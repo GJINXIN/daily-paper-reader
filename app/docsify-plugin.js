@@ -1930,45 +1930,21 @@ window.$docsify = {
       };
 
       const buildShareMarkdown = (paperId, pageMd, chatMessages) => {
-        const parts = [];
-        parts.push(`<!-- Shared by Daily Paper Reader -->`);
-        parts.push(``);
-        parts.push(`原始页面：${String(window.location.origin || '')}/#/${paperId}`);
-        parts.push(`生成时间：${new Date().toISOString()}`);
-        parts.push(``);
-        parts.push(`---`);
-        parts.push(``);
-        parts.push(pageMd || '');
-        parts.push(``);
-        parts.push(`---`);
-        parts.push(``);
-        parts.push(`## 💬 Chat History（本机记录）`);
-        parts.push(``);
-        if (!chatMessages || !chatMessages.length) {
-          parts.push(`暂无对话。`);
-          return parts.join('\n');
+        const builder =
+          window.DPRGistShareUtils &&
+          typeof window.DPRGistShareUtils.buildShareMarkdown === 'function'
+            ? window.DPRGistShareUtils.buildShareMarkdown
+            : null;
+        if (builder) {
+          return builder({
+            paperId,
+            pageMd,
+            chatMessages,
+            origin: String(window.location.origin || ''),
+            generatedAt: new Date().toISOString(),
+          });
         }
-        chatMessages.forEach((m) => {
-          const role = m && m.role ? String(m.role) : 'unknown';
-          const time = m && m.time ? String(m.time) : '';
-          const content = m && m.content ? String(m.content) : '';
-          if (role === 'thinking') {
-            parts.push(`<details>`);
-            parts.push(`<summary>🧠 思考过程 ${time ? `(${time})` : ''}</summary>`);
-            parts.push(``);
-            parts.push('```');
-            parts.push(content);
-            parts.push('```');
-            parts.push(`</details>`);
-            parts.push(``);
-            return;
-          }
-          const label = role === 'ai' ? '🤖 AI' : role === 'user' ? '👤 你' : role;
-          parts.push(`### ${label}${time ? ` (${time})` : ''}`);
-          parts.push(content);
-          parts.push(``);
-        });
-        return parts.join('\n');
+        return pageMd || '';
       };
 
       const ensureShareModal = () => {
