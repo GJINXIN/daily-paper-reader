@@ -764,8 +764,10 @@ def main() -> None:
 
     process_single_file(input_path, output_path)
   else:
-    has_raw_dir = os.path.isdir(RAW_DIR)
-    raw_files = sorted(f for f in os.listdir(RAW_DIR) if f.lower().endswith(".json")) if has_raw_dir else []
+    if os.path.isdir(RAW_DIR):
+      raw_files = sorted(f for f in os.listdir(RAW_DIR) if f.lower().endswith(".json"))
+    else:
+      raw_files = []
 
     if not raw_files and supabase_enabled:
       # Supabase-only 模式：无本地原始文件，直接走数据库端 BM25 召回

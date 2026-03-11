@@ -818,8 +818,10 @@ def main() -> None:
       and bool(supabase_conf.get("use_vector_rpc"))
       and not bool(args.disable_supabase_vector)
     )
-    has_raw_dir = os.path.isdir(RAW_DIR)
-    raw_files = sorted(f for f in os.listdir(RAW_DIR) if f.lower().endswith(".json")) if has_raw_dir else []
+    if os.path.isdir(RAW_DIR):
+      raw_files = sorted(f for f in os.listdir(RAW_DIR) if f.lower().endswith(".json"))
+    else:
+      raw_files = []
 
     if not raw_files and supabase_enabled:
       # Supabase-only 模式：无本地原始文件，直接走数据库端向量召回

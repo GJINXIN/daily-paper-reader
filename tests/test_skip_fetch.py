@@ -1,4 +1,4 @@
-"""Tests for the skip-fetch optimisation in main.py.
+"""Tests for the skip-fetch optimization in main.py.
 
 When Supabase is fully configured as the retrieval backend (both BM25 and
 vector RPCs enabled, prefer_supabase_read=true), Step 1 (全量数据拉取) can be
