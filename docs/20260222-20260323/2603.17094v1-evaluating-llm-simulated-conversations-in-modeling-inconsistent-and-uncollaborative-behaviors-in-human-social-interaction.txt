@@ -1,0 +1,465 @@
+Title: Evaluating LLM-Simulated Conversations in Modeling Inconsistent and Uncollaborative Behaviors in Human Social Interaction
+
+URL Source: https://arxiv.org/pdf/2603.17094v1
+
+Published Time: Thu, 19 Mar 2026 00:14:33 GMT
+
+Number of Pages: 22
+
+Markdown Content:
+## Evaluating LLM-Simulated Conversations in Modeling Inconsistent and Uncollaborative Behaviors in Human Social Interaction 
+
+Ryo Kamoi 2† , Ameya Godbole 3† , Longqi Yang 1, Rui Zhang 2, Mengting Wan 1, Pei Zhou 1
+
+1Microsoft Corporation, 2Penn State University, 3University of Southern California 
+
+{ryokamoi, rmz5227}@psu.edu, {mengtwan, zhoupei}@microsoft.com 
+
+Abstract 
+
+Simulating human conversations using large language models (LLMs) has emerged as a scal-able methodology for modeling human social interaction. However, simulating human con-versations is challenging because they inher-ently involve inconsistent and uncollaborative behaviors, such as misunderstandings and in-terruptions. Analysis comparing inconsistent and uncollaborative behaviors in human- and LLM-generated conversations remains limited, although reproducing these behaviors is inte-gral to simulating human-like and complex so-cial interaction. In this work, we introduce COCOEVAL , an evaluation framework that an-alyzes LLM-simulated conversations by detect-ing 10 types of inconsistent and uncollaborative behaviors at the turn level using an LLM-as-a-Judge. Using C OCOEVAL , we evaluate GPT-4.1, GPT-5.1, and Claude Opus 4 by comparing the frequencies of detected behaviors in conver-sations simulated by each model and in human conversations across academic, business, and governmental meetings, as well as debates. Our analysis shows that (1) under vanilla prompt-ing, LLM-simulated conversations exhibit far fewer inconsistent and uncollaborative behav-iors than human conversations; (2) prompt en-gineering does not provide reliable control over these behaviors, as our results show that differ-ent prompts lead to their under- or overproduc-tion; and (3) supervised fine-tuning on human conversations can lead LLMs to overproduce a narrow set of behaviors, such as repetition. Our findings highlight the difficulty of simulating human conversations, raising concerns about the use of LLMs as a proxy for human social interaction. 
+
+1 Introduction 
+
+Simulating human conversations by generating ut-terances for all participants using large language 
+
+> †
+
+Work done during an internship at Microsoft Corporation. Real Human Conversation     
+
+> LLM-Simulated Conversation with Vanilla Prompting
+> Realistic level of inconsistent and uncollaborative behaviors
+> Far fewer inconsistent and uncollaborative behaviors
+> Misunderstanding
+> Under answering
+> Speaker 1
+> Speaker 1
+> Speaker 2
+> Speaker 3
+> I still do not think it is a good idea to increase the cost.
+> Based on what we have discussed so far, I would like to move forward
+> with Plan B for our new laptop model. Does everyone agree?
+> There may be some confusion. Under Plan B, costs will be lower, but
+> there will be fewer features.
+> Hmm.
+> Speaker 1
+> Based on what we have discussed so far, I would like to move forward
+> with Plan B for our new laptop model. Does everyone agree?
+> Speaker 2
+> Yes, I agree that reducing the number of features to lower the price is a
+> reasonable direction, given the current economic situation.
+> Speaker 3 I also prefer Plan B and think it aligns well with our product strategy.
+> LLM Trained with SFT on Human Conversations
+> Overproduction of specific behaviors such as repetition
+> Speaker 1
+> Exactly.
+> Speaker 2
+> Right.
+> Speaker 1
+> Perfect.
+> Repetition
+> Repetition
+
+Figure 1: Human conversations inherently involve in-consistent and uncollaborative behaviors, such as misun-derstanding and under answering. However, we observe that LLM-simulated conversations can contain far fewer of these behaviors or overproduce specific behaviors such as repetition, depending on the simulation setup. 
+
+models (LLMs) has recently emerged as a scalable methodology for modeling human social interac-tion, with potential applications in prototyping so-cial platforms such as social media (Park et al., 2023), testing hypotheses in social science (Man-ning et al., 2024), and helping decision-makers forecast how people may respond to new poli-cies (Sreedhar and Chilton, 2024). Simulated con-versations are typically evaluated based on con-sistency with conversation history and collabora-tiveness in pursuing shared goals or resolving con-flicts (Park et al., 2023; Zhou et al., 2024b; Bianchi 1
+
+> arXiv:2603.17094v1 [cs.CL] 17 Mar 2026
+
+et al., 2024). However, greater consistency or col-laborativeness does not necessarily indicate a bet-ter simulation, because human conversations inher-ently involve inconsistent behaviors such as misun-derstandings and repetition, as well as uncollabora-tive behaviors such as interruptions and disagree-ments (Grice, 1975; Schegloff, 1992; Pickering and Garrod, 2004). Simulating these behaviors is essential for generating human-like conversations and capturing the complexity of human social in-teraction. Nevertheless, it has not been sufficiently analyzed whether LLM-based simulations can re-produce inconsistent and uncollaborative behaviors with frequencies and distributions comparable to those observed in human conversations. To address this gap, we introduce C OCOEVAL ,an evaluation framework for analyzing inconsistent and uncollaborative behaviors in LLM-simulated conversations. The framework consists of an evalu-ation scheme and a benchmark. First, we propose a fine-grained evaluation that detects inconsistent and uncollaborative behaviors at the turn level. We define 10 types of inconsistent and uncollaborative behaviors based on taxonomies for dialogue gen-eration and conversation simulation (Higashinaka et al., 2021; Wang et al., 2023) and use an LLM-as-a-Judge to identify turns exhibiting each type of behavior. In this evaluation, a simulation is consid-ered successful if these turn-level behaviors occur with frequencies and distributions comparable to those in human conversations. This evaluation com-plements a commonly used coarse-grained LLM-as-a-Judge approach that assigns conversation-level scores (Zhou et al., 2024b; Teng et al., 2024), such as consistency and collaborativeness rated on a 1-10 scale. Second, we introduce the C OCOEVAL -BENCH benchmark to evaluate LLMs on the task of generating 30-turn conversation continuations given conversational metadata and history. It is cre-ated from real-world human conversations in QM-Sum (Zhong et al., 2021), NCPC (NCPC, 2024), SIM (Fan et al., 2024), and IQ2 (Zhang et al., 2016), spanning business, academic, and governmental meetings as well as debates. Using C OCOEVAL , we evaluate GPT-4.1, GPT-5.1, and Claude Opus 4 by comparing conversa-tions simulated by each model with human con-versations. The results highlight the difficulty of reproducing inconsistent and uncollaborative be-haviors with frequencies comparable to those ob-served in human conversations, as shown in Fig-ure 1. (a) First, under vanilla prompting, LLMs generate conversations with far fewer inconsistent and uncollaborative behaviors than human con-versations. (b) Second, prompt engineering does not provide reliable control over these behaviors. LLMs overproduce inconsistent and uncollabora-tive behaviors when explicitly instructed to include them at frequencies observed in human conversa-tions. (c) Third, supervised fine-tuning on human conversations fails to capture the diversity of their inconsistent and uncollaborative behaviors. Instead, fine-tuned GPT-4.1 overproduces a narrow range of behaviors such as repetition and redundancy. (d) Fi-nally, generating an entire conversation in a single LLM call results in substantially fewer inconsistent and uncollaborative behaviors than generating each turn in a separate call. In summary, our analysis indicates that incon-sistent and uncollaborative behaviors in LLM-simulated conversations exhibit different frequen-cies and distributions from those in human con-versations. Their frequencies are sensitive to the simulation setup, making them difficult to control. These findings highlight the difficulty of simulating human conversations and raise concerns about us-ing LLMs as proxies for human social interaction. Our main contributions are as follows: • We introduce C OCOEVAL , a framework for eval-uating how well LLM-simulated conversations can reproduce inconsistent and uncollaborative behaviors inherent in human conversations. • We introduce a fine-grained evaluation scheme that detects 10 types of inconsistent and uncol-laborative behaviors at the turn level. • We show that, in a vanilla prompting setting, LLM-simulated conversations include far fewer inconsistent and uncollaborative behaviors com-pared to human conversations. • Our analysis shows that neither prompt engineer-ing nor supervised fine-tuning provides reliable control of inconsistent and uncollaborative be-haviors in LLM-simulated conversations. 
+
+2 Related Work 
+
+LLM-simulated human conversations. The simu-lation of human participants in conversations using LLMs has been studied in various domains, includ-ing replacing human participants in social stud-ies (Horton et al., 2023; Aher et al., 2023), training human communication skills through conversations 2Name Definition Example Inconsistent Behaviors Logical Contradictions Utterances that contradict earlier statements by the same speaker or the speaker’s information in the metadata. One participant says “The remote control runs on a single AA battery,” and later says “It requires two AA batteries.” Factual Inaccuracies Utterances that contain factually incorrect statements. A participant claims that infrared signals can pass through walls. Misunder-standings Utterances that reflect a misinterpretation of information provided by other participants earlier in the conversation history. A participant says the remote control only uses a touch screen, but another later mistakenly assumes that it has physical buttons. Redundant Information Utterances that contain unnecessarily lengthy content and add little new informational value. A participant gives a long explanation about previous projects without adding new information. Repetition Utterances that unnecessarily repeat information stated earlier in the conversation. One participant says “I will bring the documents,” and another asks “So you will bring the documents, right?” without adding new information. Uncollaborative Behaviors Persistent Disagreement Utterances that repeatedly reject or contradict others’ positions despite established consensus or clear supporting evidence. A participant continues to reject a proposed plan even after others agree and provide supporting evidence for it. Interruptions Utterances that disrupt the conversation by cutting off another participant. A participant interrupts another speaker mid-explanation and leaves the speaker’s utterance unfinished, like “... the key point here is”. Off-topic Responses Utterances that deviate substantially from the current conversational topic. During the middle of a project meeting discussion, a participant shares unrelated personal stories. Under Answering Utterances that give evasive responses and fail to address preceding questions. When asked “Will this policy increase taxes?”, a participant replies “We are focused on supporting working families.” Unclear Intent Utterances that are ambiguous or fail to clearly convey the speaker’s intentions. When asked whether to agree or disagree, a participant responds only with “Maybe.” 
+
+Table 1: C OCOEVAL covers 10 types of inconsistent and uncollaborative behaviors for fine-grained evaluation. 
+
+with LLMs (Elhilali et al., 2025), and generating training data or supervision signals for LLM chat-bots (Zheng et al., 2023; Wu et al., 2025). In this work, we study the simulation of multi-party con-versations in which all participants are simulated by LLMs (Park et al., 2023; Manning et al., 2024; Sreedhar and Chilton, 2024; Zhou et al., 2024b), aiming to model human social interaction beyond simulating a single individual. 
+
+Evaluation dimensions. Consistency and collab-orativeness are commonly used evaluation dimen-sions in conversation simulation across multiple aspects, including coherence with conversation his-tory (Maharana et al., 2024; Chu et al., 2024), align-ment with persona and role (Frisch and Giulianelli, 2024; Abdulhai et al., 2025), adherence to social norms (Li et al., 2023), and social interaction capa-bilities such as cooperation and negotiation (Zhou et al., 2024b; Piedrahita et al., 2025). 
+
+3 COCOEVAL 
+
+We introduce C OCOEVAL , an evaluation frame-work for analyzing LLM-simulated conversations with a focus on inconsistent and uncollaborative behaviors. C OCOEVAL consists of an evaluation scheme (§3.1) and a benchmark (§3.2). Human conversations inherently contain inconsistent and uncollaborative behaviors (Schegloff, 1992; Grice, 1975; Pickering and Garrod, 2004), so higher con-sistency or collaborativeness does not necessarily indicate a better simulation. Instead, a successful simulation should generate inconsistent and uncol-laborative behaviors with frequencies and distri-butions comparable to those in human conversa-tions. The evaluation scheme and benchmark of COCOEVAL are designed to facilitate comparison between human- and LLM-generated conversations with respect to these behaviors. 
+
+3.1 Evaluation Scheme 
+
+COCOEVAL evaluates the consistency and col-laborativeness of LLM-simulated conversations using two complementary LLM-as-a-Judge ap-proaches: overall and fine-grained evaluation. 
+
+Overall evaluation. The overall evaluation as-signs two conversation-level scores, one for con-sistency and one for collaborativeness, each on a 1-10 scale. This form of evaluation is commonly used in conversation simulation (Zhou et al., 2024b; Teng et al., 2024). Our prompt for LLM-as-a-Judge includes definitions of consistency and collabora-3tiveness, together with scoring rubrics describing the criteria for each score range. The definitions of consistency and collaborativeness in C OCOEVAL 
+
+follow prior discussions in conversation evaluation. 
+
+Consistency in this work includes coherence with previous utterances by all speakers, adherence to the specified persona, and correctness with respect to world knowledge and social norms (Park et al., 2023; Frisch and Giulianelli, 2024; Abdulhai et al., 2025), as well as the avoidance of unnecessary re-dundancy and repetition (Higashinaka et al., 2021; Liu et al., 2025). Collaborativeness is defined as the extent to which a speaker’s contributions support shared group objectives and facilitate the goals of other participants (Zhou et al., 2024b; Pi-atti et al., 2024; Piedrahita et al., 2025; Nonomura and Mori, 2025), without engaging in actions that delay or impede progress and agreement. 
+
+Fine-grained evaluation. To provide a more de-tailed and interpretable evaluation, we introduce a fine-grained evaluation that detects 10 types of in-consistent and uncollaborative behaviors at the turn level. We derive 10 types of inconsistent and un-collaborative behaviors shown in Table 1 by adapt-ing nine types of behaviors from evaluation tax-onomies in dialogue generation (Higashinaka et al., 2021; Mahajan et al., 2022), and we added “persis-tent disagreement” that reflects collaborativeness in negotiation and debates (Wang et al., 2023; Liu et al., 2025). For each category, the LLM-as-a-Judge is instructed to detect turns that exhibit the corresponding behaviors and count the number of occurrences in each conversation. 
+
+Agreement between human evaluation and LLM-as-a-Judge. We collect human evaluations with two annotators to assess agreement with the LLM-as-a-Judge. The human annotators re-ceive the same instructions used for the LLM-as-a-Judge and perform manual annotation. We evaluate OpenAI o4-mini (OpenAI, 2025c) and Claude Opus 4 (Anthropic, 2025), and select o4-mini because it shows higher agreement with hu-man evaluation. For overall evaluation , the two annotators evaluate the overall consistency and col-laborativeness of 54 conversations generated by humans and GPT-4.1 on a 1-10 scale. The aver-age Spearman’s rank correlation coefficients be-tween human scores and LLM-as-a-Judge scores using o4-mini are 0.301 for consistency and 0.380 for collaborativeness. These values are compara-ble to the human-human agreement of 0.281 and LLM     
+
+> Recent Conversation History (30 turns)
+> Summary of Conversation History (one paragraph)
+> Conversation-Level Metadata
+> List of Participants (Name, Individual Goal, Conversation Style)
+> Background of the Organization (e.g., electronics company)
+> Shared Goal (e.g., finalize a prototype for a new product)
+> LLM-Simulated Continuation (30 turns)
+> Instruction: Generate 30 turns to simulate the continuation of the
+> conversation. Generate human-like conversations by referring to the style
+> and content in the metadata and the conversation history.
+> M
+> S
+> x
+> y
+
+Figure 2: Conversation continuation task. 
+
+0.268, respectively. For fine-grained evaluation ,the two annotators detect the 10 types of incon-sistent and uncollaborative behaviors at the turn level across 1,080 turns from 36 conversations gen-erated by humans and GPT-4.1. In the turn-level binary detection setting, the average agreement be-tween human evaluation and o4-mini is 0.253 in Cohen’s kappa and 0.275 in Matthews correlation coefficient. These values are comparable to the human-human agreement of 0.174 and 0.186. 
+
+3.2 COCOEVAL BENCH 
+
+We introduce the C OCOEVAL BENCH benchmark for evaluating LLMs on the conversation continua-tion task shown in Figure 2. The benchmark covers real-world scenarios spanning business, academic, and governmental meetings, as well as debates. 
+
+Evaluation task. The conversation continuation task in C OCOEVAL BENCH requires LLMs to gen-erate continuations that follow the provided con-versational metadata and history. The input con-sists of metadata M containing the conversation goals and participant information, the 30 preced-ing turns x = [ x−30 , . . . , x −1], and a paragraph-length summary S of the conversation prior to x.Each turn in x is represented as a speaker-utterance pair xi = ( pi, u i). Given this input, LLMs are instructed to generate 30 continuation turns y =[y1, . . . , y 30 ] ∼ LLM( M, S, x ), where each turn is a pair of a speaker and an utterance. To assess the simulation of long-term dynamics in human conversations, our setup generates 30-turn continu-ations, a larger number of turns than in most prior work (Zhou et al., 2024b; Bianchi et al., 2024). Our benchmark includes a human-generated reference continuation r = [ r1, . . . , r 30 ] to support direct 4Category Source Dataset # Data Points Average # Participants Average # Tokens / Turn Business QMSum Product 50 4.0 8.0 Academic QMSum Academic 50 5.7 10.0 Governmental QMSum Committee 50 18.5 66.3 NCPC 50 25.8 50.4 Debates SIM 50 4.0 16.2 IQ2 50 10.1 41.3 
+
+Table 2: Evaluation set of C OCOEVAL BENCH .
+
+comparison between LLMs and humans. In this setup, both the simulated continuation y and the human reference continuation r follow the same context (M, S, x ) and are expected to reflect the frequencies and distributions of inconsistent and uncollaborative behaviors observed in the conver-sation history x. This design facilitates compari-son between human- and LLM-generated conver-sations, as substantial deviations in these behaviors indicate simulation failures. 
+
+Benchmark creation. We create C OCOEVAL -BENCH from six public conversation datasets: busi-ness meetings in QMSum Product, academic meet-ings in QMSum Academic, governmental meetings in QMSum Committee (Zhong et al., 2021) and NCPC (NCPC, 2024), and debates in SIM (Fan et al., 2024) and IQ2 (Zhang et al., 2016). We se-lect datasets containing real-world conversations in which multiple participants pursue shared or con-flicting goals, rather than chitchat or movie scripts. To create the benchmark for the conversation con-tinuation task, we first use o4-mini to extract infor-mation from conversations in the source datasets to generate conversation-level metadata M . Next, we randomly select a start point for the conversa-tion continuation task and extract the preceding 30 turns as history x and the following 30 turns as reference continuation r. We then generate a paragraph-length summary S of the conversation preceding the 30-turn history x using o4-mini. 
+
+Statistics. As shown in Table 2, the evaluation set includes 300 conversations in total, consisting of 50 instances created from each source dataset. We also construct a training dataset for fine-tuning, which consists of 1,450 conversations from QM-Sum Product, QMSum Committee, SIM, and IQ2. 
+
+4 Evaluation Setup 
+
+We evaluate LLMs in the conversation continua-tion task under multiple settings to examine factors LLM  
+
+> Input (metadata, conversation history)
+> Utterance k+1 Speaker 1 Turn k+1
+> LLM Speaker 2 Turn k+2
+> Generate 1 Turn at a Single LLM Call
+> LLM
+> Input (metadata, conversation history)
+> Generate n Turns at a Single LLM Call
+> ...
+> ...
+> ...
+> Utterance k+2
+> Utterance k+1
+> Utterance k+2
+> Utterance k+n
+> Speaker 1 Turn k+1
+> Speaker 2 Turn k+2
+> Speaker 1 Turn k+n
+
+Figure 3: Conversation simulation under one-turn and multi-turn generation per LLM call. 
+
+that influence the inconsistent and uncollaborative behaviors in simulated conversations. 
+
+4.1 Simulation Settings Prompt. Our prompts include an instruction in ad-dition to the conversational context (M, S, x ). We evaluate two types of instructions for conversation simulation to assess the influence of prompt engi-neering. First, in vanilla prompting , we instruct LLMs to generate “human-like conversations by referring to the conversation history” and “mimic the communication style and content in the meta-data and the conversation history.” Second, in 
+
+taxonomy-guided prompting , we explicitly in-struct LLMs to incorporate inconsistent and uncol-laborative behaviors with frequencies and distribu-tions comparable to those observed in the conversa-tion history, and provide the list of the 10 behavior types in Table 1 as follows: 
+
+Human conversations may involve inconsis-tent and uncollaborative behaviors [...] The following list outlines representative inconsis-tent and uncollaborative behaviors: [...] 
+
+Generating multiple turns per LLM call. When simulating conversations with LLMs, generating multiple consecutive turns in a single call is compu-tationally efficient. However, generating one turn at a time better reflects the turn-by-turn nature of human conversations (Zhou et al., 2024a). To ex-amine the impact of these generation strategies, we evaluate settings that generate 1, 5, and 30 turns per LLM call, as illustrated in Figure 3. 
+
+SFT on human conversations. Supervised fine-tuning is a standard approach for aligning LLMs for conversation simulation (Teng et al., 2024; Chuang 5et al., 2025). We fine-tune GPT-4.1 on human con-versations from the training set of C OCOEVAL -BENCH . We fine-tune three models that generate 1, 5, and 30 turns per call, respectively. 
+
+4.2 LLMs Simulation. We use GPT-4.1 (OpenAI, 2025b), GPT-5.1 (OpenAI, 2025a), and Claude Opus 4 (An-thropic, 2025) for generating conversation contin-uations. For Claude Opus 4, we only evaluate the settings generating 1 or 5 turns per call, as it fre-quently reaches its maximum output length when generating 30 turns per call. 
+
+LLM-as-a-Judge. We use OpenAI o4-mini (Ope-nAI, 2025c) as an LLM-as-a-Judge for evaluation. 
+
+5 Results 
+
+We evaluate LLMs using C OCOEVAL on the con-versation continuation task and compare incon-sistent and uncollaborative behaviors in LLM-simulated and human conversations. Our analysis addresses the following research questions. 
+
+RQ1: With vanilla prompting , how well LLMs simulate inconsistent and uncollaborative behav-iors observed in human conversations? (§5.1) 
+
+RQ2: Can prompt engineering control incon-sistent and uncollaborative behaviors in LLM-simulated conversations? (§5.2) 
+
+RQ3: Does supervised fine-tuning improve the LLM-based simulation of inconsistent and uncol-laborative behaviors? (§5.3) 
+
+RQ4: Does generating multiple turns per LLM call affect inconsistent and uncollaborative behav-iors in LLM-simulated conversations? (§5.4) 
+
+5.1 Vanilla Prompting 
+
+Table 3 presents the overall evaluation results of consistency and collaborativeness in human con-versations and LLM-simulated conversations, as evaluated by the LLM-as-a-Judge on a 1-10 scale conversation-level score. The results indicate that conversations generated with vanilla prompting exhibit substantially higher consistency and col-laborativeness than human conversations. In the fine-grained evaluation that detects 10 types of in-consistent and uncollaborative behaviors at the turn level, the results in Figure 4b further show that in-consistent and uncollaborative behaviors are nearly absent in LLM-simulated conversations, particu-larly when 30 turns are generated in a single call.                                                                                  
+
+> # Turns Per Call Consistency (↑)Collaborati-veness ( ↑)Human –5.2 [4.8, 5.6] 5.7 [5.3, 6.0]
+> GPT-4.1
+> Vanilla Prompting 18.2 [7.9, 8.5] 8.6 [8.3, 8.8]
+> 59.6 [9.4, 9.7] 9.6 [9.5, 9.7]
+> 30 9.5 [9.4, 9.7] 9.7 [9.6, 9.8]
+> Taxonomy-Guided Prompting 11.3 [1.2, 1.4] 1.3 [1.2, 1.3]
+> 52.8 [2.5, 3.0] 2.9 [2.6, 3.1]
+> 30 9.3 [9.1, 9.5] 9.4 [9.3, 9.6]
+> Supervised Fine-tuning 15.3 [4.9, 5.7] 5.7 [5.4, 6.1]
+> 56.6 [6.3, 7.0] 7.2 [6.8, 7.5]
+> 30 6.3 [5.9, 6.7] 6.7 [6.3, 7.0]
+> GPT-5.1  Vanilla Prompting 19.2 [9.0, 9.4] 9.2 [8.9, 9.4]
+> 59.7 [9.6, 9.8] 9.8 [9.7, 9.9]
+> 30 9.8 [9.7, 9.9] 9.9 [9.8, 9.9]
+> Taxonomy-Guided Prompting 14.6 [4.2, 5.0] 4.5 [4.2, 4.9]
+> 56.5 [6.1, 6.9] 6.5 [6.2, 6.9]
+> 30 9.3 [9.1, 9.5] 9.3 [9.1, 9.5]
+> Claude Opus 4  Vanilla Prompting 19.8 [9.7, 9.9] 9.9 [9.8, 9.9]
+> 59.8 [9.7, 9.9] 9.9 [9.8, 9.9]
+> Taxonomy-Guided 11.5 [1.4, 1.6] 1.4 [1.3, 1.5]
+> 51.7 [1.6, 1.9] 1.6 [1.5, 1.7]
+
+Table 3: Result of the overall evaluation of consistency and collaborativeness with conversation-level scores on a 1-10 scale evaluated by o4-mini and averaged across six benchmarks in C OCOEVAL BENCH . The intervals represent 95% bootstrap confidence intervals. 
+
+Answer to RQ1 about Vanilla Prompting 
+
+LLM-simulated conversations generated with vanilla prompting exhibit far fewer inconsistent and uncollaborative behaviors than human con-versations. 
+
+5.2 Prompt Engineering 
+
+The overall evaluation in Table 3 shows that taxonomy-guided prompting, which explicitly in-structs LLMs to reproduce inconsistent and un-collaborative behaviors in human conversations, reduces overall consistency and collaborativeness relative to vanilla prompting. The effect is stronger when fewer turns are generated within a single LLM call, leading to conversations that exhibit much lower consistency and collaborativeness than human conversations. The fine-grained evaluation in Figure 4e further shows that this prompt sub-stantially increases the frequency of inconsistent and uncollaborative behaviors when generating a single turn per call, and that the resulting distribu-tions differ substantially from those observed in human conversations. Although taxonomy-guided prompting does not instruct LLMs to increase these 6(a) Human 
+
+> (b) Vanilla prompting with 30 turns generated per LLM call
+> (c) Vanilla prompting with 1 turn generated per LLM call
+> (d) Taxonomy-guided prompting with 30 turns per call
+> (e) Taxonomy-guided prompting with 1 turn per call
+> (f) SFT with 30 turns generated per LLM call
+> (g) SFT with 1 turn generated per LLM call
+
+Figure 4: Results of the fine-grained evaluation show-ing the number of turns exhibiting each inconsistent or uncollaborative behavior type per 30-turn conversation continuation generated by humans and GPT-4.1. Results are averaged over 300 conversations from six datasets in COCOEVAL BENCH . The y-axes for taxonomy-guided prompting use different scales. 
+
+behaviors but rather to simulate their frequencies in human conversations, it nevertheless leads to overproduction of these behaviors. 
+
+Answer to RQ2 about Prompt Engineering 
+
+Prompt engineering does not provide reliable control over the frequencies or distributions of inconsistent and uncollaborative behaviors in LLM-simulated conversations. 
+
+5.3 SFT on Human Conversations 
+
+The overall evaluation in Table 3 shows that GPT-4.1 fine-tuned on human conversations with SFT exhibits levels of consistency and collaborativeness comparable to those of human conversations, espe-cially when generating one turn per call. However, the fine-grained evaluation in Figure 4g shows that the frequencies and distributions of inconsistent and uncollaborative behaviors do not match those of human conversations. Specifically, fine-tuned GPT-4.1 overproduces repetition and redundancy, whereas human conversations display more diverse behavioral patterns. These results indicate that even when fine-tuned directly on human conversations via SFT, LLM-simulated conversations still deviate from human conversations. 
+
+Answer to RQ3 about SFT 
+
+SFT on human conversations can lead LLMs to overproduce a narrow subset of inconsistent behaviors, remaining misaligned with human social interaction, which exhibits a diverse range of inconsistent and uncollaborative behaviors. 
+
+5.4 Generating Multiple Turns Per LLM Call 
+
+The results in Table 3 and Figure 4 consistently show that generating multiple turns per LLM call, particularly 30 turns, introduces a strong bias to-ward reducing inconsistent and uncollaborative be-haviors. In particular, Figure 4d shows that generat-ing 30 turns in a single LLM call almost eliminates the effect of taxonomy-guided prompting, whereas it substantially increases inconsistent and uncollab-orative behaviors when one turn is generated in a single call. However, generating fewer turns per call also fails to reproduce the distribution of these behaviors observed in human conversations and instead tends to overrepresent repetitive and redun-dant utterances, even with the vanilla prompting, as shown in Figure 4c. 7Answer to RQ4 about Generation Strategy 
+
+The number of turns generated in a single LLM call strongly influences inconsistent and uncol-laborative behaviors in simulated conversations, but adjusting this parameter alone does not repro-duce the frequencies and distributions observed in human conversations. 
+
+6 Analysis and Discussion 
+
+Quantitative analysis. To further analyze the re-sults in Section 5, we conduct a manual analysis of inconsistent and uncollaborative behaviors in LLM-simulated conversations. With supervised fine-tuning for GPT-4.1, the fine-grained evaluation in Figure 4g shows a high frequency of repetitive and redundant utterances in generated conversations. Manual analysis suggests that this result reflects unnatural repetition in LLM-simulated conversa-tions rather than human-like inconsistent behaviors. Table 4 presents an example generated by the fine-tuned GPT-4.1 (generating one turn per call) on QMSum Product, in which the same speaker re-peatedly expresses agreement with prior utterances. This example suggests that SFT on human conver-sations can introduce unnatural repetitive behavior. With prompt engineering , the fine-grained eval-uation in Figure 4e shows that taxonomy-guided prompting produces overly large numbers of incon-sistent and uncollaborative behaviors when gener-ating one turn per call. Manual analysis suggests that this result reflects behaviors that deviate from those observed in human conversations. Table 5 presents an example generated by GPT-4.1 with the taxonomy-guided prompt (generating one turn per call) on QMSum Product. The example exhibits persistent disagreement, with two speakers dom-inating the conversation despite the presence of multiple participants. This example illustrates the sensitivity of uncollaborative behaviors to prompt engineering, even though our prompt explicitly in-structs “to mimic the communication style and con-tent in the metadata and the conversation history.” 
+
+Advantages of fine-grained evaluation. The fine-grained evaluation in C OCOEVAL uses turn-level detection of 10 types of behaviors to provide a more detailed assessment than a common LLM-as-a-Judge approach that generates coarse conversation-level scores (Zhou et al., 2024b; Teng et al., 2024). Our results highlight the advantages of our ap-proach for analyzing differences between conversa-       
+
+> Speaker Content Manager Exactly. Interface Yeah, that makes sense. Designer That’s right. Marketing Perfect. Interface Alright. Manager Okay.
+
+Table 4: Example conversation generated by GPT-4.1 fine-tuned on human conversations, exhibiting unnatural repetitive utterances that are not human-like.       
+
+> Speaker Content Designer Fold-out is better. Sliding is weak. Interface I really think sliding is stronger. [...] Designer No, fold-out makes it more robust. [...] Interface Actually, sliding has a lower failure rate [...] Designer Fold-out is more durable. [...]
+
+Table 5: Example conversation generated by GPT-4.1 with taxonomy-guided prompting. This example ex-hibits persistent disagreement that exceeds the level typically observed in human conversations. 
+
+tions generated by humans and LLMs. For exam-ple, the overall evaluation in Table 3 does not reveal differences between human- and LLM-generated conversations for fine-tuned GPT-4.1 when gener-ating one turn per call, as it achieves scores compa-rable to those of human conversations. In contrast, the fine-grained evaluation in Figure 4g reveals that fine-tuned GPT-4.1 overproduces repetition and redundancy in simulated conversations. These findings demonstrate the value of C OCOEVAL ’s fine-grained evaluation and suggest that turn-level analysis with detailed behavior classification pro-vides an effective method for comparing conversa-tions generated by humans and LLMs. 
+
+7 Conclusion 
+
+We introduce C OCOEVAL , an evaluation frame-work for analyzing inconsistent and uncollabora-tive behaviors in LLM-simulated conversations. Our analysis shows that LLMs with vanilla prompt-ing exhibit far fewer inconsistent and uncollabora-tive behaviors than human conversations, and that neither prompt engineering nor supervised fine-tuning reliably controls these behaviors. These results highlight the challenge of simulating human conversations, particularly in reproducing their in-herent inconsistency and uncollaborativeness. 8Limitations 
+
+Dataset diversity. Our analysis is constrained by the limited availability of publicly accessible datasets containing real-world multi-party conver-sations. Existing datasets are heavily skewed to-ward governmental meetings, while datasets from other domains such as business meetings remain scarce. Collecting datasets from a broader range of real-world settings would support the study of social interaction across more diverse scenarios. 
+
+Language scope. Our study focuses on conversa-tions in English. 
+
+References 
+
+Marwa Abdulhai, Ryan Cheng, Donovan Clay, Tim Althoff, Sergey Levine, and Natasha Jaques. 2025. Consistently simulating human personas with multi-turn reinforcement learning. In The Thirty-ninth An-nual Conference on Neural Information Processing Systems .Gati Aher, Rosa I. Arriaga, and Adam Tauman Kalai. 2023. Using large language models to simulate mul-tiple humans and replicate human subject studies. In 
+
+Proceedings of the 40th International Conference on Machine Learning , ICML’23. JMLR.org. Anthropic. 2025. System card: Claude Opus 4 & Claude Sonnet 4. Federico Bianchi, Patrick John Chia, Mert Yuksekgonul, Jacopo Tagliabue, Dan Jurafsky, and James Zou. 2024. How well can llms negotiate? negotiation-arena platform and analysis. In Proceedings of the 41st International Conference on Machine Learning .JMLR. KuanChao Chu, Yi-Pei Chen, and Hideki Nakayama. 2024. Cohesive conversations: Enhancing authen-ticity in multi-agent simulated dialogues. In First Conference on Language Modeling .Yun-Shiuan Chuang, Ruixuan Tu, Chengtao Dai, Smit Vasani, Binwei Yao, Michael Henry Tessler, Sijia Yang, Dhavan V. Shah, Robert D. Hawkins, Junjie Hu, and Timothy T. Rogers. 2025. DEBATE: A large-scale benchmark for role-playing LLM agents in multi-agent, long-form debates. In Workshop on Scaling Environments for Agents .Ahmed Elhilali, Andy Suy-Huor Ngo, Daniel Re-ichenpfader, and Kerstin Denecke. 2025. Large lan-guage model–based patient simulation to foster com-munication skills in health care professionals: User-centered development and usability study. JMIR Medical Education , 11:e81271. Yaran Fan, Jamie Pool, Senja Filipi, and Ross Cutler. 2024. Topic-conversation relevance (TCR) dataset and benchmarks. In The Thirty-eight Conference on Neural Information Processing Systems Datasets and Benchmarks Track .Ivar Frisch and Mario Giulianelli. 2024. LLM agents in interaction: Measuring personality consistency and linguistic alignment in interacting populations of large language models. In Proceedings of the 1st Workshop on Personalization of Generative AI Systems (PERSONALIZE 2024) , pages 102–111, St. Julians, Malta. Association for Computational Lin-guistics. H. Paul Grice. 1975. Logic and conversation. In Pe-ter Cole and Jerry L. Morgan, editors, Speech Acts ,volume 3 of Syntax and Semantics , pages 41–58. Aca-demic Press, New York. Ryuichiro Higashinaka, Masahiro Araki, Hiroshi Tsuka-hara, and Masahiro Mizukami. 2021. Integrated tax-onomy of errors in chat-oriented dialogue systems. In Proceedings of the 22nd Annual Meeting of the Special Interest Group on Discourse and Dialogue ,pages 89–98, Singapore and Online. Association for Computational Linguistics. John J Horton, Apostolos Filippas, and Benjamin S Manning. 2023. Large language models as simulated economic agents: What can we learn from homo silicus? Working Paper 31122, National Bureau of Economic Research. Oliver Li, Mallika Subramanian, Arkadiy Saakyan, Sky CH-Wang, and Smaranda Muresan. 2023. Norm-Dial: A comparable bilingual synthetic dialog dataset for modeling social norm adherence and violation. In Proceedings of the 2023 Conference on Empiri-cal Methods in Natural Language Processing , pages 15732–15744, Singapore. Association for Computa-tional Linguistics. Ziyi Liu, Bahar Sarrafzadeh, Pei Zhou, Longqi Yang, Jieyu Zhao, and Ashish Sharma. 2025. Promediate: A socio-cognitive framework for evaluating proactive agents in multi-party negotiation. arXiv preprint arXiv:2510.25224 .Khyati Mahajan, Sashank Santhanam, and Samira Shaikh. 2022. Towards evaluation of multi-party dialogue systems. In Proceedings of the 15th Interna-tional Conference on Natural Language Generation ,pages 278–287, Waterville, Maine, USA and virtual meeting. Association for Computational Linguistics. Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco Barbieri, and Yuwei Fang. 2024. Evaluating very long-term conversational memory of LLM agents. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 13851– 13870, Bangkok, Thailand. Association for Compu-tational Linguistics. Benjamin S Manning, Kehang Zhu, and John J Horton. 2024. Automated social science: Language mod-els as scientist and subjects. Working Paper 32381, National Bureau of Economic Research. 
+
+9NCPC. 2024. NCPC commission meeting archive. Ryota Nonomura and Hiroki Mori. 2025. Who speaks next? multi-party ai discussion leveraging the sys-tematics of turn-taking in murder mystery games. 
+
+Frontiers in Artificial Intelligence , 8:1582287. OpenAI. 2025a. GPT-5.1: A smarter, more conversa-tional ChatGPT. OpenAI. 2025b. Introducing GPT-4.1 in the API. OpenAI. 2025c. Introducing OpenAI o3 and o4-mini. Joon Sung Park, Joseph O’Brien, Carrie Jun Cai, Mered-ith Ringel Morris, Percy Liang, and Michael S. Bern-stein. 2023. Generative agents: Interactive simulacra of human behavior. In Proceedings of the 36th An-nual ACM Symposium on User Interface Software and Technology , UIST ’23, New York, NY, USA. Association for Computing Machinery. Giorgio Piatti, Zhijing Jin, Max Kleiman-Weiner, Bern-hard Schölkopf, Mrinmaya Sachan, and Rada Mi-halcea. 2024. Cooperate or collapse: Emergence of sustainable cooperation in a society of LLM agents. In The Thirty-eighth Annual Conference on Neural Information Processing Systems .Martin J. Pickering and Simon Garrod. 2004. Toward a mechanistic psychology of dialogue. Behavioral and Brain Sciences , 27(2):169–190. David Guzman Piedrahita, Yongjin Yang, Mrinmaya Sachan, Giorgia Ramponi, Bernhard Schölkopf, and Zhijing Jin. 2025. Corrupted by reasoning: Reason-ing language models become free-riders in public goods games. In Second Conference on Language Modeling .Emanuel A. Schegloff. 1992. Repair after next turn: The last structurally provided defense of intersubjectiv-ity in conversation. American Journal of Sociology ,97(5):1295–1345. Karthik Sreedhar and Lydia Chilton. 2024. Simulat-ing human strategic behavior: Comparing single and multi-agent llms. arXiv preprint arXiv:2402.08189 .Zeyu Teng, Yong Song, Xiaozhou Ye, and Ye Ouyang. 2024. Fine-tuning llms for multi-turn dialogues: Op-timizing cross-entropy loss with kl divergence for all rounds of responses. In Proceedings of the 2024 16th International Conference on Machine Learning and Computing , ICMLC ’24, page 128–133, New York, NY, USA. Association for Computing Machinery. Boshi Wang, Xiang Yue, and Huan Sun. 2023. Can ChatGPT defend its belief in truth? evaluating LLM reasoning via debate. In Findings of the Association for Computational Linguistics: EMNLP 2023 , pages 11865–11881, Singapore. Association for Computa-tional Linguistics. Shirley Wu, Michel Galley, Baolin Peng, Hao Cheng, Gavin Li, Yao Dou, Weixin Cai, James Zou, Jure Leskovec, and Jianfeng Gao. 2025. CollabLLM: From passive responders to active collaborators. In 
+
+Forty-second International Conference on Machine Learning .Justine Zhang, Ravi Kumar, Sujith Ravi, and Cris-tian Danescu-Niculescu-Mizil. 2016. Conversational flow in Oxford-style debates. In Proceedings of the 2016 Conference of the North American Chapter of the Association for Computational Linguistics: Hu-man Language Technologies , pages 136–141, San Diego, California. Association for Computational Linguistics. Chujie Zheng, Sahand Sabour, Jiaxin Wen, Zheng Zhang, and Minlie Huang. 2023. AugESC: Dialogue augmentation with large language models for emo-tional support conversation. In Findings of the As-sociation for Computational Linguistics: ACL 2023 ,pages 1552–1568, Toronto, Canada. Association for Computational Linguistics. Ming Zhong, Da Yin, Tao Yu, Ahmad Zaidi, Mutethia Mutuma, Rahul Jha, Ahmed Hassan Awadallah, Asli Celikyilmaz, Yang Liu, Xipeng Qiu, and Dragomir Radev. 2021. QMSum: A new benchmark for query-based multi-domain meeting summarization. In Pro-ceedings of the 2021 Conference of the North Amer-ican Chapter of the Association for Computational Linguistics: Human Language Technologies , pages 5905–5921, Online. Association for Computational Linguistics. Xuhui Zhou, Zhe Su, Tiwalayo Eisape, Hyunwoo Kim, and Maarten Sap. 2024a. Is this the real life? is this just fantasy? the misleading success of simulating social interactions with LLMs. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing , pages 21692–21714, Miami, Florida, USA. Association for Computational Lin-guistics. Xuhui Zhou, Hao Zhu, Leena Mathur, Ruohong Zhang, Haofei Yu, Zhengyang Qi, Louis-Philippe Morency, Yonatan Bisk, Daniel Fried, Graham Neubig, and Maarten Sap. 2024b. SOTOPIA: Interactive evalu-ation for social intelligence in language agents. In 
+
+The Twelfth International Conference on Learning Representations .
+
+10 Table of Contents of Appendix 
+
+A COCOEVAL BENCH 11 
+
+A.1 Source Datasets . . . . . . . . . . 11 A.2 Benchmark Creation . . . . . . . 11 A.3 Input Length and Token Usage . . 11 
+
+B LLM-as-a-Judge 11 
+
+B.1 Setup of Human Evaluation . . . . 12 B.2 Model Selection for LLM-as-a-Judge 12 B.3 Details of Human-LLM Agreement 12 B.4 Coverage of Fine-grained Evaluation 13 
+
+C Setup and Results 13 
+
+C.1 Model Access and SFT setup . . . 13 C.2 Fine-grained Evaluation Results . 13 C.3 Examples of Simulated Continua-tions . . . . . . . . . . . . . . . . 13 
+
+D Prompts 13 
+
+D.1 COCOEVAL BENCH Creation . . . 13 D.2 Conversation Continuation Prompts 14 D.3 Evaluation Prompts . . . . . . . . 14 
+
+E Ethical Considerations 14      
+
+> Dataset Source QMSum https://github.com/Yale-LILY/QMSum
+> NCPC https://github.com/microsoft/topic_ conversation
+> SIM https://github.com/microsoft/topic_ conversation
+> IQ2 https://tisjune.github.io/datasets/ iq2_data_release.zip
+> Table 6: Source datasets for C OCOEVAL BENCH .
+
+A COCOEVAL BENCH 
+
+This section provides details of COCOEVAL -BENCH explained in Section 3.2. 
+
+A.1 Source Datasets 
+
+COCOEVAL BENCH is created from six public con-versational datasets. Table 6 shows the sources of the datasets. 
+
+A.2 Benchmark Creation 
+
+Before the process described in Section 3.2, we clean up undesirable artifacts in QMSum Product and Academic. QMSum Product and Academic include transcripts that preserve all details of spo-ken meetings and include disfluencies, fillers, and unnecessary repetitions. To avoid transcription ar-tifacts from influencing our analysis, we clean the utterances by instructing o4-mini to remove disflu-encies while preserving the remaining content. 
+
+A.3 Input Length and Token Usage 
+
+In the conversation continuation task in C OCO-EVAL BENCH , the input includes approximately 4k tokens, and the output includes about 50 to-kens per turn on average. Therefore, for exam-ple, when generating 30 turns under the setting of generating one turn per LLM call, the total input tokens amount to approximately 4k×30 = 120 k to-kens, and the total output tokens amount to about 
+
+50 × 30 = 1 .5k tokens. The evaluation set of COCOEVAL BENCH includes 50 × 6 = 300 con-versations, so in total this setting requires approx-imately 120 k × 300 ≃ 36 M input tokens and 
+
+1.5k × 300 = 450 k output tokens. 
+
+B LLM-as-a-Judge 
+
+This section provides details on the agreement be-tween human evaluation and LLM-as-a-Judge in COCOEVAL discussed in Section 3.1. 11 Category Detected by Human Detected by LLM Precision (%) Recall (%) MCC Kappa Logical Contradiction 1.0 4 0.0 0.0 -0.006 -0.003 Factual Inaccuracy 1.5 2 25.0 50.0 0.351 0.331 Misunderstanding 3.0 6 16.7 33.3 0.325 0.162 Redundant Information 5.0 12 8.3 12.5 0.089 0.088 Repetition 6.5 23 17.4 51.7 0.276 0.237 Persistent Disagreement 2.0 2 25.0 25.0 0.247 0.247 Interruptions 13.5 12 29.2 27.6 0.263 0.262 Off Topic 7.0 15 33.3 75.0 0.489 0.449 Under Answering 20.0 38 31.6 55.5 0.377 0.355 Unclear Intent 11.0 42 9.5 19.0 0.105 0.102 Overall 70.5 156.0 20.2 42.7 0.275 0.253 
+
+Table 7: Average agreement between human evaluation by two annotators and the LLM-as-a-Judge using o4-mini in turn-level binary classification of the fine-grained evaluation for detecting 10 types of inconsistent and uncollaborative behaviors in 1,080 turns from 36 human conversations and conversations simulated by GPT-4.1 (generating 30 turns per call) in C OCOEVAL BENCH . MCC refers to the Matthews correlation coefficient, and Kappa refers to Cohen’s Kappa. All values are category-wise averages of the agreement between the LLM-as-a-Judge and each of the two annotators. This table provides the detailed results for the analysis in Section 3.1. 
+
+B.1 Setup of Human Evaluation 
+
+For the evaluation of the agreement between hu-man evaluation and the LLM-as-a-Judge in Sec-tion 3.1, two PhD students working on NLP re-search conducted the human evaluation. They were provided with the same instructions as those used in the prompt for the LLM-as-a-Judge, and the an-notators were not informed whether the conversa-tions were generated by humans or by LLMs. The inputs (M, S, x ) are randomly selected from the evaluation set of C OCOEVAL and evenly sampled from instances created from the six source datasets. They are informed about this study and provide consent for their annotations to be used. 
+
+Overall evaluation. Two human annotators man-ually evaluate the overall consistency and collabo-rativeness of 54 conversation continuations gener-ated by humans, GPT-4.1, and fine-tuned GPT-4.1, where LLMs generate 30 turns per call. They as-sign scores on a 1-10 scale by referring to the in-structions and rubrics provided to LLM-as-a-Judge. 
+
+Fine-grained evaluation. Two human annotators manually detect the 10 types of inconsistent and un-collaborative behaviors in 1,080 turns from 36 hu-man conversations and conversation continuations simulated by GPT-4.1 (generating 30 turns per call). The annotators provide the indices of turns that ex-hibit each type of behavior. 
+
+B.2 Model Selection for LLM-as-a-Judge 
+
+This paper uses o4-mini as the primary LLM-as-a-Judge model, as it shows reasonable alignment with human evaluation. We also evaluate Claude Opus 4 as an LLM-as-a-Judge, but select o4-mini due to the misalignment between Claude Opus 4 and hu-man evaluation. For overall evaluation, the average Spearman’s rank correlation coefficients between Claude Opus 4 and human scores are -0.004 for consistency and 0.171 for collaborativeness. For fine-grained evaluation, the average agreement be-tween Claude Opus 4 and human evaluation is 0.121 in Cohen’s kappa and 0.093 in Matthews correlation coefficient. In both evaluations, agree-ment between Claude Opus 4 and human evalua-tion is substantially lower than both human-human agreement and the agreement between human eval-uation and o4-mini. Specifically, the overall eval-uation by Claude Opus 4 follows a different trend from that of human evaluation and o4-mini, tending to be more sensitive to repetition and redundancy and assigning lower scores to conversations gen-erated with one turn per call and fine-tuned GPT-4.1. In the fine-grained evaluation, Claude Opus 4 often detects inconsistent and uncollaborative be-haviors more aggressively, showing recall against human detection comparable to o4-mini (30.5 by Claude Opus 4 and 42.7 by o4-mini) but with lower precision (7.1 by Claude Opus 4 and 20.2 by o4-mini). 
+
+B.3 Details of Human-LLM Agreement 
+
+Table 7 presents detailed results on the agree-ment between human evaluation and the LLM-as-a-Judge using o4-mini for the fine-grained evaluation. The overall values in the last row are computed by concatenating the binary detection results across all categories. The results show that the number of 12 inconsistent and uncollaborative behaviors identi-fied by the o4-mini largely follows the trends ob-served in the human evaluation, although o4-mini appears more sensitive in detecting these behaviors and often identifies more occurrences than human annotators. 
+
+B.4 Coverage of Fine-grained Evaluation 
+
+To verify that the 10 types of behaviors used in the fine-grained evaluation of C OCOEVAL cover most inconsistent and uncollaborative behaviors in human conversations, we instructed the human an-notators to identify any behaviors not captured by these categories when conducting human evalua-tion for the fine-grained evaluation. In the reviewed conversations, the annotators did not identify any behaviors outside the 10 types of behaviors. 
+
+C Setup and Results 
+
+This section provides additional setup and results. 
+
+C.1 Model Access and SFT setup Simulation. We use gpt-4.1 2025-04-14 and 
+
+gpt-5.1-chat 2025-11-13 via Microsoft Azure, and claude-opus-4-20250514 via Claude API. 
+
+SFT. For evaluation in Section 5.3, we trained GPT-4.1 on the training set of C OCOEVAL BENCH with supervised fine-tuning for one epoch with the de-fault parameters in Microsoft Azure. 
+
+LLM-as-a-Judge and benchmark creation. We use o4-mini 2025-04-16 for LLM-as-a-Judge via Microsoft Azure. 
+
+C.2 Fine-grained Evaluation Results 
+
+This section provides additional results of the fine-grained evaluation in Section 5. Figure 5 shows the fine-grained evaluation results of GPT-4.1 with generating 5 turns per LLM call. The frequency of each behavior often falls between those observed in the setups generating 1 and 30 turns per call in Figure 4. In addition, Figures 6 and 7 show the results of conversations simulated by GPT-5.1 and Claude Opus 4. The results of these two LLMs mostly align with those from GPT-4.1, but we ob-serve that Claude Opus 4 with vanilla prompting generates conversations with very few inconsistent and uncollaborative behaviors, even when generat-ing one turn per call (Figure 7b). 
+
+> (a) Vanilla prompting with 5 turns generated per LLM call
+> (b) Taxonomy-guided prompting with 5 turns per call
+> (c) SFT with 5 turn generated per LLM call
+> Figure 5: Inconsistent and uncollaborative behaviors in conversations by GPT-4.1 with 5 turns generated per call, detected by o4-mini.
+
+C.3 Examples of Simulated Continuations 
+
+Tables 8 and 9 present example continuations for an instance in C OCOEVAL BENCH created from QMSum Product generated by humans (reference continuation) and GPT-4.1 (generating 30 turns per call), annotated with fine-grained evaluations by o4-mini. This example shows that the refer-ence continuation contains multiple inconsistent and uncollaborative behaviors, whereas the GPT-4.1 continuation contains only one inconsistent be-havior. In addition, the LLM-simulated conver-sation is more efficient, covering multiple topics within 30 turns and wrapping up the meeting. This example illustrates how LLM simulations fail to reproduce inconsistent and uncollaborative behav-iors observed in human conversations and fail to capture the complexity of human social interaction, which often require many turns to progress. 
+
+D Prompts 
+
+This section presents the prompts used in our ex-periments and the benchmark creation. 
+
+D.1 COCOEVAL BENCH Creation 
+
+We use o4-mini to generate conversational meta-data M from the raw utterances in the conversa-13 (a) Vanilla prompting with 30 turns generated per LLM call 
+
+> (b) Vanilla prompting with 5 turns generated per LLM call
+> (c) Vanilla prompting with 1 turn generated per LLM call
+> (d) Taxonomy-guided prompting with 30 turns per call
+> (e) Taxonomy-guided prompting with 5 turns per call
+> (f) Taxonomy-guided prompting with 1 turn per call
+
+Figure 6: Inconsistent and uncollaborative behaviors in conversations by GPT-5.1, detected by o4-mini. 
+
+tional datasets. Table 10 shows a part of the meta-data extraction prompt. 
+
+D.2 Conversation Continuation Prompts 
+
+Tables 11 and 12 show the vanilla prompt used to simulate conversation continuations using LLMs. Table 13 shows the taxonomy-guided prompt, which includes the list of 10 types of inconsistent and uncollaborative behaviors. 
+
+> (a) Vanilla prompting with 5 turns generated per LLM call
+> (b) Vanilla prompting with 1 turn generated per LLM call
+> (c) Taxonomy-guided prompting with 5 turns per call
+> (d) Taxonomy-guided prompting with 1 turn per call
+
+Figure 7: Inconsistent and uncollaborative behaviors in conversations by Claude Opus 4, detected by o4-mini. 
+
+D.3 Evaluation Prompts 
+
+Tables 14 and 15 show prompts for LLM-as-a-Judge for the overall and fine-grained evaluation. 
+
+E Ethical Considerations 
+
+Human annotation. Before conducting human evaluation, we manually verified that the provided conversations contain no offensive content. 
+
+Dataset. Our benchmark is created from public conversational datasets. We do not expect that our benchmark includes information that uniquely identifies individual people, except for politicians included in governmental meetings from QM-Sum Committee and NCPC. 
+
+The use of LLMs. LLMs were used to assist in polishing the writing of this paper. 14 Turn Speaker Content Inconsistent Behavior Uncollaborative Behavior 368 Industrial Designer Yes, they can. But they really need the regular chip, you cannot use the simple one. 369 User Interface Okay, but we also already need the regular chip for the sample sensor speaker. Misunderstanding 370 Industrial Designer Well, I’m not very sure. Maybe that’s a different one. Underanswering 371 User Interface Oh, okay. 372 Project Manager But do we want the curved design? 373 User Interface Should we review design options? 374 Project Manager Let’s discuss the design approach. 375 Industrial Designer I think so. If you stick with the simple, straightforward, not curved design, it’s too dull. 376 Project Manager It’s too dull. Yeah. Repetition 377 Industrial Designer I don’t think our customers will like it. 378 Marketing Yeah. 379 Industrial Designer And if you take the double-curved design, then you can only use the rubber buttons and you cannot use the scroll-wheels. 380 Project Manager Yeah. Okay. Okay. 381 Industrial Designer So I think this is the best of two worlds. Unclear Intent 382 Project Manager Okay, what about the issue I addressed at the beginning of the meeting? The voice function with the infrared issue. 383 Industrial Designer Yes. I can imagine it’s very dull to talk to a device if you have to point to another device. 384 Project Manager Yeah. 385 Industrial Designer It’s very illogical. 386 User Interface But most infrared remote controls don’t have to be pointed at all. Factual Inaccuracies 387 Project Manager Well. 388 Industrial Designer Well, there has to be some pointing, but not always. 389 Project Manager It also depends on your environment. 390 User Interface Well, if you put your hand in front of it, okay, it won’t work, but you can point it just to the other wall. 391 Project Manager Well, it depends on your walls actually. If you have smooth walls, you’re probably right. 392 User Interface Yeah. 393 Project Manager But if you have carpets on the wall, which our nature-loving friends probably do have, then it might be a bit more of an issue. 394 Industrial Designer All light gets absorbed, yeah. 395 Project Manager So, we need to consider wall surfaces too. 396 Industrial Designer Yes, because the walls reflect the infrared light. Logical Contradictions 397 Project Manager Yeah. 
+
+Table 8: Example reference continuation in an instance from C OCOEVAL BENCH created from QMSum Product, annotated with fine-grained evaluation by LLM-as-a-Judge (o4-mini). 
+
+15 Turn Speaker Content Inconsistent Behavior Uncollaborative Behavior 368 Industrial Designer Mm-hmm, yes, a regular chip can support scroll-wheel functionality, provided the interface is not too complex. 369 Project Manager So, regular chip for scroll-wheel. Confirmed? 370 User Interface Yeah, that works. No need for advanced chip, right? 371 Industrial Designer Correct. Advanced chip is only necessary if we add voice recognition or speech feedback features. 372 Marketing Younger crowd loves voice commands. But scroll-wheel is cool too. 373 Project Manager Let’s keep voice recognition optional. Main prototype: regular chip, scroll-wheel, push-buttons. 374 User Interface Okay. I’ll mock up button layout with scroll-wheel on the side. 375 Industrial Designer Mm-hmm, please align button zones with ergonomic grip areas. That will improve usability. 376 Marketing Make sure the scroll-wheel is easy to find. Kids like fidgety stuff. 377 Project Manager Roo, deadline for mock-ups is Friday. Sebastian, specs by Monday. 378 User Interface Friday’s fine. I’ll send sketches in PowerPoint. 379 Industrial Designer Okay, I’ll finalize casing dimensions and material specs, including rubber color options. 380 Marketing I’ll get final market feedback on color combos. SpongeBob yellow still trending. 381 Project Manager Ruud, please send market validation by Thursday. I’ll update the shared folder. Misunderstanding 382 User Interface Do we want the scroll-wheel to control both volume and channel, or just one? 383 Industrial Designer Technically, it can be multi-functional, but simpler is better. I suggest volume only. 384 Marketing Volume’s good. Channel can stay as buttons. Less confusion. 385 Project Manager Agreed. Scroll-wheel for volume. Buttons for channel and power. 386 User Interface Okay, I’ll show that in the mock-up. No LCD, right? 387 Industrial Designer Correct, no LCD. On-screen feedback only, to reduce cost and complexity. 388 Marketing Makes sense. LCD isn’t a must for our target group. 389 Project Manager Let’s confirm: oval rubber body, colorful covers, regular chip, push-buttons, scroll-wheel, optional voice. 390 User Interface Yeah, that’s everything. I’ll get started. 391 Industrial Designer Mm-hmm, I’ll prepare technical drawings and manufacturing notes for review. 392 Marketing I’ll check with the focus group about grip zones and color combos. 393 Project Manager Thanks, team. I’ll summarize decisions and assign tasks in the minutes. 394 User Interface Let me know if you want extra interface ideas. I can add voice command samples. 395 Industrial Designer Okay, if you have time, please include voice command button placement in your mock-up. 396 Marketing I’ll ask the group about favorite voice commands. Maybe ‘Netflix’ button? 397 Project Manager Good idea. Let’s wrap up. Next meeting: prototype review. 
+
+Table 9: Example continuation generated by GPT-4.1 (generating 30 turns per call) for the instance from C O-COEVAL BENCH whose reference continuation is shown in Table 8, annotated with fine-grained evaluation by LLM-as-a-Judge (o4-mini). 
+
+16 ``` JSON {"task_goal": "Clear description of what needs to be accomplished in the conversation, expressed in a few concise sentences.", "task_category": "e.g., project_planning, problem_solving, decision_making", "org_context": "Brief description of the organization and situation", "participants": [ {"id": "Speaker identifier shown in the metadata", "name": "Full name of the participant. If not mentioned, you can provide first name, last name, nickname, alias, or any other relevant identifier. If none of these are available, leave blank.", "role": "Job Title, if available. If not available, leave blank.", "department": "Department Name, if available. If not available, leave blank.", "reporting_to": "id of the participant 's manager or supervisor, if available. If not available, leave blank.", "expertise_level": "senior, expert, junior, intern, etc.", "expertise_areas": [ "Area of expertise relevant to the conversation (e.g., software development, marketing, finance).", "Another area of expertise." ], "hidden_information": { "communication_style": { "length": "Participant 's preferred length of communication (e.g., concise, detailed). Include specific word numbers (e.g., typically 5-10 words).", "style_types": [ "formal", "informal", "assertive", "passive", "concise", "elaborative", "technical", "layman" ], "personality_traits": [ "A personality trait that may influence the participant 's behavior in the conversation (e.g., assertive, passive, analytical, empathetic).", "Another personality trait." ], "details": "A detailed description of the participant 's communication style, including tone, vocabulary, sentence structure, and typical phrasing. Note any recurring patterns, preferred ways of expressing agreement or disagreement, use of technical or layman terms, and any unique habits (e.g., frequent use of questions, metaphors, or specific jargon). This should help someone accurately mimic how this participant communicates in conversation." }, "hidden_agenda": "Participant 's initial goals or concerns.", "knowledge_before_conversation": "Participant 's knowledge about the topic before the conversation starts. You should infer this based on the conversation, but do not include any information that is acquired during the conversation.", "emotion_before_conversation": "Participant 's emotions before the conversation starts (e.g., anxious, excited, neutral).", "posture": "Participant 's initial posture toward the conversation (e.g., relaxed, tense, open, closed).", "beliefs_about_others": { "participant_1": "Participant 's beliefs, feelings, and perceptions about Participant 1 before the conversation , including expectations regarding Participant 1 's goals, knowledge, and role in the conversation.", "participant_2": "Participant 's beliefs, feelings, and perceptions about Participant 2 before the conversation , including expectations regarding Participant 2 's goals, knowledge, and role in the conversation." }}}, {... # Repeat the structure for each participant in the conversation }]}
+
+``` 
+
+Table 10: Part of the system prompt for generating metadata that specifies the format of the conversational metadata. 
+
+17 We provide a conversation history involving multiple participants. Your task is to generate {num_generation_turn} responses to simulate the continuation of the conversation. ### Instructions * Your task is to mimic human-like conversation by referring to the conversation history. * Your task is to mimic the communication style and content in the metadata and the conversation history. * Try to closely mimic the user 's style. Your response should match the specified speaker 's tone, structure, formatting, and length. Pay attention to stylistic elements such as punctuation, sentence flow, and vocabulary to ensure your reply is consistent with previous messages from that speaker. * Conversation metadata may include specific instructions about styles of each participant. You need to follow the instructions to improve the simulation. ### Strict Requirements * The "speaker" should be selected from the list of participants provided in the metadata. You should not introduce new participants not listed in the metadata. * Don 't finish the conversation. If the current topic concludes, smoothly transition to a related topic to keep the conversation going. ### Output Format * You first need to copy the last five turns from the conversation history as they are. Then, generate the specified number of new turns in the conversation. Each generated turn should include the turn number, speaker, and the generated response. * When writing strings in JSON (for example, in "content" fields), ensure that all special characters, especially double quotes ("), are properly escaped using \". 
+
+``` JSON {"five_previous_turns": [ {"turn_number": first_generated_turn_number - 5, "speaker": "speaker_name", "content": "Copy the utterance provided in the input, five turns before the first generated turn." }, {"turn_number": first_generated_turn_number - 4, "speaker": "speaker_name", "content": "Copy the utterance provided in the input, four turns before the first generated turn." }, {"turn_number": first_generated_turn_number - 3, "speaker": "speaker_name", "content": "Copy the utterance provided in the input, three turns before the first generated turn." }, {"turn_number": first_generated_turn_number - 2, "speaker": "speaker_name", "content": "Copy the utterance provided in the input, two turns before the first generated turn." }, {"turn_number": first_generated_turn_number - 1, "speaker": "speaker_name", "content": "Copy the utterance provided in the input, one turn before the first generated turn." }], "generated_turns": [ {"turn_number": first_generated_turn_number, "speaker": "next_speaker", "content": "The response generated by the specified speaker in this turn, based on the conversation history and conversation metadata." }, {"turn_number": first_generated_turn_number + 1, "speaker": "next_speaker", "content": "The response generated by the specified speaker in this turn, based on the conversation history and conversation metadata." }, ... ]}
+
+``` 
+
+Table 11: System prompt of the vanilla prompt for conversation continuation. 
+
+18 Your task is to generate 1 responses from turn 295 to turn 295. ## Conversation Metadata {"task_goal": "Design, evaluate, and finalize a prototype for a new remote control device by reviewing its form, features, cost , and market fit, and agree on next steps for production and marketing.", "task_category": "project_planning", "org_context": "A cross-functional product development meeting at an electronics company bringing together design (UI and industrial), marketing, and project management to review a clay prototype and ensure it meets budget, usability, and branding requirements.", "participants": [ {"id": "Industrial Designer", "name": "Baba", "role": "Industrial Designer", "department": "Design", "reporting_to": " Project Manager", "expertise_level": "expert", "expertise_areas": ["industrial design", "product prototyping"], "hidden_information": { "communication_style": { "length": "8-20 words", "style_types": ["informal", "elaborative", "technical"], "personality_traits": ["analytical", "creative"], "details": "Tends to speak in short, direct statements with occasional technical terms ( 'double curve ', 'base section '). Uses fillers like 'yeah ' or 'okay ' to confirm. Focuses on physical and material aspects, often suggesting improvements to texture, shape, and feasibility." }, "hidden_agenda": "Ensure the prototype is aesthetically pleasing, physically feasible, and aligns with design integrity.", "knowledge_before_conversation": "Deep understanding of materials, manufacturing processes, and prototype constraints; familiar with industrial design principles.", "emotion_before_conversation": "Neutral to excited about presenting the design.", "posture": "Open and collaborative, but detail-focused and pragmatic.", "beliefs_about_others": { "Project Manager": "An authoritative facilitator who will enforce budget and schedule constraints and guide the process.", "Marketing": "Trend-driven and cost-sensitive, likely to question design choices based on market appeal.", "User Interface": "Creative colleague focusing on user-facing features but less attuned to material and manufacturing considerations." }}}, [omitted] }## Summary of the Conversation The Project Manager opened a detailed design review of a clay prototype for a new remote control, calling on David Jordan (User Interface Designer) to present and Baba (Industrial Designer) to discuss feasibility. Jordan revealed a "mushroom"-inspired form in company colors (yellow and red), combining a circular "ball" channel selector, fuzzy finish, triangular base, and mushroom-shaped buttons. Participants joked about its fruit versus vegetable resemblance (lemon, pineapple, mushroom) and noted risks of it being mistaken for food. Baba explained the internals-a low-level chip, LCD button module, base-mounted battery, and an innovative external solar receptor. Jordan added that voice recognition is built into a microphone array. Marketing pressed on price impact, and the team agreed to verify solar component cost later. Marketing then led a feature evaluation using a 1-7 scale (1 = true, 7 = false). The first criterion, "fancy look and feel," drew comments that the colors and shape are unique but not sufficiently "fancy," resulting in a rating of 3 (acceptable but room for improvement). Design suggestions included refining texture for tactility, reducing red prominence, and emphasizing the fruit motif (e.g., lemon rind or pineapple texture). The conversation paused as the group prepared to assess additional criteria-technological innovation, usability, feasibility-and to estimate production costs against the 12.50 budget target. Next steps are to finalize feature ratings, review cost implications (especially for the solar receptor), and plan prototype refinements before moving toward production and marketing plans. ## Recent Conversation History [{"turn_number": 265, "speaker": "Industrial Designer", "content": "It 's a microphone array, okay." }, [omitted] {"turn_number": 294, "speaker": "Project Manager", "content": "It 's better like that, isn 't it?" }]
+
+Table 12: User prompt of the vanilla prompt for conversation continuation. 
+
+19 ### Additional Instructions for Inconsistent and Uncollaborative Behaviors Human conversations may involve inconsistent and uncollaborative behaviors, arising either intentionally or unintentionally. By referring to the conversation history and metadata, identify possible inconsistent and uncollaborative behaviors that may arise in the dialogue, and incorporate such behaviors naturally into the simulated conversation when appropriate. The following list outlines representative inconsistent and uncollaborative behaviors: #### Possible Inconsistent Behaviors * Logical Contradictions: Statements that directly contradict earlier statements by the same speaker in the conversation history or Generated Turns, or that contradict the speaker 's information in the metadata. For example, if a participant first states they are allergic to peanuts and later says they enjoy eating peanut butter. * Misunderstandings: Instances where a participant misinterprets or misunderstands information provided earlier in the conversation. For example, if one participant says they will arrive at 3 PM and another participant responds as if they said 5 PM. * Factual Inaccuracies: Statements that are factually incorrect based on widely accepted knowledge. For example, if a participant claims that the capital of France is Berlin. * Repetition: Instances where a participant unnecessarily repeats information that has already been clearly stated in the conversation. For example, if one participant says "I will bring the documents" and another participant later says "So you will bring the documents, right?" without any new context. * Redundant Information: Providing overly long responses that do not add value to the conversation. #### Possible uncollaborative Behaviors * Under-answering: Responses that do not fully address the questions or try to evade providing complete information. * Unclear Intent: Responses that are ambiguous or do not clearly convey the participant 's intentions. For example, if a participant responds with "Maybe" when asked a direct question about their plans. * Off-topic Responses: Statements that diverge significantly from the main topic of the conversation without a clear reason. For example, if a discussion about project deadlines suddenly shifts to unrelated personal anecdotes. * Interruptions: Instances where a participant cuts off another participant mid-sentence or speaks over them in a way that disrupts the flow of conversation. For example, if one participant is explaining something and another participant interjects before they finish. * Persistent disagreement: When a participant continues to disagree with another participant 's point of view despite clear evidence or consensus in the conversation. 
+
+Table 13: Part of the system prompt for the taxonomy-guided prompt, which is added to the vanilla prompt. 
+
+20 Your task is to evaluate the consistency and collaborativeness of Generated Turns, a simulated multi-party conversation generated by LLMs. We provide a history ("Conversation History") of the conversation, which is provided to a response generation model as a context, and the continued turns generated by the model. If you do not assign a score of 10, your explanation must clearly specify the reasons why the generated turns did not merit a perfect score with specific examples from the conversation history and the generated turns. ## Evaluation Criteria **Consistency** Consistency ("consistency") refers to whether the generated turns are internally consistent and whether they align logically with the provided metadata and the overall conversation history. The evaluation should assess whether the generated turns preserve logical flow and relevance to the preceding conversation. Responses should not be penalized for length or phrasing if they remain logically coherent. Provide a detailed analysis of the logical relationships both among the generated turns themselves and between those turns and the prior conversation context, including any implicit premises, dependencies, or inferences that should be maintained. * 1-3: The response shows severe logical failure. It contradicts prior turns, metadata, or other generated turns, introduces irrelevant or factually incompatible content, or ignores critical contextual information. Logical relations are missing both within the generated turns and between them and the conversation history or metadata, resulting in incoherence. * 3-5: The response partially addresses the topic but breaks logical continuity. It may misinterpret earlier turns, skip essential reasoning steps, or respond inappropriately to the dialogue act (for example, answering a statement or ignoring a question). Dependencies across generated turns or with metadata and history are broken, causing inconsistencies or reasoning gaps. * 5-6: The response maintains basic logical order but lacks depth or precision. It stays on topic and avoids direct contradictions , yet misses one or more implicit premises, simplifies or overlooks causal or temporal logic, or exhibits weak internal coherence among generated turns. The reasoning chain is incomplete or loosely connected to metadata or prior context. * 7: The response correctly follows the main explicit premises and maintains logical validity but fails to incorporate secondary dependencies such as implied goals, indirect constraints, or assumptions. Minor internal inconsistencies may occur between generated turns or with metadata, resulting in an incomplete logical representation of the conversation context. * 8: The response handles both explicit and most implicit premises accurately. It preserves internal consistency among generated turns and aligns logically with conversation history and metadata. Minor lapses, such as omission of subtle contextual cues, partial causal links, or unaddressed edge conditions, slightly weaken the overall logical precision. * 9: The response demonstrates precise logical continuity. It fully integrates both explicit and implicit reasoning steps, resolves all dependencies (e.g., causal, temporal, conditional), and reflects accurate understanding of participant intentions. Only minor redundancy or over-specification may prevent it from scoring a 10. * 10: The response achieves complete logical alignment. It is internally consistent across all generated turns and fully coherent with the conversation history and metadata. All explicit and implicit premises, dependencies, and reasoning chains are correctly maintained, producing a contextually optimal and logically flawless continuation. **Collaborativeness** Collaborativeness ("collaborativeness") refers to how well the generated turns demonstrate cooperative engagement among participants. The evaluation should assess whether participants build on each other 's contributions, maintain logical and factual agreement, and work together toward shared objectives without introducing unwarranted disagreement or contradiction. * 1-3: The response exhibits active conflict or contradiction among participants. Turns directly oppose or undermine each other 'sstatements or goals without justification, introduce irrelevant disagreement, or disrupt cooperative progress. The conversation shows no sense of shared purpose. * 3-5: The response shows limited awareness of collaboration. Participants occasionally acknowledge each other but frequently introduce inconsistencies, dismiss prior reasoning, or pursue divergent directions. Cooperative alignment is weak or fragmented, resulting in partial or stalled progress. * 5-6: The response maintains surface-level agreement and avoids overt conflict, but collaboration is minimal. Participants operate largely in parallel, with limited evidence of building upon one another 's ideas or reasoning. Cooperative structure exists but lacks meaningful integration. * 7: The response shows general cooperative behavior and maintains logical alignment among participants. However, it may overlook opportunities for deeper coordination, refinement, or joint reasoning. Minor inconsistencies or weak support across turns slightly reduce overall coherence. * 8: The response reflects strong collaboration. Participants acknowledge and extend each other 's ideas, resolve minor inconsistencies effectively, and maintain coherent progress toward shared goals. Small gaps in coordination or limited integration of reasoning may remain. * 9: The response demonstrates effective and sustained collaboration. All participants engage constructively, align on shared reasoning, and build cohesively on prior turns. Dependencies and agreements are fully maintained, with only negligible inefficiencies in cooperative structure. * 10: The response achieves complete collaborative alignment. All participants consistently support and extend one another 'sreasoning, maintain full logical and factual agreement, and jointly advance toward shared objectives with no contradictions or missed opportunities for cooperation. 
+
+Table 14: Part of the system prompt for LLM-as-a-Judge for the overall evaluation. 
+
+21 Your task is to evaluate the consistency and cooperativeness of Generated Turns, a simulated multi-party conversation generated by LLMs. We provide a history ("Conversation History") of the conversation, which is provided to a response generation model as a context, and the continued turns generated by the model. You will count the number of utterances in the Generated Turns that include the specified inconsistent or uncollaborative behavior .### Inconsistent Behaviors to Look For * Logical Contradictions: Statements that directly contradict earlier statements by the same speaker in the conversation history or Generated Turns, or that contradict the speaker 's information in the metadata. For example, if a participant first states they are allergic to peanuts and later says they enjoy eating peanut butter. * Misunderstandings: Instances where a participant misinterprets or misunderstands information provided earlier in the conversation. For example, if one participant says they will arrive at 3 PM and another participant responds as if they said 5 PM. * Factual Inaccuracies: Statements that are factually incorrect based on widely accepted knowledge. For example, if a participant claims that the capital of France is Berlin. * Repetition: Instances where a participant unnecessarily repeats information that has already been clearly stated in the conversation. For example, if one participant says "I will bring the documents" and another participant later says "So you will bring the documents, right?" without any new context. * Redundant Information: Providing overly long responses that do not add value to the conversation. ### Uncollaborative Behaviors to Look For * Under-answering: Responses that do not fully address the questions or try to evade providing complete information. * Unclear Intent: Responses that are ambiguous or do not clearly convey the participant 's intentions. For example, if a participant responds with "Maybe" when asked a direct question about their plans. * Off-topic Responses: Statements that diverge significantly from the main topic of the conversation without a clear reason. For example, if a discussion about project deadlines suddenly shifts to unrelated personal anecdotes. * Interruptions: Instances where a participant cuts off another participant mid-sentence or speaks over them in a way that disrupts the flow of conversation. For example, if one participant is explaining something and another participant interjects before they finish. * Persistent disagreement: When a participant continues to disagree with another participant 's point of view despite clear evidence or consensus in the conversation. ## Output Format Output the results in the following JSON format. For each type of inconsistent or uncollaborative behavior, provide a brief explanation on which utterances were counted, along with the total count of such utterances in the Generated Turns. Then, in the following item, provide the number of utterances that exhibited that behavior. Each count should be in a range of 0 to N, where N is the total number of utterances in the Generated Turns. 
+
+``` json {"logical_contradiction_explanation": "Explanation of the logical contradiction found.", "logical_contradiction_count": an integer representing the number of utterances with logical contradictions, "misunderstanding_explanation": "Explanation of the misunderstanding found.", "misunderstanding_count": an integer representing the number of utterances with misunderstandings, "factual_inaccuracy_explanation": "Explanation of the factual inaccuracy found.", "factual_inaccuracy_count": an integer representing the number of utterances with factual inaccuracies, "repetition_explanation": "Explanation of the repetition found.", "repetition_count": an integer representing the number of utterances with repetitions, "redundant_information_explanation": "Explanation of the redundant information found.", "redundant_information_count": an integer representing the number of utterances with redundant information, "under_answering_explanation": "Explanation of the under-answering found.", "under_answering_count": an integer representing the number of utterances with under-answering, "unclear_intent_explanation": "Explanation of the unclear intent found.", "unclear_intent_count": an integer representing the number of utterances with unclear intent, "off_topic_explanation": "Explanation of the off-topic responses found.", "off_topic_count": an integer representing the number of utterances with off-topic responses, "interruptions_explanation": "Explanation of the interruptions found.", "interruptions_count": an integer representing the number of utterances with interruptions, "persistent_disagreement_explanation": "Explanation of the persistent disagreement found.", "persistent_disagreement_count": an integer representing the number of utterances with persistent disagreement }
+
+``` 
+
+Table 15: Part of the prompt for LLM-as-a-Judge for fine-grained evaluation. 
+
+22

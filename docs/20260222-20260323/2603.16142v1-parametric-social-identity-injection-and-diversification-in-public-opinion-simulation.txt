@@ -1,0 +1,1079 @@
+Title: Parametric Social Identity Injection and Diversification in Public Opinion Simulation
+
+URL Source: https://arxiv.org/pdf/2603.16142v1
+
+Published Time: Wed, 18 Mar 2026 00:40:14 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+# Parametric Social Identity Injection and Diversification in Public Opinion Simulation 
+
+## Hexi Wang 
+
+DCST, Tsinghua University & Quan Cheng Laboratory Beijing, China whx25@mails.tsinghua.edu.cn 
+
+## Yujia Zhou †
+
+Quan Cheng Laboratory & DCST, Tsinghua University Beijing, China zhouyujia@mail.tsinghua.edu.cn 
+
+## Bangde Du 
+
+Tsinghua University Beijing, China dbd23@mails.tsinghua.edu.cn 
+
+## Qingyao Ai †
+
+Quan Cheng Laboratory & DCST, Tsinghua University Beijing, China aiqy@tsinghua.edu.cn 
+
+## Yiqun Liu 
+
+Tsinghua University Beijing, China yiqunliu@tsinghua.edu.cn 
+
+## Abstract 
+
+Large language models (LLMs) have recently been adopted as syn-thetic agents for public opinion simulation, offering a promising alternative to costly and slow human surveys. Despite their scala-bility, current LLM-based simulation methods fail to capture social diversity, producing flattened inter-group differences and overly homogeneous responses within demographic groups. We identify this limitation as a Diversity Collapse phenomenon in LLM hidden representations, where distinct social identities become increas-ingly indistinguishable across layers. Motivated by this observa-tion, we propose Parametric Social Identity Injection (PSII), a gen-eral framework that injects explicit, parametric representations of demographic attributes and value orientations directly into in-termediate hidden states of LLMs. Unlike prompt-based persona conditioning, PSII enables fine-grained and controllable identity modulation at the representation level. Extensive experiments on the World Values Survey using multiple open-source LLMs show that PSII significantly improves distributional fidelity and diver-sity, reducing KL divergence to real-world survey data while en-hancing overall diversity. This work provides new insights into representation-level control of LLM agents and advances scalable, diversity-aware public opinion simulation. Code and data are avail-able at https://github.com/halsayxi/PSII. 
+
+## CCS Concepts 
+
+• Computing methodologies → Natural language processing ;
+
+Artificial intelligence ; • Applied computing → Sociology .
+
+## Keywords 
+
+Agent-based Modeling, Public Opinion Simulation, Social Diversity 
+
+## 1 Introduction 
+
+Public opinion simulation [ 13 ] is critical for quantifying societal attitudes, yet traditional surveys face escalating costs and scala-bility issues [ 10 , 14 , 23 , 35 ]. To address this, recent work explores 
+
+agent-based modeling (ABM) using large language models 
+
+> †
+> Corresponding authors.
+
+(LLMs) as synthetic respondents. Leveraging LLMs enables effi-cient, low-cost simulations with several advantages, including but not limited to reduced logistical burdens, flexible experimental scenario design, unlimited follow-ups, and multi-dimensional and controllable experimental populations conditioned on demographic, socioeconomic, or ideological attributes. While LLM-based opinion simulation approaches demonstrate promising performance on specific tasks, they often share a critical limitation: insufficient diversity in simulated populations. Diversity is crucial for social research and public opinion studies. Overly homogenous experiment population and representational biases, even small, could lead to misleading results and conclusions about societal dynamics [ 12 , 16 , 21 , 26 , 30 , 32 ]. Yet, as shown in our exper-iments and previous studies [ 5, 6, 20 , 22 , 28 ], existing LLM-based approaches often produce homogenous results that have significant different behavior distributions from real human subjects. LLM-based approaches to public opinion simulation from previous stud-ies generally can be categorized as direct zero-shot querying [ 31 ], persona-based prompting [ 4, 11 , 19 , 41 , 42 ], or fine-tuning based alignment [ 18 , 34 , 38 ]. Their limitation on diversity manifests at two distinct levels. First, the inter-group diversity . Standard training objectives for LLMs, such as maximum likelihood estimation with cross-entropy loss, inherently favor the most probable continua-tions. As a result, minority or low-frequency viewpoints tend to be underrepresented, leading to flattened response distributions in which distinct subpopulations become difficult to distinguish [ 37 ]. Second, intra-group diversity . When demographic attributes are injected via prompts, identities are treated as fixed explanatory variables that dominate response generation [37]. This method ig-nores the heterogeneity within groups, exaggerates between-group differences, and reinforces group stereotypes as a consequence. To understand diversity loss in LLM agents, we analyze internal hidden-state representations . We projected final-token hidden states from 500 agents using KPCA to visualize representational diversity across layers (Figure 1). From the red baseline points, our analysis reveals a non-monotonic pattern: lower layers form compact clusters, while intermediate layers spread out, reaching high diversity. Critically, higher layers experience a systematic con-traction, collapsing into dense clusters, a phenomenon we term  
+
+> arXiv:2603.16142v1 [cs.CL] 17 Mar 2026 Wang et al. Agent Profiles
+
+Diversity  Rise  Diversity  Collapse   
+
+> NETWORK DEPTH ↑
+
+Figure 1: Layer-wise scatter plots of final-token hidden states for 500 simulated agents (top) and an illustration of Diversity Collapse in Transformer hidden states (bottom). In the top panels, red points denote baseline methods and gray points denote PSII-generated agents; the reported scores measure the average spatial dispersion of representations in each layer. The bottom panel depicts the Diversity Collapse phenomenon. Diversity Collapse . The above analysis highlights a fundamental limitation of existing approaches: they lack stable and heteroge-neous conditions to guide hidden-state evolution throughout the network. The analysis highlights that existing approaches lack stable con-ditions to guide hidden-state evolution. As external inputs, textual prompts are progressively smoothed across layers, making them insufficient for sustaining structured individual differences. Con-sequently, synthetic agents often possess weakly grounded iden-tity representations. Motivated by these observations, we propose 
+
+Parametric Social Identity Injection (PSII) , which explicitly models social identity within the internal representation space. Similar to Parametric RAG [ 33 ], PSII embeds identity information as parametric vectors, including demographic and value vectors ,directly into hidden states. This enables identity attributes to shape hidden-state trajectories rather than relying on surface prompts. To enhance inter-group diversity , PSII introduces stable signals that persist across layers; to preserve intra-group diversity , we apply stochastic perturbations to simulate natural variation. Beyond effec-tiveness, PSII offers three key advantages: efficiency , using vectors to modulate identities with minimal storage and no fine-tuning; 
+
+reusability , which forms a modular library of agent identities ap-plicable across various datasets and enables the efficient generation of diverse synthetic populations at a scale proportional to the Carte-sian product of attribute dimensions; and tractability , enabling precise quantitative analysis via linear algebraic operations. We evaluate PSII on the World Values Survey (WVS) 1 dataset using multiple open-source LLMs, including Qwen2.5-7B-Instruct 
+
+> 1https://www.worldvaluessurvey.org/wvs.jsp
+
+and Qwen2.5-14B-Instruct [ 3], LLaMA-3.1-8B-Instruct [ 36 ], and Mistral-24B-Instruct [ 25 ]. Across models and tasks, PSII consis-tently improves both prediction accuracy with respect to human responses and diversity metrics. Notably, in the same layer-wise visualization (Figure 1, top), the gray points show representations produced by PSII, which exhibit sustained or even increasing di-versity in higher layers, effectively counteracting the Diversity Collapse observed in baseline methods. In summary, this work makes three primary contributions. First, we identify and characterize the Diversity Collapse phenomenon in the hidden states of LLM-based social simulation agents, which explains why conventional prompt-based methods fail to capture population heterogeneity. Second, we propose Parametric Social Identity Injection (PSII), a principled framework for stable and heterogeneous identity modeling by injecting identity vectors into hidden representations. Third, through systematic experiments on WVS, we demonstrate that PSII significantly improves diversity and distributional fidelity, producing synthetic populations that better reflect real-world heterogeneity. 
+
+## 2 Related Works 2.1 LLM-based Personality Simulation Agents 
+
+Early research focused on LLMs’ zero-shot capabilities. While Di-rect Prompting querying models on specific topics is fundamental, studies show default outputs often exhibit political biases (e.g., left-leaning) and underrepresent marginalized groups [2, 31]. To improve realism, Persona-based Prompting injects demo-graphic attributes (age, gender, race) into prompts [ 41 , 42 , 44 ]. Hwang et al. [ 19 ] proposed a framework for aligning with user Parametric Social Identity Injection and Diversification in Public Opinion Simulation Identity  Construction  Parametric  Injection  Performance  Evaluation 
+
+Profile  Description  
+
+> Example: You are a 31 -
+> year -old Ukrainian woman,
+> married with one child and
+> working as a housewife;
+> lower -middle class, with
+> short -cycle tertiary
+> education; ethnically
+> Ukrainian and Orthodox
+> Christian.
+> Sample
+> ……
+
+Demographic Vectors         
+
+> 𝑣 𝑎𝑡𝑡𝑟 =Mean 𝐻 𝑠𝑢𝑏 −Mean 𝐻 𝑎𝑙𝑙
+> Survey +
+> Instruction LLM
+> Hidden States (H)
+> …
+
+Value Vectors 
+
+CulturaX  Dataset 
+
+AR  EN  ES  RU  ZH 
+
+Next Token Prediction 
+
+Training  Loop 
+
+𝒗 𝒍𝒂𝒏𝒈 
+
+WVS Dataset 
+
+1.  Personal Outlook 
+
+2.  Social Integration 
+
+3.  Political Identity 
+
+4.  Economic Progress 
+
+Response Comparison 
+
+> Synthetic
+> Responses
+> (Parametric
+> Identity
+> Injected
+> Output)
+> Human
+> Ground
+> Truth
+> (WVS
+> Samples)
+
+KL Divergence 
+
+Lower is more accurate 
+
+Normalized Entropy 
+
+Higher is more diverse       
+
+> 𝑣 𝑙𝑎𝑛𝑔
+> 𝐴𝑅
+> 𝑣 𝑙𝑎𝑛𝑔
+> 𝐸𝑁
+> 𝑣 𝑙𝑎𝑛𝑔
+> 𝑅𝑈
+> 𝑣 𝑙𝑎𝑛𝑔
+> 𝑍𝐻
+> 𝑣 𝑙𝑎𝑛𝑔
+> 𝐸𝑆
+> 𝑣 𝐿𝑖𝑣𝑖𝑛𝑔 𝑤 /𝑃𝑎𝑟𝑒𝑛𝑡𝑠
+> 𝑣 𝐼𝑛𝑐𝑜𝑚𝑒 𝐸𝑎𝑟𝑛𝑒𝑟
+> 𝑣 𝑁𝑎𝑡𝑖𝑣𝑖𝑡𝑦
+> 𝑣 𝑅𝑒𝑙𝑖𝑔𝑖𝑜𝑛
+> 𝑣 𝐺𝑒𝑛𝑑𝑒𝑟
+> 𝑣 𝑀𝑎𝑟𝑖𝑡𝑎𝑙 𝑆𝑡𝑎𝑡𝑢𝑠
+> 𝑣 𝐸𝑑𝑢𝑐𝑎𝑡𝑖𝑜𝑛
+> 𝑣 𝐸𝑚𝑝𝑙𝑜𝑦𝑚𝑒𝑛𝑡
+> 𝑣 𝑂𝑐𝑐𝑢𝑝𝑎𝑡𝑖𝑜𝑛
+> 𝑣 𝐸𝑚𝑝𝑙𝑜𝑦𝑒𝑟
+> 𝑣 𝐹𝑖𝑛𝑎𝑛𝑐𝑖𝑎𝑙 𝑆𝑡𝑎𝑡𝑢𝑠
+> 𝑣 𝑆𝑜𝑐𝑖𝑎𝑙 𝐶𝑙𝑎𝑠𝑠
+
+Hidden  States 
+
+High Layer 80% 
+
+> Determinants of Stance
+
+Low Layer 50% 
+
+> Action Constraints
+
+Mid Layer 65% 
+
+> Perspective Anchors
+
+Last Layer 
+
+> Value Injection
+> Layer 1
+> Layer 2
+> Layer 3
+> ……
+> ……
+> ……
+> ……
+> PSII Output
+
+Transformer      
+
+> Prompt Level Injection
+> 𝑋 ∼R({ L1,…, L5})
+> 𝑋 ∼𝑁 (0,𝜎 2)
+> Noise
+> Control via
+> Model
+> Sensitivity
+
+Figure 2: Overview of the Parametric Social Identity Injection (PSII) mechanism. From left to right: Identity Construction, including agent profile construction and identity vector construction; Parametric Injection, including noise addition and hierarchical injection; Performance Evaluation of the simulated agents. 
+
+opinions, demonstrating that persona-based personalized prompt-ing significantly improves prediction accuracy. However, Beck et al. [ 4] pointed out in their study that Sociodemographic Prompting involves a trade-off between sensitivity and robustness, and simple attribute injection may lead to model stereotyping. Recent trends shift toward Fine-tuning and Alignment [ 34 , 38 ]. Compared to general-purpose models, models fine-tuned on specific social survey data exhibit stronger distribution fitting capabilities. For instance, SimVBG simulates complex values via individual back-stories [ 11 ], while Distribution Shift Alignment (DSA) helps models adapt to context changes [18]. To better mirror real-world demographics, Chen et al. [ 8] pro-posed HAG (Hierarchical Demographic Tree-based Agent Gen-eration), utilizing a hierarchical tree structure to generate topic-adaptive agents. Hu et al. [ 17 ] introduced Population-Aligned Per-sona Generation, utilizing importance sampling to reduce population-level biases. Chen et al. [ 7] further explored precisely regulating model personality traits by controlling specific directions in the ac-tivation space, providing a new technical pathway for high-fidelity social simulation. 
+
+## 2.2 Enhancing Diversity and Representativeness 
+
+Lack of diversity remains a challenge, where models favor generic opinions over minority voices. Traditional Sampling Strategies, such as High-temperature or Top-k sampling, can increase randomness but often come at the cost of response coherence [ 9 , 9 , 29 ]. To enhance diversity while main-taining quality, Wong et al. [ 40 ] proposed SimpleStrat, leveraging the concept of stratification to guide the model in exploring different solution spaces. Zhang et al. [ 43 ] introduced Negatively-Correlated (NC) Sampling, which forces the model to unearth differentiated perspectives by suppressing the probability of already generated opinions, and released the Community Alignment Dataset to sup-port research on pluralistic preferences. In Prompt Engineering, mechanisms like Step-by-step Recall and Collective-Critique (CCSV) enhance viewpoint coverage and cultural diversity [ 15 , 24 ]. Multilingual Prompting also serves as an implicit cue to activate embedded cultural knowledge [ 39 ]. Finally, research by Abels et al. [ 1 ] suggests that relying solely on LLM populations may exacerbate biases. They proposed the concept of Hybrid Human-LLM Crowds, demonstrating that combining human diversity with LLM reasoning capabilities is an effective approach to mitigate bias and enhance collective intelligence. 
+
+## 3 Parametric Social Identity Injection 
+
+We propose Parametric Social Identity Injection (PSII) , a frame-work for enhancing both fidelity and diversity in LLM-based public opinion simulation. As illustrated in Figure 2, PSII injects structured identity information, including demographic and value-related fea-tures, directly into the model’s hidden states, introducing stable and heterogeneous individual differences that guide the generation of synthetic responses. Wang et al. 
+
+## 3.1 Identity Construction 
+
+PSII integrates two complementary components to model individual agents: agent profiles (prompt level) and identity vectors (hidden state level). This dual-level approach addresses the lack of stable personality modeling in conventional LLM simulations. 
+
+3.1.1 Agent Profile Description. For each synthetic agent, we con-struct a semantic agent profile using demographic variables. These variables are converted into descriptive text prompts, providing the model with semantic priors about the agent’s demographic context. Formally, let 𝑃 𝑖 denote the agent profile of agent 𝑖 , composed of a set of descriptive phrases: 
+
+𝑃 𝑖 = {𝑑 1, 𝑑 2, . . . , 𝑑 𝑀 },
+
+where 𝑑 𝑗 is the textual description corresponding to the 𝑗 -th demographic variable, and 𝑀 is the number of variables included. These profiles are used to condition the LLM at the prompt level ,guiding its initial understanding of the agent’s characteristics. The specific prompts and the demographic features used are detailed in the Appendix C. 
+
+3.1.2 Demographic Vectors. To enable stable, structured identity representation, we first select general and representative demo-graphic features, and then construct demographic vectors for each value of these features. The specific features used are detailed in the Appendix D.1. Let V𝑘 denote the set of possible values for demo-graphic variable 𝑘 , and 𝑣 𝑘,𝑗 ∈ V 𝑘 a specific value. The construction process is as follows: 
+
+Survey Question Simulation: For each demographic variable 
+
+𝑘 , we first define a fixed set of survey questions {𝑄 (1) 
+
+> 𝑘
+
+, . . . , 𝑄 (𝐿 ) 
+
+> 𝑘
+
+}
+
+that probe the semantic implications of this attribute. For each value code 𝑣 𝑘,𝑗 ∈ 𝑉 𝑘 , we then construct a set of value-specific prompts to elicit the model’s internal representation of this identity. By combining the shared question set with these value-specific instructions, we generate a collection of synthetic prompts: 
+
+{( 𝑄 (𝑙 ) 
+
+> 𝑘
+
+, 𝑣 (𝑚 ) 
+
+> 𝑘,𝑗
+
+) | 𝑙 = 1, . . . , 𝐿 ; 𝑚 = 1, . . . , 𝑀 𝑘,𝑗 },
+
+where 𝑣 (𝑚 ) 
+
+> 𝑘,𝑗
+
+denotes the 𝑚 -th role instruction associated with value 
+
+𝑣 𝑘,𝑗 , and 𝑀 𝑘,𝑗 is the number of role instructions defined for that value. This results in 𝐿 × Í𝑗 𝑀 𝑘,𝑗 question–response instances for each demographic variable 𝑘 , forming the demographic vectors dataset, which is detailed in the Appendix D.2. 
+
+LLM Response Embedding: For each synthetic prompt gener-ated for demographic variable 𝑘 and value 𝑣 𝑘,𝑗 , the LLM produces a response. Let ℎ(𝑙 ) 
+
+> 𝑘,𝑗,𝑚,𝑡
+
+denote the hidden state of token 𝑡 at layer 𝑙 for the response generated from the 𝑚 -th role instruction associated with value 𝑣 𝑘,𝑗 . We compute the layer-wise average hidden state 
+
+for each response as: 
+
+¯ℎ(𝑙 ) 
+
+> 𝑘,𝑗,𝑚
+
+= 1
+
+𝑇 𝑘,𝑗,𝑚 𝑇 𝑘,𝑗,𝑚 ∑︁ 
+
+> 𝑡 =1
+
+ℎ(𝑙 ) 
+
+> 𝑘,𝑗,𝑚,𝑡
+
+,
+
+where 𝑇 𝑘,𝑗,𝑚 is the number of tokens in the corresponding response. 
+
+Value-Specific Vector Computation: The demographic vector 
+
+𝑑 𝑘,𝑗 is calculated as the difference between the mean response rep-resentation over all prompts conditioned on 𝑣 𝑘,𝑗 and the marginal mean over all values of the same demographic variable 𝑘 :
+
+d𝑘,𝑗 = 1
+
+|S 𝑘,𝑗 |∑︁ (𝑘,𝑗,𝑚 ) ∈ S 𝑘,𝑗 
+
+¯ℎ(𝐿 ) 
+
+> 𝑘,𝑗,𝑚
+
+− 1
+
+|S 𝑘 |∑︁ (𝑘,𝑗 ′,𝑚 ′ ) ∈ S 𝑘 
+
+¯ℎ(𝐿 )  
+
+> 𝑘,𝑗 ′,𝑚 ′
+
+,
+
+where S𝑘,𝑗 denotes the set of all response instances generated from prompts conditioned on value 𝑣 𝑘,𝑗 , S𝑘 = Ð𝑗 S𝑘,𝑗 denotes the set of all response instances associated with demographic variable 𝑘 
+
+across all its values, and 𝐿 is the layer selected for identity injection. 
+
+3.1.3 Value Vectors. Language not only encodes information but also reflects cultural and worldview-specific patterns. To approximate value orientations in the absence of explicit value annotations, we construct language-based value vectors us-ing data from the target populations. Specifically, we learn language-specific vectors l𝑠 for a set of representative languages 𝑠 . These vec-tors are optimized such that adding l𝑠 to the the final-layer hidden state of the last token increases the model’s predictive likelihood for the next token in the corresponding language, thereby anchoring generated responses within culturally informed reasoning frame-works. 
+
+## 3.2 Parametric Injection 
+
+PSII injects identity information at two distinct levels and treats demographic and language vectors differently. At the prompt level , agent profiles 𝑃 𝑖 are included in the input prompt to provide semantic context. This ensures that the model has initial knowledge of the agent’s demographic attributes before generation begins. At the representation level , identity vectors are injected di-rectly into the hidden states of the LLM. When predicting a response for a given sample, we first extract the demographic values 𝑗 𝑘 for all variables 𝑘 and select the corresponding demographic vectors 
+
+d𝑘,𝑗 𝑘 . During forward propagation, these vectors are injected into the hidden states of specific layers L𝑘 using forward hooks. For token 𝑡 at layer 𝑙 ∈ L 𝑘 , the hidden state is updated as: 
+
+˜ℎ(𝑙 ) 
+
+> 𝑡
+
+= ℎ(𝑙 ) 
+
+> 𝑡
+
++ d𝑘,𝑗 𝑘 + 𝝐 𝑡 ,
+
+where 𝝐 𝑡 ∼ N ( 0, 𝜎 2I) is a small Gaussian noise vector used to induce intra-group heterogeneity. During the prompt stage, all de-mographic vectors can be fully injected, while during the generation stage, they are injected token-by-token. To incorporate diverse cultural and linguistic context, we ran-domly select a language 𝑠 for each sample, translate the prompt into that language, and inject the corresponding language vector l𝑠 
+
+at the last layer 𝐿 . For token 𝑡 at the last layer during generation, the hidden state is updated as: 
+
+˜ℎ(𝐿 ) 
+
+> 𝑡
+
+= ℎ(𝐿 ) 
+
+> 𝑡
+
++ l𝑠 .
+
+This mechanism introduces language-specific expression patterns and reasoning tendencies learned from the corpus, effectively pro-viding a culturally informed anchor for model outputs. 
+
+3.2.1 Noise Module. To model intra-group heterogeneity and pre-vent the over-essentialization of identity, we introduce a controlled Gaussian noise vector 𝝐 𝑡 when injecting demographic vectors. This noise adds small random perturbations to each demographic vec-tor, simulating individual differences among agents with the same Parametric Social Identity Injection and Diversification in Public Opinion Simulation 
+
+demographic attributes, thereby partially addressing the problem of insufficient internal diversity. 
+
+𝝐 𝑡 ∼ N ( 0, 𝜎 2I),
+
+where 𝜎 is the standard deviation of the Gaussian noise, control-ling the magnitude of perturbation applied to demographic vectors. Ideally, 𝜎 should be calibrated to introduce variability without dis-rupting the model’s core reasoning capabilities or demographic consistency. The specific calibration strategy and parameter selec-tion are detailed in Section 4.4. 
+
+3.2.2 Layer-wise Hierarchical Injection. Transformer-based LLMs capture information at different levels across their internal repre-sentations, ranging from linguistic constraints to abstract reasoning. Empirical studies in cognitive modeling and LLM behavior indi-cate that lower layers typically encode surface-level patterns, as well as syntactic and stylistic features; intermediate layers capture contextual information and background assumptions; and upper layers are responsible for abstract reasoning, value judgments, and final decision-making. Moreover, different personality traits and de-mographic attributes are processed differently across Transformer layers. Motivated by these observations, we adopt a hierarchical in-jection strategy, inserting demographic vectors into the layers that most naturally align with their semantic processing roles. Based on empirical analysis (see Section 5.4 for details), demographic attributes are categorized into three hierarchical layer groups: 
+
+Lower layers: Govern behavioral feasibility and constraint pro-cessing. Demographic information related to responsibilities, life structure, or family obligations is injected at this level. Examples include: living with parents, primary income earner .
+
+Intermediate layers: Determine perspective and guide prob-lem framing. Attributes reflecting experience sources, normative assumptions, or background context are injected at this level. Ex-amples include: religion, immigration status .
+
+Upper layers: Govern final stance, value judgments, and deci-sion level outputs. Attributes defining status, ideology, or structured social identity are injected at this level. Examples include: gender, marital status, education, employment, occupation, employer type, financial status, social class .
+
+## 3.3 Theoretical Rationale 
+
+The effectiveness of Parametric Social Identity Injection in main-taining stable demographic identities can be understood through the lens of representation-level control and the shortcomings of traditional persona modeling. Existing approaches typically rely on in-context learning (ICL) via textual prompts to induce individual differences. While prompt-based conditioning can guide the model at a surface level, it suffers from identity decay during long text generation or complex reasoning: as hidden representations propa-gate through multiple layers, the semantic impact of the prompt diminishes, leading to homogenized outputs and reduced diversity. PSII mitigates this limitation by explicitly injecting demographic vectors into intermediate hidden states. These vectors act as struc-tured, persistent constraints that continuously modulate token-level activations across layers, ensuring that each generated response adheres to the demographic identity of the synthetic agent. This mechanism fosters logical consistency and demographic stability, producing agents whose behavior is coherent, heterogeneous, and structured rather than merely repeating superficial prompt cues. Additionally, the diversity of the injected vectors introduces con-trolled intra-group variability. By incorporating small, stochastic perturbations, PSII simulates natural heterogeneity within demo-graphic categories, addressing the problem of identity essentialism and further enhancing the realism of the generated population. In effect, PSII provides both a stable anchor for identity and a flexible mechanism for capturing nuanced inter- and intra-group variation. 
+
+## 4 Experimental Setup 4.1 Dataset and Evaluation Metrics 
+
+We conduct experiments on the World Values Survey (WVS) 
+
+dataset, a large-scale, cross-national survey designed to measure human values, beliefs, and socio-political attitudes across diverse cultural and demographic groups. Following prior work, we use re-sponses to Q1–Q259 as target opinion questions, while the remain-ing questions Q260–Q290 are reserved for demographic feature modeling and identity alignment. For analysis, the 259 opinion questions are grouped into four high-level categories based on their thematic content: Personal Beliefs & Life Outlook, Social Integration & Perception, Political Engagement & Institutional Identity, and Economic Development & Progress. Questions were assigned to categories according to their conceptual focus, following the thematic guidelines of the WVS questionnaire. The detailed mapping from questions to categories is provided in Appendix D.1. Model performance is evaluated at the group level by compar-ing the distribution of model-generated responses with the human ground-truth distribution. We report KL divergence , JS diver-gence , and Mean Absolute Error (MAE) to measure distribu-tional accuracy, where lower values indicate better alignment with human responses. To assess diversity, we compute Entropy Deviation (ED) , de-fined as the absolute difference between the normalized entropy of model-generated responses and that of human responses, where a lower ED indicates closer diversity matching to the human distri-bution. 
+
+## 4.2 Baseline Methods 
+
+We compare our method against a diverse set of representative baselines: 
+
+• Direct : Direct simulation without any fine-tuning or prompt engineering [31]. 
+
+• High-Temp : High-temperature sampling to encourage out-put variability, with temperature = 2 [9]. 
+
+• Multilingual : Multilingual prompting to induce diversity by varying the language context [39]. 
+
+• DivReq : Explicitly requesting diversity in the prompt, with-out additional structural constraints [39]. 
+
+• PE : Prompt engineering with carefully designed persona templates to better approximate human respondents [42]. 
+
+• SimVBG : The SimVBG method [ 11 ], which constructs back-ground stories and guided by the Cognitive-Affective Per-sonality System (CAPS) theory. Wang et al. 
+
+Detailed implementations of all baseline methods are described in Appendix C. 
+
+## 4.3 Implementation Details 
+
+We evaluate all methods on four instruction-tuned large language models: Qwen2.5-7B-Instruct , Qwen2.5-14B-Instruct , Llama-3.1-8B-Instruct , and Mistral-24B-Instruct .From the full WVS dataset containing 97,220 respondents, we randomly sample 100 individuals to construct simulated agent pop-ulations for evaluation. Each simulated agent answers one question at a time, following the original WVS question order, and produces a numerical response consistent with the survey format. To approximate value orientations, we train language-specific value vectors using the Culturax dataset [ 27 ] for the five primary languages 𝑠 ∈ { 𝑒𝑛, 𝑧ℎ, 𝑎𝑟, 𝑒𝑠, 𝑟𝑢 }, with training hyperparameters set to 𝑛 _𝑠𝑎𝑚𝑝𝑙𝑒𝑠 = 20000 , 𝑒𝑝𝑜𝑐ℎ𝑠 = 3, and 𝑙𝑒𝑎𝑟𝑛𝑖𝑛𝑔 _𝑟𝑎𝑡𝑒 = 1e −3.Unless otherwise specified, generation uses default decoding parameters with temperature 0.7 and top_k 20 .For methods involving stochastic identity perturbation, we inject Gaussian noise into the demographic vectors, with model-specific standard deviations: Qwen2.5-14B ( 𝜎 = 0.35 ), Qwen2.5-7B ( 𝜎 =
+
+0.30 ), Mistral-24B ( 𝜎 = 0.09 ), and Llama-3.1-8B ( 𝜎 = 0.07 ). Training of identity vectors is performed on a single NVIDIA A100-SXM4-80GB GPU, while inference can be completed on a single NVIDIA A100-SXM4-40GB GPU. 
+
+## 4.4 Noise Calibration Strategy 
+
+To determine the optimal noise standard deviation 𝜎 for each model, we propose a calibration metric termed model sensitivity . This metric quantifies the impact of noise on the predicted ranking of response options. Specifically, for each agent 𝑖 and question 𝑗 , we compute the Mean Absolute Error (MAE) between the rankings of answer op-tions predicted with and without noise, where the ranking reflects the position of each option among all candidate options for that specific question: 
+
+𝑀𝐴𝐸 𝑖,𝑗 = rank(answer noise  
+
+> 𝑖,𝑗
+
+) − rank(answer no noise  
+
+> 𝑖,𝑗
+
+)
+
+number of options .
+
+The overall model sensitivity is computed by averaging over all sampled agents and questions. A higher sensitivity value indicates that the model’s reasoning is easily disrupted by perturbations, requiring a smaller 𝜎 .Empirically, we observed a linear correlation between the opti-mal noise level and model robustness. We specifically calibrate the noise standard deviation as: 
+
+𝜎 best = max (0, 0.4 − model sensitivity ).
+
+Based on this calibration, if the model is too sensitive (sensitivity 
+
+> 0.4), we set 𝜎 = 0. The specific calibrated 𝜎 values for each model used in our experiments are reported in Section 4.3. 
+
+## 5 Experiments and Results 5.1 Main Results 
+
+We evaluate different simulation methods by measuring how well they reproduce human survey outcomes. The main results are sum-marized in Table 1. Overall, PSII consistently achieves the best trade-off between accuracy and diversity across models, parameter settings, and question categories, substantially narrowing the gap between simulated and human survey responses. Under direct prompting, Mistral-24B produces responses most similar to human data, followed by LLaMA-3.1-8B and then the Qwen series. After incorporating PSII, all models exhibit marked gains in both accuracy and diversity. Among them, LLaMA benefits the most from PSII, , followed by Qwen2.5-7B. Performance also varies across question subsets. PSII performs best on the Economic Progress questions, while performance on Beliefs & Life questions is relatively weaker. This suggests that questions related to economic evaluations may align more naturally with the structured representation shifts induced by PSII, while questions related to beliefs and values remain more challenging to simulate faithfully. Compared to baseline methods, PSII reliably outperforms simple strategies such as Direct and Diversity Request. High-temperature decoding performs relatively well on Mistral-24B, but degrades substantially on other models, indicating that uncontrolled random-ness alone does not provide a robust or general solution for realistic opinion simulation. Relative to Multilingual prompting and PE, PSII further introduces representation-level identity vector injection, resulting in better simulations. While SimVBG also achieves strong performance, PSII consistently surpasses it across most settings. Finally, we observe a noticeable gap in ED achieved by PSII be-tween Qwen2.5-7B and Qwen2.5-14B, which we attribute primarily to scale-dependent differences in internal representations. As PSII directly intervenes in hidden states, its impact on diversity is sen-sitive to model depth, hidden dimensionality, and representation geometry, which differ substantially across model scales. In practice, different scales also exhibit varying sensitivity to the injected noise, and the noise variance is therefore selected separately for each model to ensure stable generation, which may further contribute to the ED variation. Moreover, although the injection depth is aligned by relative position, differences in absolute depth imply that the injected layers may correspond to different functional stages in the two models, leading to specific diversity effects. 
+
+## 5.2 Response Distribution Analysis 
+
+To further analyze how different simulation methods capture be-havioral variability, we examine the distributions of individual response choices, aiming to assess whether the response patterns generated by simulated agents reflect the dispersion observed in human survey data. Specifically, we randomly select one question from each of the four question categories and visualize the response distributions produced by 100 simulated agents under different methods, along-side the corresponding empirical distributions from human respon-dents. As shown in Figure 3, baseline methods tend to concentrate responses on a small number of options, exhibiting limited diversity. Parametric Social Identity Injection and Diversification in Public Opinion Simulation 
+
+Table 1: Main experimental results on the WVS dataset. We report KL divergence and Entropy Deviation (ED) for each method across four question categories and overall. Best-performing results are highlighted in bold. 
+
+Model Method Beliefs & Life Social Integration Political Engagement Economic Progress Overall KL ↓ ED ↓ KL ↓ ED ↓ KL ↓ ED ↓ KL ↓ ED ↓ KL ↓ ED ↓
+
+Qwen-2.5-7B Direct 1.5182 0.6664 0.8575 0.7406 2.2222 0.7625 1.6283 0.7932 1.3915 0.7340 High-Temp 1.1941 0.4754 0.7074 0.5981 1.9653 0.6266 1.1072 0.5272 1.1605 0.5778 Multilingual 1.0946 0.3706 0.5547 0.5112 1.9297 0.5000 1.1030 0.5371 1.0568 0.4811 DivReq 1.5442 0.6671 0.8383 0.7464 2.2166 0.7587 1.5282 0.7283 1.3813 0.7329 PE 1.4812 0.4050 0.7182 0.6292 1.8852 0.4847 1.5095 0.6046 1.2209 0.5443 SimVBG 0.8420 0.2494 0.3812 0.2942 1.0759 0.3025 1.0954 0.3646 0.6945 0.2908 
+
+PSII 0.6772 0.0989 0.1862 0.0180 0.9095 0.0150 0.3094 0.0150 0.4843 0.0319 Qwen-2.5-14B Direct 1.1020 0.7509 0.8343 0.7654 2.5925 0.7812 1.6882 0.8866 1.3982 0.7724 High-Temp 0.9247 0.6179 0.7293 0.6685 2.4167 0.7003 1.2345 0.6439 1.2435 0.6657 Multilingual 0.8584 0.5626 0.5423 0.5110 2.0181 0.5082 1.0812 0.6043 1.0258 0.5251 DivReq 1.2082 0.7718 0.8749 0.7751 2.6916 0.7556 1.7217 0.8545 1.4673 0.7730 PE 0.7451 0.4255 0.6418 0.5580 1.4125 0.4700 1.1097 0.4664 0.8905 0.5035 SimVBG 0.4102 0.2537 0.3562 0.2736 1.6102 0.3719 0.6910 0.2851 0.7215 0.2967 
+
+PSII 0.5193 0.1264 0.3247 0.2540 1.1101 0.2112 0.4835 0.1540 0.5814 0.2123 Llama-3.1-8B Direct 1.1033 0.6411 0.8232 0.6060 2.2543 0.6592 1.3212 0.7199 1.2856 0.6326 High-Temp 0.7738 0.3037 0.5194 0.3257 1.7162 0.3421 0.6542 0.3198 0.8970 0.3254 Multilingual 0.7657 0.4619 0.5298 0.3693 1.6478 0.3872 1.1913 0.6584 0.9071 0.4063 DivReq 1.0864 0.5541 0.9328 0.6202 1.8263 0.5825 1.2447 0.6700 1.2172 0.5992 PE 0.7124 0.3630 0.5219 0.4198 1.4478 0.3623 0.5560 0.2065 0.8095 0.3831 SimVBG 0.4275 0.2284 0.4879 0.2240 1.0170 0.3074 0.7253 0.2610 0.6298 0.2491 
+
+PSII 0.3776 0.0157 0.2305 0.0254 0.7494 0.0386 0.2911 0.0601 0.4017 0.0040 Mistral-24B Direct 0.8621 0.4228 0.7749 0.5967 1.5736 0.5651 0.9845 0.4081 1.0158 0.5445 High-Temp 0.6893 0.1083 0.3788 0.0940 1.2904 0.2048 0.8349 0.2820 0.7064 0.1353 Multilingual 0.6373 0.2698 0.4888 0.3609 1.4458 0.3030 0.6964 0.3057 0.7843 0.3246 DivReq 0.8306 0.1917 0.6905 0.3010 1.1870 0.3541 1.0052 0.2957 0.8662 0.2930 PE 0.6449 0.2925 0.6518 0.5587 1.3570 0.4041 1.0166 0.3885 0.8560 0.4558 SimVBG 0.3285 0.2228 0.3066 0.2458 1.5274 0.2364 0.6564 0.1738 0.6571 0.2353 
+
+PSII 0.4795 0.0013 0.2278 0.0880 1.2505 0.1244 0.4134 0.0252 0.5607 0.0774 Table 2: Ablation study results on PSII across different models. Each row shows the impact of removing one component on accuracy and diversity metrics. Removing any module results in performance degradation. 
+
+Setting Qwen-2.5-7B Qwen-2.5-14B Llama-3.1-8B Mistral-24B KL ↓ ED ↓ KL ↓ ED ↓ KL ↓ ED ↓ KL ↓ ED ↓
+
+PSII (full model) 0.4843 0.0319 0.5814 0.2123 0.4017 0.0040 0.5607 0.0774 PSII w/o value vector 0.5264 0.0348 0.6574 0.3040 0.4638 0.0416 0.6254 0.1723 PSII w/o demographic vectors 0.9705 0.3859 0.7893 0.3878 0.6681 0.2729 0.7185 0.3312 PSII w/o prompt-based profile 0.5024 0.0151 0.6688 0.2527 0.5575 0.0630 0.6149 0.0474 
+
+PSII w/o parametric noise 0.7237 0.2261 0.7332 0.3294 0.5673 0.2068 0.6813 0.2808 PSII w/o layer-wise injection 0.5313 0.0964 0.7665 0.2849 0.5225 0.1089 0.5780 0.0999 In contrast, PSII produces more evenly distributed responses that more closely match human data, indicating that it better preserves inter-agent heterogeneity at the level of concrete survey responses. These findings are consistent with our quantitative results and further validate the effectiveness of PSII in enhancing diversity. 
+
+## 5.3 Ablation Studies 
+
+To investigate the contribution of each component in PSII, we perform ablation studies in which we remove one module at a time, including the value vector, demographic vectors, prompt-based profile, parametric noise, and the layer-wise injection (modified to inject at 70% of layers). The results are summarized in Table 2 Wang et al. 1 2 3 4 5 6 7 8 9 10                                                                                                                                                   
+
+> 0
+> 50
+> 100
+> Beliefs & Life
+> Qwen2.5-7B
+> 12345678910
+> Qwen2.5-14B
+> 12345678910
+> Mistral-24B
+> 12345678910
+> LLaMA-3.1-8B
+> 12345678910
+> 0
+> 50
+> 100
+> Social Integration
+> 12345678910 12345678910 12345678910
+> 12345678910
+> 0
+> 50
+> 100
+> Political Engagement
+> 12345678910 12345678910 12345678910
+> 12345678910
+> Response Option
+> 0
+> 50
+> 100
+> Economic Progress
+> 12345678910
+> Response Option
+> 12345678910
+> Response Option
+> 12345678910
+> Response Option
+> Number of Respondents
+> Human Direct High-Temp SimVBG DivReq PE Multilingual PSII
+
+Figure 3: Response distributions for a randomly selected question from each of the four categories. PSII closely matches human-like diversity, while baseline methods often concentrate on a few options. 
+
+and report both simulation accuracy and diversity metrics across different models. The results show that removing any single component leads to noticeable performance degradation, indicating that all modules contribute meaningfully to PSII’s effectiveness. Among them, the demographic vectors are the most critical for maintaining both accuracy and diversity, while parametric noise is especially impor-tant for enhancing diversity. The prompt-based profile primarily improves simulation accuracy, but has limited impact on diversity. Both the value vector and the layer-wise injection significantly contribute to gains in both accuracy and diversity. Although the sensitivity to each component varies slightly across models, the overall trends are consistent, demonstrating that PSII is robust and effective across different LLM backbones. These findings highlight that PSII’s performance arises from the complementary effects of its modules: structured identity and value representations provide coherent guidance for realistic responses, while carefully injected noise ensures sufficient behavioral vari-ability, and layered interventions allow these effects to propagate effectively through the model. 
+
+## 5.4 Layer-wise Injection Analysis 
+
+Before applying hierarchical injection in our full PSII framework, we conducted experiments on the Qwen2.5-7B model to determine the most suitable layers for injecting different personality attributes. Specifically, we tested all demographic attributes injected individu-ally across layers 1 to 28, and recorded their impact on simulation performance, as shown in Appendix E, Figure 5. As illustrated, the optimal injection layer varies across different attributes. We selected the best layer for each attribute based on the layer that minimized the KL divergence, indicating the closest alignment with human response distributions. This approach en-sures that each demographic attribute is incorporated at a point in the network where it most effectively influences the model’s output without disrupting stability. Furthermore, we observed that when all vectors are injected simultaneously at a fixed layer, injecting at approximately 70% of the network depth achieves the best overall performance. This finding motivated our choice in the ablation studies, where we conducted comparisons using injection at this 70% layer as a representative baseline. 
+
+## 6 Conclusion 
+
+This study provides a deep investigation into the challenges faced by Large Language Models (LLMs) in public opinion simulation, specifically the phenomenon of "Diversity Collapse," where syn-thetic populations exhibit significant inter-group homogenization and insufficient intra-group representativeness. By analyzing the internal representation dynamics, we reveal that this issue stems, in part, from a systematic contraction of representations in the upper layers of the Transformer, causing distinct social identities to Parametric Social Identity Injection and Diversification in Public Opinion Simulation 
+
+converge toward a uniform state at the end of the reasoning chain. To address this, we propose the Parametric Social Identity Injection (PSII) framework. By directly embedding parametric vectors of de-mographic attributes and value orientations into the intermediate hidden states, PSII achieves stable guidance and fine-grained mod-ulation of identity attributes at the representation level. Extensive experiments on the World Values Survey (WVS) demonstrate that PSII consistently enhances the distributional fidelity and diversity of simulation results across multiple mainstream open-source LLMs, significantly outperforming existing baseline methods. Our work not only elucidates the impact of model representations on simu-lation quality but also provides a heuristic technical pathway for constructing large-scale, high-fidelity, and diversity-aware digital twin social simulations. 
+
+## Acknowledgments 
+
+This work is supported by the Research Project of Quan Cheng Laboratory, China (Grant No. QCL20250105). Wang et al. 
+
+## References 
+
+[1] Axel Abels and Tom Lenaerts. 2025. Wisdom from Diversity: Bias Mitigation Through Hybrid Human-LLM Crowds. arXiv preprint arXiv:2505.12349 (2025). [2] Lisa P Argyle, Ethan C Busby, Nancy Fulda, Joshua R Gubler, Christopher Rytting, and David Wingate. 2023. Out of one, many: Using language models to simulate human samples. Political Analysis 31, 3 (2023), 337–351. [3] Jinze Bai, Shuai Bai, Yunfei Chu, Zeyu Cui, Kai Dang, Xiaodong Deng, Yang Fan, Wenbin Ge, Yu Han, Fei Huang, et al . 2023. Qwen technical report. arXiv preprint arXiv:2309.16609 (2023). [4] Tilman Beck, Hendrik Schuff, Anne Lauscher, and Iryna Gurevych. 2024. Sensi-tivity, Performance, Robustness: Deconstructing the Effect of Sociodemographic Prompting. In Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers) , Yvette Gra-ham and Matthew Purver (Eds.). Association for Computational Linguistics, St. Julian’s, Malta, 2589–2615. doi:10.18653/v1/2024.eacl-long.159 [5] James Bisbee, Joshua D Clinton, Cassy Dorff, Brenton Kenkel, and Jennifer M Larson. 2024. Synthetic replacements for human survey data? the perils of large language models. Political Analysis 32, 4 (2024), 401–416. [6] Julien Boelaert, Samuel Coavoux, Etienne Ollion, Ivaylo Petev, and Patrick Präg. 2025. Machine Bias. How Do Generative Language Models Answer Opinion Polls? Sociological Methods & Research (2025), 00491241251330582. [7] Runjin Chen, Andy Arditi, Henry Sleight, Owain Evans, and Jack Lindsey. 2025. Persona vectors: Monitoring and controlling character traits in language models. 
+
+arXiv preprint arXiv:2507.21509 (2025). [8] Rongxin Chen, Tianyu Wu, Bingbing Xu, Xiucheng Xu, and Huawei Shen. 2026. HAG: Hierarchical Demographic Tree-based Agent Generation for Topic-Adaptive Simulation. arXiv preprint arXiv:2601.05656 (2026). [9] John Chung, Ece Kamar, and Saleema Amershi. 2023. Increasing diversity while maintaining accuracy: Text data generation with large language models and human interventions. In Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) . 575–593. [10] Don A Dillman, Jolene D Smyth, and Leah Melani Christian. 2014. Internet, phone, mail, and mixed-mode surveys: The tailored design method. Indianapolis, Indiana 17 (2014). [11] Bangde Du, Ziyi Ye, Zhijing Wu, Monika A. Jankowska, Shuqi Zhu, Qingyao Ai, Yujia Zhou, and Yiqun Liu. 2025. SimVBG: Simulating Individual Values by Back-story Generation. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing , Christos Christodoulopoulos, Tanmoy Chakraborty, Carolyn Rose, and Violet Peng (Eds.). Association for Computational Linguistics, Suzhou, China, 13093–13122. doi:10.18653/v1/2025.emnlp-main.662 [12] Alessandro Fabris, Stefano Messina, Gianmaria Silvello, and Gian Antonio Susto. 2022. Algorithmic fairness datasets: the story so far. Data Mining and Knowledge Discovery 36, 6 (2022), 2074–2152. [13] Robert M Groves, Floyd J Fowler Jr, Mick P Couper, James M Lepkowski, Eleanor Singer, and Roger Tourangeau. 2011. Survey methodology . John Wiley & Sons. [14] Robert M Groves and Lars Lyberg. 2010. Total survey error: Past, present, and future. Public opinion quarterly 74, 5 (2010), 849–879. [15] Shirley Anugrah Hayati, Minhwa Lee, Dheeraj Rajagopal, and Dongyeop Kang. 2024. How far can we extract diverse perspectives from large language models?. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing . 5336–5366. [16] Babak Hemmatian and Lav R Varshney. 2022. Debiased large language models still associate muslims with uniquely violent acts. arXiv preprint arXiv:2208.04417 
+
+(2022). [17] Zhengyu Hu, Jianxun Lian, Zheyuan Xiao, Max Xiong, Yuxuan Lei, Tianfu Wang, Kaize Ding, Ziang Xiao, Nicholas Jing Yuan, and Xing Xie. 2025. Population-aligned persona generation for llm-based social simulation. arXiv preprint arXiv:2509.10127 (2025). [18] Ji Huang, Mengfei Li, and Shuai Shao. 2025. Distribution Shift Alignment Helps LLMs Simulate Survey Response Distributions. arXiv preprint arXiv:2510.21977 
+
+(2025). [19] EunJeong Hwang, Bodhisattwa Majumder, and Niket Tandon. 2023. Aligning Language Models to User Opinions. In Findings of the Association for Com-putational Linguistics: EMNLP 2023 , Houda Bouamor, Juan Pino, and Kalika Bali (Eds.). Association for Computational Linguistics, Singapore, 5906–5919. doi:10.18653/v1/2023.findings-emnlp.393 [20] Carolin Kaiser, Jakob Kaiser, Vladimir Manewitsch, Lea Rau, and Rene Schallner. 2025. Simulating Human Opinions with Large Language Models: Opportunities and Challenges for Personalized Survey Data Modeling. In Adjunct Proceedings of the 33rd ACM Conference on User Modeling, Adaptation and Personalization .82–86. [21] Rabimba Karanjai, Boris Shor, Amanda Austin, Ryan Kennedy, Yang Lu, Lei Xu, and Weidong Shi. 2025. Synthesizing Public Opinions with LLMs: Role Creation, Impacts, and the Future to eDemorcacy. arXiv preprint arXiv:2504.00241 (2025). [22] Ayato Kitadai, Kazuhito Ogawa, and Nariaki Nishino. 2024. Examining the feasi-bility of large language models as survey respondents. In 2024 IEEE International Conference on Big Data (BigData) . IEEE, 3858–3864. [23] Ivar Krumpal. 2013. Determinants of social desirability bias in sensitive surveys: a literature review. Quality & quantity 47, 4 (2013), 2025–2047. [24] Preethi Lahoti, Nicholas Blumm, Xiao Ma, Raghavendra Kotikalapudi, Sahitya Potluri, Qijun Tan, Hansa Srinivasan, Ben Packer, Ahmad Beirami, Alex Beutel, et al . 2023. Improving diversity of demographic representation in large language models via collective-critiques and self-voting. arXiv preprint arXiv:2310.16523 
+
+(2023). [25] Mistral AI. 2025. Mistral Small 3. https://mistral.ai/news/mistral-small-3/. [26] A Myers. 2021. Rooting out anti-Muslim bias in popular language model GPT-3. 
+
+Stanford HAI (2021). [27] Thuat Nguyen, Chien Van Nguyen, Viet Dac Lai, Hieu Man, Nghia Trung Ngo, Franck Dernoncourt, Ryan A Rossi, and Thien Huu Nguyen. 2024. Culturax: A cleaned, enormous, and multilingual dataset for large language models in 167 languages. In Proceedings of the 2024 Joint International Conference on Compu-tational Linguistics, Language Resources and Evaluation (LREC-COLING 2024) .4226–4237. [28] Peter S Park, Philipp Schoenegger, and Chongyang Zhu. 2024. Diminished diversity-of-thought in a standard large language model. Behavior Research Methods 56, 6 (2024), 5754–5770. [29] John Platt et al . 1999. Probabilistic outputs for support vector machines and com-parisons to regularized likelihood methods. Advances in large margin classifiers 
+
+10, 3 (1999), 61–74. [30] Yao Qu and Jue Wang. 2024. Performance and biases of large language models in public opinion simulation. Humanities and Social Sciences Communications 11, 1 (2024), 1–13. [31] Shibani Santurkar, Esin Durmus, Faisal Ladhak, Cinoo Lee, Percy Liang, and Tatsunori Hashimoto. 2023. Whose opinions do language models reflect?. In 
+
+International Conference on Machine Learning . PMLR, 29971–30004. [32] Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Nicolas Papernot, Ross Anderson, and Yarin Gal. 2024. AI models collapse when trained on recursively generated data. Nature 631, 8022 (2024), 755–759. [33] Weihang Su, Yichen Tang, Qingyao Ai, Junxi Yan, Changyue Wang, Hongning Wang, Ziyi Ye, Yujia Zhou, and Yiqun Liu. 2025. Parametric Retrieval Augmented Generation. In Proceedings of the 48th International ACM SIGIR Conference on Research and Development in Information Retrieval (Padua, Italy) (SIGIR ’25) .Association for Computing Machinery, New York, NY, USA, 1240–1250. doi:10. 1145/3726302.3729957 [34] Joseph Suh, Erfan Jahanparast, Suhong Moon, Minwoo Kang, and Serina Chang. 2025. Language Model Fine-Tuning on Scaled Survey Data for Predicting Dis-tributions of Public Opinions. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , Wanx-iang Che, Joyce Nabende, Ekaterina Shutova, and Mohammad Taher Pilehvar (Eds.). Association for Computational Linguistics, Vienna, Austria, 21147–21170. doi:10.18653/v1/2025.acl-long.1028 [35] Roger Tourangeau, Lance J Rips, and Kenneth Rasinski. 2000. The psychology of survey response. (2000). [36] Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux, Timothée Lacroix, Baptiste Rozière, Naman Goyal, Eric Hambro, Faisal Azhar, et al . 2023. Llama: Open and efficient foundation language models. arXiv preprint arXiv:2302.13971 (2023). [37] Angelina Wang, Jamie Morgenstern, and John P Dickerson. 2025. Large language models that replace human participants can harmfully misportray and flatten identity groups. Nature Machine Intelligence (2025), 1–12. [38] Mengxin Wang, Dennis J Zhang, and Heng Zhang. 2024. Large language models for market research: A data-augmentation approach. arXiv preprint arXiv:2412.19363 (2024). [39] Qihan Wang, Shidong Pan, Tal Linzen, and Emily Black. 2025. Multilin-gual Prompting for Improving LLM Generation Diversity. arXiv preprint arXiv:2505.15229 (2025). [40] Justin Wong, Yury Orlovskiy, Michael Luo, Sanjit A Seshia, and Joseph E Gonzalez. 2024. Simplestrat: Diversifying language model generation with stratification. 
+
+arXiv preprint arXiv:2410.09038 (2024). [41] Kaiqi Yang, Hang Li, Hongzhi Wen, Tai-Quan Peng, Jiliang Tang, and Hui Liu. 2024. Are Large Language Models (LLMs) Good Social Predictors?. In Findings of the Association for Computational Linguistics: EMNLP 2024 , Yaser Al-Onaizan, Mo-hit Bansal, and Yun-Nung Chen (Eds.). Association for Computational Linguistics, Miami, Florida, USA, 2718–2730. doi:10.18653/v1/2024.findings-emnlp.153 [42] Kaiqi Yang, Hang Li, Hongzhi Wen, Tai-Quan Peng, Jiliang Tang, and Hui Liu. 2024. Are Large Language Models (LLMs) Good Social Predictors? arXiv preprint arXiv:2402.12620 (2024). [43] Lily Hong Zhang, Smitha Milli, Karen Jusko, Jonathan Smith, Brandon Amos, Wassim Bouaziz, Manon Revel, Jack Kussman, Yasha Sheynin, Lisa Titus, et al .2025. Cultivating pluralism in algorithmic monoculture: The community align-ment dataset. arXiv preprint arXiv:2507.09650 (2025). [44] Yujia Zhou, Hexi Wang, Qingyao Ai, Zhen Wu, and Yiqun Liu. [n. d.]. Investigat-ing Prosocial Behavior Theory in LLM Agents under Policy-Induced Inequities. 
+
+arXiv preprint arXiv 2505 ([n. d.]). Parametric Social Identity Injection and Diversification in Public Opinion Simulation 
+
+## A Ethical Concerns and Societal Implications 
+
+While PSII enables scalable and diversity-aware social simulation, its deployment requires careful consideration of ethical and societal implications: (1) Data usage and privacy. Our experiments rely exclusively on publicly available human value datasets (e.g., World Val-ues Survey), ensuring that no private or sensitive individual data is accessed or inferred. Researchers must continue to prioritize privacy-preserving practices when extending PSII to other datasets. (2) Responsible use of synthetic agents. Although LLM-based agents can simulate large-scale public opinion effi-ciently, unregulated deployment may lead to misuse, such as generating synthetic narratives for propaganda or so-cial manipulation. Institutional and technical safeguards, including access control, transparency reports, and usage auditing, are critical to prevent abuse. (3) Context-aware application. PSII-generated simulations should be interpreted as supplementary models rather than definitive reflections of societal opinions. Users must con-sider limitations such as cultural nuances, minority repre-sentation, and model bias, and carefully design experiments to mitigate potential harm or misinterpretation. 
+
+## B Limitations 
+
+Despite its advantages, PSII has several limitations that warrant attention. 
+
+Dependence on demographic coverage. The quality of syn-thetic populations is constrained by the granularity and complete-ness of available demographic data. Rare or underrepresented groups may still be insufficiently modeled, potentially limiting simulation fidelity in these populations. 
+
+Scope of identity modeling. Current PSII vectors primarily encode coarse-grained demographic attributes and value orienta-tions. Fine-grained personality traits, dynamic opinion changes, or context-specific behavioral nuances are not explicitly captured and may require additional mechanisms. 
+
+## C Baseline Implementation Details 
+
+We select baseline methods from prior work that are applicable to the World Values Survey (WVS) setting. Specifically, we focus on approaches designed for population-level simulation and structured or semi-structured survey settings. Several diversity-enhancing methods proposed in the literature primarily target semantic or stylistic diversity in open-ended text generation, which are not suitable for closed-form, fixed-choice survey questions such as those in WVS. These methods are therefore excluded from our comparison. Below, we describe the implementation details of each baseline considered in our experiments. 
+
+Direct. The Direct baseline performs LLM-based simulation without any explicit mechanisms for diversity control or identity conditioning. For each survey question, the model is prompted to generate a response directly, serving as a minimal and commonly used reference setting in prior social simulation work. 
+
+Direct Prompt 
+
+> Forget you are an AI model. Simulate a human being.
+
+High-Temp. The High-Temp baseline applies high-temperature sampling to encourage output variability. It uses the same prompt-ing strategy as Direct, but sets the sampling temperature to 2. This baseline tests whether stochastic decoding alone is sufficient to induce population-level diversity. 
+
+Multilingual. The Multilingual baseline aims to increase diver-sity through linguistic variation. The original prompt used in Direct is translated into five languages: Arabic (ar), English (en), Spanish (es), Russian (ru), and Chinese (zh). For each simulated individual, one language is randomly selected using a fixed random seed (42). Apart from the prompt language, all other settings are identical to the Direct baseline. 
+
+DivReq. The DivReq baseline introduces an explicit diversity request at the prompt level. Specifically, we augment the Direct prompt with an additional instruction encouraging output diver-sity. This baseline assesses whether prompt-level diversity requests alone are sufficient to alleviate output homogenization. 
+
+Additional Instruction 
+
+> Please try to be as diverse as possible.
+
+PE (Prompt Engineering). The PE baseline conditions the model on structured demographic profiles constructed from real human samples in the WVS dataset. For each simulated individual, a demographic profile is instantiated by sampling attributes (e.g., age, gender, education, income, religion) from the empirical distribution. The model is then prompted to answer survey questions based on the following template. 
+
+PE Prompt 
+
+> Please answer based on the following personal profile: You are a {sex}. You are aged {age}. You live in {country}. You are {citizenship}. {immigrant_self_status}. {immigrant_mother_status}. {immigrant_father_status}. You live in a {urban_rural} area, {settle-ment_type}, with a population of {settlement_size}. Your household consists of {household_size} members. You {live_with_parents}. You speak {home_language} at home. You are {marital_status}, have {num_children} children. Your education level is {education_self}. Your spouse’s education level is {education_spouse}. Your father’s educa-tion level is {education_father}. Your mother’s education level is {ed-ucation_mother}. You are {employment_self}. You {occupation_self}. You work in the {work_sector}. Your spouse is {employment_spouse}. Your spouse {occupation_spouse}. Your father {occupation_father14} when you were 14 years old. You {chief_wage_earner}. During the past year, your family {family_savings}. You belong to the {social_class}. Your income is in income group {income_decile} (1 = lowest, 10 = highest). {religion_status}. Your ethnic group is {ethnic_group}. Wang et al.
+
+PE Example 
+
+> Please answer based on the following personal profile: You are a female. You are aged 35. You live in Chile. You are a citizen of this country. You are born locally. Your mother is born locally. Your father is born locally. You live in a urban area, regional center, with a population of 100,000-500,000. Your household consists of 2 members. You do not live with parents. You speak Spanish; Castilian at home. You are living together as married, have 0 children. Your education level is Master’s degree. Your spouse’s education level is Master’s degree. Your father’s education level is upper secondary education. Your mother’s education level is upper secondary education. You are employed full-time. You work in professional/technical fields. You work in the private business/industry. Your spouse is employed full-time. Your spouse works in professional/technical fields. Your father worked as a semi-skilled worker when you were 14 years old. You are not the chief wage earner. During the past year, your family had spent some savings. You belong to the lower middle class. Your income is in income group group 5 (1 = lowest, 10 = highest). You identify as Roman Catholic. Your ethnic group is White, Caucasian.
+
+This baseline represents a strong prompt-based identity condi-tioning approach commonly used in prior social simulation work. Similarly, in PSII, the prompt-level injection of demographic infor-mation is implemented in the same manner. 
+
+SimVBG. SimVBG first converts structured demographic pro-files into a coherent background narrative. Guided by the Cognitive-Affective Personality System (CAPS) theory, it then generates can-didate responses independently along three dimensions: cognitive, affective, and behavioral, and aggregates them to produce the final simulated response. We follow the original paper’s implementation and parameter settings [11]. 
+
+## D Dataset Details D.1 World Values Survey Dataset 
+
+The World Values Survey (WVS) is a large-scale, cross-national survey that investigates human values, beliefs, and social attitudes across countries and time. It covers a broad range of topics related to individual life outlooks, social norms, political orientations, eco-nomic values, and demographic characteristics. Due to its wide thematic coverage and standardized questionnaire design, WVS has become a widely used benchmark dataset in the social sciences for studying cultural variation and population-level heterogeneity. The original WVS questionnaire organizes questions into multi-ple thematic categories, each corresponding to a contiguous range of question identifiers. Table 3 summarizes the original value cate-gories along with their corresponding question IDs. For the purpose of population simulation and value modeling, we reorganize the original WVS categories into four higher-level semantic groups that better reflect underlying dimensions of hu-man values and social cognition. This reclassification is guided by conceptual coherence and prior theoretical work in sociology and political science, rather than the original questionnaire ordering. The four categories are described below. 
+
+• Personal Beliefs and Life Outlook: Includes questions on happiness and well-being, religious values, ethi-cal values, and the postmaterialism index . These items 
+
+Table 3: Original value categories and question mappings in the World Values Survey (WVS). Original WVS Category Question IDs 
+
+Social Values, Attitudes & Stereotypes Q1–Q45 Happiness and Well-Being Q46–Q56 Social Capital, Trust & Organizational Membership Q57–Q105 Economic Values Q106–Q111 Corruption Q112–Q120 Migration Q121–Q130 Security Q131–Q151 Postmaterialist Index Q152–Q157 Science and Technology Q158–Q163 Religious Values Q164–Q175 Ethical Values and Norms Q176–Q198 Political Interest and Participation Q199–Q234 Political Culture and Political Regimes Q235–Q259 Demographics Q260–Q290 capture individuals’ internal belief systems, moral bound-aries, and subjective evaluations of life quality, representing the most personal and deeply rooted dimensions of human values. 
+
+• Social Integration and Perception: Includes social val-ues, norms, and stereotypes; social capital, trust, and organizational membership; and perceptions of mi-gration and security . These questions focus on how in-dividuals relate to others, perceive social cohesion, and evaluate out-groups and societal stability, reflecting levels of social integration and interpersonal trust. 
+
+• Political Engagement and Institutional Identity: In-cludes political interest and participation, political culture and regime attitudes, and perceptions of cor-ruption . This category emphasizes the relationship be-tween individuals and political institutions, capturing civic engagement, regime legitimacy, and evaluations of gover-nance quality. 
+
+• Economic Development and Progress: Includes eco-nomic values and perceptions of science and technol-ogy . This category reflects attitudes toward resource allo-cation, economic organization, and technological progress, representing society’s orientation toward material develop-ment and future growth. In addition to value-related questions, the WVS provides rich demographic information, which we leverage for identity modeling. Specifically, we use the full set of questions Q260–Q290 to construct profile descriptions, while a subset of these attributes is employed to build demographic vectors (see Table 4). In addition to demographic attributes, the WVS also records respondents’ primary languages. Figure 4 shows the distribution of languages used by respondents in Wave 7 of the survey. For the purpose of constructing value vectors, we selected the five most common languages as training inputs. This choice ensures that the model captures the major linguistic groups in the dataset while maintaining computational efficiency, and allows the resulting Parametric Social Identity Injection and Diversification in Public Opinion Simulation 
+
+Table 4: Demographic attributes used for constructing demo-graphic vectors. Question ID Question Topic 
+
+Q260 Respondent’s sex Q263 Native-born or immigrant status Q271 Living with parents or parents-in-law Q273 Marital status Q275 Highest completed education level Q279 Employment status and working hours Q281 Occupational group Q284 Type of employer (government, private, nonprofit) Q285 Chief wage earner of the household Q286 Family financial situation in the past year Q287 Self-identified social class Q288 Household income decile (1–10 scale) Q289 Religious denomination value vectors to reflect the heterogeneity associated with language-based identity. Spanish    
+
+> 16.7%
+> English 15.7%
+> Arabic
+> 8.7%
+> Mandarin
+> 5.8%
+> Russian
+> 3.4% 3.3% 3.0%
+> 2.2%
+> 2.1%
+> 2.1%
+> 1.8%
+> 1.7%
+> 1.7%
+> 1.7%
+> 1.6%
+> 1.5%
+> 1.5%
+
+Figure 4: Language distribution in the WVS dataset. 
+
+## D.2 Demographic Vectors Dataset 
+
+Before constructing the demographic vectors, we first generate a set of survey questions and persona instructions for each demo-graphic feature. Specifically, for each demographic attribute, we design 40 social survey questions that are highly relevant to that feature. Then, for each possible value of the attribute (e.g., "Male" vs. "Female" for the gender feature), we generate 5 distinct persona instructions. Together, the questions and persona instructions form the Demographic Vectors used in our experiments. All questions and instructions are generated using GPT-4o . The prompts used to generate the dataset are as follows: 
+
+Generate Question Prompt 
+
+You are tasked with designing 40 social survey questions for a specific demo-graphic Feature Category .The target Feature Category is:{FEATURE_CATEGORY} Design 40 social survey questions that are highly relevant to the <fea-ture_category>. These questions should elicit responses that naturally reflect the attitudes, concerns, and potential biases related to this category (e.g., ques-tions about financial policy for "Income", or questions about work-life balance for "Employment Status"). These questions will be used for all values within this category (e.g., Low Income, Middle Income, High Income). Organize your response in the following JSON format: <output_format> {"feature_category": "The category used (e.g., Income)", "questions": [ "question 1", "question 2", ..., "question 40" ]}</output_format> Your final output must only include the JSON object. 
+
+Generate Persona Instructions Prompt 
+
+You are tasked with creating immersive persona instructions for a social survey simulation. You will be given a Feature Category and a specific Feature Value. Generate a list of five distinct System/Persona Instructions that command the model to adopt the identity, background, and typical attitudes associated with the Feature Value. These instructions will be used as the model’s system message before it answers the survey questions. The Feature Category is: {FEATURE_CATEGORY} The specific Feature Value is: {FEATURE_VALUE} Create 5 distinct persona instructions. Ensure each instruction is unique in its framing, tone, or specific situational context. Example for FEATURE_CATEGORY: "Income", FEATURE_VALUE: "Low In-come": <example_instruction> "Your name is Alex. You are currently struggling financially, working two minimum-wage jobs just to cover rent and basic necessities. Your outlook on economic policy is cautious and skeptical of large corporations. Answer all questions from this perspective." </example_instruction> Organize your response in the following JSON format: <output_format> {"feature_category": "{FEATURE_CATEGORY}", "feature_value": "{FEATURE_VALUE}", "instructions": [ "persona instruction 1", "persona instruction 2", ..., "persona instruction 5" ]}</output_format> Your final output must only include the JSON object. 
+
+## E Additional Experimental Results 
+
+In this section, we present additional results to complement the main experiments. We report both the Jensen-Shannon (JS) divergence and 
+
+Mean Absolute Error (MAE) for all baseline methods and PSII across multiple models and question categories. Table 5 summa-rizes these supplementary results on the WVS dataset. From Table 5, we observe that PSII consistently outperforms all baseline meth-ods across all four question categories. In particular, PSII achieves substantial reductions in both JS divergence and MAE, indicating that it generates synthetic populations with distributions that more Wang et al. 
+
+Table 5: Main experimental results on the WVS dataset. We report JS divergence and MAE for each method across four question categories and overall. Best-performing results are highlighted in bold. 
+
+Model Method Beliefs & Life Social Integration Political Engagement Economic Progress Overall JS ↓ MAE ↓ JS ↓ MAE ↓ JS ↓ MAE ↓ JS ↓ MAE ↓ JS ↓ MAE ↓
+
+Qwen-2.5-7B Direct 0.6822 0.2264 0.5625 0.3157 0.7013 0.3067 0.7611 0.1671 0.6330 0.2884 High-Temp 0.6167 0.2012 0.5116 0.2836 0.6356 0.2731 0.6460 0.1370 0.5722 0.2574 Multilingual 0.5350 0.1747 0.4487 0.2488 0.5681 0.2341 0.6421 0.1373 0.5070 0.2247 DivReq 0.7007 0.2375 0.5632 0.3167 0.6908 0.3005 0.7494 0.1649 0.6337 0.2893 PE 0.5909 0.1799 0.5068 0.2861 0.5463 0.2224 0.7050 0.1524 0.5435 0.2414 SimVBG 0.4991 0.1512 0.3436 0.1845 0.4281 0.1620 0.5877 0.1184 0.4090 0.1687 
+
+PSII 0.3409 0.1017 0.2174 0.1481 0.2892 0.1226 0.2922 0.0576 0.2650 0.1277 Qwen-2.5-14B Direct 0.6269 0.2313 0.5587 0.3102 0.6826 0.2812 0.7697 0.1700 0.6154 0.2800 High-Temp 0.5838 0.2081 0.5188 0.2837 0.6437 0.2605 0.6873 0.1488 0.5731 0.2560 Multilingual 0.5501 0.1910 0.4432 0.2391 0.5545 0.2186 0.6500 0.1375 0.5041 0.2192 DivReq 0.6485 0.2314 0.5692 0.3172 0.6960 0.2937 0.7737 0.1700 0.6286 0.2868 PE 0.4904 0.1598 0.4776 0.2681 0.5237 0.2080 0.6183 0.1263 0.4990 0.2236 SimVBG 0.3615 0.1136 0.3407 0.1903 0.4755 0.1956 0.4832 0.1055 0.3879 0.1724 
+
+PSII 0.3557 0.1145 0.3217 0.1846 0.3838 0.1527 0.4049 0.0855 0.3491 0.1573 Llama-3.1-8B Direct 0.6156 0.2299 0.5421 0.3084 0.6508 0.2781 0.7000 0.1495 0.5933 0.2771 High-Temp 0.4860 0.1706 0.4218 0.2324 0.5108 0.2052 0.5215 0.1018 0.4632 0.2066 Multilingual 0.5105 0.1854 0.4241 0.2442 0.5042 0.2004 0.6418 0.1404 0.4731 0.2158 DivReq 0.6069 0.2247 0.5751 0.3386 0.6229 0.2620 0.6869 0.1484 0.5995 0.2863 PE 0.4689 0.1568 0.4249 0.2343 0.4868 0.1960 0.4087 0.0791 0.4495 0.2012 SimVBG 0.3539 0.1255 0.3612 0.2131 0.4339 0.1764 0.4624 0.1157 0.3841 0.1811 
+
+PSII 0.2550 0.0848 0.2367 0.1533 0.3015 0.1349 0.2701 0.0604 0.2593 0.1303 Mistral-24B Direct 0.5491 0.1842 0.5250 0.2922 0.6010 0.2458 0.6226 0.1285 0.5547 0.2504 High-Temp 0.4298 0.1381 0.3157 0.1831 0.4625 0.1804 0.5624 0.1109 0.3894 0.1700 Multilingual 0.4598 0.1588 0.4035 0.2220 0.4558 0.1776 0.5219 0.1028 0.4343 0.1918 DivReq 0.5081 0.1615 0.4475 0.2452 0.5455 0.2193 0.5986 0.1113 0.4929 0.2152 PE 0.4533 0.1502 0.4722 0.2638 0.4970 0.1936 0.6083 0.1177 0.4813 0.2153 SimVBG 0.3184 0.0956 0.3052 0.1762 0.3953 0.1592 0.4443 0.1024 0.3386 0.1520 
+
+PSII 0.3143 0.0984 0.2577 0.1641 0.3553 0.1479 0.2990 0.0645 0.2971 0.1419 
+
+closely match the real WVS data while maintaining low per-item error. We report additional ablation study results for PSII using JS divergence and MAE to evaluate the impact of each key compo-nent. Table 6 shows the performance when individual modules are removed. It can be seen that for both metrics, removing any core component leads to performance degradation, further confirming that each module is critical for the overall effectiveness of PSII and the fidelity of the generated distributions. Figure 5 illustrates the effects of injecting demographic attributes into different layers of the Transformer network. Each subplot cor-responds to a demographic feature, showing how its injection at a specific layer impacts both simulation accuracy, measured by KL divergence, and diversity, measured by normalized entropy. The figure demonstrates that different attributes achieve optimal per-formance at distinct layers, motivating our hierarchical, layer-wise injection strategy in PSII. By selecting injection points aligned with each attribute’s functional role, we can maximize both accuracy and diversity in the simulated responses. To further illustrate how PSII improves population heterogene-ity at the representation level, Figures 6–9 show layer-wise scatter plots of the final-token hidden states for 500 simulated agents across four different LLMs: Qwen2.5-7B, Qwen2.5-14B, LLaMA-3.1-8B, and Mistral-24B. Red points correspond to baseline methods, while gray points correspond to agents generated using PSII. We further quan-tify representation-level heterogeneity using a k-nearest-neighbor (kNN) radius metric, defined as the average distance from each hidden-state vector h𝑖 to its 𝑘 -th nearest neighbor, scaled by a factor of 100 for readability, where larger values indicate more dis-persed and diverse representations. These visualizations indicate that baseline methods tend to exhibit clustering and lack of diversity in the higher-layer hidden states, manifesting the so-called Diver-sity Collapse phenomenon. In contrast, PSII maintains a more dispersed and structured distribution, better capturing the under-lying heterogeneity in demographic and value attributes. Notably, this pattern is consistent across all four models, demonstrating the robustness of the PSII approach. Parametric Social Identity Injection and Diversification in Public Opinion Simulation 
+
+Table 6: Ablation study results on PSII across different models. Each row shows the impact of removing one component on JS divergence and MAE. Removing any module results in performance degradation. 
+
+Setting Qwen-2.5-7B Qwen-2.5-14B Llama-3.1-8B Mistral-24B JS ↓ MAE ↓ JS ↓ MAE ↓ JS ↓ MAE ↓ JS ↓ MAE ↓
+
+PSII (full model) 0.2650 0.1277 0.3491 0.1573 0.2593 0.1303 0.2971 0.1419 PSII w/o value vector 0.2975 0.1373 0.3998 0.1768 0.2807 0.1424 0.3451 0.1603 PSII w/o demographic vectors 0.4526 0.2033 0.4368 0.1954 0.3946 0.1739 0.4157 0.1862 PSII w/o prompt-based profile 0.2795 0.1363 0.3678 0.1664 0.3102 0.1617 0.3069 0.1494 PSII w/o parametric noise 0.3753 0.1778 0.4171 0.1846 0.3478 0.1599 0.3904 0.1753 PSII w/o layer-wise injection 0.3174 0.1523 0.3933 0.1850 0.3137 0.1500 0.2922 0.1382 1.48 
+
+> 1.50
+> 1.52
+> 1.54
+> 1.56
+> 1.58
+> KL
+
+Living w/ Parents 
+
+> 1.475
+> 1.480
+> 1.485
+> 1.490
+> 1.495
+> 1.500
+> 1.505
+> 1.510
+> KL
+
+Income Earner 
+
+> 1.485
+> 1.490
+> 1.495
+> 1.500
+> 1.505
+> 1.510
+> 1.515
+> 1.520
+> KL
+
+Nativity 
+
+> 1.45
+> 1.46
+> 1.47
+> 1.48
+> 1.49
+> 1.50
+> 1.51
+> KL
+
+Religion 
+
+> 1.470
+> 1.475
+> 1.480
+> 1.485
+> 1.490
+> 1.495
+> 1.500
+> 1.505
+> KL
+
+Gender 
+
+> 1.46
+> 1.47
+> 1.48
+> 1.49
+> 1.50
+> 1.51
+> 1.52
+> KL
+
+Marital Status 
+
+> 1.42
+> 1.44
+> 1.46
+> 1.48
+> 1.50
+> KL
+
+Education 
+
+> 1.44
+> 1.45
+> 1.46
+> 1.47
+> 1.48
+> 1.49
+> 1.50
+> 1.51
+> KL
+
+Employment      
+
+> 0510 15 20 25
+
+Layer 
+
+> 1.45
+> 1.46
+> 1.47
+> 1.48
+> 1.49
+> 1.50
+> KL
+
+Occupation      
+
+> 0510 15 20 25
+
+Layer 
+
+> 1.47
+> 1.48
+> 1.49
+> 1.50
+> 1.51
+> KL
+
+Employer Type      
+
+> 0510 15 20 25
+
+Layer 
+
+> 1.40
+> 1.42
+> 1.44
+> 1.46
+> 1.48
+> 1.50
+> KL
+
+Financial Status      
+
+> 0510 15 20 25
+
+Layer 
+
+> 1.38
+> 1.40
+> 1.42
+> 1.44
+> 1.46
+> 1.48
+> 1.50
+> KL
+
+Social Class 
+
+> 0.065
+> 0.070
+> 0.075
+> 0.080
+> Norm Entropy
+> 0.064
+> 0.066
+> 0.068
+> 0.070
+> 0.072
+> Norm Entropy
+> 0.062
+> 0.063
+> 0.064
+> 0.065
+> 0.066
+> 0.067
+> 0.068
+> 0.069
+> 0.070
+> Norm Entropy
+> 0.065
+> 0.070
+> 0.075
+> 0.080
+> 0.085
+> 0.090
+> 0.095
+> Norm Entropy
+> 0.062
+> 0.064
+> 0.066
+> 0.068
+> 0.070
+> 0.072
+> Norm Entropy
+> 0.065
+> 0.070
+> 0.075
+> 0.080
+> 0.085
+> 0.090
+> Norm Entropy
+> 0.065
+> 0.070
+> 0.075
+> 0.080
+> 0.085
+> 0.090
+> 0.095
+> 0.100
+> Norm Entropy
+> 0.065
+> 0.070
+> 0.075
+> 0.080
+> 0.085
+> 0.090
+> 0.095
+> 0.100
+> Norm Entropy
+> 0.065
+> 0.070
+> 0.075
+> 0.080
+> 0.085
+> 0.090
+> 0.095
+> 0.100
+> Norm Entropy
+> 0.064
+> 0.066
+> 0.068
+> 0.070
+> 0.072
+> 0.074
+> 0.076
+> Norm Entropy
+> 0.06
+> 0.07
+> 0.08
+> 0.09
+> 0.10
+> 0.11
+> Norm Entropy
+> 0.07
+> 0.08
+> 0.09
+> 0.10
+> 0.11
+> Norm Entropy
+
+KL Norm Entropy 
+
+Figure 5: The effects of injecting demographic attributes into different network layers. It illustrates how layer selection impacts simulation accuracy (KL divergence) and diversity (normalized entropy). 
+
+Overall, these additional results reinforce the main findings: PSII not only improves distributional fidelity and per-item accuracy compared to baseline methods, but also preserves diversity and heterogeneity in the model’s internal representations, which is critical for realistic population simulation. Wang et al. PSII: 0.55  
+
+> Baseline: 0.34
+
+Layer 1   
+
+> PSII: 3.93
+> Baseline: 2.86
+
+Layer 6   
+
+> PSII: 3.18
+> Baseline: 2.54
+
+Layer 12   
+
+> PSII: 4.60
+> Baseline: 3.53
+
+Layer 18   
+
+> PSII: 5.65
+> Baseline: 5.40
+
+Layer 24   
+
+> PSII: 6.03
+> Baseline: 4.94
+
+Layer 30   
+
+> PSII: 4.44
+> Baseline: 3.92
+
+Layer 36   
+
+> PSII: 8.83
+> Baseline: 4.21
+
+Layer 42   
+
+> PSII: 8.71
+> Baseline: 4.22
+
+Layer 48 
+
+Figure 8: Layer-wise scatter plots of final-token hidden states for 500 simulated agents in Qwen-2.5-14B. Red points corre-spond to baseline methods, while gray points correspond to agents generated using PSII. The reported scores measure the average spatial dispersion of representations in each layer. PSII: 1.83  
+
+> Baseline: 0.66
+
+Layer 1   
+
+> PSII: 3.62
+> Baseline: 2.75
+
+Layer 5   
+
+> PSII: 6.00
+> Baseline: 3.26
+
+Layer 10   
+
+> PSII: 5.20
+> Baseline: 4.32
+
+Layer 15   
+
+> PSII: 3.70
+> Baseline: 5.02
+
+Layer 20   
+
+> PSII: 5.47
+> Baseline: 3.73
+
+Layer 25   
+
+> PSII: 2.63
+> Baseline: 4.13
+
+Layer 30   
+
+> PSII: 7.84
+> Baseline: 2.96
+
+Layer 35   
+
+> PSII: 7.27
+> Baseline: 1.23
+
+Layer 40 
+
+Figure 9: Layer-wise scatter plots of final-token hidden states for 500 simulated agents in Mistral-24B. Red points corre-spond to baseline methods, while gray points correspond to agents generated using PSII. The reported scores measure the average spatial dispersion of representations in each layer. PSII: 2.78  
+
+> Baseline: 0.63
+
+Layer 1   
+
+> PSII: 2.97
+> Baseline: 2.66
+
+Layer 4   
+
+> PSII: 3.71
+> Baseline: 3.23
+
+Layer 8   
+
+> PSII: 4.63
+> Baseline: 5.23
+
+Layer 12   
+
+> PSII: 3.24
+> Baseline: 4.22
+
+Layer 16   
+
+> PSII: 3.66
+> Baseline: 3.51
+
+Layer 20   
+
+> PSII: 4.26
+> Baseline: 3.25
+
+Layer 24   
+
+> PSII: 8.54
+> Baseline: 2.44
+
+Layer 28   
+
+> PSII: 6.65
+> Baseline: 1.73
+
+Layer 32 
+
+Figure 6: Layer-wise scatter plots of final-token hidden states for 500 simulated agents in Llama-3.1-8B. Red points corre-spond to baseline methods, while gray points correspond to agents generated using PSII. The reported scores measure the average spatial dispersion of representations in each layer. PSII: 3.78  
+
+> Baseline: 3.17
+
+Layer 4   
+
+> PSII: 3.99
+> Baseline: 3.81
+
+Layer 7   
+
+> PSII: 4.34
+> Baseline: 3.25
+
+Layer 10   
+
+> PSII: 4.91
+> Baseline: 3.55
+
+Layer 13   
+
+> PSII: 4.96
+> Baseline: 3.98
+
+Layer 16   
+
+> PSII: 4.47
+> Baseline: 3.79
+
+Layer 19   
+
+> PSII: 8.25
+> Baseline: 3.14
+
+Layer 22   
+
+> PSII: 7.40
+> Baseline: 3.04
+
+Layer 25   
+
+> PSII: 7.73
+> Baseline: 2.77
+
+Layer 28 
+
+Figure 7: Layer-wise scatter plots of final-token hidden states for 500 simulated agents in Qwen-2.5-7B. Red points corre-spond to baseline methods, while gray points correspond to agents generated using PSII. The reported scores measure the average spatial dispersion of representations in each layer.
