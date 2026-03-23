@@ -1,0 +1,678 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-03-23T20:23:18.211266+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 43,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 73,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2603.17694v1",
+      "title": "MALLES: A Multi-agent LLMs-based Economic Sandbox with Consumer Preference Alignment",
+      "abstract": "In the real economy, modern decision-making is fundamentally challenged by high-dimensional, multimodal environments, which are further complicated by agent heterogeneity and combinatorial data sparsity. This paper introduces a Multi-Agent Large Language Model-based Economic Sandbox (MALLES), leveraging the inherent generalization capabilities of large-sacle models to establish a unified simulation framework applicable to cross-domain and cross-category scenarios. Central to our approach is a preference learning paradigm in which LLMs are economically aligned via post-training on extensive, heterogeneous transaction records across diverse product categories. This methodology enables the models to internalize and transfer latent consumer preference patterns, thereby mitigating the data sparsity issues prevalent in individual categories. To enhance simulation stability, we implement a mean-field mechanism designed to model the dynamic interactions between the product environment and customer populations, effectively stabilizing sampling processes within high-dimensional decision spaces. Furthermore, we propose a multi-agent discussion framework wherein specialized agents collaboratively process extensive product information. This architecture distributes cognitive load to alleviate single-agent attention bottlenecks and captures critical decision factors through structured dialogue. Experiments demonstrate that our framework achieves significant improvements in product selection accuracy, purchase quantity prediction, and simulation stability compared to existing economic and financial LLM simulation baselines. Our results substantiate the potential of large language models as a foundational pillar for high-fidelity, scalable decision simulation and latter analysis in the real economy based on foundational database.",
+      "authors": [
+        "Yusen Wu",
+        "Yiran Liu",
+        "Xiaotie Deng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-18T13:11:09+00:00",
+      "link": "https://arxiv.org/pdf/2603.17694v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Multi-agent LLM-based economic sandbox for simulating consumer behavior",
+      "llm_evidence_cn": "基于大模型的经济沙盒，用于模拟消费者行为的多智能体系统",
+      "llm_evidence": "基于大模型的经济沙盒，用于模拟消费者行为的多智能体系统",
+      "canonical_evidence": "基于大模型的经济沙盒，用于模拟消费者行为的多智能体系统",
+      "llm_tldr_en": "Develops a multi-agent LLM sandbox to simulate economic scenarios with aligned consumer preferences.",
+      "llm_tldr_cn": "开发了一个基于大模型的多智能体经济沙盒，通过对齐消费者偏好来模拟经济场景。",
+      "llm_tldr": "开发了一个基于大模型的多智能体经济沙盒，通过对齐消费者偏好来模拟经济场景。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.14895v1",
+      "title": "FS_GPlib: Breaking the Web-Scale Barrier - A Unified Acceleration Framework for Graph Propagation Models",
+      "abstract": "Propagation models are essential for modeling and simulating dynamic processes such as epidemics and information diffusion. However, existing tools struggle to scale to large-scale graphs that emerge across social networks, epidemic networks and so on, due to limited algorithmic efficiency, weak scalability, and high communication overhead. We present FS_GPlib, a unified library that enables efficient, high-fidelity propagation modeling on Web-scale graphs. FS_GPlib introduces a dual-acceleration framework: it combines micro-level synchronous message-passing updates with macro-level batched Monte Carlo simulation, leveraging high-dimensional tensor operations for parallel execution. To further enhance scalability, it supports distributed simulation via a novel target-node-based graph partitioning strategy that minimizes communication overhead while maintaining load balance. Theoretically, we show that under ideal assumptions, the runtime of simulations converges approximately to a constant. Extensive experiments demonstrate up to 35,000 times speedup over standard libraries such as NDlib and execution of a full Monte Carlo simulation on a Web-scale (billion-edge) graph in 11 seconds while maintaining high simulation fidelity. FS_GPlib supports 29 propagation models-including epidemic and opinion dynamics and dynamic network models-and offers a lightweight Python API compatible with mainstream data science ecosystems. By addressing the unique challenges of modeling diffusion and cascades on the Web, FS_GPlib provides a scalable, extensible, and theoretically grounded solution for large-scale propagation analysis in epidemiology, social media analysis, and online network dynamics. Code available at: https://github.com/Allen-Ciel/FS_GPlib.",
+      "authors": [
+        "Chang Guo",
+        "Juyuan Zhang",
+        "Chang Su",
+        "Tianlong Fan",
+        "Linyuan Lü"
+      ],
+      "primary_category": "cs.SI",
+      "categories": [
+        "cs.SI"
+      ],
+      "published": "2026-03-16T06:49:19+00:00",
+      "link": "https://arxiv.org/pdf/2603.14895v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "simulating dynamic processes on large-scale social networks",
+      "llm_evidence_cn": "在大规模社交网络上模拟动态过程",
+      "llm_evidence": "在大规模社交网络上模拟动态过程",
+      "canonical_evidence": "在大规模社交网络上模拟动态过程",
+      "llm_tldr_en": "A unified library for efficient, high-fidelity propagation modeling on web-scale social and epidemic graphs.",
+      "llm_tldr_cn": "一个用于在万亿级社交和疫情图上进行高效、高保真传播建模的统一库。",
+      "llm_tldr": "一个用于在万亿级社交和疫情图上进行高效、高保真传播建模的统一库。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.15852v1",
+      "title": "Playing Against the Machine: Cooperation, Communication, and Strategy Heterogeneity in Repeated Prisoner's Dilemma",
+      "abstract": "This paper investigates how natural language communication with an AI agent affects human cooperative behaviour in indefinitely repeated Prisoner's Dilemma games. We conduct a laboratory experiment (n = 126) with two between-subjects treatments varying whether human participants chat with an AI chatbot (GPT-5.2) before every round or only before the first round of each supergame, and benchmark against human-human data from Dvorak and Fehrler (2024) (n = 108). We find four main results. First, cooperation against the AI is high and initially comparable to human-human levels, but unlike in the human-human setting, where cooperation converges to near-complete levels, cooperation against the AI plateaus and never reaches full cooperation. Second, repeated communication, which substantially increases cooperation in human-human interactions, has no detectable effect in the human-AI setting. Third, strategy estimation reveals that human-AI subjects favour Grim Trigger under pre-play communication and remain dispersed under repeated communication, whereas human-human subjects converge to Tit-for-Tat and unconditional cooperation respectively. Fourth, human-AI conversations contain more explicit strategy commitments but fewer emotional and social messages. These results suggest that humans cooperate with AI at high rates but do not develop the trust observed in human-human interactions. Cooperation in the human-AI setting is sustained through conditional rules rather than through the social bonds and mutual understanding that characterise human-human cooperation.",
+      "authors": [
+        "Chowdhury Mohammad Sakib Anwar",
+        "Konstantinos Georgalos"
+      ],
+      "primary_category": "econ.GN",
+      "categories": [
+        "econ.GN"
+      ],
+      "published": "2026-03-16T19:32:43+00:00",
+      "link": "https://arxiv.org/pdf/2603.15852v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "simulating social behavior and cooperation with AI agents",
+      "llm_evidence_cn": "模拟与AI智能体的社会行为与合作",
+      "llm_evidence": "模拟与AI智能体的社会行为与合作",
+      "canonical_evidence": "模拟与AI智能体的社会行为与合作",
+      "llm_tldr_en": "Studies human-AI cooperation and communication in repeated social dilemma games.",
+      "llm_tldr_cn": "研究了在重复社会困境博弈中人类与AI之间的合作与沟通。",
+      "llm_tldr": "研究了在重复社会困境博弈中人类与AI之间的合作与沟通。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.18128v1",
+      "title": "Myopic Best Response as a Double-Edged Mechanism in Networked Social Dilemmas with Individual Solutions",
+      "abstract": "Myopic best-response dynamics (MBRD) capture agents' bounded rationality and can generate evolutionary outcomes that differ from those produced by widely examined imitation dynamics. In this study, we apply MBRD to a three-strategy social dilemma -- the snowdrift game with an individual solution -- in which not only defection but also an individual solution that guarantees a safe, constant payoff can undermine cooperation. Monte Carlo simulations show that, on a square lattice, the evolutionary dynamics result in distinct equilibria, including the dominance of the individual solution, the coexistence of cooperators and defectors, or all-strategy coexistence. By combining simulations with a simple heuristic that approximates the transition condition between the dominance of the individual solution and the all-strategy coexistence, the analysis reveals a dual role of neighborhood size. Specifically, smaller neighborhoods can promote cooperation even when the individual solution is relatively inexpensive; however, achieving cooperation under these conditions requires greater benefits from cooperation. Notably, this hindrance to cooperation contrasts with evolutionary outcomes observed under imitation dynamics. Analysis of local strategy configurations explains the transition between the all-strategy coexistence and the coexistence of cooperators and defectors while showing that this transition is absent in a one-dimensional lattice. These observations indicate that the persistent availability of individual solutions constitutes an additional inhibiting factor of cooperation in populations of boundedly rational agents.",
+      "authors": [
+        "Hirofumi Takesue"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph"
+      ],
+      "published": "2026-03-18T17:35:32+00:00",
+      "link": "https://arxiv.org/pdf/2603.18128v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Evolutionary outcomes and equilibria in networked social dilemmas",
+      "llm_evidence_cn": "网络化社会困境中的演化结果与均衡",
+      "llm_evidence": "网络化社会困境中的演化结果与均衡",
+      "canonical_evidence": "网络化社会困境中的演化结果与均衡",
+      "llm_tldr_en": "Uses Monte Carlo simulations to study how myopic best-response dynamics affect cooperation in social dilemmas.",
+      "llm_tldr_cn": "利用蒙特卡洛模拟研究近视最优反应动态如何影响社会困境中的合作演化。",
+      "llm_tldr": "利用蒙特卡洛模拟研究近视最优反应动态如何影响社会困境中的合作演化。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.18894v1",
+      "title": "I Can't Believe It's Corrupt: Evaluating Corruption in Multi-Agent Governance Systems",
+      "abstract": "Large language models are increasingly proposed as autonomous agents for high-stakes public workflows, yet we lack systematic evidence about whether they would follow institutional rules when granted authority. We present evidence that integrity in institutional AI should be treated as a pre-deployment requirement rather than a post-deployment assumption. We evaluate multi-agent governance simulations in which agents occupy formal governmental roles under different authority structures, and we score rule-breaking and abuse outcomes with an independent rubric-based judge across 28,112 transcript segments. While we advance this position, the core contribution is empirical: among models operating below saturation, governance structure is a stronger driver of corruption-related outcomes than model identity, with large differences across regimes and model--governance pairings. Lightweight safeguards can reduce risk in some settings but do not consistently prevent severe failures. These results imply that institutional design is a precondition for safe delegation: before real authority is assigned to LLM agents, systems should undergo stress testing under governance-like constraints with enforceable rules, auditable logs, and human oversight on high-impact actions.",
+      "authors": [
+        "Vedanta S P",
+        "Ponnurangam Kumaraguru"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-19T13:34:54+00:00",
+      "link": "https://arxiv.org/pdf/2603.18894v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-agent governance simulations and social behavior evaluation",
+      "llm_evidence_cn": "多智能体治理模拟与社会行为评估",
+      "llm_evidence": "多智能体治理模拟与社会行为评估",
+      "canonical_evidence": "多智能体治理模拟与社会行为评估",
+      "llm_tldr_en": "Evaluates rule-breaking and corruption in LLM agents within simulated multi-agent governance structures.",
+      "llm_tldr_cn": "评估了模拟多智能体治理结构中LLM智能体的违规和腐败行为。",
+      "llm_tldr": "评估了模拟多智能体治理结构中LLM智能体的违规和腐败行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.19791v1",
+      "title": "Text-Based Personas for Simulating User Privacy Decisions",
+      "abstract": "The ability to simulate human privacy decisions has significant implications for aligning autonomous agents with individual intent and conducting cost-effective, large-scale privacy-centric user studies. Prior approaches prompt Large Language Models (LLMs) with natural language user statements, data-sharing histories, or demographic attributes to simulate privacy decisions. These approaches, however, fail to balance individual-level accuracy, prompt usability, token efficiency, and population-level representation. We present Narriva, an approach that generates text-based synthetic privacy personas to address these shortcomings. Narriva grounds persona generation in prior user privacy decisions, such as those from large-scale survey datasets, rather than purely relying on demographic stereotypes. It compresses this data into concise, human-readable summaries structured by established privacy theories. Through benchmarking across five diverse datasets, we analyze the characteristics of Narriva's synthetic personas in modeling both individual and population-level privacy preferences. We find that grounding personas in past privacy behaviors achieves up to 88% predictive accuracy (significantly outperforming a non-personalized LLM baseline), and yields an 80-95% reduction in prompt tokens compared to in-context learning with raw examples. Finally, we demonstrate that personas synthesized from a single survey can reproduce the aggregate privacy behaviors and statistical distributions (TVComplement up to 0.85) of entirely different studies.",
+      "authors": [
+        "Kassem Fawaz",
+        "Ren Yi",
+        "Octavian Suciu",
+        "Rishabh Khandelwal",
+        "Hamza Harkous",
+        "Nina Taft",
+        "Marco Gruteser"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-03-20T09:28:15+00:00",
+      "link": "https://arxiv.org/pdf/2603.19791v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Simulating human privacy decisions with LLM personas",
+      "llm_evidence_cn": "利用LLM画像模拟人类隐私决策",
+      "llm_evidence": "利用LLM画像模拟人类隐私决策",
+      "canonical_evidence": "利用LLM画像模拟人类隐私决策",
+      "llm_tldr_en": "Narriva generates synthetic privacy personas to simulate human decision-making in social studies.",
+      "llm_tldr_cn": "Narriva生成合成隐私画像，以在社会研究中模拟人类的隐私决策行为。",
+      "llm_tldr": "Narriva生成合成隐私画像，以在社会研究中模拟人类的隐私决策行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2602.22697v1",
+      "title": "Reinforcing Real-world Service Agents: Balancing Utility and Cost in Task-oriented Dialogue",
+      "abstract": "The rapid evolution of Large Language Models (LLMs) has accelerated the transition from conversational chatbots to general agents. However, effectively balancing empathetic communication with budget-aware decision-making remains an open challenge. Since existing methods fail to capture these complex strategic trade-offs, we propose InteractCS-RL, a framework that reframes task-oriented dialogue as a multi-granularity reinforcement learning process. Specifically, we first establish a User-centric Interaction Framework to provide a high-fidelity training gym, enabling agents to dynamically explore diverse strategies with persona-driven users. Then, we introduce Cost-aware Multi-turn Policy Optimization (CMPO) with a hybrid advantage estimation strategy. By integrating generative process credits and employing a PID-Lagrangian cost controller, CMPO effectively guides the policy to explore Pareto boundary between user reward and global cost constraints. Extensive experiments on customized real business scenarios demonstrate that InteractCS-RL significantly outperform other baselines across three evaluation dimensions. Further evaluation on tool-agent-user interaction benchmarks verify InteractCS-RL robustness across diverse domains.",
+      "authors": [
+        "Ning Gao",
+        "Wei Zhang",
+        "Yuqin Dai",
+        "Ling Shi",
+        "Ziyin Wang",
+        "Yujie Wang",
+        "Wei He",
+        "Jinpeng Wang",
+        "Chaozheng Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-02-26T07:19:57+00:00",
+      "link": "https://arxiv.org/pdf/2602.22697v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Simulating persona-driven users for agent training",
+      "llm_evidence_cn": "模拟人格驱动的用户进行智能体训练",
+      "llm_evidence": "模拟人格驱动的用户进行智能体训练",
+      "canonical_evidence": "模拟人格驱动的用户进行智能体训练",
+      "llm_tldr_en": "Reframes dialogue as RL with a user-centric framework to train agents using simulated persona-driven users.",
+      "llm_tldr_cn": "将对话重构为强化学习，利用模拟的人格驱动用户训练具有共情能力的智能体。",
+      "llm_tldr": "将对话重构为强化学习，利用模拟的人格驱动用户训练具有共情能力的智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2602.22697v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.14688v1",
+      "title": "AgentTrace: Causal Graph Tracing for Root Cause Analysis in Deployed Multi-Agent Systems",
+      "abstract": "As multi-agent AI systems are increasingly deployed in real-world settings - from automated customer support to DevOps remediation - failures become harder to diagnose due to cascading effects, hidden dependencies, and long execution traces. We present AgentTrace, a lightweight causal tracing framework for post-hoc failure diagnosis in deployed multi-agent workflows. AgentTrace reconstructs causal graphs from execution logs, traces backward from error manifestations, and ranks candidate root causes using interpretable structural and positional signals - without requiring LLM inference at debugging time. Across a diverse benchmark of multi-agent failure scenarios designed to reflect common deployment patterns, AgentTrace localizes root causes with high accuracy and sub-second latency, significantly outperforming both heuristic and LLM-based baselines. Our results suggest that causal tracing provides a practical foundation for improving the reliability and trustworthiness of agentic systems in the wild.",
+      "authors": [
+        "Zhaohui Geoffrey Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-03-16T00:46:44+00:00",
+      "link": "https://arxiv.org/pdf/2603.14688v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "causal tracing in deployed multi-agent systems",
+      "llm_evidence_cn": "已部署多智能体系统中的因果追踪",
+      "llm_evidence": "已部署多智能体系统中的因果追踪",
+      "canonical_evidence": "已部署多智能体系统中的因果追踪",
+      "llm_tldr_en": "A framework for diagnosing failures in multi-agent workflows using causal graph reconstruction.",
+      "llm_tldr_cn": "一种利用因果图重建诊断多智能体工作流故障的框架。",
+      "llm_tldr": "一种利用因果图重建诊断多智能体工作流故障的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.14229v1",
+      "title": "Agentic DAG-Orchestrated Planner Framework for Multi-Modal, Multi-Hop Question Answering in Hybrid Data Lakes",
+      "abstract": "Enterprises increasingly need natural language (NL) question answering over hybrid data lakes that combine structured tables and unstructured documents. Current deployed solutions, including RAG-based systems, typically rely on brute-force retrieval from each store and post-hoc merging. Such approaches are inefficient and leaky, and more critically, they lack explicit support for multi-hop reasoning, where a query is decomposed into successive steps (hops) that may traverse back and forth between structured and unstructured sources. We present Agentic DAG-Orchestrated Transformer (A.DOT) Planner, a framework for multi-modal, multi-hop question answering, that compiles user NL queries into directed acyclic graph (DAG) execution plans spanning both structured and unstructured stores. The system decomposes queries into parallelizable sub-queries, incorporates schema-aware reasoning, and applies both structural and semantic validation before execution. The execution engine adheres to the generated DAG plan to coordinate concurrent retrieval across heterogeneous sources, route intermediate outputs to dependent sub-queries, and merge final results in strict accordance with the plan's logical dependencies. Advanced caching mechanisms, incorporating paraphrase-aware template matching, enable the system to detect equivalent queries and reuse prior DAG execution plans for rapid re-execution, while the DataOps System addresses validation feedback or execution errors. The proposed framework not only improves accuracy and latency, but also produces explicit evidence trails, enabling verification of retrieved content, tracing of data lineage, and fostering user trust in the system's outputs. On benchmark dataset, A.DOT achieves 14.8% absolute gain in correctness and 10.7% in completeness over baselines.",
+      "authors": [
+        "Kirushikesh D B",
+        "Manish Kesarwani",
+        "Nishtha Madaan",
+        "Sameep Mehta",
+        "Aldrin Dennis",
+        "Siddarth Ajay",
+        "Rakesh B R",
+        "Renu Rajagopal",
+        "Sudheesh Kairali"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-03-15T05:34:16+00:00",
+      "link": "https://arxiv.org/pdf/2603.14229v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agentic framework for multi-modal question answering",
+      "llm_evidence_cn": "多模态问答的智能体框架",
+      "llm_evidence": "多模态问答的智能体框架",
+      "canonical_evidence": "多模态问答的智能体框架",
+      "llm_tldr_en": "Introduces a DAG-orchestrated planner for multi-hop reasoning across structured and unstructured data sources.",
+      "llm_tldr_cn": "引入一种DAG编排规划器，用于在结构化和非结构化数据源间进行多跳推理。",
+      "llm_tldr": "引入一种DAG编排规划器，用于在结构化和非结构化数据源间进行多跳推理。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2602.23258v1",
+      "title": "AgentDropoutV2: Optimizing Information Flow in Multi-Agent Systems via Test-Time Rectify-or-Reject Pruning",
+      "abstract": "While Multi-Agent Systems (MAS) excel in complex reasoning, they suffer from the cascading impact of erroneous information generated by individual participants. Current solutions often resort to rigid structural engineering or expensive fine-tuning, limiting their deployability and adaptability. We propose AgentDropoutV2, a test-time rectify-or-reject pruning framework designed to dynamically optimize MAS information flow without retraining. Our approach acts as an active firewall, intercepting agent outputs and employing a retrieval-augmented rectifier to iteratively correct errors based on a failure-driven indicator pool. This mechanism allows for the precise identification of potential errors using distilled failure patterns as prior knowledge. Irreparable outputs are subsequently pruned to prevent error propagation, while a fallback strategy preserves system integrity. Empirical results on extensive math benchmarks show that AgentDropoutV2 significantly boosts the MAS's task performance, achieving an average accuracy gain of 6.3 percentage points on math benchmarks. Furthermore, the system exhibits robust generalization and adaptivity, dynamically modulating rectification efforts based on task difficulty while leveraging context-aware indicators to resolve a wide spectrum of error patterns. Our code and dataset are released at https://github.com/TonySY2/AgentDropoutV2.",
+      "authors": [
+        "Yutong Wang",
+        "Siyuan Xiong",
+        "Xuebo Liu",
+        "Wenkang Zhou",
+        "Liang Ding",
+        "Miao Zhang",
+        "Min Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-02-26T17:31:43+00:00",
+      "link": "https://arxiv.org/pdf/2602.23258v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "optimizing information flow in Multi-Agent Systems",
+      "llm_evidence_cn": "优化多智能体系统中的信息流",
+      "llm_evidence": "优化多智能体系统中的信息流",
+      "canonical_evidence": "优化多智能体系统中的信息流",
+      "llm_tldr_en": "Introduces a pruning framework to rectify errors and optimize information flow in multi-agent systems.",
+      "llm_tldr_cn": "引入一种剪枝框架，用于纠正多智能体系统中的错误并优化信息流。",
+      "llm_tldr": "引入一种剪枝框架，用于纠正多智能体系统中的错误并优化信息流。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2602.23258v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.14811v1",
+      "title": "Ego to World: Collaborative Spatial Reasoning in Embodied Systems via Reinforcement Learning",
+      "abstract": "Understanding the world from distributed, partial viewpoints is a fundamental challenge for embodied multi-agent systems. Each agent perceives the environment through an ego-centric view that is often limited by occlusion and ambiguity. To study this problem, we introduce the Ego-to-World (E2W) benchmark, which evaluates a vision-language model's ability to fuse heterogeneous viewpoints across three tasks: (i) global counting, (ii) relational location reasoning, and (iii) action-oriented grasping that requires predicting view-specific image coordinates. To address this setting, we propose CoRL, a two-stage framework that combines Chain-of-Thought supervised fine-tuning with reinforcement learning using Group-Relative Policy Optimization. Its core component, the Cross-View Spatial Reward (CVSR), provides dense task-aligned feedback by linking reasoning steps to visual evidence, ensuring coherent cross-view entity resolution, and guiding the model toward correct final predictions. Experiments on E2W show that CoRL consistently surpasses strong proprietary and open-source baselines on both reasoning and perception-grounding metrics, while ablations further confirm the necessity of each CVSR component. Beyond that, CoRL generalizes to external spatial reasoning benchmarks and enables effective real-world multi-robot manipulation with calibrated multi-camera rigs, demonstrating cross-view localization and successful grasp-and-place execution. Together, E2W and CoRL provide a principled foundation for learning world-centric scene understanding from distributed, ego-centric observations, advancing collaborative embodied AI.",
+      "authors": [
+        "Heng Zhou",
+        "Li Kang",
+        "Yiran Qin",
+        "Xiufeng Song",
+        "Ao Yu",
+        "Zilu Zhang",
+        "Haoming Song",
+        "Kaixin Xu",
+        "Yuchen Fan",
+        "Dongzhan Zhou",
+        "Xiaohong Liu",
+        "Ruimao Zhang",
+        "Philip Torr",
+        "Lei Bai",
+        "Zhenfei Yin"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-03-16T04:27:53+00:00",
+      "link": "https://arxiv.org/pdf/2603.14811v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "collaborative spatial reasoning in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的协作空间推理",
+      "llm_evidence": "多智能体系统中的协作空间推理",
+      "canonical_evidence": "多智能体系统中的协作空间推理",
+      "llm_tldr_en": "Introduces a benchmark and framework for multi-agent collaborative spatial reasoning using vision-language models.",
+      "llm_tldr_cn": "引入了一个基准和框架，用于多智能体利用视觉语言模型进行协作空间推理。",
+      "llm_tldr": "引入了一个基准和框架，用于多智能体利用视觉语言模型进行协作空间推理。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.14248v1",
+      "title": "Why Do LLM-based Web Agents Fail? A Hierarchical Planning Perspective",
+      "abstract": "Large language model (LLM) web agents are increasingly used for web navigation but remain far from human reliability on realistic, long-horizon tasks. Existing evaluations focus primarily on end-to-end success, offering limited insight into where failures arise. We propose a hierarchical planning framework to analyze web agents across three layers (i.e., high-level planning, low-level execution, and replanning), enabling process-based evaluation of reasoning, grounding, and recovery. Our experiments show that structured Planning Domain Definition Language (PDDL) plans produce more concise and goal-directed strategies than natural language (NL) plans, but low-level execution remains the dominant bottleneck. These results indicate that improving perceptual grounding and adaptive control, not only high-level reasoning, is critical for achieving human-level reliability. This hierarchical perspective provides a principled foundation for diagnosing and advancing LLM web agents.",
+      "authors": [
+        "Mohamed Aghzal",
+        "Gregory J. Stein",
+        "Ziyu Yao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-03-15T06:52:06+00:00",
+      "link": "https://arxiv.org/pdf/2603.14248v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM-based web agents and hierarchical planning",
+      "llm_evidence_cn": "基于大语言模型的Web智能体与分层规划",
+      "llm_evidence": "基于大语言模型的Web智能体与分层规划",
+      "canonical_evidence": "基于大语言模型的Web智能体与分层规划",
+      "llm_tldr_en": "A hierarchical planning framework to evaluate and analyze failures in LLM-based web navigation agents.",
+      "llm_tldr_cn": "一种分层规划框架，用于评估和分析基于大语言模型的Web导航智能体的失败原因。",
+      "llm_tldr": "一种分层规划框架，用于评估和分析基于大语言模型的Web导航智能体的失败原因。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.00130v1",
+      "title": "Agentic Hives: Equilibrium, Indeterminacy, and Endogenous Cycles in Self-Organizing Multi-Agent Systems",
+      "abstract": "Current multi-agent AI systems operate with a fixed number of agents whose roles are specified at design time. No formal theory governs when agents should be created, destroyed, or re-specialized at runtime-let alone how the population structure responds to changes in resources or objectives.  We introduce the Agentic Hive, a framework in which a variable population of autonomous micro-agents-each equipped with a sandboxed execution environment and access to a language model-undergoes demographic dynamics: birth, duplication, specialization, and death. Agent families play the role of production sectors, compute and memory play the role of factors of production, and an orchestrator plays the dual role of Walrasian auctioneer and Global Workspace.  Drawing on the multi-sector growth theory developed for dynamic general equilibrium (Benhabib \\& Nishimura, 1985; Venditti, 2005; Garnier, Nishimura \\& Venditti, 2013), we prove seven analytical results: (i) existence of a Hive Equilibrium via Brouwer's fixed-point theorem; (ii) Pareto optimality of the equilibrium allocation; (iii) multiplicity of equilibria under strategic complementarities between agent families; (iv)-(v) Stolper-Samuelson and Rybczynski analogs that predict how the Hive restructures in response to preference and resource shocks; (vi) Hopf bifurcation generating endogenous demographic cycles; and (vii) a sufficient condition for local asymptotic stability.  The resulting regime diagram partitions the parameter space into regions of unique equilibrium, indeterminacy, endogenous cycles, and instability. Together with the comparative-statics matrices, it provides a formal governance toolkit that enables operators to predict and steer the demographic evolution of self-organizing multi-agent systems.",
+      "authors": [
+        "Jean-Philippe Garnier"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "math.DS"
+      ],
+      "published": "2026-02-23T13:22:23+00:00",
+      "link": "https://arxiv.org/pdf/2603.00130v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "self-organizing multi-agent systems with demographic dynamics",
+      "llm_evidence_cn": "具有人口动态特征的自组织多智能体系统",
+      "llm_evidence": "具有人口动态特征的自组织多智能体系统",
+      "canonical_evidence": "具有人口动态特征的自组织多智能体系统",
+      "llm_tldr_en": "Introduces Agentic Hive, a framework for self-organizing multi-agent systems with dynamic population changes.",
+      "llm_tldr_cn": "引入Agentic Hive框架，研究具有动态人口变化的自组织多智能体系统。",
+      "llm_tldr": "引入Agentic Hive框架，研究具有动态人口变化的自组织多智能体系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.00130v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.14867v1",
+      "title": "Sample-Efficient Hypergradient Estimation for Decentralized Bi-Level Reinforcement Learning",
+      "abstract": "Many strategic decision-making problems, such as environment design for warehouse robots, can be naturally formulated as bi-level reinforcement learning (RL), where a leader agent optimizes its objective while a follower solves a Markov decision process (MDP) conditioned on the leader's decisions. In many situations, a fundamental challenge arises when the leader cannot intervene in the follower's optimization process; it can only observe the optimization outcome. We address this decentralized setting by deriving the hypergradient of the leader's objective, i.e., the gradient of the leader's strategy that accounts for changes in the follower's optimal policy. Unlike prior hypergradient-based methods that require extensive data for repeated state visits or rely on gradient estimators whose complexity can increase substantially with the high-dimensional leader's decision space, we leverage the Boltzmann covariance trick to derive an alternative hypergradient formulation. This enables efficient hypergradient estimation solely from interaction samples, even when the leader's decision space is high-dimensional. Additionally, to our knowledge, this is the first method that enables hypergradient-based optimization for 2-player Markov games in decentralized settings. Experiments highlight the impact of hypergradient updates and demonstrate our method's effectiveness in both discrete and continuous state tasks.",
+      "authors": [
+        "Mikoto Kudo",
+        "Takumi Tanabe",
+        "Akifumi Wachi",
+        "Youhei Akimoto"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.GT",
+        "cs.MA"
+      ],
+      "published": "2026-03-16T06:11:00+00:00",
+      "link": "https://arxiv.org/pdf/2603.14867v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized bi-level reinforcement learning for leader-follower agents",
+      "llm_evidence_cn": "领导者-跟随者智能体的去中心化双层强化学习",
+      "llm_evidence": "领导者-跟随者智能体的去中心化双层强化学习",
+      "canonical_evidence": "领导者-跟随者智能体的去中心化双层强化学习",
+      "llm_tldr_en": "Derives hypergradients for decentralized bi-level RL where a leader observes a follower's optimization.",
+      "llm_tldr_cn": "推导了去中心化双层强化学习的超梯度，适用于领导者仅能观察跟随者结果的场景。",
+      "llm_tldr": "推导了去中心化双层强化学习的超梯度，适用于领导者仅能观察跟随者结果的场景。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.14564v1",
+      "title": "Distance Backbones Optimize Spreading Dynamics and Centrality Ranks in the Sparsification of Complex Networks",
+      "abstract": "Detailed network models of social, biological and other complex systems are often dense, which increases their computational complexity in simulations and analysis. To address this challenge, graph sparsification is used to remove edges while preserving desired network properties. Distance backbones of weighted graphs, which remove edges that break a generalized triangle inequality for any given path-length measure, preserve all shortest paths of weighted graphs. They have been shown to typically sparsify graphs more, as well as preserve community structure and spreading dynamics better than alternative state-of-the-art methods. Here, We show that they significantly best preserve node centrality ranks, as well as local and global dynamics in spreading phenomena. This is done by introducing the distance backbone synthesis (DBS) to progressively sparsify weighted graphs according to a general family of nested distance backbones, whereby each edge is associated with the smallest distance backbone in which it appears. DBS provides a principled and natural method to sweep all degrees of sparsification possible while preserving connectivity, allowing us to precisely study (directed and undirected) weighted graph sparsification under multi-objective criteria. It provides an algebraically-principled explanation of edge importance by revealing the precise topological space associated with each edge. The theory is demonstrated with a battery of social contact networks obtained from real-world social activity in different scenarios. Our study also shows that the optimal preservation of node centrality and spreading dynamics happens for the distance backbone obeying the generalized triangle inequality for the path-length measure $g(x, y) = (\\sqrt[3]{x}+\\sqrt[3]{y})^3$, which removes more than half of the edges from the empirical networks studied.",
+      "authors": [
+        "Miguel Bernardo Pereira",
+        "Felipe Xavier Costa",
+        "Luís M. Rocha"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph",
+        "cs.SI",
+        "math.GN"
+      ],
+      "published": "2026-03-15T19:32:10+00:00",
+      "link": "https://arxiv.org/pdf/2603.14564v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Sparsification of complex networks preserving spreading dynamics and social structure",
+      "llm_evidence_cn": "保留传播动力学和社会结构的复杂网络稀疏化",
+      "llm_evidence": "保留传播动力学和社会结构的复杂网络稀疏化",
+      "canonical_evidence": "保留传播动力学和社会结构的复杂网络稀疏化",
+      "llm_tldr_en": "Demonstrates how distance backbones preserve critical properties in social and biological network simulations.",
+      "llm_tldr_cn": "展示了距离骨干如何在社会和生物网络模拟中保留关键的传播动力学属性。",
+      "llm_tldr": "展示了距离骨干如何在社会和生物网络模拟中保留关键的传播动力学属性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.00309v1",
+      "title": "DIG to Heal: Scaling General-purpose Agent Collaboration via Explainable Dynamic Decision Paths",
+      "abstract": "The increasingly popular agentic AI paradigm promises to harness the power of multiple, general-purpose large language model (LLM) agents to collaboratively complete complex tasks. While many agentic AI systems utilize predefined workflows or agent roles in order to reduce complexity, ideally these agents would be truly autonomous, able to achieve emergent collaboration even as the number of collaborating agents increases. Yet in practice, such unstructured interactions can lead to redundant work and cascading failures that are difficult to interpret or correct. In this work, we study multi-agent systems composed of general-purpose LLM agents that operate without predefined roles, control flow, or communication constraints, relying instead on emergent collaboration to solve problems. We introduce the Dynamic Interaction Graph (DIG), which captures emergent collaboration as a time-evolving causal network of agent activations and interactions. DIG makes emergent collaboration observable and explainable for the first time, enabling real-time identification, explanation, and correction of collaboration-induced error patterns directly from agents' collaboration paths. Thus, DIG fills a critical gap in understanding how general LLM agents solve problems together in truly agentic multi-agent systems. The project webpage can be found at: https://happyeureka.github.io/dig.",
+      "authors": [
+        "Hanqing Yang",
+        "Hyungwoo Lee",
+        "Yuhang Yao",
+        "Zhiwei Liu",
+        "Kay Liu",
+        "Jingdi Chen",
+        "Carlee Joe-Wong"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-02-27T20:59:37+00:00",
+      "link": "https://arxiv.org/pdf/2603.00309v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "emergent collaboration in unstructured multi-agent systems",
+      "llm_evidence_cn": "非结构化多智能体系统中的涌现协作",
+      "llm_evidence": "非结构化多智能体系统中的涌现协作",
+      "canonical_evidence": "非结构化多智能体系统中的涌现协作",
+      "llm_tldr_en": "Investigates emergent collaboration and decision paths in autonomous multi-agent systems without predefined roles.",
+      "llm_tldr_cn": "研究无预设角色的自主多智能体系统中的涌现协作与决策路径。",
+      "llm_tldr": "研究无预设角色的自主多智能体系统中的涌现协作与决策路径。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.00309v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.15054v1",
+      "title": "Interference-Aware K-Step Reachable Communication in Multi-Agent Reinforcement Learning",
+      "abstract": "Effective communication is pivotal for addressing complex collaborative tasks in multi-agent reinforcement learning (MARL). Yet, limited communication bandwidth and dynamic, intricate environmental topologies present significant challenges in identifying high-value communication partners. Agents must consequently select collaborators under uncertainty, lacking a priori knowledge of which partners can deliver task-critical information. To this end, we propose Interference-Aware K-Step Reachable Communication (IA-KRC), a novel framework that enhances cooperation via two core components: (1) a K-Step reachability protocol that confines message passing to physically accessible neighbors, and (2) an interference-prediction module that optimizes partner choice by minimizing interference while maximizing utility. Compared to existing methods, IA-KRC enables substantially more persistent and efficient cooperation despite environmental interference. Comprehensive evaluations confirm that IA-KRC achieves superior performance compared to state-of-the-art baselines, while demonstrating enhanced robustness and scalability in complex topological and highly dynamic multi-agent scenarios.",
+      "authors": [
+        "Ziyu Cheng",
+        "Jinsheng Ren",
+        "Zhouxian Jiang",
+        "Chenzhihang Li",
+        "Rongye Shi",
+        "Bin Liang",
+        "Jun Yang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-16T10:07:33+00:00",
+      "link": "https://arxiv.org/pdf/2603.15054v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "communication in multi-agent reinforcement learning",
+      "llm_evidence_cn": "多智能体强化学习中的通信",
+      "llm_evidence": "多智能体强化学习中的通信",
+      "canonical_evidence": "多智能体强化学习中的通信",
+      "llm_tldr_en": "Proposes a framework to optimize communication partner selection in multi-agent reinforcement learning.",
+      "llm_tldr_cn": "提出了一种在多智能体强化学习中优化通信伙伴选择的框架。",
+      "llm_tldr": "提出了一种在多智能体强化学习中优化通信伙伴选择的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
