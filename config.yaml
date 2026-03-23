@@ -25,3 +25,37 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: MAS SS
+      description: 多智能体系统、社会模拟器及社会话语相关论文检索
+      enabled: true
+      keywords:
+        - keyword: Short Video Fake News Detection
+          keyword_cn: 短视频假新闻检测
+          query: Short Video Fake News Detection
+        - keyword: fake news
+          keyword_cn: 虚假信息
+          query: f
+        - keyword: Multi-Agent
+          keyword_cn: 多智能体
+          query: Multi-Agent
+        - keyword: Social Simulator
+          keyword_cn: 社会模拟器
+          query: s
+      intent_queries:
+        - query: recent advances in multi agent social simulation
+          query_cn: 多智能体社会模拟的最新进展
+          enabled: true
+          source: manual
+          note: ''
+        - query: LLM powered agents for simulating social behavior
+          query_cn: 基于大语言模型的社会行为模拟智能体
+          enabled: true
+          source: manual
+          note: ''
+        - query: emergent social phenomena in multi agent environments
+          query_cn: 多智能体环境中的涌现社会现象
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-03-23T15:32:01.602Z'
