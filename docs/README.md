@@ -6,73 +6,82 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-03-23
-- 运行时间：2026-03-23 20:25:33 UTC
+- 最新运行日期：2026-03-24
+- 运行时间：2026-03-24 19:57:48 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：20
+- 精读区：9
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度解析 17 篇前沿论文，重点攻克多智能体经济沙盒与超大规模图计算加速框架。
-满分力作 MALLES 实现了对齐消费者偏好的经济模拟，FS_GPlib 则成功突破了 Web 级图传播的性能瓶颈。
-建议关注多智能体系统如何从单一任务执行向复杂经济博弈及自组织演化（如 Agentic Hives）迈进。
-- 详情：[/202603/23/README](/202603/23/README)
+今日深度解析 LLM 智能体的社交参与机制与多智能体系统的动态演进架构。
+核心研究揭示了智能体对信息负载与流行度诱导的响应规律，并提出通过“松散结构”有效管理多智能体系统的演化熵。
+建议重点关注智能体社交心理模拟及复杂协作系统的工程化落地趋势。
+- 详情：[/202603/24/README](/202603/24/README)
 
 ### 精读区论文标签
-1. [MALLES: A Multi-agent LLMs-based Economic Sandbox with Consumer Preference Alignment](/202603/23/2603.17694v1-malles-a-multi-agent-llms-based-economic-sandbox-with-consumer-preference-alignment)  
+1. [Do LLM-Driven Agents Exhibit Engagement Mechanisms? Controlled Tests of Information Load, Descriptive Norms, and Popularity Cues](/202603/24/2603.20911v1-do-llm-driven-agents-exhibit-engagement-mechanisms-controlled-tests-of-information-load-descriptive-norms-and-popularity-cues)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：基于大模型的经济沙盒，用于模拟消费者行为的多智能体系统
-2. [FS_GPlib: Breaking the Web-Scale Barrier - A Unified Acceleration Framework for Graph Propagation Models](/202603/23/2603.14895v1-fsgplib-breaking-the-web-scale-barrier---a-unified-acceleration-framework-for-graph-propagation-models)  
+   evidence：大模型驱动的社交媒体参与机制模拟
+2. [Loosely-Structured Software: Engineering Context, Structure, and Evolution Entropy in Runtime-Rewired Multi-Agent Systems](/202603/24/2603.15690v1-loosely-structured-software-engineering-context-structure-and-evolution-entropy-in-runtime-rewired-multi-agent-systems)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：在大规模社交网络上模拟动态过程
-3. [Playing Against the Machine: Cooperation, Communication, and Strategy Heterogeneity in Repeated Prisoner's Dilemma](/202603/23/2603.15852v1-playing-against-the-machine-cooperation-communication-and-strategy-heterogeneity-in-repeated-prisoners-dilemma)  
+   evidence：基于大语言模型的多智能体系统工程架构
+3. [On Online Control of Opinion Dynamics](/202603/24/2603.17155v1-on-online-control-of-opinion-dynamics)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：模拟与AI智能体的社会行为与合作
-4. [Myopic Best Response as a Double-Edged Mechanism in Networked Social Dilemmas with Individual Solutions](/202603/23/2603.18128v1-myopic-best-response-as-a-double-edged-mechanism-in-networked-social-dilemmas-with-individual-solutions)  
+   evidence：多智能体系统中的舆论动力学在线控制
+4. [Agentic AI and the next intelligence explosion](/202603/24/2603.20639v1-agentic-ai-and-the-next-intelligence-explosion)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：网络化社会困境中的演化结果与均衡
-5. [I Can't Believe It's Corrupt: Evaluating Corruption in Multi-Agent Governance Systems](/202603/23/2603.18894v1-i-cant-believe-its-corrupt-evaluating-corruption-in-multi-agent-governance-systems)  
+   evidence：模拟内部思想社会与社会基础设施
+5. [AI-Driven Multi-Agent Simulation of Stratified Polyamory Systems: A Computational Framework for Optimizing Social Reproductive Efficiency](/202603/24/2603.20678v1-ai-driven-multi-agent-simulation-of-stratified-polyamory-systems-a-computational-framework-for-optimizing-social-reproductive-efficiency)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体治理模拟与社会行为评估
-6. [Text-Based Personas for Simulating User Privacy Decisions](/202603/23/2603.19791v1-text-based-personas-for-simulating-user-privacy-decisions)  
+   evidence：社会再生产效率和人口趋势的多智能体模拟
+6. [Modeling Epistemic Uncertainty in Social Perception via Rashomon Set Agents](/202603/24/2603.20750v1-modeling-epistemic-uncertainty-in-social-perception-via-rashomon-set-agents)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：利用LLM画像模拟人类隐私决策
+   evidence：用于模拟社会感知和群体动态的大模型驱动多智能体框架
+7. [The AI Scientific Community: Agentic Virtual Lab Swarms](/202603/24/2603.21344v1-the-ai-scientific-community-agentic-virtual-lab-swarms)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：利用智能体集群模拟科学共同体行为
+8. [Empirical Evaluation of Link Deletion Methods for Limiting Information Diffusion on Social Media](/202603/24/2603.21470v1-empirical-evaluation-of-link-deletion-methods-for-limiting-information-diffusion-on-social-media)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：通过链接删除限制社交媒体上的虚假信息扩散
+9. [Would You Like to Visit My World? Cultivating Perceived Equality in Human-Agent Interaction via Observable Social Life Spaces](/202603/24/2603.21505v1-would-you-like-to-visit-my-world-cultivating-perceived-equality-in-human-agent-interaction-via-observable-social-life-spaces)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：虚拟环境中具有社会关系的智能体
 
 ### 速读区论文标签
-1. [Reinforcing Real-world Service Agents: Balancing Utility and Cost in Task-oriented Dialogue](/202603/23/2602.22697v1-reinforcing-real-world-service-agents-balancing-utility-and-cost-in-task-oriented-dialogue)  
+1. [EmCoop: A Framework and Benchmark for Embodied Cooperation Among LLM Agents](/202603/24/2603.00349v1-emcoop-a-framework-and-benchmark-for-embodied-cooperation-among-llm-agents)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：模拟人格驱动的用户进行智能体训练
-2. [AgentDropoutV2: Optimizing Information Flow in Multi-Agent Systems via Test-Time Rectify-or-Reject Pruning](/202603/23/2602.23258v1-agentdropoutv2-optimizing-information-flow-in-multi-agent-systems-via-test-time-rectify-or-reject-pruning)  
+   evidence：多智能体系统中大语言模型智能体的具身协作
+2. [EMPA: Evaluating Persona-Aligned Empathy as a Process](/202603/24/2603.00552v1-empa-evaluating-persona-aligned-empathy-as-a-process)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：优化多智能体系统中的信息流
-3. [Agentic Hives: Equilibrium, Indeterminacy, and Endogenous Cycles in Self-Organizing Multi-Agent Systems](/202603/23/2603.00130v1-agentic-hives-equilibrium-indeterminacy-and-endogenous-cycles-in-self-organizing-multi-agent-systems)  
+   evidence：用于评估对话智能体的多智能体沙盒
+3. [MO-MIX: Multi-Objective Multi-Agent Cooperative Decision-Making With Deep Reinforcement Learning](/202603/24/2603.00730v1-mo-mix-multi-objective-multi-agent-cooperative-decision-making-with-deep-reinforcement-learning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：具有人口动态特征的自组织多智能体系统
-4. [DIG to Heal: Scaling General-purpose Agent Collaboration via Explainable Dynamic Decision Paths](/202603/23/2603.00309v1-dig-to-heal-scaling-general-purpose-agent-collaboration-via-explainable-dynamic-decision-paths)  
+   evidence：多目标多智能体强化学习
+4. [Silo-Bench: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems](/202603/24/2603.01045v1-silo-bench-a-scalable-environment-for-evaluating-distributed-coordination-in-multi-agent-llm-systems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：非结构化多智能体系统中的涌现协作
-5. [AgentTrace: Causal Graph Tracing for Root Cause Analysis in Deployed Multi-Agent Systems](/202603/23/2603.14688v1-agenttrace-causal-graph-tracing-for-root-cause-analysis-in-deployed-multi-agent-systems)  
+   evidence：评估多智能体LLM系统的协作能力
+5. [Beyond Benchmark Islands: Toward Representative Trustworthiness Evaluation for Agentic AI](/202603/24/2603.14987v1-beyond-benchmark-islands-toward-representative-trustworthiness-evaluation-for-agentic-ai)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：已部署多智能体系统中的因果追踪
-6. [Ego to World: Collaborative Spatial Reasoning in Embodied Systems via Reinforcement Learning](/202603/23/2603.14811v1-ego-to-world-collaborative-spatial-reasoning-in-embodied-systems-via-reinforcement-learning)  
+   evidence：社会技术场景下智能体AI的可信度评估
+6. [SAGE: Multi-Agent Self-Evolution for LLM Reasoning](/202603/24/2603.15255v1-sage-multi-agent-self-evolution-for-llm-reasoning)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统中的协作空间推理
-7. [Sample-Efficient Hypergradient Estimation for Decentralized Bi-Level Reinforcement Learning](/202603/23/2603.14867v1-sample-efficient-hypergradient-estimation-for-decentralized-bi-level-reinforcement-learning)  
+   evidence：LLM推理的多智能体自我进化框架
+7. [SAGE: Multi-Agent Self-Evolution for LLM Reasoning](/202603/24/2603.15255v2-sage-multi-agent-self-evolution-for-llm-reasoning)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：领导者-跟随者智能体的去中心化双层强化学习
-8. [Interference-Aware K-Step Reachable Communication in Multi-Agent Reinforcement Learning](/202603/23/2603.15054v1-interference-aware-k-step-reachable-communication-in-multi-agent-reinforcement-learning)  
+   evidence：用于推理的多智能体自我进化
+8. [Brain-Inspired Graph Multi-Agent Systems for LLM Reasoning](/202603/24/2603.15371v1-brain-inspired-graph-multi-agent-systems-for-llm-reasoning)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体强化学习中的通信
-9. [Agentic DAG-Orchestrated Planner Framework for Multi-Modal, Multi-Hop Question Answering in Hybrid Data Lakes](/202603/23/2603.14229v1-agentic-dag-orchestrated-planner-framework-for-multi-modal-multi-hop-question-answering-in-hybrid-data-lakes)  
+   evidence：受大脑启发的图多智能体系统用于大语言模型推理
+9. [Compute Allocation for Reasoning-Intensive Retrieval Agents](/202603/24/2603.14635v1-compute-allocation-for-reasoning-intensive-retrieval-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多模态问答的智能体框架
-10. [Why Do LLM-based Web Agents Fail? A Hierarchical Planning Perspective](/202603/23/2603.14248v1-why-do-llm-based-web-agents-fail-a-hierarchical-planning-perspective)  
+   evidence：推理密集型检索智能体
+10. [To be FAIR or RIGHT? Methodological [R]esearch [I]ntegrity [G]iven [H]uman-facing [T]echnologies using the example of Learning Technologies](/202603/24/2603.15366v1-to-be-fair-or-right-methodological-research-integrity-given-human-facing-technologies-using-the-example-of-learning-technologies)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：基于大语言模型的Web智能体与分层规划
-11. [Distance Backbones Optimize Spreading Dynamics and Centrality Ranks in the Sparsification of Complex Networks](/202603/23/2603.14564v1-distance-backbones-optimize-spreading-dynamics-and-centrality-ranks-in-the-sparsification-of-complex-networks)  
+   evidence：基于模拟研究和经验社会科学的方法论框架
+11. [CLAG: Adaptive Memory Organization via Agent-Driven Clustering for Small Language Model Agents](/202603/24/2603.15421v1-clag-adaptive-memory-organization-via-agent-driven-clustering-for-small-language-model-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：保留传播动力学和社会结构的复杂网络稀疏化
+   evidence：针对小语言模型智能体的代理记忆框架
 
 
 <div class="dpr-home-promo-card">

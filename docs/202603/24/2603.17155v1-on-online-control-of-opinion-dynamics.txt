@@ -1,0 +1,815 @@
+Title: On Online Control of Opinion Dynamics
+
+URL Source: https://arxiv.org/pdf/2603.17155v1
+
+Published Time: Thu, 19 Mar 2026 00:22:41 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# On Online Control of Opinion Dynamics 
+
+Sheryl Paul 1, Leslie Cruz Juarez 1, Jyotirmoy V. Deshmukh 1, Ketan Savla 1
+
+Abstract — Networked multi-agent dynamical systems have been used to model how individual opinions evolve over time due to the opinions of other agents in the network. Particularly, such a model has been used to study how a planning agent can be used to steer opinions in a desired direction through repeated, budgeted interventions. In this paper, we consider the problem where individuals’ susceptibilities to external influences are unknown. We propose an online algorithm that alternates between estimating this susceptibility parameter, and using the current estimate to drive the opinion to a desired target. We provide conditions that guarantee stability and convergence to the desired target opinion when the planning agent faces budgetary or temporal constraints. Our analysis shows that the key advantage of estimating the susceptibility parameter is that it helps achieve near-optimal convergence to the target opinion given a finite amount of intervention rounds, and, for a given intervention budget, quantifies how close the opinion can get to the desired target. 
+
+I. INTRODUCTION In this paper, we study the problem of influencing the preferences of social agents through the lens of control design. A social agent is a unit of a networked multi-agent system, where the opinion or preference of each agent in the network evolves over time while being influenced by the opinion of the neighboring agents in the network. Additionally, we assume a designated planner agent that can perform interventions (or control actions), which percolate through the network and may guide agents to a specific desired opinion. The agent network is assumed to model the 
+
+susceptibility of agents to the opinions of other agents as well as the planner agent. The objective of this paper is to study how the planner agent can estimate the susceptibility parameters of the agent network, and how the learned pa-rameters can be used to design resource allocation to move opinions towards a desired value. There are many real-world applications of such a problem setting. For example, consider social settings where agents are individual humans in a social network, and a central plan-ner may wish to encourage certain kinds of behaviors such as sustainable consumer behavior, public health awareness, civic engagement, etc. In these scenarios, influences can be applied through interventions like advertising, discounts, or targeted messaging. However, these deployments also come with a cost (e.g. time spent or monetary expense). Thus, we wish to optimize the cost of control actions while being able to reach the desired objective in the least amount of time. This problem of the allocation of influencing interventions in opinion dynamics has been previously studied with various          
+
+> 1University of Southern California, Los Angeles, California, 90089, USA.
+
+{sherylpa, lcruzjua, jdeshmuk, ksavla }@usc.edu 
+
+models. Classical frameworks like DeGroot explain consen-sus formation under fixed interaction rules [1]. Subsequent work (e.g., [2], [3]) studies the implications of Bayesian and non-Bayesian social learning models, highlighting when beliefs converge to truth, and when network structure or agent behavior leads to polarization, or clustering. The Friedkin–Johnsen model introduces agent stubbornness [4], and has been extended to study leadership design (tailored to network structure) [5], adversarial settings involving com-peting stubborn agents [6], and convergence behavior over time-varying or concatenated graphs [7]–[9]. Optimal control formulations target specific opinion outcomes within budget or effort constraints [10], though often under the assumption that the interaction parameters are known. Recent works emphasize parameter recovery and forecasting e.g., sublinear or Expectation Maximization-style estimators [11], [12] and sociologically informed neural predictors [13]. Such Bayesian estimation methods use regret minimiza-tion and bandit algorithms that update parameter estimates dynamically upon the arrival of new data. In contrast to the regret-minimization focus of online-learning and bandit methods [14]–[16] and regret-optimal estimation and control methods [17], we treat opinion shaping as a networked control problem. Unlike [13], which forecasts opinions with sociologically-informed neural nets, we aim to control an opinion dynamic model to a prescribed target under budget and constraints. We show that by alternating parameter identification with a control law (derived analytically), we can drive the system to a prescribed target opinion, while providing explicit convergence-rate and cost bounds. Our proposed method combines opinion dynamics inspired by the Friedkin-Johnsen model and online control, where we assume that the ‘susceptibility’ parameters for the network are unknown and are estimated. The algorithm alternates between exploration (to maximize parameter accuracy) and exploitation (using an optimal control law to drive opinions towards a desired target under current estimates). In contrast to [18], our control law is derived analytically, and we provide proofs of convergence for state and parameter errors over our two-phase algorithm. We also address a feasibility 
+
+problem: given a time horizon, and budget-constraint, de-termining if the system can be steered to be within a user-specified error tolerance from the desired target opinion. We summarize our contributions as follows: 
+
+Contributions. (1) We analyze the state invariance, equi-libria and convergence of opinion dynamics model, derive analytic control update rules, and prove convergence to the target when the parameters are under defined constraints. We further formulate a finite-horizon feasibility problem 
+
+> arXiv:2603.17155v1 [cs.SI] 17 Mar 2026
+
+under error (distance of the state to the target) and bud-get constraints. (2) For unknown susceptibility parameters, we propose an online control algorithm that alternates be-tween parameter-estimation and control, ensuring parameter identifiability and performance. We prove that, under this algorithm, the combined parameter and state error converges, and the system state is driven to the desired target. (3) We compare our work through simulations against recent models that perform budget-constrained optimization and those that perform online control via gradient descent. Additionally, we benchmark the cost of parameter-estimation by comparison with the cost of control under known parameters. The paper is organized as follows: Section 2 introduces the system dynamics and formulates the control and parameter-estimation problems. In Section 3 we analyze system equi-libria, stability under static and time-varying inputs, and perform feasibility analysis via convergence rate and control cost. Section 4 presents the parameter identification algo-rithm with sufficient conditions for correctness, while Section 5 describes the adaptive control algorithm with theoretical convergence guarantees. In Section 6 we report simulation results, and discuss limitations and future directions in Sec-tion 7. II. PRELIMINARIES 
+
+Friedkin-Johnsen Model for Opinion Dynamics. The opin-ion dynamics model in our work is inspired by the Friedkin-Johnsen (FJ) model [19] which is shown in Equation (1). 
+
+x(t) = Λ( I − L)x(t − 1) + ( I − Λ) d (1) where x(t) ∈ RN represents the system state at time t, and 
+
+xi(t) ∈ R denotes the opinion of agent i. The desired opinion vector is denoted by d = d1 ∈ [0 , 1] N , with the scalar 
+
+d ∈ [0 , 1] representing the target opinion. Λ is a diagonal matrix representing agents’ susceptibility to interpersonal influence, where λii represents the susceptibility of agent 
+
+i, and L is the graph-Laplacian of the underlying social network graph. This model has the unique fixed point: x∗ =(Λ L + I − Λ) −1(I − Λ) d. The quantity ΛL encodes how much each agent averages neighbors’ opinions, and I − Λ
+
+encodes attachment or bias to one’s prejudice. We note that the FJ model does not include a planner agent that can alter the opinion dynamics. To allow for such an agent, in [18], the authors present a modified two timescale model; in our paper, we consider only the discrete-time version of this model, which is shown in Equation (2). 
+
+x(t) = V (I − HU (t)) x(t − 1) + HU (t)d. (2) In the above formulation, H = diag( h1, . . . , h N ) ≻ 0 is the susceptibility matrix where hi, represents the suscepti-bility of agent i to the planner’s influence. The non-negative control vector u(t) ∈ RN 
+
+> ≥0
+
+represents the influence that the planner exerts on the system, with ui(t) representing the influence exerted on agent i at time t (U (t) = diag( u(t)) .
+
+V = (Λ L + I − Λ) −1(I − Λ) , V ∈ RN ×N , is defined by the fixed point of the FJ model, where vij represents the weight agent i places on agent j’s opinion. In [18], the authors argue that the matrix −(Λ L + I − Λ) is Metzler and Hurwitz, and therefore invertible, under the assumption of a strongly connected graph and at least one non-stubborn agent i.e. ∃i s. t. λii < 11.The interpretation of system dynamics in (2) is that agents form a convex blend of their prior opinions x(t − 1) and the target d, weighted by HU (t). (We assume HU (t) ∈
+
+[0 , 1] (elementwise) and will justify why this restriction is necessary in the next section.) After this, the social mixing matrix V propagates these updates across the network. 2
+
+Cost definitions and budget. We assume that the control strategy of the planner incurs some cost. Similar to [18], we assume that these costs are linear functions of the control input 3. W.l.o.g., we interpret ui(t) as the actual per–agent effort or cost at time t. We can define cost at time instant t
+
+as c(t) = Pni=1 ui(t) and the cumulative cost over horizon-
+
+T as cu(T ) = Pni=1 
+
+PTt=1 ui(t). A natural budget constraint is cu(T ) ≤ Cmax for some Cmax > 0.
+
+Problem Statement. We describe the problems we wish to solve, under the cases of known and unknown parameters. Specifically, we assume the susceptibility matrix H which encodes each agent’s responsiveness to planner interventions is unknown. 4 The problems we solve in this work are stated below, categorized in the known and unknown parameter settings: 
+
+Known susceptibility parameters . (1) Global asymptotic sta-bility: We design a control sequence u(t) so that x = d is a globally asymptotically stable equilibrium of the system, i.e., 
+
+x(t) → d, as t → ∞ . (2) Feasibility under error constraints and budget: Given a time horizon T , and a target accuracy 
+
+ϵ ≥ ∥ x(t) − d∥ and a total cost budget Cmax > 0, we wish to find u(t) that satisfies both the accuracy and budget constraints. 
+
+Unknown susceptibility parameters . (3) Online Control: We employ a parameter estimation algorithm, to estimate the unknown parameter H, while simultaneously driving x to the target using adaptive control. We show that, under certain conditions the combined error converges: the state error decreases to zero, while the parameter error remains bounded at a minimum level.                 
+
+> 1The matrix is Metzler because Lis a Laplacian and Λis diagonal with entries in [0 ,1] , preserving the Metzler property. It is Hurwitz because the graph Gis connected and has at least one non-stubborn agent ensuring it is positive definite and invertible.
+> 2Our model applies control at every discrete time step, whereas [18] uses a two-timescale scheme in which interventions ’campaigns’+) occur at discrete epochs and the system evolves in continuous time between campaigns.
+> 3The cost in a social setting models the planner purchasing influence (ads, outreach campaigns, incentives). This, along with simpler comparison to related work acts as our motivation for choosing a linear sum of costs, over the advantages of smoother analysis provided by quadratic costs.
+> 4Susceptibility to influence is latent, and cannot typically be directly observed, or reliably inferred through survey data, as individuals rarely estimate their own susceptibility accurately. In contrast, other parameters such as the interaction matrix Vcan be inferred from observed networks, and the opinion vector x(t)is observable through expressed behavior (clicks, ratings, purchases, or survey/sentiment responses).
+
+III. ANALYSIS OF SYSTEM DYNAMICS As a starting point, we examine the boundedness of the state trajectory and establish that under the system dynamics, 
+
+x(t) remains confined to an invariant subset of Rn for all time. 
+
+Theorem 1. If V ∈ Rn×n is row-stochastic matrix, i.e., V 1 = 1 and vij ≥ 0, ∀i, j , and the control vector u(t) satisfies 0 ≤ hiui(t) ≤ 1 ∀i,for ∀t, assuming that the opinion vector x(t −
+
+1) lies in the subset [0 , 1] n with the desired target d ∈
+
+[0 , 1] n, then under the dynamics equation (2) x(t) remains in the set [0 , 1] n, i.e., the set [0 , 1] n is positively invariant under the system dynamics. Proof. Since each term hiui(t) ∈ [0 , 1] , we observe that for each i, the quantity (1 − hiui(t)) xi(t − 1) + hiui(t)d is a convex combination of xi(t − 1) ∈ [0 , 1] and d ∈ [0 , 1] and 
+
+∴ 0 ≤ (1 − hiui(t)) xi(t − 1) + hiui(t)d ≤ 1 ∀i (3) Therefore, the vector [( I − HU (t)) x(t − 1) + HU (t)d] ∈
+
+[0 , 1] n.Now since x(t) = V [( I − HU (t)) x(t − 1) + HU (t)d],and each row (vi1, . . . , v in ) of V is a probability vector (i.e. 
+
+vij ≥ 0 and P 
+
+> j
+
+vij = 1 ), it follows that each coordinate 
+
+xi(t) is a convex combination of entries of the expression 
+
+(1 − hiui(t)) xi(t − 1) + hiui(t)d.
+
+∴ From (3) it follows that: 0 ≤ xi(t) ≤ 1, ∀i. Thus, the opinion vector x(t) ∈ [0 , 1] n, ∀t.We now address the problems known susceptibility parame-ters setting. First, we establish global asymptotic stability of the equilibrium (i.e., x(t) → d as t → ∞ ) under some bounds on the control input u(t). Second, we formulate and analyze a finite-horizon feasibility problem that certifies attainment of a prescribed error (distance from target) within a specified control budget. 
+
+A. Stability Analysis under Bounded Control Input 
+
+To establish global asymptotic stability of the equilibrium 
+
+x = d, we analyze the existence, uniqueness, and stability of the equilibria under bounded control inputs. 
+
+Theorem 2 (Stability of the desired equilibrium for admis-sible initial conditions) . Consider the dynamics in (2) , if 
+
+x(0) , d ∈ [0 , 1] n, and if the control vector u(t) satisfies 
+
+0 < hiui(t) < 1, ∀i, t , then for all initial conditions 
+
+x(0) ∈ [0 , 1] n, the system converges exponentially to the equilibrium x∗ = d.Proof. Let us define the deviation from equilibrium as 
+
+x′(t) = x(t)−d. Since d is constant: d = V [( I −HU (t)) d+
+
+HU (t)d] = V d. Subtracting d from both sides of the system dynamics Eq. (2): we get 
+
+x′(t) = V (I − HU (t)) x′(t − 1) .
+
+Let us define A(t) = V (I − HU (t)) . Then the update becomes: 
+
+x′(t) = A(t − 1) x′(t − 1) = A(t − 1) A(t − 2) · · · A(0) x′(0) .
+
+Let η(t) = min i hiui(t), so that 0 < η (t) < 1. Then: 
+
+∥A(t)∥∞ ≤ 1 − η(t) < 1,
+
+∥x′(t)∥∞ ≤
+
+> t−1
+
+Y
+
+> s=0
+
+(1 − η(s)) 
+
+!
+
+∥x′(0) ∥∞. (4) Since η(t) ∈ (0 , 1) , Q∞
+
+> t=0
+
+(1 − η(t)) = 0 and therefore, 
+
+∥x′(t)∥∞ → 0. Thus, we have lim t→∞ x(t) = d.
+
+If u(t) = u is constant, then so is A = V (I − HU ). By the assumption 0 < h iui < 1, we have: ∥I − HU ∥∞ =max i |1 − hiui| < 1 so ∥A∥∞ ≤ ∥ V ∥∞∥I − HU ∥∞ < 1,
+
+and we can similarly show that lim t→∞ x(t) = d.
+
+Remark 3 (Joint Spectral Radius Argument.) . We could also show this result using an argument with the joint spectral radius of A(t). Define M = { V (I − HU ) : U =diag( u), 0 < h iui ≤ 1 }, η = inf t min i hiui(t) > 0. Then 
+
+∥A∥∞ ≤ 1 − η for all A ∈ M , so ρ(M) ≤ 1 − η < 1.By standard results [20], for any sequence A(t) ∈ M,
+
+x′(t) = A(t − 1) · · · A(0) x′(0) → 0 exponentially, hence 
+
+x(t) → x∗.
+
+Remark 4 (System behavior without control input.) . If U =0, the system reduces to the standard consensus dynam-ics [21]: x(t) = V x (t − 1) . If x(t − 1) = d, then x(t) = d.That is, the system remains at equilibrium. However, if 
+
+x(t − 1) ̸ = d, then the system converges to a weighted average of the initial state components instead, and d does not influence the convergence. Having established convergence to the desired equilibrium for admissible initial conditions under bounds on the control input, we go on to characterize the convergence rate for such inputs and quantify the corresponding control cost. 
+
+B. Feasibility Analysis of Control Cost and Accuracy 
+
+Rate of Convergence. We consider a time-varying control input of the form u(t), which enforces a uniform rate of convergence r(t) = a · bt ∈ (0 , 1) , with 0 < a, b < 1 for all agents, s.t. hiui(t) = r(t). Thus, the individual control input for each agent can be set as 
+
+ui(t) = r(t)
+
+hi
+
+(5) From (4) ∥x′(t)∥∞ ≤ ∥ x′(0) ∥∞ · Qt−1
+
+> s=0
+
+(1 − ab s). Using the inequality 1 − y ≤ e−y for y ∈ (0 , 1) , we bound the product as: ∥x′(t)∥∞ ≤ exp 
+
+
+
+− a(1 −bt)1−b
+
+
+
+· ∥ x′(0) ∥∞
+
+so lim t→∞ ∥x′(t)∥∞ ≤ exp 
+
+
+
+− a
+
+> 1−b
+
+
+
+· ∥ x′(0) ∥∞.And the distance from equilibrium ϵ, at time T can be bounded by: 
+
+ϵ = ∥x′(T )∥∞ ≤ exp 
+
+
+
+− a(1 − bT )1 − b
+
+
+
+· ∥ x′(0) ∥∞ (6) We define non-uniform control as when each agent has a specified control input depending on their individual sus-ceptibility parameter hi, and uniform control as when the same control input (say uc(t)) is applied to all agents i.e., ui(t) = uc(t), ∀i. 5 Cost of Control. We now compute the associated cost of control, making explicit the trade-off between convergence speed and control expenditure. The expression for cost can be given as: 
+
+cu(T ) =  
+
+> T−1
+
+X
+
+> t=0
+> n
+
+X
+
+> i=1
+
+r(t)
+
+hi
+
+= 
+
+> T−1
+
+X
+
+> t=0
+> n
+
+X
+
+> i=1
+
+ab t
+
+hi
+
+= a(1 − bT )1 − b S, S =
+
+
+
+> n
+
+X
+
+> i=1
+
+1
+
+hi
+
+(non-uniform control) 
+
+nhmax (uniform control) (7) In both cases, the cost depends on the same bilinear term 
+
+a(1 − bT )/(1 − b) that also governs convergence speed. 
+
+Minimum Control Cost for Finite-Time ϵ-Accuracy. 
+
+Firstly, in order to ensure at time t, that the state x(t) is at most ϵ away from the equilibrium, from (6) we have: 
+
+a(1 − bt) ≥ (1 − b) log 
+
+ ∥x′(0) ∥∞
+
+> ϵ
+
+
+
+. Secondly, to satisfy a budget constraint, i.e., cu(t) ≤ Cmax , from equation (7) we get: a(1 − bt) ≤ (1 − b) Cmax  
+
+> S
+
+. These inequalities aid us in framing and solving the problem of analyzing the feasibility of achieving ϵ−accuracy under given time and budget constraints. 
+
+Feasibility Analysis. Given a finite horizon T , minimum accuracy requirement ϵ > 0, initial error ∥x′(0) ∥∞, budget limit Cmax , and the sum of susceptibility parameters S =Pni=0 1/h i, we seek to determine whether there exist a, b ∈
+
+(0 , 1) such that the control schedule u(t) = ab t/h i satisfies both the accuracy and budget constraints. This amounts to solving the constraint system: 
+
+Cmax 
+
+S ≥ a 1 − bT
+
+1 − b ≥ log 
+
+ ∥x′(0) ∥∞
+
+ϵ
+
+
+
+, 0 < a, b < 1. (8) A solution exists if:  
+
+> •
+
+Condition 1. Relating the error ϵ to the budget Cmax 
+
+we require: ϵ ≥ ∥ x′(0) ∥∞e− Cmax  
+
+> S
+
+. 
+
+> •
+
+Condition 2. We can rewrite 8 as: 
+
+log 
+
+ ∥x′(0) ∥∞
+
+> ϵ
+
+ 1 − b
+
+1 − bT ≤ a ≤ Cmax 
+
+S
+
+1 − b
+
+1 − bT .
+
+Under Condition 1 the interval is nonempty; to also satisfy a < 1 it suffices that Cmax  
+
+> S
+> 1−b
+> 1−bT
+
+≤ 1.Obtaining the value of b requires solving a polynomial equation: a(1 − bT ) − Cmax  
+
+> S
+
+(1 − b) = 0 or a(1 − bT ) −
+
+log 
+
+ ∥x′(0) ∥∞
+
+> ϵ
+
+
+
+(1 − b) = 0 . Hence, feasibility reduces to verifying these conditions, which can be checked analytically or with standard nonlinear solvers. Thus, we have established the convergence of the system dynamics and analyzed the feasibility problem in the case of known parameters. However, if the susceptibility parameter 
+
+H is unknown, estimating it enables us to design u(t)                                      
+
+> 5In the special case of a constant control input u(t) = u, convergence can be regulated by fixing a rate r∈(0 ,1) and setting ui=r/h i, which yields ∥x′(t)∥∞≤(1 −r)t∥x′(0) ∥∞. In the case of uniform control, we impose bounds hmin ≤hi≤hmax and select uc=r/h max . This guarantees hiuc∈[rh min /h max , r ]⊂(0 ,1) for all i, leading to the contraction bound ϵ=∥x′(t)∥∞≤
+> 
+> 1−rh min
+> hmax
+> t
+> ∥x′(0) ∥∞.
+
+accurately enough for faster convergence, while respecting the bounds 0 < h iui < 1 and budget constraints. Although convergence can be achieved without exact estimation of 
+
+H, more accurate estimates allow tighter enforcement of the input bounds, thereby improving the convergence rate. This motivates the parameter identification algorithm that we introduce in the next section. IV. PARAMETER ESTIMATION In this section, we adapt standard parameter-estimation techniques for discrete-time systems following the frame-work presented in the literature [22] (Ref. Chapter 4) to identify the susceptibility parameter H. In such techniques, unknown model parameters are updated online using error signals between the plant and a reference/prediction model. An adaptation law (e.g. gradient, Lyapunov-based, or least-squares) adjusts the estimates to maintain stability and de-sired performance. The canonical setup in this framework considers systems of the form: 
+
+x(t) = ˜Ft(x(t − 1) , u (t − 1)) + Ft(x(t − 1) , u (t − 1)) θ, (9) where ˜Ft and Ft are assumed to be known functions 6, and 
+
+θ ∈ Rn is an unknown parameter vector that appears linearly with the regressor matrix Ft.We reformulate our system to match the canonical form to show how we can apply the adaptive control technique. We denote the parameter hi as θi and H as Θ henceforth. We observe that the following substitutions allows us to rewrite (2) in the form of (9): 
+
+˜Ft := V x (t − 1) Ft := V diag  u(t) ◦ (d − x(t − 1)) 
+
+where U (t) = diag( u(t)) and ◦ denotes elementwise multi-plication. The parameter-estimation method prescribes com-puting a state prediction ˆx(t), and updating the parameter estimate at time t, i.e., ˆθ(t) as follows: 
+
+ˆx(t) = ˜Ft + Ft ˆθ(t − 1) ,
+
+ˆθ(t) = ˆθ(t − 1) + Ψ F ⊤
+
+> t
+
+ x(t) − ˆx(t), Ψ = ψI, ψ > 0.
+
+(10) where Ψ is a gain matrix. Intuitively, this update cor-rects the estimate in the direction of the state prediction error, weighted by the regressor Ft. Let the parameter and state estimation errors be defined as: θerr (t) := θ −
+
+ˆθ(t), and xerr (t) := x(t) − ˆx(t). Substituting in the above dynamics yields: 
+
+xerr (t) = Ftθerr (t−1) and θerr (t) = ( I −ΨF ⊤ 
+
+> t
+
+Ft)θerr (t−1) 
+
+(11) Thus, the updates in (10) are applied iteratively at each timestep, using the observed state to refine the parameter estimate. The mechanism works by adjusting ˆθ(t) in the direction that would reduce the observed state prediction error, effectively steering the parameters to better match the system dynamics over time. We now show that the parameter    
+
+> 6For convenience we denote them without the arguments as ˜Ftand Ft
+> henceforth.
+
+error under this method converges to zero, using Lyapunov analysis. 
+
+Parameter Error Analysis. To show that the parameter-error reduces geometrically, we begin by introducing aquadratic Lyapunov function: R(t) := 12 θerr (t)⊤Ψ−1θerr (t).
+
+Using the error dynamics (11), we derive conditions under which R(t) decreases monotonically. The analysis shows that this requires bounds on ∥Ft∥ and an appropriate choice of the gain parameter ψ. By bounding the Lyapunov difference 
+
+R(t) − R(t − 1) , we prove that the parameter error decreases at a geometric rate: ∥θerr ∥ ≤ K. (1 − κ) t 
+
+> 2
+
+, where κ > 0 and 
+
+K > 0 are constants. 
+
+Lemma 1 (Convergence of Parameter Estimation Error) .
+
+Suppose the following conditions hold: 
+
+1) Boundedness: There exists β > 0 such that ∥Ft∥ ≤ β
+
+for all t, and the adaptation gain satisfies ψ < 2/β 2.
+
+> 7
+
+2) Persistent Excitation: The regressor Ft is persistently exciting, i.e., there exists α > 0 such that ∀t: F ⊤ 
+
+> t
+
+Ft ⪰
+
+α2I.Then the following hold: 
+
+1) For (11) , the function R(t) := 12 θerr (t)⊤Ψ−1θerr (t) is a discrete-time Lyapunov function. 
+
+2) The rate of decrease of θerr satisfies: ∥θerr (t)∥ ≤
+
+q 2 
+
+> β2
+
+R(0) 
+
+
+
+1 − α2
+
+> β2
+
+t/ 2
+
+.Proof. By definition of R(t) and using Eq. (11), we can show: 
+
+R(t) − R(t − 1) = −xerr (t)⊤Mt xerr (t); Mt := I − 12 FtΨF ⊤
+
+> t
+
+(12) Note that ∀t, R(t) is positive. To establish that R(t) is a discrete-time Lyapunov function, we show that for all t,
+
+R(t) − R(t − 1) is strictly negative by showing that Mt ≻ 0.Since Ψ is a symmetric p.d. matrix, by the norm-eigenvalue inequality, we have 
+
+λmax (FtΨF ⊤ 
+
+> t
+
+) ≤ λmax (Ψ) ∥Ft∥2
+
+Since λmax (Ψ) = ψ, and from Condition 1, ∥Ft∥2 < β 2, we get that λmax (FtΨF ⊤ 
+
+> t
+
+) ≤ ψβ 2.Applying Weyl’s inequalities to bound the eigenvalues of 
+
+I − 12 FtΨF ⊤ 
+
+> t
+
+, we get: 
+
+λmin (Mt) = 1 − 12 λmax (FtΨF ⊤ 
+
+> t
+
+) ≥ 1 − 12 ψβ 2.
+
+Also by Condition 1, 12 ψβ 2 < 1, which means that the min eigenvalue of Mt is positive, proving that Mt ≻ 0. Next, we establish the convergence rate of ∥θerr (t)∥. Using norm-eigenvalue inequality we have 
+
+xerr (t)⊤Mtxerr (t) ≥ λmin (Mt)∥xerr (t)∥2. (13) From Eq. (11), xerr (t) = Ftθerr (t−1) , and from Condition 2, 
+
+F ⊤ 
+
+> t
+
+Ft ⪰ α2I, so ∥Ftθerr (t − 1) ∥2 ≥ α2∥θerr (t − 1) ∥2                         
+
+> 7Since Vis fixed, x(t),d∈[0 ,1] nand 0< h iui(t)<1, it is possible to bound ∥Ft∥ ≤ ∥ V∥∥ u(t)◦(d−x(t)) ∥∞≤β. The parameter ψis a design choice and can be selected to ensure ψ < 2
+> β2.
+
+And xerr (t)⊤Mtxerr (t) ≥
+
+
+
+1 − 12 ψβ 2
+
+α2∥θerr (t − 1) ∥2.
+
+Now, to bound θerr (t − 1) , we consider the definition of 
+
+R(t − 1) = 12 θerr (t − 1) ⊤Ψ−1θerr (t − 1) . Since Ψ = ψI ,
+
+R(t − 1) = 12ψ ∥θerr (t − 1) ∥2, and we have ∥θerr (t − 1) ∥2 =2ψR (t − 1) . Substituting in Eq. (13): 
+
+xerr (t)⊤Mtxerr (t) ≥ 2ψ
+
+
+
+1 − 12 ψβ 2
+
+α2R(t − 1) 
+
+Substituting in (12) we get: 
+
+R(t) ≤ (1 − κ)R(t − 1) and R(t) ≤ (1 − κ)tR(0) (14) where κ := 2 ψ 1 − 12 ψβ 2α2 > 0. Using the definition of 
+
+R(t), we can simplify this to: 
+
+∥θerr (t)∥ ≤ p2ψR (0)(1 − κ)t/ 2. (15) As ψ is a design parameter, we observe that setting ψ = 1
+
+> β2
+
+yields the smallest value for (1 − κ), which in turn yields the tightest upper bound on ∥θerr (t)∥. Substituting ψ = 1
+
+> β2
+
+in (15) yields: ∥θerr (t)∥ ≤ 
+
+q 2 
+
+> β2
+
+R(0) 
+
+
+
+1 − α2
+
+> β2
+
+t/ 2
+
+.We go on to discuss persistency of excitation (PE) (Con-dition 2), and the choice of u(t) to maintain it. 
+
+Persistency of Excitation Conditions. To enforce the PE condition λmin (F ⊤ 
+
+> t
+
+Ft) ≥ α2 at each time instant, we expand using Ft = V diag( y(t)) with y(t) = u(t)◦(d−x(t)) , which gives λmin 
+
+ F ⊤ 
+
+> t
+
+Ft
+
+ ≥   min j |yj (t)|2λmin 
+
+ V ⊤V . Thus, a sufficient condition to ensure PE is: min j |yj (t)| ≥ αλV
+
+where λV = pλmin (V ⊤V ).Since yj (t) = uj (t)|xj (t)−d|, we must keep the deviation 
+
+|xj − d| bounded away from zero. So, we enforce a margin: 
+
+|xj (t) − d| ≥ δ(t), ∀j where δ(t) ∈ (0 , 1] , i.e., every component of the state x(t) must be at least δ away from the target d to preserve the PE lower bound. We choose δ(t) that guarantees this for all uj (t) using a conservative bound on θ
+
+from its estimate and error. Define θmax (t) = ˆθ(t) + θerr (t)
+
+for a given α we can set: 
+
+δ = αλV umax (t) where umax (t) = min  
+
+> j
+
+1/θ max  
+
+> j
+
+(t) (16) Thus PE holds by keeping x(t) outside a neighborhood of radius δ(t), with α and δ(t) chosen to respect input bounds. We now present an online algorithm that estimates θ while steering x(t) → d.V. ONLINE CONTROL ALGORITHM Our algorithm alternates between “exploration” and “ex-ploitation” phases indexed by m: Let the number of steps in the exploration and exploitation phases of cycle m be Kmθ ,and Kmx resp. Each cycle m is additionally characterized by a neighborhood radius δm and a PE level αm:(i) Exploration: executed while |xj (tm) − d| > δ m, ∀j to guarantee PE and drive ˆθ(tm) → θ. We develop a controller that ensures PE: 
+
+uj (t) = clip [0 , 1/θ j ]
+
+ αλV |xj (t) − d|
+
+
+
+, ∀j (17) Algorithm 1 Online Control Algorithm  
+
+> 1:
+
+Input Target d, social network matrix V 
+
+> 2:
+
+Initialize adaptation gain Ψ, α0 and δ0 (via (16)), shrink factor cδ , parameter-estimate ˆθ(0)  
+
+> 3:
+
+Set m ← 0, tm ← 0 
+
+> 4:
+
+Observe x(0)  
+
+> 5:
+
+while ∥x(tm) − d∥ has not converged do  
+
+> 6:
+
+while |xj (tm) − d| > δ m, ∀j and αm > α min do  
+
+> 7:
+
+uj (tm) ← αm    
+
+> λV|xj(tm)−dj|
+
+, ∀j 
+
+> 8:
+
+Predict ˆx(tm + 1) ; observe x(tm + 1)  
+
+> 9:
+
+Parameter update ˆθ(tm + 1) via (10)  
+
+> 10:
+
+tm ← tm + 1  
+
+> 11:
+
+end while  
+
+> 12:
+
+Update parameter bound: θmax ← ˆθ(tm) + θerr (tm) 
+
+> 13:
+
+while |xj (tm) − d| ≥ γδ m, ∀j do  
+
+> 14:
+
+Set contraction rate: r(tm) = ab tm 
+
+> 15:
+
+uj (tm) ← r(tm)
+
+> θmax
+> j
+
+, ∀j 
+
+> 16:
+
+Observe x(tm + 1) ; tm ← tm + 1  
+
+> 17:
+
+end while  
+
+> 18:
+
+Update schedule δm+1 , α m+1 as in (18)  
+
+> 19:
+
+m ← m + 1  
+
+> 20:
+
+end while 
+
+(ii) Exploitation: executed once ∃j, s.t. |xj (tm) − d| ≤ δm
+
+using the analytic control input (Eq. (5)). To prevent over-contraction in this phase and preserve a nontrivial δm+1 for the next cycle’s exploration phase, we impose: |xj (tm) −
+
+d| ≥ γδ m, ∀j with γ ∈ (0 , 1) .For a chosen α0, we initialize δ0 using Eq. (16). At the end of each cycle m (after the exploitation phase), to guarantee re-entry into the exploration phase in the next cycle, we shrink 
+
+δm by some factor and set: 
+
+δm+1 = cδ (γδ m) and αm+1 = λV umax (tend  
+
+> m
+
+)δm+1 (18) where cδ ∈ (0 , 12 ] is a shrinking factor, and tend  
+
+> m
+
+denotes the time at the end of cycle m. This rule ensures |xj (tm+1 ) −
+
+d| > δ m+1 , ∀j, so the next cycle begins in exploration with a PE level that remains feasible under the input bounds. We carry out the exploration phase until αm > α min where 
+
+αmin ∈ (0 , 1) . Keeping α > α min forces |xj (tm) − d| >δm, ∀j hindering the state convergence to the target i.e. 
+
+∥x(t)−d∥ → 0. Upon reaching αmin , we stop the exploration phases and define the parameter error at this point as θerr min .Let m⋆ = min {m : αm ≤ αmin }, define 
+
+θerr min = θerr  tend 
+
+> m⋆
+
+, R min = 12 θerr min ⊤Ψ−1θerr min (19) We continue exploitation letting δm → 0 to drive x(t) → d.We can now present our online control algorithm 1. and describe it as follows: Lines 1–4 specify the problem inputs and perform initialization: the current state is observed, the parameter-estimate and other hyperparameters are set. Lines 6–10 execute the exploration phase while |xj (tm) − d|∞ >δm, ∀j and αm > α min . The control input ensuring the P E 
+
+condition is applied in line 7 and the parameter-estimate is updated via line 9. Lines 13–16 perform exploitation within the bounds γδ m ≤ | xj (tm) − d| ≤ δm, ∀j using the analytic control with the conservative bound θmax (lines 12–15). At the end of the cycle, the neighborhood radius δm and PE level αm are updated in line 18 using Eq. (18), and the cycle counter advances (line 19). Once αm ≤ αmin , the exploration phase in each cycle, is no longer carried out. However, the exploitation phase (lines 13-16), keeps repeating and as δm → 0, the state error 
+
+∥x(tm) − d∥ → 0, as our control input (line 15) satisfies the conditions stated in Theorem 2. 
+
+Combined State and Parameter errors: Let tm be the start and end of cycle m. Define the combined error: 
+
+Em := νθ R(tm) + νx∥x(tm) − d∥2 (20) with νθ > 0 weighting the parameter error defined by the Lyapunov function R(tm), and νx > 0 weighting the distance of the state to the target ∥x(tm) − d∥2. Now we go on to show the convergence of this combined error under Algorithm 1. 
+
+Proposition 1 (Convergence of combined error) . Let tm
+
+and tm+1 be the start of cycles m and m + 1 respectively. Under the definitions of combined error (20) and minimum parameter error (19) , the state converges to the target: 
+
+∥x(tm) − d∥ → 0 as m → ∞ while the parameter error reaches a minimum R(tm) → Rmin ; hence Em → νθ Rmin 
+
+Proof. During exploration (∥x(tm) − d∥∞ > δm), our control input as designed in Eq. (17), fulfills the conditions in Lemma 1. Hence, the per step contraction is: R(tm+1) ≤
+
+(1 −κm)R(tm) (from Eq. (14)). After K(m) 
+
+> θ
+
+exploration steps and noting that in exploitation ˆθ is not updated (so R does not increase), 
+
+R(tm+1 ) ≤ (1 − κm)K(m) 
+
+> θ
+
+R(tm). (21) The state update satisfies the contraction condition (as in Theorem 2), which implies ∥x(tm+1) − d∥∞ ≤ ∥ x(tm) −
+
+d∥∞. Hence, once the trajectory enters the δm neighborhood, 
+
+∥x(tm+1 ) − d∥∞ ≤ δm, and using the transformation of ℓ∞
+
+norm to ℓ2 norm: 
+
+∥x(tm+1 ) − x∗∥2 ≤ nδ 2
+
+> m
+
+. (22) Multiplying (21) by νθ and (22) by νx and adding gives 
+
+Em+1 ≤ νθ (1 − κm)K(m) 
+
+> θ
+
+R(tm) + νxnδ 2
+
+> m
+
+.
+
+Using δm = cδ ∥x(tm) − d∥∞ ≤ cδ ∥x(tm) − d∥ yields: 
+
+Em+1 ≤ (1 − κm)K(m) 
+
+> θ
+
+νθ R(tm) + nc 2 
+
+> δ
+
+νx∥x(tm) − d∥2
+
+(23) Finally, the updates on αm+1 and δm+1 using Eq. (18) guarantee feasibility of inputs and re-entry into exploration, thereby maintaining PE in the next cycle. Now recall the definitions of Rmin and θerr min from Eq. (19). For m ≥ m⋆, parameter updates stop, so R(tm) = Rmin ,while the state update remains contractive with δm → 0
+
+implying ∥x(tm) − d∥ → 0. Consequently, Em = νθ Rmin +
+
+νx∥x(tm) − d∥2 → νθ Rmin .Fig. 1: Final error ϵ(T ) vs. control cost cu(T ) under known 
+
+θ vs. adaptive control using ˆθ(t).
+
+Fig. 2: Final error ϵ across costs comparing the IODSFC baseline and our method. Thus, we have shown that our algorithm sufficiently esti-mates the parameter θ, while driving the state to the target. 
+
+Remark 5. By our result in 2, estimating θ is not required to drive x(t) → d; it suffices to choose u(t) so that the condition θiui(t) ∈ (0 , 1) , ∀i, t is met. However, as the esti-mation error shrinks, we can tune u(t) with greater accuracy which tightens the contraction factor and improves the rate of convergence. We demonstrate this through simulations in our next section. VI. SIMULATIONS 
+
+Cost of Parameter Estimation. We now attempt to quantify the cost of learning the parameter θ. As noted earlier, knowing θ although not necessary to drive x(t) → d,improves the rate of convergence. Given the same budget 
+
+Cmax for a fixed time horizon T , we can reach a lower 
+
+∥x(T ) − d∥, if θ is known a priori, as opposed to when it must be estimated online- these results can be seen in Fig. 1. In the Known Parameters case, the control can be set optimally as uj (t) = r/θ j , ∀j. However in the Adaptive Control case the control is set to uj (t) = r/ ˆθj (t), ∀j, while 
+
+ˆθ is updating using parameter identification. The gap between the two curves quantifies the cost of learning: with exact θ
+
+we could achieve a lower error ∥x(T ) − d∥ for the same control cost. 
+
+Comparisons with Related Work. (I) Our setting closely aligns with that of [18] (Influencing Opinion Dynamics to promote Sustainable Food Choices, IODSFC), Under a fixed budget, the IODSFC method computes the optimal 
+
+control via numerical optimization. In contrast, we derive a closed-form update for u(t), avoiding optimization. For a fair comparison, since they assume known parameters, we assume likewise that the parameter θ is known for both methods in our simulation. Across varying budgets (Fig. 2), our approach attains performance close to the optimal, with the gap narrowing as the budget increases. Notably, as opposed to IODSFC we also provide analytic convergence conditions (ref. Theorem 2) which enable this control design rather than relying on optimization. (II) The work by [23] (Network-aware Recommender Sys-tem via Online Feedback Optimization, NRS-OFO) proposes a projected-gradient control framework for recommender systems. For a fair comparison we assume in both methods that the state x(t), and the system dynamics are known, and we implement their ‘Gradient Estimation & Optimization’ procedure (Section 3: Level III). We adopt the loss function 
+
+L(x(t)) = 12 ∥x(t) − d∥22, and minimize it via w.r.t. the control input U which requires the steady-state Jacobian 
+
+∇U x∗.The NRS-OFO method updates the control input in in-tervals, and lets the system converge to a steady state in between updates (the control input is constant within each interval). In our model, the only steady state (under bounded 
+
+u(t)) is x∗ = d, though in other frameworks the steady state may be slow to reach or misaligned with the target. To accurately represent this in our simulation of the model, we compute U (t) via gradient descent and keep it constant until convergence or until the cumulative cost of control cu(T )
+
+reaches the budget Cmax .As shown in Fig. 3a, for a given budget Cmax = 15 our method converges faster and attains a lower error. In Fig. 3b, we show the steady-state error i.e. ∥x∗ − d∥ across budgets 
+
+Cmax ∈ {10 , 15 , . . . , 50 } for both methods. Our method achieves lower error for the same cost because it designs 
+
+U (t) to satisfy a budget-constrained error guarantee, whereas NRS–OFO does not explicitly incorporate budget. Finally, in Fig. 3c we present an ablation between two online controllers that both use parameter estimation (as in section 4) but differ in their controllers: (i) gradient-descent updates to U , and (ii) our analytic control uj = r(t)/ ˆθj , ∀j. Both estimate ˆθ online while steering opinions toward d, but our method converges faster and achieves a lower steady-state error. Therefore, our approach outperforms NRS–OFO on achieving lower error for a given cost, while NRS–OFO’s advantage is that it can operate without explicit knowledge of the system dynamics, which our method requires. VII. CONCLUSIONS We presented an online control framework for opinion dynamics with unknown influence parameters, establishing theoretical guarantees on convergence of both the opin-ion trajectory and parameter estimates. Our analysis gives explicit contraction conditions for target convergence. In benchmarks against recent methods, our work performs near-optimally while providing formal guarantees for the analytic (a) Step-wise Gradient descent implemen-tation of NRS-OFO comparison 
+
+(b) Steady state error across budgets. (c) Adaptive Control with Gradient De-scent vs Analytical Solving 
+
+Fig. 3: Comparison of our method with the NRS-OFO method under different experimental setups. (a) Step-wise Gradient Descent. (b) Steady State Errors under fixed budgets. (c) Parameter estimation of θ using (10) with gradient descent versus with our proposed method. control design, and does not incur the computational over-head of optimization. Moreover, by focusing on a specific opinion-dynamics model, we achieve faster convergence to the target and direct estimation of the underlying parameters designed for a specified budget, rather than treating them implicitly within model-agnostic approaches. Future work will include extending estimation beyond the susceptibility parameter to jointly infer the interaction graph and its related parameters. We will also generalize the control and analysis to heterogeneous targets i.e. d̸ = d 1 for any scalar d,and designing budget-aware controllers that ensure progress under non-uniform objectives. REFERENCES [1] M. H. DeGroot, “Reaching a consensus,” Journal of the American Statistical Association , vol. 69, no. 345, pp. 118–121, 1974. [Online]. Available: http://www.jstor.org/stable/2285509 [2] D. Acemoglu and A. Ozdaglar, “Opinion dynamics and learning in social networks,” Dynamic Games and Applications , vol. 1, no. 1, pp. 3–49, 2011. [3] A. Peralta, A. Pluchino, A. E. Biondo et al. , “Opinion dynam-ics: a multidisciplinary review and perspective,” arXiv preprint arXiv:2201.01322 , 2022. [4] N. E. Friedkin and E. C. Johnsen, Choice Shift and Group Polarization ,ser. Structural Analysis in the Social Sciences. Cambridge University Press, 2011, p. 211–232. [5] L. Wang, Y. Xing, Y. Yi, M. Cao, and K. H. Johansson, “Adding links wisely: how an influencer seeks for leadership in opinion dynamics?” Jun. 2025, arXiv:2506.12463 [eess]. [Online]. Available: http://arxiv.org/abs/2506.12463 [6] A. Shrinate and T. Tripathy, “Leveraging Network Topology in a Two-way Competition for Influence in the Friedkin-Johnsen Model,” Apr. 2025, arXiv:2504.03397 [eess]. [Online]. Available: http://arxiv.org/abs/2504.03397 [7] A. V. Proskurnikov, R. Tempo, M. Cao, and N. E. Friedkin, “Opinion evolution in time-varying social influence networks with prejudiced agents,” vol. 50, no. 1, pp. 11 896–11 901. [Online]. Available: http://arxiv.org/abs/1704.06900 [8] L. Wang, C. Bernardo, Y. Hong, F. Vasca, G. Shi, and C. Altafini, “Achieving consensus in spite of stubbornness: time-varying concatenated friedkin-johnsen models,” in 2021 60th IEEE Conference on Decision and Control (CDC) . IEEE, pp. 4964–4969. [Online]. Available: https://ieeexplore.ieee.org/document/9683466/ [9] T.-C. Lee, J.-K. Huang, and Y. Su, “A unified framework for convergence analysis in social networks,” in 2024 IEEE 63rd Conference on Decision and Control (CDC) , pp. 2940–2945, ISSN: 2576-2370. [Online]. Available: https://ieeexplore.ieee.org/document/ 10886608/ [10] I. Kozitsin, “Optimal control of opinion dynamics: Bounded-confidence and dissimilative influence models,” arXiv preprint arXiv:2207.01300 , 2022. [11] S. Neumann, Y. Dong, and P. Peng, “Sublinear-time opinion estimation in the friedkin–johnsen model,” in Proceedings of the ACM Web Conference 2024 , 2024, pp. 2563–2571. [12] C. Monti, G. De Francisci Morales, and F. Bonchi, “Learning opinion dynamics from social traces,” in Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining , 2020, pp. 764–773. [13] M. Okawa and T. Iwata, “Predicting opinion dynamics via sociologically-informed neural networks,” in Proceedings of the 28th ACM SIGKDD conference on knowledge discovery and data mining ,2022, pp. 1306–1316. [14] Y. Abbasi-Yadkori, D. P´ al, and C. Szepesv´ ari, “Improved algorithms for linear stochastic bandits,” in Advances in Neural Information Processing Systems , vol. 24, 2011. [15] H. Bastani and M. Bayati, “Online decision-making with high-dimensional covariates,” Operations Research , vol. 68, no. 1, pp. 276– 294, 2020. [16] N. Cesa-Bianchi and G. Lugosi, Prediction, Learning, and Games .Cambridge University Press, 2006. [17] G. Goel and B. Hassibi, “Regret-optimal estimation and control,” IEEE Transactions on Automatic Control , vol. 68, no. 5, pp. 3041–3053, 2023. [18] A. Fontan, P. E. Colombo, R. Green, and K. H. Johansson, “Influencing opinion dynamics to promote sustainable food choices,” IFAC-PapersOnLine , vol. 58, no. 30, pp. 169–174, 2024, 5th IFAC Workshop on Cyber-Physical Human Systems. [Online]. Available: https: //www.sciencedirect.com/science/article/pii/S2405896325001752 [19] A. V. Proskurnikov and R. Tempo, “A tutorial on modeling and analysis of dynamic social networks. part ii,” Annual Reviews in Control , vol. 45, 2018. [Online]. Available: https://www.sciencedirect. com/science/article/pii/S1367578818300142 [20] R. M. Jungers, The Joint Spectral Radius: Theory and Applications ,ser. Lecture Notes in Control and Information Sciences. Springer, 2009, vol. 385. [21] M. H. DeGroot, “Reaching a consensus,” Journal of the American Statistical Association , vol. 69, no. 345, pp. 118–121, 1974. [Online]. Available: http://www.jstor.org/stable/2285509 [22] P. Ioannou and B. Fidan, Adaptive control tutorial . Siam, 2006, vol. 11. [23] S. Chandrasekaran, G. D. Pasquale, G. Belgioioso, and F. D¨ orfler, “Network-aware recommender system via online feedback optimization.” [Online]. Available: http://arxiv.org/abs/2408.16899
