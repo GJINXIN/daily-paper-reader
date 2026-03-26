@@ -1,0 +1,1161 @@
+Title: Linear-Quadratic Gaussian Games with Distributed Sparse Estimation
+
+URL Source: https://arxiv.org/pdf/2603.17202v1
+
+Published Time: Thu, 19 Mar 2026 00:28:10 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Linear-Quadratic Gaussian Games with Distributed Sparse Estimation 
+
+Tianyu Qiu 1, Filippos Fotiadis 1, Xinjie Liu 1, Christian Ellis 1,2, Jesse Milzman 2, Wesley Suttle 2,Ufuk Topcu 1 and David Fridovich-Keil 1
+
+Abstract — Linear-quadratic Gaussian games provide aframework for modeling strategic interactions in multi-agent systems, where agents must estimate system states from noisy observations while also making decisions to optimize a quadratic cost. However, these formulations usually require agents to utilize the full set of available observations when forming their state estimates, which can be unrealistic in large-scale or resource-constrained settings. In this paper, we consider linear-quadratic Gaussian games with sparse interagent obser-vations. To enforce sparsity in the estimation stage, we design a distributed estimator that balances estimation e ff ectiveness with interagent measurement sparsity via a group lasso problem, while agents implement feedback Nash strategies based on their state estimates. We provide su ffi cient conditions under which the sparse estimator is guaranteed to trigger a corrective reset to the optimal estimation gain, ensuring that estimation quality does not degrade beyond a level determined by the regularization parameters. Simulations on a formation game show that the proposed approach yields a significant reduction in communication resources consumed while only minimally aff ecting the nominal equilibrium trajectories. 
+
+I. I ntroduction 
+
+Dynamic games are widely used to model strategic inter-actions in multi-agent systems, where agents are assumed to share a common representation of state uncertainty. In many applications, however, agents operate under severe resource constraints. For instance, large-scale robot swarms may rely on limited onboard computation and energy re-sources, making it impractical to process or exchange all available measurements. Sparsity in sensing design thus becomes essential for e ffi cient resource allocation. Recent works [1]–[3] have explored sparsity in determin-istic games. These works propose sparsity-promoting game formulations to selectively prune less influential interac-tions while preserving e ff ective overall agent performance. However, deterministic games simplify common multi-agent scenarios by ignoring process disturbances and noise, which are inevitable in real-world applications. Classically, linear-quadratic Gaussian (LQG) games [4] extend dynamic game theory to stochastic settings, where                                    
+
+> This work was sponsored by the ARL under Cooperative Agree-ments W911NF-23-2-0011 and W911NF-25-2-0021, by NSF under grants 2211548, 2336840, and 2409535, by ONR under grant N00014-24-1-2797, and by AFOSR under grant FA9550-22-1-0403. T. Qiu, F. Fotiadis, X. Liu, C. Ellis, U. Topcu, and D. Fridovich-Keil are with the Oden Institute for Computational Engineering and Sciences, The University of Texas at Austin, TX, 78712, USA. (Email:
+> {tianyuqiu, ffotiadis, xinjie-liu, utopcu, dfk }@utexas.edu, christian.ellis@austin.utexas.edu ). C. Ellis, J. Milzman, and W. Suttle are with the DEVCOM Army Research Laboratory, MD, 20783-1138, USA. (Email:
+> jesse.m.milzman.civ@army.mil, suttlewes@gmail.com ).
+> Fig. 1. Feedback LQG game play with distributed sparse estimation in a three-robot formation game.
+
+agents interact under process and observation uncertainty. LQG games have been studied extensively and are funda-mentally more complex than deterministic LQ games studied in [2,5] due to the coupling between control and estimation. Specifically, the separation principle [6]–[8] does not gener-ally hold for these games, and equilibrium strategies depend on the underlying information pattern. As a result, much of the literature on LQG games focuses on characterizing equilibrium solutions under various information structures [9]–[15]. However, these works have not investigated how sparsity in estimation can be incorporated in LQG games. A natural way to introduce sparsity in LQG games is through their estimation stage. In particular, sparsity in estimation can be interpreted as a sensor selection problem, where agents selectively utilize certain observation com-ponents when forming their state estimates. Existing work on sensor selection and sparsity-promoting estimation has primarily focused on single-agent or centralized systems [16]–[18]. Related work on distributed estimation also ex-ists [19]. However, the distributed estimation problem for multi-agent dynamic games brings two di ffi culties: i) agents interact strategically, and ii) agents are subject to distinct measurements, making classical sensor selection approaches inapplicable. Consequently, distributed sparse estimation de-sign in stochastic games remains largely unexplored. In this work, we study how sparsity can be incorporated into LQG games with individual observations. Towards this end, our contributions are as follows: i) We first design a distributed state estimator for LQG games that operates using each agent’s local measurements while agents follow feedback Nash equilibrium strategies [2,5]. ii) Building on this estimator, we introduce a sparsity-promoting distributed estimation framework for LQG games based on group lasso, which promotes structured sparsity across interagent observation groups. iii) We provide su ffi cient conditions showing that if the estimation error covariance grows be-
+
+> arXiv:2603.17202v1 [eess.SY] 17 Mar 2026
+
+yond a level determined by the regularization parameters, the sparse estimator is guaranteed to reset to the optimal estimation gain, thereby preventing unbounded degradation of estimation quality. iv) Finally, we validate the proposed framework through simulations on a three-robot formation game, as illustrated in Fig. 1, demonstrating the trade-o ff 
+
+between estimation sparsity and trajectory performance in noisy multi-agent environments. II. L inear -Q uadratic Gaussian Games with Individual 
+
+Observations 
+
+A. Linear-Quadratic Gaussian Games 
+
+We consider an N-player discrete-time finite-horizon linear-quadratic Gaussian (LQG) game. In this setting, each agent i ∈ [N] B {1, . . . , N}1 is subject to the linear dynamics 
+
+xit+1 B Ait xit + Bituit + wit,
+
+with state xit ∈ Rni , control input uit ∈ Rmi , and system ma-trices Ait ∈ Rni×ni and Bit ∈ Rni×mi . wit ∈ Rni , wit ∼ N (0 , Wit ) is Gaussian process noise with covariance Wit ∈ Rni×ni ⪰
+
+0. We further denote the joint state of all agents as 
+
+xt B [x1⊤ 
+
+> t
+
+, . . . , xN⊤ 
+
+> t
+
+]⊤ ∈ Rn and the joint control input of all agents as ut B [u1⊤ 
+
+> t
+
+, . . . , uN⊤ 
+
+> t
+
+]⊤ ∈ Rm with joint state dimen-sion n B PNi=1 ni and joint control dimension m B PNi=1 mi.The objective of each agent i is to minimize a quadratic performance criterion over a finite time horizon T , subject to the joint dynamics of all agents. Agent i’s problem can be formulated as min 
+
+> ui
+> T
+
+X
+
+> t=1
+
+12 E h(x⊤ 
+
+> t
+
+Qit + 2qi⊤ 
+
+> t
+
+)xt + (u⊤ 
+
+> t
+
+Rit + 2ri⊤ 
+
+> t
+
+)ut
+
+i
+
++ 12 E h(x⊤  
+
+> T+1
+
+QiT +1 + 2qi⊤ 
+
+> T+1
+
+)xT +1
+
+i , (1a) s.t. xt+1 = Atxt + Btut + wt, (1b) 
+
+x1 ∼ N (¯ x1, Σ−
+
+> x,1
+
+), (1c) with At B blockdiag( {Ait}Ni=1), Bt B blockdiag( {Bit}Ni=1) and joint process noise wt B [w1⊤ 
+
+> t
+
+, . . . , wN⊤ 
+
+> t
+
+]⊤ ∈ Rn, following 
+
+wt ∼ N (0, Wt), Wt B blockdiag( {Wit }Ni=1) ∈ Rn×n.
+
+The joint initial state x1 follows a prior Gaussian distribution with mean ¯ x1 and covariance Σ− 
+
+> x,1
+
+⪰ 0. The N agents’ coupled versions of problem (1) form an LQG game. 
+
+B. Individual Observation Model 
+
+In LQG games, each agent i usually does not have access to all agents’ full states xt. Instead, it has access to some partial, noisy individual observations yit ∈ Rpi , given by 
+
+yit B Cit xt + vit, vit ∈ Rpi , vit ∼ N (0 , Vit ), Vit ∈ Rpi×pi ⪰ 0, (2) where Cit ∈ Rpi×n denotes the individual observation matrix of agent i, and vit denotes the individual Gaussian observation noise. We also denote vt B [v1⊤ 
+
+> t
+
+, . . . , vN⊤ 
+
+> t
+
+]⊤ ∈ Rp, following 
+
+vt ∼ N (0, Vt), Vt B blockdiag( {Vit }Ni=1) ∈ Rp×p, p =
+
+> N
+
+X
+
+> i=1
+
+pi.     
+
+> 1In this work, we denote [ Z]B{1, . . . , Z}for any positive integer Z.
+
+In this paper, we assume that yit can be obtained from Pi
+
+individual sensors and thus partitioned into yi1 
+
+> t
+
+, . . . , yiP i 
+
+> t
+
+. It is also common that Cit = I, implying that yit may comprise interagent observations. 
+
+C. Control, Estimation, and Information Patterns 
+
+There is generally no closed-form solution for the feed-back Nash equilibrium in LQG games with individual ob-servations [20]. A common low-complexity approximation assumes that each agent i employs the Nash control gains 
+
+Γt B [Γ1 
+
+> t
+
+, · · · , ΓNt ]⊤ and αt B [α1⊤ 
+
+> t
+
+, · · · , α N⊤ 
+
+> t
+
+]⊤ obtained from the LQG game with process noise but without measurement noise [2,5]. Each agent then estimates the joint state ˆ xit from its individual observations yit with estimation gain Kit , and substitutes this estimate into its control input uit, resulting in: 
+
+uit = −Γit ˆxit − αit, (3) whose performance relies on the accuracy of ˆ xit. To charac-terize this accuracy, we define agent i’s individual estimation error eit and the joint estimation error across agents et as 
+
+eit B xt − ˆxit, et B [e1⊤ 
+
+> t
+
+, · · · , eN⊤ 
+
+> t
+
+]⊤,
+
+and their covariances as Σit B Cov( eit), Σt B Cov( et). The central question we investigate in this paper is how to design these gains Kit to enforce interagent measurement sparsity, while balancing that against control performance. To that end, we assume the following information pattern: 1) The system matrices At, Bt, observation model Cit , pro-cess and measurement noise covariance Wt, Vt, control gains Γt, α t, and distributed estimation gain Kit are common knowledge among agents. 2) The individual observations yit, together with individual estimation ˆ xit computed via yit, and feedback control uit
+
+computed via ˆ xit are not shared among agents. This information pattern captures how agents’ decisions depend upon their limited access to information, particularly when agents’ sensing of one another is sparse .III. D istributed Sparse Estimation Gain Design 
+
+In this section, we design sparse estimation gains Kit
+
+for each agent, subject to the aforementioned information pattern. We first derive the propagation of estimation error and covariance under the distributed information structure, then obtain the unconstrained optimal estimation gain as a reference solution, and finally formulate a group lasso optimization that sparsifies this gain by penalizing reliance on uninformative sensors. 
+
+A. Propagation of Joint Estimation Error and Covariance 
+
+Joint Control Input: A consequence of the assumed information pattern is that each agent i cannot reconstruct the actual joint control ut from (3) applied to the joint system, because agents do not share their state estimates. Instead, each agent can only reconstruct an estimated ˆuit based on its estimation of the joint state ˆ xit. This estimate is given by ˆuit = hˆui1⊤ 
+
+> t
+
+· · · ˆuiN ⊤
+
+> t
+
+i⊤
+
+= −Γt ˆxit − αt = −Γt(xt − eit) − αt, (4) where agent i’s actual control uit is the i-th block of ˆ uit, i.e., 
+
+uit = ˆuii t . Then, the actual joint control ut applied to the system is the concatenation of all agents’ actual control uit, given as 
+
+ut = hˆu11 ⊤ 
+
+> t
+
+· · · ˆuNN ⊤
+
+> t
+
+i⊤
+
+=
+
+> N
+
+X
+
+> j=1
+
+E ju jt
+
+= −αt −
+
+> N
+
+X
+
+> j=1
+
+E jΓt(xt − e jt ) = −αt − Γtxt +
+
+> N
+
+X
+
+> j=1
+
+E jΓte jt ,
+
+(5) with Ei ∈ Rm×m being a block diagonal matrix with its ( i, i)-th block being Imi , and the other blocks being zero matrices. 
+
+Joint State Propagation: Given the joint control input (5), the joint state xt+1 evolves according to 
+
+xt+1 = Atxt + Btut + wt
+
+= (At − BtΓt)xt +
+
+> N
+
+X
+
+> j=1
+
+Bt E jΓte jt − Btαt + wt. (6) 
+
+Linear Estimation Propagation: Each agent i then updates the estimate ˆ xit+1 according to its individual observations yit+1
+
+and the estimate of control ˆ uit via ˆxi− 
+
+> t+1
+
+= At ˆxit + Bt ˆuit, (7a) ˆxit+1 = ˆxi− 
+
+> t+1
+
++ Kit+1
+
+yit+1 − Cit+1 ˆxi−
+
+> t+1
+
+ , (7b) where Kit is to be designed in the following subsections. Moreover, subtracting (7a) and (7b) from (6), we obtain each agent i’s individual estimation error eit+1 as 
+
+ei− 
+
+> t+1
+
+= xt+1 − ˆxi− 
+
+> t+1
+
+= At(xt − ˆxit) + Bt(ut − ˆuit) + wt
+
+= Ateit + Bt
+
+
+
+> N
+
+X
+
+> j=1
+
+E jΓte jt − Γteit
+
+ + wt, (8a) 
+
+eit+1 = xt+1 − ˆxit+1 = ei− 
+
+> t+1
+
+− Kit+1
+
+Cit+1ei− 
+
+> t+1
+
++ vit+1
+
+ . (8b) 
+
+Remark 1. A key observation from (8) is that, unlike classical state estimation where error depends only on system dynamics and noise, the error in LQG games with individual observations is also driven by the mismatch between agent i’s estimate of the joint control ˆuit and the actual ut, and consequently leads to a joint update for the estimation error. 
+
+Covariance Update: Finally, concatenating (8a) and (8b), the joint estimation error et+1 and covariance Σt+1 evolve as 
+
+e− 
+
+> t+1
+
+= (At + Bt)et + wt, (9a) 
+
+et+1 = (In2 − K t+1)e− 
+
+> t+1
+
+− Kt+1vt+1, (9b) 
+
+Σ− 
+
+> t+1
+
+= (At + Bt)Σt(At + Bt)⊤ + Wt, (9c) 
+
+Σt+1 = (In2 − K t+1)Σ−
+
+> t+1
+
+(In2 − K t+1)⊤ + Kt+1Vt+1K⊤
+
+> t+1
+
+, (9d) 
+
+At = blockdiag( {At − BtΓt}Ni=1), Bt =
+
+
+
+Bt E1Γt · · · Bt EN Γt
+
+... . . . ...
+
+Bt E1Γt · · · Bt EN Γt
+
+ ,
+
+Kt+1 = blockdiag( {Kit+1Cit+1}Ni=1), Kt+1 = blockdiag( {Kit+1}Ni=1).
+
+This relation explicitly shows how et+1 and Σt+1 are a ff ected by the distributed estimation gains, which we will design sparsely in the following subsections. 
+
+B. Distributed Optimal Estimation Design 
+
+We now derive the unconstrained optimal estimation gain for each agent, which will serve as the reference solution for the sparse design in Section III-C. Specifically, we minimize agent i’s individual estimation error covariance Σit
+
+with respect to its estimation gain Kit :
+
+Σi− 
+
+> t
+
+= FiΣ− 
+
+> t
+
+Fi⊤, (10a) 
+
+Σit = (I − Kit Cit )Σi− 
+
+> t
+
+(I − Kit Cit )⊤ + Kit Vit Ki⊤ 
+
+> t
+
+, (10b) where Fi B [0, · · · , 0, In, 0, · · · , 0] with its ith block being 
+
+In. Note that (10b) naturally holds since Kt and Kt are block diagonal matrices. By letting ∂tr (Σit )
+
+> ∂Kit
+
+= 0, the stepwise optimal individual estimation gain is expressed as follows: 
+
+Ki⋆ 
+
+> t
+
+(Cit Σi− 
+
+> t
+
+Ci⊤ 
+
+> t
+
++ Vit ) = Σ i− 
+
+> t
+
+Cit ,
+
+Ki⋆ 
+
+> t
+
+= Σ i− 
+
+> t
+
+Cit (Cit Σi− 
+
+> t
+
+Ci⊤ 
+
+> t
+
++ Vit )−1. (11) Note that each agent’s estimation gain can be optimized independently. However, this gain generally processes all sensor observations, motivating a sparse relaxation. 
+
+C. Sparse Estimation via Group Lasso Optimization 
+
+We therefore seek a sparse approximation to Ki⋆ 
+
+> t+1
+
+that zeroes out columns corresponding to uninformative sensors, allowing each agent to rely on fewer observations while preserving estimation accuracy. Mirroring the partition of yit
+
+into Pi sensor groups, we partition Kit into Pi block columns as Kit = [Kit [1] , · · · , Kit [Pi]], where Kit [ρ] is the estimation gain associated with sensor ρ. Subsequently, we formulate the following group lasso problem for all i ∈ [N], t ∈ [T +1]: min 
+
+> Kit
+
+Kit (Cit Σi− 
+
+> t
+
+Ci⊤ 
+
+> t
+
++ Vit ) − Σi− 
+
+> t
+
+Cit
+
+> 2
+> F
+
+| {z }
+
+> LEstimation
+
++
+
+X
+
+> ρ∈[Pi]
+
+λiρ 
+
+> t
+
+Kit [ρ] F
+
+| {z }
+
+> LSparsity
+
+, (12) where ∥·∥ F is the matrix Frobenius norm. In this optimization problem, LEstimation denotes a least square error cost that encourages the stepwise estimation gain Kit to be closer to the optimal individual estimation gain in (11). On the other hand, 
+
+LSparsity penalizes large norms of Kit [ρ], with non-negative regularization constant λiρ 
+
+> t
+
+, encouraging agent i not to rely on observation yiρ 
+
+> t
+
+, i.e., the measurement from the ρ-th sensor. In what follows, we show that (12) can be cast as a convex conic program, solvable by o ff -the-shelf optimizers [21]. 
+
+Proposition 1. Problem (12) is equivalent to a convex conic program with quadratic cost. Proof. Using matrix vectorization [22], the group lasso prob-lem (12) can be reconstructed as min 
+
+> Kit
+
+(Cit Σi− 
+
+> t
+
+Ci⊤ 
+
+> t
+
++ Vit ) ⊗ I vec( Kit ) − vec( Σi− 
+
+> t
+
+Cit ) 22
+
++
+
+X
+
+> ρ∈[Pi]
+
+λiρ 
+
+> t
+
+∥vec( Kit [ρ]) ∥2, (13) where ⊗ denotes the Kronecker product. Moreover, introduc-ing the slack variables siρ 
+
+> t
+
+, it follows that the optimization (13) has the same optimal solution as min  
+
+> Kit,sit
+
+(Cit Σi− 
+
+> t
+
+Ci⊤ 
+
+> t
+
++Vit ) ⊗ I vec( Kit )−vec( Σi− 
+
+> t
+
+Cit ) 22 +
+
+X
+
+> ρ∈[Pi]
+
+λiρ 
+
+> t
+
+siρ 
+
+> t
+
+,
+
+s.t. 
+
+"vec( Kit [ρ]) 
+
+siρ
+
+> t
+
+#
+
+∈ C, C B {(p, q) | q ∈ R, ∥p∥2 ≤ q} ,
+
+which is a convex conic program with a second-order cone constraint by definition [23]. □
+
+Finally, note that (12) continuously optimizes the linear estimation gain matrices Kit for all players and time steps. In practice, however, each agent i’s ultimate goal is to have a binary decision about whether to utilize sensor ρ to obtain the corresponding measurement yiρ 
+
+> t
+
+. If yiρ 
+
+> t
+
+is not used in constructing ˆ xit, it is equivalent to zeroing out Kit [ρ], the 
+
+ρ-th block column of the linear estimation gain Kit . In that way, we introduce a ratio threshold rth ∈ (0 , 1] to zero out 
+
+Kit [ρ] if its norm ∥Kit [ρ]∥F is small enough compared to the optimal dense estimation gain Ki⋆ 
+
+> t
+
+[ρ] in (11), i.e., 
+
+Kit [ρ] =
+
+
+
+Ki⋆ 
+
+> t
+
+[ρ], ∥Kit [ρ]∥F ≥ rth ∥Ki⋆ 
+
+> t
+
+[ρ]∥F , [reset ]
+
+0, otherwise . [zero-out ] (14) The resulting procedure is summarized in Algorithm 1. 
+
+Algorithm 1 LQG Game with Sparse Distributed Estimation 
+
+Input: System Parameters: Σ−
+
+> x,1
+
+, (At, Bt, Wt)Tt=1, ({Cit }Ni=1, Vt)T +1 
+
+> t=1
+
+,
+
+Deterministic Feedback Nash Strategy: (Γt, α t)Tt=1,
+
+Regularization level ({λiρ 
+
+> t
+
+}Pi
+
+> ρ=1
+
+)N,T +1
+
+> i=1,t=1
+
+.
+
+Output: Sparse Individual Estimation Gain {Kit }N,T +1
+
+> i=1,t=1
+
+. 
+
+> 1:
+
+for t = 1 : T do  
+
+> 2:
+
+for i = 1 : N do  
+
+> 3:
+
+Kit ← (12) // Group lasso optimization  
+
+> 4:
+
+yit ← (2) // Individual noisy observation  
+
+> 5:
+
+ˆxit ← (7) // Distributed sparse estimation  
+
+> 6:
+
+ˆuit ← (4) // Feedback control estimation  
+
+> 7:
+
+end for  
+
+> 8:
+
+ut ← (5) // Actual feedback joint control  
+
+> 9:
+
+xt+1 ← (6) // System update with process noise  
+
+> 10:
+
+end for 
+
+D. Game-Theoretic Control-Adaptive Regularization 
+
+For the remainder of this section, we specialize to the interagent measurement case, where each sensor directly measures a specific agent’s state ( Cit = I). That is, each measurement yi j t represents agent i’s noisy observation of agent j. In this setting, the sparse estimation framework di-rectly determines which agents each agent observes, making the connection between estimation sparsity and interagent communication explicit. Since the sparsity decision now corresponds to which agents to observe, the regularization λi j t should reflect how much agent i’s control depends on agent j’s state. This dependency is captured by Γit[ j], the j-th block of the feed-back gain. We thus propose the following control-adaptive regularization: 
+
+λi j t+1 =
+
+  
+
+> L1
+> ∥Γit[j]∥F
+
+, ∥Γit[ j]∥F , 0,
+
+L2, otherwise , (15) where Γit[ j] is the j-th block of Γit, and L1, L2 > 0 are tuning parameters. When agent i’s control depends strongly on agent j (large ∥Γit[ j]∥F ), the regularization is low and the observation is (more likely) retained; when the dependency is weak or absent, λi j t defaults to L2, promoting sparsification. 
+
+E. Covariance-Sparsity Trade-O ff 
+
+A natural question is how much estimation accuracy is sacrificed by sparsifying the estimation gain. We address this by providing a su ffi cient condition on the regularization level under which the reset mechanism is guaranteed to trigger. This condition becomes easier to satisfy as the estimation error covariance grows, implying that the system self-corrects before estimation quality degrades too far. 
+
+Theorem 1. In the interagent measurement case, at time t, Kit [ρ] will reset to K i⋆ 
+
+> t
+
+[ρ] for ρ ∈ [Pi] if 
+
+max  
+
+> ρ∈[Pi]
+
+λiρ 
+
+> t
+
+≤ 2(1 − rth )
+
+√Pi
+
+· σmin (Σi− 
+
+> t
+
+)[ σmin (Σi− 
+
+> t
+
+) + σmin (Vit )] 2
+
+σmax (Σi− 
+
+> t
+
+) + σmax (Vit ) ,
+
+where σmin (·) and σmax (·) denote the minimum and maximum singular value for a matrix, respectively. Proof. Case 1: Suppose Kit [ρ] , 0, ∀ρ ∈ [Pi]. Then, the first-order optimality condition for the problem (12) gives: 2( Kit − Ki⋆ 
+
+> t
+
+)( Σi− 
+
+> t
+
++ Vit )2 = −
+
+ λi1   
+
+> tKit[1]
+> ∥Kit[1] ∥F
+
+· · · λiP it Kit [Pi] 
+
+> ∥Kit[Pi]∥F
+
+
+
+⇒ Kit = Ki⋆ 
+
+> t
+
++ Kλ,
+
+where Kλ = − 12
+
+ λi1   
+
+> tKit[1]
+> ∥Kit[1] ∥F
+
+· · · λiP it Kit [Pi] 
+
+> ∥Kit[Pi]∥F
+
+
+
+(Σi− 
+
+> t
+
++Vit )−2. Let ¯ λit =
+
+max ρ∈[Pi] λiρ 
+
+> t
+
+. Denoting the ρ-th block column of Kλ as Kλ[ρ], it follows that 
+
+∥Kλ[ρ]∥F ≤ ∥ Kλ∥F ≤√Pi ¯λit
+
+2[ σmin (Σi− 
+
+> t
+
++ Vit )] 2 . (16) Since Kit = Ki⋆ 
+
+> t
+
++ Kλ holds block-column-wise, i.e., Kit [ρ] =
+
+Ki⋆ 
+
+> t
+
+[ρ] + Kλ[ρ], the reverse triangle inequality and σmin (Σi− 
+
+> t
+
++
+
+Vit ) ≥ σmin (Σi− 
+
+> t
+
+) + σmin (Vit ) give 
+
+∥Kit [ρ]∥F ≥ ∥ Ki⋆ 
+
+> t
+
+[ρ]∥F − ∥ Kλ[ρ]∥F
+
+≥ ∥ Ki⋆ 
+
+> t
+
+[ρ]∥F −√Pi ¯λit
+
+2[ σmin (Σi− 
+
+> t
+
+) + σmin (Vit )] 2 . (17) Next, note that for Kit [ρ] to reset to Ki⋆ 
+
+> t
+
+[ρ], the rule (14) requires ∥Kit [ρ]∥ ≥ rth ∥Ki⋆ 
+
+> t
+
+[ρ]∥F . Combining this rule with (17), a su ffi cient condition for Kit [ρ] to reset to Ki⋆ 
+
+> t
+
+[ρ] is given by 
+
+∥Ki⋆ 
+
+> t
+
+[ρ]∥F −√Pi ¯λit
+
+2[ σmin (Σi− 
+
+> t
+
+) + σmin (Vit )] 2 ≥ rth ∥Ki⋆ 
+
+> t
+
+[ρ]∥F
+
+⇔ (1 − rth )∥Ki⋆ 
+
+> t
+
+[ρ]∥F ≥√Pi ¯λit
+
+2[ σmin (Σi− 
+
+> t
+
+) + σmin (Vit )] 2 . (18) Denote Ki⋆ 
+
+> t
+
+[ρ] = Ki⋆ 
+
+> t
+
+Eρ, where Eρ is a matrix that selects the ρ-th block column of Ki⋆ 
+
+> t
+
+. Then, it follows that 
+
+∥Ki⋆ 
+
+> t
+
+[ρ]∥F ≥ ∥ Ki⋆ 
+
+> t
+
+[ρ]∥2 ≥ σmin (Ki⋆ 
+
+> t
+
+)∥Eρ∥2
+
+= σmin (Ki⋆ 
+
+> t
+
+) ≥ σmin (Σi− 
+
+> t
+
+)
+
+σmax (Σi− 
+
+> t
+
+) + σmax (Vit ) . (19) Fig. 2. The sensor usage and individual estimation covariance norm evolution of each robot (Row 1: R1, Row 2: R2, we omit R3 as it is symmetric to R2) in the three-robot formation game under constant regularization levels (a) λit = 50, (b) λit = 1000 and (c) game-theoretic control-adaptive λit.   
+
+> Fig. 3. Game-theoretic control-adaptive regularization with respect to feedback Nash control gain Γit[j] in (15) for a three-robot formation game.
+
+Combining (18)-(19), it follows that a su ffi cient condition for 
+
+Kit [ρ] to reset to Ki⋆ 
+
+> t
+
+[ρ] is ¯λit ≤ 2(1 − rth )
+
+√Pi
+
+· σmin (Σi− 
+
+> t
+
+)[ σmin (Σi− 
+
+> t
+
+) + σmin (Vit )] 2
+
+σmax (Σi− 
+
+> t
+
+) + σmax (Vit ) (20) 
+
+Case 2: Suppose Kit [ρ] = 0 is the optimal solution for (12) for some ρ. Then, using the subgradient optimality condition in (12) with respect to Kit [ρ], we obtain 
+
+λiρ 
+
+> t
+
+≥ 2Ki⋆ 
+
+> t
+
+(Σi− 
+
+> t
+
++ Vit )2 Eρ F ≥ 2σmin 
+
+Σi− 
+
+> t
+
+(Σi− 
+
+> t
+
++ Vit )
+
+≥ 2σmin (Σi− 
+
+> t
+
+) hσmin (Σi− 
+
+> t
+
+) + σmin (Vit )i
+
+> 2(1 − rth )
+
+√Pi
+
+· σmin (Σi− 
+
+> t
+
+) hσmin (Σi− 
+
+> t
+
+) + σmin (Vit )i2
+
+σmax (Σi− 
+
+> t
+
+) + σmax (Vit ) ,
+
+(21) where the last inequality follows from √Pi ≥ 1, 1 − rth <
+
+1, and σmin (Σi−     
+
+> t)+σmin (Vit)
+> σmax (Σi−
+> t)+σmax (Vit)
+
+≤ 1. This contradicts (20). Hence, 
+
+Kit [ρ] = 0 cannot be optimal under (20), hence (20) is su ffi cient to trigger a reset of Kit [ρ] to Ki⋆ 
+
+> t
+
+[ρ]. □
+
+IV. N umerical Simulations 
+
+We validate our proposed sparse LQG games framework in a three-robot formation game, and investigate robots’ trajectory performance under di ff erent regularization designs. 
+
+A. Simulation Setup 
+
+The formation game comprises a leading robot (R1) that aims to track a static reference path p1
+
+> t,ref
+
+, and following robots (R2 and R3) that aim to maintain a reference displace-ment di j  
+
+> ref
+
+between them. Each robot follows double-integrator dynamics discretized with time-step ∆t, i.e., 
+
+Ait =
+
+"I2 ∆t · I2
+
+0 I2
+
+#
+
+, Bit =
+
+" ∆2 
+
+> t
+> 2
+
+· I2
+
+∆t · I2
+
+#
+
+,
+
+with state xit = [pit,x, pit,y, vit,x, vit,y]⊤ encoding 2-D position and velocity and control uit = [ait,x, ait,y]⊤ encoding 2-D acceleration. We formulate each robot’s objective as follows: 
+
+J1 =
+
+> T
+
+X
+
+> t=1
+
+E h∥p1 
+
+> t
+
+− p1
+
+> t,ref
+
+∥22 + ∥u1 
+
+> t
+
+∥22
+
+i + E h∥p1  
+
+> T+1
+
+− p1 
+
+> T+1,ref
+
+∥22
+
+i ,
+
+Ji =
+
+> T
+
+X
+
+> t=1
+
+X
+
+> j,i
+
+E h∥pit − p jt − di j 
+
+> ref
+
+∥22 + ∥uit∥22
+
+i
+
++
+
+X
+
+> j,i
+
+E h∥piT +1 − p jT +1 − di j 
+
+> ref
+
+∥22
+
+i , i ∈ { 2, 3}, j ∈ { 1, 2, 3},
+
+with T = 150 , ∆t = 0.05 s, the reference displacement between robots d21 ref = [−2; −2] , d31 ref = [2; −2] , d23 ref =
+
+−d32 ref = [4; 0], and the reference path for R1: p1 
+
+> t,ref
+
+=
+
+ 30 cos ( k · ∆t), 30 sin (3 k · ∆t) for k ∈ [T ]. We also set Σ− 
+
+> x,1
+
+=
+
+I3 ⊗ blockdiag(0 .25 2 I2, 1.22 I2), Wit = blockdiag( 02×2, 1.22 I2),
+
+Vit = I3 ⊗ blockdiag(0 .25 2 I2, 1.22 I2) and Cit = I12 , ∀i ∈
+
+[3] being identical across robots. For the control-adaptive regularization design in (15), we set L1 = 1000 and L2 = 250, and the resulting regularization is illustrated in Fig. 3. 
+
+B. Result Analysis 
+
+We evaluate our distributed sparse estimation with game-theoretic control-adaptive regularization and compare it with static regularization levels λit = 50 and 1000. We observe the following behaviors: i) Fig. 2 shows that sensor usage decreases as the regularization level increases, since LSparsity 
+
+becomes more dominant in (12). ii) Fig. 4 further shows that stronger regularization reduces sensing usage but degrades control performance because estimation error accumulates more quickly, highlighting the trade-o ff between control Fig. 4. Trajectory performance for the formation game with regularization levels (a) λit = 0, (b) λit = 50, (c) λit = 1000, and (d) control-adaptive λit.
+
+performance and estimation sparsity. iii) The estimation error increases when measurements are skipped and drops sharply when dense measurements are taken, suggesting that the covariance remains bounded under sparse estimation. Compared with static regularization, the proposed control-adaptive regularization achieves a better balance between sensing resource allocation and control performance. As shown in Fig. 2, R1 saves sensing resources by prioritizing self-measurement, while R2 and R3 still frequently measure all robots. The sensor usage pattern also shows that R2 and R3 measure R1 more often than they measure each other, reflecting R1’s leadership role in the game. Fig. 4 shows that this adaptive strategy allows R1 to track the reference path well with limited sensing, while R2 and R3 follow accord-ingly. Overall, compared with static regularization, control-adaptive regularization leads to a more e ff ective allocation of inter-robot measurements in games with structured coupling among agents’ objectives. V. C onclusions and Future Work 
+
+We studied LQG games in which multiple agents estimate the joint system state using sparse individual observations. To promote sparsity in each agent’s estimator, we proposed a group lasso formulation that zeros out groups of estimation gains, yielding a convex optimization problem. Future work includes an extension of the proposed approach to nonlinear dynamics and non-quadratic agent objectives, via iterative LQ game approaches such as [24]–[26]. References 
+
+[1] M. Chahine, R. Firoozi, W. Xiao, M. Schwager, and D. Rus, “Local non-cooperative games with principled player selection for scalable motion planning,” in 2023 IEEE /RSJ International Conference on Intelligent Robots and Systems (IROS) . IEEE, 2023, pp. 880–887. [2] X. Liu, J. Li, F. Fotiadis, M. O. Karabag, J. Milzman, D. Fridovich-Keil, and U. Topcu, “Approximate feedback nash equilibria with sparse inter-agent dependencies,” arXiv preprint arXiv:2410.16441 , 2024. [3] T. Qiu, E. Ouano, F. Palafox, C. Ellis, and D. Fridovich-Keil, “Psn game: Game-theoretic prediction and planning via a player selection network,” arXiv preprint arXiv:2505.00213 , 2025. [4] L. S. Shapley, “Stochastic games,” Proceedings of the national academy of sciences , vol. 39, no. 10, pp. 1095–1100, 1953. [5] D. Fridovich-Keil, Smooth Game Theory , 2024. [Online]. Available: https: // clearoboticslab.github.io /documents /smooth game theory.pdf [6] G. Welch, G. Bishop et al. , “An introduction to the kalman filter,” 1995. [7] J. Van Den Berg, P. Abbeel, and K. Goldberg, “Lqg-mp: Optimized path planning for robots with motion uncertainty and imperfect state information,” The International Journal of Robotics Research , vol. 30, no. 7, pp. 895–913, 2011. [8] D. Bertsekas, Dynamic programming and optimal control: Volume I .Athena scientific, 2012, vol. 4. [9] M. Pachter, “Static linear-quadratic gaussian games,” in Advances in Dynamic Games: Theory, Applications, and Numerical Methods .Springer, 2013, pp. 85–105. [10] ——, “On linear-quadratic gaussian dynamic games,” in International Symposium on Dynamic Games and Applications . Springer, 2016, pp. 301–322. [11] A. Gupta, A. Nayyar, C. Langbort, and T. Basar, “Common informa-tion based markov perfect equilibria for linear-gaussian games with asymmetric information,” SIAM Journal on Control and Optimization ,vol. 52, no. 5, pp. 3228–3260, 2014. [12] A. Gupta, C. Langbort, and T. Bas ¸ar, “Dynamic games with asym-metric information and resource constrained players with applications to security of cyberphysical systems,” IEEE Transactions on Control of Network Systems , vol. 4, no. 1, pp. 71–81, 2016. [13] D. Vasal and A. Anastasopoulos, “Signaling equilibria for dynamic lqg games with asymmetric information,” in 2016 IEEE 55th Conference on Decision and Control (CDC) . IEEE, 2016, pp. 6901–6908. [14] N. Heydaribeni and A. Anastasopoulos, “Linear equilibria for dynamic lqg games with asymmetric information and dependent types,” in 2019 IEEE 58th Conference on Decision and Control (CDC) . IEEE, 2019, pp. 5971–5976. [15] B. Hambly, R. Xu, and H. Yang, “Linear-quadratic gaussian games with asymmetric information: Belief corrections using the opponents actions,” arXiv preprint arXiv:2307.15842 , 2023. [16] V. Tzoumas, L. Carlone, G. J. Pappas, and A. Jadbabaie, “Lqg control and sensing co-design,” IEEE Transactions on Automatic Control ,vol. 66, no. 4, pp. 1468–1483, 2020. [17] F. Fotiadis and K. G. Vamvoudakis, “Input-output data-driven sensor selection,” in 2024 IEEE 63rd Conference on Decision and Control (CDC) . IEEE, 2024, pp. 4506–4511. [18] ——, “Input–output data-driven sensor selection for cyber-physical systems,” Automatica , vol. 186, p. 112829, 2026. [19] Y. Zhong, N. Yang, L. Huang, G. Shi, and L. Shi, “Sparse sensor selec-tion for distributed systems: An l1-relaxation approach,” Automatica ,vol. 165, p. 111670, 2024. [20] H. S. Witsenhausen, “A counterexample in stochastic optimum con-trol,” SIAM Journal on Control , vol. 6, no. 1, pp. 131–147, 1968. [21] P. J. Goulart and Y. Chen, “Clarabel: An interior-point solver for conic programs with quadratic objectives,” 2024. [22] H. D. Macedo and J. N. Oliveira, “Typing linear algebra: A biproduct-oriented approach,” Science of Computer Programming , vol. 78, no. 11, pp. 2160–2191, 2013. [23] S. Boyd and L. Vandenberghe, Convex optimization . Cambridge university press, 2004. [24] D. Fridovich-Keil, E. Ratner, L. Peters, A. D. Dragan, and C. J. Tomlin, “E ffi cient iterative linear-quadratic approximations for non-linear multi-player general-sum di ff erential games,” in 2020 IEEE international conference on robotics and automation (ICRA) . IEEE, 2020, pp. 1475–1481. [25] M. Wang, N. Mehr, A. Gaidon, and M. Schwager, “Game-theoretic planning for risk-aware interactive agents,” in 2020 IEEE /RSJ Interna-tional Conference on Intelligent Robots and Systems (IROS) . IEEE, 2020, pp. 6998–7005. [26] W. Schwarting, A. Pierson, S. Karaman, and D. Rus, “Stochastic dynamic games in belief space,” IEEE Transactions on Robotics ,vol. 37, no. 6, pp. 2157–2172, 2021.
