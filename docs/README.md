@@ -6,73 +6,76 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-03-26
-- 运行时间：2026-03-26 20:12:19 UTC
+- 最新运行日期：2026-03-27
+- 运行时间：2026-03-27 19:50:21 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：18
+- 精读区：7
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度复盘 17 篇 AI 论文，聚焦多智能体系统在社会舆情治理与复杂对话谈判中的前沿突破。
-满分力作 POSIM 揭示了社交媒体舆情演化的仿真新范式，而 MIND 框架则显著提升了多智能体在旅游规划中的谈判推理能力。
-推荐关注多智能体协同如何解决异构目标下的合作难题，并探索其在社交机器人等现实交互场景的落地潜力。
-- 详情：[/202603/26/README](/202603/26/README)
+今日精选 18 篇前沿成果，深度攻克多智能体协作博弈与短视频谣言治理两大难题。
+核心突破在于利用近似完美贝叶斯均衡优化社会模拟，并构建了针对多样化微视频误导信息的鲁棒辟谣框架。
+推荐关注多智能体在冲突环境中的交互演化，以及通过代码空间提升策略可解释性的新路径。
+- 详情：[/202603/27/README](/202603/27/README)
 
 ### 精读区论文标签
-1. [POSIM: A Multi-Agent Simulation Framework for Social Media Public Opinion Evolution and Governance](/202603/26/2603.23884v1-posim-a-multi-agent-simulation-framework-for-social-media-public-opinion-evolution-and-governance)  
+1. [Belief-Driven Multi-Agent Collaboration via Approximate Perfect Bayesian Equilibrium for Social Simulation](/202603/27/2603.24973v1-belief-driven-multi-agent-collaboration-via-approximate-perfect-bayesian-equilibrium-for-social-simulation)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体社交媒体舆情模拟
-2. [MIND: Multi-agent inference for negotiation dialogue in travel planning](/202603/26/2603.21696v1-mind-multi-agent-inference-for-negotiation-dialogue-in-travel-planning)  
+   evidence：信念驱动的多智能体协作用于高保真社会模拟
+2. [From Manipulation to Mistrust: Explaining Diverse Micro-Video Misinformation for Robust Debunking in the Wild](/202603/27/2603.25423v1-from-manipulation-to-mistrust-explaining-diverse-micro-video-misinformation-for-robust-debunking-in-the-wild)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：短视频虚假信息基准测试与检测智能体
+3. [Harmful Visual Content Manipulation Matters in Misinformation Detection Under Multimedia Scenarios](/202603/27/2603.21054v1-harmful-visual-content-manipulation-matters-in-misinformation-detection-under-multimedia-scenarios)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：模拟具有异构偏好的旅行者之间的现实共识建立
-3. [Cooperation in Public Goods Games over Uniform Random Hypergraphs with Game Transitions](/202603/26/2603.22967v1-cooperation-in-public-goods-games-over-uniform-random-hypergraphs-with-game-transitions)  
+   evidence：多模态虚假信息检测与视觉内容篡改
+4. [Human, AI, and Hybrid Ensembles for Detection of Adaptive, RL-based Social Bots](/202603/27/2603.23796v1-human-ai-and-hybrid-ensembles-for-detection-of-adaptive-rl-based-social-bots)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：超图上公共物品博弈中合作的演化
-4. [EnvSocial-Diff: A Diffusion-Based Crowd Simulation Model with Environmental Conditioning and Individual-Group Interaction](/202603/26/2603.23874v1-envsocial-diff-a-diffusion-based-crowd-simulation-model-with-environmental-conditioning-and-individual-group-interaction)  
+   evidence：检测在社交媒体上传播虚假信息的社交机器人
+5. [On a Co-evolving Opinion-Leadership Model in Social Networks](/202603/27/2603.24381v1-on-a-co-evolving-opinion-leadership-model-in-social-networks)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：基于扩散模型和社会物理学的群体模拟
-5. [Social Norm Reasoning in Multimodal Language Models: An Evaluation](/202603/26/2603.03590v1-social-norm-reasoning-in-multimodal-language-models-an-evaluation)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统中的社会规范推理
-6. [Interplay: Training Independent Simulators for Reference-Free Conversational Recommendation](/202603/26/2603.18573v1-interplay-training-independent-simulators-for-reference-free-conversational-recommendation)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：使用大语言模型模拟用户与推荐系统的对话
+   evidence：社交网络中观点与领导力的协同演化模型
+6. [When Is Collective Intelligence a Lottery? Multi-Agent Scaling Laws for Memetic Drift in LLMs](/202603/27/2603.24676v1-when-is-collective-intelligence-a-lottery-multi-agent-scaling-laws-for-memetic-drift-in-llms)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：多智能体模因漂移与共识的缩放法则
+7. [An Experimental Comparison of the Most Popular Approaches to Fake News Detection](/202603/27/2603.25501v1-an-experimental-comparison-of-the-most-popular-approaches-to-fake-news-detection)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：对社交媒体数据集上的虚假新闻检测方法进行评估
 
 ### 速读区论文标签
-1. [MistyPilot: An Agentic Fast-Slow Thinking LLM Framework for Misty Social Robots](/202603/26/2603.03640v1-mistypilot-an-agentic-fast-slow-thinking-llm-framework-for-misty-social-robots)  
+1. [ConflictBench: Evaluating Human-AI Conflict via Interactive and Visually Grounded Environments](/202603/27/2603.08024v1-conflictbench-evaluating-human-ai-conflict-via-interactive-and-visually-grounded-environments)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于社交机器人的智能体大模型框架
-2. [Learning When to Cooperate Under Heterogeneous Goals](/202603/26/2603.07253v1-learning-when-to-cooperate-under-heterogeneous-goals)  
+   evidence：在交互式社会模拟环境中行动的大模型智能体
+2. [Influencing LLM Multi-Agent Dialogue via Policy-Parameterized Prompts](/202603/27/2603.09890v1-influencing-llm-multi-agent-dialogue-via-policy-parameterized-prompts)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体环境下异构目标下的协作
-3. [Coordination Games on Multiplex Networks: Consensus, Convergence, and Stability of Opinion Dynamics](/202603/26/2603.07633v1-coordination-games-on-multiplex-networks-consensus-convergence-and-stability-of-opinion-dynamics)  
+   evidence：影响大模型多智能体对话行为
+3. [Code-Space Response Oracles: Generating Interpretable Multi-Agent Policies with Large Language Models](/202603/27/2603.10098v1-code-space-response-oracles-generating-interpretable-multi-agent-policies-with-large-language-models)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：社交网络中的观点演化与共识
-4. [Adaptive Collaboration with Humans: Metacognitive Policy Optimization for Multi-Agent LLMs with Continual Learning](/202603/26/2603.07972v1-adaptive-collaboration-with-humans-metacognitive-policy-optimization-for-multi-agent-llms-with-continual-learning)  
+   evidence：使用大模型生成可解释的多智能体策略
+4. [Learning to Negotiate: Multi-Agent Deliberation for Collective Value Alignment in LLMs](/202603/27/2603.10476v1-learning-to-negotiate-multi-agent-deliberation-for-collective-value-alignment-in-llms)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：通过多智能体系统（MAS）扩展协作
-5. [When Only the Final Text Survives: Implicit Execution Tracing for Multi-Agent Attribution](/202603/26/2603.17445v1-when-only-the-final-text-survives-implicit-execution-tracing-for-multi-agent-attribution)  
+   evidence：大语言模型价值对齐的多智能体协商
+5. [Helix: A Dual-Helix Co-Evolutionary Multi-Agent System for Prompt Optimization and Question Reformulation](/202603/27/2603.19732v1-helix-a-dual-helix-co-evolutionary-multi-agent-system-for-prompt-optimization-and-question-reformulation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：语言系统中多智能体归因和交互拓扑重建的框架
-6. [When Only the Final Text Survives: Implicit Execution Tracing for Multi-Agent Attribution](/202603/26/2603.17445v2-when-only-the-final-text-survives-implicit-execution-tracing-for-multi-agent-attribution)  
+   evidence：用于提示词和问题联合优化的多智能体系统
+6. [Utility-Guided Agent Orchestration for Efficient LLM Tool Use](/202603/27/2603.19896v1-utility-guided-agent-orchestration-for-efficient-llm-tool-use)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体语言系统中的归因
-7. [Governed Memory: A Production Architecture for Multi-Agent Workflows](/202603/26/2603.17787v1-governed-memory-a-production-architecture-for-multi-agent-workflows)  
+   evidence：多步推理智能体的效用引导编排
+7. [ALARA for Agents: Least-Privilege Context Engineering Through Portable Composable Multi-Agent Teams](/202603/27/2603.20380v1-alara-for-agents-least-privilege-context-engineering-through-portable-composable-multi-agent-teams)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体工作流的共享记忆与治理
-8. [Retrieval-Augmented LLM Agents: Learning to Learn from Experience](/202603/26/2603.18272v1-retrieval-augmented-llm-agents-learning-to-learn-from-experience)  
+   evidence：管理多智能体团队的框架
+8. [Position: Multi-Agent Algorithmic Care Systems Demand Contestability for Trustworthy AI](/202603/27/2603.20595v1-position-multi-agent-algorithmic-care-systems-demand-contestability-for-trustworthy-ai)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：大语言模型智能体从经验轨迹中学习
-9. [Linear-Quadratic Gaussian Games with Distributed Sparse Estimation](/202603/26/2603.17202v1-linear-quadratic-gaussian-games-with-distributed-sparse-estimation)  
+   evidence：用于复杂决策和人类监督的多智能体系统
+9. [Introducing M: A Modular, Modifiable Social Robot](/202603/27/2603.19134v1-introducing-m-a-modular-modifiable-social-robot)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：稀疏观测下多智能体系统的策略博弈
-10. [An Auditable AI Agent Loop for Empirical Economics: A Case Study in Forecast Combination](/202603/26/2603.17381v1-an-auditable-ai-agent-loop-for-empirical-economics-a-case-study-in-forecast-combination)  
+   evidence：具有交互行为模拟环境的社交机器人平台
+10. [From Human Interfaces to Agent Interfaces: Rethinking Software Design in the Age of AI-Native Systems](/202603/27/2603.20300v1-from-human-interfaces-to-agent-interfaces-rethinking-software-design-in-the-age-of-ai-native-systems)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于实证经济学和行为搜索的AI智能体循环
-11. [From Noise to Signal: When Outliers Seed New Topics](/202603/26/2603.18358v1-from-noise-to-signal-when-outliers-seed-new-topics)  
+   evidence：从面向人类到面向智能体的软件接口转变
+11. [Bounded Coupled AI Learning Dynamics in Tri-Hierarchical Drone Swarms](/202603/27/2603.20333v1-bounded-coupled-ai-learning-dynamics-in-tri-hierarchical-drone-swarms)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：新闻文档轨迹的时间分类与话题形成
+   evidence：用于战术协调的多智能体强化学习
 
 
 <div class="dpr-home-promo-card">

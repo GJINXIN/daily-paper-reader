@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-03-26T20:10:15.113984+00:00",
-  "updated_date": "20260326",
+  "generated_at": "2026-03-27T19:47:48.770997+00:00",
+  "updated_date": "20260327",
   "carryover_days": 9,
   "items": [
     {
@@ -40,46 +40,7 @@
       "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
       "paper_id": "2603.11834v1",
-      "carry_days": 4
-    },
-    {
-      "id": "2603.10476v1",
-      "title": "Learning to Negotiate: Multi-Agent Deliberation for Collective Value Alignment in LLMs",
-      "abstract": "The alignment of large language models (LLMs) has progressed substantially in single-agent settings through paradigms such as RLHF and Constitutional AI, with recent work exploring scalable alternatives such as RLAIF and evolving alignment objectives. However, these approaches remain limited in multi-stakeholder settings, where conflicting values arise and deliberative negotiation capabilities are required. This work proposes a multi-agent negotiation-based alignment framework that aligns LLMs to Collective Agency (CA)-an existing alignment objective introduced to promote the continual expansion of agency-while simultaneously improving conflict-resolution capability. To enable scalable training, two self-play instances of the same LLM, assigned opposing personas, engage in structured turn-based dialogue to synthesize mutually beneficial solutions. We generate synthetic moral-dilemma prompts and conflicting persona pairs, and optimize the policy via RLAIF using GRPO with an external LLM reward model. While rewards are computed from CA scores assigned to the final completion, gradients are applied to dialogue tokens to directly improve deliberative interaction dynamics. Experiments show that the resulting model achieves CA alignment comparable to a single-agent baseline while substantially improving conflict-resolution performance without degrading general language capabilities. These results suggest that negotiation-driven deliberation training provides a practical path toward LLMs that better support collective decision-making in value-conflict scenarios.",
-      "authors": [
-        "Panatchakorn Anantaprayoon",
-        "Nataliia Babina",
-        "Nima Asgharbeygi",
-        "Jad Tarifi"
-      ],
-      "primary_category": "cs.CL",
-      "categories": [
-        "cs.CL",
-        "cs.AI"
-      ],
-      "published": "2026-03-11T06:58:55+00:00",
-      "link": "https://arxiv.org/pdf/2603.10476v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "multi-agent negotiation for value alignment in LLMs",
-      "llm_evidence_cn": "大语言模型价值对齐的多智能体协商",
-      "llm_evidence": "大语言模型价值对齐的多智能体协商",
-      "canonical_evidence": "大语言模型价值对齐的多智能体协商",
-      "llm_tldr_en": "Introduces a multi-agent negotiation framework to align LLMs with collective values in multi-stakeholder settings.",
-      "llm_tldr_cn": "提出一种多智能体协商框架，用于在多利益相关者场景下实现大语言模型的集体价值对齐。",
-      "llm_tldr": "提出一种多智能体协商框架，用于在多利益相关者场景下实现大语言模型的集体价值对齐。",
-      "llm_tags": [
-        "query:mas-ss:composite"
-      ],
-      "matched_query_tag": "query:mas-ss:composite",
-      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
-      "matched_requirement_id": "req-composite-mas-ss",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.10476v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.11757v1",
@@ -120,7 +81,7 @@
       "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
       "paper_id": "2603.11757v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.14260v1",
@@ -159,49 +120,7 @@
       "matched_requirement_id": "req-6",
       "selection_source": "carryover_cache",
       "paper_id": "2603.14260v1",
-      "carry_days": 4
-    },
-    {
-      "id": "2603.08024v1",
-      "title": "ConflictBench: Evaluating Human-AI Conflict via Interactive and Visually Grounded Environments",
-      "abstract": "As large language models (LLMs) evolve into autonomous agents capable of acting in open-ended environments, ensuring behavioral alignment with human values becomes a critical safety concern. Existing benchmarks, focused on static, single-turn prompts, fail to capture the interactive and multi-modal nature of real-world conflicts. We introduce ConflictBench, a benchmark for evaluating human-AI conflict through 150 multi-turn scenarios derived from prior alignment queries. ConflictBench integrates a text-based simulation engine with a visually grounded world model, enabling agents to perceive, plan, and act under dynamic conditions. Empirical results show that while agents often act safely when human harm is immediate, they frequently prioritize self-preservation or adopt deceptive strategies in delayed or low-risk settings. A regret test further reveals that aligned decisions are often reversed under escalating pressure, especially with visual input. These findings underscore the need for interaction-level, multi-modal evaluation to surface alignment failures that remain hidden in conventional benchmarks.",
-      "authors": [
-        "Weixiang Zhao",
-        "Haozhen Li",
-        "Yanyan Zhao",
-        "xuda zhi",
-        "Yongbo Huang",
-        "Hao He",
-        "Bing Qin",
-        "Ting Liu"
-      ],
-      "primary_category": "cs.CL",
-      "categories": [
-        "cs.CL"
-      ],
-      "published": "2026-03-09T06:59:48+00:00",
-      "link": "https://arxiv.org/pdf/2603.08024v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "LLM agents acting in interactive social simulation environments",
-      "llm_evidence_cn": "在交互式社会模拟环境中行动的大模型智能体",
-      "llm_evidence": "在交互式社会模拟环境中行动的大模型智能体",
-      "canonical_evidence": "在交互式社会模拟环境中行动的大模型智能体",
-      "llm_tldr_en": "Evaluates human-AI conflict in dynamic, visually grounded multi-turn agent simulations.",
-      "llm_tldr_cn": "在动态、视觉化的多轮智能体模拟中评估人机冲突与行为对齐。",
-      "llm_tldr": "在动态、视觉化的多轮智能体模拟中评估人机冲突与行为对齐。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "LLM powered agents for simulating social behavior",
-      "matched_requirement_id": "req-6",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.08024v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.11802v1",
@@ -238,7 +157,7 @@
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
       "paper_id": "2603.11802v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.12137v1",
@@ -275,85 +194,7 @@
       "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
       "paper_id": "2603.12137v1",
-      "carry_days": 4
-    },
-    {
-      "id": "2603.10098v1",
-      "title": "Code-Space Response Oracles: Generating Interpretable Multi-Agent Policies with Large Language Models",
-      "abstract": "Recent advances in multi-agent reinforcement learning, particularly Policy-Space Response Oracles (PSRO), have enabled the computation of approximate game-theoretic equilibria in increasingly complex domains. However, these methods rely on deep reinforcement learning oracles that produce `black-box' neural network policies, making them difficult to interpret, trust or debug. We introduce Code-Space Response Oracles (CSRO), a novel framework that addresses this challenge by replacing RL oracles with Large Language Models (LLMs). CSRO reframes the best response computation as a code generation task, prompting an LLM to generate policies directly as human-readable code. This approach not only yields inherently interpretable policies but also leverages the LLM's pretrained knowledge to discover complex, human-like strategies. We explore multiple ways to construct and enhance an LLM-based oracle: zero-shot prompting, iterative refinement and \\emph{AlphaEvolve}, a distributed LLM-based evolutionary system. We demonstrate that CSRO achieves performance competitive with baselines while producing a diverse set of explainable policies. Our work presents a new perspective on multi-agent learning, shifting the focus from optimizing opaque policy parameters to synthesizing interpretable algorithmic behavior.",
-      "authors": [
-        "Daniel Hennes",
-        "Zun Li",
-        "John Schultz",
-        "Marc Lanctot"
-      ],
-      "primary_category": "cs.GT",
-      "categories": [
-        "cs.GT",
-        "cs.AI",
-        "cs.LG"
-      ],
-      "published": "2026-03-10T17:37:06+00:00",
-      "link": "https://arxiv.org/pdf/2603.10098v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "interpretable multi-agent policies with LLMs",
-      "llm_evidence_cn": "使用大模型生成可解释的多智能体策略",
-      "llm_evidence": "使用大模型生成可解释的多智能体策略",
-      "canonical_evidence": "使用大模型生成可解释的多智能体策略",
-      "llm_tldr_en": "Replaces black-box RL oracles with LLMs to generate human-readable code for multi-agent policies.",
-      "llm_tldr_cn": "利用大模型生成可读代码，替代黑盒强化学习以实现可解释的多智能体策略。",
-      "llm_tldr": "利用大模型生成可读代码，替代黑盒强化学习以实现可解释的多智能体策略。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.10098v1",
-      "carry_days": 4
-    },
-    {
-      "id": "2603.09890v1",
-      "title": "Influencing LLM Multi-Agent Dialogue via Policy-Parameterized Prompts",
-      "abstract": "Large Language Models (LLMs) have emerged as a new paradigm for multi-agent systems. However, existing research on the behaviour of LLM-based multi-agents relies on ad hoc prompts and lacks a principled policy perspective. Different from reinforcement learning, we investigate whether prompt-as-action can be parameterized so as to construct a lightweight policy which consists of a sequence of state-action pairs to influence conversational behaviours without training. Our framework regards prompts as actions executed by LLMs, and dynamically constructs prompts through five components based on the current state of the agent. To test the effectiveness of parameterized control, we evaluated the dialogue flow based on five indicators: responsiveness, rebuttal, evidence usage, non-repetition, and stance shift. We conduct experiments using different LLM-driven agents in two discussion scenarios related to the general public and show that prompt parameterization can influence the dialogue dynamics. This result shows that policy-parameterised prompts offer a simple and effective mechanism to influence the dialogue process, which will help the research of multi-agent systems in the direction of social simulation.",
-      "authors": [
-        "Hongbo Bo",
-        "Jingyu Hu",
-        "Weiru Liu"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.MA"
-      ],
-      "published": "2026-03-10T16:47:25+00:00",
-      "link": "https://arxiv.org/pdf/2603.09890v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "Influencing LLM multi-agent dialogue behavior",
-      "llm_evidence_cn": "影响大模型多智能体对话行为",
-      "llm_evidence": "影响大模型多智能体对话行为",
-      "canonical_evidence": "影响大模型多智能体对话行为",
-      "llm_tldr_en": "Develops a framework to influence multi-agent conversational behaviors using parameterized prompts.",
-      "llm_tldr_cn": "开发了一个利用参数化提示词来影响多智能体对话行为的框架。",
-      "llm_tldr": "开发了一个利用参数化提示词来影响多智能体对话行为的框架。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.09890v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.16215v1",
@@ -394,7 +235,7 @@
       "matched_requirement_id": "req-composite-mas-ss",
       "selection_source": "carryover_cache",
       "paper_id": "2603.16215v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.14525v1",
@@ -435,7 +276,7 @@
       "matched_requirement_id": "req-composite-mas-ss",
       "selection_source": "carryover_cache",
       "paper_id": "2603.14525v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.18563v1",
@@ -472,7 +313,7 @@
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
       "paper_id": "2603.18563v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.17153v1",
@@ -508,7 +349,7 @@
       "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
       "paper_id": "2603.17153v1",
-      "carry_days": 4
+      "carry_days": 5
     },
     {
       "id": "2603.17335v1",
@@ -550,50 +391,7 @@
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
       "paper_id": "2603.17335v1",
-      "carry_days": 3
-    },
-    {
-      "id": "2603.21475v1",
-      "title": "Unified-MAS: Universally Generating Domain-Specific Nodes for Empowering Automatic Multi-Agent Systems",
-      "abstract": "Automatic Multi-Agent Systems (MAS) generation has emerged as a promising paradigm for solving complex reasoning tasks. However, existing frameworks are fundamentally bottlenecked when applied to knowledge-intensive domains (e.g., healthcare and law). They either rely on a static library of general nodes like Chain-of-Thought, which lack specialized expertise, or attempt to generate nodes on the fly. In the latter case, the orchestrator is not only bound by its internal knowledge limits but must also simultaneously generate domain-specific logic and optimize high-level topology, leading to a severe architectural coupling that degrades overall system efficacy. To bridge this gap, we propose Unified-MAS that decouples granular node implementation from topological orchestration via offline node synthesis. Unified-MAS operates in two stages: (1) Search-Based Node Generation retrieves external open-world knowledge to synthesize specialized node blueprints, overcoming the internal knowledge limits of LLMs; and (2) Reward-Based Node Optimization utilizes a perplexity-guided reward to iteratively enhance the internal logic of bottleneck nodes. Extensive experiments across four specialized domains demonstrate that integrating Unified-MAS into four Automatic-MAS baselines yields a better performance-cost trade-off, achieving up to a 14.2% gain while significantly reducing costs. Further analysis reveals its robustness across different designer LLMs and its effectiveness on conventional tasks such as mathematical reasoning.",
-      "authors": [
-        "Hehai Lin",
-        "Yu Yan",
-        "Zixuan Wang",
-        "Bo Xu",
-        "Sudong Wang",
-        "Weiquan Huang",
-        "Ruochen Zhao",
-        "Minzhi Li",
-        "Chengwei Qin"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI"
-      ],
-      "published": "2026-03-23T01:36:07+00:00",
-      "link": "https://arxiv.org/pdf/2603.21475v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "automatic multi-agent systems generation for complex reasoning",
-      "llm_evidence_cn": "用于复杂推理的自动多智能体系统生成",
-      "llm_evidence": "用于复杂推理的自动多智能体系统生成",
-      "canonical_evidence": "用于复杂推理的自动多智能体系统生成",
-      "llm_tldr_en": "Decouples domain-specific logic from topology to empower automatic generation of multi-agent systems.",
-      "llm_tldr_cn": "将特定领域逻辑与拓扑解耦，以实现多智能体系统的自动生成。",
-      "llm_tldr": "将特定领域逻辑与拓扑解耦，以实现多智能体系统的自动生成。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.21475v1",
-      "carry_days": 1
+      "carry_days": 4
     },
     {
       "id": "2603.20640v1",
@@ -617,13 +415,13 @@
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "Multi-agent debate framework for improving reasoning through iterative communication",
-      "llm_evidence_cn": "通过迭代通信提高推理质量的多智能体辩论框架",
-      "llm_evidence": "通过迭代通信提高推理质量的多智能体辩论框架",
-      "canonical_evidence": "通过迭代通信提高推理质量的多智能体辩论框架",
-      "llm_tldr_en": "Proposes a diversity-aware retention method to improve efficiency and quality in multi-agent debates.",
-      "llm_tldr_cn": "提出一种多样性感知保留方法，以提高多智能体辩论的效率和质量。",
-      "llm_tldr": "提出一种多样性感知保留方法，以提高多智能体辩论的效率和质量。",
+      "llm_evidence_en": "multi-agent debate framework for improving reasoning",
+      "llm_evidence_cn": "用于提升推理能力的多智能体辩论框架",
+      "llm_evidence": "用于提升推理能力的多智能体辩论框架",
+      "canonical_evidence": "用于提升推理能力的多智能体辩论框架",
+      "llm_tldr_en": "Proposes a diversity-aware retention framework to optimize communication efficiency in multi-agent debates.",
+      "llm_tldr_cn": "提出一种多样性感知保留框架，旨在优化多智能体辩论中的通信效率。",
+      "llm_tldr": "提出一种多样性感知保留框架，旨在优化多智能体辩论中的通信效率。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -672,7 +470,7 @@
       "matched_requirement_id": "req-composite-mas-ss",
       "selection_source": "carryover_cache",
       "paper_id": "2603.21368v1",
-      "carry_days": 1
+      "carry_days": 2
     },
     {
       "id": "2603.21563v1",
@@ -698,19 +496,19 @@
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "Credit policy optimization for collaborative multi-agent LLMs",
-      "llm_evidence_cn": "协作式多智能体大模型的信用策略优化",
-      "llm_evidence": "协作式多智能体大模型的信用策略优化",
-      "canonical_evidence": "协作式多智能体大模型的信用策略优化",
-      "llm_tldr_en": "Proposes a counterfactual credit assignment framework to improve reinforcement learning in multi-agent LLM systems.",
-      "llm_tldr_cn": "提出一种反事实信用分配框架，以改进多智能体大模型系统中的强化学习。",
-      "llm_tldr": "提出一种反事实信用分配框架，以改进多智能体大模型系统中的强化学习。",
+      "llm_evidence_en": "Counterfactual credit assignment for collaborative multi-agent LLMs",
+      "llm_evidence_cn": "协作式多智能体大语言模型的反事实信用分配",
+      "llm_evidence": "协作式多智能体大语言模型的反事实信用分配",
+      "canonical_evidence": "协作式多智能体大语言模型的反事实信用分配",
+      "llm_tldr_en": "Introduces CCPO to optimize policy in multi-agent LLM systems through counterfactual marginal contributions.",
+      "llm_tldr_cn": "引入CCPO框架，通过反事实边际贡献优化多智能体大模型系统的信用分配与策略。",
+      "llm_tldr": "引入CCPO框架，通过反事实边际贡献优化多智能体大模型系统的信用分配与策略。",
       "llm_tags": [
         "query:mas-ss"
       ],
       "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
       "selection_source": "carryover_cache",
       "paper_id": "2603.21563v1",
       "carry_days": 1
@@ -749,7 +547,7 @@
       "matched_requirement_id": "req-5",
       "selection_source": "carryover_cache",
       "paper_id": "2603.15160v1",
-      "carry_days": 3
+      "carry_days": 4
     },
     {
       "id": "2603.20279v1",
@@ -789,7 +587,7 @@
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
       "paper_id": "2603.20279v1",
-      "carry_days": 1
+      "carry_days": 2
     },
     {
       "id": "2603.22854v1",
@@ -825,7 +623,7 @@
       "matched_requirement_id": "req-1",
       "selection_source": "carryover_cache",
       "paper_id": "2603.22854v1",
-      "carry_days": 2
+      "carry_days": 3
     },
     {
       "id": "2603.23125v1",
@@ -866,46 +664,7 @@
       "matched_requirement_id": "req-1",
       "selection_source": "carryover_cache",
       "paper_id": "2603.23125v1",
-      "carry_days": 2
-    },
-    {
-      "id": "2603.23271v1",
-      "title": "A Multimodal Framework for Human-Multi-Agent Interaction",
-      "abstract": "Human-robot interaction is increasingly moving toward multi-robot, socially grounded environments. Existing systems struggle to integrate multimodal perception, embodied expression, and coordinated decision-making in a unified framework. This limits natural and scalable interaction in shared physical spaces. We address this gap by introducing a multimodal framework for human-multi-agent interaction in which each robot operates as an autonomous cognitive agent with integrated multimodal perception and Large Language Model (LLM)-driven planning grounded in embodiment. At the team level, a centralized coordination mechanism regulates turn-taking and agent participation to prevent overlapping speech and conflicting actions. Implemented on two humanoid robots, our framework enables coherent multi-agent interaction through interaction policies that combine speech, gesture, gaze, and locomotion. Representative interaction runs demonstrate coordinated multimodal reasoning across agents and grounded embodied responses. Future work will focus on larger-scale user studies and deeper exploration of socially grounded multi-agent interaction dynamics.",
-      "authors": [
-        "Shaid Hasan",
-        "Breenice Lee",
-        "Sujan Sarker",
-        "Tariq Iqbal"
-      ],
-      "primary_category": "cs.RO",
-      "categories": [
-        "cs.RO",
-        "cs.AI"
-      ],
-      "published": "2026-03-24T14:35:40+00:00",
-      "link": "https://arxiv.org/pdf/2603.23271v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "socially grounded multi-agent interaction framework",
-      "llm_evidence_cn": "具备社会基础的多智能体交互框架",
-      "llm_evidence": "具备社会基础的多智能体交互框架",
-      "canonical_evidence": "具备社会基础的多智能体交互框架",
-      "llm_tldr_en": "Presents a multimodal framework for human-multi-agent interaction in socially grounded environments.",
-      "llm_tldr_cn": "提出一种在社会化场景下进行人与多智能体交互的多模态框架。",
-      "llm_tldr": "提出一种在社会化场景下进行人与多智能体交互的多模态框架。",
-      "llm_tags": [
-        "query:mas-ss:composite"
-      ],
-      "matched_query_tag": "query:mas-ss:composite",
-      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
-      "matched_requirement_id": "req-composite-mas-ss",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.23271v1",
-      "carry_days": 1
+      "carry_days": 3
     },
     {
       "id": "2603.20975v1",
@@ -926,13 +685,13 @@
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "uncertainty quantification in multi-agent LLM ensembles",
-      "llm_evidence_cn": "多智能体大模型集成中的不确定性量化",
-      "llm_evidence": "多智能体大模型集成中的不确定性量化",
-      "canonical_evidence": "多智能体大模型集成中的不确定性量化",
-      "llm_tldr_en": "Analyzes inter-agent disagreement to improve confidence estimates in multi-agent LLM reasoning systems.",
-      "llm_tldr_cn": "通过分析智能体间的语义分歧，提升多智能体大模型推理系统的置信度评估。",
-      "llm_tldr": "通过分析智能体间的语义分歧，提升多智能体大模型推理系统的置信度评估。",
+      "llm_evidence_en": "uncertainty quantification in multi-agent LLM systems",
+      "llm_evidence_cn": "多智能体大模型系统中的不确定性量化",
+      "llm_evidence": "多智能体大模型系统中的不确定性量化",
+      "canonical_evidence": "多智能体大模型系统中的不确定性量化",
+      "llm_tldr_en": "Introduces DiscoUQ to analyze inter-agent disagreement for better confidence estimates in multi-agent ensembles.",
+      "llm_tldr_cn": "引入 DiscoUQ 框架，通过分析智能体间的意见分歧来优化多智能体系统的置信度评估。",
+      "llm_tldr": "引入 DiscoUQ 框架，通过分析智能体间的意见分歧来优化多智能体系统的置信度评估。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -941,7 +700,7 @@
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
       "paper_id": "2603.20975v1",
-      "carry_days": 2
+      "carry_days": 1
     },
     {
       "id": "2603.21025v1",
@@ -964,13 +723,13 @@
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "spatial public goods dilemma and evolution of cooperative behavior",
-      "llm_evidence_cn": "空间公共物品困境与合作行为演化",
-      "llm_evidence": "空间公共物品困境与合作行为演化",
-      "canonical_evidence": "空间公共物品困境与合作行为演化",
-      "llm_tldr_en": "Models how spatial structure and motion influence the emergence of cooperation in social dilemmas.",
-      "llm_tldr_cn": "模拟了空间结构和运动如何影响社会困境中合作行为的涌现。",
-      "llm_tldr": "模拟了空间结构和运动如何影响社会困境中合作行为的涌现。",
+      "llm_evidence_en": "pattern formation and evolution of cooperative behavior",
+      "llm_evidence_cn": "合作行为的模式形成与演化",
+      "llm_evidence": "合作行为的模式形成与演化",
+      "canonical_evidence": "合作行为的模式形成与演化",
+      "llm_tldr_en": "Studies how spatial dynamics and individual motion affect the evolution of cooperation in public goods dilemmas.",
+      "llm_tldr_cn": "研究空间动态和个体运动如何影响公共物品困境中合作行为的演化。",
+      "llm_tldr": "研究空间动态和个体运动如何影响公共物品困境中合作行为的演化。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -979,44 +738,6 @@
       "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
       "paper_id": "2603.21025v1",
-      "carry_days": 1
-    },
-    {
-      "id": "2603.24381v1",
-      "title": "On a Co-evolving Opinion-Leadership Model in Social Networks",
-      "abstract": "Leadership in social groups is often a dynamic characteristic that emerges from interactions and opinion exchange. Empirical evidence suggests that individuals with strong opinions tend to gain influence, at the same time maintaining alignment with the social context is crucial for sustained leadership. Motivated by the social psychology literature that supports these empirical observations, we propose a novel dynamical system in which opinions and leadership co-evolve within a social network. Our model extends the Friedkin-Johnsen framework by making susceptibility to peer influence time-dependent, turning it into the leadership variable. Leadership strengthens when an agent holds strong yet socially aligned opinions, and declines when such alignment is lost, capturing the trade-off between conviction and social acceptance. After illustrating the emergent behavior of this complex system, we formally analyze the coupled dynamics, establishing sufficient conditions for convergence to a non-trivial equilibrium, and examining two time-scale separation regimes reflecting scenarios where opinion and leadership evolve at different speeds.",
-      "authors": [
-        "Martina Alutto",
-        "Lorenzo Zino",
-        "Karl H. Johansson",
-        "Angela Fontan"
-      ],
-      "primary_category": "physics.soc-ph",
-      "categories": [
-        "physics.soc-ph",
-        "eess.SY"
-      ],
-      "published": "2026-03-25T15:00:59+00:00",
-      "link": "https://arxiv.org/pdf/2603.24381v1",
-      "tags": [
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "Emergent leadership and opinion dynamics in social networks",
-      "llm_evidence_cn": "社交网络中涌现的领导力与观点演化",
-      "llm_evidence": "社交网络中涌现的领导力与观点演化",
-      "canonical_evidence": "社交网络中涌现的领导力与观点演化",
-      "llm_tldr_en": "Models the co-evolution of opinions and leadership as emergent phenomena within social network interactions.",
-      "llm_tldr_cn": "将观点和领导力的协同演化建模为社交网络互动中的涌现现象。",
-      "llm_tldr": "将观点和领导力的协同演化建模为社交网络互动中的涌现现象。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "emergent social phenomena in multi agent environments",
-      "matched_requirement_id": "req-7",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.24381v1",
       "carry_days": 1
     },
     {
@@ -1053,36 +774,34 @@
       "matched_requirement_id": "req-6",
       "selection_source": "carryover_cache",
       "paper_id": "2603.19568v1",
-      "carry_days": 1
+      "carry_days": 2
     },
     {
-      "id": "2603.24324v1",
-      "title": "Large Language Model Guided Incentive Aware Reward Design for Cooperative Multi-Agent Reinforcement Learning",
-      "abstract": "Designing effective auxiliary rewards for cooperative multi-agent systems remains a precarious task; misaligned incentives risk inducing suboptimal coordination, especially where sparse task feedback fails to provide sufficient grounding. This study introduces an automated reward design framework that leverages large language models to synthesize executable reward programs from environment instrumentation. The procedure constrains candidate programs within a formal validity envelope and evaluates their efficacy by training policies from scratch under a fixed computational budget; selection depends exclusively on the sparse task return. The framework is evaluated across four distinct Overcooked-AI layouts characterized by varied corridor congestion, handoff dependencies, and structural asymmetries. Iterative search generations consistently yield superior task returns and delivery counts, with the most pronounced gains occurring in environments dominated by interaction bottlenecks. Diagnostic analysis of the synthesized shaping components indicates increased interdependence in action selection and improved signal alignment in coordination-intensive tasks. These results demonstrate that the search for objectivegrounded reward programs can mitigate the burden of manual engineering while producing shaping signals compatible with cooperative learning under finite budgets.",
+      "id": "2603.19452v1",
+      "title": "TrustFlow: Topic-Aware Vector Reputation Propagation for Multi-Agent Ecosystems",
+      "abstract": "We introduce TrustFlow, a reputation propagation algorithm that assigns each software agent a multi-dimensional reputation vector rather than a scalar score. Reputation is propagated through an interaction graph via topic-gated transfer operators that modulate each edge by its content embedding, with convergence to a unique fixed point guaranteed by the contraction mapping theorem. We develop a family of Lipschitz-1 transfer operators and composable information-theoretic gates that achieve up to 98% multi-label Precision@5 on dense graphs and 78% on sparse ones. On a benchmark of 50 agents across 8 domains, TrustFlow resists sybil attacks, reputation laundering, and vote rings with at most 4 percentage-point precision impact. Unlike PageRank and Topic-Sensitive PageRank, TrustFlow produces vector reputation that is directly queryable by dot product in the same embedding space as user queries.",
       "authors": [
-        "Dogan Urgun",
-        "Gokhan Gungor"
+        "Volodymyr Seliuchenko"
       ],
-      "primary_category": "cs.LG",
+      "primary_category": "cs.MA",
       "categories": [
-        "cs.LG",
-        "cs.AI",
-        "eess.SY"
+        "cs.MA",
+        "cs.AI"
       ],
-      "published": "2026-03-25T14:05:59+00:00",
-      "link": "https://arxiv.org/pdf/2603.24324v1",
+      "published": "2026-03-19T20:26:07+00:00",
+      "link": "https://arxiv.org/pdf/2603.19452v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "LLM guided reward design for cooperative multi-agent reinforcement learning",
-      "llm_evidence_cn": "大模型引导的协作式多智能体强化学习奖励设计",
-      "llm_evidence": "大模型引导的协作式多智能体强化学习奖励设计",
-      "canonical_evidence": "大模型引导的协作式多智能体强化学习奖励设计",
-      "llm_tldr_en": "Uses LLMs to automate reward program synthesis for improving coordination in multi-agent systems.",
-      "llm_tldr_cn": "利用大语言模型自动合成奖励程序，以改善多智能体系统中的协作。",
-      "llm_tldr": "利用大语言模型自动合成奖励程序，以改善多智能体系统中的协作。",
+      "llm_evidence_en": "Reputation propagation algorithm for multi-agent ecosystems",
+      "llm_evidence_cn": "多智能体生态系统的声誉传播算法",
+      "llm_evidence": "多智能体生态系统的声誉传播算法",
+      "canonical_evidence": "多智能体生态系统的声誉传播算法",
+      "llm_tldr_en": "Develops TrustFlow, a vector-based reputation algorithm to secure multi-agent interactions.",
+      "llm_tldr_cn": "开发了TrustFlow，一种基于向量的声誉算法，用于保障多智能体交互安全。",
+      "llm_tldr": "开发了TrustFlow，一种基于向量的声誉算法，用于保障多智能体交互安全。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -1090,90 +809,213 @@
       "matched_query_text": "Multi-Agent",
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
-      "paper_id": "2603.24324v1",
+      "paper_id": "2603.19452v1",
       "carry_days": 1
     },
     {
-      "id": "2603.24329v1",
-      "title": "GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents",
-      "abstract": "Multimodal LLMs are increasingly deployed as perceptual backbones for autonomous agents in 3D environments, from robotics to virtual worlds. These applications require agents to perceive rapid state changes, attribute actions to the correct entities, and reason about concurrent multi-agent behaviors from a first-person perspective, capabilities that existing benchmarks do not adequately evaluate. We introduce GameplayQA, a framework for evaluating agentic-centric perception and reasoning through video understanding. Specifically, we densely annotate multiplayer 3D gameplay videos at 1.22 labels/second, with time-synced, concurrent captions of states, actions, and events structured around a triadic system of Self, Other Agents, and the World, a natural decomposition for multi-agent environments. From these annotations, we refined 2.4K diagnostic QA pairs organized into three levels of cognitive complexity, accompanied by a structured distractor taxonomy that enables fine-grained analysis of where models hallucinate. Evaluation of frontier MLLMs reveals a substantial gap from human performance, with common failures in temporal and cross-video grounding, agent-role attribution, and handling the decision density of the game. We hope GameplayQA stimulates future research at the intersection of embodied AI, agentic perception, and world modeling.",
+      "id": "2603.24858v1",
+      "title": "Context-Mediated Domain Adaptation in Multi-Agent Sensemaking Systems",
+      "abstract": "Domain experts possess tacit knowledge that they cannot easily articulate through explicit specifications. When experts modify AI-generated artifacts by correcting terminology, restructuring arguments, and adjusting emphasis, these edits reveal domain understanding that remains latent in traditional prompt-based interactions. Current systems treat such modifications as endpoint corrections rather than as implicit specifications that could reshape subsequent reasoning. We propose context-mediated domain adaptation, a paradigm where user modifications to system-generated artifacts serve as implicit domain specification that reshapes LLM-powered multi-agent reasoning behavior. Through our system Seedentia, a web-based multi-agent framework for sense-making, we demonstrate bidirectional semantic links between generated artifacts and system reasoning. Our approach enables specification bootstrapping where vague initial prompts evolve into precise domain specifications through iterative human-AI collaboration, implicit knowledge transfer through reverse-engineered user edits, and in-context learning where agent behavior adapts based on observed correction patterns. We present results from an evaluation with domain experts who generated and modified research questions from academic papers. Our system extracted 46 domain knowledge entries from user modifications, demonstrating the feasibility of capturing implicit expertise through edit patterns, though the limited sample size constrains conclusions about systematic quality improvements.",
       "authors": [
-        "Yunzhe Wang",
-        "Runhui Xu",
-        "Kexin Zheng",
-        "Tianyi Zhang",
-        "Jayavibhav Niranjan Kogundi",
-        "Soham Hans",
-        "Volkan Ustun"
+        "Anton Wolter",
+        "Leon Haag",
+        "Vaishali Dhanoa",
+        "Niklas Elmqvist"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.MA"
+      ],
+      "published": "2026-03-25T22:57:05+00:00",
+      "link": "https://arxiv.org/pdf/2603.24858v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-powered multi-agent framework for sensemaking and domain adaptation",
+      "llm_evidence_cn": "用于意义构建和领域自适应的LLM驱动多智能体框架",
+      "llm_evidence": "用于意义构建和领域自适应的LLM驱动多智能体框架",
+      "canonical_evidence": "用于意义构建和领域自适应的LLM驱动多智能体框架",
+      "llm_tldr_en": "Uses user modifications to reshape LLM-powered multi-agent reasoning behavior in sensemaking.",
+      "llm_tldr_cn": "利用用户修改来重塑LLM驱动的多智能体在意义构建中的推理行为。",
+      "llm_tldr": "利用用户修改来重塑LLM驱动的多智能体在意义构建中的推理行为。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.24858v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2603.25268v1",
+      "title": "CRAFT: Grounded Multi-Agent Coordination Under Partial Information",
+      "abstract": "We introduce CRAFT, a multi-agent benchmark for evaluating pragmatic communication in large language models under strict partial information. In this setting, multiple agents with complementary but incomplete views must coordinate through natural language to construct a shared 3D structure that no single agent can fully observe. We formalize this problem as a multi-sender pragmatic reasoning task and provide a diagnostic framework that decomposes failures into spatial grounding, belief modeling and pragmatic communication errors, including a taxonomy of behavioral failure profiles in both frontier and open-weight models. Across a diverse set of models, including 8 open-weight and 7 frontier including reasoning models, we find that stronger reasoning ability does not reliably translate to better coordination: smaller open-weight models often match or outperform frontier systems, and improved individual communication does not guarantee successful collaboration. These results suggest that multi-agent coordination remains a fundamentally unsolved challenge for current language models. Our code can be found at https://github.com/csu-signal/CRAFT",
+      "authors": [
+        "Abhijnan Nath",
+        "Hannah VanderHoeven",
+        "Nikhil Krishnaswamy"
       ],
       "primary_category": "cs.CL",
       "categories": [
         "cs.CL",
-        "cs.AI",
-        "cs.CV"
+        "cs.AI"
       ],
-      "published": "2026-03-25T14:10:45+00:00",
-      "link": "https://arxiv.org/pdf/2603.24329v1",
+      "published": "2026-03-26T10:06:39+00:00",
+      "link": "https://arxiv.org/pdf/2603.25268v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "reasoning about concurrent multi-agent behaviors in video",
-      "llm_evidence_cn": "对视频中并发多智能体行为的推理",
-      "llm_evidence": "对视频中并发多智能体行为的推理",
-      "canonical_evidence": "对视频中并发多智能体行为的推理",
-      "llm_tldr_en": "A benchmark for evaluating multimodal LLM agents on understanding multi-video 3D agent behaviors.",
-      "llm_tldr_cn": "一个用于评估多模态大模型智能体对3D环境中多视频并发行为理解能力的基准框架。",
-      "llm_tldr": "一个用于评估多模态大模型智能体对3D环境中多视频并发行为理解能力的基准框架。",
+      "llm_evidence_en": "multi-agent coordination under partial information",
+      "llm_evidence_cn": "部分信息下的多智能体协作",
+      "llm_evidence": "部分信息下的多智能体协作",
+      "canonical_evidence": "部分信息下的多智能体协作",
+      "llm_tldr_en": "CRAFT is a benchmark for evaluating LLM multi-agent coordination and pragmatic communication in 3D environments.",
+      "llm_tldr_cn": "CRAFT是一个用于评估3D环境中大模型多智能体协作和语用通信的基准。",
+      "llm_tldr": "CRAFT是一个用于评估3D环境中大模型多智能体协作和语用通信的基准。",
       "llm_tags": [
-        "query:mas-ss:composite"
+        "query:mas-ss"
       ],
-      "matched_query_tag": "query:mas-ss:composite",
-      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
-      "matched_requirement_id": "req-composite-mas-ss",
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
-      "paper_id": "2603.24329v1",
+      "paper_id": "2603.25268v1",
       "carry_days": 1
     },
     {
-      "id": "2603.24014v1",
-      "title": "Language-Grounded Multi-Agent Planning for Personalized and Fair Participatory Urban Sensing",
-      "abstract": "Participatory urban sensing leverages human mobility for large-scale urban data collection, yet existing methods typically rely on centralized optimization and assume homogeneous participants, resulting in rigid assignments that overlook personal preferences and heterogeneous urban contexts. We propose MAPUS, an LLM-based multi-agent framework for personalized and fair participatory urban sensing. In our framework, participants are modeled as autonomous agents with individual profiles and schedules, while a coordinator agent performs fairness-aware selection and refines sensing routes through language-based negotiation. Experiments on real-world datasets show that MAPUS achieves competitive sensing coverage while substantially improving participant satisfaction and fairness, promoting more human-centric and sustainable urban sensing systems.",
+      "id": "2603.18743v1",
+      "title": "Memento-Skills: Let Agents Design Agents",
+      "abstract": "We introduce \\emph{Memento-Skills}, a generalist, continually-learnable LLM agent system that functions as an \\emph{agent-designing agent}: it autonomously constructs, adapts, and improves task-specific agents through experience. The system is built on a memory-based reinforcement learning framework with \\emph{stateful prompts}, where reusable skills (stored as structured markdown files) serve as persistent, evolving memory. These skills encode both behaviour and context, enabling the agent to carry forward knowledge across interactions.   Starting from simple elementary skills (like Web search and terminal operations), the agent continually improves via the \\emph{Read--Write Reflective Learning} mechanism introduced in \\emph{Memento~2}~\\cite{wang2025memento2}. In the \\emph{read} phase, a behaviour-trainable skill router selects the most relevant skill conditioned on the current stateful prompt; in the \\emph{write} phase, the agent updates and expands its skill library based on new experience. This closed-loop design enables \\emph{continual learning without updating LLM parameters}, as all adaptation is realised through the evolution of externalised skills and prompts.   Unlike prior approaches that rely on human-designed agents, Memento-Skills enables a generalist agent to \\emph{design agents end-to-end} for new tasks. Through iterative skill generation and refinement, the system progressively improves its own capabilities. Experiments on the \\emph{General AI Assistants} benchmark and \\emph{Humanity's Last Exam} demonstrate sustained gains, achieving 26.2\\% and 116.2\\% relative improvements in overall accuracy, respectively. Code is available at https://github.com/Memento-Teams/Memento-Skills.",
       "authors": [
-        "Xusen Guo",
-        "Mingxing Peng",
-        "Hongliang Lu",
-        "Hai Yang",
-        "Jun Ma",
-        "Yuxuan Liang"
+        "Huichi Zhou",
+        "Siyuan Guo",
+        "Anjie Liu",
+        "Zhongwei Yu",
+        "Ziqin Gong",
+        "Bowen Zhao",
+        "Zhixun Chen",
+        "Menglong Zhang",
+        "Yihang Chen",
+        "Jinsong Li",
+        "Runyu Yang",
+        "Qiangbin Liu",
+        "Xinlei Yu",
+        "Jianmin Zhou",
+        "Na Wang",
+        "Chunyang Sun",
+        "Jun Wang"
       ],
       "primary_category": "cs.AI",
       "categories": [
-        "cs.AI"
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
       ],
-      "published": "2026-03-25T07:19:45+00:00",
-      "link": "https://arxiv.org/pdf/2603.24014v1",
+      "published": "2026-03-19T10:45:22+00:00",
+      "link": "https://arxiv.org/pdf/2603.18743v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "LLM-based multi-agent framework for participatory urban sensing and social coordination",
-      "llm_evidence_cn": "基于大语言模型的多智能体框架，用于参与式城市感知和社会协调",
-      "llm_evidence": "基于大语言模型的多智能体框架，用于参与式城市感知和社会协调",
-      "canonical_evidence": "基于大语言模型的多智能体框架，用于参与式城市感知和社会协调",
-      "llm_tldr_en": "Uses LLM agents to model personalized preferences and fair negotiation in urban data collection.",
-      "llm_tldr_cn": "使用大语言模型智能体在城市数据采集任务中模拟个性化偏好和公平协商。",
-      "llm_tldr": "使用大语言模型智能体在城市数据采集任务中模拟个性化偏好和公平协商。",
+      "llm_evidence_en": "LLM agent system that autonomously designs and improves task-specific agents",
+      "llm_evidence_cn": "自主设计并改进任务特定智能体的 LLM 智能体系统",
+      "llm_evidence": "自主设计并改进任务特定智能体的 LLM 智能体系统",
+      "canonical_evidence": "自主设计并改进任务特定智能体的 LLM 智能体系统",
+      "llm_tldr_en": "Presents Memento-Skills, a system where agents use memory and reflective learning to design other agents.",
+      "llm_tldr_cn": "提出 Memento-Skills 系统，使智能体能够通过记忆和反思学习自主设计和改进其他智能体。",
+      "llm_tldr": "提出 Memento-Skills 系统，使智能体能够通过记忆和反思学习自主设计和改进其他智能体。",
       "llm_tags": [
-        "query:mas-ss:composite"
+        "query:mas-ss"
       ],
-      "matched_query_tag": "query:mas-ss:composite",
-      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
-      "matched_requirement_id": "req-composite-mas-ss",
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
-      "paper_id": "2603.24014v1",
+      "paper_id": "2603.18743v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2603.23234v1",
+      "title": "MemCollab: Cross-Agent Memory Collaboration via Contrastive Trajectory Distillation",
+      "abstract": "Large language model (LLM)-based agents rely on memory mechanisms to reuse knowledge from past problem-solving experiences. Existing approaches typically construct memory in a per-agent manner, tightly coupling stored knowledge to a single model's reasoning style. In modern deployments with heterogeneous agents, a natural question arises: can a single memory system be shared across different models? We found that naively transferring memory between agents often degrades performance, as such memory entangles task-relevant knowledge with agent-specific biases. To address this challenge, we propose MemCollab, a collaborative memory framework that constructs agent-agnostic memory by contrasting reasoning trajectories generated by different agents on the same task. This contrastive process distills abstract reasoning constraints that capture shared task-level invariants while suppressing agent-specific artifacts. We further introduce a task-aware retrieval mechanism that conditions memory access on task category, ensuring that only relevant constraints are used at inference time. Experiments on mathematical reasoning and code generation benchmarks demonstrate that MemCollab consistently improves both accuracy and inference-time efficiency across diverse agents, including cross-modal-family settings. Our results show that the collaboratively constructed memory can function as a shared reasoning resource for diverse LLM-based agents.",
+      "authors": [
+        "Yurui Chang",
+        "Yiran Wu",
+        "Qingyun Wu",
+        "Lu Lin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-03-24T14:05:47+00:00",
+      "link": "https://arxiv.org/pdf/2603.23234v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Cross-agent memory collaboration for LLM-based agents",
+      "llm_evidence_cn": "基于大语言模型智能体的跨智能体记忆协作",
+      "llm_evidence": "基于大语言模型智能体的跨智能体记忆协作",
+      "canonical_evidence": "基于大语言模型智能体的跨智能体记忆协作",
+      "llm_tldr_en": "Proposes MemCollab to enable agent-agnostic memory sharing across heterogeneous LLM-based agents.",
+      "llm_tldr_cn": "提出MemCollab框架，实现异构大模型智能体之间的跨智能体记忆共享与协作。",
+      "llm_tldr": "提出MemCollab框架，实现异构大模型智能体之间的跨智能体记忆共享与协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.23234v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2603.23419v1",
+      "title": "Biased Error Attribution in Multi-Agent Human-AI Systems Under Delayed Feedback",
+      "abstract": "Human decision-making is strongly influenced by cognitive biases, particularly under conditions of uncertainty and risk. While prior work has examined bias in single-step decisions with immediate outcomes and in human interaction with a single autonomous agent, comparatively little attention has been paid to decision-making under delayed outcomes involving multiple AI agents, where decisions at each step affect subsequent states. In this work, we study how delayed outcomes shape decision-making and responsibility attribution in a multi-agent human-AI task. Using a controlled game-based experiment, we analyze how participants adjust their behavior following positive and negative outcomes. We observe asymmetric responses to gains and losses, with stronger corrective adjustments after negative outcomes. Importantly, participants often fail to correctly identify the actions that caused failure and misattribute responsibility across AI agents, leading to systematic revisions of decisions that are weakly related to the underlying causes of poor performance. We refer to this phenomenon as a form of attribution bias, manifested as biased error attribution under delayed feedback. Our findings highlight how cognitive biases can be amplified in human-AI systems with delayed outcomes and multiple autonomous agents, underscoring the need for decision-support systems that better support causal understanding and learning over time.",
+      "authors": [
+        "Teerthaa Parakh",
+        "Karen M. Feigh"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-03-24T16:52:14+00:00",
+      "link": "https://arxiv.org/pdf/2603.23419v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "decision-making and responsibility in multi-agent human-AI systems",
+      "llm_evidence_cn": "多智能体人机系统中的决策与责任归因",
+      "llm_evidence": "多智能体人机系统中的决策与责任归因",
+      "canonical_evidence": "多智能体人机系统中的决策与责任归因",
+      "llm_tldr_en": "Studies how delayed outcomes affect human decision-making and bias in multi-agent AI environments.",
+      "llm_tldr_cn": "研究了延迟结果如何影响多智能体AI环境中的人类决策和偏见。",
+      "llm_tldr": "研究了延迟结果如何影响多智能体AI环境中的人类决策和偏见。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.23419v1",
       "carry_days": 1
     }
   ]

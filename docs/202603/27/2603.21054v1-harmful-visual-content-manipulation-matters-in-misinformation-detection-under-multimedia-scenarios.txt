@@ -1,0 +1,828 @@
+Title: Harmful Visual Content Manipulation Matters in Misinformation Detection Under Multimedia Scenarios
+
+URL Source: https://arxiv.org/pdf/2603.21054v1
+
+Published Time: Tue, 24 Mar 2026 01:04:51 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+> JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 1
+
+# Harmful Visual Content Manipulation Matters in Misinformation Detection Under Multimedia Scenarios 
+
+Bing Wang, Ximing Li, Changchun Li, Jinjin Chi, Tianze Li, Renchu Guan, Shengsheng Wang 
+
+Abstract —Nowadays, the widespread dissemination of misin-formation across numerous social media platforms has led to severe negative effects on society. To address this challenge, the automatic detection of misinformation, particularly under multimedia scenarios, has gained significant attention from both academic and industrial communities, leading to the emergence of a research task known as Multimodal Misinformation Detection (MMD). Typically, current MMD approaches focus on capturing the semantic relationships and inconsistency between various modalities but often overlook certain critical indicators within multimodal content. Recent research has shown that manipulated features within visual content in social media articles serve as valuable clues for MMD. Meanwhile, we argue that the potential intentions behind the manipulation, e.g., harmful and harmless, also matter in MMD. Therefore, in this study, we aim to identify such multimodal misinformation by capturing two types of features: manipulation features, which represent if visual content has been manipulated, and intention features, which assess the nature of these manipulations, distinguishing between harmful and harmless intentions. Unfortunately, the manipulation and intention labels that supervise these features to be discriminative are unknown. To address this, we introduce two weakly supervised indicators as substitutes by incorporating supplementary datasets focused on image manipulation detection and framing two different classification tasks as positive and unlabeled learning issues. With this framework, we introduce an innovative MMD approach, titled Harmful Visual Content Manipulation Matters in MMD (H AVC -M4 D). Comprehensive experiments conducted on four prevalent MMD datasets indi-cate that H AVC -M4 D significantly and consistently enhances the performance of existing MMD methods. 
+
+Index Terms —misinformation detection, multimodal learning, video manipulation, PU learning 
+
+I. I NTRODUCTION 
+
+In recent years, widely used social media platforms have connected individuals from all over the world and simplified information sharing. However, as these platforms have grown, misinformation with harmful intentions has also spread ex-tensively, posing risks to individual’s mental well-being and 
+
+This work was supported in part by the National Science and Technology Major Project of China (No. 2021ZD0112500), the National Natural Science Foundation of China (No.62276113, No.62376106), and China Postdoctoral Science Foundation (No.2022M721321). Bing Wang, Ximing Li, Changchun Li, Jinjin Chi, Renchu Guan, Shengsheng Wang are with College of Computer Science and Tech-nology, Jilin University, China (e-mail: wangbing1416@gmail.com, lix-iming86@gmail.com, changchunli93@gmail.com, chijinjin616@gmail.com, guanrenchu@jlu.edu.cn, wss@jlu.edu.cn). Ximing Li is the corresponding author (liximing86@gmail.com). Tianze Li is with the School of Advanced Technology, Xi’an Jiaotong-Liverpool University, China. Email: Tianze.Li22@student.xjtlu.edu.cn 81 
+
+[33.6%] 
+
+160 
+
+[66.4%] 
+
+227 
+
+[90.0%] 
+
+25 
+
+[10.0%] 
+
+un manipulated manipulated 
+
+Fake 
+
+Real  
+
+> Harmful Harmless
+> Harmless
+
+Fig. 1. The statistics from the MMD dataset Twitter reveal a quantitative relationship between manipulated visual content and veracity labels. We utilize a pre-trained model for image manipulation detection to determine if an image has been manipulated. Additionally, we provide various examples of images that have been manipulated with both harmful and harmless intentions. 
+
+financial assets [1], [2]. For example, during the fire at Notre Dame Cathedral in Paris in 2019, some conspiracy theorists claimed that the fire was a case of deliberate arson rather than an accident. 1 Although this claim was unverified, it caused extensive panic and distrust among the public. To mitigate these negative impacts, it is essential to detect misinformation automatically, leading to the emergence of an active research topic known as Misinformation Detection ( MD ). Generally, the goal of MD is to develop a veracity predictor that can automatically discriminate the veracity label of an article, e.g., real and fake. Previous MD efforts have focused on encoding raw articles into a high-dimensional semantic space and learning potential relationships between these se-mantics and their veracity labels using various deep models [3]–[5]. However, most existing MD approaches only deal with text-only articles, which is not realistic given the preva-lence of multimodal content on social media platforms today. To address this, recent efforts have been directed towards developing Multimodal Misinformation Detection (MMD )approaches to meet this practical need, which can detect misinformation across multiple modalities, e.g., text, image, and video. The typical MMD pipelines first extract unimodal semantic features using various prevalent feature extractors [6], [7]. These features are then aligned and integrated into a multimodal feature to predict the veracity labels [8]–[10]. Upon this pipeline, state-of-the-art MMD approaches develop innovative multimodal interaction strategies to fuse semantic 
+
+> 1
+
+https://abcnews.go.com/International/france-marks-3rd-anniversary-notre-dame-cathedral-fire/story?id=84075948  
+
+> arXiv:2603.21054v1 [cs.LG] 22 Mar 2026 JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 2
+
+features [8], [11], [12], and model the semantic inconsistencies between different modalities [10], [13], [14]. While modality features can enhance current MMD meth-ods, these approaches often treat MMD as a conventional text classification problem that relies heavily on sample semantics. However, misinformation is a nuanced issue, with its veracity influenced by multiple factors. As explored in prior studies [15], [16], many fake articles tend to include manipulated visual elements generated through various techniques, such as image copy-move manipulation and video editing [17]. To investigate this perspective, we perform an initial statistical analysis on a public MMD dataset, Twitter , illustrated in Fig. 1. The results present two key findings. Initially, we observe that about 66.4% of fake articles include manipulated visual content, suggesting that such content could serve as a useful indicator for identifying fake articles. Conversely, we find that about 10.0% of real articles also contain manipulated visual elements, which seems to contradict the general assumption that real articles should be entirely authentic. Upon further examination of these manipulated visuals, we empirically observe that those in fake articles tend to be associated with harmful intentions, such as deception or pranks, while the manipulated content in real articles is typically driven by harm-less intentions, like watermarking or aesthetic modifications, as illustrated in Fig. 1. Based on these observations and the intention-based perspective [18], we hypothesize that visual content manipulated with harmful intent can serve as a strong indicator for detecting misinformation. Driven by these insights, we propose a method for detecting misinformation by extracting distinctive manipulation features 
+
+that indicate whether the visual content has been manipulated, alongside intention features that distinguish between harmful and harmless intentions behind the manipulation. To this end, we introduce a novel MMD framework, named HA rmful 
+
+Vi sual Content Manipulation Matters in MMD (HAVC -M4 D). In particular, we extract manipulation and intention features from multimodal articles and leverage them to define two binary classification tasks: manipulation classification and intention classification. These classifiers are then trained using their respective binary labels. However, the ground-truth labels for these tasks are unknown in prevalent MMD datasets. To overcome this challenge, we propose two weakly supervised signals as alternatives to these labels. To supervise the manip-ulation classifier, we adopt a knowledge distillation approach [19], [20] to train a manipulation teacher capable of identifying whether the visual content has been manipulated. The teacher’s discriminative abilities are then transferred to the manipulation classifier. Specifically, we use additional benchmark datasets for Image Manipulation Detection ( IMD ) [21] to pre-train the manipulation teacher. For video content, we design a cross-similarity module that refines the pseudo labels generated by the teacher. To address the distribution shift between IMD and MMD data, we generate synthetic manipulated images from MMD datasets and introduce a Positive and Unlabeled ( PU )learning objective to adapt the teacher to MMD data. Second, considering a fact that if the visual content in real information has been manipulated, the manipulation is likely to have a harmless intention , we can treat the intention classification task as a PU learning problem and address it using a PU approach. We validate the performance of the method H AVC -M4 D
+
+across 4 prevalent MMD datasets, including GossipCop [22], 
+
+Weibo [12], Twitter [23], and FakeSV [24], and compare its performance against several baseline MMD models. The results show a consistent enhancement in average performance across all metrics when using H AVC -M4 D, highlighting its effectiveness. In summary, our contributions are the following three-fold:  
+
+> •
+
+We propose that the manipulation of visual content, along with its underlying intention, plays a significant role in MMD. To capture and integrate these manipulation and intention features, we introduce a novel MMD model, HAVC -M4 D. 
+
+> •
+
+To address the challenge of unknown manipulation and intention labels, we design two weakly-supervised cues using supplemental IMD datasets and the PU learning technique.  
+
+> •
+
+Comprehensive experiments are carried out on four MMD datasets, showcasing the performance enhance-ments achieved by H AVC -M4 D.
+
+Remark. This paper is an extension version of our previous conference paper [25]. This paper extends our earlier work in several important aspects: (1) We generalize our previous method by designing a new video manipulation detection method to correct the pseudo labels generated by the manipulation teacher (Sec. III); (2) We evaluate H AVC -M4 D across four benchmark MMD dataset, demonstrating its effectiveness (Sec. IV). II. R ELATED WORK 
+
+In this section, we briefly describe the related literature on misinformation detection, manipulation detection, and positive and unlabeled learning. 
+
+A. Misinformation Detection 
+
+Recent MD models can be categorized into text-only and multimodal methods. 
+
+Text-only MD. Text-only models typically formulate MD as a binary classification task, aiming to learn the potential correlation between textual features and veracity labels. Pre-vious research has predominantly focused on augmenting these models with additional discriminative signals, such as world knowledge [26], [27], the intentions behind news creators [28], domain-specific information [29], [30], and stylistic attributes of writing [30]. In parallel, with the rapid advancements in Large Language Models ( LLMs ), the field has seen a growing interest in leveraging their capabilities to support MD. These approaches include prompting LLMs to generate explanatory rationales for detecting potential misinformation in news articles [31] or employing LLMs to retrieve relevant evidence from large-scale knowledge bases to enhance detec-tion accuracy [32], [33]. 
+
+Multimodal MD. Currently, most MMD models predomi-nantly addresses the scenario in which an article comprises a JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 3
+
+single text–image pair. In this setting, misinformation is identi-fied by jointly leveraging the semantic features of both modal-ities while explicitly modeling their interactions. Broadly, such cross-modal interactions can be classified into three categories: multimodal alignment, multimodal inconsistency, and multimodal fusion. Recent arts on multimodal alignment typically employs variational encoder networks [10], [34] and contrastive learning techniques [9] to align the semantic features of text and image modalities. Ones on multimodal inconsistency is grounded in the assumption that if the content expressed by images and text is inconsistent, the article is more likely to be fake . Accordingly, semantic-based [13], [35], distribution-based [10], and knowledge-based [14], [36] methods have been proposed to capture such cross-modal inconsistencies. Finally, multimodal fusion aims to devise more effective approaches to integrate features of image and text modalities, e.g., using attention mechanisms [11], [37] and weighted concatenation methods [38]. With the proliferation of short-video platforms, this conventional text–image paradigm can be naturally extended to encompass video, audio, and tex-tual modalities—a formulation referred to as misinformation video detection (MVD). Despite its growing practical rele-vance, MVD has thus far received limited scholarly attention [16], [39]. Existing efforts are primarily directed toward the construction of benchmark datasets and baseline models for this task, such as FakeSV [24] and FakeTT [40]. 
+
+B. Manipulation Detection 
+
+With the rapid advancement of multimedia technologies, the manipulation of digital media content, e.g., images and videos, has become increasingly effortless, in part due to techniques like copy–move [17] and splicing [41]. To automatically control the misuse of these techniques, IMD has become a crucial technique in the community [18]. Briefly, IMD seeks to determine whether an image has been altered and to accurately localize the manipulated regions, rendering it a par-ticularly challenging fine-grained segmentation task. Current approaches primarily center on developing powerful neural architectures capable of extracting discriminative semantic features while capturing subtle manipulation artifacts [42], [43]. For example, Objectformer [44] leverages a Transformer-based framework [45] to learn patch-level embeddings that model object-level consistencies across different image re-gions; MVSS-Net [46], [47] introduces a multi-view learning paradigm that simultaneously exploits boundary artifacts and learns semantic-agnostic features for robust generalization. Additionally, several studies have enriched IMD training re-sources by synthesizing tampered images from real-world data, thereby expanding the manipulated class and improving detection performance [48], [49]. Motivated by these arts, we introduce a manipulation teacher model, pre-trained on both a benchmark IMD dataset and a synthesized dataset derived from MMD corpora, to provide robust manipulation-aware knowledge for our downstream tasks. 
+
+C. Positive and Unlabeled Learning 
+
+PU learning is a prevalent paradigm in which the goal is to develop a binary classifier using only a subset of labeled pos-                      
+
+> TABLE I SUMMARY OF NOTATIONS .Notation Description
+> xtitext content
+> Xvi={xvij }Kj=1 visual content
+> yiveracity label
+> Nnumber of samples
+> Knumber of images
+> θt,θvparameters of text and visual encoders
+> θm,θeparameters of manipulation and intention encoders
+> Πparameters of manipulation teacher
+> eti,evitext and visual features
+> emi,eeimanipulation and intention features
+> ym, y epseudo manipulation and intention labels
+
+itive samples and a set of unlabeled instances. Traditional PU learning methods generally fall into two categories: sample-selection and cost-sensitive techniques. Sample-selection ap-proaches apply heuristic strategies to identify likely negative instances within the unlabeled data, which are then used in a supervised or semi-supervised learning framework for clas-sifier training [50]–[52]. For instance, PULUS [53] employs reinforcement learning to train a negative sample selector based on the rewards from validation performance. In contrast, cost-sensitive methods focus on constructing diverse empirical risk functions for negative samples to ensure unbiased risk estimation [54]–[57]. For example, uPU [54] initially proposed unbiased risk estimation, whereas nnPU [55] observed that uPU often overfits negative samples, especially in deep learn-ing, and thus introduced a non-negative PU risk by bounding the risk estimation. Additionally, some recent methods focus on assigning reliable pseudo-labels to unlabeled samples [58] and designing effective data augmentation techniques [59]. Within the MMD field, recent studies have also explored PU learning for misinformation detection [60], [61], addressing a weakly-supervised task where detectors are trained using partially labeled real articles as positive samples and treating other articles as unlabeled. Unlike these approaches, our HAVC -M4 D framework leverages PU learning to adapt the pre-trained IMD model to MMD datasets and to enable learning without pre-defined intention labels. III. P ROPOSED HAVC -M4 D METHOD 
+
+In this section, we will introduce the definition of our generalized MMD task, and the proposed MMD model HAVC -  
+
+> M4D
+
+in more detail. 
+
+Problem definition. Typically, an MMD dataset consists of 
+
+N training samples, expressed as D = {(xti, X vi , y i)}Ni=1 ,where xti denotes the text content, X vi = {xvij }Kj=1 represents the visual content of the i-th article, yi ∈ {0, 1} is the corresponding veracity label (0/1 indicates real/fake), and K
+
+denotes the number of images or video frames within the visual content. When K = 1 , the task will be degenerated into the typical MMD scenario involving text-image pairs. The primary goal of the MMD task is to train a misinfor-mation detector capable of predicting the veracity label of any previously unseen article. The basic pipeline of current JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 4Text Encoder 
+
+> Title & Transcript
+> Video Frames
+
+Fusion 
+
+Network Veracity Classifier 
+
+> Task 1 : Veracity Classification
+> Task 2 : Manipulation Classification
+
+Manipulation 
+
+Encoder 
+
+Manipulation 
+
+Classifier 
+
+Image Encoder 
+
+> This year's No. 4 typhoon
+> Hagupit was really fierce
+> and flooded the town ...
+
+Manipulation Teacher 
+
+## - +
+
+> CASIA
+> Cross-similarity
+> If
+
+Intent 
+
+Encoder 
+
+> Real
+> Fake
+> Fact 1
+
+## -
+
+Intent 
+
+Classifier 
+
+> Prediction Checking
+> Fact 2
+
++       
+
+> Task 2
+> Task 3
+> Task 3 : Intent Classification
+> Fig. 2. The H AVC -M4Dframework comprises four primary encoders: text encoder, image encoder, manipulation encoder, and intention encoder, which extract features from the provided text content xtiand visual content Xvi. These features are subsequently fed into a feature fusion network to create a combined representation. To accomplish the multiple tasks, we employ three distinct predictors aimed at veracity classification, manipulation classification, and intention classification.
+
+MMD approaches typically involves three components: feature encoder, feature fusion network, and predictor. Specifically, the feature encoder extracts the unimodal features from xti
+
+and X vi . The feature fusion network then fuses the features into a unified multimodal feature, which is then inputted into the predictor module for veracity classification. For clarity, the important notations and their descriptions are listed in Table I. 
+
+A. Overview of HAVC -M4 D
+
+We draw motivation from the observation and hypothesis that fake articles often involve visual content that has been manipulated in harmful ways. Thus, for each article, we extract hidden features related to manipulation and harm-fulness, which are then integrated with semantic features to produce a more distinctive representation. To approximate these hidden features, we perform manipulation and harm-fulness classification as auxiliary tasks. Building on these concepts, we propose H AVC -M4 D within a multi-task learning framework that simultaneously addresses the primary veracity classification task along with the two auxiliary tasks. More specifically, H AVC -M4 D consists of three main components: a feature encoders module, a feature fusion module, and a predictors module. A comprehensive view of the H AVC -M4 D
+
+framework is presented in Fig. 2. The following sections will provide an in-depth explanation of each module. 
+
+Feature encoders module. This module comprises four dis-tinct feature encoding sub-modules: a text encoder, a visual encoder, a manipulation encoder, and an intention encoder. For a given text xti and a set of visual contents X vi , the text and visual encoders capture the corresponding text and visual features, denoted as eti and evi , respectively. To be specific, the text feature eti = Fθt (xti) is obtained using a pre-trained BERT model [7] and the visual features evi = Fθv (xvi ) is derived using a ResNet34 model [6]. If there are K ≥ 2
+
+images in X vi , we compute the average of their visual features to obtain evi . These features are subsequently projected into a shared feature space via two feed-forward neural networks. Then, the visual feature evi is fed into a manipulation encoder to produce its manipulation feature emi = Fθm (evi ). This manipulation feature is then concatenated with the text and visual features eti and evi in an intention encoder, yielding the intention feature eei = Fθe (eti, evi , emi ).
+
+Feature fusion module. With the captured features, the feature fusion module employs an cross-attention mechanism to fuse them into a unified feature zi = FΨf (eti, evi , emi , eei ). The number of heads is fixed to 4 in our experiments. 
+
+Predictors module. The module comprises three predictors, each trained on a distinct task: veracity classification, ma-nipulation classification, and intention classification. With the feature zi, a linear classifier for veracity prediction is utilized, yielding the veracity label prediction as pi = WV zi. The objective for the veracity classification task over the dataset 
+
+D can be expressed as follows: 
+
+LV C = 1
+
+N
+
+XNi=1 ℓCE (pi, y i) , (1) where ℓCE (·, ·) represents the cross-entropy loss function. Using the manipulation feature emi and intention feature eei ,we apply their respective classifiers to obtain predictions 
+
+pmi = WM emi ∈ [0 , 1] and pei = WE eei ∈ [0 , 1] , where 
+
+pmi = 1 or 0 indicates whether the visual content has under-gone manipulation, while pei = 1 or 0 represents whether the manipulation is performed with harmless or harmful intention, respectively. Unfortunately, in MMD datasets, the ground-truth manipu-lation and intention labels remain unknown . To circumvent this challenge, we propose two weakly supervised cues as alternatives for the manipulation and intention classification tasks. For the manipulation classification task, we first train JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 5
+
+a teacher model fΠ(·) on auxiliary IMD datasets, such as 
+
+CASIAv2 [21], by utilizing a loss function LP RE . To mitigate the data distribution discrepancy problem between the IMD and MMD datasets, we further adapt the teacher model using a PU loss LP U . With the prediction ymi = fΠ(xvi ) from the teacher model, we employ a cross-similarity module to refine it and distill its knowledge to the prediction pmi as follows: 
+
+LKD = 1
+
+N
+
+XNi=1 DKL 
+
+ ymi , p mi
+
+, (2) where DKL (· , ·) represents the KL divergence function. For the intention classification task, we are guided by the fact that if the visual content of the real article is manipulated, its intention must be harmless , leading us to reformulate the intention classification as a PU learning problem, defined by the objective LIR . Furthermore, considering the fact that if the visual content of one article is manipulated with a harmful 
+
+intention, the veracity label of this article must be fake , we can also assess the dependability of the prediction pei and exclude unreliable examples during the training process. Building upon these tasks, our primary objectives are out-lined as follows: 
+
+min  
+
+> θ
+
+L = LV C + αLKD + βLIR , (3) 
+
+min  
+
+> Π
+
+Lteacher = LP RE + δLP U , (4) where α, β, and δ serve as hyperparameters that mediate the equilibrium between various loss functions. We will alterna-tively optimize the detector and the teacher model parameter-ized by θ and Π by the objectives in Eqs. (3) and (4). For clarity, the complete training process is detailed in Alg. 1. Subsequent sections will provide an in-depth description of the manipulation and intention classification tasks. 
+
+B. Manipulation Classification 
+
+Typically, manipulation classification entails first training a manipulation teacher model, denoted as fΠ(·), followed by distilling its predictions into the output qmi as defined in Eq. (2). The teacher model’s optimization focuses on two primary objectives: a pre-training objective, LP RE , and an adaptation objective, LP U .We introduce a prevalent IMD dataset, termed Dμ =
+
+{xμi , y μi }Nμ
+
+> i=1
+
+, such as CASIAv2 [21], which includes Nμ im-ages xμ paired with their corresponding manipulation labels 
+
+yμ ∈ { 0, 1}, where yμ = 1 or 0 indicates whether xμ is manipulated. Each image xμi is then fed into a ResNet18 model, which underpins our teacher model. Recent IMD research highlights that identifying manipulation cues requires both semantic information and subtle image details [43], [47]. In line with this, we utilize the method from [46] to extract features from intermediate layers of ResNet18, integrate them using a self-attention mechanism, and predict the manipula-tion label for xμi . The associated objective is represented as follows: 
+
+LP RE = 1
+
+Nμ
+
+XNμ 
+
+> i=1
+
+ℓCE 
+
+ fΠ
+
+ xμi
+
+, y μi
+
+ . (5) Typically, the teacher model for manipulation detection in our method is a plug-and-play model. As the research community advances, this component can be replaced with more advanced image manipulation detection models. Then, confronting the unavoidable data distribution discrepancy issue between the IMD dataset Dμ and the MMD dataset D, we suggest adapting the teacher, pre-trained on Dμ, to the MMD dataset via a PU learning scheme. To be specific, for an image or a video frame xvij drawn from X vi in D, we manipulate it using the image copy-moving technique [17], creating its manipulated counterpart ˆxvij . Accordingly, the ground-truth manipulation label for ˆxvij is inherently designated as “manipulated ”, represented by ˆymij = 1, and construct a training subset Pm = {ˆxvij , ˆymij = 1 }Ni=1 . Simultaneously, the manipulation label for xvij remains unknown, leading us to form an additional unlabeled subset Um = {xvij }Ni=1 . Inspired by the PU learning regime, which focuses on learning a binary classifier using a part of labeled positive examples and an abundance of unlabeled examples, we reformulate the manipulation classification over Pm ∪ U m as a PU learning problem. Formally, in PU learning, various methodologies have been proposed for risk estimation. In our study, we adopt a varia-tional PU learning framework [62]. 2 Considering two subsets 
+
+Pm ∼ PP ≜ P(xv |ym = 1) and Um ∼ PU ≜ P(xv ),3 we use the Bayes rule to estimate the distribution PP as follows: 
+
+PP = P(ym = 1 |xv )P(xv )
+
+R P(ym = 1 |xv )P(xv )dxv = fΠ⋆ (xv )PU
+
+EPU [fΠ⋆ (xv )] 
+
+≈ fΠ(xv )PU
+
+EPU [fΠ(xv )] ≜ PΠ, (6) where PΠ denotes the data distribution generated by the teacher model parameterized by Π, and fΠ⋆ (·) represents an optimal teacher model. Accordingly, to optimize fΠ(·) towards the optimal fΠ⋆ (·), existing works [62] have proved that it is effective to minimize the KL divergence between PP and PΠ,which is formalized as follows: 
+
+DKL (PP ∥PΠ) = EPP
+
+
+
+log PP (xv )
+
+PΠ(xv )
+
+
+
+(7) 
+
+=EPP
+
+ log fΠ⋆ (xv ) + EPP
+
+ log PP (xv )
+
+− log EPU
+
+fΠ⋆ (xv ) −
+
+
+
+EPP
+
+ log fΠ(xv )
+
++ EPP
+
+ log PP (xv ) − log EPU
+
+fΠ(xv )
+
+.
+
+Accordingly, the PU optimization objective is specified as follows: 
+
+LP U ≜ log EUm∼PU
+
+fΠ(xv ) − EPm∼PP
+
+ log fΠ(xv ). (8) By optimizing LP RE and LP U with Eq. (4), we can obtain a strong manipulation teacher, which generates the pseudo manipulation label ymij . Notably, when training with             
+
+> 2This variational approach is grounded in the “ selected completely at random ” assumption that does not require additional class priors, which aligns with the context of our method. Furthermore, it has also empirically demonstrated notable efficacy in H AVC -M4D.
+> 3Given that P(ˆxv)and P(xv)are independently and identically distributed (IID), to keep our notations clear, we uniformly utilize xvand ymto indicate the visual content and its manipulation label. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 6
+
+Algorithm 1 Training summary of H AVC -M4 D.
+
+Input: Training MMD dataset D; IMD dataset Dμ; hyper-paramaters α, β, and δ; training iterations I.
+
+Output: An MMD model parameterized by θ; teacher model parameterized by Π. 
+
+> 1:
+
+Initialize θt and θv with their pre-trained weights, and other parameters from scratch.  
+
+> 2:
+
+Warm-up Π with LP RE for 10 epochs.  
+
+> 3:
+
+for i = 1 , 2, · · · , I do  
+
+> 4:
+
+Draw mini-batches B, Bμ from D, Dμ randomly.  
+
+> 5:
+
+Manipulate images in B and form a manipulated ˆB. 
+
+> 6:
+
+Calculate LP RE with Bμ and LP U with B ∪ ˆB. 
+
+> 7:
+
+Optimize Π with Eq. (4).  
+
+> 8:
+
+Calculate LV C , LKD , and LIR with B. 
+
+> 9:
+
+Optimize θ with Eq. (3).  
+
+> 10:
+
+end for 
+
+PU learning on the MMD data, the size of the IMD data is significantly larger than that of the MMD data. Therefore, for the objective LP RE , we use an online learning regime to optimize this objective function. Specifically, during multiple training epochs on the MMD data, we consistently sample new data from the IMD data, ensuring that the training IMD data does not overlap. Additionally, video editing is also a visual content manipulation technique that should be considered. Therefore, we present a cross-similarity method to generate the video manipulation label ˜ymi and use this approach to refine the pseudo labels ym. Specifically, given the features {evij }Kj=1 of 
+
+K images in X vi , we calculate the cosine similarities between different features as ˜ymi as follows: 
+
+˜ymi = ν
+
+ 1
+
+K2
+
+XKj=1 
+
+XKk=1 ν
+
+
+
+|k − j|−1
+
+cos  evij , evik 
+
+
+
+,
+
+(9) where ν(·) represents a sigmoid activation function. Notably, we design a weight ν |k − j|−1, so that the semantic incon-sistency between two video frames is considered more sig-nificant in measuring video editing if their temporal distance is closer. Based on ˜ymi , the refined manipulation label is as follows: 
+
+ymi =
+
+
+
+max 
+
+
+
+˜ymi , max  ymi[1: K]
+
+
+
+, max  ymi[1: K]
+
+ < 0.5,
+
+min 
+
+
+
+max  ymi[1: K]
+
+ + ˜ ymi , 1
+
+
+
+, max  ymi[1: K]
+
+ ≥ 0.5,
+
+(10) where max  ymi[1: K]
+
+ < 0.5 indicates that no images have been manipulated, in which case the label ymi depends on whether the video has been edited; if max  ymi[1: K]
+
+ ≥ 0.5 means that the images have already been manipulated, in this scenario, the visual content of the article is certainly manipulated, and the label of video editing ˜ymi will only affect the predicted probability of the pseudo-label. Accordingly, we can distill the prediction ymi from the teacher to pmi with Eq. (2) [19], [20]. It is important to note that, during the optimization procedure, we initially apply LP RE for 10 epochs to warm up the teacher model, helping to mitigate the cold start issue when optimizing 
+
+LP U .
+
+C. Intention Classification 
+
+Considering the intention feature eei , the objective of the intention classification is to enhance its distinctive capacity in identifying the intention underlying the image manipulation. To address the challenge that ground-truth intention labels are consistently unknown, we introduce two heuristic facts as weak-supervised cues to guide the prediction of pei . In detail, the first fact is expressed as follows: 
+
+Fact 1. If the visual content of the real article is manipulated, its intention must be harmless ; But if the visual content of the 
+
+fake article is manipulated, its intention may be harmful or 
+
+harmless . Written as: 
+
+yei =
+
+( 1, yi = 0 ∧ ymi = 1 ,
+
+0 or 1, yi = 1 ∧ ymi = 1 ,
+
+where yei denotes the intention label of the i-th sample. Given such fact, we can define a subset De ⊂ D where each sample meets the condition ym = 1 . We then partition 
+
+De into a positive subset Pe (where y = 0 ) and an unlabeled subset Ue (where y = 1 ). Consequently, the task of intention classification over Pe ∪ U e can be reframed as a PU learning problem, with its objective, similar to the equation in Eq. (8), expressed as: 
+
+LIR ≜ log EUe∼PU [pe] − EPe∼PP [log pe]. (11) In addition, another fact is presented as: 
+
+Fact 2. If the visual content of one article is manipulated by a harmful intention, the veracity label of this article must be 
+
+fake ; But if the visual content of one article is manipulated by a harmless intention, the veracity label of this article may be real or fake . Written as: 
+
+yi =
+
+( 1, yei = 0 ∧ ymi = 1 ,
+
+0 or 1, yei = 0 ∧ ymi = 1 .
+
+This fact can serve as a criterion for assessing the accuracy of predictions pmi and pei . For a sample where pmi = 1 and 
+
+pei = 0 , if its ground-truth veracity label yi̸ = 1 , at least one of its predictions pmi and pei is incorrect. Therefore, we remove such incorrect samples during the optimizing process with Eq. (3). IV. E XPERIMENTS 
+
+In this section, we conduct extensive experiments and evaluate the performance of H AVC -M4 D by comparing it with existing MMD baselines. 
+
+A. Experimental Settings 
+
+Datasets. We perform our experiments on four well-known MMD datasets GossipCop [22], Weibo [12], Twitter [23], and 
+
+FakeSV [24]. Table II provides the detailed statistics of each dataset.  
+
+> •
+
+GossipCop [22] is sourced from a website that fact-checks celebrity news. It comprises 12,840 text-image pairs, where each image is uniquely paired with an article. The articles are typically long-form entertainment news. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 7                         
+
+> TABLE II STATISTICS OF THREE PREVALENT MMD DATASETS .Dataset #Real #Fake #Images GossipCop [22] 10,259 2,581 12,840
+> Weibo [12] 4,779 4,749 9,528
+> Twitter [23] 6,026 7,898 514
+> FakeSV [24] 1,827 1,827 3,654
+> •
+
+Weibo [12] is collected from a Chinese social media platform and includes 9,528 one-to-one image-text pairs. The content is in Chinese and generally consists of short, informal social posts.  
+
+> •
+
+Twitter [23] is derived from the English social media plat-form X.com and primarily features informal social posts. Unlike GossipCop and Weibo , the images and text in 
+
+Twitter do not have a one-to-one correspondence; instead, they exhibit more complex one-to-many or many-to-one relationships. Despite containing 13,924 posts, the dataset includes only 514 unique images, which complicates the extraction of meaningful information from the visual data.  
+
+> •
+
+FakeSV [24] is a dataset collected from the Chinese short video platform Douyin , consisting of 3,654 entries. Each entry includes video frames, articles, subtitles, and audio content, presenting a significant challenge for integrating multimodal features. For these datasets, we follow previous research methods [63] to split each dataset into training, validation, and test sets with a ratio of 7:1:2. 
+
+Baselines. Across three datasets GossipCop [22], Weibo [12], 
+
+Twitter [23] ( K = 1 ), we compare five MMD baselines and their improved versions using H AVC -M4 D in our experiments. A brief overview of these baseline models is provided below:  
+
+> •
+
+Base model . The baseline framework extracts textual and visual features, projects them into a shared representation space via feed-forward neural network layers for semantic alignment, and subsequently performs feature fusion. The fused features are fed into multi-layer perceptron layers to produce the final veracity classification.  
+
+> •
+
+SAFE [64]. This method introduces a multimodal fusion module that considers semantic similarity across modal-ities to enhance feature integration for MMD.  
+
+> •
+
+MCAN [37]. It utilizes a co-attention mechanism that integrates multimodal features by accounting for inter-modality relationships  
+
+> •
+
+CAFE [10]. This approach adopts a variational weight-ing strategy to dynamically control multimodal feature fusion, and applies contrastive learning to enhance cross-modal feature alignment.  
+
+> •
+
+BMR [11]. It constructs an advanced network with an improved mixture-of-experts mechanism for both feature extraction and fusion of multimodal content. For all baselines, we re-produced them by employing the BERT model and ResNet34 as the feature extractors. Addi-tionally, across the FakeSV dataset [24] ( K ≥ 2), we compare the following four baselines:  
+
+> •
+
+VGG [65] extracts visual features of video frames with the pre-trained VGG-19 network.  
+
+> •
+
+C3D [66] is a pre-trained video analysis model, which captures temporal and motion information from se-quences of video frames.  
+
+> •
+
+FANVM [67] learns the topic inconsistency between the text content and the comments with an adversarial network, and integrates them with the frame features.  
+
+> •
+
+SV-FEND [24] extracts text, audio, frame, comment, and user features with different encoders, and fuses them with a cross-modal transformer model. 
+
+Implementation Details. During data preprocessing, raw images are resized and randomly cropped to 224 × 224 pixels, and text content is limited to 128 tokens. We then use pre-trained ResNet34 4 and BERT 5 models to extract visual and textual features, keeping the first 9 layers of BERT’s Transformer frozen. For audio features from video content, we employ a pre-trained VGGish model [68]. The manipulation teacher model is based on a shallow ResNet18 architecture, which is pre-trained on the IMD benchmark dataset CASIAv2 6
+
+[21], [69], comprising 12,614 images, with 7,491 authentic and 5,123 tampered examples. In the training phase, we fine-tune the BERT model using the Adam optimizer with a learning rate of 3×10 −5, while other modules are optimized separately with Adam at a learning rate of 10 −3, using a batch size of 32 throughout. The hyperparameters α, β, δ, and K are set to 0.1, 0.1, 0.1, and 10, respectively. To prevent overfitting, training stops if the Macro F1 score does not improve for 10 epochs. Each experiment is run 5 times with different random seeds 1, 2, 3, 4, 5, and we report the average scores from these trials in the final results. 
+
+B. Main Results 
+
+We evaluate our proposed model, H AVC -M4 D, against nine baseline approaches on four benchmark datasets, with the results summarized in Tables III and IV. These tables report the Avg. ∆ scores, which quantify the average performance gains achieved by H AVC -M4 D over each baseline across all evaluation metrics. Overall, our model exhibits substantial improvements against all competitors. For instance, on the Weibo dataset, H AVC -M4 D surpasses BMR by approximately 1.79 points, while on Twitter it exceeds the Base model by 1.84 points. A more fine-grained analysis of H AVC -M4 D’s performance across various metrics highlights its consistent superiority over the baselines. For example, on the Gossipcop 
+
+dataset, it surpasses the BMR model by around 2.57 in the fake class recall score. These outcomes underscore the efficacy of our approach and emphasize the significance of manip-ulation and intention features in misinformation detection. Furthermore, we note that the magnitude of improvements by HAVC -M4 D across the four MMD datasets roughly follows the order FakeSV > Twitter > Weibo > GossipCop . This pattern suggests that H AVC -M4 D yields larger benefits on smaller datasets, where the scarcity of semantic information can be compensated by leveraging manipulation and intention cues.  
+
+> 4https://download.pytorch.org/models/resnet34-333f7ec4.pth.
+> 5https://huggingface.co/bert-base-uncased.
+> 6https://github.com/SunnyHaze/CASIA2.0-Corrected-Groundtruth. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 8
+
+TABLE III EXPERIMENTAL RESULTS OF HAVC -M4 D ACROSS THREE PREVALENT MD DATASETS GossipCop , Weibo , AND Twitter . T HE RESULTS MARKED BY * ARE STATISTICALLY SIGNIFICANT COMPARED TO ITS BASELINE MODELS , SATISFYING P -VALUE < 0.05. Method Accuracy Macro F1 Real Fake Avg. ∆
+
+Precision Recall F1 Precision Recall F1 
+
+Dataset : GossipCop 
+
+Base model 87.77 ±0.56 79.51 ±0.44 91.55 ±0.41 93.36 ±1.20 92.37 ±0.41 69.96 ±1.10 63.30 ±1.46 66.92 ±0.58 -+ H AVC -M4 D 88.45 ±0.20 * 80.32 ±0.43 * 91.93 ±0.14 94.08 ±0.33 * 92.83 ±0.12 71.99 ±0.80 * 64.59 ±0.74 * 67.63 ±0.78 * +0.90 
+
+SAFE [64] 87.78 ±0.31 79.22 ±0.49 91.22 ±0.30 93.34 ±0.47 92.37 ±0.20 70.66 ±1.32 63.12 ±1.50 66.66 ±0.84 -+ H AVC -M4 D 88.53 ±0.24 * 79.87 ±0.30 * 91.90 ±0.31 * 94.32 ±0.54 * 92.95 ±0.20 * 72.19 ±1.30 * 64.44 ±0.73 * 67.88 ±0.51 * +0.96 
+
+MCAN [37] 87.66 ±0.59 78.89 ±0.34 90.89 ±0.78 94.07 ±1.27 92.19 ±0.46 71.01 ±1.09 60.37 ±1.21 65.29 ±0.87 -+ H AVC -M4 D 88.27 ±0.57 * 79.87 ±0.36 * 91.72 ±0.35 * 95.13 ±1.21 * 93.05 ±0.41 * 72.69 ±0.96 * 62.64 ±1.21 * 66.65 ±0.32 * +1.21 
+
+CAFE [10] 87.40 ±0.71 79.51 ±0.61 91.07 ±0.25 93.84 ±1.28 92.16 ±0.50 71.60 ±1.39 61.16 ±1.10 66.24 ±0.72 -+ H AVC -M4 D 88.18 ±0.44 * 80.43 ±0.48 * 91.50 ±0.45 94.46 ±1.00 * 92.80 ±0.31 * 72.84 ±0.83 * 62.51 ±0.90 * 67.58 ±0.83 * +0.91 
+
+BMR [11] 87.26 ±0.46 79.03 ±0.64 90.89 ±0.24 93.99 ±0.59 92.14 ±0.29 71.15 ±1.23 60.37 ±1.21 65.51 ±1.01 -+ H AVC -M4 D 87.95 ±0.27 * 79.99 ±0.57 * 91.40 ±0.51 * 94.73 ±0.75 * 93.14 ±0.19 * 72.26 ±0.73 * 62.94 ±0.89 * 66.80 ±1.09 * +1.11 
+
+Dataset : Weibo 
+
+Base model 90.87 ±0.34 90.75 ±0.34 91.08 ±0.23 90.17 ±0.85 90.62 ±0.40 90.87 ±0.70 91.41 ±0.28 91.29 ±0.29 -+ H AVC -M4 D 91.62 ±0.66 * 91.61 ±0.66 * 91.83 ±0.87 * 93.23 ±0.56 * 91.39 ±0.76 * 92.52 ±0.89 * 91.87 ±0.64 91.84 ±0.62 * +1.11 
+
+SAFE [64] 91.06 ±0.88 91.04 ±0.89 91.09 ±1.25 90.51 ±0.90 90.73 ±1.04 91.27 ±0.78 91.57 ±1.14 91.36 ±0.85 -+ H AVC -M4 D 92.22 ±0.91 * 92.22 ±0.93 * 91.15 ±1.08 94.22 ±0.84 * 92.14 ±0.92 * 94.34 ±1.00 * 91.34 ±1.09 92.30 ±0.66 * +1.42 
+
+MCAN [37] 90.99 ±0.83 90.99 ±0.83 89.66 ±0.82 92.24 ±1.10 90.81 ±0.90 92.69 ±0.80 89.92 ±0.99 91.20 ±0.79 -+ H AVC -M4 D 92.01 ±0.80 * 92.01 ±0.80 * 90.44 ±0.70 * 93.37 ±0.87 * 91.88 ±0.85 * 93.59 ±0.74 * 90.84 ±0.78 * 92.17 ±0.76 * +0.98 
+
+CAFE [10] 90.99 ±0.78 90.98 ±0.78 90.31 ±0.72 91.19 ±1.09 90.73 ±0.97 91.70 ±1.26 90.81 ±1.03 91.24 ±0.60 -+ H AVC -M4 D 91.95 ±1.06 * 91.84 ±1.01 * 91.25 ±0.55 * 92.38 ±1.04 * 91.66 ±0.91 * 92.99 ±0.83 * 91.93 ±0.91 * 92.11 ±0.75 * +1.02 
+
+BMR [11] 90.17 ±0.92 90.15 ±0.93 90.09 ±1.20 89.60 ±0.85 89.81 ±1.00 90.36 ±0.93 90.71 ±0.78 90.50 ±0.81 -+ H AVC -M4 D 91.74 ±0.40 * 91.68 ±0.40 * 91.01 ±0.92 * 93.17 ±0.82 * 91.56 ±0.43 * 93.40 ±0.84 * 91.29 ±0.67 * 91.81 ±0.38 * +1.79 
+
+Dataset : Twitter 
+
+Base model 65.08 ±1.18 63.91 ±1.09 57.29 ±1.26 66.67 ±1.01 61.48 ±1.56 72.04 ±0.96 62.41 ±0.92 65.35 ±1.01 -+ H AVC -M4 D 66.27 ±0.66 * 65.67 ±1.27 * 59.70 ±1.16 * 69.70 ±0.71 * 62.46 ±1.08 * 73.19 ±0.93 * 64.12 ±1.12 * 67.86 ±0.82 * +1.84 
+
+SAFE [64] 66.43 ±0.33 66.33 ±0.32 58.28 ±0.50 73.63 ±1.38 64.47 ±0.53 74.94 ±0.84 61.78 ±1.26 68.34 ±0.69 -+ H AVC -M4 D 67.15 ±0.96 * 67.00 ±0.89 * 59.32 ±0.90 * 74.05 ±0.99 65.65 ±0.70 * 76.49 ±0.60 * 63.58 ±1.09 * 68.77 ±0.94 +0.98 
+
+MCAN [37] 65.82 ±0.64 65.24 ±1.34 58.30 ±1.07 63.66 ±1.03 61.16 ±1.23 71.70 ±1.03 67.42 ±1.39 69.33 ±1.22 -+ H AVC -M4 D 67.14 ±1.11 * 66.58 ±1.21 * 60.63 ±0.99 * 64.94 ±1.04 * 62.55 ±1.28 * 72.86 ±0.82 * 68.77 ±1.12 * 70.61 ±1.10 * +1.43 
+
+CAFE [10] 65.62 ±0.58 65.04 ±0.48 58.39 ±0.90 66.24 ±1.48 62.05 ±0.21 72.37 ±1.28 65.16 ±1.06 68.57 ±1.05 -+ H AVC -M4 D 65.89 ±1.30 65.37 ±0.87 59.91 ±0.55 * 67.28 ±1.17 * 63.60 ±0.64 * 73.42 ±1.18 * 68.76 ±1.12 * 70.49 ±1.06 * +1.41 
+
+BMR [11] 67.12 ±0.74 66.64 ±1.28 59.09 ±0.61 72.62 ±1.28 64.43 ±1.28 75.10 ±1.13 62.56 ±0.91 68.65 ±1.17 -+ H AVC -M4 D 67.84 ±0.83 * 67.68 ±0.82 * 60.01 ±0.88 * 73.31 ±1.28 * 65.65 ±0.92 * 76.27 ±1.03 * 64.32 ±0.98 * 69.71 ±0.91 * +1.08 
+
+Furthermore, the relatively high prevalence of manipulated images in the Twitter dataset amplifies the contribution of manipulation-aware features, indirectly validating the reliabil-ity and relevance of the extracted manipulation 
+
+C. Ablative Study 
+
+To assess how varying objective functions and features influ-ence our model, H AVC -M4 D, an ablation study was conducted on three distinct datasets: the English-language GossipCop ,the Chinese-language Weibo , and the video-oriented FakeSV 
+
+dataset. Tables V and VI display the results of these experi-ments. Specific descriptions of the different ablated versions are presented as follows:  
+
+> •
+
+w/o LP RE . This variant trains the teacher model solely using the PU objective LP U , omitting the initial pre-training phase involving the external IMD dataset Dμ; 
+
+> •
+
+w/o LP U . In this case, the PU loss is excluded from adapting the teacher model to the MMD dataset D; 
+
+> •
+
+w/o LKD , LIR . In this variant, no objective function is applied to control the manipulation and intention features. Instead, the cross-entropy loss LCE alone is used for veracity prediction. Since LIR is highly related to LKD ,both are removed simultaneously.  
+
+> •
+
+w/o em, w/o ee, and w/o em, ee. These variations ex-clude the features em and ee and their corresponding training losses. Removing both features leads to a model that aligns with the baseline, omitting the enhancements introduced by H AVC -M4 D in this study. Overall, the removal of each component weakens H AVC -
+
+M4 D’s predictive performance, highlighting the importance of each element. Notably, the predictive performance of the three ablation objectives ranks in the order of w/o LP U > w/o 
+
+LP RE > w/o LKD , LIR . Excluding LP RE and LKD , LIR 
+
+particularly diminishes the model’s performance, sometimes even falling below that of the baseline. When LP RE is removed, the teacher’s predictive power declines, resulting in less distinct features produced by the manipulation encoder, which adversely affects veracity predictions. In contrast, the absence of LKD and LIR leads to unregulated manipu-lation and intention features, increasing the computational burden of the baseline model and introducing redundant, non-discriminative features that weaken the discriminative strength JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 9
+
+TABLE IV EXPERIMENTAL RESULTS OF HAVC -M4 D ACROSS THE PREVALENT MMD DATASET FakeSV . T HE RESULTS MARKED BY * ARE STATISTICALLY SIGNIFICANT COMPARED TO ITS BASELINE MODELS , SATISFYING P -VALUE < 0.05. Method Accuracy Macro F1 Precision Recall AUC Avg. ∆
+
+VGG [65] 69.45 ±2.12 64.52 ±1.96 68.08 ±2.87 64.19 ±1.84 64.19 ±1.84 -+ H AVC -M4 D 70.85 ±1.31 * 66.12 ±2.35 * 70.00 ±0.78 * 65.82 ±1.91 * 65.82 ±1.91 * +1.63 
+
+C3D [66] 67.60 ±1.62 67.43 ±1.59 67.97 ±1.67 67.60 ±1.58 67.60 ±1.58 -+ H AVC -M4 D 68.80 ±1.77 * 68.70 ±1.79 * 68.98 ±1.77 * 68.77 ±1.78 * 68.77 ±1.78 * +1.16 
+
+FANVM [67] 77.14 ±3.07 77.11 ±3.05 77.26 ±3.14 77.13 ±3.04 77.13 ±3.04 -+ H AVC -M4 D 78.39 ±2.44 * 78.38 ±2.42 * 78.48 ±2.54 * 78.39 ±2.43 * 78.39 ±2.43 * +1.25 
+
+SV-FEND [24] 79.03 ±2.09 78.99 ±2.23 79.94 ±1.30 79.17 ±2.00 79.17 ±2.00 -+ H AVC -M4 D 80.67 ±1.84 * 80.63 ±1.80 * 80.91 ±2.14 * 80.66 ±1.82 * 80.66 ±1.82 * +1.44 
+
+TABLE V ABLATIVE STUDY ON OBJECTIVE FUNCTIONS . T HE BOLD AND UNDERLINED SCORES INDICATE THE HIGHEST AND LOWEST RESULTS IN THE ABLATIVE VERSIONS , RESPECTIVELY .Method Dataset : GossipCop Dataset : Weibo Dataset : FakeSV 
+
+Acc. F1 AUC F1 real F1 fake Acc. F1 AUC F1 real F1 fake Acc. F1 P. R. AUC SOTA + H AVC -M4 D 87.95 79.99 87.46 93.14 66.80 91.74 91.68 97.06 91.56 91.81 80.67 80.63 80.91 80.66 80.66 w/o LP RE 87.24 79.18 87.21 92.14 66.23 90.17 90.12 96.93 89.91 90.83 79.45 79.41 79.70 79.47 79.47 w/o LP U 87.63 79.66 87.38 93.05 66.52 91.40 91.39 96.96 91.19 91.60 80.35 80.32 80.52 80.36 80.36 
+
+w/o LKD , LIR 86.93 78.65 86.24 91.94 65.36 90.10 90.10 95.97 89.88 90.31 78.98 78.94 79.21 79.00 79.00 TABLE VI ABLATIVE STUDY ON MANIPULATION AND INTENTION FEATURES .Method Dataset : GossipCop Dataset : Weibo Dataset : FakeSV 
+
+Acc. F1 AUC F1 real F1 fake Acc. F1 AUC F1 real F1 fake Acc. F1 P. R. AUC SOTA + H AVC -M4 D 87.95 79.99 87.46 93.14 66.80 91.74 91.68 97.06 91.56 91.81 80.67 80.63 80.91 80.66 80.66 w/o em 87.53 79.13 86.47 92.37 65.89 90.92 90.91 96.52 90.57 91.08 79.77 79.72 79.93 79.79 79.79 w/o ee 87.69 79.56 86.72 92.39 66.25 91.13 91.11 96.78 90.78 91.45 80.29 80.23 80.40 80.26 80.26 
+
+w/o em, ee 87.26 79.03 86.27 92.14 65.51 90.17 90.15 96.45 89.81 90.50 79.03 78.99 79.94 79.17 79.17 
+
+of the final veracity feature e. Comparing the performance impacts of three variants by the feature removal, we find the ranking as w/o ee > w/o em > w/o em, ee, underscoring the value of both features in enhancing the final multimodal feature’s discriminative ability, with em making a stronger contribution. Specifically, after removing the manipulation fea-ture em, the model’s performance decreases more significantly. This observation first demonstrates that our method can extract accurate and discriminative manipulation features. It indirectly validates that our proposed manipulation teacher model can enhance its generalization across various manipulation types by simultaneously performing incremental learning on external IMD data and PU learning on synthetic MMD data. Addition-ally, it effectively transfers the pre-trained model from IMD data to MMD data, thereby mitigating the data shift problem. 
+
+D. Sensitivity Analysis 
+
+In the H AVC -M4 D method, the hyper-parameters α and β
+
+play crucial roles by determining the relative importance of 
+
+LKD and LIR during training, thus helping to maintain a balance across the various loss functions. To evaluate the model’s sensitivity to these hyper-parameters, we conduct sensitivity analyses, and the corresponding experimental re-sults are shown in Fig. 3. We conduct experiments on four versions: Basic model + GossipCop , Basic model + Weibo ,SV-FEND + FakeSV , and FANVM + FakeSV , with the Macro F1 metric reported in Fig. 3. α and β are drawn from the set {0, 0.01 , 0.1, 1, 10 }, where α or β = 0 indicates the corresponding objective function is not engaged in training. The results indicate that the model is highly sensitive to both hyper-parameters, performing optimally when α = 0 .1 and 
+
+β = 0 .1. Deviating from these values in either direction leads to diminished performance. Consequently, we consistently use 
+
+α = 0 .1 and β = 0 .1 for all experiments in this study. When α
+
+and β are too small, the manipulation and intention features are undertrained, resulting in inadequate discriminative features that impair the model’s predictive accuracy, potentially falling short of the baseline model. On the other hand, if they are too large, the model’s optimization prioritizes their respective loss functions, diminishing the weight of the veracity prediction objective LCE and negatively impacting the veracity predic-tion results. 
+
+E. Visualization Analysis 
+
+To investigate the discriminative capability of the extracted manipulation and intention features, we provide a visualization analysis of these features in Fig. 4. We select the Weibo JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 10 00.01 0.1 110 78.5 79.0 79.5 80.0 80.5 81.0 00.01 0.1 110 90.0 90.5 91.0 91.5 92.0 92.5 00.01 0.1 110 78.0 78.6 79.2 79.8 80.4 81.0 00.01 0.1 110 89.0 89.8 90.6 91.4 92.2 93.0 Macro F1 α α     
+
+> 0
+> 0.01
+> 0.1
+> 1
+> 10
+> 75.0
+> 76.6
+> 78.2
+> 79.8
+> 81.4
+> 83.0α
+> 1
+> 2
+> 3
+> 4
+> 5
+> 72.0
+> 74.2
+> 76.4
+> 78.6
+> 80.8
+> 83.0α
+> baselines
+> Basicmodel+
+> GossipCop
+> Basicmodel+
+> GossipCop
+> Basicmodel+
+> Weibo
+> Basicmodel+
+> Weibo
+> SV-FEND+
+> FakeSV
+> SV-FEND+
+> FakeSV
+> FANVM+
+> FakeSV
+> FANVM+
+> FakeSV
+> MacroF1
+> ββ
+> 0
+> 0.01
+> 0.1
+> 1
+> 10
+> 77.0
+> 78.2
+> 79.4
+> 80.6
+> 81.8
+> 83.0β
+> 0
+> 0.01
+> 0.1
+> 1
+> 10
+> 73.0
+> 75.5
+> 78.0
+> 80.5
+> 83.0β
+
+Fig. 3. Sensitivity analysis of the parameters α and β.Manipulated  w/o manipulated  Real  Fake  Real  Fake  Real  Fake (d) Intent features (c) Manipulation features (b) Backbone + M ANI-M 3D(a) Backbone 
+
+Fig. 4. Visualization analysis of features z, em and ee with the T-SNE method. 
+
+dataset for this visualization analysis and employ the T-SNE technique [70] to reduce the multimodal feature z, the manipulation feature em, and the intention feature ee to a 2D space, visualizing the corresponding points in Fig. 4. Fig. 4(a) depicts the visualization of the multimodal features of the basic model, while Fig. 4(b) presents the visualization of the multimodal features when enhanced by our proposed H AVC -
+
+M4 D. A comparison of the two figures reveals that our method effectively separates the clusters of real and fake classes, thereby enhancing the discriminative nature of the multimodal features. Fig. 4(c) shows the visualization of the manipulation feature em, where we utilize the teacher model’s results to differentiate between manipulated and unmanipulated im-ages. The visualization demonstrates the strong discriminative power of the manipulation feature in identifying manipulated Manipulation: 0.97         
+
+> Intention: 0.10
+> Veracity: Fake
+> Manipulation: 0.79
+> Intention: 0.95
+> Veracity: Real
+> Manipulation: 0.98
+> Intention: 0.92
+> Veracity: Fake
+> I blame cats .
+> #hurricane #sandy
+> The pirates of the
+> Caribbean ship sunk.
+> Makes me a sad panda.
+> No idea if \"Suspect 2\" is missing
+> Brown student Sunil Tripathi but
+> looks more than a little like him:
+
+Fig. 5. We illustrate three representative examples for the case study. 
+
+images, showcasing the effectiveness of knowledge distillation in transferring the discriminative ability of the manipulation teacher to the manipulation encoder. Meanwhile, this result on the discriminative capability of manipulation features directly demonstrates that our trained manipulation teacher model can enhance its generalization to different and even unknown visual content manipulation types through online learning on IMD data. It also shows that the pre-trained teacher model on IMD data can be effectively transferred to MMD data by using synthetic copy-moved data. Fig. 4(d) focuses on the intention features ee of samples classified as “ manipulated ”in the manipulation classification task. We observe a clear separation between the intention features of real and fake 
+
+samples. However, some fake samples are interspersed within the real cluster, indicating that fake samples may also exhibit 
+
+harmless intention. 
+
+F. Case Study 
+
+We present three illustrative cases in Fig. 5 to showcase the efficacy of our classifiers in handling the three different tasks. In the first case, we examine an image that exhibits manipulation with harmful intentions. Our model successfully detects both the manipulation and the harmful intention, correctly labeling it as fake. The second case shows an JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 11                                                                         
+
+> TABLE VII TRAINING BUDGET OF OUR PROPOSED HAVC -M4D.Methods Base SAFE MCAN CAFE BMR
+> GossipCop 20.2 23.0 28.8 18.8 23.8 + H AVC -M4D27.4 27.8 34.6 23.6 27.8
+> ∆1.35 ×1.20 ×1.20 ×1.25 ×1.16 ×
+> Weibo 8.0 10.0 15.8 10.0 10.6 + H AVC -M4D12.0 14.2 18.8 13.8 14.0
+> ∆1.50 ×1.42 ×1.18 ×1.38 ×1.32 ×
+> Twitter 15.8 14.8 29.2 16.0 20.4 + H AVC -M4D20.4 19.0 34.4 19.8 25.8
+> ∆1.29 ×1.28 ×1.17 ×1.23 ×1.26 ×
+> Methods VGG C3D FANVM SV-FEND
+> FakeSV 10.2 13.8 27.4 73.0 + H AVC -M4D14.2 18.4 32.8 78.4
+> ∆1.39 ×1.33 ×1.19 ×1.07 ×
+
+image with manipulated colors. While our model correctly identifies the manipulation and predicts its veracity label with precision, it assigns a low-confidence score to this specific manipulation type, indicating the potential for enhancement in recognizing certain manipulation methods. The third case involves an image that has undergone harmless manipulation, merely being cropped without any harmful intention. Our model demonstrates accurate predictions across all three tasks. Overall, our model exhibits impressive performance in the three tasks, which indicates the effectiveness of our manip-ulation detector distilled from the manipulation teacher and the intention detector by the heuristic PU learning. However, it remains susceptible to subtle manipulations, highlighting the need for further refinement. 
+
+G. Computation Budget 
+
+Due to the introduction of an external IMD dataset for train-ing the manipulation teacher model and the proposal of two manipulation and intention detectors to generate their features, this process undoubtedly imposes a greater computational burden and reduces computational efficiency. To quantify the computational burden introduced by our method, we conduct a time-cost experiment. We test the time consumption for a single training session of nine baseline models across four MMD datasets, both with and without our proposed method. Since we employ an early stopping strategy during training, which can significantly vary the training time, each experiment is repeated five times with different seeds {1,2,3,4,5 }, and the average training time is reported in Table VII. The experimental results show that, after applying H AVC - 
+
+> M4D
+
+, the time consumption increased by approximately 1.27 times compared to the baseline methods. This additional time is primarily due to the training of the manipulation teacher model using external IMD data. However, our ablation studies indicate that the manipulation features obtained from this train-ing significantly enhance the model’s performance. Therefore, the additional time overhead is justifiable and acceptable. V. C ONCLUSION AND FUTURE WORKS 
+
+In this work, we focus on detecting multimodal misin-formation by identifying traces of manipulation in visual content within articles, along with understanding the under-lying intentions behind such manipulations. To achieve this, we present a novel MMD model called H AVC -M4 D, which extracts manipulation and intention features, then integrates them into the overall multimodal features. To enhance the discriminative capability of these features regarding whether an image has been harmfully manipulated, we propose two classifiers that predict the respective labels. To address the issue of unknown manipulation and intention labels, we intro-duce two weakly supervised signals. These signals are learned by training a manipulation teacher on additional IMD datasets, along with two PU learning objectives that adapt and guide the classifier. Our experimental results demonstrate that H AVC -  
+
+> M4D
+
+significantly outperforms baseline models. 
+
+Future works. First, a more powerful and meticulously de-signed manipulation detection teacher can improve the MMD performance, and in our future work, we aim to gradually en-hance the manipulation detection performance by incorporat-ing more diverse IMD data and refining the model architecture. However, introducing more data and more complex models invariably leads to increased time consumption. Balancing the additional training costs with model performance will be a key focus of future work. Then, the continuous updates on social media platforms often expose models to previously unseen events or emerging domains. To address this emergent issue, our method builds upon existing advanced MMD techniques by introducing additional image manipulation features and manipulation intention features as supplementary cues, and of-fers greater flexibility to incorporate advanced data adaptation techniques when emergent events significantly deviate from existing data. However, dealing with unseen events is always a challenging problem, as even humans struggle to assess the veracity of an event accurately. Addressing this issue will be a key focus of our future work. REFERENCES [1] S. Vosoughi, D. Roy, and S. Aral, “The spread of true and false news online,” science , vol. 359, no. 6380, pp. 1146–1151, 2018. [2] S. Van Der Linden, “Misinformation: susceptibility, spread, and inter-ventions to immunize the public,” Nature medicine , vol. 28, no. 3, pp. 460–467, 2022. [3] X. Zhang, J. Cao, X. Li, Q. Sheng, L. Zhong, and K. Shu, “Mining dual emotion for fake news detection,” in The Web Conference , 2021, pp. 3465–3476. [4] Q. Sheng, J. Cao, X. Zhang, R. Li, D. Wang, and Y. Zhu, “Zoom out and observe: News environment perception for fake news detection,” in               
+
+> Annual Meeting of the Association for Computational Linguistics , 2022, pp. 4543–4556. [5] Y. Zhu, Q. Sheng, J. Cao, S. Li, D. Wang, and F. Zhuang, “General-izing to the future: Mitigating entity bias in fake news detection,” in
+> International ACM SIGIR Conference on Research and Development in Information Retrieval , 2022, pp. 2120–2125. [6] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for image recognition,” in IEEE Conference on Computer Vision and Pattern Recognition , 2016, pp. 770–778. [7] J. Devlin, M. Chang, K. Lee, and K. Toutanova, “BERT: pre-training of deep bidirectional transformers for language understanding,” in
+> Conference of the North American Chapter of the Association for Computational Linguistics , 2019, pp. 4171–4186. [8] S. Qian, J. Wang, J. Hu, Q. Fang, and C. Xu, “Hierarchical multi-modal contextual attention network for fake news detection,” in International ACM SIGIR Conference on Research and Development in Information Retrieval , 2021, pp. 153–162. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 12
+
+[9] L. Wang, C. Zhang, H. Xu, Y. Xu, X. Xu, and S. Wang, “Cross-modal contrastive learning for multimodal fake news detection,” in ACM International Conference on Multimedia , 2023, pp. 5696–5704. [10] Y. Chen, D. Li, P. Zhang, J. Sui, Q. Lv, T. Lu, and L. Shang, “Cross-modal ambiguity learning for multimodal fake news detection,” in The ACM Web Conference , 2022, pp. 2897–2905. [11] Q. Ying, X. Hu, Y. Zhou, Z. Qian, D. Zeng, and S. Ge, “Bootstrapping multi-view representations for fake news detection,” in AAAI Conference on Artificial Intelligence , 2023, pp. 5384–5392. [12] Z. Jin, J. Cao, H. Guo, Y. Zhang, and J. Luo, “Multimodal fusion with recurrent neural networks for rumor detection on microblogs,” in ACM on Multimedia Conference , 2017, pp. 795–816. [13] P. Qi, J. Cao, X. Li, H. Liu, Q. Sheng, X. Mi, Q. He, Y. Lv, C. Guo, and Y. Yu, “Improving fake news detection by using an entity-enhanced framework to fuse diverse multimodal clues,” in ACM Multimedia Conference , 2021, pp. 1212–1220. [14] M. Sun, X. Zhang, J. Ma, and Y. Liu, “Inconsistency matters: A knowledge-guided dual-inconsistency network for multi-modal rumor detection,” in Findings of the Association for Computational Linguistics: EMNLP , 2021, pp. 1412–1423. [15] J. Cao, P. Qi, Q. Sheng, T. Yang, J. Guo, and J. Li, “Exploring the role of visual content in fake news detection,” CoRR , vol. abs/2003.05096, 2020. [16] Y. Bu, Q. Sheng, J. Cao, P. Qi, D. Wang, and J. Li, “Combating online misinformation videos: Characterization, detection, and future directions,” in ACM International Conference on Multimedia , 2023, pp. 8770–8780. [17] D. Cozzolino, G. Poggi, and L. Verdoliva, “Efficient dense-field copy-move forgery detection,” IEEE Transactions on Information Forensics and Security , vol. 10, no. 11, pp. 2284–2297, 2015. [18] J. Da, M. Forbes, R. Zellers, A. Zheng, J. D. Hwang, A. Bosselut, and Y. Choi, “Edited media understanding frames: Reasoning about the intent and implications of visual misinformation,” in Annual Meeting of the Association for Computational Linguistics , 2021, pp. 2026–2039. [19] G. E. Hinton, O. Vinyals, and J. Dean, “Distilling the knowledge in a neural network,” CoRR , vol. abs/1503.02531, 2015. [20] Q. Zhou, Z. Yang, P. Li, and Y. Liu, “Bridging the gap between decision and logits in decision-based knowledge distillation for pre-trained language models,” in Annual Meeting of the Association for Computational Linguistics , 2023, pp. 13 234–13 248. [21] J. Dong, W. Wang, and T. Tan, “CASIA image tampering detection eval-uation database,” in IEEE China Summit and International Conference on Signal and Information Processing , 2013, pp. 422–426. [22] K. Shu, D. Mahudeswaran, S. Wang, D. Lee, and H. Liu, “Fakenewsnet: A data repository with news content, social context, and spatiotemporal information for studying fake news on social media,” Big Data , vol. 8, no. 3, pp. 171–188, 2020. [23] C. Boididou, S. Papadopoulos, M. Zampoglou, L. Apostolidis, O. Pa-padopoulou, and Y. Kompatsiaris, “Detection and visualization of misleading content on twitter,” International Journal of Multimedia Information Retrieval , vol. 7, no. 1, pp. 71–86, 2018. [24] P. Qi, Y. Bu, J. Cao, W. Ji, R. Shui, J. Xiao, D. Wang, and T. Chua, “Fakesv: A multimodal benchmark with rich social context for fake news detection on short video platforms,” in AAAI Conference on Artificial Intelligence , 2023, pp. 14 444–14 452. [25] B. Wang, S. Wang, C. Li, R. Guan, and X. Li, “Harmfully manipu-lated images matter in multimodal misinformation detection,” in ACM International Conference on Multimedia , 2024. [26] Y. Dun, K. Tu, C. Chen, C. Hou, and X. Yuan, “KAN: knowledge-aware attention network for fake news detection,” in AAAI Conference on Artificial Intelligence , 2021, pp. 81–89. [27] Z. Zhou, X. Zhang, L. Zhang, J. Liu, X. Zhang, and C. Li, “Finefake: A knowledge-enriched dataset for fine-grained multi-domain fake news detection,” CoRR , vol. abs/2404.01336, 2024. [28] B. Wang, X. Li, C. Li, B. Fu, S. Pei, and S. Wang, “Why misinformation is created? detecting them by integrating intent features,” in ACM International Conference on Information and Knowledge Management ,2024, pp. 2304–2314. [29] Q. Nan, J. Cao, Y. Zhu, Y. Wang, and J. Li, “MDFEND: multi-domain fake news detection,” in ACM International Conference on Information and Knowledge Management , 2021, pp. 3343–3347. [30] Y. Zhu, Q. Sheng, J. Cao, Q. Nan, K. Shu, M. Wu, J. Wang, and F. Zhuang, “Memory-guided multi-view multi-domain fake news detec-tion,” IEEE Transactions on Knowledge and Data Engineering , vol. 35, no. 7, pp. 7178–7191, 2023. [31] B. Hu, Q. Sheng, J. Cao, Y. Shi, Y. Li, D. Wang, and P. Qi, “Bad actor, good advisor: Exploring the role of large language models in fake news detection,” in AAAI Conference on Artificial Intelligence , 2024, pp. 22 105–22 113. [32] Z. Yue, H. Zeng, Y. Lu, L. Shang, Y. Zhang, and D. Wang, “Evidence-driven retrieval augmented response generation for online misinforma-tion,” in Conference of the North American Chapter of the Association for Computational Linguistics , 2024, pp. 5628–5643. [33] G. Li, W. Lu, W. Zhang, D. Lian, K. Lu, R. Mao, K. Shu, and H. Liao, “Re-search for the truth: Multi-round retrieval-augmented large language models are strong fake news detectors,” CoRR , vol. abs/2403.09747, 2024. [34] D. Khattar, J. S. Goud, M. Gupta, and V. Varma, “MVAE: multimodal variational autoencoder for fake news detection,” in The World Wide Web Conference , 2019, pp. 2915–2921. [35] L. Wei, D. Hu, W. Zhou, and S. Hu, “Modeling both intra- and inter-modality uncertainty for multimodal fake news detection,” IEEE Transactions on Multimedia , vol. 25, pp. 7906–7916, 2023. [36] X. Gao, X. Wang, Z. Chen, W. Zhou, and S. C. H. Hoi, “Knowledge enhanced vision and language model for multi-modal fake news detec-tion,” IEEE Transactions on Multimedia , vol. 26, pp. 8312–8322, 2024. [37] Y. Wu, P. Zhan, Y. Zhang, L. Wang, and Z. Xu, “Multimodal fusion with co-attention networks for fake news detection,” in Findings of the Association for Computational Linguistics , 2021, pp. 2560–2569. [38] B. Wang, X. Li, C. Li, S. Wang, and W. Gao, “Escaping the neu-tralization effect of modality features fusion in multimodal fake news detection,” Information Fusion , vol. 111, p. 102500, 2024. [39] P. Qi, Y. Zhao, Y. Shen, W. Ji, J. Cao, and T. Chua, “Two heads are better than one: Improving fake news video detection by correlating with neighbors,” in Findings of the Association for Computational Linguistics: ACL , 2023, pp. 11 947–11 959. [40] Y. Bu, Q. Sheng, J. Cao, P. Qi, D. Wang, and J. Li, “Fakingrecipe: Detecting fake news on short video platforms from the perspective of creative process,” in ACM International Conference on Multimedia ,2024. [41] M. Huh, A. Liu, A. Owens, and A. A. Efros, “Fighting fake news: Image splice detection via learned self-consistency,” in European Conference on Computer Vision , vol. 11215, 2018, pp. 106–124. [42] X. Ma, B. Du, X. Liu, A. Y. A. Hammadi, and J. Zhou, “Iml-vit: Image manipulation localization by vision transformer,” CoRR , vol. abs/2307.14863, 2023. [43] Z. Sun, H. Jiang, D. Wang, X. Li, and J. Cao, “Safl-net: Semantic-agnostic feature learning network with auxiliary plugins for image manipulation detection,” in IEEE/CVF International Conference on Computer Vision , 2023, pp. 22 367–22 376. [44] J. Wang, Z. Wu, J. Chen, X. Han, A. Shrivastava, S. Lim, and Y. Jiang, “Objectformer for image manipulation detection and localization,” in 
+
+IEEE/CVF Conference on Computer Vision and Pattern Recognition ,2022, pp. 2354–2363. [45] A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, X. Zhai, T. Unterthiner, M. Dehghani, M. Minderer, G. Heigold, S. Gelly, J. Uszkoreit, and N. Houlsby, “An image is worth 16x16 words: Trans-formers for image recognition at scale,” in International Conference on Learning Representations , 2021. [46] X. Chen, C. Dong, J. Ji, J. Cao, and X. Li, “Image manipulation detec-tion by multi-view multi-scale supervision,” in IEEE/CVF International Conference on Computer Vision , 2021, pp. 14 165–14 173. [47] C. Dong, X. Chen, R. Hu, J. Cao, and X. Li, “Mvss-net: Multi-view multi-scale supervised networks for image manipulation detec-tion,” IEEE Transactions on Pattern Analysis and Machine Intelligence ,vol. 45, no. 3, pp. 3539–3553, 2023. [48] Y. Wu, W. Abd-Almageed, and P. Natarajan, “Busternet: Detecting copy-move image forgery with source/target localization,” in European Conference on Computer Vision , vol. 11210, 2018, pp. 170–186. [49] Y. Wu, W. AbdAlmageed, and P. Natarajan, “Mantra-net: Manipulation tracing network for detection and localization of image forgeries with anomalous features,” in IEEE Conference on Computer Vision and Pattern Recognition , 2019, pp. 9543–9552. [50] H. Yu, J. Han, and K. C. Chang, “PEBL: web page classification without negative examples,” IEEE Transactions on Knowledge and Data Engineering , vol. 16, no. 1, pp. 70–81, 2004. [51] Y. Hsieh, G. Niu, and M. Sugiyama, “Classification from positive, unlabeled and biased negative data,” in International Conference on Machine Learning , vol. 97, 2019, pp. 2820–2829. [52] J. Zhang, Z. Wang, J. Meng, Y. Tan, and J. Yuan, “Boosting positive and unlabeled learning for anomaly detection with multi-features,” IEEE Transactions on Multimedia , vol. 21, no. 5, pp. 1332–1344, 2019. [53] C. Luo, P. Zhao, C. Chen, B. Qiao, C. Du, H. Zhang, W. Wu, S. Cai, B. He, S. Rajmohan, and Q. Lin, “PULNS: positive-unlabeled learning JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 13 
+
+with effective negative sample selector,” in AAAI Conference on Artificial Intelligence , 2021, pp. 8784–8792. [54] M. C. du Plessis, G. Niu, and M. Sugiyama, “Analysis of learning from positive and unlabeled data,” in Advances in Neural Information Processing Systems , 2014, pp. 703–711. [55] R. Kiryo, G. Niu, M. C. du Plessis, and M. Sugiyama, “Positive-unlabeled learning with non-negative risk estimator,” in Advances in Neural Information Processing Systems , 2017, pp. 1675–1685. [56] X. Chen, W. Chen, T. Chen, Y. Yuan, C. Gong, K. Chen, and Z. Wang, “Self-pu: Self boosted and calibrated positive-unlabeled training,” in 
+
+International Conference on Machine Learning , vol. 119, 2020, pp. 1510–1519. [57] C. Li, Y. Dai, L. Feng, X. Li, B. Wang, and J. Ouyang, “Positive and unlabeled learning with controlled probability boundary fence,” in 
+
+International Conference on Machine Learning , 2024. [58] X. Wang, W. Wan, C. Geng, S. Li, and S. Chen, “Beyond myopia: Learning from positive and unlabeled data through holistic predictive trends,” in Advances in Neural Information Processing Systems , 2023. [59] C. Li, X. Li, L. Feng, and J. Ouyang, “Who is your right mixup partner in positive and unlabeled learning,” in International Conference on Learning Representations , 2022. [60] M. C. de Souza, B. M. Nogueira, R. G. Rossi, R. M. Marcacini, B. N. dos Santos, and S. O. Rezende, “A network-based positive and unlabeled learning approach for fake news detection,” Machine Learning , vol. 111, no. 10, pp. 3549–3592, 2022. [61] J. Wang, S. Qian, J. Hu, and R. Hong, “Positive unlabeled fake news detection via multi-modal masked transformer network,” IEEE Transactions on Multimedia , vol. 26, pp. 234–244, 2024. [62] H. Chen, F. Liu, Y. Wang, L. Zhao, and H. Wu, “A variational approach for learning from positive and unlabeled data,” in Advances in Neural Information Processing Systems , 2020. [63] Y. Wang, F. Ma, Z. Jin, Y. Yuan, G. Xun, K. Jha, L. Su, and J. Gao, “EANN: event adversarial neural networks for multi-modal fake news detection,” in ACM SIGKDD International Conference on Knowledge Discovery & Data Mining , 2018, pp. 849–857. [64] X. Zhou, J. Wu, and R. Zafarani, “SAFE: similarity-aware multi-modal fake news detection,” in Advances in Knowledge Discovery and Data Mining - Pacific-Asia Conference , vol. 12085, 2020, pp. 354–367. [65] K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale image recognition,” in International Conference on Learning Representations , 2015. [66] D. Tran, L. D. Bourdev, R. Fergus, L. Torresani, and M. Paluri, “Learning spatiotemporal features with 3d convolutional networks,” in 
+
+IEEE International Conference on Computer Vision , 2015, pp. 4489– 4497. [67] H. Choi and Y. Ko, “Using topic modeling and adversarial neural net-works for fake news video detection,” in ACM International Conference on Information and Knowledge Management , G. Demartini, G. Zuccon, J. S. Culpepper, Z. Huang, and H. Tong, Eds., 2021, pp. 2950–2954. [68] S. Hershey, S. Chaudhuri, D. P. W. Ellis, J. F. Gemmeke, A. Jansen, R. C. Moore et al. , “CNN architectures for large-scale audio classification,” in IEEE International Conference on Acoustics, Speech and Signal Processing , 2017, pp. 131–135. [69] N. T. Pham, J. Lee, G. Kwon, and C. Park, “Hybrid image-retrieval method for image-splicing validation,” Symmetry , vol. 11, no. 1, p. 83, 2019. [70] L. Van der Maaten and G. Hinton, “Visualizing data using t-sne.” Journal of Machine Learning Research , vol. 9, no. 11, 2008. 
+
+Bing Wang received the MS degree in computer science from Jilin University, Changchun, China, in 2023 and the BS degree in industrial engineering from Jilin University in 2020. He is currently pursu-ing the PhD degree in computer science from Jilin University. He has published more than 20 papers in international journals and conferences, including SIGIR, ACM Multimedia, IJCAI, ICML, NeurIPS, AAAI, CIKM, etc. His research interest is large language models and misinformation detection. 
+
+Ximing Li received the Ph.D. degree from Jilin Uni-versity, Changchun, China, in 2015. He is currently a Professor with the College of Computer Science and Technology, Jilin University, Changchun, China. His research interests include data mining, machine learning and natural language processing. He has published more than 100 papers at the competitive venues, including NeurIPS, ICML, ICLR, ACL, IJ-CAI, AAAI, WWW etc. 
+
+Changchun Li received the Ph.D. degree from Jilin University, Changchun, China, in 2022. He is currently an Associate Professor with the College of Computer Science and Technology, Jilin Uni-versity, Changchun, China. His research interests include data mining and machine learning, especially for weakly supervised learning and semi-supervised learning. He has published many papers at the com-petitive venues, including NeurIPS, ICML, ICLR, ACL, AAAI, WWW, CIKM, ICDM etc. 
+
+Jinjin Chi received the Ph.D. degree from Jilin University, Changchun, China, in 2019. She is cur-rently an Associate Professor with the College of Computer Science and Technology, Jilin University. His research interests include optimal transport and representation learning. She has published papers at the competitive venues, including IJCAI, AAAI etc. 
+
+Renchu Guan received the Ph.D. degree from the College of Computer Science and Technology, Jilin University, Changchun, China, in 2010. He was a Visiting Scholar with the University of Trento, Trento, Italy, from 2011 to 2012. He is currently a Professor with the College of Computer Science and Technology, Jilin University. He has authored or coauthored over 40 scientific papers in refereed journals and proceedings. His research was featured in the Nature Communications, IEEE Transactions on Knowledge and Data Engineering, IEEE Trans-actions on Geoscience and Remote Sensing, etc. His research interests include machine learning and knowledge engineering. 
+
+Shengsheng Wang received the B.S., M.S., and Ph.D. degrees in computer science from Jilin Uni-versity, Changchun, China, in 1997, 2000, and 2003, respectively. He is currently a Professor with the College of Computer Science and Technology, Jilin University. His research interests are in the areas of computer vision, deep learning, and data mining
