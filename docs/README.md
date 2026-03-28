@@ -6,76 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-03-27
-- 运行时间：2026-03-27 19:50:21 UTC
+- 最新运行日期：2026-03-28
+- 运行时间：2026-03-28 19:28:20 UTC
 - 运行状态：成功
-- 本次总论文数：18
-- 精读区：7
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 18 篇前沿成果，深度攻克多智能体协作博弈与短视频谣言治理两大难题。
-核心突破在于利用近似完美贝叶斯均衡优化社会模拟，并构建了针对多样化微视频误导信息的鲁棒辟谣框架。
-推荐关注多智能体在冲突环境中的交互演化，以及通过代码空间提升策略可解释性的新路径。
-- 详情：[/202603/27/README](/202603/27/README)
+今日聚焦多智能体系统与社会化学习，深度解读 17 篇涵盖自由能原理与半去中心化控制的前沿成果。
+核心突破在于利用非专家智能体提升学习效率，并探索了 AI 严肃游戏在消除方言偏见等社会治理中的潜力。
+推荐关注 AI 如何在能源市场博弈与舆论演化等复杂社会场景中实现从理论到应用的跨越。
+- 详情：[/202603/28/README](/202603/28/README)
 
 ### 精读区论文标签
-1. [Belief-Driven Multi-Agent Collaboration via Approximate Perfect Bayesian Equilibrium for Social Simulation](/202603/27/2603.24973v1-belief-driven-multi-agent-collaboration-via-approximate-perfect-bayesian-equilibrium-for-social-simulation)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：信念驱动的多智能体协作用于高保真社会模拟
-2. [From Manipulation to Mistrust: Explaining Diverse Micro-Video Misinformation for Robust Debunking in the Wild](/202603/27/2603.25423v1-from-manipulation-to-mistrust-explaining-diverse-micro-video-misinformation-for-robust-debunking-in-the-wild)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：短视频虚假信息基准测试与检测智能体
-3. [Harmful Visual Content Manipulation Matters in Misinformation Detection Under Multimedia Scenarios](/202603/27/2603.21054v1-harmful-visual-content-manipulation-matters-in-misinformation-detection-under-multimedia-scenarios)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多模态虚假信息检测与视觉内容篡改
-4. [Human, AI, and Hybrid Ensembles for Detection of Adaptive, RL-based Social Bots](/202603/27/2603.23796v1-human-ai-and-hybrid-ensembles-for-detection-of-adaptive-rl-based-social-bots)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：检测在社交媒体上传播虚假信息的社交机器人
-5. [On a Co-evolving Opinion-Leadership Model in Social Networks](/202603/27/2603.24381v1-on-a-co-evolving-opinion-leadership-model-in-social-networks)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：社交网络中观点与领导力的协同演化模型
-6. [When Is Collective Intelligence a Lottery? Multi-Agent Scaling Laws for Memetic Drift in LLMs](/202603/27/2603.24676v1-when-is-collective-intelligence-a-lottery-multi-agent-scaling-laws-for-memetic-drift-in-llms)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体模因漂移与共识的缩放法则
-7. [An Experimental Comparison of the Most Popular Approaches to Fake News Detection](/202603/27/2603.25501v1-an-experimental-comparison-of-the-most-popular-approaches-to-fake-news-detection)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：对社交媒体数据集上的虚假新闻检测方法进行评估
+1. [Exploiting Expertise of Non-Expert and Diverse Agents in Social Bandit Learning: A Free Energy Approach](/202603/28/2603.11757v1-exploiting-expertise-of-non-expert-and-diverse-agents-in-social-bandit-learning-a-free-energy-approach)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：智能体群体中的社会学习能力
+2. [A Semi-Decentralized Approach to Multiagent Control](/202603/28/2603.11802v1-a-semi-decentralized-approach-to-multiagent-control)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：协作智能体的半去中心化控制
+3. [MALicious INTent Dataset and Inoculating LLMs for Enhanced Disinformation Detection](/202603/28/2603.14525v1-malicious-intent-dataset-and-inoculating-llms-for-enhanced-disinformation-detection)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：虚假信息检测与恶意意图分类
+4. [Hear Both Sides: Efficient Multi-Agent Debate via Diversity-Aware Message Retention](/202603/28/2603.20640v1-hear-both-sides-efficient-multi-agent-debate-via-diversity-aware-message-retention)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：提升推理质量的多智能体辩论
+5. [Pattern Formation in a Spatial Public Goods Dilemma due to Diffusive or Directed Motion](/202603/28/2603.21025v1-pattern-formation-in-a-spatial-public-goods-dilemma-due-to-diffusive-or-directed-motion)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：群体中合作行为的演化与社会困境
+6. [Unified-MAS: Universally Generating Domain-Specific Nodes for Empowering Automatic Multi-Agent Systems](/202603/28/2603.21475v1-unified-mas-universally-generating-domain-specific-nodes-for-empowering-automatic-multi-agent-systems)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于复杂推理任务的自动多智能体系统生成
 
 ### 速读区论文标签
-1. [ConflictBench: Evaluating Human-AI Conflict via Interactive and Visually Grounded Environments](/202603/27/2603.08024v1-conflictbench-evaluating-human-ai-conflict-via-interactive-and-visually-grounded-environments)  
+1. [Hybrid Human-Agent Social Dilemmas in Energy Markets](/202603/28/2603.11834v1-hybrid-human-agent-social-dilemmas-in-energy-markets)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：在交互式社会模拟环境中行动的大模型智能体
-2. [Influencing LLM Multi-Agent Dialogue via Policy-Parameterized Prompts](/202603/27/2603.09890v1-influencing-llm-multi-agent-dialogue-via-policy-parameterized-prompts)  
+   evidence：混合群体中涌现的合作行为
+2. [Opinion Dynamics in Learning Systems](/202603/28/2603.12137v1-opinion-dynamics-in-learning-systems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：影响大模型多智能体对话行为
-3. [Code-Space Response Oracles: Generating Interpretable Multi-Agent Policies with Large Language Models](/202603/27/2603.10098v1-code-space-response-oracles-generating-interpretable-multi-agent-policies-with-large-language-models)  
+   evidence：观点共同演化的涌现动态
+3. [Gamifying Compassion: Mitigating Dialect Prejudice Through An AI-Driven Serious Game](/202603/28/2603.14260v1-gamifying-compassion-mitigating-dialect-prejudice-through-an-ai-driven-serious-game)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：使用大模型生成可解释的多智能体策略
-4. [Learning to Negotiate: Multi-Agent Deliberation for Collective Value Alignment in LLMs](/202603/27/2603.10476v1-learning-to-negotiate-multi-agent-deliberation-for-collective-value-alignment-in-llms)  
+   evidence：涉及方言歧视的模拟社交互动
+4. [Multi-Scale Control of Large Agent Populations: From Density Dynamics to Individual Actuation](/202603/28/2603.15160v1-multi-scale-control-of-large-agent-populations-from-density-dynamics-to-individual-actuation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：大语言模型价值对齐的多智能体协商
-5. [Helix: A Dual-Helix Co-Evolutionary Multi-Agent System for Prompt Optimization and Question Reformulation](/202603/27/2603.19732v1-helix-a-dual-helix-co-evolutionary-multi-agent-system-for-prompt-optimization-and-question-reformulation)  
+   evidence：大智能体群体的多尺度控制与密度动力学
+5. [TrustFlow: Topic-Aware Vector Reputation Propagation for Multi-Agent Ecosystems](/202603/28/2603.19452v1-trustflow-topic-aware-vector-reputation-propagation-for-multi-agent-ecosystems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于提示词和问题联合优化的多智能体系统
-6. [Utility-Guided Agent Orchestration for Efficient LLM Tool Use](/202603/27/2603.19896v1-utility-guided-agent-orchestration-for-efficient-llm-tool-use)  
+   evidence：多智能体生态系统中的声誉传播与社会话语
+6. [Stochastic Sequential Decision Making over Expanding Networks with Graph Filtering](/202603/28/2603.19501v1-stochastic-sequential-decision-making-over-expanding-networks-with-graph-filtering)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多步推理智能体的效用引导编排
-7. [ALARA for Agents: Least-Privilege Context Engineering Through Portable Composable Multi-Agent Teams](/202603/27/2603.20380v1-alara-for-agents-least-privilege-context-engineering-through-portable-composable-multi-agent-teams)  
+   evidence：网络图滤波的多智能体建模
+7. [When Agents Disagree: The Selection Bottleneck in Multi-Agent LLM Pipelines](/202603/28/2603.20324v1-when-agents-disagree-the-selection-bottleneck-in-multi-agent-llm-pipelines)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：管理多智能体团队的框架
-8. [Position: Multi-Agent Algorithmic Care Systems Demand Contestability for Trustworthy AI](/202603/27/2603.20595v1-position-multi-agent-algorithmic-care-systems-demand-contestability-for-trustworthy-ai)  
+   evidence：多智能体大模型流水线中的选择瓶颈
+8. [Does Peer Observation Help? Vision-Sharing Collaboration for Vision-Language Navigation](/202603/28/2603.20804v1-does-peer-observation-help-vision-sharing-collaboration-for-vision-language-navigation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于复杂决策和人类监督的多智能体系统
-9. [Introducing M: A Modular, Modifiable Social Robot](/202603/27/2603.19134v1-introducing-m-a-modular-modifiable-social-robot)  
+   evidence：多智能体视觉共享协作
+9. [Memori: A Persistent Memory Layer for Efficient, Context-Aware LLM Agents](/202603/28/2603.19935v1-memori-a-persistent-memory-layer-for-efficient-context-aware-llm-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：具有交互行为模拟环境的社交机器人平台
-10. [From Human Interfaces to Agent Interfaces: Rethinking Software Design in the Age of AI-Native Systems](/202603/27/2603.20300v1-from-human-interfaces-to-agent-interfaces-rethinking-software-design-in-the-age-of-ai-native-systems)  
+   evidence：为大语言模型智能体提供上下文感知行为的持久记忆层
+10. [The Causal Impact of Tool Affordance on Safety Alignment in LLM Agents](/202603/28/2603.20320v1-the-causal-impact-of-tool-affordance-on-safety-alignment-in-llm-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：从面向人类到面向智能体的软件接口转变
-11. [Bounded Coupled AI Learning Dynamics in Tri-Hierarchical Drone Swarms](/202603/27/2603.20333v1-bounded-coupled-ai-learning-dynamics-in-tri-hierarchical-drone-swarms)  
+   evidence：交互环境中大模型智能体的安全对齐与行为
+11. [Barriers to Gender Convergence: The Interactive Effects of Job Inflexibility and Social Norms](/202603/28/2603.20817v1-barriers-to-gender-convergence-the-interactive-effects-of-job-inflexibility-and-social-norms)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于战术协调的多智能体强化学习
+   evidence：社会规范与家庭劳动的定量模型
 
 
 <div class="dpr-home-promo-card">
