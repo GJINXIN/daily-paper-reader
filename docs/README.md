@@ -6,73 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-03-28
-- 运行时间：2026-03-28 19:28:20 UTC
+- 最新运行日期：2026-03-29
+- 运行时间：2026-03-29 20:03:01 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日聚焦多智能体系统与社会化学习，深度解读 17 篇涵盖自由能原理与半去中心化控制的前沿成果。
-核心突破在于利用非专家智能体提升学习效率，并探索了 AI 严肃游戏在消除方言偏见等社会治理中的潜力。
-推荐关注 AI 如何在能源市场博弈与舆论演化等复杂社会场景中实现从理论到应用的跨越。
-- 详情：[/202603/28/README](/202603/28/README)
+今日精选 17 篇前沿论文，深度解析了社交媒体谣言检测与多智能体协同记忆等核心技术。
+重点关注通过预训练传播树 Transformer 解决谣言检测中的过度平滑问题，以及利用对比轨迹蒸馏实现跨智能体的高效记忆协作。
+建议关注多智能体系统在博弈论与公平评估中的最新应用，以提升复杂任务下的决策鲁棒性。
+- 详情：[/202603/29/README](/202603/29/README)
 
 ### 精读区论文标签
-1. [Exploiting Expertise of Non-Expert and Diverse Agents in Social Bandit Learning: A Free Energy Approach](/202603/28/2603.11757v1-exploiting-expertise-of-non-expert-and-diverse-agents-in-social-bandit-learning-a-free-energy-approach)  
+1. [Avoiding Over-smoothing in Social Media Rumor Detection with Pre-trained Propagation Tree Transformer](/202603/29/2603.22854v1-avoiding-over-smoothing-in-social-media-rumor-detection-with-pre-trained-propagation-tree-transformer)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：利用传播树进行社交媒体谣言检测
+2. [MemCollab: Cross-Agent Memory Collaboration via Contrastive Trajectory Distillation](/202603/29/2603.23234v1-memcollab-cross-agent-memory-collaboration-via-contrastive-trajectory-distillation)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：基于大语言模型的智能体及跨智能体记忆协作
+3. [Biased Error Attribution in Multi-Agent Human-AI Systems Under Delayed Feedback](/202603/29/2603.23419v1-biased-error-attribution-in-multi-agent-human-ai-systems-under-delayed-feedback)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：多智能体人机系统中的社会现象与偏见
+4. [Language-Grounded Multi-Agent Planning for Personalized and Fair Participatory Urban Sensing](/202603/29/2603.24014v1-language-grounded-multi-agent-planning-for-personalized-and-fair-participatory-urban-sensing)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：基于大模型的多智能体城市感知框架，包含个体画像
+5. [Split-Merge Dynamics for Shapley-Fair Coalition Formation](/202603/29/2603.17153v1-split-merge-dynamics-for-shapley-fair-coalition-formation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：智能体群体中的社会学习能力
-2. [A Semi-Decentralized Approach to Multiagent Control](/202603/28/2603.11802v1-a-semi-decentralized-approach-to-multiagent-control)  
+   evidence：管理智能体自组织的动态过程
+6. [DiscoUQ: Structured Disagreement Analysis for Uncertainty Quantification in LLM Agent Ensembles](/202603/29/2603.20975v1-discouq-structured-disagreement-analysis-for-uncertainty-quantification-in-llm-agent-ensembles)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：协作智能体的半去中心化控制
-3. [MALicious INTent Dataset and Inoculating LLMs for Enhanced Disinformation Detection](/202603/28/2603.14525v1-malicious-intent-dataset-and-inoculating-llms-for-enhanced-disinformation-detection)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：虚假信息检测与恶意意图分类
-4. [Hear Both Sides: Efficient Multi-Agent Debate via Diversity-Aware Message Retention](/202603/28/2603.20640v1-hear-both-sides-efficient-multi-agent-debate-via-diversity-aware-message-retention)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：提升推理质量的多智能体辩论
-5. [Pattern Formation in a Spatial Public Goods Dilemma due to Diffusive or Directed Motion](/202603/28/2603.21025v1-pattern-formation-in-a-spatial-public-goods-dilemma-due-to-diffusive-or-directed-motion)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：群体中合作行为的演化与社会困境
-6. [Unified-MAS: Universally Generating Domain-Specific Nodes for Empowering Automatic Multi-Agent Systems](/202603/28/2603.21475v1-unified-mas-universally-generating-domain-specific-nodes-for-empowering-automatic-multi-agent-systems)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：用于复杂推理任务的自动多智能体系统生成
+   evidence：多智能体大模型系统与智能体间分歧分析
 
 ### 速读区论文标签
-1. [Hybrid Human-Agent Social Dilemmas in Energy Markets](/202603/28/2603.11834v1-hybrid-human-agent-social-dilemmas-in-energy-markets)  
+1. [CoMAI: A Collaborative Multi-Agent Framework for Robust and Equitable Interview Evaluation](/202603/29/2603.16215v1-comai-a-collaborative-multi-agent-framework-for-robust-and-equitable-interview-evaluation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：混合群体中涌现的合作行为
-2. [Opinion Dynamics in Learning Systems](/202603/28/2603.12137v1-opinion-dynamics-in-learning-systems)  
+   evidence：用于评估和社会话语的协作多智能体框架
+2. [Distributed Equilibrium-Seeking in Target Coverage Games via Self-Configurable Networks under Limited Communication](/202603/29/2603.17335v1-distributed-equilibrium-seeking-in-target-coverage-games-via-self-configurable-networks-under-limited-communication)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：观点共同演化的涌现动态
-3. [Gamifying Compassion: Mitigating Dialect Prejudice Through An AI-Driven Serious Game](/202603/28/2603.14260v1-gamifying-compassion-mitigating-dialect-prejudice-through-an-ai-driven-serious-game)  
+   evidence：多智能体感知团队中的分布式均衡寻求
+3. [Reasonably reasoning AI agents can avoid game-theoretic failures in zero-shot, provably](/202603/29/2603.18563v1-reasonably-reasoning-ai-agents-can-avoid-game-theoretic-failures-in-zero-shot-provably)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：涉及方言歧视的模拟社交互动
-4. [Multi-Scale Control of Large Agent Populations: From Density Dynamics to Individual Actuation](/202603/28/2603.15160v1-multi-scale-control-of-large-agent-populations-from-density-dynamics-to-individual-actuation)  
+   evidence：交互式经济环境中的推理AI智能体
+4. [Memento-Skills: Let Agents Design Agents](/202603/29/2603.18743v1-memento-skills-let-agents-design-agents)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：大智能体群体的多尺度控制与密度动力学
-5. [TrustFlow: Topic-Aware Vector Reputation Propagation for Multi-Agent Ecosystems](/202603/28/2603.19452v1-trustflow-topic-aware-vector-reputation-propagation-for-multi-agent-ecosystems)  
+   evidence：自主设计并改进任务特定智能体的 LLM 智能体系统
+5. [SkillProbe: Security Auditing for Emerging Agent Skill Marketplaces via Multi-Agent Collaboration](/202603/29/2603.21019v1-skillprobe-security-auditing-for-emerging-agent-skill-marketplaces-via-multi-agent-collaboration)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体生态系统中的声誉传播与社会话语
-6. [Stochastic Sequential Decision Making over Expanding Networks with Graph Filtering](/202603/28/2603.19501v1-stochastic-sequential-decision-making-over-expanding-networks-with-graph-filtering)  
+   evidence：通过多智能体协作进行安全审计
+6. [Improving Coherence and Persistence in Agentic AI for System Optimization](/202603/29/2603.21321v1-improving-coherence-and-persistence-in-agentic-ai-for-system-optimization)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：网络图滤波的多智能体建模
-7. [When Agents Disagree: The Selection Bottleneck in Multi-Agent LLM Pipelines](/202603/28/2603.20324v1-when-agents-disagree-the-selection-bottleneck-in-multi-agent-llm-pipelines)  
+   evidence：用于系统优化的智能体研究员架构
+7. [Efficient Failure Management for Multi-Agent Systems with Reasoning Trace Representation](/202603/29/2603.21522v1-efficient-failure-management-for-multi-agent-systems-with-reasoning-trace-representation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体大模型流水线中的选择瓶颈
-8. [Does Peer Observation Help? Vision-Sharing Collaboration for Vision-Language Navigation](/202603/28/2603.20804v1-does-peer-observation-help-vision-sharing-collaboration-for-vision-language-navigation)  
+   evidence：基于大模型的多智能体系统故障管理
+8. [Counterfactual Credit Policy Optimization for Multi-Agent Collaboration](/202603/29/2603.21563v1-counterfactual-credit-policy-optimization-for-multi-agent-collaboration)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体视觉共享协作
-9. [Memori: A Persistent Memory Layer for Efficient, Context-Aware LLM Agents](/202603/28/2603.19935v1-memori-a-persistent-memory-layer-for-efficient-context-aware-llm-agents)  
+   evidence：多智能体协作中的信用分配
+9. [Governance-Aware Vector Subscriptions for Multi-Agent Knowledge Ecosystems](/202603/29/2603.20833v1-governance-aware-vector-subscriptions-for-multi-agent-knowledge-ecosystems)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：为大语言模型智能体提供上下文感知行为的持久记忆层
-10. [The Causal Impact of Tool Affordance on Safety Alignment in LLM Agents](/202603/28/2603.20320v1-the-causal-impact-of-tool-affordance-on-safety-alignment-in-llm-agents)  
+   evidence：多智能体知识生态系统中的治理机制
+10. [Incentive-Aware Federated Averaging with Performance Guarantees under Strategic Participation](/202603/29/2603.20873v1-incentive-aware-federated-averaging-with-performance-guarantees-under-strategic-participation)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：交互环境中大模型智能体的安全对齐与行为
-11. [Barriers to Gender Convergence: The Interactive Effects of Job Inflexibility and Social Norms](/202603/28/2603.20817v1-barriers-to-gender-convergence-the-interactive-effects-of-job-inflexibility-and-social-norms)  
+   evidence：跨多个策略性智能体的联邦学习
+11. [Profit is the Red Team: Stress-Testing Agents in Strategic Economic Interactions](/202603/29/2603.20925v1-profit-is-the-red-team-stress-testing-agents-in-strategic-economic-interactions)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：社会规范与家庭劳动的定量模型
+   evidence：策略交互中智能体的压力测试
 
 
 <div class="dpr-home-promo-card">

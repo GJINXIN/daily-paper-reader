@@ -1,0 +1,376 @@
+Title: Split-Merge Dynamics for Shapley-Fair Coalition Formation
+
+URL Source: https://arxiv.org/pdf/2603.17153v1
+
+Published Time: Thu, 19 Mar 2026 00:22:32 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Split-Merge Dynamics for Shapley-Fair Coalition Formation 
+
+Quanyan Zhu ∗ Zhengye Han ∗∗ Department of Electrical and Computer Engineering, New York University, Brooklyn, NY 11201 USA (e-mail: qz494@nyu.edu, zh3286@nyu.edu). 
+
+Abstract: Coalition formation is often modeled as a static equilibrium problem, neglecting the dynamic processes governing how agents self-organize. This paper proposes a dynamic split-and-merge framework that balances two conflicting economic forces: individual fairness and collective efficiency. We introduce a control-theoretic mechanism where topological operations are driven by distinct signals: splits are triggered by fairness violations (specifically, negative Shapley values representing “agent-responsible inefficiency”), while merges are driven by strict surplus improvements (superadditivity). We prove that these dynamics converge in finite time to a specific class of steady states termed Shapley-Fair and Merge-Stable (SFMS) partitions. Convergence is established via a vector Lyapunov function tracking aggregate fairness deficits and system surplus, leveraging a discrete-time LaSalle invariance principle. Numerical case studies on a 10-player game demonstrate the algorithm’s ability to resolve fairness tensions and reach stable configurations, providing a rigorous foundation for endogenous coalition formation in dynamic environments. 
+
+Keywords: Large Scale Systems, Stability, Optimization: Theory and Algorithms. 1. INTRODUCTION Coalitions are the fundamental building blocks of socio-technical systems, orchestrating cooperation in everything from international treaties to distributed agent networks. However, these structures are rarely static; they form, dissolve, and reorganize in response to evolving incen-tives. While cooperative game theory has provided a rich vocabulary for describing stable outcomes—such as the core concept introduced in foundational works [Gillies, 1953] or the partition-based stability in hedonic games [Bogomolnaia and Jackson, 2002]—these classical frame-works are fundamentally static. They characterize stable configurations but remain silent on the dynamic pathways by which agents, starting from disarray, self-organize to reach such equilibria. This limitation has motivated a shift towards dynamic per-spectives. Seminal studies [Filar and Petrosjan, 2000] and later robustness analyses [Bauso and Timmer, 2009; Smyr-nakis et al., 2019] introduced time-varying characteristic functions, while other approaches dealing with stochastic-ity [Timmer et al., 2004] or myopic deviations [Konishi and Ray, 2003] framed coalition formation as an evolving process. Yet, establishing a unified control-theoretic frame-work that explains how stable structures emerge from local rules remains a challenge. Existing generic approaches to split-and-merge dynamics, such as those discussed in [Apt and Witzel, 2009], provide a structural foundation but often lack a specific economic mechanism to resolve the inherent tension between efficiency (collective gain) and fairness (individual reward). As noted in bargaining dynamics research [Hart and Mas-Colell, 1996], value allo-cation is intrinsic to stability; without perceived fairness, even efficient coalitions are prone to fragmentation. In this work, we propose a dynamic framework that har-monizes these forces by assigning distinct economic roles to topological operations. Unlike approaches that treat splits and merges symmetrically, our algorithm utilizes the Shapley value as a strict filter for stability. We posit that a negative Shapley value signals “agent-responsible inefficiency,” triggering a fairness-driven split specifically designed to isolate detrimental agents. This targeted ap-proach addresses the structural complexities of stability highlighted in [Faigle et al., 2001] by localizing corrective actions. Conversely, efficiency-driven merges are permitted only when they yield a strict surplus improvement (super-additivity) and, crucially, only after internal fairness has been restored. This ensures that efficiency gains do not come at the expense of individual stability. We show that the resulting dynamics converge to awell-defined class of coalition structures, which we term 
+
+Shapley-Fair and Merge-Stable (SFMS) partitions. An SFMS partition satisfies two properties: (i) Shapley fairness, meaning that no agent within any coalition re-ceives a negative Shapley value in the restricted game induced by that coalition; and (ii) merge stability, mean-ing that no pair of coalitions can merge to obtain astrictly higher total surplus. These partitions characterize the steady states of the algorithm under the strongest fairness-enforcing split rule and refine classical notions of coalition stability by explicitly incorporating individual fairness alongside collective efficiency. To establish this convergence, we construct a vector Lyapunov function tracking aggregate fairness violations and system surplus. 
+
+> arXiv:2603.17153v1 [cs.GT] 17 Mar 2026
+
+Leveraging a discrete-time LaSalle invariance principle, we prove that every trajectory enters, in finite time, an invariant set composed of SFMS fixed points or value-preserving limit cycles. The paper is structured as follows. Section 2 introduces the game-theoretic preliminaries and the Shapley value. Sec-tion 3 details the proposed merge-split algorithm. Section 4 establishes the general invariance principle for coalition structures. Section 5 applies this theory to analyze the convergence of the proposed algorithm. Section 6 presents a numerical case study demonstrating the dynamics, and Section 7 concludes the paper. 2. PRELIMINARIES Let N = {1, 2, . . . , n } denote a finite set of players. A transferable-utility (TU) cooperative game is defined by a characteristic function v : 2N → R, where v(S)represents the total surplus generated by coalition S ⊆ N ,with the convention v(∅) = 0. A partition (or coalition structure) of N is a collection Π = {S1, S 2, . . . , S k} of disjoint, nonempty coalitions whose union is N . The set of all partitions of N is denoted by P(N ). A partition specifies how players are organized into coalitions that jointly generate and distribute surplus. For a coalition S ⊆ N , we denote by v|S the restriction of the characteristic function to subsets of S (i.e., v|S (T ) := 
+
+v(T ), T ⊆ S). This restriction represents the induced cooperative game faced by the members of S when acting independently of the rest of the population. 
+
+2.1 Shapley value 
+
+The Shapley value assigns to each player i ∈ S a payoff 
+
+ϕi (S, v |S ) representing the player’s expected marginal contribution to coalition S. It is defined as 
+
+ϕi (S, v |S ) = X 
+
+> T⊆S\{ i}
+
+|T |!( |S| − | T | − 1)! 
+
+|S|! [v(T ∪{ i})−v(T )] .
+
+In particular, a player with ϕi (S, v |S ) < 0 is one whose expected marginal contribution is negative: on average, the presence of that player reduces the surplus available to the coalition. Such players are naturally interpreted as being treated unfairly by the coalition structure or as imposing a net burden on the coalition. While the exact computation of Shapley values is combinatorially expensive (N P -hard), efficient approximation methods such as sampling permutations [Mitchell et al., 2022] or Bayesian Monte Carlo techniques [Touati et al., 2021] can be employed. This ensures that the proposed fairness metrics remain computationally feasible even for larger player sets. A fundamental property of the Shapley value is efficiency P 
+
+> i∈S
+
+ϕi(S, v |S ) = v(S), which states that the total surplus of a coalition is fully allocated among its members. This implies that negative Shapley values cannot occur in iso-lation: whenever some players receive negative allocations, others must receive positive allocations that compensate for these deficits. Thus, fairness violations are inherently a redistributive phenomenon within coalitions. Furthermore, due to the linearity of Shapley value, the ensuing analysis is invariant under affine transformations of the character-istic function v, allowing us to normalize payoffs without loss of generality. 
+
+2.2 Negative Shapley mass and notation 
+
+To quantify fairness violations, we introduce the positive-part operator. For any real number x ∈ R, define ( x)+ := max {x, 0}. For a coalition R ⊆ N , the negative Shapley mass of player j ∈ R is given by ( −ϕj (R, v |R)) +, which measures the extent to which player j is under-allocated relative to zero. Summing this quantity over all players in a coalition yields the total fairness deficit within that coalition P 
+
+> j∈R
+
+(−ϕj (R, v |R)) +.This notion of negative Shapley mass serves as the funda-mental fairness signal driving the split phase of the merge-split algorithm and forms the basis of the Lyapunov func-tions used to analyze convergence and invariant behavior. 3. MERGE-SPLIT DYNAMICS We consider a cooperative game defined over a finite set of players N = {1, 2, . . . , n } with characteristic function v :2N → R. Our objective is to construct coalition structures that balance individual Shapley fairness with collective surplus efficiency. The algorithm generates a sequence of partitions {Πt}t≥0 of the player set N starting from an arbitrary initial partition Π 0. Each iteration consists of a parallel split phase (F S), which enforces internal fairness, followed by a sequential merge phase (F M), which exploits cross-coalition surplus. 
+
+3.1 Split Operator F S
+
+The split phase refines coalitions exhibiting fairness viola-tions. For any coalition S ⊆ N , we classify agents based on the sign of their Shapley values: 
+
+P+(S) := {i ∈ S | ϕi(S, v |S ) ≥ 0} , P−(S) := S \ P+(S).
+
+We employ a Fairness-Stable split rule that explicitly enforces the internal consistency of the residual group. 
+
+Split Rule (Fairness-stable residual coalition). De-fine the refinement S(S) as: 
+
+S(S) := 
+
+
+
+{{ i} | i ∈ S}, if X
+
+> j∈R
+
+(−ϕj (R, v |R)) +
+
+> 0
+
+{R} ∪ {{ i} | i ∈ P−(S)} , otherwise where R := P+(S). Under this rule, the non-negative candidate coalition R is retained only if it is internally Shapley-fair; otherwise, the entire coalition S disintegrates into singletons. This strict condition prevents the regener-ation of fairness violations, ensuring monotonicity of the Lyapunov function. The global split operator F S applies this rule parallelly to all coalitions: F S (Π) := S 
+
+> S∈Π
+
+S(S).3.2 Merge Operator F M
+
+The merge phase sequentially aggregates coalitions to capture surplus. For any disjoint A, B ∈ Π, define the merge surplus ∆( A, B ) := v(A ∪ B) − (v(A) + v(B)). The operator F M iteratively merges any pair with ∆( A, B ) > 0until no such profitable pairs remain. The order of merges is arbitrary; thus F M is a set-valued map if multiple profitable pairs exist. 
+
+3.3 Steady States: SFMS Partitions 
+
+The full dynamics iterate the split and merge phases: Πt+1 ∈ F M(F S(Π t)). The fixed points of this system correspond to a specific class of stable structures. 
+
+Definition 1. (SFMS Partition). A partition Π is Shapley-Fair and Merge-Stable (SFMS) if: 
+
+• Shapley Fairness: ϕi(S, v |S ) ≥ 0 for all S ∈ Π and 
+
+i ∈ S.
+
+• Merge Stability: v(A ∪ B) ≤ v(A) + v(B) for all distinct A, B ∈ Π. Under the Fairness-Stable split rule, SFMS partitions char-acterize precisely the steady states: internal fairness pre-vents splits, and superadditivity violation prevents merges. 
+
+Algorithm 1 Split Rule: Fairness-Stable Residual Coali-tion 
+
+Require: Coalition S ⊆ N , characteristic function v
+
+Ensure: A collection of subcoalitions S(S) 
+
+> 1:
+
+Compute Shapley values ϕi(S, v |S ) for all i ∈ S 
+
+> 2:
+
+Form sign-based subsets: 
+
+P+(S) ← { i ∈ S | ϕi(S, v |S ) ≥ 0}, P−(S) ← S\P+(S) 
+
+> 3:
+
+if P−(S) = ∅ then  
+
+> 4:
+
+return {S} 
+
+> 5:
+
+end if  
+
+> 6:
+
+Let R ← P+(S) 
+
+> 7:
+
+Compute Shapley values ϕj (R, v |R) for all j ∈ R 
+
+> 8:
+
+Evaluate the residual fairness violation: Θ( R) ← X
+
+> j∈R
+
+(−ϕj (R, v |R)) + 
+
+> 9:
+
+if Θ( R) > 0 then  
+
+> 10:
+
+return {{ i} | i ∈ S} 
+
+> 11:
+
+else  
+
+> 12:
+
+return {R} ∪ {{ i} | i ∈ P−(S)} 
+
+> 13:
+
+end if 
+
+Unlike classical coalition formation rules that split when-ever a sub-partition yields higher total welfare ( v(S) <P v(Tk)), our approach is explicitly agent-responsible. Splits are triggered solely by negative Shapley values, tar-geting specific agents causing inefficiency. This avoids un-necessary structural reorganization when the inefficiency is purely due to coordination costs rather than individual burdens. 4. INVARIANCE PRINCIPLE FOR COALITION STRUCTURES 
+
+Definition 2. (Lexicographic order). For u, v ∈ Rk, we say that u is lexicographically greater than or equal to v,written u ⪰ v, if either u = v, or there exists an index 
+
+j ∈ { 1, . . . , k } such that ui = vi for all i < j and uj > v j .In other words, u and v agree in all earlier components, and u is larger at the first component where they differ. We write u ≻ v if u ⪰ v and u̸ = v.
+
+Lemma 1. (Finite lexicographic order has no infinite ascent). Let Y ⊂ Rk be a finite set, and consider the strict lexicographic order ≻ restricted to Y . Then there is no infinite strictly increasing sequence in Y . Equivalently, any sequence {yt}t≥0 ⊂ Y that is nondecreasing with respect to ⪰, i.e., yt+1 ⪰ yt for all t, must become constant after finitely many steps: there exists T < ∞ such that yt = yT
+
+for all t ≥ T .
+
+Proof. Because Y is finite, a strictly increasing sequence in ( Y, ≻ ) cannot repeat elements and therefore can have length at most |Y |. Consequently, a nondecreasing sequence can experience only finitely many strict increases. Once no further strict increase is possible, the sequence must remain constant thereafter. Let N be a finite player set and X := P(N ) the finite set of all partitions of N . Let F : X ⇒ X be a set-valued map. A (forward) trajectory is any sequence {Πt}t≥0 such that Πt+1 ∈ F (Π t) for all t.
+
+Definition 3. (Weak invariance). A set S ⊆ X is weakly invariant under F if ∀Π ∈ S, ∃Π′ ∈ F (Π) ∩ S. The largest weakly invariant subset of a set E ⊆ X is the union of all weakly invariant subsets of E (it exists since X is finite). 
+
+Theorem 1. (Generalized discrete LaSalle invariance principle). Let X = P(N ) be finite and F : X ⇒ X. Let V : X → Rk
+
+and equip Rk with the lexicographic order. Assume: (i) Monotonicity along all admissible moves: for all Π ∈ X
+
+and all Π ′ ∈ F (Π) , V (Π ′) ⪰ V (Π). (ii) Dichotomy on each state: for every Π ∈ X, either (a) there exists Π ′ ∈ F (Π) with V (Π ′) = V(Π), or else (b) for all Π ′ ∈ F (Π) , V (Π ′) ≻ V (Π). Define the zero-progress set E := {Π ∈ X | ∃Π′ ∈
+
+F (Π) s.t. V(Π ′) = V(Π) }. Let I be the largest weakly invariant subset of E. Then for every trajectory {Πt}t≥0
+
+with Π t+1 ∈ F (Π t), there exists T < ∞ such that Π t ∈ I 
+
+for all t ≥ T . In particular, the tail of the trajectory is eventually periodic, i.e., it is either a fixed point or a finite limit cycle contained in I.
+
+Proof. Fix any trajectory {Πt}t≥0 with Π t+1 ∈ F (Π t). Step 1: finite-time stabilization of V (Π t). Because X is finite, Y := V(X) is finite. By (i), V (Π t+1 ) ⪰ V (Π t) for all 
+
+t, hence {V (Π t)} ⊂ Y is lexicographically nondecreasing. By Lemma 1, there exists T0 < ∞ such that V (Π t) = 
+
+V (Π T0 ) for all t ≥ T0.Step 2: eventual membership in E. Fix any t ≥ T0. Since Πt+1 ∈ F (Π t) and V (Π t+1 ) = V (Π t), it follows that Πt ∈ E by definition. Hence Π t ∈ E for all t ≥ T0.Step 3: restriction to a constant- V level set. Let v⋆ := 
+
+V (Π T0 ) and define the level set L := {Π ∈ E : V(Π) = v⋆}.Then Π t ∈ L for all t ≥ T0. Moreover, for any Π ∈ L
+
+and any Π ′ ∈ F (Π), assumption (i) gives V (Π ′) ⪰ v⋆,while Π ∈ E ensures there exists some successor with equality. Assumption (ii) therefore rules out V (Π ′) ≻ v⋆
+
+for a successor chosen along the stabilized trajectory; in particular, the trajectory uses only transitions that keep 
+
+V equal to v⋆.Define the restricted transition relation on L : Π → Π′ if Π′ ∈ F (Π) and V (Π ′) = V(Π). The tail {Πt}t≥T0 is a walk on the finite directed graph GL = ( L, →). Step 4: eventual periodicity and entry into I. Since L is finite and {Πt}t≥T0 is an infinite walk in GL, there exist integers T1 ≥ T0 and p ≥ 1 such that Π T1 = Π T1+p (pi-geonhole principle). Let C := {ΠT1 , ΠT1+1 , . . . , ΠT1+p−1}.By construction, for every Π ∈ C there exists a successor in C (namely the next state on the cycle), so C is weakly invariant and C ⊆ E . Hence C ⊆ I by maximality of I.It remains to show the trajectory enters I in finite time. By definition, I is the union of all weakly invariant subsets of E. The cycle set C is one such subset, and the trajectory enters C at time T1. Therefore Π t ∈ I for all t ≥ T1.Finally, the tail {Πt}t≥T1 is periodic with period p; if p = 1 it is a fixed point, otherwise it is a finite limit cycle. 5. INVARIANCE FOR THE MERGE-SPLIT ALGORITHM We introduce two scalar functionals on the space of parti-tions P(N ). The first measures violations of Shapley fair-ness, while the second captures aggregate coalition surplus. 
+
+Fairness violation. Define the Shapley fairness violation measure Ψ(Π) := X
+
+> S∈Π
+
+X
+
+> i∈S
+
+max {0, −ϕi (S, v |S )} ,
+
+which aggregates the total magnitude of negative Shapley values across all coalitions in the partition. 
+
+Aggregate surplus. Define the total coalition value Φ(Π) := X
+
+> S∈Π
+
+v(S).
+
+Definition 4. (Vector Lyapunov Function). Define the vector-valued Lyapunov function 
+
+V(Π) := ( −Ψ(Π) , Φ(Π)) ∈ R2
+
+equipped with the lexicographic order ⪰.
+
+Assumption 1. (Nonnegative singleton values). Let v : 2 N →
+
+R be a characteristic function satisfying v({i}) ≥ 0 for all i ∈
+
+N. 
+
+Lemma 2. (Fairness monotonicity under Split Rule). Under Assumption 1, the split operator F S induced by Split Rule satisfies P 
+
+> T∈S (S)
+
+P 
+
+> j∈T
+
+(−ϕj (T, v |T )) + ≤ P 
+
+> i∈S
+
+(−ϕi (S, v |S )) + for every coalition S ⊆
+
+N. Consequently, for any partition Π ∈ P (N ), Ψ  F S(Π)  ≤
+
+Ψ(Π) and the vector Lyapunov function V(Π) = ( −Ψ(Π) , Φ(Π)) satisfies V  F S(Π)  ⪰ V (Π). 
+
+Proof. Fix a coalition S ⊆ N and consider its contribu-tion to the total negative Shapley mass before and after the split induced by Split Rule. Step 1: Contribution before the split. By definition of 
+
+P+(S) and P−(S), 
+
+X
+
+> i∈S
+
+(−ϕi (S, v |S )) + = X
+
+> i∈P−(S)
+
+(−ϕi (S, v |S )) ,
+
+since ϕi (S, v |S ) ≥ 0 for all i ∈ P+(S). Step 2: Contribution of singleton coalitions. Under Split Rule, every agent i ∈ P−(S) is isolated as a singleton. By Assumption 1, ϕi({i}, v ) = v({i}) ≥ 0, and therefore singleton coalitions contribute no negative Shapley mass: P 
+
+> i∈P−(S)
+
+(−ϕi({i}, v )) + = 0 Step 3: Contribution of the residual coalition. Let R := 
+
+P+(S). Split Rule explicitly tests whether the residual coalition R is internally Shapley-fair. If P 
+
+> j∈R
+
+(−ϕj (R, v |R)) + > 0, then the rule fully decom-poses S into singleton coalitions, in which case Step 2 applies to all agents and the post-split negative Shap-ley mass is zero. Otherwise, R is retained as a coali-tion and satisfies ϕj (R, v |R) ≥ 0 for all j ∈ R, implying 
+
+P 
+
+> j∈R
+
+(−ϕj (R, v |R)) + = 0 .
+
+Thus, under Split Rule, no residual coalition produced by the split phase contributes negative Shapley mass. Step 4: Coalition-level comparison. Combining Steps 2 and 3, we obtain P 
+
+> T∈S (S)
+
+P 
+
+> j∈T
+
+(−ϕj (T, v |T )) + = 0. Since the pre-split contribution satisfies P 
+
+> i∈S
+
+(−ϕi (S, v |S )) + ≥
+
+0 the desired inequality follows. Step 5: Global conclusion. Applying the above inequality to every coalition S ∈ Π and summing over all coalitions yields Ψ  F S(Π)  ≤ Ψ(Π). Equivalently, −Ψ  F S(Π)  ≥−Ψ(Π) Since the split phase does not decrease total surplus Φ(Π), the vector Lyapunov function V(Π) = ( −Ψ(Π) , Φ(Π)) is lexicographically nondecreasing under the split operator 
+
+V  F S(Π)  ⪰ V (Π) 
+
+Lemma 3. (Monotonicity of the Merge-Split Update). Consider the merge-split dynamics defined by the update map F =
+
+F M ◦ F S, where the split operator F S is implemented according to Split Rule. Assume that the characteristic function satisfies v({i}) ≥ 0 for all i ∈ N (Assumption 1). Then, for any partition Π ∈ P (N ) and any Π ′ ∈ F (Π) generated by one full merge-split iteration, V (Π ′) ⪰ V (Π), where V(Π) := ( −Ψ(Π) , Φ(Π)) is ordered lexicographi-cally. Moreover, if Π admits a strictly profitable merge, i.e., there exist distinct coalitions A, B ∈ Π such that v(A ∪ B) >v(A) + v(B), then V (Π ′) ≻ V (Π) for all Π ′ ∈ F (Π) .
+
+Proof. Recall that V(Π) = ( −Ψ(Π) , Φ(Π)), where Ψ(Π) denotes the total negative Shapley mass and Φ(Π) =P 
+
+> S∈Π
+
+v(S) is the total coalition surplus. Lexicographic ordering compares −Ψ first and Φ only when −Ψ is unchanged. Fix an arbitrary partition Π and define eΠ := 
+
+F S(Π) , Π′ := F M(eΠ) .
+
+Effect of the split phase. By Lemma 2, which applies under Assumption 1 and Split Rule, the split phase weakly decreases the total negative Shapley mass Ψ( eΠ) ≤
+
+Ψ(Π) , equivalently, − Ψ( eΠ) ≥ − Ψ(Π). In particular, all singleton coalitions created during the split phase are Shapley-fair, and any residual coalition retained by Split Rule is internally Shapley-fair by construction. Effect of the merge phase. The merge operator F M only aggregates coalitions when doing so strictly increases total surplus. Hence, Φ (Π ′) ≥ Φ( eΠ), with strict inequality whenever a profitable merge is executed. The merge phase does not alter −Ψ within the same iteration. Lexicographic comparison. Combining the two phases yields −Ψ (Π ′) ≥ − Ψ( eΠ) ≥ − Ψ(Π) and Φ (Π ′) ≥ Φ( eΠ) .
+
+Therefore, V (Π ′) ⪰ V (Π). If Π admits a strictly profitable merge, then either: (i) the split phase is inactive and the merge phase strictly increases Φ, or (ii) the split phase weakly increases −Ψand the merge phase strictly increases Φ. In both cases, 
+
+V (Π ′) ≻ V (Π). This establishes lexicographic monotonicity of V along the merge-split dynamics, with strict improvement whenever a surplus-positive merge occurs. 
+
+Theorem 2. (Invariance for Merge-Split Dynamics). Consider the merge-split dynamics induced by the set-valued update map F = F M ◦ F S on the finite partition space P(N ). Suppose the following assumptions hold: (A1) The characteristic function satisfies v({i}) ≥ 0 for all 
+
+i ∈ N (Assumption 1). (A2) The split operator F S is implemented according to Split Rule, isolating agents with negative Shapley values and fully decomposing coalitions whenever residual fair-ness violations persist. (A3) The Lyapunov function V(Π) = ( −Ψ(Π) , Φ(Π)) is lexicographically nondecreasing along admissible merge-split updates, and strictly increases whenever a strictly profitable merge is executed (Lemma 3). Then every trajectory {Πt}t≥0 with Π t+1 ∈ F (Π t), start-ing from an arbitrary initial partition Π 0 ∈ P (N ), enters in finite time the largest weakly invariant set 
+
+I := {Π ∈ P (N ) | ∃ Π′ ∈ F (Π) such that V (Π ′) = V(Π) } .
+
+Moreover, the invariant set I consists of: (a) fixed points corresponding to Shapley-fair and merge-stable partitions; and (b) finite limit cycles generated by value-preserving transi-tions, induced by persistent alternation between fairness-driven splits and surplus-driven merges. 
+
+Proof. Consider any trajectory {Πt}t≥0 generated by the set-valued dynamics Π t+1 ∈ F (Π t). Step 1: Lyapunov monotonicity along trajectories. By Assumption (A3), the Lyapunov sequence {V (Π t)}t≥0
+
+is lexicographically nondecreasing along every admissible transition. Moreover, V (Π t+1 ) ≻ V (Π t) whenever Πt
+
+admits a strictly profitable merge. Step 2: Finite-time stabilization of Lyapunov values. The partition space P(N ) is finite. Consequently, the image set V(P(N )) is finite. A lexicographically nondecreasing sequence taking values in a finite set must stabilize in finite time. Hence, there exists a finite time T such that 
+
+V (Π t+1 ) = V (Π t) for all t ≥ T. 
+
+Step 3: Entry into the weakly invariant set. By definition of I, the equality V (Π t+1 ) = V (Π t) implies that Π t ∈ I .Therefore, every trajectory enters I in finite time. Step 4: Structure of the invariant set. Let Π ∈ I . If Π is a fixed point of F , then no admissible split and no strictly profitable merge exists. Under Split Rule and Assumption 1, this is equivalent to Π being both Shapley-fair and merge-stable, establishing part (a). If Π is not a fixed point, then there exists at least one successor Π ′ ∈ F (Π) such that V (Π ′) = V(Π). Since strict Lyapunov improvement is ruled out, such transitions must preserve both the total negative Shapley mass Ψ and the total surplus Φ. Because P(N ) is finite, repeated applica-tion of value-preserving transitions necessarily produces a finite cycle, establishing part (b). 6. CASE STUDY: MERGE-SPLIT DYNAMICS We consider a transferable-utility cooperative game ( N, v 
+
+) with N = {1, . . . , 10 }. Let C = {1, 2, 3, 4} denote a subset of productive players. The characteristic function v : 2 N →
+
+R is constructed to exhibit heterogeneous incentives and fairness tensions: players in C have higher standalone value than those outside C, coalitions contained entirely in C
+
+generate increasing surplus, and coalitions containing all members of C receive an additional synergy bonus. As a result, the game violates marginal monotonicity and induces negative Shapley allocations for certain players in mixed coalitions. To align with Assumption 1 and the invariance results of Theorem 2, the characteristic function is additively shifted so that v({i}) ≥ 0 for all i ∈ N . This shift preserves Shapley signs, merge incentives, and all ordinal comparisons relevant to the merge-split dynamics. At iteration t, the system is in a coalition structure Π t =
+
+{S1, . . . , S k}. For each coalition S ∈ Πt, let ϕi(S) denote the Shapley value of player i in the restricted game v|S .The dynamics follow the merge-split algorithm introduced in Section 3 with the split phase implemented according to Split Rule: 
+
+• (Split) Any agent with ϕi(S) < 0 is isolated as a singleton. The residual coalition is retained only if it is internally Shapley-fair; otherwise, the coalition is fully decomposed into singletons. 
+
+• (Merge) If no split is applied, any pair of coalitions 
+
+A, B ∈ Πt satisfying v(A ∪ B) > v (A) + v(B) may merge. 
+
+• Exactly one split or one merge is applied per iteration. The dynamics are analyzed using the vector Lyapunov function V(Π) = ( −Ψ(Π) , Φ(Π)). Here, Φ(Π) = P 
+
+> S∈Π
+
+v(S)denotes the total coalition surplus, while fairness violation term is defined as Ψ(Π) = P
+
+> S∈Π
+
+P 
+
+> i∈S
+
+max {0, −ϕi(S)}.Starting from a randomly generated initial partition, the dynamics rapidly eliminate fairness violations through singleton splits. In the run reported here, a single split operation at t = 0 isolates all agents with negative Shapley values and yields the partition Π 1 = {{ 2, 3, 4}} ∪ {{ i} | 
+
+i ∈ N \{ 2, 3, 4}} . This partition is internally Shapley-fair and admits no strictly profitable merge. Consequently, the system enters the invariant set I at t = 1 and remains there for all subsequent iterations. Although the algorithm continues to be iterated, neither the coalition structure nor the Lyapunov value changes thereafter, illustrating finite-time entry into the invariant set rather than asymptotic convergence. 
+
+Fig. 1. Coalition evolution under the merge-split dynam-ics. After a single split iteration, the system enters the invariant set and the coalition structure remains unchanged. Figure 1 visualizes coalition membership over time. Rows correspond to players and columns to iterations; colors de-note coalitions. After the initial transient, coalition mem-bership becomes constant, reflecting stabilization within the invariant set. 
+
+Fig. 2. Evolution of the Lyapunov components. The vector Lyapunov function stabilizes after finite time, con-firming finite-time entry into the invariant set. Figure 2 shows the evolution of the Lyapunov components 
+
+−Ψ (Π t) and Φ (Π t). The Lyapunov sequence is lexico-graphically nondecreasing and stabilizes in finite time. This case study illustrates the role of Split Rule in en-forcing fairness monotonicity and preventing oscillatory behavior. Fairness violations are resolved through targeted singleton isolation, and once all surplus-enhancing merges are exhausted, the dynamics remain within the invariant set. In this example, the invariant set consists of a single Shapley-fair and mergestable fixed point. More generally, as shown in Theorem 2, the invariant set may also contain finite cycles when value-preserving transitions exist. 7. CONCLUSION This paper presents a dynamic control-theoretic frame-work for coalition formation that harmonizes the often competing objectives of fairness and efficiency. By assign-ing distinct roles to topological operators—using Shapley value fairness to drive splits and collective surplus to drive merges—we establish a rigorous pathway to equilibrium. The proposed Fairness-Stable split rule is proven to elim-inate “agent-responsible inefficiency,” ensuring that cor-rective actions are targeted and non-regressive. Our theo-retical analysis, grounded in a vector Lyapunov approach and the LaSalle invariance principle, guarantees finite-time convergence to a set of Shapley-Fair and Merge-Stable (SFMS) partitions. These results bridge the gap between static cooperative game theory and dynamic system stabil-ity. Future work will extend this framework to stochastic environments where the characteristic function is learned online from noisy observations, and explore applications in large-scale systems such as LLM agent collaboration networks. REFERENCES Apt, K.R. and Witzel, A. (2009). A generic approach to coalition formation. International game theory review ,11(03), 347–367. Bauso, D. and Timmer, J. (2009). Robust dynamic cooperative games. International Journal of Game Theory , 38(1), 23–36. Bogomolnaia, A. and Jackson, M.O. (2002). The stability of hedonic coalition structures. Games and Economic Behavior , 38(2), 201–230. Faigle, U., Kern, W., and Kuipers, J. (2001). On the computation of the nucleolus of a cooperative game. 
+
+International Journal of Game Theory , 30(1), 79–98. Filar, J.A. and Petrosjan, L.A. (2000). Dynamic coopera-tive games. International Game Theory Review , 2(01), 47–65. Gillies, D.B. (1953). Some theorems on n-person games .Princeton University. Hart, S. and Mas-Colell, A. (1996). Bargaining and value. 
+
+Econometrica: Journal of the Econometric Society , 357– 380. Konishi, H. and Ray, D. (2003). Coalition formation as a dynamic process. Journal of Economic theory , 110(1), 1–41. Mitchell, R., Cooper, J., Frank, E., and Holmes, G. (2022). Sampling permutations for shapley value estimation. 
+
+Journal of Machine Learning Research , 23(43), 1–46. Smyrnakis, M., Bauso, D., and Tembine, H. (2019). Game-theoretic learning and allocations in robust dynamic coalitional games. SIAM Journal on Control and Opti-mization , 57(4), 2902–2923. Timmer, J., Borm, P., and Tijs, S. (2004). On three shapley-like solutions for cooperative games with ran-dom payoffs. International Journal of Game Theory ,32(4), 595–613. Touati, S., Radjef, M.S., et al. (2021). A bayesian monte carlo method for computing the shapley value: Applica-tion to weighted voting and bin packing games. Com-puters & Operations Research , 125, 105094.

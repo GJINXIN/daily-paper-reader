@@ -1,164 +1,8 @@
 {
-  "generated_at": "2026-03-28T19:26:01.661114+00:00",
-  "updated_date": "20260328",
+  "generated_at": "2026-03-29T20:00:42.051384+00:00",
+  "updated_date": "20260329",
   "carryover_days": 9,
   "items": [
-    {
-      "id": "2603.16215v1",
-      "title": "CoMAI: A Collaborative Multi-Agent Framework for Robust and Equitable Interview Evaluation",
-      "abstract": "Ensuring robust and fair interview assessment remains a key challenge in AI-driven evaluation. This paper presents CoMAI, a general-purpose multi-agent interview framework designed for diverse assessment scenarios. In contrast to monolithic single-agent systems based on large language models (LLMs), CoMAI employs a modular task-decomposition architecture coordinated through a centralized finite-state machine. The system comprises four agents specialized in question generation, security, scoring, and summarization. These agents work collaboratively to provide multi-layered security defenses against prompt injection, support multidimensional evaluation with adaptive difficulty adjustment, and enable rubric-based structured scoring that reduces subjective bias. Experimental results demonstrate that CoMAI achieved 90.47% accuracy, 83.33% recall, and 84.41% candidate satisfaction. These results highlight CoMAI as a robust, fair, and interpretable paradigm for AI-driven interview assessment.",
-      "authors": [
-        "Gengxin Sun",
-        "Ruihao Yu",
-        "Liangyi Yin",
-        "Yunqi Yang",
-        "Bin Zhang",
-        "Zhiwei Xu"
-      ],
-      "primary_category": "cs.MA",
-      "categories": [
-        "cs.MA",
-        "cs.AI"
-      ],
-      "published": "2026-03-17T07:44:12+00:00",
-      "link": "https://arxiv.org/pdf/2603.16215v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "collaborative multi-agent framework for evaluation and discourse",
-      "llm_evidence_cn": "用于评估和社会话语的协作多智能体框架",
-      "llm_evidence": "用于评估和社会话语的协作多智能体框架",
-      "canonical_evidence": "用于评估和社会话语的协作多智能体框架",
-      "llm_tldr_en": "A modular multi-agent framework for robust and fair interview evaluation using specialized LLM agents.",
-      "llm_tldr_cn": "一种模块化多智能体框架，利用专门的LLM智能体进行稳健公平的面试评估。",
-      "llm_tldr": "一种模块化多智能体框架，利用专门的LLM智能体进行稳健公平的面试评估。",
-      "llm_tags": [
-        "query:mas-ss:composite"
-      ],
-      "matched_query_tag": "query:mas-ss:composite",
-      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
-      "matched_requirement_id": "req-composite-mas-ss",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.16215v1",
-      "carry_days": 6
-    },
-    {
-      "id": "2603.18563v1",
-      "title": "Reasonably reasoning AI agents can avoid game-theoretic failures in zero-shot, provably",
-      "abstract": "AI agents are increasingly deployed in interactive economic environments characterized by repeated AI-AI interactions. Despite AI agents' advanced capabilities, empirical studies reveal that such interactions often fail to stably induce a strategic equilibrium, such as a Nash equilibrium. Post-training methods have been proposed to induce a strategic equilibrium; however, it remains impractical to uniformly apply an alignment method across diverse, independently developed AI models in strategic settings. In this paper, we provide theoretical and empirical evidence that off-the-shelf reasoning AI agents can achieve Nash-like play zero-shot, without explicit post-training. Specifically, we prove that `reasonably reasoning' agents, i.e., agents capable of forming beliefs about others' strategies from previous observation and learning to best respond to these beliefs, eventually behave along almost every realized play path in a way that is weakly close to a Nash equilibrium of the continuation game. In addition, we relax the common-knowledge payoff assumption by allowing stage payoffs to be unknown and by having each agent observe only its own privately realized stochastic payoffs, and we show that we can still achieve the same on-path Nash convergence guarantee. We then empirically validate the proposed theories by simulating five game scenarios, ranging from a repeated prisoner's dilemma game to stylized repeated marketing promotion games. Our findings suggest that AI agents naturally exhibit such reasoning patterns and therefore attain stable equilibrium behaviors intrinsically, obviating the need for universal alignment procedures in many real-world strategic interactions.",
-      "authors": [
-        "Enoch Hyunwook Kang"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.MA",
-        "econ.TH"
-      ],
-      "published": "2026-03-19T07:24:39+00:00",
-      "link": "https://arxiv.org/pdf/2603.18563v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "reasoning AI agents in interactive economic environments",
-      "llm_evidence_cn": "交互式经济环境中的推理AI智能体",
-      "llm_evidence": "交互式经济环境中的推理AI智能体",
-      "canonical_evidence": "交互式经济环境中的推理AI智能体",
-      "llm_tldr_en": "Proves that reasoning LLM agents can achieve Nash equilibrium in strategic multi-agent interactions zero-shot.",
-      "llm_tldr_cn": "证明推理型LLM智能体在多智能体策略交互中无需训练即可达到纳什均衡。",
-      "llm_tldr": "证明推理型LLM智能体在多智能体策略交互中无需训练即可达到纳什均衡。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.18563v1",
-      "carry_days": 6
-    },
-    {
-      "id": "2603.17153v1",
-      "title": "Split-Merge Dynamics for Shapley-Fair Coalition Formation",
-      "abstract": "Coalition formation is often modeled as a static equilibrium problem, neglecting the dynamic processes governing how agents self-organize. This paper proposes a dynamic split-and-merge framework that balances two conflicting economic forces: individual fairness and collective efficiency. We introduce a control-theoretic mechanism where topological operations are driven by distinct signals: splits are triggered by fairness violations (specifically, negative Shapley values representing \"agent-responsible inefficiency\"), while merges are driven by strict surplus improvements (superadditivity). We prove that these dynamics converge in finite time to a specific class of steady states termed Shapley-Fair and Merge-Stable (SFMS) partitions. Convergence is established via a vector Lyapunov function tracking aggregate fairness deficits and system surplus, leveraging a discrete-time LaSalle invariance principle. Numerical case studies on a 10-player game demonstrate the algorithm's ability to resolve fairness tensions and reach stable configurations, providing a rigorous foundation for endogenous coalition formation in dynamic environments.",
-      "authors": [
-        "Quanyan Zhu",
-        "Zhengye Han"
-      ],
-      "primary_category": "cs.GT",
-      "categories": [
-        "cs.GT"
-      ],
-      "published": "2026-03-17T21:31:38+00:00",
-      "link": "https://arxiv.org/pdf/2603.17153v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "dynamic processes governing how agents self-organize",
-      "llm_evidence_cn": "管理智能体自组织的动态过程",
-      "llm_evidence": "管理智能体自组织的动态过程",
-      "canonical_evidence": "管理智能体自组织的动态过程",
-      "llm_tldr_en": "Proposes a split-and-merge framework for fair and efficient coalition formation in multi-agent systems.",
-      "llm_tldr_cn": "提出一种拆分与合并框架，用于多智能体系统中公平且高效的联盟形成。",
-      "llm_tldr": "提出一种拆分与合并框架，用于多智能体系统中公平且高效的联盟形成。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "emergent social phenomena in multi agent environments",
-      "matched_requirement_id": "req-7",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.17153v1",
-      "carry_days": 6
-    },
-    {
-      "id": "2603.17335v1",
-      "title": "Distributed Equilibrium-Seeking in Target Coverage Games via Self-Configurable Networks under Limited Communication",
-      "abstract": "We study a target coverage problem in which a team of sensing agents, operating under limited communication, must collaboratively monitor targets that may be adaptively repositioned by an attacker. We model this interaction as a zero-sum game between the sensing team (known as the defender) and the attacker. However, computing an exact Nash equilibrium (NE) for this game is computationally prohibitive as the action space of the defender grows exponentially with the number of sensors and their possible orientations. Exploiting the submodularity property of the game's utility function, we propose a distributed framework that enables agents to self-configure their communication neighborhoods under bandwidth constraints and collaboratively maximize the target coverage. We establish theoretical guarantees showing that the resulting sensing strategies converge to an approximate NE of the game. To our knowledge, this is the first distributed, communication-aware approach that scales effectively for games with combinatorial action spaces while explicitly incorporating communication constraints. To this end, we leverage the distributed bandit-submodular optimization framework and the notion of Value of Coordination that were introduced in [1]. Through simulations, we show that our approach attains near-optimal game value and higher target coverage compared to baselines.",
-      "authors": [
-        "Jayanth Bhargav",
-        "Zirui Xu",
-        "Vasileios Tzoumas",
-        "Mahsa Ghasemi",
-        "Shreyas Sundaram"
-      ],
-      "primary_category": "eess.SY",
-      "categories": [
-        "eess.SY",
-        "cs.GT",
-        "cs.MA",
-        "math.OC"
-      ],
-      "published": "2026-03-18T04:02:57+00:00",
-      "link": "https://arxiv.org/pdf/2603.17335v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "distributed equilibrium-seeking in multi-agent sensing teams",
-      "llm_evidence_cn": "多智能体感知团队中的分布式均衡寻求",
-      "llm_evidence": "多智能体感知团队中的分布式均衡寻求",
-      "canonical_evidence": "多智能体感知团队中的分布式均衡寻求",
-      "llm_tldr_en": "Proposes a distributed framework for sensing agents to collaboratively monitor targets under limited communication.",
-      "llm_tldr_cn": "提出了一种分布式框架，使感知智能体在有限通信下协作监控目标。",
-      "llm_tldr": "提出了一种分布式框架，使感知智能体在有限通信下协作监控目标。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.17335v1",
-      "carry_days": 5
-    },
     {
       "id": "2603.21368v1",
       "title": "Conspiracy Frame: a Semiotically-Driven Approach for Conspiracy Theories Detection",
@@ -182,13 +26,13 @@
         "keyword:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "Conspiracy theory detection and social discourse analysis",
-      "llm_evidence_cn": "阴谋论检测与社会话语分析",
-      "llm_evidence": "阴谋论检测与社会话语分析",
-      "canonical_evidence": "阴谋论检测与社会话语分析",
-      "llm_tldr_en": "Introduces a semiotically-driven frame for detecting conspiracy theories in social media messages using LLMs.",
-      "llm_tldr_cn": "引入一种基于符号学的框架，利用大语言模型检测社交媒体中的阴谋论叙事。",
-      "llm_tldr": "引入一种基于符号学的框架，利用大语言模型检测社交媒体中的阴谋论叙事。",
+      "llm_evidence_en": "detection of conspiracy theories in social discourse",
+      "llm_evidence_cn": "社会话语中的阴谋论检测",
+      "llm_evidence": "社会话语中的阴谋论检测",
+      "canonical_evidence": "社会话语中的阴谋论检测",
+      "llm_tldr_en": "Introduces a semiotically-driven semantic representation for detecting conspiracy theories in social media messages.",
+      "llm_tldr_cn": "引入了一种符号驱动的语义表示方法，用于检测社交媒体信息中的阴谋论。",
+      "llm_tldr": "引入了一种符号驱动的语义表示方法，用于检测社交媒体信息中的阴谋论。",
       "llm_tags": [
         "query:mas-ss:composite"
       ],
@@ -197,47 +41,6 @@
       "matched_requirement_id": "req-composite-mas-ss",
       "selection_source": "carryover_cache",
       "paper_id": "2603.21368v1",
-      "carry_days": 3
-    },
-    {
-      "id": "2603.21563v1",
-      "title": "Counterfactual Credit Policy Optimization for Multi-Agent Collaboration",
-      "abstract": "Collaborative multi-agent large language models (LLMs) can solve complex reasoning tasks by decomposing roles and aggregating diverse hypotheses. Yet, reinforcement learning (RL) for such systems is often undermined by credit assignment: a shared global reward obscures individual contributions, inflating update variance and encouraging free-riding. We introduce Counterfactual Credit Policy Optimization (CCPO), a framework that assigns agent-specific learning signals by estimating each agent's marginal contribution through counterfactual trajectories. CCPO builds dynamic counterfactual baselines that simulate outcomes with an agent's contribution removed, yielding role-sensitive advantages for policy optimization. To further improve stability under heterogeneous tasks and data distributions, we propose a global-history-aware normalization scheme that calibrates advantages using global rollout statistics. We evaluate CCPO on two collaboration topologies: a sequential Think--Reason dyad and multi-agent voting. Across mathematical and logical reasoning benchmarks, CCPO mitigates free-riding and outperforms strong multi-agent RL baselines, yielding finer-grained and more effective credit assignment for collaborative LLM training. Our code is available at https://github.com/bhai114/ccpo.",
-      "authors": [
-        "Zhongyi Li",
-        "Wan Tian",
-        "Yikun Ban",
-        "Jinju Chen",
-        "Huiming Zhang",
-        "Yang Liu",
-        "Fuzhen Zhuang"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI"
-      ],
-      "published": "2026-03-23T04:35:02+00:00",
-      "link": "https://arxiv.org/pdf/2603.21563v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "credit assignment in collaborative multi-agent LLMs",
-      "llm_evidence_cn": "协作式多智能体大语言模型中的信用分配",
-      "llm_evidence": "协作式多智能体大语言模型中的信用分配",
-      "canonical_evidence": "协作式多智能体大语言模型中的信用分配",
-      "llm_tldr_en": "Introduces CCPO to improve multi-agent collaboration by estimating individual marginal contributions.",
-      "llm_tldr_cn": "引入CCPO框架，通过估计个体边际贡献来优化多智能体协作效率。",
-      "llm_tldr": "引入CCPO框架，通过估计个体边际贡献来优化多智能体协作效率。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.21563v1",
       "carry_days": 1
     },
     {
@@ -278,42 +81,6 @@
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
       "paper_id": "2603.20279v1",
-      "carry_days": 3
-    },
-    {
-      "id": "2603.22854v1",
-      "title": "Avoiding Over-smoothing in Social Media Rumor Detection with Pre-trained Propagation Tree Transformer",
-      "abstract": "Deep learning techniques for rumor detection typically utilize Graph Neural Networks (GNNs) to analyze post relations. These methods, however, falter due to over-smoothing issues when processing rumor propagation structures, leading to declining performance. Our investigation into this issue reveals that over-smoothing is intrinsically tied to the structural characteristics of rumor propagation trees, in which the majority of nodes are 1-level nodes. Furthermore, GNNs struggle to capture long-range dependencies within these trees. To circumvent these challenges, we propose a Pre-Trained Propagation Tree Transformer (P2T3) method based on pure Transformer architecture. It extracts all conversation chains from a tree structure following the propagation direction of replies, utilizes token-wise embedding to infuse connection information and introduces necessary inductive bias, and pre-trains on large-scale unlabeled datasets. Experiments indicate that P2T3 surpasses previous state-of-the-art methods in multiple benchmark datasets and performs well under few-shot conditions. P2T3 not only avoids the over-smoothing issue inherent in GNNs but also potentially offers a large model or unified multi-modal scheme for future social media research.",
-      "authors": [
-        "Chaoqun Cui",
-        "Caiyan Jia"
-      ],
-      "primary_category": "cs.CL",
-      "categories": [
-        "cs.CL",
-        "cs.AI"
-      ],
-      "published": "2026-03-24T06:45:02+00:00",
-      "link": "https://arxiv.org/pdf/2603.22854v1",
-      "tags": [
-        "keyword:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "social media rumor detection using propagation structures",
-      "llm_evidence_cn": "利用传播结构的社交媒体谣言检测",
-      "llm_evidence": "利用传播结构的社交媒体谣言检测",
-      "canonical_evidence": "利用传播结构的社交媒体谣言检测",
-      "llm_tldr_en": "Proposes a Transformer-based method to detect social media rumors by analyzing conversation chains.",
-      "llm_tldr_cn": "提出一种基于Transformer的方法，通过分析对话链来检测社交媒体谣言。",
-      "llm_tldr": "提出一种基于Transformer的方法，通过分析对话链来检测社交媒体谣言。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Short Video Fake News Detection",
-      "matched_requirement_id": "req-1",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.22854v1",
       "carry_days": 4
     },
     {
@@ -355,43 +122,7 @@
       "matched_requirement_id": "req-1",
       "selection_source": "carryover_cache",
       "paper_id": "2603.23125v1",
-      "carry_days": 4
-    },
-    {
-      "id": "2603.20975v1",
-      "title": "DiscoUQ: Structured Disagreement Analysis for Uncertainty Quantification in LLM Agent Ensembles",
-      "abstract": "Multi-agent LLM systems, where multiple prompted instances of a language model independently answer questions, are increasingly used for complex reasoning tasks. However, existing methods for quantifying the uncertainty of their collective outputs rely on shallow voting statistics that discard the rich semantic information in agents' reasoning. We introduce DiscoUQ, a framework that extracts and leverages the structure of inter-agent disagreement -- both linguistic properties (evidence overlap, argument strength, divergence depth) and embedding geometry (cluster distances, dispersion, cohesion) -- to produce well-calibrated confidence estimates. We propose three methods of increasing complexity: DiscoUQ-LLM (logistic regression on LLM-extracted structure features), DiscoUQ-Embed (logistic regression on embedding geometry), and DiscoUQ-Learn (a neural network combining all features). Evaluated on four diverse benchmarks (StrategyQA, MMLU, TruthfulQA, ARC-Challenge) with a 5-agent system using Qwen3.5-27B, DiscoUQ-LLM achieves an average AUROC of 0.802, outperforming the best baseline (LLM Aggregator, 0.791) while being substantially better calibrated (ECE 0.036 vs. 0.098). The learned features generalize across benchmarks with near-zero performance degradation and provide the largest improvements where they are most needed: in the ambiguous \"weak disagreement\" tier where simple vote counting fails.",
-      "authors": [
-        "Bo Jiang"
-      ],
-      "primary_category": "cs.CL",
-      "categories": [
-        "cs.CL",
-        "cs.LG"
-      ],
-      "published": "2026-03-21T23:24:12+00:00",
-      "link": "https://arxiv.org/pdf/2603.20975v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "uncertainty quantification in multi-agent LLM systems",
-      "llm_evidence_cn": "多智能体大模型系统中的不确定性量化",
-      "llm_evidence": "多智能体大模型系统中的不确定性量化",
-      "canonical_evidence": "多智能体大模型系统中的不确定性量化",
-      "llm_tldr_en": "Introduces DiscoUQ to analyze inter-agent disagreement for better confidence estimates in multi-agent ensembles.",
-      "llm_tldr_cn": "引入 DiscoUQ 框架，通过分析智能体间的意见分歧来优化多智能体系统的置信度评估。",
-      "llm_tldr": "引入 DiscoUQ 框架，通过分析智能体间的意见分歧来优化多智能体系统的置信度评估。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.20975v1",
-      "carry_days": 2
+      "carry_days": 5
     },
     {
       "id": "2603.19568v1",
@@ -427,174 +158,7 @@
       "matched_requirement_id": "req-6",
       "selection_source": "carryover_cache",
       "paper_id": "2603.19568v1",
-      "carry_days": 3
-    },
-    {
-      "id": "2603.25268v1",
-      "title": "CRAFT: Grounded Multi-Agent Coordination Under Partial Information",
-      "abstract": "We introduce CRAFT, a multi-agent benchmark for evaluating pragmatic communication in large language models under strict partial information. In this setting, multiple agents with complementary but incomplete views must coordinate through natural language to construct a shared 3D structure that no single agent can fully observe. We formalize this problem as a multi-sender pragmatic reasoning task and provide a diagnostic framework that decomposes failures into spatial grounding, belief modeling and pragmatic communication errors, including a taxonomy of behavioral failure profiles in both frontier and open-weight models. Across a diverse set of models, including 8 open-weight and 7 frontier including reasoning models, we find that stronger reasoning ability does not reliably translate to better coordination: smaller open-weight models often match or outperform frontier systems, and improved individual communication does not guarantee successful collaboration. These results suggest that multi-agent coordination remains a fundamentally unsolved challenge for current language models. Our code can be found at https://github.com/csu-signal/CRAFT",
-      "authors": [
-        "Abhijnan Nath",
-        "Hannah VanderHoeven",
-        "Nikhil Krishnaswamy"
-      ],
-      "primary_category": "cs.CL",
-      "categories": [
-        "cs.CL",
-        "cs.AI"
-      ],
-      "published": "2026-03-26T10:06:39+00:00",
-      "link": "https://arxiv.org/pdf/2603.25268v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "multi-agent coordination and pragmatic communication failures",
-      "llm_evidence_cn": "多智能体协同与语用通信失效分析",
-      "llm_evidence": "多智能体协同与语用通信失效分析",
-      "canonical_evidence": "多智能体协同与语用通信失效分析",
-      "llm_tldr_en": "A benchmark for evaluating how LLM agents coordinate and communicate under partial information.",
-      "llm_tldr_cn": "一个用于评估大模型智能体在部分信息下协同与语用通信能力的基准。",
-      "llm_tldr": "一个用于评估大模型智能体在部分信息下协同与语用通信能力的基准。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "emergent social phenomena in multi agent environments",
-      "matched_requirement_id": "req-7",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.25268v1",
-      "carry_days": 1
-    },
-    {
-      "id": "2603.18743v1",
-      "title": "Memento-Skills: Let Agents Design Agents",
-      "abstract": "We introduce \\emph{Memento-Skills}, a generalist, continually-learnable LLM agent system that functions as an \\emph{agent-designing agent}: it autonomously constructs, adapts, and improves task-specific agents through experience. The system is built on a memory-based reinforcement learning framework with \\emph{stateful prompts}, where reusable skills (stored as structured markdown files) serve as persistent, evolving memory. These skills encode both behaviour and context, enabling the agent to carry forward knowledge across interactions.   Starting from simple elementary skills (like Web search and terminal operations), the agent continually improves via the \\emph{Read--Write Reflective Learning} mechanism introduced in \\emph{Memento~2}~\\cite{wang2025memento2}. In the \\emph{read} phase, a behaviour-trainable skill router selects the most relevant skill conditioned on the current stateful prompt; in the \\emph{write} phase, the agent updates and expands its skill library based on new experience. This closed-loop design enables \\emph{continual learning without updating LLM parameters}, as all adaptation is realised through the evolution of externalised skills and prompts.   Unlike prior approaches that rely on human-designed agents, Memento-Skills enables a generalist agent to \\emph{design agents end-to-end} for new tasks. Through iterative skill generation and refinement, the system progressively improves its own capabilities. Experiments on the \\emph{General AI Assistants} benchmark and \\emph{Humanity's Last Exam} demonstrate sustained gains, achieving 26.2\\% and 116.2\\% relative improvements in overall accuracy, respectively. Code is available at https://github.com/Memento-Teams/Memento-Skills.",
-      "authors": [
-        "Huichi Zhou",
-        "Siyuan Guo",
-        "Anjie Liu",
-        "Zhongwei Yu",
-        "Ziqin Gong",
-        "Bowen Zhao",
-        "Zhixun Chen",
-        "Menglong Zhang",
-        "Yihang Chen",
-        "Jinsong Li",
-        "Runyu Yang",
-        "Qiangbin Liu",
-        "Xinlei Yu",
-        "Jianmin Zhou",
-        "Na Wang",
-        "Chunyang Sun",
-        "Jun Wang"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.CL",
-        "cs.LG"
-      ],
-      "published": "2026-03-19T10:45:22+00:00",
-      "link": "https://arxiv.org/pdf/2603.18743v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "LLM agent system that autonomously designs and improves task-specific agents",
-      "llm_evidence_cn": "自主设计并改进任务特定智能体的 LLM 智能体系统",
-      "llm_evidence": "自主设计并改进任务特定智能体的 LLM 智能体系统",
-      "canonical_evidence": "自主设计并改进任务特定智能体的 LLM 智能体系统",
-      "llm_tldr_en": "Presents Memento-Skills, a system where agents use memory and reflective learning to design other agents.",
-      "llm_tldr_cn": "提出 Memento-Skills 系统，使智能体能够通过记忆和反思学习自主设计和改进其他智能体。",
-      "llm_tldr": "提出 Memento-Skills 系统，使智能体能够通过记忆和反思学习自主设计和改进其他智能体。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.18743v1",
-      "carry_days": 2
-    },
-    {
-      "id": "2603.23234v1",
-      "title": "MemCollab: Cross-Agent Memory Collaboration via Contrastive Trajectory Distillation",
-      "abstract": "Large language model (LLM)-based agents rely on memory mechanisms to reuse knowledge from past problem-solving experiences. Existing approaches typically construct memory in a per-agent manner, tightly coupling stored knowledge to a single model's reasoning style. In modern deployments with heterogeneous agents, a natural question arises: can a single memory system be shared across different models? We found that naively transferring memory between agents often degrades performance, as such memory entangles task-relevant knowledge with agent-specific biases. To address this challenge, we propose MemCollab, a collaborative memory framework that constructs agent-agnostic memory by contrasting reasoning trajectories generated by different agents on the same task. This contrastive process distills abstract reasoning constraints that capture shared task-level invariants while suppressing agent-specific artifacts. We further introduce a task-aware retrieval mechanism that conditions memory access on task category, ensuring that only relevant constraints are used at inference time. Experiments on mathematical reasoning and code generation benchmarks demonstrate that MemCollab consistently improves both accuracy and inference-time efficiency across diverse agents, including cross-modal-family settings. Our results show that the collaboratively constructed memory can function as a shared reasoning resource for diverse LLM-based agents.",
-      "authors": [
-        "Yurui Chang",
-        "Yiran Wu",
-        "Qingyun Wu",
-        "Lu Lin"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.LG"
-      ],
-      "published": "2026-03-24T14:05:47+00:00",
-      "link": "https://arxiv.org/pdf/2603.23234v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "Cross-agent memory collaboration in multi-agent systems",
-      "llm_evidence_cn": "多智能体系统中的跨智能体记忆协作",
-      "llm_evidence": "多智能体系统中的跨智能体记忆协作",
-      "canonical_evidence": "多智能体系统中的跨智能体记忆协作",
-      "llm_tldr_en": "Introduces MemCollab for sharing agent-agnostic memory across heterogeneous LLM-based agents.",
-      "llm_tldr_cn": "引入 MemCollab 框架，在异构的大模型智能体之间共享智能体无关的记忆。",
-      "llm_tldr": "引入 MemCollab 框架，在异构的大模型智能体之间共享智能体无关的记忆。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.23234v1",
-      "carry_days": 1
-    },
-    {
-      "id": "2603.23419v1",
-      "title": "Biased Error Attribution in Multi-Agent Human-AI Systems Under Delayed Feedback",
-      "abstract": "Human decision-making is strongly influenced by cognitive biases, particularly under conditions of uncertainty and risk. While prior work has examined bias in single-step decisions with immediate outcomes and in human interaction with a single autonomous agent, comparatively little attention has been paid to decision-making under delayed outcomes involving multiple AI agents, where decisions at each step affect subsequent states. In this work, we study how delayed outcomes shape decision-making and responsibility attribution in a multi-agent human-AI task. Using a controlled game-based experiment, we analyze how participants adjust their behavior following positive and negative outcomes. We observe asymmetric responses to gains and losses, with stronger corrective adjustments after negative outcomes. Importantly, participants often fail to correctly identify the actions that caused failure and misattribute responsibility across AI agents, leading to systematic revisions of decisions that are weakly related to the underlying causes of poor performance. We refer to this phenomenon as a form of attribution bias, manifested as biased error attribution under delayed feedback. Our findings highlight how cognitive biases can be amplified in human-AI systems with delayed outcomes and multiple autonomous agents, underscoring the need for decision-support systems that better support causal understanding and learning over time.",
-      "authors": [
-        "Teerthaa Parakh",
-        "Karen M. Feigh"
-      ],
-      "primary_category": "cs.HC",
-      "categories": [
-        "cs.HC",
-        "cs.AI"
-      ],
-      "published": "2026-03-24T16:52:14+00:00",
-      "link": "https://arxiv.org/pdf/2603.23419v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "multi-agent human-AI social interaction and bias",
-      "llm_evidence_cn": "多智能体人机社会交互与偏差",
-      "llm_evidence": "多智能体人机社会交互与偏差",
-      "canonical_evidence": "多智能体人机社会交互与偏差",
-      "llm_tldr_en": "Studies cognitive biases and responsibility attribution in multi-agent human-AI systems under delayed feedback.",
-      "llm_tldr_cn": "研究了延迟反馈下多智能体人机系统中认知偏差与责任归属问题。",
-      "llm_tldr": "研究了延迟反馈下多智能体人机系统中认知偏差与责任归属问题。",
-      "llm_tags": [
-        "query:mas-ss:composite"
-      ],
-      "matched_query_tag": "query:mas-ss:composite",
-      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
-      "matched_requirement_id": "req-composite-mas-ss",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.23419v1",
-      "carry_days": 1
+      "carry_days": 4
     },
     {
       "id": "2603.23271v1",
@@ -618,139 +182,53 @@
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "LLM-driven planning in socially grounded environments",
-      "llm_evidence_cn": "社会化环境中的LLM驱动规划",
-      "llm_evidence": "社会化环境中的LLM驱动规划",
-      "canonical_evidence": "社会化环境中的LLM驱动规划",
-      "llm_tldr_en": "A multimodal framework for human-multi-agent interaction using LLM-driven planning and embodied expression.",
-      "llm_tldr_cn": "一种利用LLM驱动规划和具身表达实现人与多智能体交互的多模态框架。",
-      "llm_tldr": "一种利用LLM驱动规划和具身表达实现人与多智能体交互的多模态框架。",
+      "llm_evidence_en": "multimodal framework for human-multi-agent interaction and coordinated decision-making",
+      "llm_evidence_cn": "人与多智能体交互的多模态框架及协同决策",
+      "llm_evidence": "人与多智能体交互的多模态框架及协同决策",
+      "canonical_evidence": "人与多智能体交互的多模态框架及协同决策",
+      "llm_tldr_en": "A framework for human-multi-agent interaction using LLM-driven planning and centralized coordination.",
+      "llm_tldr_cn": "一种利用LLM驱动的规划和集中协调实现人与多智能体交互的框架。",
+      "llm_tldr": "一种利用LLM驱动的规划和集中协调实现人与多智能体交互的框架。",
       "llm_tags": [
         "query:mas-ss"
       ],
       "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "LLM powered agents for simulating social behavior",
-      "matched_requirement_id": "req-6",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
       "paper_id": "2603.23271v1",
       "carry_days": 1
     },
     {
-      "id": "2603.25001v1",
-      "title": "Rethinking Failure Attribution in Multi-Agent Systems: A Multi-Perspective Benchmark and Evaluation",
-      "abstract": "Failure attribution is essential for diagnosing and improving multi-agent systems (MAS), yet existing benchmarks and methods largely assume a single deterministic root cause for each failure. In practice, MAS failures often admit multiple plausible attributions due to complex inter-agent dependencies and ambiguous execution trajectories. We revisit MAS failure attribution from a multi-perspective standpoint and propose multi-perspective failure attribution, a practical paradigm that explicitly accounts for attribution ambiguity. To support this setting, we introduce MP-Bench, the first benchmark designed for multi-perspective failure attribution in MAS, along with a new evaluation protocol tailored to this paradigm. Through extensive experiments, we find that prior conclusions suggesting LLMs struggle with failure attribution are largely driven by limitations in existing benchmark designs. Our results highlight the necessity of multi-perspective benchmarks and evaluation protocols for realistic and reliable MAS debugging.",
+      "id": "2603.25620v1",
+      "title": "PICon: A Multi-Turn Interrogation Framework for Evaluating Persona Agent Consistency",
+      "abstract": "Large language model (LLM)-based persona agents are rapidly being adopted as scalable proxies for human participants across diverse domains. Yet there is no systematic method for verifying whether a persona agent's responses remain free of contradictions and factual inaccuracies throughout an interaction. A principle from interrogation methodology offers a lens: no matter how elaborate a fabricated identity, systematic interrogation will expose its contradictions. We apply this principle to propose PICon, an evaluation framework that probes persona agents through logically chained multi-turn questioning. PICon evaluates consistency along three core dimensions: internal consistency (freedom from self-contradiction), external consistency (alignment with real-world facts), and retest consistency (stability under repetition). Evaluating seven groups of persona agents alongside 63 real human participants, we find that even systems previously reported as highly consistent fail to meet the human baseline across all three dimensions, revealing contradictions and evasive responses under chained questioning. This work provides both a conceptual foundation and a practical methodology for evaluating persona agents before trusting them as substitutes for human participants. We provide the source code and an interactive demo at: https://kaist-edlab.github.io/picon/",
       "authors": [
-        "Yeonjun In",
-        "Mehrab Tanjim",
-        "Jayakumar Subramanian",
-        "Sungchul Kim",
-        "Uttaran Bhattacharya",
-        "Wonjoong Kim",
-        "Sangwu Park",
-        "Somdeb Sarkhel",
-        "Chanyoung Park"
+        "Minseo Kim",
+        "Sujeong Im",
+        "Junseong Choi",
+        "Junhee Lee",
+        "Chaeeun Shim",
+        "Edward Choi"
       ],
-      "primary_category": "cs.AI",
+      "primary_category": "cs.CL",
       "categories": [
-        "cs.AI"
+        "cs.CL"
       ],
-      "published": "2026-03-26T04:02:23+00:00",
-      "link": "https://arxiv.org/pdf/2603.25001v1",
+      "published": "2026-03-26T16:34:34+00:00",
+      "link": "https://arxiv.org/pdf/2603.25620v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "Benchmark and evaluation for failure attribution in multi-agent systems",
-      "llm_evidence_cn": "多智能体系统故障归因的基准测试与评估",
-      "llm_evidence": "多智能体系统故障归因的基准测试与评估",
-      "canonical_evidence": "多智能体系统故障归因的基准测试与评估",
-      "llm_tldr_en": "Introduces MP-Bench for multi-perspective failure attribution in complex multi-agent systems.",
-      "llm_tldr_cn": "引入MP-Bench，用于复杂多智能体系统中的多视角故障归因。",
-      "llm_tldr": "引入MP-Bench，用于复杂多智能体系统中的多视角故障归因。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.25001v1",
-      "carry_days": 1
-    },
-    {
-      "id": "2603.21574v1",
-      "title": "Adaptive Robust Estimator for Multi-Agent Reinforcement Learning",
-      "abstract": "Multi-agent collaboration has emerged as a powerful paradigm for enhancing the reasoning capabilities of large language models, yet it suffers from interaction-level ambiguity that blurs generation, critique, and revision, making credit assignment across agents difficult. Moreover, policy optimization in this setting is vulnerable to heavy-tailed and noisy rewards, which can bias advantage estimation and trigger unstable or even divergent training. To address both issues, we propose a robust multi-agent reinforcement learning framework for collaborative reasoning, consisting of two components: Dual-Agent Answer-Critique-Rewrite (DACR) and an Adaptive Robust Estimator (ARE). DACR decomposes reasoning into a structured three-stage pipeline: answer, critique, and rewrite, while enabling explicit attribution of each agent's marginal contribution to its partner's performance. ARE provides robust estimation of batch experience means during multi-agent policy optimization. Across mathematical reasoning and embodied intelligence benchmarks, even under noisy rewards, our method consistently outperforms the baseline in both homogeneous and heterogeneous settings. These results indicate stronger robustness to reward noise and more stable training dynamics, effectively preventing optimization failures caused by noisy reward signals.",
-      "authors": [
-        "Zhongyi Li",
-        "Wan Tian",
-        "Jingyu Chen",
-        "Kangyao Huang",
-        "Huiming Zhang",
-        "Hui Yang",
-        "Tao Ren",
-        "Jinyang Jiang",
-        "Yijie Peng",
-        "Yikun Ban",
-        "Fuzhen Zhuang"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI"
-      ],
-      "published": "2026-03-23T04:51:15+00:00",
-      "link": "https://arxiv.org/pdf/2603.21574v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "Robust multi-agent reinforcement learning for collaborative reasoning",
-      "llm_evidence_cn": "用于协作推理的鲁棒多智能体强化学习",
-      "llm_evidence": "用于协作推理的鲁棒多智能体强化学习",
-      "canonical_evidence": "用于协作推理的鲁棒多智能体强化学习",
-      "llm_tldr_en": "Proposes a robust multi-agent reinforcement learning framework to improve collaborative reasoning in LLMs.",
-      "llm_tldr_cn": "提出了一种鲁棒的多智能体强化学习框架，以改进大语言模型的协作推理。",
-      "llm_tldr": "提出了一种鲁棒的多智能体强化学习框架，以改进大语言模型的协作推理。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "Multi-Agent",
-      "matched_requirement_id": "req-3",
-      "selection_source": "carryover_cache",
-      "paper_id": "2603.21574v1",
-      "carry_days": 1
-    },
-    {
-      "id": "2603.24324v1",
-      "title": "Large Language Model Guided Incentive Aware Reward Design for Cooperative Multi-Agent Reinforcement Learning",
-      "abstract": "Designing effective auxiliary rewards for cooperative multi-agent systems remains a precarious task; misaligned incentives risk inducing suboptimal coordination, especially where sparse task feedback fails to provide sufficient grounding. This study introduces an automated reward design framework that leverages large language models to synthesize executable reward programs from environment instrumentation. The procedure constrains candidate programs within a formal validity envelope and evaluates their efficacy by training policies from scratch under a fixed computational budget; selection depends exclusively on the sparse task return. The framework is evaluated across four distinct Overcooked-AI layouts characterized by varied corridor congestion, handoff dependencies, and structural asymmetries. Iterative search generations consistently yield superior task returns and delivery counts, with the most pronounced gains occurring in environments dominated by interaction bottlenecks. Diagnostic analysis of the synthesized shaping components indicates increased interdependence in action selection and improved signal alignment in coordination-intensive tasks. These results demonstrate that the search for objectivegrounded reward programs can mitigate the burden of manual engineering while producing shaping signals compatible with cooperative learning under finite budgets.",
-      "authors": [
-        "Dogan Urgun",
-        "Gokhan Gungor"
-      ],
-      "primary_category": "cs.LG",
-      "categories": [
-        "cs.LG",
-        "cs.AI",
-        "eess.SY"
-      ],
-      "published": "2026-03-25T14:05:59+00:00",
-      "link": "https://arxiv.org/pdf/2603.24324v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "LLM-guided reward design for multi-agent systems",
-      "llm_evidence_cn": "大语言模型引导的多智能体奖励设计",
-      "llm_evidence": "大语言模型引导的多智能体奖励设计",
-      "canonical_evidence": "大语言模型引导的多智能体奖励设计",
-      "llm_tldr_en": "Uses LLMs to automate reward program synthesis for cooperative multi-agent reinforcement learning.",
-      "llm_tldr_cn": "利用大语言模型为协作式多智能体强化学习自动合成奖励程序。",
-      "llm_tldr": "利用大语言模型为协作式多智能体强化学习自动合成奖励程序。",
+      "llm_evidence_en": "persona agents as proxies for human participants",
+      "llm_evidence_cn": "人格化智能体作为人类参与者的代理",
+      "llm_evidence": "人格化智能体作为人类参与者的代理",
+      "canonical_evidence": "人格化智能体作为人类参与者的代理",
+      "llm_tldr_en": "Proposes PICon to evaluate the consistency of LLM-based persona agents through multi-turn interrogation.",
+      "llm_tldr_cn": "提出PICon框架，通过多轮审讯式提问评估大模型人格化智能体的一致性。",
+      "llm_tldr": "提出PICon框架，通过多轮审讯式提问评估大模型人格化智能体的一致性。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -758,7 +236,44 @@
       "matched_query_text": "LLM powered agents for simulating social behavior",
       "matched_requirement_id": "req-6",
       "selection_source": "carryover_cache",
-      "paper_id": "2603.24324v1",
+      "paper_id": "2603.25620v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2603.21489v1",
+      "title": "Effective Strategies for Asynchronous Software Engineering Agents",
+      "abstract": "AI agents have become increasingly capable at isolated software engineering (SWE) tasks such as resolving issues on Github. Yet long-horizon tasks involving multiple interdependent subtasks still pose challenges both with respect to accuracy, and with respect to timely completion. A natural approach to solving these long-horizon tasks in a timely manner is asynchronous multi-agent collaboration, where multiple agents work on different parts of the task at the same time. But effective application of multi-agent systems has proven surprisingly difficult: concurrent edits by multiple agents interfere with each other, dependencies are difficult to synchronize, and combining partial progress into a coherent whole is challenging. On the other hand, human developers have long relied on mature collaboration infrastructure to manage these challenges in large software projects. Inspired by these collaboration primitives, we introduce Centralized Asynchronous Isolated Delegation (CAID), a structured multi-agent coordination paradigm grounded in three core SWE primitives: centralized task delegation, asynchronous execution, and isolated workspaces. CAID constructs dependency-aware task plans through a central manager, executes subtasks concurrently in isolated workspaces, and consolidates progress via structured integration with executable test-based verification. In empirical evaluation, we find that CAID improves accuracy over single-agent baselines by 26.7% absolute on paper reproduction tasks (PaperBench) and 14.3% on Python library development tasks (Commit0). Through systematic analysis, we find that branch-and-merge is a central coordination mechanism for multi-agent collaboration, and that SWE primitives such as git worktree, git commit, and git merge enable it to be realized in a reliable and executable manner.",
+      "authors": [
+        "Jiayi Geng",
+        "Graham Neubig"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-03-23T02:26:35+00:00",
+      "link": "https://arxiv.org/pdf/2603.21489v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Asynchronous multi-agent collaboration for software engineering",
+      "llm_evidence_cn": "软件工程中的异步多智能体协作",
+      "llm_evidence": "软件工程中的异步多智能体协作",
+      "canonical_evidence": "软件工程中的异步多智能体协作",
+      "llm_tldr_en": "This paper explores strategies for effective asynchronous collaboration among multiple agents in complex software tasks.",
+      "llm_tldr_cn": "该研究探讨了在复杂软件工程任务中，多个智能体如何进行有效的异步协作与同步。",
+      "llm_tldr": "该研究探讨了在复杂软件工程任务中，多个智能体如何进行有效的异步协作与同步。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.21489v1",
       "carry_days": 1
     }
   ]
