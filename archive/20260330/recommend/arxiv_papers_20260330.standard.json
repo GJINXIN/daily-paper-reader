@@ -1,0 +1,656 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-03-30T20:01:35.836041+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 9,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 40,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2603.26635v1",
+      "title": "Deception and Communication in Autonomous Multi-Agent Systems: An Experimental Study with Among Us",
+      "abstract": "As large language models are deployed as autonomous agents, their capacity for strategic deception raises core questions for coordination, reliability, and safety in multi-goal, multi-agent systems. We study deception and communication in L2LM agents through the social deduction game Among Us, a cooperative-competitive environment. Across 1,100 games, autonomous agents produced over one million tokens of meeting dialogue. Using speech act theory and interpersonal deception theory, we find that all agents rely mainly on directive language, while impostor agents shift slightly toward representative acts such as explanations and denials. Deception appears primarily as equivocation rather than outright lies, increasing under social pressure but rarely improving win rates. Our contributions are a large-scale analysis of role-conditioned deceptive behavior in LLM agents and empirical evidence that current agents favor low-risk ambiguity that is linguistically subtle yet strategically limited, revealing a fundamental tension between truthfulness and utility in autonomous communication.",
+      "authors": [
+        "Maria Milkowski",
+        "Tim Weninger"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-03-27T17:39:07+00:00",
+      "link": "https://arxiv.org/pdf/2603.26635v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Deception and communication in autonomous multi-agent systems",
+      "llm_evidence_cn": "自主多智能体系统中的欺骗与沟通",
+      "llm_evidence": "自主多智能体系统中的欺骗与沟通",
+      "canonical_evidence": "自主多智能体系统中的欺骗与沟通",
+      "llm_tldr_en": "Studies strategic deception and communication patterns among LLM agents in a social deduction game.",
+      "llm_tldr_cn": "研究了大语言模型智能体在社交博弈游戏中的战略性欺骗和沟通模式。",
+      "llm_tldr": "研究了大语言模型智能体在社交博弈游戏中的战略性欺骗和沟通模式。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.21574v1",
+      "title": "Adaptive Robust Estimator for Multi-Agent Reinforcement Learning",
+      "abstract": "Multi-agent collaboration has emerged as a powerful paradigm for enhancing the reasoning capabilities of large language models, yet it suffers from interaction-level ambiguity that blurs generation, critique, and revision, making credit assignment across agents difficult. Moreover, policy optimization in this setting is vulnerable to heavy-tailed and noisy rewards, which can bias advantage estimation and trigger unstable or even divergent training. To address both issues, we propose a robust multi-agent reinforcement learning framework for collaborative reasoning, consisting of two components: Dual-Agent Answer-Critique-Rewrite (DACR) and an Adaptive Robust Estimator (ARE). DACR decomposes reasoning into a structured three-stage pipeline: answer, critique, and rewrite, while enabling explicit attribution of each agent's marginal contribution to its partner's performance. ARE provides robust estimation of batch experience means during multi-agent policy optimization. Across mathematical reasoning and embodied intelligence benchmarks, even under noisy rewards, our method consistently outperforms the baseline in both homogeneous and heterogeneous settings. These results indicate stronger robustness to reward noise and more stable training dynamics, effectively preventing optimization failures caused by noisy reward signals.",
+      "authors": [
+        "Zhongyi Li",
+        "Wan Tian",
+        "Jingyu Chen",
+        "Kangyao Huang",
+        "Huiming Zhang",
+        "Hui Yang",
+        "Tao Ren",
+        "Jinyang Jiang",
+        "Yijie Peng",
+        "Yikun Ban",
+        "Fuzhen Zhuang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-23T04:51:15+00:00",
+      "link": "https://arxiv.org/pdf/2603.21574v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-agent collaboration for enhancing LLM reasoning capabilities",
+      "llm_evidence_cn": "增强大语言模型推理能力的多智能体协作",
+      "llm_evidence": "增强大语言模型推理能力的多智能体协作",
+      "canonical_evidence": "增强大语言模型推理能力的多智能体协作",
+      "llm_tldr_en": "Proposes a robust MARL framework to improve collaborative reasoning and credit assignment in LLM agents.",
+      "llm_tldr_cn": "提出一种鲁棒的多智能体强化学习框架，用于优化大语言模型智能体的协作推理。",
+      "llm_tldr": "提出一种鲁棒的多智能体强化学习框架，用于优化大语言模型智能体的协作推理。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.24402v1",
+      "title": "AI-Supervisor: Autonomous AI Research Supervision via a Persistent Research World Model",
+      "abstract": "Existing automated research systems operate as stateless, linear pipelines, generating outputs without maintaining a persistent understanding of the research landscape. They process papers sequentially, propose ideas without structured gap analysis, and lack mechanisms for agents to verify or refine each other's findings. We present AutoProf (Autonomous Professor), a multi-agent orchestration framework where specialized agents provide end-to-end AI research supervision driven by human interests, from literature review through gap discovery, method development, evaluation, and paper writing, via autonomous exploration and self-correcting updates. Unlike sequential pipelines, AutoProf maintains a continuously evolving Research World Model implemented as a Knowledge Graph, capturing methods, benchmarks, limitations, and unexplored gaps as shared memory across agents. The framework introduces three contributions: first, structured gap discovery that decomposes methods into modules, evaluates them across benchmarks, and identifies module-level gaps; second, self-correcting discovery loops that analyze why modules succeed or fail, detect benchmark biases, and assess evaluation adequacy; third, self-improving development loops using cross-domain mechanism search to iteratively address failing components. All agents operate under a consensus mechanism where findings are validated before being committed to the shared model. The framework is model-agnostic, supports mainstream large language models, and scales elastically with token budget from lightweight exploration to full-scale investigation.",
+      "authors": [
+        "Yunbo Long"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-25T15:16:51+00:00",
+      "link": "https://arxiv.org/pdf/2603.24402v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent orchestration for autonomous research and literature review",
+      "llm_evidence_cn": "用于自主研究和文献综述的多智能体编排",
+      "llm_evidence": "用于自主研究和文献综述的多智能体编排",
+      "canonical_evidence": "用于自主研究和文献综述的多智能体编排",
+      "llm_tldr_en": "AutoProf is a multi-agent framework for autonomous AI research supervision and literature exploration.",
+      "llm_tldr_cn": "AutoProf是一个用于自主AI研究监督和文献探索的多智能体框架。",
+      "llm_tldr": "AutoProf是一个用于自主AI研究监督和文献探索的多智能体框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.23271v1",
+      "title": "A Multimodal Framework for Human-Multi-Agent Interaction",
+      "abstract": "Human-robot interaction is increasingly moving toward multi-robot, socially grounded environments. Existing systems struggle to integrate multimodal perception, embodied expression, and coordinated decision-making in a unified framework. This limits natural and scalable interaction in shared physical spaces. We address this gap by introducing a multimodal framework for human-multi-agent interaction in which each robot operates as an autonomous cognitive agent with integrated multimodal perception and Large Language Model (LLM)-driven planning grounded in embodiment. At the team level, a centralized coordination mechanism regulates turn-taking and agent participation to prevent overlapping speech and conflicting actions. Implemented on two humanoid robots, our framework enables coherent multi-agent interaction through interaction policies that combine speech, gesture, gaze, and locomotion. Representative interaction runs demonstrate coordinated multimodal reasoning across agents and grounded embodied responses. Future work will focus on larger-scale user studies and deeper exploration of socially grounded multi-agent interaction dynamics.",
+      "authors": [
+        "Shaid Hasan",
+        "Breenice Lee",
+        "Sujan Sarker",
+        "Tariq Iqbal"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-03-24T14:35:40+00:00",
+      "link": "https://arxiv.org/pdf/2603.23271v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-driven planning for agents in socially grounded environments",
+      "llm_evidence_cn": "社会化场景中智能体的LLM驱动规划",
+      "llm_evidence": "社会化场景中智能体的LLM驱动规划",
+      "canonical_evidence": "社会化场景中智能体的LLM驱动规划",
+      "llm_tldr_en": "A multimodal framework for human-multi-agent interaction using LLMs for planning in social spaces.",
+      "llm_tldr_cn": "一种用于人类与多智能体交互的多模态框架，利用LLM在社交空间中进行规划。",
+      "llm_tldr": "一种用于人类与多智能体交互的多模态框架，利用LLM在社交空间中进行规划。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.19568v1",
+      "title": "AI as Relational Translator: Rethinking Belonging and Mutual Legibility in Cross-Cultural Contexts",
+      "abstract": "Against rising global loneliness, AI companions promise connection, yet accumulating evidence suggests that, for some users and contexts, intensive companion-style use can correlate with increased loneliness and reduced offline socialisation. This position paper challenges the dominant \"AI as companion\" paradigm by proposing a shift: from AI that simulates relationships with humans to AI that supports relationships between humans. We introduce Relational AI Translation, positioning AI as cultural-relational infrastructure that scaffolds human connection across cultural, generational, and geographical divides. Using first-generation East Asian migrants as a theoretically productive critical case, we outline a multi-agent architecture instantiating three translation operations: emotion-intent decoding, contextual reframing, and relational scaffolding. We articulate design provocations around measurement, safety architecture, and the tension between technological intervention and structural justice, and explicitly frame success as graduation toward renewed human-to-human support rather than sustained engagement with the system.",
+      "authors": [
+        "Yao Xiao",
+        "Rafael A. Calvo"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-03-20T02:20:21+00:00",
+      "link": "https://arxiv.org/pdf/2603.19568v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent architecture for simulating and supporting human relationships",
+      "llm_evidence_cn": "用于模拟和支持人类关系的多智能体架构",
+      "llm_evidence": "用于模拟和支持人类关系的多智能体架构",
+      "canonical_evidence": "用于模拟和支持人类关系的多智能体架构",
+      "llm_tldr_en": "Proposes a multi-agent framework to scaffold human connection and simulate cross-cultural social interactions.",
+      "llm_tldr_cn": "提出了一个多智能体框架，用于支撑人类联系并模拟跨文化社会互动。",
+      "llm_tldr": "提出了一个多智能体框架，用于支撑人类联系并模拟跨文化社会互动。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.19568v1"
+    },
+    {
+      "id": "2603.20279v1",
+      "title": "Learning Communication Between Heterogeneous Agents in Multi-Agent Reinforcement Learning for Autonomous Cyber Defence",
+      "abstract": "Reinforcement learning techniques are being explored as solutions to the threat of cyber attacks on enterprise networks. Recent research in the field of AI in cyber security has investigated the ability of homogeneous multi-agent reinforcement learning agents, capable of inter-agent communication, to respond to cyberattacks. This paper advances the study of learned communication in multi-agent systems by examining heterogeneous agent capabilities within a simulated network environment. To this end, we leverage CommFormer, a publicly available state-of-the-art communication algorithm, to train and evaluate agents within the Cyber Operations Research Gym (CybORG). Our results show that CommFormer agents with heterogeneous capabilities can outperform other algorithms deployed in the CybORG environment, by converging to an optimal policy up to four times faster while improving standard error by up 38%. The agents implemented in this project provide an additional avenue for exploration in the field of AI for cyber security, enabling further research involving realistic networks.",
+      "authors": [
+        "Alex Popa",
+        "Adrian Taylor",
+        "Ranwa Al Mallah"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-03-17T21:38:39+00:00",
+      "link": "https://arxiv.org/pdf/2603.20279v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Communication between heterogeneous agents in multi-agent reinforcement learning",
+      "llm_evidence_cn": "多智能体强化学习中异构智能体间的通信",
+      "llm_evidence": "多智能体强化学习中异构智能体间的通信",
+      "canonical_evidence": "多智能体强化学习中异构智能体间的通信",
+      "llm_tldr_en": "Explores learned communication among heterogeneous agents for autonomous cyber defense in simulated networks.",
+      "llm_tldr_cn": "探索了模拟网络环境下异构智能体之间的学习通信，用于自主网络防御。",
+      "llm_tldr": "探索了模拟网络环境下异构智能体之间的学习通信，用于自主网络防御。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.20279v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2603.23125v1",
+      "title": "From Questions to Trust Reports: A LLM-IR Framework for the TREC 2025 DRAGUN Track",
+      "abstract": "The DRAGUN Track at TREC 2025 targets the growing need for effective support tools that help users evaluate the trustworthiness of online news. We describe the UR_Trecking system submitted for both Task 1 (critical question generation) and Task 2 (retrieval-augmented trustworthiness reporting). Our approach combines LLM-based question generation with semantic filtering, diversity enforcement using clustering, and several query expansion strategies (including reasoning-based Chain-of-Thought expansion) to retrieve relevant evidence from the MS MARCO V2.1 segmented corpus. Retrieved documents are re-ranked using a monoT5 model and filtered using an LLM relevance judge together with a domain-level trustworthiness dataset. For Task 2, selected evidence is synthesized by an LLM into concise trustworthiness reports with citations. Results from the official evaluation indicate that Chain-of-Thought query expansion and re-ranking substantially improve both relevance and domain trust compared to baseline retrieval, while question-generation performance shows moderate quality with room for improvement. We conclude by outlining key challenges encountered and suggesting directions for enhancing robustness and trustworthiness assessment in future iterations of the system.",
+      "authors": [
+        "Ignacy Alwasiak",
+        "Kene Nnolim",
+        "Jaclyn Thi",
+        "Samy Ateia",
+        "Markus Bink",
+        "Gregor Donabauer",
+        "David Elsweiler",
+        "Udo Kruschwitz"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-03-24T12:22:27+00:00",
+      "link": "https://arxiv.org/pdf/2603.23125v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM framework for evaluating online news trustworthiness",
+      "llm_evidence_cn": "评估在线新闻可信度的LLM框架",
+      "llm_evidence": "评估在线新闻可信度的LLM框架",
+      "canonical_evidence": "评估在线新闻可信度的LLM框架",
+      "llm_tldr_en": "Describes a system for generating trust reports to help users evaluate the veracity of online news.",
+      "llm_tldr_cn": "描述了一个生成信任报告的系统，帮助用户评估在线新闻的真实性。",
+      "llm_tldr": "描述了一个生成信任报告的系统，帮助用户评估在线新闻的真实性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.23125v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.20976v1",
+      "title": "Detection of adversarial intent in Human-AI teams using LLMs",
+      "abstract": "Large language models (LLMs) are increasingly deployed in human-AI teams as support agents for complex tasks such as information retrieval, programming, and decision-making assistance. While these agents' autonomy and contextual knowledge enables them to be useful, it also exposes them to a broad range of attacks, including data poisoning, prompt injection, and even prompt engineering. Through these attack vectors, malicious actors can manipulate an LLM agent to provide harmful information, potentially manipulating human agents to make harmful decisions. While prior work has focused on LLMs as attack targets or adversarial actors, this paper studies their potential role as defensive supervisors within mixed human-AI teams. Using a dataset consisting of multi-party conversations and decisions for a real human-AI team over a 25 round horizon, we formulate the problem of malicious behavior detection from interaction traces. We find that LLMs are capable of identifying malicious behavior in real-time, and without task-specific information, indicating the potential for task-agnostic defense. Moreover, we find that the malicious behavior of interest is not easily identified using simple heuristics, further suggesting the introduction of LLM defenders could render human teams more robust to certain classes of attack.",
+      "authors": [
+        "Abed K. Musaffar",
+        "Ambuj Singh",
+        "Francesco Bullo"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.HC"
+      ],
+      "published": "2026-03-21T23:27:51+00:00",
+      "link": "https://arxiv.org/pdf/2603.20976v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM agents in human-AI teams and social discourse defense",
+      "llm_evidence_cn": "人机团队中的LLM智能体与社会话语防御",
+      "llm_evidence": "人机团队中的LLM智能体与社会话语防御",
+      "canonical_evidence": "人机团队中的LLM智能体与社会话语防御",
+      "llm_tldr_en": "Explores LLMs as defensive supervisors to detect adversarial intent in mixed human-AI social teams.",
+      "llm_tldr_cn": "探讨LLM作为防御性监督者，在人机混合团队中检测对抗性意图。",
+      "llm_tldr": "探讨LLM作为防御性监督者，在人机混合团队中检测对抗性意图。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.20933v1",
+      "title": "AC4A: Access Control for Agents",
+      "abstract": "Large Language Model (LLM) agents combine the chat interaction capabilities of LLMs with the power to interact with external tools and APIs. This enables them to perform complex tasks and act autonomously to achieve user goals. However, current agent systems operate on an all-or-nothing basis: an agent either has full access to an API's capabilities and a web page's content, or it has no access at all. This coarse-grained approach forces users to trust agents with more capabilities than they actually need for a given task.   In this paper, we introduce AC4A, an access control framework for agents. As agents become more capable and autonomous, users need a way to limit what APIs or portions of web pages these agents can access, eliminating the need to trust them with everything an API or web page allows. Our goal with AC4A is to provide a framework for defining permissions that lets agents access only the resources they are authorized to access. AC4A works across both API-based and browser-based agents. It does not prescribe what permissions should be, but offers a flexible way to define and enforce them, making it practical for real-world systems.   AC4A works by creating permissions granting access to resources, drawing inspiration from established access control frameworks like the one for the Unix file system. Applications define their resources as hierarchies and provide a way to compute the necessary permissions at runtime needed for successful resource access. We demonstrate the usefulness of AC4A in enforcing permissions over real-world APIs and web pages through case studies. The source code of AC4A is available at https://github.com/reSHARMA/AC4A",
+      "authors": [
+        "Reshabh K Sharma",
+        "Dan Grossman"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.PL"
+      ],
+      "published": "2026-03-21T20:23:06+00:00",
+      "link": "https://arxiv.org/pdf/2603.20933v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Access control framework for autonomous LLM agents",
+      "llm_evidence_cn": "自主LLM智能体的访问控制框架",
+      "llm_evidence": "自主LLM智能体的访问控制框架",
+      "canonical_evidence": "自主LLM智能体的访问控制框架",
+      "llm_tldr_en": "Introduces AC4A to provide fine-grained access control for LLM agents interacting with APIs.",
+      "llm_tldr_cn": "为与API交互的LLM智能体提供细粒度的访问控制框架，提升系统安全性。",
+      "llm_tldr": "为与API交互的LLM智能体提供细粒度的访问控制框架，提升系统安全性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.24324v1",
+      "title": "Large Language Model Guided Incentive Aware Reward Design for Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Designing effective auxiliary rewards for cooperative multi-agent systems remains a precarious task; misaligned incentives risk inducing suboptimal coordination, especially where sparse task feedback fails to provide sufficient grounding. This study introduces an automated reward design framework that leverages large language models to synthesize executable reward programs from environment instrumentation. The procedure constrains candidate programs within a formal validity envelope and evaluates their efficacy by training policies from scratch under a fixed computational budget; selection depends exclusively on the sparse task return. The framework is evaluated across four distinct Overcooked-AI layouts characterized by varied corridor congestion, handoff dependencies, and structural asymmetries. Iterative search generations consistently yield superior task returns and delivery counts, with the most pronounced gains occurring in environments dominated by interaction bottlenecks. Diagnostic analysis of the synthesized shaping components indicates increased interdependence in action selection and improved signal alignment in coordination-intensive tasks. These results demonstrate that the search for objectivegrounded reward programs can mitigate the burden of manual engineering while producing shaping signals compatible with cooperative learning under finite budgets.",
+      "authors": [
+        "Dogan Urgun",
+        "Gokhan Gungor"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-03-25T14:05:59+00:00",
+      "link": "https://arxiv.org/pdf/2603.24324v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM guided reward design for cooperative multi-agent reinforcement learning",
+      "llm_evidence_cn": "大语言模型引导的协作式多智能体强化学习奖励设计",
+      "llm_evidence": "大语言模型引导的协作式多智能体强化学习奖励设计",
+      "canonical_evidence": "大语言模型引导的协作式多智能体强化学习奖励设计",
+      "llm_tldr_en": "Uses LLMs to synthesize reward programs for improving coordination in multi-agent environments.",
+      "llm_tldr_cn": "利用大语言模型合成奖励程序，以优化多智能体系统中的协作效率和激励机制。",
+      "llm_tldr": "利用大语言模型合成奖励程序，以优化多智能体系统中的协作效率和激励机制。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.21368v1",
+      "title": "Conspiracy Frame: a Semiotically-Driven Approach for Conspiracy Theories Detection",
+      "abstract": "Conspiracy theories are anti-authoritarian narratives that lead to social conflict, impacting how people perceive political information. To help in understanding this issue, we introduce the Conspiracy Frame: a fine-grained semantic representation of conspiratorial narratives derived from frame-semantics and semiotics, which spawned the Conspiracy Frames (Con.Fra.) dataset: a corpus of Telegram messages annotated at span-level. The Conspiracy Frame and Con.Fra. dataset contribute to the implementation of a more generalizable understanding and recognition of conspiracy theories. We observe the ability of LLMs to recognize this phenomenon in-domain and out-of-domain, investigating the role that frames may have in supporting this task. Results show that, while the injection of frames in an in-context approach does not lead to clear increase of performance, it has potential; the mapping of annotated spans with FrameNet shows abstract semantic patterns (e.g., `Kinship', `Ingest\\_substance') that potentially pave the way for a more semantically- and semiotically-aware detection of conspiratorial narratives.",
+      "authors": [
+        "Heidi Campana Piva",
+        "Shaina Ashraf",
+        "Maziar Kianimoghadam Jouneghani",
+        "Arianna Longo",
+        "Rossana Damiano",
+        "Lucie Flek",
+        "Marco Antonio Stranisci"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-03-22T18:59:59+00:00",
+      "link": "https://arxiv.org/pdf/2603.21368v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Detection of conspiracy theories and social conflict narratives",
+      "llm_evidence_cn": "阴谋论检测与社会冲突叙事分析",
+      "llm_evidence": "阴谋论检测与社会冲突叙事分析",
+      "canonical_evidence": "阴谋论检测与社会冲突叙事分析",
+      "llm_tldr_en": "Introduces a semiotic frame for detecting conspiracy theories in social media messages using LLMs.",
+      "llm_tldr_cn": "引入符号学框架，利用大语言模型检测社交媒体中的阴谋论叙事。",
+      "llm_tldr": "引入符号学框架，利用大语言模型检测社交媒体中的阴谋论叙事。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.21723v2",
+      "title": "Can a Robot Walk the Robotic Dog: Triple-Zero Collaborative Navigation for Heterogeneous Multi-Agent Systems",
+      "abstract": "We present Triple Zero Path Planning (TZPP), a collaborative framework for heterogeneous multi-robot systems that requires zero training, zero prior knowledge, and zero simulation. TZPP employs a coordinator--explorer architecture: a humanoid robot handles task coordination, while a quadruped robot explores and identifies feasible paths using guidance from a multimodal large language model. We implement TZPP on Unitree G1 and Go2 robots and evaluate it across diverse indoor and outdoor environments, including obstacle-rich and landmark-sparse settings. Experiments show that TZPP achieves robust, human-comparable efficiency and strong adaptability to unseen scenarios. By eliminating reliance on training and simulation, TZPP offers a practical path toward real-world deployment of heterogeneous robot cooperation. Our code and video are provided at: https://github.com/triple-zeropp/Triple-zero-robot-agent",
+      "authors": [
+        "Yaxuan Wang",
+        "Yifan Xiang",
+        "Ke Li",
+        "Xun Zhang",
+        "BoWen Ye",
+        "Zhuochen Fan",
+        "Fei Wei",
+        "Tong Yang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA"
+      ],
+      "published": "2026-03-23T09:12:45+00:00",
+      "link": "https://arxiv.org/pdf/2603.21723v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "collaborative navigation for heterogeneous multi-agent systems",
+      "llm_evidence_cn": "异构多智能体系统的协同导航",
+      "llm_evidence": "异构多智能体系统的协同导航",
+      "canonical_evidence": "异构多智能体系统的协同导航",
+      "llm_tldr_en": "A zero-training collaborative framework for heterogeneous robots using multimodal LLMs for navigation.",
+      "llm_tldr_cn": "一种利用多模态大模型实现异构机器人协同导航的零训练框架。",
+      "llm_tldr": "一种利用多模态大模型实现异构机器人协同导航的零训练框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.25620v1",
+      "title": "PICon: A Multi-Turn Interrogation Framework for Evaluating Persona Agent Consistency",
+      "abstract": "Large language model (LLM)-based persona agents are rapidly being adopted as scalable proxies for human participants across diverse domains. Yet there is no systematic method for verifying whether a persona agent's responses remain free of contradictions and factual inaccuracies throughout an interaction. A principle from interrogation methodology offers a lens: no matter how elaborate a fabricated identity, systematic interrogation will expose its contradictions. We apply this principle to propose PICon, an evaluation framework that probes persona agents through logically chained multi-turn questioning. PICon evaluates consistency along three core dimensions: internal consistency (freedom from self-contradiction), external consistency (alignment with real-world facts), and retest consistency (stability under repetition). Evaluating seven groups of persona agents alongside 63 real human participants, we find that even systems previously reported as highly consistent fail to meet the human baseline across all three dimensions, revealing contradictions and evasive responses under chained questioning. This work provides both a conceptual foundation and a practical methodology for evaluating persona agents before trusting them as substitutes for human participants. We provide the source code and an interactive demo at: https://kaist-edlab.github.io/picon/",
+      "authors": [
+        "Minseo Kim",
+        "Sujeong Im",
+        "Junseong Choi",
+        "Junhee Lee",
+        "Chaeeun Shim",
+        "Edward Choi"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-03-26T16:34:34+00:00",
+      "link": "https://arxiv.org/pdf/2603.25620v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "persona agents as proxies for human participants",
+      "llm_evidence_cn": "人格化智能体作为人类参与者的代理",
+      "llm_evidence": "人格化智能体作为人类参与者的代理",
+      "canonical_evidence": "人格化智能体作为人类参与者的代理",
+      "llm_tldr_en": "Proposes PICon to evaluate the consistency of LLM-based persona agents through multi-turn interrogation.",
+      "llm_tldr_cn": "提出PICon框架，通过多轮审讯式提问评估大模型人格化智能体的一致性。",
+      "llm_tldr": "提出PICon框架，通过多轮审讯式提问评估大模型人格化智能体的一致性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2603.25620v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.21489v1",
+      "title": "Effective Strategies for Asynchronous Software Engineering Agents",
+      "abstract": "AI agents have become increasingly capable at isolated software engineering (SWE) tasks such as resolving issues on Github. Yet long-horizon tasks involving multiple interdependent subtasks still pose challenges both with respect to accuracy, and with respect to timely completion. A natural approach to solving these long-horizon tasks in a timely manner is asynchronous multi-agent collaboration, where multiple agents work on different parts of the task at the same time. But effective application of multi-agent systems has proven surprisingly difficult: concurrent edits by multiple agents interfere with each other, dependencies are difficult to synchronize, and combining partial progress into a coherent whole is challenging. On the other hand, human developers have long relied on mature collaboration infrastructure to manage these challenges in large software projects. Inspired by these collaboration primitives, we introduce Centralized Asynchronous Isolated Delegation (CAID), a structured multi-agent coordination paradigm grounded in three core SWE primitives: centralized task delegation, asynchronous execution, and isolated workspaces. CAID constructs dependency-aware task plans through a central manager, executes subtasks concurrently in isolated workspaces, and consolidates progress via structured integration with executable test-based verification. In empirical evaluation, we find that CAID improves accuracy over single-agent baselines by 26.7% absolute on paper reproduction tasks (PaperBench) and 14.3% on Python library development tasks (Commit0). Through systematic analysis, we find that branch-and-merge is a central coordination mechanism for multi-agent collaboration, and that SWE primitives such as git worktree, git commit, and git merge enable it to be realized in a reliable and executable manner.",
+      "authors": [
+        "Jiayi Geng",
+        "Graham Neubig"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-03-23T02:26:35+00:00",
+      "link": "https://arxiv.org/pdf/2603.21489v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Asynchronous multi-agent collaboration for complex tasks",
+      "llm_evidence_cn": "复杂任务中的异步多智能体协作",
+      "llm_evidence": "复杂任务中的异步多智能体协作",
+      "canonical_evidence": "复杂任务中的异步多智能体协作",
+      "llm_tldr_en": "Explores strategies for asynchronous multi-agent collaboration in software engineering to handle interdependencies.",
+      "llm_tldr_cn": "探索软件工程中异步多智能体协作的策略，以处理任务间的相互依赖。",
+      "llm_tldr": "探索软件工程中异步多智能体协作的策略，以处理任务间的相互依赖。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.21726v1",
+      "title": "LSAI: A Large Small AI Model Codesign Framework for Agentic Robot Scenarios",
+      "abstract": "The development of Artificial Intelligence (AI) has enabled agentic robots an appealing paradigm for various applications, such as research and rescue in complex environment. In this context, the next wireless communication technology facilitates robot cooperation for efficient environment sensing and exploration. However, traditional AI solutions cannot always provide reasonable resource utilization decisions, which makes it challenging to achieve both accurate and low-latency research and rescue. To address this issue, we propose a, LSAI, a large small AI model codesign framework to achieve highly accurate and real-time robot cooperation with deep interaction between large AI model and small AI model. We first propose an attention-based model aggregation for LAI construction. It can assist agentic robots in accurately sensing physical environments. Next, we design an adaptive model splitting and update algorithm to enable the robots to perform accurate path planning for high-efficiency environment sensing with low energy consumption. Finally, we demonstrate the effectiveness of our proposed LSAI framework. The simulation results indicate that our solution achieves sensing accuracy of up to 20.4% while reducing sensing cooperation latency by an average of 17.9% compared to traditional AI solutions.",
+      "authors": [
+        "Longyu Zhou",
+        "Supeng Leng",
+        "Tianhao Liang",
+        "Jianping Yao"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-03-23T09:14:39+00:00",
+      "link": "https://arxiv.org/pdf/2603.21726v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent robot cooperation framework",
+      "llm_evidence_cn": "多智能体机器人协作框架",
+      "llm_evidence": "多智能体机器人协作框架",
+      "canonical_evidence": "多智能体机器人协作框架",
+      "llm_tldr_en": "Proposes a large-small model codesign for accurate and real-time robot cooperation in rescue scenarios.",
+      "llm_tldr_cn": "提出了一种大小模型协同设计框架，用于救援场景下准确、实时的机器人协作。",
+      "llm_tldr": "提出了一种大小模型协同设计框架，用于救援场景下准确、实时的机器人协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.22823v1",
+      "title": "Empirical Comparison of Agent Communication Protocols for Task Orchestration",
+      "abstract": "Context. Nowadays, artificial intelligence agent systems are transforming from single-tool interactions to complex multi-agent orchestrations. As a result, two competing communication protocols have emerged: a tool integration protocol that standardizes how agents invoke external tools, and an inter-agent delegation protocol that enables autonomous agents to discover and delegate tasks to one another. Despite widespread industry adoption by dozens of enterprise partners, no empirical comparison of these protocols exists in the literature. Objective. The goal of this work is to develop the first systematic benchmark comparing tool-integration-only, multi-agent delegation, and hybrid architectures across standardized queries at three complexity levels, and to quantify the trade-offs in response time, context window consumption, monetary cost, error recovery, and implementation complexity.",
+      "authors": [
+        "Ivan Dobrovolskyi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-24T05:50:58+00:00",
+      "link": "https://arxiv.org/pdf/2603.22823v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Comparison of communication protocols for multi-agent orchestrations",
+      "llm_evidence_cn": "多智能体编排通信协议的实证比较",
+      "llm_evidence": "多智能体编排通信协议的实证比较",
+      "canonical_evidence": "多智能体编排通信协议的实证比较",
+      "llm_tldr_en": "Benchmarks tool integration and delegation protocols for complex multi-agent task orchestration.",
+      "llm_tldr_cn": "对多智能体任务编排中的工具集成和委派协议进行了首次系统性的基准测试比较。",
+      "llm_tldr": "对多智能体任务编排中的工具集成和委派协议进行了首次系统性的基准测试比较。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.22881v1",
+      "title": "Cooperative Bandit Learning in Directed Networks with Arm-Access Constraints",
+      "abstract": "Sequential decision-making under uncertainty often involves multiple agents learning which actions (arms) yield the highest rewards through repeated interaction with a stochastic environment. This setting is commonly modeled by cooperative multi-agent multi-armed bandit problems, where agents explore and share information without centralized coordination. In many realistic systems, agents have heterogeneous capabilities that limit their access to subsets of arms and communicate over asymmetric networks represented by directed graphs. In this work, we study multi-agent multi-armed bandit problems with partial arm access, where agents explore and exploit only the arms available to them while exchanging information with neighbors. We propose a distributed consensus-based upper confidence bound (UCB) algorithm that accounts for both the arm accessibility structure and network asymmetry. Our approach employs a mass-preserving information mixing mechanism, ensuring that reward estimates remain unbiased across the network despite accessibility constraints and asymmetric information flow. Under standard stochastic assumptions, we establish logarithmic regret for every agent, with explicit dependence on network mixing properties and arm accessibility constraints. These results quantify how heterogeneous arm access and directed communication shape cooperative learning performance.",
+      "authors": [
+        "Evagoras Makridis",
+        "Themistoklis Charalambous"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "math.OC"
+      ],
+      "published": "2026-03-24T07:27:05+00:00",
+      "link": "https://arxiv.org/pdf/2603.22881v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "cooperative multi-agent bandit learning",
+      "llm_evidence_cn": "协作式多智能体老虎机学习",
+      "llm_evidence": "协作式多智能体老虎机学习",
+      "canonical_evidence": "协作式多智能体老虎机学习",
+      "llm_tldr_en": "Studies multi-agent bandit problems in directed networks where agents have limited access to actions.",
+      "llm_tldr_cn": "研究有向网络中具有动作访问限制的协作式多智能体多臂老虎机问题。",
+      "llm_tldr": "研究有向网络中具有动作访问限制的协作式多智能体多臂老虎机问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

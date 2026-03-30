@@ -6,73 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-03-29
-- 运行时间：2026-03-29 20:03:01 UTC
+- 最新运行日期：2026-03-30
+- 运行时间：2026-03-30 20:03:46 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 17 篇前沿论文，深度解析了社交媒体谣言检测与多智能体协同记忆等核心技术。
-重点关注通过预训练传播树 Transformer 解决谣言检测中的过度平滑问题，以及利用对比轨迹蒸馏实现跨智能体的高效记忆协作。
-建议关注多智能体系统在博弈论与公平评估中的最新应用，以提升复杂任务下的决策鲁棒性。
-- 详情：[/202603/29/README](/202603/29/README)
+深度复盘 17 篇 AI 前沿进展，重点聚焦多智能体系统中的欺骗博弈与跨文化翻译。
+核心研究揭示了智能体在《Among Us》中的欺骗与沟通机制，并探讨了 AI 作为“关系翻译者”在跨文化语境下的潜力。
+建议关注多智能体协作中的激励机制设计，以及如何通过多轮审讯框架评估 AI 人格的一致性。
+- 详情：[/202603/30/README](/202603/30/README)
 
 ### 精读区论文标签
-1. [Avoiding Over-smoothing in Social Media Rumor Detection with Pre-trained Propagation Tree Transformer](/202603/29/2603.22854v1-avoiding-over-smoothing-in-social-media-rumor-detection-with-pre-trained-propagation-tree-transformer)  
+1. [Deception and Communication in Autonomous Multi-Agent Systems: An Experimental Study with Among Us](/202603/30/2603.26635v1-deception-and-communication-in-autonomous-multi-agent-systems-an-experimental-study-with-among-us)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：利用传播树进行社交媒体谣言检测
-2. [MemCollab: Cross-Agent Memory Collaboration via Contrastive Trajectory Distillation](/202603/29/2603.23234v1-memcollab-cross-agent-memory-collaboration-via-contrastive-trajectory-distillation)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于大语言模型的智能体及跨智能体记忆协作
-3. [Biased Error Attribution in Multi-Agent Human-AI Systems Under Delayed Feedback](/202603/29/2603.23419v1-biased-error-attribution-in-multi-agent-human-ai-systems-under-delayed-feedback)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体人机系统中的社会现象与偏见
-4. [Language-Grounded Multi-Agent Planning for Personalized and Fair Participatory Urban Sensing](/202603/29/2603.24014v1-language-grounded-multi-agent-planning-for-personalized-and-fair-participatory-urban-sensing)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于大模型的多智能体城市感知框架，包含个体画像
-5. [Split-Merge Dynamics for Shapley-Fair Coalition Formation](/202603/29/2603.17153v1-split-merge-dynamics-for-shapley-fair-coalition-formation)  
+   evidence：自主多智能体系统中的欺骗与沟通
+2. [AI as Relational Translator: Rethinking Belonging and Mutual Legibility in Cross-Cultural Contexts](/202603/30/2603.19568v1-ai-as-relational-translator-rethinking-belonging-and-mutual-legibility-in-cross-cultural-contexts)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：管理智能体自组织的动态过程
-6. [DiscoUQ: Structured Disagreement Analysis for Uncertainty Quantification in LLM Agent Ensembles](/202603/29/2603.20975v1-discouq-structured-disagreement-analysis-for-uncertainty-quantification-in-llm-agent-ensembles)  
+   evidence：用于模拟和支持人类关系的多智能体架构
+3. [Learning Communication Between Heterogeneous Agents in Multi-Agent Reinforcement Learning for Autonomous Cyber Defence](/202603/30/2603.20279v1-learning-communication-between-heterogeneous-agents-in-multi-agent-reinforcement-learning-for-autonomous-cyber-defence)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体大模型系统与智能体间分歧分析
+   evidence：多智能体强化学习中异构智能体间的通信
+4. [Adaptive Robust Estimator for Multi-Agent Reinforcement Learning](/202603/30/2603.21574v1-adaptive-robust-estimator-for-multi-agent-reinforcement-learning)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：增强大语言模型推理能力的多智能体协作
+5. [A Multimodal Framework for Human-Multi-Agent Interaction](/202603/30/2603.23271v1-a-multimodal-framework-for-human-multi-agent-interaction)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：社会化场景中智能体的LLM驱动规划
+6. [AI-Supervisor: Autonomous AI Research Supervision via a Persistent Research World Model](/202603/30/2603.24402v1-ai-supervisor-autonomous-ai-research-supervision-via-a-persistent-research-world-model)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于自主研究和文献综述的多智能体编排
 
 ### 速读区论文标签
-1. [CoMAI: A Collaborative Multi-Agent Framework for Robust and Equitable Interview Evaluation](/202603/29/2603.16215v1-comai-a-collaborative-multi-agent-framework-for-robust-and-equitable-interview-evaluation)  
+1. [From Questions to Trust Reports: A LLM-IR Framework for the TREC 2025 DRAGUN Track](/202603/30/2603.23125v1-from-questions-to-trust-reports-a-llm-ir-framework-for-the-trec-2025-dragun-track)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于评估和社会话语的协作多智能体框架
-2. [Distributed Equilibrium-Seeking in Target Coverage Games via Self-Configurable Networks under Limited Communication](/202603/29/2603.17335v1-distributed-equilibrium-seeking-in-target-coverage-games-via-self-configurable-networks-under-limited-communication)  
+   evidence：评估在线新闻可信度的LLM框架
+2. [Large Language Model Guided Incentive Aware Reward Design for Cooperative Multi-Agent Reinforcement Learning](/202603/30/2603.24324v1-large-language-model-guided-incentive-aware-reward-design-for-cooperative-multi-agent-reinforcement-learning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体感知团队中的分布式均衡寻求
-3. [Reasonably reasoning AI agents can avoid game-theoretic failures in zero-shot, provably](/202603/29/2603.18563v1-reasonably-reasoning-ai-agents-can-avoid-game-theoretic-failures-in-zero-shot-provably)  
+   evidence：大语言模型引导的协作式多智能体强化学习奖励设计
+3. [PICon: A Multi-Turn Interrogation Framework for Evaluating Persona Agent Consistency](/202603/30/2603.25620v1-picon-a-multi-turn-interrogation-framework-for-evaluating-persona-agent-consistency)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：交互式经济环境中的推理AI智能体
-4. [Memento-Skills: Let Agents Design Agents](/202603/29/2603.18743v1-memento-skills-let-agents-design-agents)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：自主设计并改进任务特定智能体的 LLM 智能体系统
-5. [SkillProbe: Security Auditing for Emerging Agent Skill Marketplaces via Multi-Agent Collaboration](/202603/29/2603.21019v1-skillprobe-security-auditing-for-emerging-agent-skill-marketplaces-via-multi-agent-collaboration)  
+   evidence：人格化智能体作为人类参与者的代理
+4. [Detection of adversarial intent in Human-AI teams using LLMs](/202603/30/2603.20976v1-detection-of-adversarial-intent-in-human-ai-teams-using-llms)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：通过多智能体协作进行安全审计
-6. [Improving Coherence and Persistence in Agentic AI for System Optimization](/202603/29/2603.21321v1-improving-coherence-and-persistence-in-agentic-ai-for-system-optimization)  
+   evidence：人机团队中的LLM智能体与社会话语防御
+5. [Conspiracy Frame: a Semiotically-Driven Approach for Conspiracy Theories Detection](/202603/30/2603.21368v1-conspiracy-frame-a-semiotically-driven-approach-for-conspiracy-theories-detection)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于系统优化的智能体研究员架构
-7. [Efficient Failure Management for Multi-Agent Systems with Reasoning Trace Representation](/202603/29/2603.21522v1-efficient-failure-management-for-multi-agent-systems-with-reasoning-trace-representation)  
+   evidence：阴谋论检测与社会冲突叙事分析
+6. [Effective Strategies for Asynchronous Software Engineering Agents](/202603/30/2603.21489v1-effective-strategies-for-asynchronous-software-engineering-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于大模型的多智能体系统故障管理
-8. [Counterfactual Credit Policy Optimization for Multi-Agent Collaboration](/202603/29/2603.21563v1-counterfactual-credit-policy-optimization-for-multi-agent-collaboration)  
+   evidence：复杂任务中的异步多智能体协作
+7. [Empirical Comparison of Agent Communication Protocols for Task Orchestration](/202603/30/2603.22823v1-empirical-comparison-of-agent-communication-protocols-for-task-orchestration)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体协作中的信用分配
-9. [Governance-Aware Vector Subscriptions for Multi-Agent Knowledge Ecosystems](/202603/29/2603.20833v1-governance-aware-vector-subscriptions-for-multi-agent-knowledge-ecosystems)  
+   evidence：多智能体编排通信协议的实证比较
+8. [Cooperative Bandit Learning in Directed Networks with Arm-Access Constraints](/202603/30/2603.22881v1-cooperative-bandit-learning-in-directed-networks-with-arm-access-constraints)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：协作式多智能体老虎机学习
+9. [AC4A: Access Control for Agents](/202603/30/2603.20933v1-ac4a-access-control-for-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多智能体知识生态系统中的治理机制
-10. [Incentive-Aware Federated Averaging with Performance Guarantees under Strategic Participation](/202603/29/2603.20873v1-incentive-aware-federated-averaging-with-performance-guarantees-under-strategic-participation)  
+   evidence：自主LLM智能体的访问控制框架
+10. [Can a Robot Walk the Robotic Dog: Triple-Zero Collaborative Navigation for Heterogeneous Multi-Agent Systems](/202603/30/2603.21723v2-can-a-robot-walk-the-robotic-dog-triple-zero-collaborative-navigation-for-heterogeneous-multi-agent-systems)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：跨多个策略性智能体的联邦学习
-11. [Profit is the Red Team: Stress-Testing Agents in Strategic Economic Interactions](/202603/29/2603.20925v1-profit-is-the-red-team-stress-testing-agents-in-strategic-economic-interactions)  
+   evidence：异构多智能体系统的协同导航
+11. [LSAI: A Large Small AI Model Codesign Framework for Agentic Robot Scenarios](/202603/30/2603.21726v1-lsai-a-large-small-ai-model-codesign-framework-for-agentic-robot-scenarios)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：策略交互中智能体的压力测试
+   evidence：多智能体机器人协作框架
 
 
 <div class="dpr-home-promo-card">

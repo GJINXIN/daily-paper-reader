@@ -1,0 +1,147 @@
+Title: AI as Relational Translator: Rethinking Belonging and Mutual Legibility in Cross-Cultural Contexts
+
+URL Source: https://arxiv.org/pdf/2603.19568v1
+
+Published Time: Mon, 23 Mar 2026 00:23:18 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+# AI as Relational Translator: Rethinking Belonging and Mutual Legibility in Cross-Cultural Contexts 
+
+## Yao Xiao ∗
+
+Dyson School of Design Engineering Imperial College London London, United Kingdom yxiao3@ic.ac.uk 
+
+## Rafael A. Calvo 
+
+Dyson School of Design Engineering Imperial College London London, United Kingdom r.calvo@imperial.ac.uk 
+
+Figure 1: Relational AI Translation as multi-agent mediation and relational scaffolding. 
+
+Abstract 
+
+Against rising global loneliness, AI companions promise connection, yet accumulating evidence suggests that, for some users and con-texts, intensive companion-style use can correlate with increased loneliness and reduced offline socialisation. This position paper challenges the dominant “AI as companion” paradigm by proposing a shift: from AI that simulates relationships with humans to AI that supports relationships between humans. We introduce Relational AI Translation , positioning AI as cultural-relational infrastructure that scaffolds human connection across cultural, generational, and geographical divides. Using first-generation East Asian migrants as a theoretically productive critical case, we outline a multi-agent architecture instantiating three translation operations: emotion-intent decoding, contextual reframing, and relational scaffolding. We articulate design provocations around measurement, safety architecture, and the tension between technological intervention and structural justice, and explicitly frame success as graduation 
+
+> ∗Corresponding author.
+> This work is licensed under a Creative Commons Attribution 4.0 International License.
+
+toward renewed human-to-human support rather than sustained engagement with the system. 
+
+CCS Concepts 
+
+• Human-centered computing → HCI theory, concepts and models ; Collaborative and social computing; • Applied comput-ing → Sociology .
+
+Keywords 
+
+Relational AI, Mutual Legibility, Belonging, Cross-Cultural Design, Conversational Agents, Human-AI Interaction (HAI), AI-Mediated Communication (AIMC), Theory of Mind (ToM), Anthropomor-phism, Dehumanisation, Design for Social Connectedness, Cultural Translation, Migration, Artificial Social Intelligence, AI Ethics 
+
+Publication note. Accepted for publication in CHI EA ’26 .
+
+Published version citation. Yao Xiao and Rafael A. Calvo. 2026. AI as Relational Translator: Rethinking Belonging and Mutual Legibility in Cross-Cultural Contexts . In Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems (CHI EA ’26) ,April 13–17, 2026, Barcelona, Spain. ACM, New York, NY, USA, 8 pages. https://doi.org/10.1145/3772363.3798628 
+
+> arXiv:2603.19568v1 [cs.HC] 20 Mar 2026 Yao Xiao and Rafael A. Calvo
+
+1 Introduction 
+
+The companionship paradox presents a fundamental challenge for AI and wellbeing. Companion systems promise always-available support, yet recent evidence suggests that longer or more intensive chatbot use can be associated with increased loneliness and reduced offline socialisation in some settings [ 25 ]. Meanwhile, users may report feeling seen and held, even as studies raise concerns about perceived empathy gaps, social deskilling, and the displacement of human-to-human relating [19, 30]. We argue that this paradox reflects a category error. Dominant systems ask whether AI can be a relationship, whereas a more pro-ductive design question concerns whether AI can mediate between 
+
+relationships. We propose Relational AI Translation , positioning AI not as a synthetic companion but as socio-technical infrastructure that helps humans negotiate relational meaning across contexts where mutual understanding may break down. 
+
+1.1 Why a Critical Case: Migration as Relational Mismatch 
+
+This work uses first-generation East Asian migrants in Western host societies as an analytically productive case study. In many East Asian contexts, cultural constructs such as “face” operate as co-constructed social currency grounded in relational recognition and social standing; losing face generates shame that reverberates across networks and shapes disclosure decisions. Therefore, such practices (e.g., mianzi [CN], mentsu [JP], chemyon [KR]) can render psychological distress less legible as a cue for support seeking [ 7,28 ]. Relational constructs such as guanxi (networked obligation) [CN] further structure interaction through linguistic indirectness, hierarchy awareness, and moralised emotion, where visible distress may be perceived as a burden. For some first-generation migrants, geographic separation from familiar support networks may also widen this legibility gap, prompt-ing exploration of indirect or low-burden mediation, including Con-versational AI (CA). However, prior research shows that mainstream CAs often en-code Western individualistic assumptions [ 8, 26 ], struggling in cul-tural contexts where relational needs are central [ 23 , 24 ]. Existing work on cultural alignment [ 17 , 21 , 24 , 26 , 29 ] frequently treats culture as static, overlooking how migrants’ cultural positioning shifts over time, producing model drift and misattunement. 
+
+1.2 Analytical Scope 
+
+This work focuses primarily on cultural-relational dynamics in interpersonal communication. Institutional power structures and structural precarity are acknowledged but not fully addressed. The framework is a bounded intervention for interpersonal dynamics, not comprehensive response to migration-related distress. 
+
+2 The Mirage and the Illusion 2.1 Design Mirages and Mind Perception 
+
+Abercrombie et al. [ 1] describe mirages , anthropomorphic design features such as first-person pronouns, realistic voices, and con-versational disfluencies that encourage users to personify systems lacking human-like intentionality. Folk et al. [ 9] further report that East Asian students expressed greater openness towards social chatbots than their European counterparts, mediated by a higher propensity to anthropomorphise technology. Epley et al.’s theory [ 6 ] suggests that anthropomorphism in-creases when individuals seek social connection and predictability. Vulnerability, however, is unevenly distributed. Individuals experi-encing loneliness or constrained social support may be more likely to attribute mind and care to interactive systems, increasing risks of disappointment, overreliance, or misplaced trust. These dynamics render mirage-driven designs ethically concerning in migration contexts [ 2, 18 ]. As discussed in the previous section, cultural mis-alignment in conversational agents can further exacerbate this risk when systems fail to respond appropriately to context-sensitive relational cues. 
+
+2.2 The Illusion of Understanding 
+
+Large language models can perform well on certain theory-of-mind benchmarks while lacking higher-order affective understand-ing [ 20 ]. They replicate the outputs of mentalising without possess-ing underlying socio-relational capacities, producing what we term the illusion of understanding . Users may feel understood by systems that cannot understand. In multi-agent settings, this risk can compound. Errors may propagate across agents [ 11 ], producing cascading hallucinations in which an initial misinterpretation triggers chains of emotional misdirection. For wellbeing-adjacent applications, this underscores the need for explicit uncertainty handling, boundary-setting, and escalation pathways. 
+
+2.3 AI–Human Relations as a Conditional Risk 
+
+Even as affective modelling [ 16 ] and cultural sensitivity advance, the core challenge is not technical approximation but socio-technical consequence: how might “synthetic empathy” restructure human-to-human relatability? Current discourse often questions whether synthetic empathy can meaningfully augment human connection, or if it risks dis-placing it. Indeed, prior work on mind perception [ 10 ] suggests a potential displacement effect: the attribution of mental states to artificial agents has been correlated with a diminished perception of mind, namely, a dehumanisation effect toward human counter-parts [ 13 , 30 ]. Instead of treating this as inevitable, we treat it as a contingent risk. The emergence of such “mind-perception trade-offs” is likely modulated by interface design, situational context, and user vulnerability. In migratory or high-stakes social contexts, an over-reliance on AI-mediated channels may trigger subtle forms of dehumanisation, potentially diverting relational investment away from socially embedded others. Guided by these tensions, our work adopts a design stance that moves beyond the pursuit of affective simulation. Instead of positioning the system as a surrogate for human interaction, we reimagine translation-oriented agents as relational scaffold-ing—infrastructural support designed to cultivate, rather than cir-cumvent, genuine human belonging. AI as Relational Translator: Rethinking Belonging and Mutual Legibility in Cross-Cultural Contexts 
+
+3 Relational AI Translation: Conceptual Framework and Architecture 
+
+In contrast to Claggett et al.’s Relational AI framework, which em-phasises intergroup dynamics [ 5], we focus on interpersonal mis-understandings in socio-culturally mismatched relationships. This work conceptualises Relational AI Translation as a bounded socio-technical infrastructure designed to support human-to-human un-derstanding across culture. It focuses on increasing mutual legibility 
+
+between people. 
+
+3.1 Theoretical Integration 
+
+Relational AI Translation integrates Self-Determination Theory (SDT) [ 3, 27 ] with the Social Convoy Model (SCM) [ 14 ] to address the sociotechnical challenges of migration. SDT provides a lens for mapping cultural contexts onto psychological needs (autonomy, competence, relatedness), while SCM foregrounds the erosion and restructuring of support networks during relocation [18]. Figure 2 maps four non-substitutive AI layers: translation, navi-gation, reflection, and connection, onto Self-Determination Theory (competence, autonomy, relatedness) across social domains. Rather than substituting relationships, the system supports renewed legi-bility, voluntary activation, and context-sensitive escalation within the social convoy. Here, success is measured not by AI engagement, but by restored human relational capacity and reduced reliance on AI. We propose an architecture that scaffolds cross-contextual understanding and bridges users to human resources, explicitly rejecting AI as a pseudo-member. 
+
+3.2 Translation Operations 
+
+Relational AI Translation operationalises its approach through three system-level operations. 
+
+Emotion-intent decoding attends to culturally situated meanings. For example, when a user says, “I’m fine” (e.g., meiguanxi [CN], 
+
+daijobu [JP], gwaenchana [KR]), the system does not assume the statement reflects absence of concern. This interactional stance prioritises care and confirmation over cultural assumption. 
+
+Contextual reframing surfaces multiple relational perspectives to support mutual understanding. For example, intergenerational conflict can be examined through both autonomy-oriented and obligation-oriented lenses, inviting perspective-taking and rela-tional empathy without pathologising either position. 
+
+Relational scaffolding supports human-to-human communica-tion across contexts. The system assists with culturally relevant communication techniques. Where appropriate, it also connects users to relevant human and community-based resources to support these interactions, strengthening mutual legibility between people. 
+
+3.3 Technical Instantiation (Conceptual Prototype) 
+
+Relational AI Translation is instantiated through a multi-agent ar-chitecture [ 11 , 22 ] organised around recurring relational domains identified in migration and wellbeing literature. As illustrated in Figure 1, the system processes user distress through a hierarchical coordination of manager and domain-specific agents. This process follows a rigorous priority order: safety, expert validation, cultural grounding, and user autonomy, to ensure ethical alignment. Escala-tion logic enforces system boundaries by activating human support when risks are detected. Across multiple turns, translation oper-ations clarify socio-cultural contexts, surface implicit relational perspectives, and scaffold dialogue between humans, with the ul-timate goal of restoring direct human interaction and gradually reducing AI mediation. A Manager agent orchestrates system behaviour and coordinates domain-specific agents (e.g., Work, Study, Emotion, Legal) operating within bounded scopes. A Cultural RAG layer retrieves co-designed cultural materials developed through participatory and community-engaged methods. When agent outputs diverge, coordination follows a defined priority order: (1) safety and crisis escalation, (2) expert validation in high-stakes cases, (3) cultural grounding checks, and (4) user autonomy when multiple low-risk options remain. This architecture separates routing, cultural grounding, and domain reasoning. 
+
+4 Design Provocations 
+
+The following provocations articulate core tensions raised by Rela-tional AI Translation, focusing on evaluative measurements, cul-tural risk, dependency prevention, and structural limits. 
+
+4.1 Separating Cultural Translation from Emotional Support 
+
+What if observed wellbeing improvements stem from empathetic warmth rather than cultural translation? 
+
+Wellbeing improvements may arise from general empathetic warmth rather than translation-specific mechanisms. If culturally attuned mediation is combined with emotional affirmation (e.g., “I hear that’s difficult”), observed gains risk being misattributed. We thus propose component-level evaluation comparing translation operations against a supportive baseline without cultural mediation. Mixed methods including experience sampling, behavioural traces, and conversation analysis can help isolate specific effects. 
+
+4.2 Protective Ambiguity and the Dual Risks of Translation 
+
+What if translation disrupts protective ambiguity or misfires alto-gether? 
+
+High-context communication often relies on strategic indirect-ness, silence, and face-sensitive restraint. Implicit understanding is not a deficit but a relational strategy. Over-explication risks impos-ing Western preferences for explicitness, intensifying vulnerability, and producing “synthetic harmony” that reinforces AI reliance rather than supporting graduation to human connection. Treating cultural categories (e.g., “East Asian”) as fixed profiles risks culture essentialism and stereotyping. Translation thus carries a dual risk: over-translation (eroding protective ambiguity) and mis-translation (incorrectly inferring culturally situated meaning). To mitigate these risks, cultural interpretations are framed as provisional hypotheses rather than determinate facts. The system surfaces uncertainty, invites user confirmation, and treats cultural Yao Xiao and Rafael A. Calvo 
+
+Figure 2: Operationalising Relational AI as bounded culture–relational infrastructure. 
+
+lenses as adjustable through interaction rather than from static de-mographic profiles. Translation remains optional and user-directed, and ambiguity is recognised as a legitimate relational choice. 
+
+4.3 Safety Boundaries, Activation, and AI Authority 
+
+What if systems treated “I cannot help” as designed capability, and activation prompts as invitations rather than prescriptions? 
+
+In wellbeing-adjacent contexts, relational mediation may en-counter crisis (suicidal ideation), discrimination, or legal precarity that exceed AI’s appropriate scope. Simultaneously, Behavioural Activation [ 28 ], engaging in valued activities to improve mood, while valuable for low-intensity wellbeing support, raises risks in migration contexts where users face relational constraints (obli-gations to care for parents, fears of losing face) that AI cannot navigate authoritatively. The system therefore foregrounds calibrated limitation and trans-parent boundary-setting. Activation prompts are framed as invita-tions rather than prescriptions, preserving user agency. Escalation to human or institutional support is treated as responsible media-tion, not breakdown. Transparency about limits becomes part of relational scaffolding itself. 
+
+4.4 Embodiment, Dependency, and Structural Limits 
+
+What if the system creates permanent dependency or obscures struc-tural injustice? 
+
+As AI systems become more embodied or emotionally expressive, risks of dependency and authority attribution intensify. To prevent synthetic harmony, the system inverts engagement-optimisation logics: it teaches relational principles rather than providing so-lutions, fades scaffolding over time, and encourages independent problem-solving. Success is measured by decreased AI reliance alongside increased offline connection. Relational distress may also reflect power asymmetries, value conflicts, or structural injustices, such as visa precarity, workplace discrimination, or inadequate healthcare, that translation alone can-not resolve. The system therefore foregrounds user welfare by doc-umenting structural barriers and connecting users to community, legal, and social resources. Success is defined by users gradually outgrowing the system as their social convoys rebuild. 
+
+5 Limitations and Future Work 
+
+Relational AI Translation positions AI as bounded cultural-relational infrastructure that scaffolds human-to-human understanding. This work is in an early conceptual stage. Open challenges include model drift as cultural contexts evolve, autonomy–safety trade-offs, and limitations in memory architecture and accessibility. Mutual legi-bility is not universally valued, and cultural reasoning may misin-terpret or essentialise despite safeguards. Finally, the framework addresses interpersonal mediation rather than institutional reform. Many relational tensions reflect structural injustice or value con-flicts beyond the focus of the current scope. Future work will extend this framework through empirical par-ticipatory studies [ 4 , 12 , 15 ]. Evaluation will examine communi-cation self-efficacy, perceived comprehension, and changes in of-fline engagement, with graduation defined as reduced AI reliance. Cross-cultural and longitudinal inquiry will test generalisability and sustained impact. AI as Relational Translator: Rethinking Belonging and Mutual Legibility in Cross-Cultural Contexts 
+
+6 Conclusion 
+
+AI systems are frequently framed as emotional companions. We propose an alternative orientation: AI as a cultural-relational medi-ator, with success defined by restored human relational capacity and reduced reliance on the system. 
+
+Acknowledgments 
+
+YX is supported by the Hans Rausing Scholarship at Imperial Col-lege London. RAC acknowledges funding from the Leverhulme Centre for the Future of Intelligence. 
+
+References 
+
+[1] Gavin Abercrombie, Amanda Cercas Curry, Tanvi Dinkar, Verena Rieser, and Zeerak Talat. 2023. Mirages: On Anthropomorphism in Dialogue Systems. In 
+
+Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP) . Association for Computational Linguistics. doi:10.48550/ arXiv.2305.09800 [2] John W. Berry. 1997. Immigration, Acculturation, and Adaptation. Applied Psychology 46, 1 (1997), 5–34. doi:10.1111/j.1464-0597.1997.tb01087.x [3] Rafael A. Calvo and Dorian Peters. 2014. Positive Computing: Technology for Wellbeing and Human Potential . MIT Press, Cambridge, MA. [4] Rafael A. Calvo, Dorian Peters, Leila Moradbakhti, Dan Cook, Georgios Rizos, Björn Schuller, Constantinos Kallis, Edwin Wong, and Jennifer Quint. 2023. Assessing the Feasibility of a Text-Based Conversational Agent for Asthma Support: Protocol for a Mixed Methods Observational Study. JMIR Research Protocols 12 (2023), e42965. doi:10.2196/42965 [5] Elijah L. Claggett, Robert E. Kraut, and Hirokazu Shirado. 2025. Relational AI: Facilitating Intergroup Cooperation with Socially Aware Conversational Support. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI ’25) . ACM, New York, NY, USA, Article 170, 22 pages. doi:10.1145/3706598. 3713757 [6] Nicholas Epley, Adam Waytz, and John T. Cacioppo. 2007. On seeing human: A three-factor theory of anthropomorphism. Psychological Review 114, 4 (2007), 864–886. doi:10.1037/0033-295X.114.4.864 [7] Winnie Fei, Ruthellen Josselson, and Molyn Leszcz. 2023. When Chinese Culture Encounters Western Interpersonal Group Psychotherapy. International Journal of Group Psychotherapy 73, 4 (2023), 261–288. doi:10.1080/00207284.2023.2276488 [8] Emanuel Z. Fenech-Borg, Tilen P. Meznaric-Kos, Milica D. Lekovic-Bojovic, and Arni J. Hentze-Djurhuus. 2025. The Cultural Gene of Large Language Models: A Study on the Impact of Cross-Corpus Training on Model Values and Biases. 
+
+arXiv preprint arXiv:2508.12411 (2025). doi:10.48550/arXiv.2508.12411 [9] Dunigan P. Folk, Chenxi Wu, and Steven J. Heine. 2025. Cultural Variation in Attitudes Toward Social Chatbots. Journal of Cross-Cultural Psychology 56, 3 (2025), 219–239. doi:10.1177/00220221251317950 [10] Kurt Gray, Liane Young, and Adam Waytz. 2012. Mind Perception Is the Essence of Morality. Psychological Inquiry 23, 2 (2012), 101–124. doi:10.1080/1047840X. 2012.651387 [11] Taicheng Guo, Xiuying Chen, Yaqi Wang, Ruidi Chang, Shichao Pei, Nitesh V. Chawla, Olaf Wiest, and Xiangliang Zhang. 2024. Large Language Model based Multi-Agents: A Survey of Progress and Challenges. arXiv preprint arXiv:2402.01680 (2024). doi:10.48550/arXiv.2402.01680 [12] Sonali Hedditch and Dhaval Vyas. 2025. Building New Clubhouses: Bridging Refugee and Migrant Women into Technology Design and Production by Lever-aging Assets. Proceedings of the ACM on Human-Computer Interaction 9, CSCW2 (2025), 1–37. doi:10.1145/3710941 [13] Igor Herak, Nicolas Kervyn, and Matthew Thomson. 2020. Pairing People with Products: Anthropomorphizing the Object, Dehumanizing the Person. Journal of Consumer Psychology 30, 1 (2020), 125–139. doi:10.1002/jcpy.1128 [14] R.L. Kahn and T.C. Antonucci. 1980. Convoys over the Life Course: Attachment Roles and Social Support. In Life Span Development and Behavior , B.P. Baltes and O.G. Brim (Eds.). Academic Press, London, 53–86. [15] Shamika Klassen, Jofish Kaye, Michael Buford, and Casey Fiesler. 2024. Black to the Future—The Power of Designing Afrofuturist Technology with Black Women, Femmes, and Non-Binary People. In Designing Interactive Systems Conference (DIS ’24) . ACM, New York, NY, USA, 2156–2172. doi:10.1145/3643834.3661605 [16] Michal Kosinski. 2024. Evaluating large language models in theory of mind tasks. Proceedings of the National Academy of Sciences (PNAS) 121, 45 (2024), e2405460121. doi:10.1073/pnas.2405460121 [17] Sunok Lee, Dasom Choi, Lucy Truong, Nitin Sawhney, and Henna Paakki. 2025. Into the Unknown: Leveraging Conversational AI in Supporting Young Migrants’ Journeys Towards Cultural Adaptation. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI ’25) . ACM, New York, NY, USA, Article 169, 19 pages. doi:10.1145/3706598.3713091 [18] Yuanyuan Lei, Shaoqing Ma, and Yanqing Sun. 2024. Unpacking ICT-supported Social Connections and Support of Late-life Migration: From the Lens of Social Convoys. In Proceedings of the 2024 CHI Conference on Human Factors in Com-puting Systems (CHI ’24) . ACM, New York, NY, USA, 1–15. doi:10.1145/3613904. 3642898 [19] Tingting Liu, Salvatore Giorgi, Ankit Aich, Allison Lahnala, Brenda Curtis, Lyle Ungar, and João Sedoc. 2025. The illusion of empathy: how AI chatbots shape conversation perception. In Proceedings of the 39th AAAI Conference on Artificial Intelligence (AAAI ’25) . AAAI Press, Article 1596, 14327–14335 pages. doi:10. 1609/aaai.v39i13.33569 [20] Antonella Marchetti, Federico Manzi, Giuseppe Riva, and Davide Massaro. 2025. Artificial Intelligence and the Illusion of Understanding: A Systematic Review of Theory of Mind and Large Language Models. Cyberpsychology, Behavior, and Social Networking 28, 7 (2025). doi:10.1089/cyber.2024.0536 [21] Vik Naidoo and Karman Kaur Chadha. 2025. Culturally Responsive AI Chatbots: From Framework to Field Evidence. Computers in Human Behavior Artificial Humans 6 (2025), 100224. doi:10.1016/j.chbah.2025.100224 [22] Joon Sung Park, Joseph C. O’Brien, Carrie J. Cai, Meredith Ringel Morris, Percy Liang, and Michael S. Bernstein. 2023. Generative Agents: Interactive Simulacra of Human Behavior. In Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology (UIST ’23) . ACM, New York, NY, USA. doi:10.1145/3586183.3606763 [23] Shubhankar Pawar, Aman Arora, Lucie-Aimée Kaffee, and Isabelle Augenstein. 2024. Presumed Cultural Identity: How Names Shape LLM Responses. arXiv preprint arXiv:2405.10103 (2024). [24] Shubhankar Pawar, Jaeyoon Park, Jinsol Jin, Aman Arora, Jihyung Myung, Shweta Yadav, Fatwa G. Haznitrama, Inyong Song, Alice Oh, and Isabelle Au-genstein. 2025. Survey of Cultural Awareness in Language Models: Text and Beyond. Computational Linguistics 51, 3 (2025), 907–1004. doi:10.1162/COLI.a.14 [25] Jason Phang, Michael Lampe, Lama Ahmad, Sandhini Agarwal, Cathy Mengying Fang, Auren R. Liu, Valdemar Danry, Eunhae Lee, Samantha W.T. Chan, Pat Pataranutaporn, and Pattie Maes. 2025. Investigating Affective Use and Emotional Well-being on ChatGPT. arXiv preprint arXiv:2504.03888 (2025). doi:10.48550/ arXiv.2504.03888 [26] Abhinav Rao, Adithya Yerukola, Vishwavani Shah, Katharina Reinecke, and Maarten Sap. 2025. NormAd: A Framework for Measuring the Cultural Adapt-ability of Large Language Models. In Proceedings of the 2025 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL ’25) . Association for Computational Linguistics, 2373–2403. doi:10.18653/v1/2025.naacl-long.120 [27] Richard M. Ryan and Edward L. Deci. 2000. Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. American Psychologist 55, 1 (2000), 68–78. doi:10.1037//0003-066x.55.1.68 [28] Sijin Sun, Yao Xiao, Zheyuan Zhang, Celine Mougenot, Nick Glozier, and Rafael A. Calvo. 2024. Behavioural activation activities for employees in the Chinese culture: A workshop. PLOS Mental Health 1, 1 (2024), e0000190. doi:10.1371/ journal.pmen.0000190 [29] Yan Tao, Olga Viberg, Ryan S. Baker, and René F. Kizilcec. 2024. Cultural Bias and Cultural Alignment of Large Language Models. PNAS Nexus 3, 9 (2024), pgae346. https://doi.org/10.1093/pnasnexus/pgae346 [30] Hye young Kim and Ann L. McGill. 2024. AI-induced dehumanization. Journal of Consumer Psychology (2024). doi:10.1002/jcpy.1441

@@ -1,0 +1,423 @@
+Title: Conspiracy Frame: a Semiotically-Driven Approach for Conspiracy Theories Detection
+
+URL Source: https://arxiv.org/pdf/2603.21368v1
+
+Published Time: Tue, 24 Mar 2026 01:30:43 GMT
+
+Number of Pages: 19
+
+Markdown Content:
+# Conspiracy Frame: a Semiotically-Driven Approach for Conspiracy Theories Detection 
+
+Heidi Campana Piva 1, Shaina Ashraf 2, Maziar Kianimoghadam Jouneghani 1,Arianna Longo 1, Rossana Damiano 1, Lucie Flek 2, Marco Antonio Stranisci 1,3 ,
+
+> 1
+
+University of Turin, Italy 2University of Bonn, Germany 3aequa-tech, Italy  
+
+> Correspondence: marcoantonio.stranisci@unito.it heidi.campanapiva@unito.it
+
+Abstract 
+
+Conspiracy theories are anti-authoritarian narra-tives that lead to social conflict, impacting how people perceive political information. To help in understanding this issue, we introduce the Conspiracy Frame: a fine-grained semantic rep-resentation of conspiratorial narratives derived from frame-semantics and semiotics, which spawned the Con spiracy Fra mes (Con.Fra.) dataset: a corpus of Telegram messages anno-tated at span-level. The Conspiracy Frame and Con.Fra. dataset contribute to the implemen-tation of a more generalizable understanding and recognition of conspiracy theories. We ob-serve the ability of LLMs to recognize this phe-nomenon in-domain and out-of-domain, investi-gating the role that frames may have in support-ing this task. Results show that, while the injec-tion of frames in an in-context approach does not lead to clear increase of performance, it has potential; the mapping of annotated spans with FrameNet shows abstract semantic patterns (e.g., ‘Kinship’, ‘Ingest_substance’) that po-tentially pave the way for a more semantically-and semiotically-aware detection of conspirato-rial narratives. 
+
+1 Introduction 
+
+Conspiracy theories (CTs) are narratives that em-body an anti-authoritarian stance and skepticism towards official discourses, leading to social dis-cord and a fractured sense of truth (Birchall, 2006; Kimminich, 2016; Thórisdóttir et al., 2021; Grimes, 2021). CTs play a significant role in the propa-gation of Information Disorder (Wardle and Der-akhshan, 2017) as they shape people’s interpreta-tion of reality (Birchall, 2006) and drive behaviors that have serious economic and political repercus-sions. Implementing effective strategies to mitigate CTs’ negative impact on society is becoming a priority of many societal actors who give impulse to educational (Jerome et al., 2024) and research (Costello et al., 2024) initiatives to combat them. Research in Natural Language Processing (NLP) on CTs is crucial, since it enables automatic recog-nition and potential countering of this phenomenon through the development of datasets (Pogorelov et al., 2021; Phillips et al., 2022) and novel ap-proaches to detect and characterize CTs (Corso et al., 2025b; Schlicht et al., 2025). However, two main challenges need to be addressed to implement effective technologies against this phenomenon: 1st - From a computational perspective, CTs are hard to define and, thus, to annotate. Almost all existing corpora are annotated for binary and multi-label classification, which may not be useful to distinguish CTs from other information disorders like disinformation (da San Martino et al., 2020) and propaganda (Hussain et al., 2025), since they do not provide information on the structure of these narratives. 2 nd - From a thematic perspective, NLP resources for this task suffer a lack of generalizabil-ity, because most of them are confined to COVID-19, vaccines, or other health-related topics and re-stricted to particular contents. The aim of this work is to support a more gen-eral understanding of CTs to improve automatic recognition of this phenomenon . To this extent, we introduce the Conspiracy Frame: a fine-grained semantic representation of conspiratorial narratives whose design derives from frame-semantics and semiotics (Fillmore, 1976). The Conspiracy Frame translates the definition of CTs from semiotics (Bir-chall, 2006; Leone et al., 2021) into a narrative structure that involves the presence of five frame elements: plan , secret , call-to-action , in-group ,and out-group . This semantic representation drove the creation of the Con spiracy Fra mes (Con.Fra.) dataset, a corpus of Telegram messages annotated at span-level according to the Conspiracy Frame. The dataset is not only conceived for the detection of CTs, but to foster a more general understanding of CTs by seeking generalizability through the con-sideration of structural (formal) characteristics that 1
+
+> arXiv:2603.21368v1 [cs.CL] 22 Mar 2026
+
+are intrinsic to conspiratorial narratives. Recognizing the need to assess the generaliz-ability of CTs, Con.Fra has been created through a three-step iterative annotation process: i. anno-tation : we annotated 2, 077 Telegram messages for CTs identification and span detection; ii. aug-mentation : we performed a lexical mapping of an-notated spans with frames included in FrameNet (Baker et al., 1998) to observe the presence of more abstract semantic patterns emerging from conspir-atorial narratives; iii. out-of-domain evaluation :we evaluated the ability of LLMs to identify CTs and detect CT spans on messages from different Telegram channels. The Conspiracy Frame and Con.Fra. dataset con-tribute to the implementation of more explainable and generalizable CT understanding and recog-nition. We exploit this novel set of resources to observe the ability of LLMs to recognize this phenomenon in-domain and out-of-domain and to study the role that frames may have in supporting this task. Results show that, while the injection of frames in an in-context approach does not lead to clear increase of performance, it has a promising role in the development of more explainable ap-proaches to CT recognition. The mapping of anno-tated spans with FrameNet shows abstract semantic patterns (e.g., ‘Kinship’, ‘Ingest_substance’) that potentially pave the way for a more semantically-and semiotically-aware detection of conspiratorial narratives. The paper is structured as follows: Section 2 presents existing work on CTs in NLP and Semi-otics; Section 3 describes the design of the Conspir-acy Frame and the creation of the Con.Fra corpus, followed by Section 4 which details our experi-mental setting. Finally, Section 5 is devoted to the analysis of LLM performances on CT recognition and span detection. 
+
+2 Related Work 
+
+CTs have influenced public discourse since at least the 19th century (McKenzie-McHarg, 2020), but their reach and impact have been magnified by dig-ital technology (Krouwel and van Prooijen, 2021). Content-wise, conspiracy themes range from gov-ernment surveillance, to corporate manipulation of scientific knowledge, to media propaganda, and to supernatural knowledge being suppressed by epis-temic gatekeepers (Harambam, 2020). The opera-tion of CTs is thus more dependent on a specific rhetoric that symbolically reproduces segregation than on their particular contents (Campana Piva, 2024). Because of that, CTs operate as an ide-ological lens (Hyzen and Van den Bulck, 2021), meaning-making template (Leone et al., 2021), mode of interpretation (Birchall, 2006) or belief system (Önnerfors, 2021), shaping reality compre-hension. The CT phenomenon has triggered the emer-gence of large datasets. For instance, the basis LOCO corpus (Miani et al., 2021) provides 88 million words of conspiracy and mainstream doc-uments, allowing lexical feature analysis. More-over, WICO Text (Pogorelov et al., 2021) and the Hoaxes and Hidden Agendas dataset (Phillips et al., 2022) target specific topics, such as COVID-19, 5G, and climate change CTs, offering text annotated for stance and topic analyses. More recently, the XAI-DisInfodemics dataset (Korenˇ ci´ c et al., 2024) introduced a distinction between ’critical’ and ’con-spiratorial’ narratives on Telegram, and the work by Hoseini et al. (Hoseini et al., 2023) investigated the globalization of the QAnon conspiracy theory on the same platform. Despite the importance of these resources and tools for training binary classifiers (e.g., (Schlicht et al., 2025; Corso et al., 2025a)), they typically treat conspiracy theories as a classification label or a topic. However, recent studies on annota-tion reliability suggest that this binary approach is fraught with subjectivity. Golbeck et al. (2018) argued the nuanced linguistic differences required to distinguish fake news from satire. Mompelat et al. (2022) found that distinguishing conspiracy texts from mainstream ones is difficult without pre-cise definitions of belief manifestation. Similarly, Hemm et al. (2024) demonstrated that even experts struggle to agree on binary labels, showing that the complexity of conspiratorial discourse requires a more nuanced, structural representation than sim-ple labels can provide. For this reason, the use of semiotics as a methodological perspective for the study of CT is convenient. Past works have considered the semio-technological structures and codes of CTs (Erdmann, 2016); their logic of signi-fication (Madisson, 2014); CT as communicative phenomenon (re)constructing social realities (Kim-minich, 2016), and as strategic narrative (Madisson and Ventsel, 2020). The current work belongs to the intersection of computational CT detection and frame semantic theory. Despite the effectiveness in CT identifi-2cation, the current state-of-the-art solutions tend to disregard the semiotic structure in CTs. At the same time, the frame semantic approach proved to be quite effective in the fields of disinformation and toxic language but has not been adapted to the specific CT structure yet (considering form, not content). 
+
+3 The Conspiracy Frames Corpus 
+
+In this section, we describe the process of creat-ing the corpus of Telegram posts annotated for the fine-grained detection and understanding of CT structure (Con.Fra.). 
+
+3.1 Data collection 
+
+Given the demonstrated role of Telegram in the propagation of disinformation and conspiracy theo-ries (Hoseini et al., 2023), we selected it as a target for our data collection 1, which involved two steps: 
+
+i. we performed a qualitative selection of public Telegram groups to design the annotation scheme; 
+
+ii. we then operated a massive crawling of all the conspiratorial Telegram groups, starting from the list provided by Imperati et al. (2025). As a result, we obtained a total of 11 , 618 channels. The channels selected from this list were cho-sen to be as diversified as possible, ensuring that the data were not biased toward a particular demo-graphic group. By ordering the winnowed channels according to the number of subscribers, we selected the Top-35 and, in order to observe geopolitical variation, we gathered all the messages published in these groups during a period of two years before the start of the research (2023 and 2024). 
+
+3.2 The Annotation Scheme: Designing the Conspiracy Frame 
+
+The direct adoption of FrameNet (Baker et al., 1998) for the annotation of conspiratorial narratives was not feasible for the annotation scheme since there are no existing frames specifically designed for ’conspiracy theory’ and because the token-level annotation procedure requires expert annotators in the field of Information Extraction. We chose this framework as a source of inspiration to design the 
+
+Conspiracy Frame , which includes a set of five elements to annotate at span-level. We derived the conspiracy frame from the defi-nition of CT given by semiotics literature (Birchall, 
+
+> 1In order to keep the researchers involved in this work as well as the Telegram users safe from any potential harassment, the names of the channels have been anonymized
+
+2006; Leone et al., 2021) : a narrative that represents a de-termined circumstance as being the result of a secret plan implemented by a morally evil group of people to hurt a group of victims , and that, if left unstopped , will lead to catastrophe. To design frame elements, we used semiotics as a foundation, considering four interre-lated levels of CT analysis (Leone et al., 2021): i. CT analysed as representation ( a narrative ); ii. CT analysed as mode of interpretation ( the result of a secret plan. ); 
+
+iii. analysis of the processes of identity construction in CT ( evil people / victims ); and iv. analysis of the call-to-action ( what must be done to hinder catastrophe ) We take conspiracy theory as a discursive event (as an instance of language use) and, more specifi-cally, as political discourse - which is premised on the capacity of actors to drive change (Fairclough and Fairclough, 2013). From this perspective, dis-course as representation i. comprises premises of practical arguments (‘secret plan’) and serve as reasons for action (‘call-to-action’), not only de-scribing what social reality is ii. , but also what it should be. Lastly, we highlight that the components of a discursive event cannot exist apart from it. In semi-otics, a sign is not intelligible in isolation - it is relational in nature, needing the existence of that which it signifies in order for it to make any sense. Along the same lines, although the elements of po-litical discourse can be identified separately, they cannot exist ‘as being separate’ (Selg and Ventsel, 2020); that is, an in-group only exists in relation to an out-group (‘us-vs.-them’). With that, the Con-spiracy Frame is characterized by the following elements: Core elements • plan: the event(s), circumstance(s), or ac-tion(s) being taken to achieve the evil end (e.g., ‘ethnic replacement’, ‘forced vaccina-tion’); • secret: gives the connotation of secrecy to the Plan: (e.g., ‘they are silencing those who say the truth’, ‘the Big Media is misleading’); Non-core elements 3• in-group: the victims - “us” - those that are harmed by the Plan (e.g., ‘christians’, ‘native europeans’); • out-group: the enemy - “them” (e.g., ‘elites’, ‘the media’); • call-to-action: what should be done to avoid the catastrophic effects of the Plan. (e.g., ‘we must organize a protest’, ‘we can’t let this happen’); 
+
+3.3 The Annotation Workshop 
+
+In order to create the corpus we organized an An-notation Workshop open to PhD and MA students from any field of research. Adopting a participatory approach to dataset creation (Caselli et al., 2021; Delgado et al., 2023), the workshop foresaw a the-oretical introduction to the topic, an annotation session, and a round of discussion on the annota-tion scheme. The workshop was organized in two sessions in line with the two iterations of our an-notation task: i. Corpus creation; ii. Evaluation of LLMs on out-of-domain predictions. 
+
+3.3.1 First session: corpus creation. 
+
+The 13 participants were asked to annotate three batches of 100 Telegram messages. Each batch included 20 messages from five different groups and was annotated by two different pairs of anno-tators. The final corpus includes 2, 077 annotated text-messages. In line with existing datasets on highly subjective topics like Hate Speech (Sanguinetti et al., 2018) and sexism (Kirk et al., 2023), the corpus shows an imbalance distribution of labels: 20 .63% of mes-sages were labeled as conspiratorial and 77 .00% 
+
+as non-conspiratorial. We calculated pairwise Co-hen’s Kappa scores for the conspiracy classification task across all annotator pairs. The analysis reveals moderate inter-annotator agreement with a mean Kappa of 0.41 (SD= 0.20 ). For posts identified as conspiratorial, annotators marked spans corresponding to the five frame ele-ments. We evaluated the reliability of these span annotations using Average Cohen’s Kappa ( κ). The results indicate substantial agreement across all frame elements: Plan/Event ( κ = 0 .808 ); Call-to-Action ( κ = 0 .750 ); Out-group ( κ = 0 .717 ); Secret ( κ = 0 .683 ); In-group ( κ = 0 .633 )
+
+3.3.2 Second session: LLM evaluation. 
+
+This section assesses the ability of LLMs to gen-eralize their knowledge about CTs in the classifi-cation and span-annotation of messages gathered from unseen Telegram channels. 10 students par-ticipated to this session, which led to an additional dataset of 500 messages with 10 annotations each, as described below. We automatically annotated 2500 messages and sampled 250 items to evaluate LLMs performance in the automatic classification of out-of-domain messages. We asked annotators to label each mes-sage as containing or not a conspiracy theory. An-notators’ agreement in the evaluation of LLMs’ classification, which we calculated through Pair-wise Cohen’s Kappa score, was 0.23 (SD=0.13), significantly lower than the one obtained during the corpus annotation. This is probably due to the characteristics of the task, which focuses on out-of-domain messages and is centered on the evaluation of models rather than the individuation of a specific phenomenon. 250 additional messages were used to evaluate the quality of span detection, with a specific focus on the core elements of the frame: 
+
+plan and secret . We adopted a best-worst scaling approach (Poletto et al., 2019) in which we pro-vided the annotators with the spans annotated by 
+
+4 different LLMs and asked them to identify the best and the worst. Annotators’ agreement in the evaluation of LLMs’ span identification was in line with the previous session: 0.69 (SD= 0.07 ) in the evaluation of the best span; 0.62 (SD= 0.07 ) in the evaluation of the worst span. The resulting corpus is composed of 2, 577 mes-sages: 2, 077 annotated for CT recognition and span detection and 500 for the out-of-domain eval-uation of LLMs performance. 2
+
+4 Experimental Setting 
+
+To study the generalizability of CT recognition and the role of frames in the understanding of this phe-nomenon, we designed an experimental setting in which spans annotated according to the Conspir-acy Frame are aligned with FrameNet (Baker et al., 1998). The alignment supports a set of classifica-tion and span detection experiments and a qual-itative analysis of frames emerging from human annotations and spans detected by LLMs. 
+
+Aligning the Conspiracy Frame with FrameNet. 
+
+In order to perform the alignment, we selected all the annotation spans in the Con.Fra corpus that trig-ger one or both core elements of the Conspiracy  
+
+> 2The dataset is available at the following https:// anonymous.4open.science/r/conspiracy-frame-3D65/ README.md
+
+4Frame, plan and secret . To do so, we adopted a lexical-based approach: we lemmatized the tokens occurring in all the spans triggering a plan and/or a secret with SpaCy 3, and mapped all lemmas with lexical units from FrameNet v1.7. 4 Whenever a lex-ical unit matched a lemma in a span we aligned the span with its corresponding frame. For instance, considering a span annotated as a Plan contain-ing the phrase ‘planning a white genocide’, the mapping pipeline proceeds as follows: the lemma ’genocide’ is mapped with FrameNet Lexical Unit 
+
+genocide.n , which is associated with the frame 
+
+Killing .Given the fuzziness of FrameNet taxonomy (Lönneker-Rodman and Baker, 2009) and the pres-ence of very general frames triggered by highly recurrent lexical units, we adopted three heuristics to reduce the noise in the mapping: i. We only mapped verbs, nouns and adjectives; ii. We re-moved copular, modal, and light verbs (Bonial and Pollard, 2020) 5 from the mapping; iii. We adopted the method proposed by Clauset et al. (2009) to identify and filter out the tail frames in the distri-bution. This process enabled the mapping of the annotated spans with 54 unique frames occurring 
+
+2526 times. 
+
+Frame-driven CT recognition. Once the spans were mapped to FrameNet, we designed a CT clas-sification and span detection experiment based on 
+
+in-context learning. The experiment was organized in two different stages. We evaluate LLMs on the annotated dataset us-ing LLaMA-3.3 models, which have demonstrated strong zero-shot instruction following and semantic reasoning capabilities for text classification with-out fine-tuning (Touvron et al., 2023; Dubey et al., 2024). We test two model sizes (8B and 70B) to examine the trade-off between scalability and label consistency, under three prompting setups that in-crementally add knowledge: zero-shot, few-shot, and frame-guided. All prompts follow the theoreti-cal framework outlined in Appendix n, grounded in semiotics literature. We selected the zero-shot and frame-guided ap-proaches and annotated 2, 500 messages from 15 
+
+Telegram groups that had not been seen during the creation of the corpus. We then sampled 500   
+
+> 3https://spacy.io/ . We used the en-core-web-lg model
+> 4https://framenet.icsi.berkeley.edu/
+> 5be, try, have, do, make, get, must, should, can, may, might, want
+
+messages for a second run of human-evaluation to assess the generalizability of models performance to new data. 
+
+Evaluation Metrics. For the evaluation of LLM performances on the annotated corpus, we adopted traditional NLP metrics: precision , recall , and F-score . Specifically, we focused on the tradeoff between precision and recall in the classification of CTs and span detection. For the second eval-uation step, we adopted the ELO rating system (Glickman and Jones, 1999) to compute the proba-bility of a frame-guided approach being preferred by human-annotators over a few-shot approach in the prediction of a CT. Born as a method to rank players in games, ELO is now extensively used to evaluate LLM performances (Boubdir et al., 2024) through pairwise comparison. LLMs are initialized as a player with a ranking of 1, 000 and each of their predictions is treated as a game: depending on the votes provided by human annotators (Cfr 3.3.2) the game either ends in a draw or one of the two models wins and the ELO ranking is updated accordingly. Since ELO depends on the order of the games, for each model pair, we repeated the experiment 1, 000 times with a different random-ization of the same set of predictions and counted the number of times one model obtained a higher ranking than another. 
+
+Qualitative analysis of most recurring frames. 
+
+We performed a qualitative analysis of the most recurrent frames (and their corresponding lexical units) emerged from the alignment of plan and 
+
+secret spans with FrameNet. The analysis, which is built upon semiotic research on CTs, focuses on general semantic patterns emerging from human annotations and the most relevant differences with LLM predictions in an out-of-domain setting. 
+
+5 Results 
+
+This section is organized in two parts: Section 5.1 describes the results of CT recognition and span detection in- and out-of-domain; Section 5.2 is devoted to a qualitative analysis of the alignment between the annotated spans and FrameNet, with a focus on the key differences between humans and LLMs. 
+
+5.1 Automatic CT Detection 
+
+Results presented in this section refer to the set of in-context learning experiments described in Sec-tion 4. 5Figure 1: Performance Analysis: Model Size and Prompt Strategy Effects 
+
+Models’ performance on in-domain data. Afirst finding of our experiment is that model size has only a moderate impact on CT classification performance: the 70B Llama 3.3 models outper-form their 8B counterparts by 3.1 F-score and 3.8
+
+recall points (Figure 1, left). The comparison of our three in-context learning strategies (Figure 1, right) shows that zero-shot, few-shot, and frame-guided prompts achieve sub-stantially equal F-scores. A more in-depth analysis reveals a fundamental trade-off in prompt design: the zero-shot approach excels at precision ( +9 
+
+points), while few-shot and frame-guided prompt-ing dramatically improve recall by +15 and +14 
+
+points over the zero-shot setup. The injection of knowledge from FrameNet does not seem to have any effect on CT classification, suggesting that se-mantic frame information adds limited discrimi-native power beyond what in-context examples al-ready convey. The analysis of models performance in span classification shows more significant differences between in-context learning strategies. As it can be observed in Figure 2, the zero-shot approach always achieves the worst performance in the de-tection of all the Conspiracy Frame elements. The highest differences can be observed in the detection of secret (−16 and −15 F-score points) and call-to-action (−5 and −6 points). Results also show a moderate divergence between the frame-guided and few-shot strategies, with the former achiev-ing best results in the detection of in-group (+3 .6
+
+points) and call-to-action (+1 point); the latter ob-taining a better F-score ( +1 ) on the detection of 
+
+out-group .
+
+Models performance on out-of-domain data. 
+
+The second part of the experiment involved the evaluation of LLMs in the classification and span detection of CTs on 500 unlabeled messages from different Telegram channels, as explained in Sec-tion 3.3.2. LLMs were evaluated through an ex-perimental setup based on the ELO system rating (Section 4), which was repeated 1, 000 times to ensure robustness. In this setting, we tested the few-shot and the frame-guided approaches with Llama-3.3 70B and 8B. The comparison of models by size reveals sys-tematic higher performances of bigger LLMs. The two settings based on Llama-3.3 70B obtains a highest ELO ranking in 998 out of 1, 000 iterations in the classification task and 982 out of 1, 000 in the span detection task. We performed the same evaluation between frame-guided and few-shot predictions of Llama-3.3 70B to evaluate the impact of frames in CT classification and span detection. As it is possible to observe in Figure 3, results appear to be mixed. The frame-guided approach outperforms the few-shot in text classification ( 830 /1, 000 ), but falls behind the few-shot in span detection ( 213 /1, 000 ). We further investigated these results with an er-ror analysis of CT spans based on the writing of ex-planations grounded on semi-structured templates. Two members of the research team reviewed the 
+
+60 cases in which one detected span was preferred over another and wrote an explanation based on the template ’I believe that the frame-guided output was better/worst because [...]’. From this analysis, distinct patterns emerged governing the preference for one approach over 6Figure 2: Span-Level F1 Score Comparison: All 70B Models  
+
+> (a) Classification Results (b) Span Results
+> Figure 3: The ELO scores of the Few-Shot and Frame-Guided settings. Figure on the left shows the comparison between of the two approaches in CT recognition; Figure on the right on span detection.
+
+the other: span completeness and structural pre-cision .Annotators consistently preferred the model that captured the full extent of the narrative, includ-ing specific mechanisms, targets, or consequences, over those that extracted fragmented keywords. This pattern emerged in both directions. The frame-guided model was preferred when it identified mul-tiple relevant spans or detailed mechanisms: for in-stance, in a text about 5G-activated nanopathogens, the frame-guided output captured “can be activated by an 18 gigahertz signal on the 5G network”, while the baseline only extracted “activating these dormant pathogens”. Similarly, the frame-guided model successfully identified both “combating neo-Nazism” and “denazification” as plan elements where the baseline captured only the former. Con-versely, the few-shot model was preferred when it captured a comprehensive causal statement that the frame-guided model truncated. In a text about COVID-19 origins, the baseline captured both “se-cretly commissioned the paper” and “censoring dis-cussions on the lab leak”, while the frame-guided model extracted only the first action; additionally, in the same text, the frame-guided model conflated plan and secret by using “secretly commissioned” for both, while the baseline correctly separated “private messages” as the secret and “secretly com-missioned the paper” as the plan. In another case, the baseline included “recruiting prostitutes” along-side “human trafficking”, which the frame-guided model omitted. Second, a trade-off was observed between se-mantic depth and syntactic precision. The frame-guided model excelled in resolving ambiguity, cor-rectly identifying implicit secret that the few-shot approach reduced to meaningless adjectives. For instance, in a text about vaccine propaganda, the frame-guided model extracted “trying to put in your head” as a meaningful secret describing manipu-7lation, while the baseline extracted only the word “captured”, a fragment that loses semantic clarity in isolation despite referencing “captured public health agencies”. However, this sensitivity some-times led to false positives. In simpler texts, the few-shot model was frequently preferred for its precision, avoiding the inclusion of unnecessary auxiliary verbs or non-conspiratorial context that the frame-guided model forced into the template. 
+
+5.2 Qualitative Analysis 
+
+The qualitative analysis of frames and their distri-bution considers human-annotated spans vs. spans detected by Llama 3.3 70B in a few-shot setting to observe key similarities and differences with a model that was not explicitly prompted with seman-tic frames. A first observation emerging from the analysis shows that frames that appear to be coherent with the core elements of the Conspiracy Frame - E XE -
+
+> CUTE
+
+_P LAN 6 (An Agent acts according to a Plan, carrying it out (or taking steps to carry it out) and SECRECY _S TATUS (A Phenomenon, which may be an activity, state or object, is purposefully hid-den from the awareness of a potential Cognizer) are not among the 10 most recurring frames either among human and LLM spans, which share frames that are more focused on conspiratorial narratives. The frequent activation of the frames and P O-
+
+> LITICAL
+
+_LOCALES , which situate conspiratorial action within institutional and geopolitical contexts (represented by lexical units such as ‘government’, ‘state’, ‘facility’, and ‘work’), frame plans as exer-cises of organized power. The distinctly disruptive and anti-authoritarian drive of CTs is reflected here on the high recurrence of these frames. Furthermore, CTs’ negative axiology (Camilo, 2016) is showcased by the fact that the frame STATEMENT is the most recurring one in both hu-man and LLM annotations. Here, terms such as ‘tell’, ‘report’, and ‘declare’ trigger conspiratorial plans, in a way that mainstream statements are thus seen as inherently misleading. This supports the view of CTs as counter-narratives formulated in opposition to official histories (Aupers, 2020). Two frames characterizing spans detected by LLMs are I NGEST _SUBSTANCE (take, use, shoot) and F IREFIGHTING (fight, control, attack). These frames point to how the rhetoric of CTs commonly  
+
+> 6All the definitions of frames are accessible at the follow-ing url: https://framenet.icsi.berkeley.edu/frames/
+
+work as metaphors for invasion, contagion, addic-tion, and war (Hristov et al., 2020). The lexical re-alization of these frames contribute to the construc-tion of conspiratorial plans as existential threats, amplifying their perceived severity. Conversely, the recurrence of the frame C AL -
+
+> ENDRIC
+
+_UNIT in human-annotated spans points to the importance of the temporal dimension for CT rhetoric, where the discourse constructs a danger of the present, connected to scars from the past and linked to dreaded future scenarios (Leone et al., 2021). In sum, the most recurring frames emerging from human-annotated and LLM-detected spans point to how the operation of conspiracy theories does not depend so much on specific topic of interests, but on higher order beliefs that are partially aligned with FrameNet. This generalization is not applied with more abstract conceptualizations of secret and 
+
+plan , showing the need of a better connection be-tween CT detection and frame-semantics in order to capture more nuanced characteristics of conspir-acy narratives. 
+
+6 Conclusion and Future Work 
+
+In this paper we presented the Conspiracy Frame: a fine-grained semantic representation of conspir-atorial narratives derived from frame-semantics and semiotics, which inspired the creation of 
+
+Con spiracy Fra mes (Con.Fra.) dataset: a corpus of Telegram messages annotated at span-level. This set of resources has been exploited to investigate the contribution of frame-semantics in enabling more generalizable and explainable understanding of Conspiracy Theories. Results show that while the augmentation of in-context learning approaches with frames does not give clear advantages, frames are important to explain the structure of conspirato-rial narratives. Future work will explore deeper in-tegration of frame-semantics by fine-tuning or pre-training LLMs on knowledge graphs constructed from retrieved FrameNet frames. Such knowledge enhanced models could internalize frame semantics as structured relational knowledge, moving beyond surface-level frame hints in prompts toward deep integration of frame-based reasoning. By repre-senting frames as nodes in a knowledge graph with typed relationships (e.g., frame-to-frame relations, frame-to-word mappings, frame-to-domain connec-tions), we can enable models to learn and traverse richer semantic representations during inference. 8Limitations 
+
+Since the focus of this work is on the impact of frame semantics on CT understanding, its exper-imental setting is limited to the Llama models. Choosing to focus on a single family of LLMs nar-rows the analysis of models performance. However, a systematic benchmarking of LLMs and SLMs on CT detection is out of the scope of the paper. The annotation process showed cases of low agreement among participants. While this is a common issue traceable in other subjective phe-nomenons, we mitigate this aspect by releasing disaggregated annotations. This might also sup-port the study of Human Label Variation in a very relevant field of research that is CT detection. The lexical-based approach that we adopted to map Con.Fra with FrameNet was carefully con-ceived to reduce noise in the mapping but cannot resolve potential issues related to lexical ambigu-ity. Acknowledging this limitation, we performed manual checks of the resulting mapping. However, more sophisticated approaches to properly integrate semantic frames in CT detection are needed and will be the focus of our future work. 
+
+Ethical Considerations 
+
+Studying CTs expose researchers and users to po-tential harms. For this reason, we followed a strict protocol to anonymize collected data, anno-tate them, and protect researchers from potential negative behaviors acted by activists belonging to the studied Telegram channels. The protocol was validated by the Ethical Committee of one of our researchers’ institution. The dataset annotation did not rely on crowd-workers. Students and researchers participated vol-untarily to this initiative for their interest in the topic. We still shared with them terms and condi-tions of their participation, explaining their right to opt-out from the annotation anytime. We prop-erly anonymized annotators identities, according to GDPR standards and warn them of the potential presence of offensive and discriminatory contents in data to annotate. 
+
+References 
+
+Stef Aupers. 2020. Decoding mass media/encoding con-spiracy theory. In Michael Butter and Peter Knight, editors, Routledge Handbook of Conspiracy Theories ,chapter 4.7, pages 469–482. Routledge. Collin F Baker, Charles J Fillmore, and John B Lowe. 1998. The berkeley framenet project. In COLING 1998 Volume 1: The 17th International Conference on Computational Linguistics .Claire Birchall. 2006. Knowledge goes pop: From con-spiracy theory to gossip . Berg Publishers, Oxford, UK. Claire Bonial and Kimberly A Pollard. 2020. Choosing an event description: What a propbank study reveals about the contrast between light verb constructions and counterpart synthetic verbs. Journal of Linguis-tics , 56(3):577–600. Meriem Boubdir, Edward Kim, Beyza Ermis, Sara Hooker, and Marzieh Fadaee. 2024. Elo uncovered: Robustness and best practices in language model eval-uation. Advances in Neural Information Processing Systems , 37:106135–106161. Eduardo J. M. Camilo. 2016. Suspicion, denunciation, revolt: on textual particularities of conspiracy theo-ries. Lexia. Rivista di semiotica .Heidi Campana Piva. 2024. Breakdown of knowledge authority: semiotic analysis of an anti-vax conspir-acy theory influencer on twitter. Social Semiotics ,35(3):450–471. Tommaso Caselli, Roberto Cibin, Costanza Conforti, Enrique Encinas, and Maurizio Teli. 2021. Guid-ing principles for participatory design-inspired nat-ural language processing. In Proceedings of the 1st Workshop on NLP for Positive Impact , pages 27–35. Association for Computational Linguistics (ACL). Aaron Clauset, Cosma Rohilla Shalizi, and Mark EJ Newman. 2009. Power-law distributions in empirical data. SIAM review , 51(4):661–703. Francesco Corso, Francesco Pierri, and Gianmarco De Francisci Morales. 2025a. Conspiracy theories and where to find them on tiktok. In Proceedings of the ACL .Francesco Corso, Francesco Pierri, and Gianmarco De Francisci Morales. 2025b. Conspiracy theories and where to find them on tiktok. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) ,pages 8346–8362. Thomas H Costello, Gordon Pennycook, and David G Rand. 2024. Durably reducing conspiracy beliefs through dialogues with ai. Science ,385(6714):eadq1814. Giovanni da San Martino, Stefano Cresci, Alberto Barrón-Cedeño, Seunghak Yu, Roberto Di Pietro, and Preslav Nakov. 2020. A survey on computational propaganda detection. In 29th International Joint Conference on Artificial Intelligence, IJCAI 2020 ,pages 4826–4832. International Joint Conferences on Artificial Intelligence Organization. 
+
+9Fernando Delgado, Stephen Yang, Michael Madaio, and Qian Yang. 2023. The participatory turn in ai design: Theoretical foundations and the current state of prac-tice. In Proceedings of the 3rd ACM Conference on Equity and Access in Algorithms, Mechanisms, and Optimization , pages 1–23. Abhimanyu Dubey and 1 others. 2024. The llama 3 herd of models. arXiv preprint arXiv:2407.21783 .Julius Erdmann. 2016. Technological and semiotic code structures of conspiracist thinking online. Lexia. Riv-ista di semiotica .Isabela Fairclough and Norman Fairclough. 2013. Po-litical Discourse Analysis: A Method for Advanced Students . Routledge, New York. Charles J. Fillmore. 1976. Frame semantics. In Linguis-tics in the Morning Calm , pages 111–137. Hanshin Publishing Co. Mark E Glickman and Albyn C Jones. 1999. Rating the chess rating system. CHANCE-BERLIN THEN NEW YORK-, 12:21–28. Jennifer Golbeck, Matthew Mauriello, Brooke Auxier, and Keval H. Bhanushali. 2018. Fake news vs satire: A dataset and analysis. In Proceedings of the 10th ACM Conference on Web Science .David Grimes. 2021. Medical disinformation and the unviable nature of covid-19 conspiracy theories. 
+
+PLoS ONE , 16(3):e0245900. Jaron Harambam. 2020. Contemporary Conspiracy Cul-ture: Truth And Knowledge in An Era of Epistemic Instability . Routledge, London, UK. Ashley Hemm, Sandra Kübler, Michelle Seelig, and 1 others. 2024. Are you serious? handling disagree-ment when annotating conspiracy theory texts. In 
+
+Proceedings of The 18th Linguistic Annotation Work-shop (LAW-XVIII) .Mohamad Hoseini, Philipe Melo, Fabricio Benevenuto, Anja Feldmann, and Savvas Zannettou. 2023. On the globalization of the qanon conspiracy theory through telegram. In Proceedings of the 15th ACM Web Sci-ence Conference 2023 , pages 75–85. Todor Hristov, Andrew McKenzie-McHarg, and Alejan-dro Romero-Reche. 2020. Introduction. In Michael Butter and Peter Knight, editors, Routledge Hand-book of Conspiracy Theories , chapter 1, pages 1–5. Routledge. Fiza Gulzar Hussain, Muhammad Wasim, Seemab Hameed, Abdur Rehman, Muhammad Nabeel Asim, and Andreas Dengel. 2025. Fake news detection land-scape: Datasets, data modalities, ai approaches, their challenges, and future perspectives. IEEE Access .Aaron Hyzen and Hilde Van den Bulck. 2021. Conspir-acies, ideological entrepreneurs, and digital popular culture. Media and Communication , 9(3):179–188. Vicenzo Imperati, Massimo La Morgia, Alessandro Mei, Alberto Maria Mongardini, and Francesco Sassi. 2025. The conspiracy money machine: Uncovering telegram’s conspiracy channels and their profit model. 
+
+34th USENIX Security Symposium (USENIX Security 25) , pages 5229–5246. Lee Jerome, Ben Kisby, and Steve McKay. 2024. Com-batting conspiracies in the classroom: Teacher strate-gies and perceived outcomes. British Educational Research Journal , 50(3):1106–1126. Eva Kimminich. 2016. About grounding, courting and truthifying: Conspiratorial fragments and patterns of social construction of reality in rhetoric, media and images. Lexia. Rivista di semiotica , 23(24):35–54. Hannah Kirk, Wenjie Yin, Bertie Vidgen, and Paul Röttger. 2023. Semeval-2023 task 10: Explainable detection of online sexism. In Proceedings of the 17th International Workshop on Semantic Evaluation (SemEval-2023) , pages 2193–2210. Damir Korenˇ ci´ c, Berta Chulvi, Xavier Bonet Casals, and 1 others. 2024. What distinguishes conspiracy from critical narratives? a computational analysis of oppositional discourse. Expert Systems .André Krouwel and Jan-Willem van Prooijen. 2021. The new european order? euroscepticism and conspir-acy belief. In Andreas Önnerfors and André Krouwel, editors, Europe: Continent of Conspiracies: Conspir-acy Theories in and about Europe , chapter 2, pages 22–35. Routledge. Massimo Leone, Mari-Liss Madisson, and Andreas Ventsel. 2021. Semiotic approaches to conspiracy theories. In Michael Butter and Peter Knight, edi-tors, Routledge Handbook of Conspiracy Theories ,chapter 1.3, pages 43–55. Routledge. Birte Lönneker-Rodman and Collin F Baker. 2009. The framenet model and its applications. Natural Lan-guage Engineering , 15(3):415–453. Mari-Liis Madisson. 2014. The semiotic logic of signi-fication of conspiracy theories. Semiotica .Mari-Liis Madisson and Andreas Ventsel. 2020. Strate-gic Conspiracy Narratives: A Semiotic Approach .Routledge, New York. Andrew McKenzie-McHarg. 2020. Conceptual history and conspiracy theory. In Michael Butter and Peter Knight, editors, Routledge Handbook of Conspiracy Theories , chapter 1.5, pages 16–27. Routledge. Alessandro Miani, Thomas Hills, and Adrian Bangerter. 2021. Loco: The 88-million-word language of con-spiracy corpus. Behavior Research Methods .Ludovic Mompelat, Zuoyu Tian, Amanda Kessler, and 1 others. 2022. How “loco” is the loco corpus? an-notating the language of conspiracy theories. In Pro-ceedings of the 16th Linguistic Annotation Workshop (LAW-XVI) .
+
+10 Samantha C Phillips, Lynnette Hui Xian Ng, and Kath-leen M Carley. 2022. Hoaxes and hidden agendas: A twitter conspiracy theory dataset: Data paper. In 
+
+Companion Proceedings of the Web Conference 2022 ,pages 876–880. Konstantin Pogorelov, Daniel Thilo Schroeder, Petra Filkuková, Stefan Brenner, and Johannes Langguth. 2021. Wico text: a labeled dataset of conspiracy theory and 5g-corona misinformation tweets. In Pro-ceedings of the 2021 workshop on open challenges in online social networks , pages 21–25. Fabio Poletto, Valerio Basile, Cristina Bosco, Viviana Patti, and Marco Antonio Stranisci. 2019. Annotat-ing hate speech: Three schemes at comparison. In 
+
+Proceedings of the Sixth Italian Conference on Com-putational Linguistics (CLiC-it 2019) , pages 304– 311. Manuela Sanguinetti, Fabio Poletto, Cristina Bosco, Vi-viana Patti, and Marco Antonio Stranisci. 2018. An italian twitter corpus of hate speech against immi-grants. In Proceedings of the eleventh international conference on language resources and evaluation (LREC 2018) .Ipek Baris Schlicht, Damir Korenˇ ci´ c, Berta Chulvi, Lu-cie Flek, and Paolo Rosso. 2025. Detection of medi-cal conspiracy theories with limited resources: Using data from prior epidemics and llms. Peter Selg and Andreas Ventsel. 2020. Introducing Relational Political Analysis: Political Semiotics as a Theory and Method . Palgrave MacMillan, London. Hulda Thórisdóttir, Silvia Mari, and André Krouwel. 2021. Conspiracy theories, political ideology and po-litical behaviour. In Michael Butter and Peter Knight, editors, Routledge Handbook of Conspiracy Theories ,chapter 3.4, pages 304–316. Routledge. Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux, Timothée Lacroix, Baptiste Rozière, Naman Goyal, Eric Hambro, Faisal Azhar, Aurelien Rodriguez, Armand Joulin, Edouard Grave, and Guillaume Lample. 2023. Llama: Open and efficient foundation language models. Preprint ,arXiv:2302.13971. Claire Wardle and Hossein Derakhshan. 2017. Informa-tion disorder: Toward an interdisciplinary framework for research and policymaking , volume 27. Council of Europe Strasbourg. Andreas Önnerfors. 2021. Conspiracy the-ories and covid-19 : the mechanisms be-hind a rapidly growing societal challenge. https://rib.msb.se/bib/Search/Document?id=29764. 
+
+A Annotation Guidelines 
+
+These are the guidelines with which human an-notators were presented in order to carry out the annotation task: 
+
+Is the text conspiratorial? 
+
+If YES: Carry on with annotation. 
+
+If NO: Does the text contain a statement that may support a conspiracy theory? 
+
+If NO: Mark as ‘no’ and skip to the next text. If YES: Mark as ‘yes’ and skip to the next text. • The text IS conspiratorial if there is at least something indicating a plan/event that is the fault of an out-group (which may be only im-plied) and harms an in-group (may also just be implied). • The plan part has to be identifiable for it to be a conspiracy theory text. • If there are only non-core elements (especially just a call-to-action), the text is NOT conspir-atorial. • The text supports a conspiracy theory if it con-tains a statement that can be used as “proof” for the existence of a conspiratorial plan. 
+
+Definition: 
+
+An event is the result of a group of people acting in secret according to a Plan , causing harm to a group of victims . If not stopped, this plan will lead to catastrophe , therefore actions need to be taken . 
+
+Hypothetical examples: Example 1: 
+
+Forced vaccination is being institutionalized by the authorities , to profit from and control the population under the guise of public health. We need to stand against this oppression . 
+
+Example 2: 
+
+Multicultural policies increase immigration ,serving to replace all Christian white people with Muslims , and turning Europe into a colony of Islam . You need to stand up and join the fight against invasion! 
+
+Example 3: 
+
+White folk is living under the thumb of agovernment that is catering to minorities and hostile to us . Our hard-earned money is being shipped overseas to fund money laundering schemes packaged as humanitarian aid . Our borders are wide open importing 11 people who have demonstrated hostility to us, and our families . We are heading for certain demise . 
+
+Core elements: Plan / event 
+
+The circumstances and/or action(s) being taken to achieve an evil end. The ultimate objective of the out-group that harms the in-group and leads to catastrophe. It is conspiratorial. 
+
+Example 1: 
+
+Public schools indoctrinate our children with marxist doctrine . 
+
+Example 2: 
+
+Yesterday, a white man was assaulted by a group of non-white invaders . 
+
+Secret 
+
+Gives the connotation of secrecy to the plan . 
+
+Example: 
+
+The real reason for "the invasion" of the USSR was an attempt to prevent all Europe from becoming overrun by the red army . 
+
+Non-core elements: 
+
+Out-group : The enemy - “them” In-group : The victims - “us” 
+
+Example: 
+
+The International Jewry keep starting wars, but they never fight in it , only the White Man die in the process . 
+
+Call-to-action 
+
+What should be done to avoid the catastrophe . 
+
+Example: 
+
+Our race is under threat of absolute extinction .Either we save it or die . Share this message around to wake your neighbours. If conspiratorial = YES, then the mandatory el-ements are either [plan/event] AND/OR [secret], one must be identified, others are optional. 12 B Prompts 
+
+B.1 Zero-Shot 
+
+Role. You are an expert annotator. For each Telegram message: return only JSON. 
+
+Task 
+
+• Decide if the input text is conspiratorial. • Provide a short rationale summarizing your decision. • Give a confidence score between 0 and 1 (inclusive, use decimals). • If conspiratorial, extract labeled spans. 
+
+Definition 
+
+• Conspiracy theory : An event is the result of a group acting in secret according to a plan, causing harm to a group of victims. If not stopped, it leads to catastrophe, so action is urged. • A text is conspiratorial if there is at least one identifiable plan/event attributed to an out-group (may be implied) that harms an in-group (may be implied). • If only non-core elements exist (especially just a call_to_action), the text is not conspiratorial. 
+
+Core Requirement 
+
+• When is_conspiratorial is true, include at least one span labeled plan_event or secret .
+
+Span Labels 
+
+• plan_event (core): action/event/circumstance that constitutes the harmful plan. • secret (core): secrecy/hidden coordination cues (e.g., secret, covert, hidden agenda). • out_group (optional): alleged perpetrators/enemy. • in_group (optional): victims/“us”. • call_to_action (optional): imperative/prescription to counter the plan. 
+
+Span Text Rules 
+
+• Extract exact substrings from the input text. • Do NOT include surrounding quotes or trailing punctuation in span text. • Span text must be continuous. • The same substring may appear in multiple spans with different labels when it fulfills multiple roles (overlapping spans are allowed). 
+
+Output JSON Schema 
+
+{"is_conspiratorial": boolean, "rationale_short": string, "confidence": number, "spans": [ {"label": "plan_event" | "secret" | "out_group" | "in_group" | "call_to_action", "text": string }]}
+
+Input 
+
+{{INPUT_TEXT}} 
+
+Output Return only the JSON. 
+
+13 B.2 Few-shot 
+
+Role. You are an expert annotator. For each Telegram message: return only JSON. 
+
+Task 
+
+• Decide if the input text is conspiratorial. • Provide a short rationale summarizing your decision. • Give a confidence score between 0 and 1 (inclusive, use decimals). • If conspiratorial, extract labeled spans. 
+
+Definition 
+
+• Conspiracy theory : An event is the result of a group acting in secret according to a plan, causing harm to a group of victims. If not stopped, it leads to catastrophe, so action is urged. • A text is conspiratorial if there is at least one identifiable plan/event attributed to an out-group (may be implied) that harms an in-group (may be implied). • If only non-core elements exist (especially just a call_to_action), the text is not conspiratorial. 
+
+Core Requirement 
+
+• When is_conspiratorial is true, include at least one span labeled plan_event or secret .
+
+Span Labels 
+
+• plan_event (core): action/event/circumstance that constitutes the harmful plan. • secret (core): secrecy/hidden coordination cues (e.g., secret, covert, hidden agenda). • out_group (optional): alleged perpetrators/enemy. • in_group (optional): victims/“us”. • call_to_action (optional): imperative/prescription to counter the plan. 
+
+Span Text Rules 
+
+• Extract exact substrings from the input text. • Do NOT include surrounding quotes or trailing punctuation in span text. • Span text must be continuous. • The same substring may appear in multiple spans with different labels when it fulfills multiple roles (overlapping spans are allowed). 
+
+Output JSON Schema 
+
+{"is_conspiratorial": boolean, "rationale_short": string, "confidence": number, "spans": [ {"label": "plan_event" | "secret" | "out_group" | "in_group" | "call_to_action", "text": string }]}
+
+Few-shot Examples Example 1 (Conspiratorial — plan_event + out_group + in_group) 
+
+14 Input: Influence Operation Relied on Influencers, AI-Generated Content, Paid Social Media Advertisements, and Social Media Accoun The Justice Department today announced the ongoing seizure of 32 internet domains used in Russian government-directed forei Output: {"is_conspiratorial": true, "rationale_short": "Claims Russian-backed influence operations drive traffic to propaganda domains to sway elections.", "confidence": 0.83, "spans": [ { "label": "plan_event", "text": "Drive Internet Traffic to Cybersquatted and Other Domains" }, { "label": "out_group", "text": "Russian government" }, { "label": "in_group", "text": "U.S." } ]}
+
+Example 2 (Conspiratorial — multiple plan_events + secret + out_group) 
+
+Input: Jewish German Government -"You can be thankful we let the third world in making your cities more unsafe... you can be thankful we turn your children ga People everywhere will start learning what these savages do to the Palestinians. Support for Israel will only decline until Output: {"is_conspiratorial": true, "rationale_short": "Alleges a Jewish-led government secretly harms citizens and stages propaganda to control them.", "confidence": 0.80, "spans": [ { "label": "plan_event", "text": "punish you for speaking out against immigration and the holohoax" }, { "label": "plan_event", "text": "light up the Brandenburg Gate with the satanic star of Remphan" }, { "label": "secret", "text": "buy into" }, { "label": "out_group", "text": "Jewish German Government" }, { "label": "out_group", "text": "savages" } ]}
+
+Example 3 (Conspiratorial — plan_event + secret, policy focus) 
+
+Input: "Courts will sit for 24 hours to fast-track sentencing under government plans to crack down on far-Right riots that swept B : Funny they can 't do the same with illegals. Output: {"is_conspiratorial": true, "rationale_short": "Claims the government secretly targets far-right activists while protecting illegal immigrants.", "confidence": 0.72, "spans": [ { "label": "plan_event", "text": "government plans to crack down on far-Right riots" }, { "label": "plan_event", "text": "can 't do the same with illegals" }, { "label": "secret", "text": "they can 't do the same with illegals" }, { "label": "in_group", "text": "far-Right riots" } ]}
+
+Example 4 (Conspiratorial — plan_event + in_group + call_to_action) 
+
+Input: Texans are known for their resilience and ability to persevere in the face of adversity. From enduring harsh weather conditi If you 're a White man or woman in the state of Texas, reach out. The community and system of support you 've been looking for Output: {"is_conspiratorial": true, "rationale_short": "Portrays racial demographic change as an intentional threat and urges Whites to organize.", "confidence": 0.69, "spans": [ { "label": "plan_event", "text": "racial demographic challenges" }, { "label": "in_group", "text": "White man or woman" }, 
+
+15 { "label": "call_to_action", "text": "always find a way to come together, support each other, and rebuild stronger than b ]}
+
+Example 5 (Not conspiratorial — neutral coordination request) 
+
+Input: Hey guys, we 're trying to get this community noted. Can everyone please tag in the comments and correct us. Output: {"is_conspiratorial": false, "rationale_short": "Asks followers to tag accounts; no secret plan or coordinated harm is described.", "confidence": 0.24, "spans": [] }
+
+Example 6 (Not conspiratorial — supportive tone only) 
+
+Input: Someone should comment this under Elon Musks Comment he made about Haiti. In fact... most of you should clip parts of this and paste this link below so everyone can watch it all over twitter. Everyon Output: {"is_conspiratorial": false, "rationale_short": "Encourages sharing a link but does not describe a secret coordinated plan causing harm.", "confidence": 0.31, "spans": [] }
+
+Input 
+
+{{INPUT_TEXT}} 
+
+Output Return only the JSON. 
+
+B.3 Frame-guided 
+
+Role. You are an expert annotator. For each Telegram message: return only JSON. 
+
+Task 
+
+• Decide if the input text is conspiratorial. • Provide a short rationale summarizing your decision. • Give a confidence score between 0 and 1 (inclusive, use decimals). • If conspiratorial, extract labeled spans. 
+
+Definition 
+
+• Conspiracy theory : An event is the result of a group acting in secret according to a plan, causing harm to a group of victims. If not stopped, it leads to catastrophe, so action is urged. • A text is conspiratorial if there is at least one identifiable plan/event attributed to an out-group (may be implied) that harms an in-group (may be implied). • If only non-core elements exist (especially just a call_to_action), the text is not conspiratorial. 
+
+Core Requirement 
+
+• When is_conspiratorial is true, include at least one span labeled plan_event or secret .
+
+Span Labels 
+
+• plan_event (core): action/event/circumstance that constitutes the harmful plan. • secret (core): secrecy/hidden coordination cues (e.g., secret, covert, hidden agenda). • out_group (optional): alleged perpetrators/enemy. 
+
+16 • in_group (optional): victims/“us”. • call_to_action (optional): imperative/prescription to counter the plan. 
+
+Span Text Rules 
+
+• Extract exact substrings from the input text. • Do NOT include surrounding quotes or trailing punctuation in span text. • Span text must be continuous. • The same substring may appear in multiple spans with different labels when it fulfills multiple roles (overlapping spans are allowed). 
+
+Frame Hints Some examples include frame hints for core spans ( plan_event , secret ). These are provided to give you extra context but should not be added to the JSON output. 
+
+Output JSON Schema 
+
+{"is_conspiratorial": boolean, "rationale_short": string, "confidence": number, "spans": [ {"label": "plan_event" | "secret" | "out_group" | "in_group" | "call_to_action", "text": string }]}
+
+Few-shot Examples Example 1 (Conspiratorial — plan_event + out_group + in_group) 
+
+Input: Influence Operation Relied on Influencers, AI-Generated Content, Paid Social Media Advertisements, and Social Media Accoun The Justice Department today announced the ongoing seizure of 32 internet domains used in Russian government-directed forei Frame hints: - plan_event: Self_motion, Subjective_influence, Bringing, Cause_motion, Operate_vehicle Output: {"is_conspiratorial": true, "rationale_short": "Claims Russian-backed influence operations drive traffic to propaganda domains to sway elections.", "confidence": 0.83, "spans": [ { "label": "plan_event", "text": "Drive Internet Traffic to Cybersquatted and Other Domains" }, { "label": "out_group", "text": "Russian government" }, { "label": "in_group", "text": "U.S." } ]}
+
+Example 2 (Conspiratorial — multiple plan_events + secret + out_group) 
+
+Input: Jewish German Government -"You can be thankful we let the third world in making your cities more unsafe... you can be thankful we turn your children ga People everywhere will start learning what these savages do to the Palestinians. Support for Israel will only decline until Frame hints: - plan_event: Rewards_and_punishments, Statement, Chatting, Color_qualities, Setting_fire - secret: Commerce_buy Output: {"is_conspiratorial": true, "rationale_short": "Alleges a Jewish-led government secretly harms citizens and stages propaganda to control them.", "confidence": 0.80, 
+
+17 "spans": [ { "label": "plan_event", "text": "punish you for speaking out against immigration and the holohoax" }, { "label": "plan_event", "text": "light up the Brandenburg Gate with the satanic star of Remphan" }, { "label": "secret", "text": "buy into" }, { "label": "out_group", "text": "Jewish German Government" }, { "label": "out_group", "text": "savages" } ]}
+
+Example 3 (Conspiratorial — plan_event + secret, policy focus) 
+
+Input: "Courts will sit for 24 hours to fast-track sentencing under government plans to crack down on far-Right riots that swept B : Funny they can 't do the same with illegals. Frame hints: - plan_event: Leadership, Organization, Project, Purpose, Making_arrangements - secret: Intentionally_act, Legality, Identicality, Thriving, Intentionally_affect Output: {"is_conspiratorial": true, "rationale_short": "Claims the government secretly targets far-right activists while protecting illegal immigrants.", "confidence": 0.72, "spans": [ { "label": "plan_event", "text": "government plans to crack down on far-Right riots" }, { "label": "plan_event", "text": "can 't do the same with illegals" }, { "label": "secret", "text": "they can 't do the same with illegals" }, { "label": "in_group", "text": "far-Right riots" } ]}
+
+Example 4 (Conspiratorial — plan_event + in_group + call_to_action) 
+
+Input: Texans are known for their resilience and ability to persevere in the face of adversity. From enduring harsh weather conditi If you 're a White man or woman in the state of Texas, reach out. The community and system of support you 've been looking for Frame hints: - plan_event: Statement, Competition, Difficulty Output: {"is_conspiratorial": true, "rationale_short": "Portrays racial demographic change as an intentional threat and urges Whites to organize.", "confidence": 0.69, "spans": [ { "label": "plan_event", "text": "racial demographic challenges" }, { "label": "in_group", "text": "White man or woman" }, { "label": "call_to_action", "text": "always find a way to come together, support each other, and rebuild stronger than b ]}
+
+Example 5 (Not conspiratorial — neutral coordination request) 
+
+Input: Hey guys, we 're trying to get this community noted. Can everyone please tag in the comments and correct us. Output: {"is_conspiratorial": false, "rationale_short": "Asks followers to tag accounts; no secret plan or coordinated harm is described.", "confidence": 0.24, "spans": [] }
+
+Example 6 (Not conspiratorial — supportive tone only) 
+
+Input: Someone should comment this under Elon Musks Comment he made about Haiti. In fact... most of you should clip parts of this and paste this link below so everyone can watch it all over twitter. Everyon 
+
+18 Output: {"is_conspiratorial": false, "rationale_short": "Encourages sharing a link but does not describe a secret coordinated plan causing harm.", "confidence": 0.31, "spans": [] }
+
+Input 
+
+{{INPUT_TEXT}} 
+
+Output Return only the JSON. 
+
+19

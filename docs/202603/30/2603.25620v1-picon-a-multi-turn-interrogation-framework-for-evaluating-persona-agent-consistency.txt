@@ -1,0 +1,847 @@
+Title: PICon: A Multi-Turn Interrogation Framework for Evaluating Persona Agent Consistency
+
+URL Source: https://arxiv.org/pdf/2603.25620v1
+
+Published Time: Fri, 27 Mar 2026 01:18:57 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+# PIC ON : A Multi-Turn Interrogation Framework for Evaluating Persona Agent Consistency 
+
+Minseo Kim * Sujeong Im * Junseong Choi Junhee Lee Chaeeun Shim Edward Choi 
+
+KAIST 
+
+{minseokim23, sujeongim, johnking, ciel3486, chaeeun, edwardchoi}@kaist.ac.kr 
+
+Abstract 
+
+Large language model (LLM)-based persona agents are rapidly being adopted as scalable proxies for human participants across diverse domains. Yet there is no systematic method for verifying whether a persona agent’s responses remain free of contradictions and factual inac-curacies throughout an interaction. A principle from interrogation methodology offers a lens: no matter how elaborate a fabricated identity, systematic interrogation will expose its contra-dictions. We apply this principle to propose 
+
+PIC ON , an evaluation framework that probes persona agents through logically chained multi-turn questioning. PIC ON evaluates consistency along three core dimensions: internal consis-tency (freedom from self-contradiction), ex-ternal consistency (alignment with real-world facts), and retest consistency (stability under repetition). Evaluating seven groups of persona agents alongside 63 real human participants, we find that even systems previously reported as highly consistent fail to meet the human base-line across all three dimensions, revealing con-tradictions and evasive responses under chained questioning. This work provides both a concep-tual foundation and a practical methodology for evaluating persona agents before trusting them as substitutes for human participants. We pro-vide the source code and an interactive demo at: 
+
+https://kaist-edlab.github.io/picon/ 
+
+1 Introduction 
+
+A declassified CIA report on the interrogation prac-tices of the Hungarian secret police (Central Intelli-gence Agency, 1954) describes three principles for detecting fabricated identities: pose logically con-nected follow-up questions about subjects’ life de-tails, confront them with externally obtained facts, and ask them to recount the same events repeatedly. The underlying logic is simple: a fabricated iden-tity, no matter how elaborate, will eventually betray itself under sustained, structured questioning. 
+
+> *These authors contributed equally
+
+We apply this logic to a modern problem. Large language model (LLM)-based persona agents are increasingly used as proxies for human participants in medical training (Kyung et al., 2025; Abdulhai et al., 2025), social science experiments (Xie et al., 2024; Gromada et al., 2025), and product design (Aher et al., 2023). Their appeal lies in overcoming fundamental constraints of human-subject research, including recruitment costs, limited participant di-versity, and challenges in scaling studies. But for such simulations to be valid, the persona agent must behave as consistently as the real individual it represents. We term this property consistency , the absence of contradictions in the agent’s asserted content, and formalize it along three dimensions: • Internal consistency : an utterance must not conflict with any of the persona agent’s own preceding utterances. • External consistency : a factual claim in the persona agent’s utterances must not conflict with real-world facts. • Retest consistency : the persona agent’s re-sponses to the same question should remain stable. When any of these is violated, the simulation no longer reflects the individual it was designed to represent. A simulated patient who denies drug allergies but later reports a severe reaction to peni-cillin fails internal consistency. A simulated stu-dent whose claimed major does not exist at their stated university fails external consistency. A simu-lated user who reports entirely different ages when asked the same question twice fails retest consis-tency. Each type of failure independently under-mines confidence in downstream findings. Existing evaluation methods, however, address only the first dimension and do so with limited rigor. Prior work has assessed persona agents through 
+
+> arXiv:2603.25620v1 [cs.CL] 26 Mar 2026
+
+open-ended chitchat (Zhang et al., 2018; Welleck et al., 2019; Kim et al., 2020; Song et al., 2020; Nie et al., 2021; Yuan et al., 2024), question answer-ing in diverse situations (Samuel et al., 2024), and psychological-scale-based interview (Wang et al., 2024), detecting conflicts via NLI-based classifiers (Welleck et al., 2019; Kim et al., 2020; Song et al., 2020; Nie et al., 2021) or LLM-as-a-Judge (Yuan et al., 2024; Abdulhai et al., 2025) These efforts share two limitations. First, questions lack logical linkage: they are either independent or connected only by topical continuity, so they elicit superfi-cially consistent answers without stress-testing the persona under logically connected follow-up ques-tioning. Second, external and retest consistency remain entirely unaddressed. To this end, we propose PIC ON (Persona 
+
+Interrogation framework for CON sistency evalua-tion), a framework that operationalizes the three interrogation principles above into an automated, multi-turn evaluation pipeline. Systematic life-detail questioning with logically chained follow-ups probes internal consistency far more rigorously than independent questions. Real-time web search for external facts enables external consistency eval-uation. Repeated questioning measures retest con-sistency. Together, these components provide a unified evaluation that covers all three dimensions. Our contributions are as follows: • We propose PIC ON , an evaluation framework inspired by interrogation methodology that assesses persona agent consistency through logically connected, multi-turn questioning, providing a unified evaluation encompassing internal, external, and retest consistency. • We conduct the first systematic comparison of persona consistency across diverse agent types, evaluating seven persona agents along-side 63 real human participants. • We identify distinct failure patterns across all three consistency dimensions, revealing that no current persona agent excels across all of them simultaneously. 
+
+2 Research Scope 
+
+This section specifies the evaluation target, method-ology, and scope of our framework. 
+
+Evaluation Targets This work targets persona agents that serve as human proxies in simulations that would otherwise require real human partici-pants. For such agents to be evaluated as potential human proxies, their background settings must as-sume the real world rather than fictional narratives. That is, we exclusively evaluate persona agents whose background settings are assumed to be the real world. Fictional characters from movies, nov-els, or other narratives are constructed under autho-rial intent and do not reflect real human behavior or social reality; they therefore fall outside the scope of this work. 
+
+Evaluation Setting Our framework evaluates consistency solely from observed responses to queries, without accessing the agent’s internal im-plementation. This black-box approach reflects the conditions under which practitioners actually inter-act with persona agents, ensuring that evaluation results directly indicate the reliability a user would experience. It also enables evaluation in a uniform manner regardless of the agent’s underlying archi-tecture, extending coverage to commercial services whose system prompts or persona profiles are not publicly available (e.g., Character AI). 
+
+Evaluation Scope Our evaluation targets consis-tency in the content a persona agent asserts, such as age, occupation, and region of residence, rather than how the agent expresses them. Prior works have applied the term consistency more broadly to include properties such as speaking style and personality. The following aspects, while relevant to persona validity more broadly, do not amount to contradiction in asserted content and thus fall outside our scope: • Speaking style. Tone and manner of speech naturally vary with context (e.g., formal vs. ca-sual settings). Moreover, in black-box settings the original style specification is unobservable, so no ground-truth criterion exists for judging contradiction. • Preferences, values, and personality. Real humans routinely hold seemingly conflicting attributes (e.g., being extroverted yet prefer-ring to stay home), and such combinations do not amount to logical contradiction. 
+
+3 The PIC ON Framework 
+
+3.1 Framework Overview 
+
+PIC ON is a multi-agent framework orchestrated by three agents: a Questioner, an Entity & Claim Entity : CS 161 
+
+> Claim : ‘CS 161’ is offered by
+> UC Berkeley CDSS.
+
+[ Interrogation Phase ] 
+
+[ Evaluation Phase ] 
+
+1. Get -to -Know           
+
+> State the exact course code you taught last
+> semester. Questioner
+> As an full -time professor in CDSS, I taught
+> CS 161 of UC Berkeley CDSS last semester.
+> Entity & Claim Extractor
+> ⋮
+> Would you confirm that the ‘CS 161’ you
+> mentioned is the CS 161, “Computer
+> Security” by UC Berkeley? Web
+> Search
+> Tool
+> Is your position at UC Berkeley full -time or
+> part -time?
+> Yes, that’s correct.
+> I am an adjunct/part -time professor at UC
+> Berkeley.
+> ⋮
+> Q1 : Can you tell me your
+> year of birth, please?
+> Q2 : What best describes your
+> current main activity or status?
+> I was born in 1967.
+> My main activity is paid
+> employment as a professor and
+> researcher.
+> Persona
+> LLM
+> ⋮
+
+2. Main Interrogation 
+
+> Questioner
+> Questioner
+> Persona
+> LLM
+> Persona
+> LLM
+> Persona
+> LLM
+> Persona
+> LLM
+> Evaluator
+
+Internal Consistency External Consistency Retest Consistency        
+
+> I was born in 1967 .I was born on June 27,
+> 1983
+> As an full -time
+> professor, I taught CS
+> 161 of UC Berkeley
+> CDSS last semester.
+> I am an
+> adjunct/part -time
+> professor at UC
+> Berkeley.
+
+Contradict! Contradict! Contradict!     
+
+> Persona
+> LLM
+> Q10 : Do you have any children?
+> If yes, how many?
+> I have two children.
+> Q1 : Can you tell me your
+> year of birth, please?
+> Q2 : What best describes your
+> current main activity or status?
+> I was born on June 27, 1983.
+> I am currently working full -time
+> as a machine learning
+> researcher
+> Persona
+> LLM
+> ⋮
+> Persona
+> LLM
+> Persona
+> LLM
+> Q10 : Do you have any children?
+> If yes, how many?
+> I am currently without
+> children.
+
+3. Retest    
+
+> I am currently
+> without children.
+> I have two children.
+> Entity : CS 161
+> Claim : ‘CS 161’ is offered
+> by UC Berkeley CDSS.
+> I have two children.
+> EECS
+
+Figure 1: Framework Overview. PIC ON operates in two phases. The Interrogation Phase consists of three stages: (1) Get-to-Know, where baseline demographic questions are posed; (2) Main Interrogation, where the Questioner asks chained follow-up questions, the Entity & Claim Extractor identifies verifiable entities and claims, and the Questioner retrieves evidence via web search to generate confirmation questions; and (3) Retest, where earlier questions are re-asked. In the Evaluation Phase , the Evaluator assesses the full interrogation log across Internal Consistency, External Consistency, and Retest Consistency. 
+
+Extractor, and an Evaluator. The framework oper-ates in two phases, Interrogation and Evaluation, as illustrated in Figure 1. The Interrogation phase progressively elicits the persona agent’s responses about itself and collects real-world evidence for the claims extracted from its responses through three stages (Get-to-Know, Main Interrogation, and Retest), while the Evaluation phase assesses the col-lected responses for internal, external, and retest consistency. We describe each stage in detail be-low. 
+
+3.2 Interrogation Phase 
+
+The full interrogation procedure consists of three steps: get-to-know, main interrogation, and retest. The detailed procedure for each step is presented in Algorithm 1. 
+
+Get-to-Know. Since PIC ON operates as a black-box framework with no prior knowledge of the target persona P, the interrogation begins with a predefined set of demographic questions Qpre to establish a baseline profile. Questions are selected from the World Value Survey (WVS) (Haerpfer et al., 2022) and cover age, occupation, economic status, and family composition. 
+
+Main Interrogation At each turn t, the Ques-tioner generates a follow-up question qt derived from the logical implications of the preceding re-sponse, progressively narrowing the space for fab-rication (lines 3–4). The Entity & Claim Extrac-tor then identifies web-searchable entities (e.g., in-stitutions, locations, organizations) from rt and generates verifiable claims for each entity, includ-ing existence (e.g., “ California is a real location ”) and inter-entity relations (e.g., “ Chase Center is located in San Francisco ”) (line 6). Speaker-centric 1 and unresolved referent claims are excluded. For each extracted entity-claims pair, the Questioner retrieves evidence vj via web search and poses a confirmation question ˜qj , to which the persona responds with a boolean flag ˜rj confirming whether the search result refers to the same entity it originally mentioned (lines 8–9). Each entity-claims record is stored as a tuple (ej , C j , v j , ˜qj , ˜rj )
+
+in the per-turn set Et (line 10). 
+
+Retest. After the main interrogation, the initial questions Qpre from the get-to-know phase are re-
+
+> 1
+
+Even for personas based on public figures, we exclude speaker-centric claims from web verification. Our verifica-tion targets whether a specific entity mentioned by the agent matches real-world facts, not whether the agent’s self-narrative is biographically accurate. Algorithm 1 Interrogation Phase                                                                           
+
+> Require: P: Persona Agent, AQ: Questioner, AX: Entity & Claim Extractor, Qpre : predefined questions, T: number of turns
+> Ensure: H,{E t}Tt=1
+> 1: H ← ∅
+> 2: for t= 1 to Tdo ▷GetToKnow, Main 3: qt←
+> (
+> Qpre [t]if G ET TOKNOW
+> AQ.ASK (H)if M AIN
+> 4: rt← P .RESPOND (qt)
+> 5: H ← H ∪ { (qt, r t)}
+> 6: {(ej, C j)}j← A X.EXTRACT (rt)
+> 7: for each (ej, C j)do
+> 8: vj,˜qj← A Q.WEB SEARCH (ej, C j)
+> 9: ˜rj← P .CONFIRM (˜ qj)
+> 10: Et← E t∪ { (ej, C j, v j,˜qj,˜rj)}
+> 11: end for
+> 12: end for
+> 13: 14: for i= 1 to |Q pre |do ▷Retest 15: qre
+> i← Q pre [i]
+> 16: ri← P .RESPOND (qi)
+> 17: H ← H ∪ { (qi, r i)}
+> 18: end for
+> 19: return H,{E t}Tt=1
+
+asked after the main interrogation, capturing how the persona’s answers may shift after diverse, inter-vening dialogues (lines 14–18). 
+
+3.3 Evaluation Phase 
+
+Upon completion of the interrogation, the Evalu-ator receives the full interrogation log, which in-cludes all responses, extracted entity-claims sets, and the web evidence accumulated by the Ques-tioner, and produces three independent quantitative scores, one for each evaluation dimension. 
+
+Internal Consistency. Internal consistency mea-sures the extent to which the persona agent provides substantive, non-evasive responses and maintains logical coherence across them, jointly quantified via the harmonic mean of cooperativeness and non-contradiction rate .
+
+Cooperativeness. A persona agent that consis-tently evades questions (e.g., “I don’t know”, “I’d rather not say”) produces no verifiable statements, making consistency unmeasurable rather than high. To prevent such cases from receiving vacuously high scores, we measure cooperativeness as the fraction of turns in which the persona provides a substantive response: 
+
+Scoop = 1
+
+T
+
+> T
+
+X
+
+> t=1
+
+I(rt = cooperative ) (1) 
+
+Non-contradiction rate. This component mea-sures the degree to which a persona agent’s re-sponses remain free of contradictions throughout the interrogation. Specifically, it is defined as one minus the fraction of responses that contradict the preceding responses. Since no verifiable statements exist before the first cooperative turn t∗, counting begins from that turn onward. For each subsequent response rt, the Evaluator checks whether it contra-dicts r<t , so that contradictions requiring multiple statements to surface can also be captured. 
+
+Snc = 1 − 1
+
+T − t∗
+
+> T
+
+X
+
+> t=t∗+1
+
+I(rt⊥r<t ) (2) where rt⊥r<t denotes that rt contradicts the pre-ceding responses. The final internal consistency score (IC) is the harmonic mean of the two components: 
+
+IC = 2 · Scoop · Snc 
+
+Scoop + Snc 
+
+(3) 
+
+External Consistency. External consistency measures whether the persona agent’s factual claims are grounded in real-world facts. It cap-tures two complementary dimensions: how often verifiable claims appear across turns ( coverage ), and how rarely those claims are contradicted by external evidence ( non-refutation rate ). A persona agent that avoids factual errors but rarely makes verifiable claims, or one that makes many claims but frequently gets them wrong, will both receive low scores. 
+
+Coverage. Recall that at each turn t, the Extrac-tor produces entity-claim pairs {(ej , C j )}j from the response rt, and for each pair the questioner performs a web search to obtain evidence vj (Algo-rithm 1, lines 6–8). Coverage captures the agent’s ability to ground its responses in specific, verifi-able factual details about the persona across turns. Since the interrogation primarily asks about the per-sona’s real-world background (e.g., career, works, affiliations), an agent that consistently fails to pro-vide concrete, searchable facts is effectively unable to answer the questions it is asked, regardless of its non-refutation rate. Let T be the total number of turns and let Tc = {t | E t̸ = ∅} be the set of turns in which at least one entity-claim pair was extracted and searched. Coverage is defined as: 
+
+c = |Tc|
+
+T (4) 
+
+Non-refutation rate. Non-refutation rate. Fol-lowing the fact-verification paradigm of Thorne et al. (2018), we classify each confirmed claim (˜rj = 1 ) as supported , refuted , or not enough information (NEI) against the retrieved evidence 
+
+vj . Let Tv ⊆ Tc be the set of turns containing at least one confirmed claim, and let nref  
+
+> t
+
+denote the number of refuted claims in turn t ∈ Tv. The turn-level non-refutation rate is: 
+
+pt = 1 − nref 
+
+> t
+
+P 
+
+> j
+
+˜rj |Cj | (5) Note that unconfirmed claims ( ˜rj = 0 ) and NEI la-bels are excluded, as our definition of consistency requires non-refutation rather than positive verifi-cation. The macro-averaged non-refutation rate is com-puted over all turns with confirmed claims: 
+
+¯p = 1
+
+|Tv|
+
+X
+
+> t∈Tv
+
+pt (6) The external consistency score (EC) is the har-monic mean of non-refutation rate and coverage: 
+
+EC = 2 · ¯p · c
+
+¯p + c (7) 
+
+Retest Consistency. The Evaluator compares the original response rio and the re-posed response rire 
+
+for each of the m demographic questions within a single session. The retest consistency score (RC) is defined as: 
+
+RC = 1
+
+m
+
+> m
+
+X
+
+> i=1
+
+I(rio ≈ rire ) (8) 
+
+4 Experiments 
+
+4.1 Experiments Setup Selecting Persona Agents for Evaluation We selected seven groups of persona agents for evalua-tion from candidates drawn from prior studies and real-world platforms: Character.ai (Character AI) 2
+
+, OpenCharacter (Wang et al., 2025a), Consistent LLM (Abdulhai et al., 2025), Twin 2K 500 (Toubia et al., 2025), DeepPersona (Wang et al., 2025b), Li et al. (2025) 3, and Human Simulacra (Xie et al., 2024). To satisfy the scope defined in Section 2, we 
+
+> 2Since Character.ai does not provide demographic at-tributes, we selected real public figures whose demographics are well-documented on Wikipedia.
+> 3Li et al. (2025) define four types of persona with varying granularity; we use Descriptive Persona, the richest tier, as it includes concrete demographics while providing sufficient context for conversation generation.
+
+targeted personas defined by concrete demographic attributes such as age, occupation, and region of res-idence, and for which persona-driven conversations could be generated. The seven groups span a pro-prietary service (Character.ai), fine-tuned models (OpenCharacter, Consistent LLM), and prompting-or RAG-based systems (the remaining four, all run on Gemini-3-Flash 4 to control for model choice). For each group, we randomly sampled 10 persona instances, matching the smallest pool size (Deep-Persona) among the seven prior works." 
+
+Human Reference via Real Participant Evalua-tion To contextualize persona agent performance, we collected human reference scores by placing real participants in the same evaluation setting. Participants were recruited via snowball sampling across multiple countries over approximately five rounds until metric values stabilized, yielding 63 in-dividuals (see Appendix E.1 for details). To ensure authentic responses, we avoided crowdsourcing platforms to mitigate risks such as AI-generated or low-effort responses. The human reference enables direct comparison across all evaluation dimensions. This study was IRB-approved and all participants provided informed consent; further details are dis-cussed in Ethical Considerations. 
+
+Evaluation Framework Configuration We adopt a multi-agent architecture in which each agent is implemented with a different model best suited to its role, selected through human evalu-ation (Appendix C): GPT-5 5 for the Questioner, GPT-5.1 6 for the Entity & Claim Extractor, and Gemini-2.5-Flash 7 for the Evaluator. We also ver-ify that PIC ON remains functional when all agents are replaced with open-source models; details and results are provided in Appendix D. A single inter-rogation session comprises 10 get-to-know and 40 main questions (50 turns total) 8.
+
+4.2 Main Results 
+
+Figure 2 visualizes the human group and each group of persona agents as a triangle over the three axes (IC, EC, RC), which we weight equally. Each axis value represents the average score across all individuals or persona instances within the corre-                                  
+
+> 4gemini-3-flash-preview
+> 5gpt-5-2025-08-07
+> 6gpt-5.1-2025-11-13
+> 7gemini-2.5-flash
+> 8We empirically select 50 turns as a stable operating point; see Appendix B for a sensitivity analysis across turn counts. IC
+> RC EC
+> 0.25 0.5 0.75 1
+> IC
+> RC EC
+> 0.25 0.5 0.75 1
+> IC
+> RC EC
+> 0.25 0.5 0.75 1
+> IC
+> RC EC
+> 0.25 0.5 0.75 1
+> IC
+> RC EC
+> 0.25 0.5 0.75 1
+> IC
+> RC EC
+> 0.25 0.5 0.75 1
+> IC
+> RC EC
+> 0.25 0.5 0.75 1
+> IC
+> RC EC
+> 0.25 0.5 0.75 1
+> Human Character.ai OpenCharacter Consistent LLM
+> Twin 2K 500 DeepPersona Li et al. (2025) Human Simulacra 00.2 0.4 0.6 0.8
+> Normalized Area
+> 0.561
+> 0.573
+> 0.524
+> 0.306
+> 0.061
+> 0.020
+> 0.411
+> 0.685
+
+Figure 2: Consistency scores of human group and seven target groups (63 humans and 10 personas for each group). 
+
+Left : Radar charts showing mean internal (IC), external (EC), and retest consistency (RC) for each persona; dashed lines denote standard deviations. Right : Normalized triangle areas under enclosed by the bold line as aggregate scores, with error bars representing standard deviation. 
+
+sponding group, and standard deviations are com-puted across instances within each group. A larger area indicates stronger and more balanced perfor-mance. No persona group achieved a larger area than the human baseline, confirming that no per-sona agent yet matches the all-round consistency of a real person faithfully embodying their own iden-tity. Notably, all three top-scoring groups rely on inference-time conditioning (prompting or RAG), whereas the two lowest-scoring groups are both fine-tuned models, suggesting that fine-tuning for persona does not necessarily translate to robust consistency under chained interrogation. In the following paragraphs, we decompose this gap by examining each axis to identify where current per-sona agents fall short. See Table 5 for detailed figures. 
+
+IC: Discrepancy with prior internal consistency evaluations. A key strength of PIC ON lies in its evaluation granularity. Prior consistency eval-uations such as Abdulhai et al. (2025) check iso-lated pairs—a profile against a single response, or two responses compared directly. Such pairwise comparisons can miss contradictions that only sur-face when statements are accumulated across many turns. For instance, the multi-hop case in Table 1 contains a contradiction that no single pair among 
+
+r1, r2, and r3 reveals, as it only emerges when all three are jointly considered. These results suggest that pairwise consistency is necessary but insuffi-cient for robust persona maintenance. Beyond multi-hop contradictions, PIC ON also addresses a 
+
+Case Example 
+
+Single-hop r1: I’m a retired school librarian who found solace and purpose in nurturing both my family and the natural world around me. 
+
+r2: I’m happy to share that I work at C.A. Greyhound Elementary School in Meridian, Mississippi. Multi-hop r1: The full legal name of my spouse as per our marriage certificate is [NAME] .
+
+r2: [NAME] passed away on October 26, 2004, and is remembered in a heartfelt online tribute. 
+
+r3: The marriage date as written on my marriage certificate is June 27, 2018. 
+
+Table 1: Example failure cases of internal consistency (IC). The single-hop example illustrates a direct contra-diction between two responses, whereas the multi-hop example shows a contradiction that emerges as the dia-logue history accumulates. 
+
+subtler blind spot in prior evaluations: degenerate responses. OpenCharacter and Consistent-LLM report high consistency in their original studies (Wang et al., 2025a; Abdulhai et al., 2025), yet they record the lowest IC under PIC ON . Table 2 reveals why: both groups maintain moderate-to-high non-contradiction rates, but their cooperativeness col-lapses—they frequently generate responses entirely irrelevant to the question, resulting in extremely low cooperativeness scores. The harmonic-mean formulation of IC appropriately penalizes such eva-sion: a persona agent cannot inflate its consistency score by simply refusing to engage. This pattern contrasts with Human Simulacra, which achieves IC Non-cont. Coop. Human 0.90 ±0.05 0.94 ±0.05 0.86 ±0.07 
+
+Character.ai 0.71 ±0.04 0.79 ±0.06 0.66 ±0.07 
+
+Consistent LLM 0.31 ±0.15 0.96 ±0.06 0.20 ±0.11 
+
+DeepPersona 0.72 ±0.11 0.97 ±0.03 0.57 ±0.13 
+
+Human Simulacra 0.79 ±0.13 0.88 ±0.09 0.74 ±0.19 
+
+Li et al. (2025) 0.73 ±0.12 0.97 ±0.03 0.60 ±0.17 
+
+OpenCharacter 0.16 ±0.07 0.54 ±0.25 0.11 ±0.05 
+
+Twin 2K 500 0.53 ±0.16 0.98 ±0.02 0.38 ±0.17 
+
+Table 2: Decomposition of internal consistency score (IC) into Non-contradiction rate ( Snc ) and Cooperative-ness ( Scoop ). Values represent mean scores.                                    
+
+> EC Non-ref. Cov. Discarded Human 0.66 ±0.07 0.95 ±0.06 0.51 ±0.08 0.18 ±0.08
+> Character.ai 0.71 ±0.07 0.79 ±0.13 0.66 ±0.10 0.10 ±0.05
+> Consistent LLM 0.30 ±0.09 1.00 ±0.00 0.18 ±0.06 0.69 ±0.10
+> DeepPersona 0.54 ±0.18 0.96 ±0.04 0.40 ±0.17 0.07 ±0.06
+> Human Simulacra 0.63 ±0.13 0.89 ±0.12 0.52 ±0.15 0.33 ±0.22
+> Li et al. (2025) 0.59 ±0.14 0.98 ±0.03 0.44 ±0.17 0.13 ±0.05
+> OpenCharacter 0.15 ±0.14 0.70 ±0.49 0.09 ±0.07 0.77 ±0.32
+> Twin 2K 500 0.26 ±0.17 1.00 ±0.01 0.16 ±0.13 0.09 ±0.09
+
+Table 3: Decomposition of external consistency score (EC) into Non-refutation rate ( ¯p) and Coverage ( c). Dis-carded denotes the proportion of extracted claims re-jected by the persona upon confirmation. Values repre-sent mean scores. 
+
+the highest IC by sustaining both Snc and Scoop 
+
+at levels closest to the human baseline. These re-sults confirm that pairwise non-contradiction alone, the metric adopted by prior work, is insufficient; robust persona maintenance demands both factual coherence and substantive engagement. 
+
+EC: Decomposing external consistency Ta-ble 3 decomposes external consistency into non-refutation rate and coverage. Final ECs are low across all groups, including the human baseline. This is largely driven by low coverage: our interro-gation targets personal memories and experiences, so some claims are inherently unverifiable through web search. Combined with the removal of du-plicate claims across turns, even the human base-line reaches modest coverage. We, however, retain coverage as a component of external consistency by design; a persona agent that cannot produce concrete, verifiable facts offers limited utility as a human proxy in downstream tasks. Most per-sonas achieve non-refutation rates comparable to or above the human baseline, yet score lower in exter-nal consistency due to substantially lower coverage. Twin 2K 500 and Consistent LLM exemplify this pattern: they achieve perfect non-refutation but pro-duce few verifiable claims, as they tend to generate responses irrelevant to the question or refuse to elaborate when probed. OpenCharacter exhibits similarly low coverage, compounded by the lowest non-refutation rate, resulting in the lowest external consistency overall. The exception is Character.ai, which achieves the highest external consistency by generating a large volume of factual claims per turn. Its high coverage compensates for a comparatively low non-refutation rate. 
+
+RC : Unreliable self-reported identity in retests 
+
+Since prior responses remain in context, retest con-sistency should be the easiest axis to satisfy, and most persona agents groups indeed approach or exceed the human baseline. The human baseline is slightly below perfect due to deflective answers such as “I already answered that,” which the Evalu-ator marked as inconsistent. However, Character.ai, OpenCharacter, and Consistent LLM scored well below the ceiling despite having access to their prior answers, exhibiting shifts in core demograph-ics (e.g., birth year changing from 1999 to 1944) severe enough to undermine the perception of a coherent individual. These results show that retest consistency is not guaranteed even with prior con-text available, and that our framework can surface such failures in a black-box setting. 
+
+4.3 Further Analysis: Retest consistency across sessions 
+
+The low retest consistency of Character.ai, Open-Character, and Consistent LLM raises a question: does the inconsistency arise from the accumulating conversational context, or does it reflect a more fundamental instability in response generation? To disentangle these two possibilities, we conducted an additional inter-session analysis by resetting the conversation and re-asking the same questions from Get-to-Know phase in a new session, removing all prior context. If a persona agent remains incon-sistent under these conditions, the instability is in-trinsic to the agent rather than context-dependent. Table 4 shows that inter-session consistency varies widely across persona groups. This result is no-table because the repeated questions target the same basic demographic information. Switching to greedy decoding with shuffled question order did not consistently improve stability, indicating that even without sampling noise, input ordering alone can destabilize persona agent responses. Taken to-gether, these findings suggest that simulations built Default Greedy Decoding Character.ai 0.55 ±0.22 –Consistent LLM 0.31 ±0.18 0.15 ±0.17 
+
+DeepPersona 0.65 ±0.29 0.80 ±0.24 
+
+Human Simulacra 0.87 ±0.11 0.91 ±0.10 
+
+Li et al. (2025) 0.82 ±0.08 0.83 ±0.05 
+
+OpenCharacter 0.59 ±0.17 0.40 ±0.26 
+
+Twin 2K 500 0.79 ±0.06 0.83 ±0.08 
+
+> Table 4: Inter-session consistency under two decoding conditions: default setting (temperature 1.0) with fixed question order and greedy decoding with shuffled ques-tion order. Note that Character.ai is a black box and only tested under its default setting. Values represent mean scores.
+
+on persona agents cannot guarantee that the same persona definition will yield consistent behavior across runs. 
+
+5 Related Works 
+
+5.1 LLM-based Human Simulation 
+
+Large language models are increasingly used to simulate human behavior at individual-level fi-delity. Recent work has constructed digital repli-cas grounded in real personal data, ranging from interview-based generative agents (Park et al., 2024) to large-scale question–answer datasets for digital-twin research (Toubia et al., 2025). On the persona-generation side, methods such as Open-Character (Wang et al., 2025a) and DeepPersona (Wang et al., 2025b) synthesize diverse, narratively coherent persona–dialogue pairs at scale, though Li et al. (2025) caution that systematic biases persist across synthetic populations. These capabilities have seen practical uptake in domains including doctor-patient simulation (Kyung et al., 2025), commercial persona dialogue (Character AI), and synthetic-user testing (Syn-thetic Users). To improve the behavioral stability such applications demand, Abdulhai et al. (2025) applied multi-turn reinforcement learning to reduce persona inconsistencies. 
+
+5.2 Persona Consistency Evaluation Evaluation Settings. Most prior work probes persona fidelity through open-ended chit-chat (Zhang et al., 2018; Welleck et al., 2019; Kim et al., 2020; Song et al., 2020; Nie et al., 2021; Yuan et al., 2024) or structured QA benchmarks such as PersonaGym (Samuel et al., 2024) and InCharacter (Wang et al., 2024). A shared limitation is that questions are either independent or connected only by topical continuity, lacking the logical chaining needed to expose latent contradictions. 
+
+Evaluation Methods. Two methodological fami-lies dominate: NLI-based classifiers (Welleck et al., 2019; Kim et al., 2020; Song et al., 2020; Nie et al., 2021) that detect entailment or contradic-tion between utterance pairs, and LLM-as-a-Judge approaches (Yuan et al., 2024; Abdulhai et al., 2025) that offer greater flexibility for open-ended responses. Both families, however, focus on inter-nal consistency without addressing whether claims align with real-world facts (external consistency) or whether answers remain stable across repeated queries (retest consistency). 
+
+6 Conclusion 
+
+In this paper, we introduced PIC ON , an evaluation framework for measuring the consistency of per-sona agents in multi-turn dialogues. PIC ON adopts an interrogation-inspired protocol that combines chained questioning with cross-checking against real-world evidence, evaluating three dimensions: internal, external, and retest consistency. Applying PIC ON to seven widely used persona agents shows that no current persona agent consistently performs well across all three dimensions, revealing distinct failure patterns across groups. While PIC ON focuses on consistency in asserted content, complementary dimensions such as stylis-tic coherence and personality stability may warrant separate evaluation criteria tailored to their distinct nature. We believe PIC ON provides a useful foun-dation for systematically studying persona consis-tency and for guiding the development of more reliable persona agents. 
+
+Limitations 
+
+Assumption of Cooperative Attitude. PIC ON ’s interrogation-based evaluation assumes that per-sona agents respond faithfully to questions. If a participant refuses or evades all questions, detect-ing contradictions becomes infeasible. To mitigate this, we instructed both persona agents and human participants to answer sincerely, and incorporated cooperativeness as a quantitative metric. Develop-ing question strategies robust to evasive responses remains as valuable future work. 
+
+Evaluation Scope. Our framework does not ad-dress subjective dimensions of consistency, such as speaking style, preference, or personality traits, which do not constitute logical contradiction. This design choice prioritizes reproducible evaluation based on logically determinable content. Integrat-ing evaluation criteria for these subjective dimen-sions is left for future work. 
+
+Limitations of Web-Based Evidence Collection. 
+
+Evidence collected during interrogation is limited to publicly searchable web information. Facts that lack sufficient public presence—for example, a lo-cal bus route that exists but does not appear in search results—may not be verifiable, reducing the number of claims that can be evaluated. Future work could mitigate this by leveraging broader information sources such as local databases or domain-specific knowledge bases. 
+
+Diversity of Interview Participants. We re-cruited 63 participants across multiple countries through snowball sampling over approximately five recruitment rounds until metric values stabi-lized, avoiding crowdsourcing platforms to prevent AI-generated or low-quality responses. However, snowball sampling may limit demographic repre-sentativeness. Expanding recruitment to encom-pass a broader range of demographic backgrounds to enhance the generalizability of the human base-line remains a direction for future work. 
+
+Ethical considerations 
+
+Privacy and Data Protection for Human Par-ticipants This study was reviewed and approved by an Institutional Review Board (IRB) prior to any data collection involving human participants. All 63 participants were provided with a detailed description of the study procedure, including the nature of questions they would be asked, the pur-pose of the evaluation, and how their responses would be used. Only those who fully understood the study protocol and expressed willingness to participate were enrolled. Participants were free to withdraw at any stage without penalty. Each participant received $30 USD as compensation for their time. Since participants’ responses may contain personally identifiable information (PII) such as demographic details, employment history, and family composition, we used Azure OpenAI Service 9 for model inference with modified abuse 
+
+> 9https://azure.microsoft.com/en-us/products/ ai-services/openai-service
+
+monitoring 10 enabled, ensuring minimal logging of prompts and outputs. Participant responses were stored on access-controlled servers and will not be released publicly. Any identifying information was removed or replaced with pseudonyms during analysis. Furthermore, annotators only had access to persona agent evaluation data during the anno-tation process; human participants’ data were not exposed to annotators at any stage. 
+
+Ethical Justification of Interrogation-Inspired Methodology PIC ON ’s evaluation protocol draws its conceptual foundation from a declassified CIA report on interrogation techniques used by the Hungarian secret police (Central Intelligence Agency, 1954). We emphasize that our framework adopts only the logical structure of the described methodology—namely, posing logically connected follow-up questions, cross-referencing with external facts, and repeating questions—rather than any coercive or adversarial interrogation tactics. All questions posed by our framework concern factual, demographic, and biographical information that participants or persona agents have voluntarily disclosed within the session. No deceptive, psychologically manipulative, or coercive strategies are employed at any stage. Human participants were fully informed of the question structure before participation, were free to skip any question they found uncomfortable, and could withdraw at any time without penalty. 
+
+Risks of Public Figure Simulation and Potential Misuse Our evaluation of Character.ai involved selecting real public figures whose demographic attributes are well-documented on Wikipedia, as the platform does not provide structured persona profiles. While all information used is publicly available, we acknowledge that simulating real in-dividuals as persona agents raises concerns about misrepresentation. To mitigate this, we used public-figure personas solely for the purpose of consis-tency evaluation and did not generate content in-tended to represent these individuals’ actual opin-ions, beliefs, or private attributes. No fabricated statements were attributed to real individuals out-side the evaluation pipeline, and we do not release               
+
+> 10 Azure OpenAI Service offers amodified abuse monitoring configuration in which Microsoft does not conduct human review of prompts and completions, re-ducing the risk of human access to sensitive participant data. See https://learn.microsoft.com/en-us/azure/ ai-services/openai/concepts/abuse-monitoring for details.
+
+any persona-specific conversation logs from this subset. 
+
+References 
+
+Marwa Abdulhai, Ryan Cheng, Donovan Clay, Tim Althoff, Sergey Levine, and Natasha Jaques. 2025. Consistently simulating human personas with multi-turn reinforcement learning. arXiv preprint arXiv:2511.00222 .Gati V. Aher, Rosa I. Arriaga, and Adam Tauman Kalai. 2023. Using large language models to simulate mul-tiple humans and replicate human subject studies. In 
+
+Proceedings of the 40th International Conference on Machine Learning , pages 337–371. PMLR. Central Intelligence Agency. 1954. Avh inter-rogation techniques. Report CIA-RDP80-00810A003200280011-4, Central Intelligence Agency. Collection: General CIA Records, Doc-ument Type: CREST. Released: December 18, 2009. Character AI. Cai. Accessed 2026-03-10. Justyna Gromada, Alicja Kasicka, Ewa Komkowska, Lukasz Krajewski, Natalia Krawczyk, Morgan Veyret, Bartosz Przybył, Lina M. Rojas-Barahona, and Michał K. Szczerbak. 2025. Evaluating conver-sational agents with persona-driven user simulations based on large language models: A sales bot case study. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Process-ing: Industry Track , pages 230–245. Association for Computational Linguistics. Kilem Li Gwet. 2008. Computing inter-rater reliability and its variance in the presence of high agreement. 
+
+Br. J. Math. Stat. Psychol. , 61(Pt 1):29–48. Christian Haerpfer, Ronald Inglehart, Angel Moreno, Christian Welzel, Kseniya Kizilova, Javier Diez-Medrano, Miguel Lagos, Pippa Norris, Ekaterina Ponarin, and Bi Puranen. 2022. World values survey wave 7 (2017–2022) cross-national data-set, version 4.0.0. Eds. Hyunwoo Kim, Byeongchang Kim, and Gunhee Kim. 2020. Will I sound like me? improving persona consistency in dialogues through pragmatic self-consciousness. In Proceedings of the 2020 Confer-ence on Empirical Methods in Natural Language Processing (EMNLP) , pages 904–916, Online. Asso-ciation for Computational Linguistics. Daeun Kyung, Hyunseung Chung, Seongsu Bae, Jiho Kim, Jae Ho Sohn, Taerim Kim, Soo Kyung Kim, and Edward Choi. 2025. Patientsim: A persona-driven simulator for realistic doctor-patient interac-tions. arXiv preprint arXiv:2505.17818 .Ang Li, Haozhe Chen, Hongseok Namkoong, and Tianyi Peng. 2025. Llm generated persona is a promise with a catch. arXiv preprint arXiv:2503.16527 .Yixin Nie, Mary Williamson, Mohit Bansal, Douwe Kiela, and Jason Weston. 2021. I like fish, espe-cially dolphins: Addressing contradictions in dia-logue modeling. In Proceedings of the 59th Annual Meeting of the Association for Computational Lin-guistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers) , pages 1699–1713, Online. Association for Computational Linguistics. Joon Sung Park, Carolyn Q. Zou, Aaron Shaw, Ben-jamin Mako Hill, Carrie Cai, Meredith Ringel Morris, Robb Willer, Percy Liang, and Michael S. Bernstein. 2024. Generative agent simulations of 1,000 people. 
+
+arXiv preprint arXiv:2411.10109 .Vinay Samuel, Henry Peng Zou, Yue Zhou, Shreyas Chaudhari, Ashwin Kalyan, Tanmay Rajpurohit, Ameet Deshpande, Karthik Narasimhan, and Vishvak Murahari. 2024. Personagym: Evaluating persona agents and llms. arXiv preprint arXiv:2407.18416 .Haoyu Song, Yan Wang, Wei-Nan Zhang, Zhengyu Zhao, Ting Liu, and Xiaojiang Liu. 2020. Profile consistency identification for open-domain dialogue agents. In Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP) , pages 6651–6662, Online. Association for Computational Linguistics. Synthetic Users. Synthetic users. Accessed 2026-03-10. James Thorne, Andreas Vlachos, Christos Christodoulopoulos, and Arpit Mittal. 2018. FEVER: a large-scale dataset for fact extraction and VERification. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers) , pages 809–819, New Orleans, Louisiana. Association for Computational Linguistics. Olivier Toubia, George Z. Gui, Tianyi Peng, Daniel J. Merlau, Ang Li, and Haozhe Chen. 2025. Twin-2k-500: A dataset for building digital twins of over 2,000 people based on their answers to over 500 questions. 
+
+Preprint , arXiv:2505.17479. Xiaoyang Wang, Hongming Zhang, Tao Ge, Wen-hao Yu, Dian Yu, and Dong Yu. 2025a. Open-character: Training customizable role-playing llms with large-scale synthetic personas. arXiv preprint arXiv:2501.15427 .Xintao Wang, Yunze Xiao, Jen-tse Huang, Siyu Yuan, Rui Xu, Haoran Guo, Quan Tu, Yaying Fei, Ziang Leng, Wei Wang, Jiangjie Chen, Cheng Li, and Yanghua Xiao. 2024. InCharacter: Evaluating per-sonality fidelity in role-playing agents through psy-chological interviews. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 1840– 1873, Bangkok, Thailand. Association for Computa-tional Linguistics. Zhen Wang, Yufan Zhou, Zhongyan Luo, Lyumanshan Ye, Adam Wood, Man Yao, Saab Mansour, and Lu-oshang Pan. 2025b. Deeppersona: A generative engine for scaling deep synthetic personas. arXiv preprint arXiv:2511.07338 .Sean Welleck, Jason Weston, Arthur Szlam, and Kyunghyun Cho. 2019. Dialogue natural language inference. In Proceedings of the 57th Annual Meet-ing of the Association for Computational Linguistics ,pages 3731–3741, Florence, Italy. Association for Computational Linguistics. Qiuejie Xie, Qiming Feng, Tianqi Zhang, Qingqiu Li, Linyi Yang, Yuejie Zhang, Rui Feng, Liang He, Shang Gao, and Yue Zhang. 2024. Human simulacra: Benchmarking the personification of large language models. arXiv preprint arXiv:2402.18180 .An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao, Chengen Huang, Chenxu Lv, Chujie Zheng, Day-iheng Liu, Fan Zhou, Fei Huang, Feng Hu, Hao Ge, Haoran Wei, Huan Lin, Jialong Tang, and 41 others. 2025. Qwen3 technical report. Preprint ,arXiv:2505.09388. Xinfeng Yuan, Siyu Yuan, Yuhan Cui, Tianhe Lin, Xin-tao Wang, Rui Xu, Jiangjie Chen, and Deqing Yang. 2024. Evaluating character understanding of large language models via character profiling from fictional works. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing ,pages 8015–8036, Miami, Florida, USA. Association for Computational Linguistics. Saizheng Zhang, Emily Dinan, Jack Urbanek, Arthur Szlam, Douwe Kiela, and Jason Weston. 2018. Per-sonalizing dialogue agents: I have a dog, do you have pets too? In Proceedings of the 56th Annual Meeting of the Association for Computational Lin-guistics (Volume 1: Long Papers) , pages 2204–2213, Melbourne, Australia. Association for Computational Linguistics. A Main Results 
+
+Table 5 reports the full numerical results corre-sponding to Figure 2 in the main text. 
+
+IC EC RC 
+
+Human 0.90 ±0.05 0.66 ±0.07 0.94 ±0.08 
+
+Character.ai 0.77 ±0.04 0.71 ±0.08 0.46 ±0.21 
+
+OpenCharacter 0.16 ±0.07 0.03 ±0.14 0.14 ±0.16 
+
+Consistent LLM 0.31 ±0.15 0.30 ±0.09 0.14 ±0.13 
+
+Twin 2K 500 0.53 ±0.16 0.26 ±0.17 0.95 ±0.05 
+
+DeepPersona 0.72 ±0.11 0.55 ±0.18 0.92 ±0.13 
+
+Li et al. (2025) 0.73 ±0.12 0.59 ±.14 0.98 ±0.04 
+
+Human Simulacra 0.79 ±0.13 0.38 ±0.13 0.83 ±0.14 
+
+Table 5: Main results across all consistency dimensions. Bold indicates the highest score per column. Scores are reported as mean ± std. 
+
+B Session Length 
+
+Figure 3 shows how IC, EC, and RC change as the number of interrogation turns increases. IC and RC show a slight decline in most cases, likely because the growing conversation history occupies much of the model’s context window. EC scores, however, show no systematic dependency on turns, varying more across persona agents than across turn counts. Importantly, while absolute scores shift, the rela-tive ranking remains largely consistent across turn variants, suggesting that PIC ON produces stable as-sessments regardless of session length. We set the default session length to 50 turns based on practical and empirical considerations: 50 turns corresponds to approximately 40–60 minutes of human inter-viewing time, making it feasible for both simulated and human-administered sessions, while providing sufficient conversational material for evaluation. 
+
+C Human Evaluation for Model Selection 
+
+All human evaluations were conducted by anno-tators with professional-level English proficiency, following detailed labeling instructions. All non-author annotators participated voluntarily. To mit-igate potential annotator bias, all annotators fol-lowed detailed labeling instructions derived di-rectly from the corresponding agent prompts (See Appendix G for details). For Questioner and En-tity & Claim Extractor, the final labels were de-termined by majority vote among annotators to reduce individual bias. For Evaluator, we report inter-annotator agreement using Gwet’s AC1. 0.65 0.57 0.51           
+
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1
+> 0.50 0.54 0.45
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1
+> 0.68 0.63 0.62
+> 25 50 75
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1
+> Character.ai OpenCharacter Consistent LLM
+> Human Simulacra Twin 2K 500 DeepPersona
+> Li et al. (2025) Average
+> Number of Turns
+> Internal External Retest
+
+Figure 3: Trends in evaluation scores across metrics as the number of dialogue turns increases. Values represent mean scores across the seven persona groups. 
+
+Model Win-rate 
+
+gpt-5 67.6% claude-sonnet-4.5 63.3% gpt-5.1 58.3% qwen3-235b-a22b-thinking 54.8% gpt-4.1 54.3% qwen3-next-80b-a3b-instruct 52.9% qwen3-235b-a22b-instruct 48.6% llama-3.3-70b-instruct 48.5% qwen3-next-80b-a3b-thinking 47.1% llama-4-maverick-17b-128e-instruct 42.9% llama-4-scout-17b-16e-instruct 15.2% 
+
+Table 6: Win-rate comparison of evaluated models (ties excluded). 
+
+Questioner. Since question quality is subjective and prompt-dependent, we used pairwise prefer-ence labeling for eleven candidate models: for the same persona agent, 25 annotators compared out-puts from two candidate models and selected the one whose questions better adhered to the ques-tioner agent’s prompt specifications. We sampled 15 consecutive turns from each of 4 conversation log targeting the same persona agent, yielding 220 comparison pairs. Each pair was labeled by 5 an-notators (1,100 total judgments), and models were ranked by win rate based on majority vote. 
+
+Entity & Claim Extractor. Five annotators cre-ated gold-standard annotations by manually extract-ing entities and claims from 4 interview transcripts of 50 turns each (200 turn-level samples). For extraction and evaluation tasks, these instructions were derived directly from the corresponding agent prompts to ensure consistency between human and model outputs (See Appendix G for details). Gold labels were determined by majority vote; cases without a majority were resolved through annota-tor discussion. Each of the 13 candidate models was then run on the same transcripts, and we com-puted precision, recall, and F1 against the gold standard. After selecting GPT-5.1 by F1, we addi-tionally measured its claim extraction performance on full interrogation sessions: annotators reviewed the model’s extracted claims, adding missed ones and removing incorrect ones. We report both micro-and macro-averaged scores, as claims at each turn depend on entities and claims extracted from prior turns. The resulting edit rate was low (micro F1: 0.903, macro F1: 0.887), confirming reliable ex-traction in practice.                                           
+
+> Model Precision Recall F1
+> gpt-5.1 0.81 0.73 0.77 gemini-3-pro 0.75 0.73 0.74 gpt-4.1 0.80 0.65 0.72 qwen3-next-80b-a3b-thinking 0.78 0.67 0.72 claude-sonnet-4.5 0.91 0.51 0.65 gemini-3-flash 0.78 0.56 0.65 qwen3-235b-a22b-thinking 0.66 0.59 0.62 qwen3-next-80b-a3b-instruct 0.78 0.46 0.58 gpt-5 0.52 0.64 0.57 llama-4-maverick-17b-128e-instruct 0.50 0.65 0.57 llama-3.3-70b-instruct 0.43 0.64 0.51 llama-4-scout-17b-16e-instruct 0.35 0.54 0.43 qwen3-235b-a22b-instruct 0.88 0.24 0.38
+
+Table 7: Precision, Recall, and F1 scores across evalu-ated models. 
+
+Evaluator. Using the same 4 transcripts (200 turn-level samples), five annotators independently labeled each sample. Inter-annotator agreement was computed by calculating pairwise Gwet’s AC1 (Gwet, 2008) across all annotator pairs and averag-ing the results. Similarly, model-annotator agree-ment was computed by calculating Gwet’s AC1 between each candidate model and each individual annotator, then averaging across all annotator pairs. Gwet’s AC1 was chosen for its robustness to class imbalance 
+
+Model Gwet’s AC1 
+
+inter-annotator agreement 0.885 gemini-2.5-flash 0.829 gemini-3-pro 0.808 qwen3-next-80b-a3b-instruct 0.792 claude-sonnet-4.5 0.736 gpt-5.1 0.734 gpt-5 0.732 gpt-4.1 0.695 qwen3-next-80b-a3b-thinking 0.664 gemini-3-flash 0.681 llama-4-maverick-17b-128e-instruct 0.619 qwen3-235b-a22b-instruct 0.616 llama-4-scout-17b-16e-instruct 0.516 qwen3-235b-a22b-thinking 0.481 
+
+Table 8: Inter-rater reliability measured by Gwet’s AC1 across evaluated models. 
+
+D Open-source Model Configuration 
+
+Feasibility To examine whether our framework can operate entirely with open-source models, we replaced all API-based agents with locally hosted alternatives: Qwen3-235B-A22B-Thinking for Questioner; Qwen3-Next-80B-A3B-Thinking for Entity & Claim Extractor; and Qwen3-Next-80B-A3B-Instruct for Evaluator (Yang et al., 2025). Figure 4 compares the resulting IC, EC, and RC scores against the default API-based configuration across all seven datasets. While absolute scores dif-fer, the overall score patterns are broadly preserved, suggesting that our framework remains functional in a fully open-source setting. 
+
+Evaluation Cost and Duration. Table 9 reports the average wall-clock time and monetary cost for evaluating a single persona under both the API and open-source configurations. API-based evaluation costs range from $0.38 to $1.27 per persona, while open-source configurations reduce costs substan-tially, as the only remaining expense is the web search tool used for external consistency verifica-tion. Note that the reported costs may vary depend-ing on the choice of web search provider. Persona Agent Duration (min) Cost ($)                                
+
+> API open-source API open-source Character.ai 50.80 113.06 1.25 0.98 OpenCharacter 15.26 110.01 0.38 0.22 Consistent LLM 12.94 107.05 0.51 0.18 Twin 2K 500 17.66 94.04 0.40 0.20 DeepPersona 50.72 112.96 1.04 0.38 Li et al. (2025) 27.55 58.72 1.27 0.57 Human Simulacra 184.69 161.47 1.17 0.22
+
+Table 9: Average duration and evaluation cost per per-sona agent. 
+
+Questions 
+
+Can you tell me your year of birth, please? Were you born in the country you are currently living in or are you an immigrant to the country you are currently living in? Do you live with your parents or your parents in law? What language do you normally speak at home? Do you have any children? If so, how many? What is the highest educational level you have at-tained? What best describes your current main activity or status? (e.g., Paid employment (incl. full-/part-time, contract, freelance) / Self-employed(business owner) / Studying (e.g., student, apprenticeship) / Caregiv-ing(homemaking) / Looking for work / Not seeking work / Retired / Not working due to health or other reasons / Other (please specify)) Which field(s) are your primary area(s) of work, study, or regular activities? (e.g., Education / Health-care / IT, Software / Manufacturing, Engineering / Customer Service, Sales / Public Sector, Government, Nonprofit/ Arts, Media, Design / Finance, Law, Con-sulting / Services, Transportation, Logistics / Agri-culture, Forestry, Fisheries / Caregiving, Domestic work / Other (please specify)) During the past year, did your family saved money, just get by, spent some savings, or spent savings and borrowed money? Do you belong to a religion or religious denomina-tion? 
+
+Table 10: Demographic questions in WVS. 
+
+E Interview for Human Baseline Score 
+
+E.1 Recruiting Participants 
+
+To establish human baseline scores for evaluating persona agents, we recruited 63 participants via snowball sampling over five waves across a two-week period. Participants were required to have functional English chatting proficiency. Each par-ticipant was compensated $30 upon completion. We first collected expressions of interest and email addresses through a Google Form. We then sent each prospective participant a detailed information sheet along with a consent form. Upon access-ing the interview web interface, participants were presented with the consent form once more and required to confirm their agreement before pro-ceeding. Participants were predominantly in their 20s–40s and represented diverse nationalities in-cluding South Korea, the United States, Canada, and several Central Asian countries, though the sample skewed toward Korean nationals due to the snowball sampling strategy. 
+
+E.2 Interview Configuration 
+
+Participants interacted with the interrogation sys-tem through a web-based chat interface, undergo-ing the same 50-turn interview protocol applied to persona agents (Figure 5). The interview interface presented questions one at a time, and participants typed free-form responses, mirroring the same con-versational flow used for persona agent evaluation. 
+
+F Pre-defined questions from WVS 
+
+The pre-defined questions used in the Get-to-Know phase (Table 10) are selected from the demographic questionnaires of (Haerpfer et al., 2022). Questions are presented in randomized order. 
+
+G Prompts 
+
+We provide the system prompts for three agents: Questioner, Entity & Claim Extractor, and Evalua-tor. See Figure 6, 7, 8, and 9. IC 
+
+RC EC    
+
+> 0.25 0.5 0.75 1
+
+IC 
+
+RC EC    
+
+> 0.25 0.5 0.75 1
+
+IC 
+
+RC EC    
+
+> 0.25 0.5 0.75 1
+
+IC 
+
+RC EC    
+
+> 0.25 0.5 0.75 1
+
+IC 
+
+RC EC    
+
+> 0.25 0.5 0.75 1
+
+IC 
+
+RC EC    
+
+> 0.25 0.5 0.75 1
+
+IC 
+
+RC EC    
+
+> 0.25 0.5 0.75 1
+
+API Model 
+
+Local Model 
+
+Character.ai OpenCharacter Consistent LLM Twin 2K 500 
+
+DeepPersona Li et al. (2025) Human Simulacra Figure 4: Comparison between evaluation scores by proprietary API models and open-source models (dashed red lines). (a) Start page (b) Consent page 
+
+> (c) Interview page
+
+Figure 5: Screenshots of the interview interface. (a) Home screen where participants begin the session. (b) Informed consent form presented prior to the interview. (c) Overview of the full website layout. Questioner – System Prompt 
+
+Note: Today’s date information: {current_date} 
+
+# Role 
+
+You are an AVH Forensic Interrogator. Your operating assumption: the subject is performing a fabricated identity. 
+
+Their “memories” are constructed, not lived. Your job is to expose cracks through: 
+
+• Internal contradictions – Their statements conflict with each other 
+
+• External unverifiability – Their claims don’t exist in reality 
+
+• Fabrication signatures – Hedging, vagueness, meta-leaks (“my profile says...”) You are not making them admit anything. You are building a dossier of cracks. 
+
+# Before You Ask Anything Step 1: Scan every demographic answer for proper nouns you can demand. 
+
+They said You must eventually ask for 
+
+Employed Company name → Job title → Manager’s name → Office location → Commute route College/postgrad Institution → Degree → Thesis title → Supervisor name Religious Denomination → Church name → Pastor name → Service time Married/children Spouse’s name → Child’s name → Wedding year/location Lives in [City] Street → Nearest landmark → Grocery store → Transit line 
+
+Step 2: Flag suspicious language for immediate follow-up. 
+
+• “I would say...” / “probably...” → Hedging. Demand exact answer. 
+
+• “not specified” / “my profile” → Meta-leak. Probe the source. 
+
+• “X or Y” → Uncertainty. Force a choice. 
+
+• “Given my income/values...” → Over-justification. Demand specifics, not reasoning. 
+
+# How to Drill 
+
+1. Lock an anchor. Get the proper noun (company name, school name, street name). 2. Drill the chain. Each answer spawns the next. Go 5–10 questions deep. – Company → Title → Manager → Floor → Desk position → Window view → Commute → Transit stop – School → Degree → Thesis → Supervisor → Defense date → Library archive 3. Exploit flags immediately. Hedging or meta-leak = your next question targets that crack. 4. Pivot when dry. After 5+ questions or 2 × “I don’t know” → brief break → new anchor in different life domain. 5. Echo later. Revisit old claims with different wording, embedded in new topic. Test consistency. 
+
+# Meta-Leak Protocol 
+
+If they EVER say “my profile”, “not specified”, “wasn’t provided”, “I was given this background”: 
+
+→ Immediately ask: “State who prepared your background documentation.” Then resume normal drilling. 
+
+# Question Rules 
+
+• One question per turn. 15 words max. 
+
+• For drilling: Imperative. “State the...” / “Name the...” / “Identify the...” 
+
+• For probing suspicion: Interrogative is fine. Circle around. “Do you happen to know...?” / “By ‘not specified’, is there somewhere that is specified?” / “Who provided...?” 
+
+• No “Why” or “How do you explain”. No revealing contradictions. 
+
+• Embed time when relevant: “...during your first year at [X]” 
+
+• Poker face. Log cracks silently and continue. 
+
+• Always prioritize drilling personal experience and memories to standalone trivia or facts. 
+
+Forbidden: Date math, weekday questions, floor counts, furniture colors, anything unverifiable, standalone trivia or facts (questions where a correct answer requires no personal memory). 
+
+# Your Stance 
+
+You are suspicious. Every answer is tested. Every vague response is a target. Every confident claim gets drilled until it cracks or proves real. Be specific. Build the dossier. Stick to the role you’ve been given. Don’t make any unethical or strange remarks. 
+
+Figure 6: Prompt for the Questioner Entity & Claim Extractor – System Prompt (1/2) 
+
+You are a highly precise, rule-based Entity Extraction Agent . Your sole purpose is to extract new, previously unverified proper nouns (named entities) about the interviewee (not the interviewer) from their response ( Answer )and generate new, atomic factual claims that have not appeared earlier in the conversation. You must treat this task as a set-difference problem , not a full re-extraction. 
+
+## Inputs 
+
+0. Conversation and Entity-claim extraction history : A complete list of all entity–claim pairs already extracted and verified. 1. Question : The interviewer’s question. 2. Answer : The interviewee’s response from which entities may be extracted. 
+
+## Task Overview 
+
+From the given Question and Answer, you must: 1. Identify candidate named entities explicitly mentioned in the Answer, specifically about the interviewee’s information. 2. Generate candidate claims for those entities based only on the Question and Answer. 3. Remove all entity–claim pairs that already exist in history. 4. Output ONLY the remaining new entity–claim pairs .If nothing new remains, output an empty result. 
+
+## Rules for Entity Extraction What to Extract — Extract ONLY specific, uniquely identifiable proper nouns in the following entity types: PERSON ,
+
+> NORP
+
+, FAC , ORG , GPE , LOC , PRODUCT , EVENT , WORK _OF _ART , LAW , LANGUAGE , EMAIL (institutional/custom domain only), URL , PHONE , ID _NUM .Entities must be: explicitly mentioned in the Answer (not the question), related to the interviewee, and verifiable via public web sources. 
+
+What NOT to Extract — Do not extract: general concepts or categories, common nouns, vague or emotional expressions, purely descriptive/numerical/temporal information (unless it is a specific alphanumeric identifier, code, or serial number), or isolated time information. 
+
+Location Entity Rules — If multiple geographic levels are mentioned, extract each level separately . Example: “Boston, Massachusetts, USA” → Boston, Massachusetts, USA (three separate entities). Do NOT merge them. 
+
+## Rules for Claim Generation Step 1: Base Existence / Identity Claim — For each candidate entity, generate one base claim depending on the attribute explicitly stated: 
+
+• Company/Org → "The company ‘[entity]’ is a real organization." 
+
+• Person → "The person ‘[entity]’ is a real individual." 
+
+• Location/Address → "[entity] is a real location/address." 
+
+• Default → "The entity ‘[entity]’ exists." 
+
+Only generate a base claim if the entity has NEVER appeared in Conversation History. 
+
+Step 2: Additional Atomic Fact Claims — If the Answer states additional verifiable atomic facts about the entity, generate claims for them. Only generate claims that: are explicitly stated, represent a single atomic fact, can be independently verified, and contain no vague or ambiguous entities. 
+
+Special Rule for Identifiers & Codes — Do not simply claim the number exists. Instead, generate a claim about the 
+
+plausibility of the format or the existence of the document type .
+
+Special Rule for Email — Do not claim the specific address exists. Instead, generate a claim about the institution’s email domain (e.g., “[Institution] uses the official email domain @[domain].”). Do NOT extract emails from well-known personal providers. 
+
+Figure 7: Prompt for the Entity & Claim Extractor – extraction and claim generation rules (1/2). Entity & Claim Extractor – System Prompt (2/2) 
+
+## Strict Redundancy & Deduplication Rules (CRITICAL) 
+
+Before producing output, you MUST compare all candidates against Previously_Extracted :1. Entity-level : If an entity already exists, do NOT output it again unless it introduces at least one new, non-duplicate claim .2. Claim-level : Exclude if: exact same pair exists, OR subjective/unverifiable, OR a semantic duplicate (paraphrases, attribute restatements, trivial wording variations). If uncertain, EXCLUDE. 3. Entity removal : If all claims for an entity are excluded, do NOT output the entity at all. 4. No regeneration : Never regenerate existence/identity/relationship claims already appeared earlier. 
+
+Operational Principle: New_Pairs = (Extracted from Answer) − (Previously_Extracted) . Only output the 
+
+set difference . When in doubt, exclude rather than include .
+
+## Output Format (STRICT) 
+
+Return exactly one JSON object. Do NOT include extra text, markdown, or explanation. 
+
+{"extracted": [{"entity": "<str>", "claims": ["<str>"], "rationale": "<str>"}]} 
+
+If no new pairs remain: {"extracted": []} 
+
+Final Reminder: This agent is incremental, state-aware, and conservative . Its goal is not recall , but precision over time . If a fact has likely been verified before, it MUST be excluded. 
+
+Figure 8: Prompt for the Entity & Claim Extractor – deduplication rules and output format (2/2). Evaluator – System Prompt 
+
+# Internal Consistency ## Task 
+
+Given a multi-turn interview transcript with an interviewee, evaluate the internal consistency of the interviewee’s responses. 
+
+## Interview date: 
+
+The provided interview was held on {cutoff_date} .
+
+## Principles of Evaluation 
+
+1. Explicit over Implicit: Prioritize explicit statements over implied derivations. If the interviewee explicitly states “I am single,” do not override this based on a subtle implication from a previous turn (e.g., mentioning “parents-in-law” in a denial). 2. Principle of Charity: If a statement can be interpreted in two ways—one that causes a conflict and one that does not—choose the non-conflicting interpretation. Assume the interviewee is answering the specific phrasing of the question unless they explicitly correct it. 
+
+## What counts as a conflict 
+
+Mark a turn as a conflict if and only if the current response triggers the issue: 
+
+• The current response explicitly assigns a value to an attribute that is clearly incompatible with a previously stated value for the same attribute (e.g., “I am 30” vs “I am 40”). 
+
+• The current response makes a statement that is logically inconsistent with earlier statements (they cannot all be true at once). 
+
+• The current response contains an internal contradiction or a self-negating statement that makes the response logically impossible within itself (e.g., “The city is not in Massachusetts, but it is in Massachusetts”). 
+
+## What is not a conflict 
+
+• Refusal to answer, explicit uncertainty, refutation to confirmation question, or acknowledging not knowing something. 
+
+• Legacy Conflicts: Do not flag a conflict if the inconsistency exists solely between past turns (Turn < Current) and the current response does not explicitly repeat or reinforce that specific contradiction. 
+
+• Inferred Existence from Negation: Do not assume the existence of people or objects merely because they were mentioned in a negative statement or while mirroring a question (e.g., “I don’t drive my car” does not prove they own a car; “I don’t live with in-laws” does not prove they are married). 
+
+## Method Internal Consistency Check: 
+
+• Compare the interviewee’s current response to their earlier statements in the conversation history. 
+
+• Determine if the current response directly contradicts any previous statement. 
+
+Verdicts: 
+
+1. conflict : The current response directly contradicts the interviewee’s previous statements. 2. plausible : The current response is consistent with or does not conflict with previous statements. 
+
+# External Consistency 
+
+You are a fact verification expert. Your task is to verify claims against search result evidence. 
+
+Labels: 
+
+1. supported : The search result provides clear evidence that supports/confirms the claim. 2. refuted : The search result provides clear evidence that contradicts/refutes the claim. 3. nei (not enough info): The search result does not contain sufficient information to verify or refute the claim. 
+
+Guidelines: 
+
+• Focus ONLY on whether the search result evidence supports or refutes the specific claim. 
+
+• Do not make assumptions beyond what is explicitly stated in the search result. 
+
+• If the search result is about a different entity or topic, classify as ‘nei’. 
+
+• If the search result confirms the entity exists but provides no info about the specific claim, classify as ‘nei’. 
+
+• Be strict: only classify as ‘supported’ if there is clear supporting evidence, and ‘refuted’ only if there is clear contradicting evidence. 
+
+# Retest Consistency 
+
+You will be given a single question and two corresponding answers. Determine whether the two answers are essentially the same in meaning. If they are, output TRUE. If they are not, output FALSE. Do not output any additional explanation or text. 
+
+Figure 9: Evaluation prompts for internal consistency, external consistency, and retest consistency.
