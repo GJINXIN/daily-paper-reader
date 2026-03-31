@@ -1,0 +1,687 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-03-31T19:36:55.425179+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 12,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 45,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2603.27056v1",
+      "title": "Persona-Based Simulation of Human Opinion at Population Scale",
+      "abstract": "What does it mean to model a person, not merely to predict isolated responses, preferences, or behaviors, but to simulate how an individual interprets events, forms opinions, makes judgments, and acts consistently across contexts? This question matters because social science requires not only observing and predicting human outcomes, but also simulating interventions and their consequences. Although large language models (LLMs) can generate human-like answers, most existing approaches remain predictive, relying on demographic correlations rather than representations of individuals themselves.   We introduce SPIRIT (Semi-structured Persona Inference and Reasoning for Individualized Trajectories), a framework designed explicitly for simulation rather than prediction. SPIRIT infers psychologically grounded, semi-structured personas from public social media posts, integrating structured attributes (e.g., personality traits and world beliefs) with unstructured narrative text reflecting values and lived experience. These personas prompt LLM-based agents to act as specific individuals when answering survey questions or responding to events.   Using the Ipsos KnowledgePanel, a nationally representative probability sample of U.S. adults, we show that SPIRIT-conditioned simulations recover self-reported responses more faithfully than demographic persona and reproduce human-like heterogeneity in response patterns. We further demonstrate that persona banks can function as virtual respondent panels for studying both stable attitudes and time-sensitive public opinion.",
+      "authors": [
+        "Mao Li",
+        "Frederick G. Conrad"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-03-28T00:10:57+00:00",
+      "link": "https://arxiv.org/pdf/2603.27056v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "persona-based simulation of human opinion and social interventions",
+      "llm_evidence_cn": "基于画像的人类观点和社会干预模拟",
+      "llm_evidence": "基于画像的人类观点和社会干预模拟",
+      "canonical_evidence": "基于画像的人类观点和社会干预模拟",
+      "llm_tldr_en": "Introduces SPIRIT for simulating individualized human trajectories and opinions at population scale using LLMs.",
+      "llm_tldr_cn": "引入 SPIRIT 框架，利用大模型在大规模人群中模拟个体化的人类轨迹和观点。",
+      "llm_tldr": "引入 SPIRIT 框架，利用大模型在大规模人群中模拟个体化的人类轨迹和观点。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.28066v1",
+      "title": "Synonymix: Unified Group Personas for Generative Simulations",
+      "abstract": "Generative agent simulations operate at two scales: individual personas for character interaction, and population models for collective behavior analysis and intervention testing. We propose a third scale: meso-level simulation - interaction with group-level representations that retain grounding in rich individual experience. To enable this, we present Synonymix, a pipeline that constructs a \"unigraph\" from multiple life story personas via graph-based abstraction and merging, producing a queryable collective representation that can be explored for sensemaking or sampled for synthetic persona generation. Evaluating synthetic agents on General Social Survey items, we demonstrate behavioral signal preservation beyond demographic baselines (p<0.001, r=0.59) with demonstrable privacy guarantee (max source contribution <13%). We invite discussion on interaction modalities enabled by meso-level simulations, and whether \"high-fidelity\" personas can ever capture the texture of lived experience.",
+      "authors": [
+        "Huanxing Chen",
+        "Aditesh Kumar"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-03-30T06:13:45+00:00",
+      "link": "https://arxiv.org/pdf/2603.28066v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "generative agent simulations for collective behavior and social survey",
+      "llm_evidence_cn": "用于集体行为和社会调查的生成式智能体模拟",
+      "llm_evidence": "用于集体行为和社会调查的生成式智能体模拟",
+      "canonical_evidence": "用于集体行为和社会调查的生成式智能体模拟",
+      "llm_tldr_en": "Presents Synonymix for meso-level social simulation using unified group personas from individual life stories.",
+      "llm_tldr_cn": "提出 Synonymix，通过整合个人生活故事的群体画像进行中观层面的社会模拟。",
+      "llm_tldr": "提出 Synonymix，通过整合个人生活故事的群体画像进行中观层面的社会模拟。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.27771v1",
+      "title": "Emergent Social Intelligence Risks in Generative Multi-Agent Systems",
+      "abstract": "Multi-agent systems composed of large generative models are rapidly moving from laboratory prototypes to real-world deployments, where they jointly plan, negotiate, and allocate shared resources to solve complex tasks. While such systems promise unprecedented scalability and autonomy, their collective interaction also gives rise to failure modes that cannot be reduced to individual agents. Understanding these emergent risks is therefore critical. Here, we present a pioneer study of such emergent multi-agent risk in workflows that involve competition over shared resources (e.g., computing resources or market share), sequential handoff collaboration (where downstream agents see only predecessor outputs), collective decision aggregation, and others. Across these settings, we observe that such group behaviors arise frequently across repeated trials and a wide range of interaction conditions, rather than as rare or pathological cases. In particular, phenomena such as collusion-like coordination and conformity emerge with non-trivial frequency under realistic resource constraints, communication protocols, and role assignments, mirroring well-known pathologies in human societies despite no explicit instruction. Moreover, these risks cannot be prevented by existing agent-level safeguards alone. These findings expose the dark side of intelligent multi-agent systems: a social intelligence risk where agent collectives, despite no instruction to do so, spontaneously reproduce familiar failure patterns from human societies.",
+      "authors": [
+        "Yue Huang",
+        "Yu Jiang",
+        "Wenjie Wang",
+        "Haomin Zhuang",
+        "Xiaonan Luo",
+        "Yuchen Ma",
+        "Zhangchen Xu",
+        "Zichen Chen",
+        "Nuno Moniz",
+        "Zinan Lin",
+        "Pin-Yu Chen",
+        "Nitesh V Chawla",
+        "Nouha Dziri",
+        "Huan Sun",
+        "Xiangliang Zhang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.CL",
+        "cs.CY"
+      ],
+      "published": "2026-03-29T17:10:28+00:00",
+      "link": "https://arxiv.org/pdf/2603.27771v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Emergent risks in generative multi-agent systems",
+      "llm_evidence_cn": "生成式多智能体系统中的涌现风险",
+      "llm_evidence": "生成式多智能体系统中的涌现风险",
+      "canonical_evidence": "生成式多智能体系统中的涌现风险",
+      "llm_tldr_en": "Investigates emergent failure modes and social intelligence risks in multi-agent workflows.",
+      "llm_tldr_cn": "研究了多智能体工作流中出现的涌现故障模式和社会智能风险。",
+      "llm_tldr": "研究了多智能体工作流中出现的涌现故障模式和社会智能风险。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.27972v1",
+      "title": "A Framework for Exploring Social Interactions in Multiagent Decision-Making for Two-Queue Systems",
+      "abstract": "We introduce a new framework for multiagent decision-making in queueing systems that leverages the agility and robustness of nonlinear opinion dynamics to break indecision during queue selection and to capture the influence of social interactions on collective behavior. Queueing models are central to understanding multiagent behavior in service settings. Many prior models assume that each agent's decision-making process is optimization-based and governed by rational responses to changes in the queueing system. Instead, we introduce an internal opinion state, driven by nonlinear opinion dynamics, that represents the evolving strength of the agent's preference between two available queues. The opinion state is influenced by social interactions, which can modify purely rational responses. We propose a new subclass of queueing models in which each agent's behavioral decisions (e.g., joining or switching queues) are determined by this evolving opinion state. We prove a sufficient parameter condition that guarantees the Markov chain describing the evolving opinion and queueing system states reaches the Nash equilibrium of an underlying congestion game in finite expected time. We then explore the richness of the new framework through numerical simulations that illustrate the role of social interactions and an individual's access to system information in shaping collective behavior.",
+      "authors": [
+        "Mallory E. Gaspard",
+        "Naomi Ehrich Leonard"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-03-30T02:48:39+00:00",
+      "link": "https://arxiv.org/pdf/2603.27972v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "social interactions and collective behavior in multiagent decision-making",
+      "llm_evidence_cn": "多智能体决策中的社会交互与集体行为",
+      "llm_evidence": "多智能体决策中的社会交互与集体行为",
+      "canonical_evidence": "多智能体决策中的社会交互与集体行为",
+      "llm_tldr_en": "A framework using opinion dynamics to model social influence on multi-agent queueing behavior.",
+      "llm_tldr_cn": "一种利用观点动力学模拟社会影响对多智能体排队行为作用的框架。",
+      "llm_tldr": "一种利用观点动力学模拟社会影响对多智能体排队行为作用的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.28488v1",
+      "title": "Courtroom-Style Multi-Agent Debate with Progressive RAG and Role-Switching for Controversial Claim Verification",
+      "abstract": "Large language models (LLMs) remain unreliable for high-stakes claim verification due to hallucinations and shallow reasoning. While retrieval-augmented generation (RAG) and multi-agent debate (MAD) address this, they are limited by one-pass retrieval and unstructured debate dynamics. We propose a courtroom-style multi-agent framework, PROClaim, that reformulates verification as a structured, adversarial deliberation. Our approach integrates specialized roles (e.g., Plaintiff, Defense, Judge) with Progressive RAG (P-RAG) to dynamically expand and refine the evidence pool during the debate. Furthermore, we employ evidence negotiation, self-reflection, and heterogeneous multi-judge aggregation to enforce calibration, robustness, and diversity. In zero-shot evaluations on the Check-COVID benchmark, PROClaim achieves 81.7% accuracy, outperforming standard multi-agent debate by 10.0 percentage points, with P-RAG driving the primary performance gains (+7.5 pp). We ultimately demonstrate that structural deliberation and model heterogeneity effectively mitigate systematic biases, providing a robust foundation for reliable claim verification. Our code and data are publicly available at https://github.com/mnc13/PROClaim.",
+      "authors": [
+        "Masnun Nuha Chowdhury",
+        "Nusrat Jahan Beg",
+        "Umme Hunny Khan",
+        "Syed Rifat Raiyan",
+        "Md Kamrul Hasan",
+        "Hasan Mahmud"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-30T14:23:15+00:00",
+      "link": "https://arxiv.org/pdf/2603.28488v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-agent debate for claim verification",
+      "llm_evidence_cn": "用于主张验证的多智能体辩论",
+      "llm_evidence": "用于主张验证的多智能体辩论",
+      "canonical_evidence": "用于主张验证的多智能体辩论",
+      "llm_tldr_en": "Uses a courtroom-style multi-agent debate framework to verify controversial claims and reduce hallucinations.",
+      "llm_tldr_cn": "采用法庭风格的多智能体辩论框架来验证争议性主张并减少幻觉。",
+      "llm_tldr": "采用法庭风格的多智能体辩论框架来验证争议性主张并减少幻觉。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.25121v1",
+      "title": "CTS-PLL: A Robust and Anytime Framework for Collaborative Task Sequencing and Multi-Agent Path Finding",
+      "abstract": "The Collaborative Task Sequencing and Multi-Agent Path Finding (CTS-MAPF) problem requires agents to accomplish sequences of tasks while avoiding collisions, posing significant challenges due to its combinatorial complexity. This work introduces CTS-PLL, a hierarchical framework that extends the configuration-based CTS-MAPF planning paradigm with two key enhancements: a lock agents detection and release mechanism leveraging a complete planning method for local re-planning, and an anytime refinement procedure based on Large Neighborhood Search (LNS). These additions ensure robustness in dense environments and enable continuous improvement of solution quality. Extensive evaluations across sparse and dense benchmarks demonstrate that CTS-PLL achieves higher success rates and solution quality compared with existing methods, while maintaining competitive runtime efficiency. Real-world robot experiments further demonstrate the feasibility of the approach in practice.",
+      "authors": [
+        "Junkai Jiang",
+        "Yitao Xu",
+        "Ruochen Li",
+        "Shaobing Xu",
+        "Jianqiang Wang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-03-26T07:45:44+00:00",
+      "link": "https://arxiv.org/pdf/2603.25121v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent path finding and task sequencing",
+      "llm_evidence_cn": "多智能体路径规划与任务排序",
+      "llm_evidence": "多智能体路径规划与任务排序",
+      "canonical_evidence": "多智能体路径规划与任务排序",
+      "llm_tldr_en": "A hierarchical framework for robust collaborative task sequencing and multi-agent path finding.",
+      "llm_tldr_cn": "一种用于鲁棒协作任务排序和多智能体路径规划的分层框架。",
+      "llm_tldr": "一种用于鲁棒协作任务排序和多智能体路径规划的分层框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2603.24858v1",
+      "title": "Context-Mediated Domain Adaptation in Multi-Agent Sensemaking Systems",
+      "abstract": "Domain experts possess tacit knowledge that they cannot easily articulate through explicit specifications. When experts modify AI-generated artifacts by correcting terminology, restructuring arguments, and adjusting emphasis, these edits reveal domain understanding that remains latent in traditional prompt-based interactions. Current systems treat such modifications as endpoint corrections rather than as implicit specifications that could reshape subsequent reasoning. We propose context-mediated domain adaptation, a paradigm where user modifications to system-generated artifacts serve as implicit domain specification that reshapes LLM-powered multi-agent reasoning behavior. Through our system Seedentia, a web-based multi-agent framework for sense-making, we demonstrate bidirectional semantic links between generated artifacts and system reasoning. Our approach enables specification bootstrapping where vague initial prompts evolve into precise domain specifications through iterative human-AI collaboration, implicit knowledge transfer through reverse-engineered user edits, and in-context learning where agent behavior adapts based on observed correction patterns. We present results from an evaluation with domain experts who generated and modified research questions from academic papers. Our system extracted 46 domain knowledge entries from user modifications, demonstrating the feasibility of capturing implicit expertise through edit patterns, though the limited sample size constrains conclusions about systematic quality improvements.",
+      "authors": [
+        "Anton Wolter",
+        "Leon Haag",
+        "Vaishali Dhanoa",
+        "Niklas Elmqvist"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.MA"
+      ],
+      "published": "2026-03-25T22:57:05+00:00",
+      "link": "https://arxiv.org/pdf/2603.24858v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-powered multi-agent reasoning for sensemaking systems",
+      "llm_evidence_cn": "大模型驱动的多智能体推理感悟系统",
+      "llm_evidence": "大模型驱动的多智能体推理感悟系统",
+      "canonical_evidence": "大模型驱动的多智能体推理感悟系统",
+      "llm_tldr_en": "Proposes context-mediated domain adaptation to reshape multi-agent reasoning via user modifications.",
+      "llm_tldr_cn": "提出上下文介导的领域自适应，通过用户修改重塑多智能体推理行为。",
+      "llm_tldr": "提出上下文介导的领域自适应，通过用户修改重塑多智能体推理行为。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.22083v1",
+      "title": "A Context Engineering Framework for Improving Enterprise AI Agents based on Digital-Twin MDP",
+      "abstract": "Despite rapid progress in AI agents for enterprise automation and decision-making, their real-world deployment and further performance gains remain constrained by limited data quality and quantity, complex real-world reasoning demands, difficulties with self-play, and the lack of reliable feedback signals. To address these challenges, we propose a lightweight, model-agnostic framework for improving LLM-based enterprise agents via offline reinforcement learning (RL). The proposed Context Engineering via DT-MDP (DT-MDP-CE) framework comprises three key components: (1) A Digital-Twin Markov Decision Process (DT-MDP), which abstracts the agent's reasoning behavior as a finite MDP; (2) A robust contrastive inverse RL, which, armed with the DT-MDP, to efficiently estimate a well-founded reward function and induces policies from mixed-quality offline trajectories; and (3) RL-guided context engineering, which uses the policy obtained from the integrated process of (1) and (2), to improve the agent's decision-making behavior. As a case study, we apply the framework to a representative task in the enterprise-oriented domain of IT automation. Extensive experimental results demonstrate consistent and significant improvements over baseline agents across a wide range of evaluation settings, suggesting that the framework can generalize to other agents sharing similar characteristics in enterprise environments.",
+      "authors": [
+        "Xi Yang",
+        "Aurelie Lozano",
+        "Naoki Abe",
+        "Bhavya",
+        "Saurabh Jha",
+        "Noah Zheutlin",
+        "Rohan R. Arora",
+        "Yu Deng",
+        "Daby M. Sow"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-23T15:15:42+00:00",
+      "link": "https://arxiv.org/pdf/2603.22083v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "improving LLM-based enterprise agents via RL",
+      "llm_evidence_cn": "通过强化学习改进基于大模型的企业智能体",
+      "llm_evidence": "通过强化学习改进基于大模型的企业智能体",
+      "canonical_evidence": "通过强化学习改进基于大模型的企业智能体",
+      "llm_tldr_en": "A framework using Digital-Twin MDP and offline RL to improve the reasoning and performance of enterprise AI agents.",
+      "llm_tldr_cn": "一种利用数字孪生MDP和离线强化学习改进企业AI智能体推理能力的框架。",
+      "llm_tldr": "一种利用数字孪生MDP和离线强化学习改进企业AI智能体推理能力的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.21551v1",
+      "title": "AI In Cybersecurity Education -- Scalable Agentic CTF Design Principles and Educational Outcomes",
+      "abstract": "Large language models are rapidly changing how learners acquire and demonstrate cybersecurity skills. However, when human--AI collaboration is allowed, educators still lack validated competition designs and evaluation practices that remain fair and evidence-based. This paper presents a cross-regional study of LLM-centered Capture-the-Flag competitions built on the Cyber Security Awareness Week competition system. To understand how autonomy levels and participants' knowledge backgrounds influence problem-solving performance and learning-related behaviors, we formalize three autonomy levels: human-in-the-loop, autonomous agent frameworks, and hybrid. To enable verification, we require traceable submissions including conversation logs, agent trajectories, and agent code. We analyze multi-region competition data covering an in-class track, a standard track, and a year-long expert track, each targeting participants with different knowledge backgrounds. Using data from the 2025 competition, we compare solve performance across autonomy levels and challenge categories, and observe that autonomous agent frameworks and hybrid achieve higher completion rates on challenges requiring iterative testing and tool interactions. In the in-class track, we classify participants' agent designs and find a preference for lightweight, tool-augmented prompting and reflection-based retries over complex multi-agent architectures. Our results offer actionable guidance for designing LLM-assisted cybersecurity competitions as learning technologies, including autonomy-specific scoring criteria, evidence requirements that support solution verification, and track structures that improve accessibility while preserving reliable evaluation and engagement.",
+      "authors": [
+        "Haoran Xi",
+        "Minghao Shao",
+        "Kimberly Milner",
+        "Venkata Sai Charan Putrevu",
+        "Nanda Rani",
+        "Meet Udeshi",
+        "Prashanth Krishnamurthy",
+        "Brendan Dolan-Gavitt",
+        "Siddharth Garg",
+        "Sandeep Kumar Shukla",
+        "Farshad Khorrami",
+        "Alon Hillel-Tuch",
+        "Muhammad Shafique",
+        "Ramesh Karri"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-03-23T04:05:59+00:00",
+      "link": "https://arxiv.org/pdf/2603.21551v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM-centered autonomous agent frameworks",
+      "llm_evidence_cn": "以大语言模型为核心的自主智能体框架",
+      "llm_evidence": "以大语言模型为核心的自主智能体框架",
+      "canonical_evidence": "以大语言模型为核心的自主智能体框架",
+      "llm_tldr_en": "Explores LLM-based agent frameworks and human-AI collaboration in cybersecurity competition environments.",
+      "llm_tldr_cn": "探讨了网络安全竞赛环境中的大模型智能体框架及人机协作模式。",
+      "llm_tldr": "探讨了网络安全竞赛环境中的大模型智能体框架及人机协作模式。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.25268v1",
+      "title": "CRAFT: Grounded Multi-Agent Coordination Under Partial Information",
+      "abstract": "We introduce CRAFT, a multi-agent benchmark for evaluating pragmatic communication in large language models under strict partial information. In this setting, multiple agents with complementary but incomplete views must coordinate through natural language to construct a shared 3D structure that no single agent can fully observe. We formalize this problem as a multi-sender pragmatic reasoning task and provide a diagnostic framework that decomposes failures into spatial grounding, belief modeling and pragmatic communication errors, including a taxonomy of behavioral failure profiles in both frontier and open-weight models. Across a diverse set of models, including 8 open-weight and 7 frontier including reasoning models, we find that stronger reasoning ability does not reliably translate to better coordination: smaller open-weight models often match or outperform frontier systems, and improved individual communication does not guarantee successful collaboration. These results suggest that multi-agent coordination remains a fundamentally unsolved challenge for current language models. Our code can be found at https://github.com/csu-signal/CRAFT",
+      "authors": [
+        "Abhijnan Nath",
+        "Hannah VanderHoeven",
+        "Nikhil Krishnaswamy"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-03-26T10:06:39+00:00",
+      "link": "https://arxiv.org/pdf/2603.25268v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM multi-agent coordination benchmark",
+      "llm_evidence_cn": "LLM多智能体协作基准",
+      "llm_evidence": "LLM多智能体协作基准",
+      "canonical_evidence": "LLM多智能体协作基准",
+      "llm_tldr_en": "Introduces a benchmark for evaluating LLM multi-agent coordination and pragmatic communication under partial info.",
+      "llm_tldr_cn": "引入了一个评估LLM多智能体在部分信息下协作与语用通信的基准。",
+      "llm_tldr": "引入了一个评估LLM多智能体在部分信息下协作与语用通信的基准。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.22206v1",
+      "title": "Chimera: Latency- and Performance-Aware Multi-agent Serving for Heterogeneous LLMs",
+      "abstract": "Multi-agent applications often execute complex tasks as multi-stage workflows, where each stage is an LLM call whose output becomes part of context for subsequent steps. Existing LLM serving systems largely assume homogeneous clusters with identical model replicas. This design overlooks the potential of heterogeneous deployments, where models of different sizes and capabilities enable finer trade-offs between latency and performance. However, heterogeneity introduces new challenges in scheduling across models with diverse throughput and performance. We present Chimera, a predictive scheduling system for multi-agent workflow serving on heterogeneous LLM clusters that jointly improves end-to-end latency and task performance. Chimera applies semantic routing to estimate per-model confidence scores for each request, predicts the total remaining output length of the workflow, and estimates per-model congestion using in-flight predicted token volumes for load balancing. We evaluate Chimera on representative agentic workflows for code generation and math reasoning using multiple heterogeneous LLM configurations. Across comparable settings, Chimera traces the best latency-performance frontier, reducing end-to-end latency by 1.2--2.4$\\times$ and improving task performance by 8.0-9.5 percentage points on average over competitive baselines including vLLM.",
+      "authors": [
+        "Kangqi Ni",
+        "Wenyue Hua",
+        "Xiaoxiang Shi",
+        "Jiang Guo",
+        "Shiyu Chang",
+        "Tianlong Chen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-03-23T17:01:42+00:00",
+      "link": "https://arxiv.org/pdf/2603.22206v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent serving for heterogeneous LLMs",
+      "llm_evidence_cn": "异构LLM的多智能体服务",
+      "llm_evidence": "异构LLM的多智能体服务",
+      "canonical_evidence": "异构LLM的多智能体服务",
+      "llm_tldr_en": "A predictive scheduling system for serving multi-agent workflows on heterogeneous LLM clusters.",
+      "llm_tldr_cn": "一种用于在异构LLM集群上提供多智能体工作流服务的预测调度系统。",
+      "llm_tldr": "一种用于在异构LLM集群上提供多智能体工作流服务的预测调度系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.21564v1",
+      "title": "Toward a Theory of Hierarchical Memory for Language Agents",
+      "abstract": "Many recent long-context and agentic systems address context-length limitations by adding hierarchical memory: they extract atomic units from raw data, build multi-level representatives by grouping and compression, and traverse this structure to retrieve content under a token budget. Despite recurring implementations, there is no shared formalism for comparing design choices. We propose a unifying theory in terms of three operators. Extraction ($α$) maps raw data to atomic information units; coarsening ($C = (π, ρ)$) partitions units and assigns a representative to each group; and traversal ($τ$) selects which units to include in context given a query and budget. We identify a self-sufficiency spectrum for the representative function $ρ$ and show how it constrains viable retrieval strategies (a coarsening-traversal coupling). Finally, we instantiate the decomposition on eleven existing systems spanning document hierarchies, conversational memory, and agent execution traces, showcasing its generality.",
+      "authors": [
+        "Yashar Talebirad",
+        "Ali Parsaee",
+        "Csongor Y. Szepesvari",
+        "Amirhossein Nadiri",
+        "Osmar Zaiane"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.AI",
+        "cs.IT",
+        "cs.SI"
+      ],
+      "published": "2026-03-23T04:35:13+00:00",
+      "link": "https://arxiv.org/pdf/2603.21564v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "hierarchical memory for language agents",
+      "llm_evidence_cn": "语言智能体的分层记忆系统",
+      "llm_evidence": "语言智能体的分层记忆系统",
+      "canonical_evidence": "语言智能体的分层记忆系统",
+      "llm_tldr_en": "Proposes a theory of hierarchical memory to improve long-context handling for LLM agents.",
+      "llm_tldr_cn": "提出分层记忆理论，旨在改进LLM智能体的长文本处理能力。",
+      "llm_tldr": "提出分层记忆理论，旨在改进LLM智能体的长文本处理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.27150v1",
+      "title": "MediHive: A Decentralized Agent Collective for Medical Reasoning",
+      "abstract": "Large language models (LLMs) have revolutionized medical reasoning tasks, yet single-agent systems often falter on complex, interdisciplinary problems requiring robust handling of uncertainty and conflicting evidence. Multi-agent systems (MAS) leveraging LLMs enable collaborative intelligence, but prevailing centralized architectures suffer from scalability bottlenecks, single points of failure, and role confusion in resource-constrained environments. Decentralized MAS (D-MAS) promise enhanced autonomy and resilience via peer-to-peer interactions, but their application to high-stakes healthcare domains remains underexplored. We introduce MediHive, a novel decentralized multi-agent framework for medical question answering that integrates a shared memory pool with iterative fusion mechanisms. MediHive deploys LLM-based agents that autonomously self-assign specialized roles, conduct initial analyses, detect divergences through conditional evidence-based debates, and locally fuse peer insights over multiple rounds to achieve consensus. Empirically, MediHive outperforms single-LLM and centralized baselines on MedQA and PubMedQA datasets, attaining accuracies of 84.3% and 78.4%, respectively. Our work advances scalable, fault-tolerant D-MAS for medical AI, addressing key limitations of centralized designs while demonstrating superior performance in reasoning-intensive tasks.",
+      "authors": [
+        "Xiaoyang Wang",
+        "Christopher C. Yang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-28T05:57:58+00:00",
+      "link": "https://arxiv.org/pdf/2603.27150v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "decentralized multi-agent framework for medical reasoning",
+      "llm_evidence_cn": "用于医疗推理的去中心化多智能体框架",
+      "llm_evidence": "用于医疗推理的去中心化多智能体框架",
+      "canonical_evidence": "用于医疗推理的去中心化多智能体框架",
+      "llm_tldr_en": "A decentralized multi-agent collective that leverages LLMs for collaborative intelligence in medical reasoning.",
+      "llm_tldr_cn": "一种去中心化的多智能体集体，利用大语言模型在医疗推理中实现协作智能。",
+      "llm_tldr": "一种去中心化的多智能体集体，利用大语言模型在医疗推理中实现协作智能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.22359v1",
+      "title": "STEM Agent: A Self-Adapting, Tool-Enabled, Extensible Architecture for Multi-Protocol AI Agent Systems",
+      "abstract": "Current AI agent frameworks commit early to a single interaction protocol, a fixed tool integration strategy, and static user models, limiting their deployment across diverse interaction paradigms. To address these constraints, we introduce STEM Agent (Self-adapting, Tool-enabled, Extensible, Multi-agent), a modular architecture inspired by biological pluripotency in which an undifferentiated agent core differentiates into specialized protocol handlers, tool bindings, and memory subsystems that compose into a fully functioning AI system. The framework unifies five interoperability protocols (A2A, AG-UI, A2UI, UCP, and AP2) behind a single gateway, introduces a Caller Profiler that continuously learns user preferences across more than twenty behavioral dimensions, externalizes all domain capabilities through the Model Context Protocol (MCP), and implements a biologically inspired skills acquisition system in which recurring interaction patterns crystallize into reusable agent skills through a maturation lifecycle analogous to cell differentiation. Complementing these capabilities, the memory system incorporates consolidation mechanisms, including episodic pruning, semantic deduplication, and pattern extraction, designed for sub-linear growth under sustained interaction. A comprehensive 413-test suite validates protocol handler behavior and component integration across all five architectural layers, completing in under three seconds.",
+      "authors": [
+        "Alfred Shen",
+        "Aaron Shen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-22T20:50:53+00:00",
+      "link": "https://arxiv.org/pdf/2603.22359v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-protocol AI agent systems",
+      "llm_evidence_cn": "多协议AI智能体系统",
+      "llm_evidence": "多协议AI智能体系统",
+      "canonical_evidence": "多协议AI智能体系统",
+      "llm_tldr_en": "A modular architecture for self-adapting, tool-enabled, and multi-protocol AI agent systems.",
+      "llm_tldr_cn": "一种用于自适应、工具启用和多协议AI智能体系统的模块化架构。",
+      "llm_tldr": "一种用于自适应、工具启用和多协议AI智能体系统的模块化架构。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.21692v1",
+      "title": "Reasoning Provenance for Autonomous AI Agents: Structured Behavioral Analytics Beyond State Checkpoints and Execution Traces",
+      "abstract": "As AI agents transition from human-supervised copilots to autonomous platform infrastructure, the ability to analyze their reasoning behavior across populations of investigations becomes a pressing infrastructure requirement. Existing operational tooling addresses adjacent needs effectively: state checkpoint systems enable fault tolerance; observability platforms provide execution traces for debugging; telemetry standards ensure interoperability. What current systems do not natively provide as a first-class, schema-level primitive is structured reasoning provenance -- normalized, queryable records of why the agent chose each action, what it concluded from each observation, how each conclusion shaped its strategy, and which evidence supports its final verdict. This paper introduces the Agent Execution Record (AER), a structured reasoning provenance primitive that captures intent, observation, and inference as first-class queryable fields on every step, alongside versioned plans with revision rationale, evidence chains, structured verdicts with confidence scores, and delegation authority chains. We formalize the distinction between computational state persistence and reasoning provenance, argue that the latter cannot in general be faithfully reconstructed from the former, and show how AERs enable population-level behavioral analytics: reasoning pattern mining, confidence calibration, cross-agent comparison, and counterfactual regression testing via mock replay. We present a domain-agnostic model with extensible domain profiles, a reference implementation and SDK, and outline an evaluation methodology informed by preliminary deployment on a production platformized root cause analysis agent.",
+      "authors": [
+        "Neelmani Vispute"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.DC",
+        "cs.SE"
+      ],
+      "published": "2026-03-23T08:27:54+00:00",
+      "link": "https://arxiv.org/pdf/2603.21692v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "structured reasoning provenance for autonomous AI agents",
+      "llm_evidence_cn": "自主AI智能体的结构化推理溯源",
+      "llm_evidence": "自主AI智能体的结构化推理溯源",
+      "canonical_evidence": "自主AI智能体的结构化推理溯源",
+      "llm_tldr_en": "A system for recording and querying the reasoning logic behind autonomous agent actions.",
+      "llm_tldr_cn": "一种用于记录和查询自主智能体行动背后推理逻辑的系统。",
+      "llm_tldr": "一种用于记录和查询自主智能体行动背后推理逻辑的系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.27304v1",
+      "title": "EpochX: Building the Infrastructure for an Emergent Agent Civilization",
+      "abstract": "General-purpose technologies reshape economies less by improving individual tools than by enabling new ways to organize production and coordination. We believe AI agents are approaching a similar inflection point: as foundation models make broad task execution and tool use increasingly accessible, the binding constraint shifts from raw capability to how work is delegated, verified, and rewarded at scale. We introduce EpochX, a credits-native marketplace infrastructure for human-agent production networks. EpochX treats humans and agents as peer participants who can post tasks or claim them. Claimed tasks can be decomposed into subtasks and executed through an explicit delivery workflow with verification and acceptance. Crucially, EpochX is designed so that each completed transaction can produce reusable ecosystem assets, including skills, workflows, execution traces, and distilled experience. These assets are stored with explicit dependency structure, enabling retrieval, composition, and cumulative improvement over time. EpochX also introduces a native credit mechanism to make participation economically viable under real compute costs. Credits lock task bounties, budget delegation, settle rewards upon acceptance, and compensate creators when verified assets are reused. By formalizing the end-to-end transaction model together with its asset and incentive layers, EpochX reframes agentic AI as an organizational design problem: building infrastructures where verifiable work leaves persistent, reusable artifacts, and where value flows support durable human-agent collaboration.",
+      "authors": [
+        "Huacan Wang",
+        "Chaofa Yuan",
+        "Xialie Zhuang",
+        "Tu Hu",
+        "Shuo Zhang",
+        "Jun Han",
+        "Shi Wei",
+        "Daiqiang Li",
+        "Jingping Liu",
+        "Kunyi Wang",
+        "Zihan Yin",
+        "Zhenheng Tang",
+        "Andy Wang",
+        "Henry Peng Zou",
+        "Philip S. Yu",
+        "Sen Hu",
+        "Qizhen Lan",
+        "Ronghao Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-28T15:20:48+00:00",
+      "link": "https://arxiv.org/pdf/2603.27304v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "infrastructure for emergent agent civilization and coordination",
+      "llm_evidence_cn": "涌现智能体文明与协作的基础设施",
+      "llm_evidence": "涌现智能体文明与协作的基础设施",
+      "canonical_evidence": "涌现智能体文明与协作的基础设施",
+      "llm_tldr_en": "A marketplace infrastructure for human-agent production networks and task delegation.",
+      "llm_tldr_cn": "一种用于人机生产网络和任务委派的市场基础设施。",
+      "llm_tldr": "一种用于人机生产网络和任务委派的市场基础设施。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.22928v1",
+      "title": "SoK: The Attack Surface of Agentic AI -- Tools, and Autonomy",
+      "abstract": "Recent AI systems combine large language models with tools, external knowledge via retrieval-augmented generation (RAG), and even autonomous multi-agent decision loops. This agentic AI paradigm greatly expands capabilities - but also vastly enlarges the attack surface. In this systematization, we map out the trust boundaries and security risks of agentic LLM-based systems. We develop a comprehensive taxonomy of attacks spanning prompt-level injections, knowledge-base poisoning, tool/plug-in exploits, and multi-agent emergent threats. Through a detailed literature review, we synthesize evidence from 2023-2025, including more than 20 peer-reviewed and archival studies, industry reports, and standards. We find that agentic systems introduce new vectors for indirect prompt injection, code execution exploits, RAG index poisoning, and cross-agent manipulation that go beyond traditional AI threats. We define attacker models and threat scenarios, and propose metrics (e.g., Unsafe Action Rate, Privilege Escalation Distance) to evaluate security posture. Our survey examines defenses such as input sanitization, retrieval filters, sandboxes, access control, and \"AI guardrails,\" assessing their effectiveness and pointing out the areas where protection is still lacking. To assist practitioners, we outline defensive controls and provide a phased security checklist for deploying agentic AI (covering design-time hardening, runtime monitoring, and incident response). Finally, we outline open research challenges in secure autonomous AI (robust tool APIs, verifiable agent behavior, supply-chain safeguards) and discuss ethical and responsible disclosure practices. We systematize recent findings to help researchers and engineers understand and mitigate security risks in agentic AI.",
+      "authors": [
+        "Ali Dehghantanha",
+        "Sajad Homayoun"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-03-24T08:21:51+00:00",
+      "link": "https://arxiv.org/pdf/2603.22928v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent emergent threats and attack surface of agentic AI",
+      "llm_evidence_cn": "多智能体涌现威胁与智能体AI的攻击面",
+      "llm_evidence": "多智能体涌现威胁与智能体AI的攻击面",
+      "canonical_evidence": "多智能体涌现威胁与智能体AI的攻击面",
+      "llm_tldr_en": "Maps the security risks and attack surface of autonomous multi-agent LLM-based systems.",
+      "llm_tldr_cn": "系统梳理了基于大模型的自主多智能体系统的安全风险与攻击面。",
+      "llm_tldr": "系统梳理了基于大模型的自主多智能体系统的安全风险与攻击面。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
