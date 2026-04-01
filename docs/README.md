@@ -6,71 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-03-31
-- 运行时间：2026-03-31 19:41:11 UTC
+- 最新运行日期：2026-04-01
+- 运行时间：2026-04-01 20:05:58 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 17 篇论文深度解析 AI 模拟人类社会的最新进展，重点攻克大规模人群画像与多智能
-- 详情：[/202603/31/README](/202603/31/README)
+今日深度复盘 17 篇前沿论文，聚焦 AI 智能体在社会动力学与实时仿真领域的突破性进展。
+重点推荐 BotVerse 实时仿真框架与半自主智能体交互研究，揭示了多智能体协作的社会演化规律。
+建议关注 LLM 规划的可靠性边界，探索 AI 如何在模拟社会与自然群体中实现精准对齐。
+- 详情：[/202604/01/README](/202604/01/README)
 
 ### 精读区论文标签
-1. [Persona-Based Simulation of Human Opinion at Population Scale](/202603/31/2603.27056v1-persona-based-simulation-of-human-opinion-at-population-scale)  
+1. [Towards Computational Social Dynamics of Semi-Autonomous AI Agents](/202604/01/2603.28928v1-towards-computational-social-dynamics-of-semi-autonomous-ai-agents)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：基于画像的人类观点和社会干预模拟
-2. [Synonymix: Unified Group Personas for Generative Simulations](/202603/31/2603.28066v1-synonymix-unified-group-personas-for-generative-simulations)  
+   evidence：AI智能体之间涌现的社会组织与集体行动
+2. [BotVerse: Real-Time Event-Driven Simulation of Social Agents](/202604/01/2603.29741v1-botverse-real-time-event-driven-simulation-of-social-agents)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：用于集体行为和社会调查的生成式智能体模拟
-3. [Emergent Social Intelligence Risks in Generative Multi-Agent Systems](/202603/31/2603.27771v1-emergent-social-intelligence-risks-in-generative-multi-agent-systems)  
+   evidence：基于大语言模型智能体的高保真社会模拟及虚假信息场景
+3. [Heterogeneous Debate Engine: Identity-Grounded Cognitive Architecture for Resilient LLM-Based Ethical Tutoring](/202604/01/2603.27404v1-heterogeneous-debate-engine-identity-grounded-cognitive-architecture-for-resilient-llm-based-ethical-tutoring)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：生成式多智能体系统中的涌现风险
-4. [A Framework for Exploring Social Interactions in Multiagent Decision-Making for Two-Queue Systems](/202603/31/2603.27972v1-a-framework-for-exploring-social-interactions-in-multiagent-decision-making-for-two-queue-systems)  
+   evidence：用于辩证交互和伦理辅导的多智能体系统
+4. [Drop the Hierarchy and Roles: How Self-Organizing LLM Agents Outperform Designed Structures](/202604/01/2603.28990v1-drop-the-hierarchy-and-roles-how-self-organizing-llm-agents-outperform-designed-structures)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体决策中的社会交互与集体行为
-5. [Courtroom-Style Multi-Agent Debate with Progressive RAG and Role-Switching for Controversial Claim Verification](/202603/31/2603.28488v1-courtroom-style-multi-agent-debate-with-progressive-rag-and-role-switching-for-controversial-claim-verification)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：用于主张验证的多智能体辩论
-6. [CTS-PLL: A Robust and Anytime Framework for Collaborative Task Sequencing and Multi-Agent Path Finding](/202603/31/2603.25121v1-cts-pll-a-robust-and-anytime-framework-for-collaborative-task-sequencing-and-multi-agent-path-finding)  
+   evidence：大模型智能体中的涌现自组织和角色发明
+5. [Self-Evolving Multi-Agent Framework for Efficient Decision Making in Real-Time Strategy Scenarios](/202604/01/2603.23875v1-self-evolving-multi-agent-framework-for-efficient-decision-making-in-real-time-strategy-scenarios)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体路径规划与任务排序
+   evidence：实时策略场景下的自进化多智能体框架
+6. [Rethinking Failure Attribution in Multi-Agent Systems: A Multi-Perspective Benchmark and Evaluation](/202604/01/2603.25001v1-rethinking-failure-attribution-in-multi-agent-systems-a-multi-perspective-benchmark-and-evaluation)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体系统的故障归因基准
 
 ### 速读区论文标签
-1. [Context-Mediated Domain Adaptation in Multi-Agent Sensemaking Systems](/202603/31/2603.24858v1-context-mediated-domain-adaptation-in-multi-agent-sensemaking-systems)  
+1. [Mimetic Alignment with ASPECT: Evaluation of AI-inferred Personal Profiles](/202604/01/2603.26922v1-mimetic-alignment-with-aspect-evaluation-of-ai-inferred-personal-profiles)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：大模型驱动的多智能体推理感悟系统
-2. [CRAFT: Grounded Multi-Agent Coordination Under Partial Information](/202603/31/2603.25268v1-craft-grounded-multi-agent-coordination-under-partial-information)  
+   evidence：LLM智能体捕捉个人沟通特征和个人画像
+2. [On the Reliability Limits of LLM-Based Multi-Agent Planning](/202604/01/2603.26993v1-on-the-reliability-limits-of-llm-based-multi-agent-planning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：LLM多智能体协作基准
-3. [MediHive: A Decentralized Agent Collective for Medical Reasoning](/202603/31/2603.27150v1-medihive-a-decentralized-agent-collective-for-medical-reasoning)  
+   evidence：基于大语言模型的多智能体规划可靠性限制
+3. [A Deep Reinforcement Learning Framework for Closed-loop Guidance of Fish Schools via Virtual Agents](/202604/01/2603.28200v1-a-deep-reinforcement-learning-framework-for-closed-loop-guidance-of-fish-schools-via-virtual-agents)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于医疗推理的去中心化多智能体框架
-4. [EpochX: Building the Infrastructure for an Emergent Agent Civilization](/202603/31/2603.27304v1-epochx-building-the-infrastructure-for-an-emergent-agent-civilization)  
+   evidence：引导生物群体中的集体运动和社会交互规则
+4. [Truth and distortion in complex networks: a global consistency approach](/202604/01/2603.28984v1-truth-and-distortion-in-complex-networks-a-global-consistency-approach)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：涌现智能体文明与协作的基础设施
-5. [A Context Engineering Framework for Improving Enterprise AI Agents based on Digital-Twin MDP](/202603/31/2603.22083v1-a-context-engineering-framework-for-improving-enterprise-ai-agents-based-on-digital-twin-mdp)  
+   evidence：在多层交互个体系统中，真相源于全局关系一致性
+5. [Emotional Support with Conversational AI: Talking to Machines About Life](/202604/01/2603.22618v1-emotional-support-with-conversational-ai-talking-to-machines-about-life)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：通过强化学习改进基于大模型的企业智能体
-6. [Chimera: Latency- and Performance-Aware Multi-agent Serving for Heterogeneous LLMs](/202603/31/2603.22206v1-chimera-latency--and-performance-aware-multi-agent-serving-for-heterogeneous-llms)  
+   evidence：AI伴侣交互的社会化情境过程
+6. [Empirical Comparison of Agent Communication Protocols for Task Orchestration](/202604/01/2603.22823v2-empirical-comparison-of-agent-communication-protocols-for-task-orchestration)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：异构LLM的多智能体服务
-7. [STEM Agent: A Self-Adapting, Tool-Enabled, Extensible Architecture for Multi-Protocol AI Agent Systems](/202603/31/2603.22359v1-stem-agent-a-self-adapting-tool-enabled-extensible-architecture-for-multi-protocol-ai-agent-systems)  
+   evidence：多智能体编排中智能体通信协议的比较
+7. [Towards Semantic-based Agent Communication Networks: Vision, Technologies, and Challenges](/202604/01/2603.24328v1-towards-semantic-based-agent-communication-networks-vision-technologies-and-challenges)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多协议AI智能体系统
-8. [SoK: The Attack Surface of Agentic AI -- Tools, and Autonomy](/202603/31/2603.22928v1-sok-the-attack-surface-of-agentic-ai----tools-and-autonomy)  
+   evidence：基于智能体的通信网络与任务协作愿景
+8. [AI-Supervisor: Autonomous AI Research Supervision via a Persistent Research World Model](/202604/01/2603.24402v2-ai-supervisor-autonomous-ai-research-supervision-via-a-persistent-research-world-model)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体涌现威胁与智能体AI的攻击面
-9. [AI In Cybersecurity Education -- Scalable Agentic CTF Design Principles and Educational Outcomes](/202603/31/2603.21551v1-ai-in-cybersecurity-education----scalable-agentic-ctf-design-principles-and-educational-outcomes)  
+   evidence：用于研究监督的多智能体编排框架
+9. [PERMA: Benchmarking Personalized Memory Agents via Event-Driven Preference and Realistic Task Environments](/202604/01/2603.23231v1-perma-benchmarking-personalized-memory-agents-via-event-driven-preference-and-realistic-task-environments)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：以大语言模型为核心的自主智能体框架
-10. [Toward a Theory of Hierarchical Memory for Language Agents](/202603/31/2603.21564v1-toward-a-theory-of-hierarchical-memory-for-language-agents)  
+   evidence：针对不断演变的用户需求的个性化记忆智能体
+10. [GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents](/202604/01/2603.24329v1-gameplayqa-a-benchmarking-framework-for-decision-dense-pov-synced-multi-video-understanding-of-3d-virtual-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：语言智能体的分层记忆系统
-11. [Reasoning Provenance for Autonomous AI Agents: Structured Behavioral Analytics Beyond State Checkpoints and Execution Traces](/202603/31/2603.21692v1-reasoning-provenance-for-autonomous-ai-agents-structured-behavioral-analytics-beyond-state-checkpoints-and-execution-traces)  
+   evidence：在3D虚拟环境中对并发多智能体行为进行推理
+11. [Relaxing Constraints in Anonymous Multi Agent Path Finding for Large Agents](/202604/01/2603.24442v1-relaxing-constraints-in-anonymous-multi-agent-path-finding-for-large-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：自主AI智能体的结构化推理溯源
+   evidence：匿名多智能体路径规划
 
 
 <div class="dpr-home-promo-card">
