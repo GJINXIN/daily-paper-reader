@@ -1,0 +1,664 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-02T20:16:18.346410+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 13,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 42,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2603.29846v1",
+      "title": "SNEAK: Evaluating Strategic Communication and Information Leakage in Large Language Models",
+      "abstract": "Large language models (LLMs) are increasingly deployed in multi-agent settings where communication must balance informativeness and secrecy. In such settings, an agent may need to signal information to collaborators while preventing an adversary from inferring sensitive details. However, existing LLM benchmarks primarily evaluate capabilities such as reasoning, factual knowledge, or instruction following, and do not directly measure strategic communication under asymmetric information. We introduce SNEAK (Secret-aware Natural language Evaluation for Adversarial Knowledge), a benchmark for evaluating selective information sharing in language models. In SNEAK, a model is given a semantic category, a candidate set of words, and a secret word, and must generate a message that indicates knowledge of the secret without revealing it too clearly. We evaluate generated messages using two simulated agents with different information states: an ally, who knows the secret and must identify the intended message, and a chameleon, who does not know the secret and attempts to infer it from the message. This yields two complementary metrics: utility, measuring how well the message communicates to collaborators, and leakage, measuring how much information it reveals to an adversary. Using this framework, we analyze the trade-off between informativeness and secrecy in modern language models and show that strategic communication under asymmetric information remains a challenging capability for current systems. Notably, human participants outperform all evaluated models by a large margin, achieving up to four times higher scores.",
+      "authors": [
+        "Adar Avsian",
+        "Larry Heck"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-03-31T15:07:12+00:00",
+      "link": "https://arxiv.org/pdf/2603.29846v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Evaluating strategic communication and information leakage in multi-agent settings",
+      "llm_evidence_cn": "评估多智能体环境中的策略性通信与信息泄露",
+      "llm_evidence": "评估多智能体环境中的策略性通信与信息泄露",
+      "canonical_evidence": "评估多智能体环境中的策略性通信与信息泄露",
+      "llm_tldr_en": "A benchmark for measuring how LLM agents balance informativeness and secrecy in communication.",
+      "llm_tldr_cn": "一个评估LLM智能体在通信中如何平衡信息量与保密性的基准。",
+      "llm_tldr": "一个评估LLM智能体在通信中如何平衡信息量与保密性的基准。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.00249v1",
+      "title": "A Safety-Aware Role-Orchestrated Multi-Agent LLM Framework for Behavioral Health Communication Simulation",
+      "abstract": "Single-agent large language model (LLM) systems struggle to simultaneously support diverse conversational functions and maintain safety in behavioral health communication. We propose a safety-aware, role-orchestrated multi-agent LLM framework designed to simulate supportive behavioral health dialogue through coordinated, role-differentiated agents. Conversational responsibilities are decomposed across specialized agents, including empathy-focused, action-oriented, and supervisory roles, while a prompt-based controller dynamically activates relevant agents and enforces continuous safety auditing. Using semi-structured interview transcripts from the DAIC-WOZ corpus, we evaluate the framework with scalable proxy metrics capturing structural quality, functional diversity, and computational characteristics. Results illustrate clear role differentiation, coherent inter-agent coordination, and predictable trade-offs between modular orchestration, safety oversight, and response latency when compared to a single-agent baseline. This work emphasizes system design, interpretability, and safety, positioning the framework as a simulation and analysis tool for behavioral health informatics and decision-support research rather than a clinical intervention.",
+      "authors": [
+        "Ha Na Cho"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-31T21:21:31+00:00",
+      "link": "https://arxiv.org/pdf/2604.00249v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Multi-agent LLM framework for simulating behavioral health communication",
+      "llm_evidence_cn": "用于模拟行为健康沟通的多智能体LLM框架",
+      "llm_evidence": "用于模拟行为健康沟通的多智能体LLM框架",
+      "canonical_evidence": "用于模拟行为健康沟通的多智能体LLM框架",
+      "llm_tldr_en": "A role-orchestrated multi-agent framework designed to simulate supportive and safe health dialogues.",
+      "llm_tldr_cn": "一种角色编排的多智能体框架，旨在模拟支持性且安全的健康对话。",
+      "llm_tldr": "一种角色编排的多智能体框架，旨在模拟支持性且安全的健康对话。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.00284v1",
+      "title": "Improvisational Games as a Benchmark for Social Intelligence of AI Agents: The Case of Connections",
+      "abstract": "We formally introduce a improvisational wordplay game called Connections to explore reasoning capabilities of AI agents. Playing Connections combines skills in knowledge retrieval, summarization and awareness of cognitive states of other agents. We show how the game serves as a good benchmark for social intelligence abilities of language model based agents that go beyond the agents' own memory and deductive reasoning and also involve gauging the understanding capabilities of other agents. Finally, we show how through communication with other agents in a constrained environment, AI agents must demonstrate social awareness and intelligence in games involving collaboration.",
+      "authors": [
+        "Gaurav Rajesh Parikh",
+        "Angikar Ghosal"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-31T22:16:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.00284v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "benchmark for social intelligence of LLM based agents",
+      "llm_evidence_cn": "大语言模型智能体社会智能的基准测试",
+      "llm_evidence": "大语言模型智能体社会智能的基准测试",
+      "canonical_evidence": "大语言模型智能体社会智能的基准测试",
+      "llm_tldr_en": "Introduces a wordplay game benchmark to evaluate social awareness and intelligence in AI agents.",
+      "llm_tldr_cn": "引入了一种文字游戏基准，用于评估人工智能智能体的社会意识和智能。",
+      "llm_tldr": "引入了一种文字游戏基准，用于评估人工智能智能体的社会意识和智能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.00487v1",
+      "title": "Competition and Cooperation of LLM Agents in Games",
+      "abstract": "Large language model (LLM) agents are increasingly deployed in competitive multi-agent settings, raising fundamental questions about whether they converge to equilibria and how their strategic behavior can be characterized. In this paper, we study LLM agent interactions in two standard games: a network resource allocation game and a Cournot competition game. Rather than converging to Nash equilibria, we find that LLM agents tend to cooperate when given multi-round prompts and non-zero-sum context. Chain-of-thought analysis reveals that fairness reasoning is central to this behavior. We propose an analytical framework that captures the dynamics of LLM agent reasoning across rounds and explains these experimental findings.",
+      "authors": [
+        "Jiayi Yao",
+        "Cong Chen",
+        "Baosen Zhang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.GT",
+        "eess.SY"
+      ],
+      "published": "2026-04-01T05:11:44+00:00",
+      "link": "https://arxiv.org/pdf/2604.00487v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Emergent cooperation and strategic behavior of LLM agents in games",
+      "llm_evidence_cn": "LLM智能体在博弈中涌现的合作与策略行为",
+      "llm_evidence": "LLM智能体在博弈中涌现的合作与策略行为",
+      "canonical_evidence": "LLM智能体在博弈中涌现的合作与策略行为",
+      "llm_tldr_en": "This study analyzes how LLM agents exhibit emergent cooperative behavior in competitive game settings.",
+      "llm_tldr_cn": "本研究分析了LLM智能体在竞争性博弈设置中如何表现出涌现的合作行为。",
+      "llm_tldr": "本研究分析了LLM智能体在竞争性博弈设置中如何表现出涌现的合作行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.01151v1",
+      "title": "Detecting Multi-Agent Collusion Through Multi-Agent Interpretability",
+      "abstract": "As LLM agents are increasingly deployed in multi-agent systems, they introduce risks of covert coordination that may evade standard forms of human oversight. While linear probes on model activations have shown promise for detecting deception in single-agent settings, collusion is inherently a multi-agent phenomenon, and the use of internal representations for detecting collusion between agents remains unexplored. We introduce NARCBench, a benchmark for evaluating collusion detection under environment distribution shift, and propose five probing techniques that aggregate per-agent deception scores to classify scenarios at the group level. Our probes achieve 1.00 AUROC in-distribution and 0.60--0.86 AUROC when transferred zero-shot to structurally different multi-agent scenarios and a steganographic blackjack card-counting task. We find that no single probing technique dominates across all collusion types, suggesting that different forms of collusion manifest differently in activation space. We also find preliminary evidence that this signal is localised at the token level, with the colluding agent's activations spiking specifically when processing the encoded parts of their partner's message. This work takes a step toward multi-agent interpretability: extending white-box inspection from single models to multi-agent contexts, where detection requires aggregating signals across agents. These results suggest that model internals provide a complementary signal to text-level monitoring for detecting multi-agent collusion, particularly for organisations with access to model activations. Code and data are available at https://github.com/aaronrose227/narcbench.",
+      "authors": [
+        "Aaron Rose",
+        "Carissa Cullen",
+        "Brandon Gary Kaplowitz",
+        "Christian Schroeder de Witt"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-04-01T17:08:05+00:00",
+      "link": "https://arxiv.org/pdf/2604.01151v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "detecting multi-agent collusion and covert coordination",
+      "llm_evidence_cn": "检测多智能体串通与隐蔽协作",
+      "llm_evidence": "检测多智能体串通与隐蔽协作",
+      "canonical_evidence": "检测多智能体串通与隐蔽协作",
+      "llm_tldr_en": "Introduces a benchmark and probing techniques to detect emergent collusion in multi-agent systems.",
+      "llm_tldr_cn": "引入了基准测试和探测技术，用于检测多智能体系统中的突发串通行为。",
+      "llm_tldr": "引入了基准测试和探测技术，用于检测多智能体系统中的突发串通行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.24324v2",
+      "title": "Large Language Model Guided Incentive Aware Reward Design for Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Designing effective auxiliary rewards for cooperative multi-agent systems remains a challenging task. Misaligned incentives risk inducing suboptimal coordination, especially when sparse task feedback fails to provide sufficient grounding. This study introduces an automated reward design framework that leverages large language models to synthesize executable reward programs from environment instrumentation. The procedure constrains candidate programs within a formal validity envelope and evaluates their efficacy by training policies from scratch under a fixed computational budget. Selection across generations depends exclusively on the sparse task return. The framework is evaluated across four distinct Overcooked-AI layouts characterized by varied corridor congestion, handoff dependencies, and structural asymmetries. Iterative search generations consistently yield superior task returns and delivery counts, with the most pronounced gains occurring in environments dominated by interaction bottlenecks. Diagnostic analysis of the synthesized shaping components indicates increased interdependence in action selection and improved signal alignment in coordination-intensive tasks. These results demonstrate that the search for objective-grounded reward programs can mitigate the burden of manual engineering while producing shaping signals compatible with cooperative learning under finite budgets.",
+      "authors": [
+        "Dogan Urgun",
+        "Gokhan Gungor"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-03-25T14:05:59+00:00",
+      "link": "https://arxiv.org/pdf/2603.24324v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM guided reward design for multi-agent reinforcement learning",
+      "llm_evidence_cn": "大语言模型引导的多智能体强化学习奖励设计",
+      "llm_evidence": "大语言模型引导的多智能体强化学习奖励设计",
+      "canonical_evidence": "大语言模型引导的多智能体强化学习奖励设计",
+      "llm_tldr_en": "Uses LLMs to automate reward design for cooperative multi-agent systems to improve coordination.",
+      "llm_tldr_cn": "利用大语言模型自动为协作多智能体系统设计奖励，以改善协调效果。",
+      "llm_tldr": "利用大语言模型自动为协作多智能体系统设计奖励，以改善协调效果。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2603.27410v1",
+      "title": "Grounding Social Perception in Intuitive Physics",
+      "abstract": "People infer rich social information from others' actions. These inferences are often constrained by the physical world: what agents can do, what obstacles permit, and how the physical actions of agents causally change an environment and other agents' mental states and behavior. We propose that such rich social perception is more than visual pattern matching, but rather a reasoning process grounded in an integration of intuitive psychology with intuitive physics. To test this hypothesis, we introduced PHASE (PHysically grounded Abstract Social Events), a large dataset of procedurally generated animations, depicting physically simulated two-agent interactions on a 2D surface. Each animation follows the style of the Heider and Simmel movie, with systematic variation in environment geometry, object dynamics, agent capacities, goals, and relationships (friendly/adversarial/neutral). We then present a computational model, SIMPLE, a physics-grounded Bayesian inverse planning model that integrates planning, probabilistic planning, and physics simulation to infer agents' goals and relations from their trajectories. Our experimental results showed that SIMPLE achieved high accuracy and agreement with human judgments across diverse scenarios, while feedforward baseline models -- including strong vision-language models -- and physics-agnostic inverse planning failed to achieve human-level performance and did not align with human judgments. These results suggest that our model provides a computational account for how people understand physically grounded social scenes by inverting a generative model of physics and agents.",
+      "authors": [
+        "Lance Ying",
+        "Aydan Y. Huang",
+        "Aviv Netanyahu",
+        "Andrei Barbu",
+        "Boris Katz",
+        "Joshua B. Tenenbaum",
+        "Tianmin Shu"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-03-28T21:14:49+00:00",
+      "link": "https://arxiv.org/pdf/2603.27410v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "social perception and two-agent interactions in simulated environments",
+      "llm_evidence_cn": "模拟环境中的社会感知与双智能体交互",
+      "llm_evidence": "模拟环境中的社会感知与双智能体交互",
+      "canonical_evidence": "模拟环境中的社会感知与双智能体交互",
+      "llm_tldr_en": "Proposes a dataset for social perception grounded in intuitive physics and psychology within agent interactions.",
+      "llm_tldr_cn": "提出了一个基于直觉物理和心理学的智能体交互社会感知数据集。",
+      "llm_tldr": "提出了一个基于直觉物理和心理学的智能体交互社会感知数据集。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.23964v1",
+      "title": "From Pixels to Digital Agents: An Empirical Study on the Taxonomy and Technological Trends of Reinforcement Learning Environments",
+      "abstract": "The remarkable progress of reinforcement learning (RL) is intrinsically tied to the environments used to train and evaluate artificial agents. Moving beyond traditional qualitative reviews, this work presents a large-scale, data-driven empirical investigation into the evolution of RL environments. By programmatically processing a massive corpus of academic literature and rigorously distilling over 2,000 core publications, we propose a quantitative methodology to map the transition from isolated physical simulations to generalist, language-driven foundation agents. Implementing a novel, multi-dimensional taxonomy, we systematically analyze benchmarks against diverse application domains and requisite cognitive capabilities. Our automated semantic and statistical analysis reveals a profound, data-verified paradigm shift: the bifurcation of the field into a \"Semantic Prior\" ecosystem dominated by Large Language Models (LLMs) and a \"Domain-Specific Generalization\" ecosystem. Furthermore, we characterize the \"cognitive fingerprints\" of these distinct domains to uncover the underlying mechanisms of cross-task synergy, multi-domain interference, and zero-shot generalization. Ultimately, this study offers a rigorous, quantitative roadmap for designing the next generation of Embodied Semantic Simulators, bridging the gap between continuous physical control and high-level logical reasoning.",
+      "authors": [
+        "Lijing Luo",
+        "Yiben Luo",
+        "Alexey Gorbatovski",
+        "Sergey Kovalchuk",
+        "Xiaodan Liang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-25T05:56:54+00:00",
+      "link": "https://arxiv.org/pdf/2603.23964v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "evolution of RL environments to language-driven foundation agents",
+      "llm_evidence_cn": "强化学习环境向语言驱动基础智能体的演进",
+      "llm_evidence": "强化学习环境向语言驱动基础智能体的演进",
+      "canonical_evidence": "强化学习环境向语言驱动基础智能体的演进",
+      "llm_tldr_en": "Provides a large-scale empirical study on the taxonomy and trends of reinforcement learning agent environments.",
+      "llm_tldr_cn": "对强化学习智能体环境的分类和趋势进行了大规模的实证研究。",
+      "llm_tldr": "对强化学习智能体环境的分类和趋势进行了大规模的实证研究。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.23749v1",
+      "title": "Efficient Benchmarking of AI Agents",
+      "abstract": "Evaluating AI agents on comprehensive benchmarks is expensive because each evaluation requires interactive rollouts with tool use and multi-step reasoning. We study whether small task subsets can preserve agent rankings at substantially lower cost. Unlike static language model benchmarks, agent evaluation is subject to scaffold-driven distribution shift, since performance depends on the framework wrapping the underlying model. Across eight benchmarks, 33 agent scaffolds, and 70+ model configurations, we find that absolute score prediction degrades under this shift, while rank-order prediction remains stable. Exploiting this asymmetry, we propose a simple optimization-free protocol: evaluate new agents only on tasks with intermediate historical pass rates (30-70%). This mid-range difficulty filter, motivated by Item Response Theory, reduces the number of evaluation tasks by 44-70% while maintaining high rank fidelity under scaffold and temporal shifts. It provides more reliable rankings than random sampling, which exhibits high variance across seeds, and outperforms greedy task selection under distribution shift. These results suggest that reliable leaderboard ranking does not require full-benchmark evaluation.",
+      "authors": [
+        "Franck Ndzomga"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-24T22:17:11+00:00",
+      "link": "https://arxiv.org/pdf/2603.23749v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "benchmarking multi-step reasoning AI agents",
+      "llm_evidence_cn": "多步推理AI智能体的基准测试",
+      "llm_evidence": "多步推理AI智能体的基准测试",
+      "canonical_evidence": "多步推理AI智能体的基准测试",
+      "llm_tldr_en": "Proposes an efficient protocol for ranking AI agents by evaluating them on mid-range difficulty tasks.",
+      "llm_tldr_cn": "提出了一种通过在中等难度任务上评估来高效对AI智能体进行排名的协议。",
+      "llm_tldr": "提出了一种通过在中等难度任务上评估来高效对AI智能体进行排名的协议。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.28986v1",
+      "title": "Mimosa Framework: Toward Evolving Multi-Agent Systems for Scientific Research",
+      "abstract": "Current Autonomous Scientific Research (ASR) systems, despite leveraging large language models (LLMs) and agentic architectures, remain constrained by fixed workflows and toolsets that prevent adaptation to evolving tasks and environments. We introduce Mimosa, an evolving multi-agent framework that automatically synthesizes task-specific multi-agent workflows and iteratively refines them through experimental feedback. Mimosa leverages the Model Context Protocol (MCP) for dynamic tool discovery, generates workflow topologies via a meta-orchestrator, executes subtasks through code-generating agents that invoke available tools and scientific software libraries, and scores executions with an LLM-based judge whose feedback drives workflow refinement. On ScienceAgentBench, Mimosa achieves a success rate of 43.1% with DeepSeek-V3.2, surpassing both single-agent baselines and static multi-agent configurations. Our results further reveal that models respond heterogeneously to multi-agent decomposition and iterative learning, indicating that the benefits of workflow evolution depend on the capabilities of the underlying execution model. Beyond these benchmarks, Mimosa modular architecture and tool-agnostic design make it readily extensible, and its fully logged execution traces and archived workflows support auditability by preserving every analytical step for inspection and potential replication. Combined with domain-expert guidance, the framework has the potential to automate a broad range of computationally accessible scientific tasks across disciplines. Released as a fully open-source platform, Mimosa aims to provide an open foundation for community-driven ASR.",
+      "authors": [
+        "Martin Legrand",
+        "Tao Jiang",
+        "Matthieu Feraud",
+        "Benjamin Navet",
+        "Yousouf Taghzouti",
+        "Fabien Gandon",
+        "Elise Dumont",
+        "Louis-Félix Nothias"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-03-30T20:35:57+00:00",
+      "link": "https://arxiv.org/pdf/2603.28986v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "evolving multi-agent framework for scientific research tasks",
+      "llm_evidence_cn": "用于科学研究任务的可演化多智能体框架",
+      "llm_evidence": "用于科学研究任务的可演化多智能体框架",
+      "canonical_evidence": "用于科学研究任务的可演化多智能体框架",
+      "llm_tldr_en": "Presents a framework that automatically synthesizes and refines multi-agent workflows for scientific discovery.",
+      "llm_tldr_cn": "提出一个能自动合成并优化用于科学发现的多智能体工作流的框架。",
+      "llm_tldr": "提出一个能自动合成并优化用于科学发现的多智能体工作流的框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.24639v1",
+      "title": "Experiential Reflective Learning for Self-Improving LLM Agents",
+      "abstract": "Recent advances in large language models (LLMs) have enabled the development of autonomous agents capable of complex reasoning and multi-step problem solving. However, these agents struggle to adapt to specialized environments and do not leverage past interactions, approaching each new task from scratch regardless of their accumulated experience. We introduce Experiential Reflective Learning (ERL), a simple self-improvement framework that enables rapid environment adaptation through experiential learning. ERL reflects on task trajectories and outcomes to generate heuristics, capturing actionable lessons that transfer across tasks. At test time, relevant heuristics are retrieved based on the current task and injected into the agent's context to guide execution. On the Gaia2 benchmark, ERL improves success rate by 7.8% over a ReAct baseline, with large gains in task completion reliability, and outperforms prior experiential learning methods. Through systematic ablations, we find that selective retrieval is essential and that heuristics provide more transferable abstractions than few-shot trajectory prompting. These results demonstrate that reflecting on single-attempt experiences to extract transferable heuristics enables effective agent self-improvement.",
+      "authors": [
+        "Marc-Antoine Allard",
+        "Arnaud Teinturier",
+        "Victor Xing",
+        "Gautier Viaud"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-03-25T11:43:22+00:00",
+      "link": "https://arxiv.org/pdf/2603.24639v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "autonomous agents for complex reasoning and multi-step problem solving",
+      "llm_evidence_cn": "用于复杂推理和多步问题解决的自主智能体",
+      "llm_evidence": "用于复杂推理和多步问题解决的自主智能体",
+      "canonical_evidence": "用于复杂推理和多步问题解决的自主智能体",
+      "llm_tldr_en": "Introduces a self-improvement framework for LLM agents to adapt to environments through experiential learning.",
+      "llm_tldr_cn": "引入了一种自我改进框架，使LLM智能体能够通过经验学习快速适应环境。",
+      "llm_tldr": "引入了一种自我改进框架，使LLM智能体能够通过经验学习快速适应环境。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.24018v1",
+      "title": "ELITE: Experiential Learning and Intent-Aware Transfer for Self-improving Embodied Agents",
+      "abstract": "Vision-language models (VLMs) have shown remarkable general capabilities, yet embodied agents built on them fail at complex tasks, often skipping critical steps, proposing invalid actions, and repeating mistakes. These failures arise from a fundamental gap between the static training data of VLMs and the physical interaction for embodied tasks. VLMs can learn rich semantic knowledge from static data but lack the ability to interact with the world. To address this issue, we introduce ELITE, an embodied agent framework with {E}xperiential {L}earning and {I}ntent-aware {T}ransfer that enables agents to continuously learn from their own environment interaction experiences, and transfer acquired knowledge to procedurally similar tasks. ELITE operates through two synergistic mechanisms, \\textit{i.e.,} self-reflective knowledge construction and intent-aware retrieval. Specifically, self-reflective knowledge construction extracts reusable strategies from execution trajectories and maintains an evolving strategy pool through structured refinement operations. Then, intent-aware retrieval identifies relevant strategies from the pool and applies them to current tasks. Experiments on the EB-ALFRED and EB-Habitat benchmarks show that ELITE achieves 9\\% and 5\\% performance improvement over base VLMs in the online setting without any supervision. In the supervised setting, ELITE generalizes effectively to unseen task categories, achieving better performance compared to state-of-the-art training-based methods. These results demonstrate the effectiveness of ELITE for bridging the gap between semantic understanding and reliable action execution.",
+      "authors": [
+        "Bingqing Wei",
+        "Zhongyu Xia",
+        "Dingai Liu",
+        "Xiaoyu Zhou",
+        "Zhiwei Lin",
+        "Yongtao Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-25T07:25:51+00:00",
+      "link": "https://arxiv.org/pdf/2603.24018v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "experiential learning for self-improving embodied agents",
+      "llm_evidence_cn": "用于自我改进具身智能体的经验学习",
+      "llm_evidence": "用于自我改进具身智能体的经验学习",
+      "canonical_evidence": "用于自我改进具身智能体的经验学习",
+      "llm_tldr_en": "Enables embodied agents to learn from physical interactions and transfer knowledge to similar tasks.",
+      "llm_tldr_cn": "使具身智能体能从物理交互中学习并将知识迁移到类似任务中。",
+      "llm_tldr": "使具身智能体能从物理交互中学习并将知识迁移到类似任务中。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00344v1",
+      "title": "Agent Q-Mix: Selecting the Right Action for LLM Multi-Agent Systems through Reinforcement Learning",
+      "abstract": "Large Language Models (LLMs) have shown remarkable performance in completing various tasks. However, solving complex problems often requires the coordination of multiple agents, raising a fundamental question: how to effectively select and interconnect these agents. In this paper, we propose \\textbf{Agent Q-Mix}, a reinforcement learning framework that reformulates topology selection as a cooperative Multi-Agent Reinforcement Learning (MARL) problem. Our method learns decentralized communication decisions using QMIX value factorization, where each agent selects from a set of communication actions that jointly induce a round-wise communication graph. At its core, Agent Q-Mix combines a topology-aware GNN encoder, GRU memory, and per-agent Q-heads under a Centralized Training with Decentralized Execution (CTDE) paradigm. The framework optimizes a reward function that balances task accuracy with token cost. Across seven core benchmarks in coding, reasoning, and mathematics, Agent Q-Mix achieves the highest average accuracy compared to existing methods while demonstrating superior token efficiency and robustness against agent failure. Notably, on the challenging Humanity's Last Exam (HLE) using Gemini-3.1-Flash-Lite as a backbone, Agent Q-Mix achieves 20.8\\% accuracy, outperforming Microsoft Agent Framework (19.2\\%) and LangGraph (19.2\\%), followed by AutoGen and Lobster by OpenClaw. These results underscore the effectiveness of learned, decentralized topology optimization in pushing the boundaries of multi-agent reasoning.",
+      "authors": [
+        "Eric Hanchen Jiang",
+        "Levina Li",
+        "Rui Sun",
+        "Xiao Liang",
+        "Yubei Li",
+        "Yuchen Wu",
+        "Haozheng Luo",
+        "Hengli Li",
+        "Zhi Zhang",
+        "Zhaolu Kang",
+        "Kai-Wei Chang",
+        "Ying Nian Wu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "stat.AP"
+      ],
+      "published": "2026-04-01T00:38:24+00:00",
+      "link": "https://arxiv.org/pdf/2604.00344v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "cooperative multi-agent reinforcement learning for LLM topology",
+      "llm_evidence_cn": "用于LLM拓扑选择的协作式多智能体强化学习",
+      "llm_evidence": "用于LLM拓扑选择的协作式多智能体强化学习",
+      "canonical_evidence": "用于LLM拓扑选择的协作式多智能体强化学习",
+      "llm_tldr_en": "Agent Q-Mix applies MARL to optimize communication and coordination between multiple LLM agents.",
+      "llm_tldr_cn": "Agent Q-Mix应用多智能体强化学习来优化多个LLM智能体之间的通信与协作。",
+      "llm_tldr": "Agent Q-Mix应用多智能体强化学习来优化多个LLM智能体之间的通信与协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.24639v2",
+      "title": "Experiential Reflective Learning for Self-Improving LLM Agents",
+      "abstract": "Recent advances in large language models (LLMs) have enabled the development of autonomous agents capable of complex reasoning and multi-step problem solving. However, these agents struggle to adapt to specialized environments and do not leverage past interactions, approaching each new task from scratch regardless of their accumulated experience. We introduce Experiential Reflective Learning (ERL), a simple self-improvement framework that enables rapid environment adaptation through experiential learning. ERL reflects on task trajectories and outcomes to generate heuristics, capturing actionable lessons that transfer across tasks. At test time, relevant heuristics are retrieved based on the current task and injected into the agent's context to guide execution. On the Gaia2 benchmark, ERL improves success rate by 7.8% over a ReAct baseline, with large gains in task completion reliability, and outperforms prior experiential learning methods. Through systematic ablations, we find that selective retrieval is essential and that heuristics provide more transferable abstractions than few-shot trajectory prompting. These results demonstrate that reflecting on single-attempt experiences to extract transferable heuristics enables effective agent self-improvement.",
+      "authors": [
+        "Marc-Antoine Allard",
+        "Arnaud Teinturier",
+        "Victor Xing",
+        "Gautier Viaud"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-03-25T11:43:22+00:00",
+      "link": "https://arxiv.org/pdf/2603.24639v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "self-improving LLM agents with experiential reflective learning",
+      "llm_evidence_cn": "具有经验反思学习能力的自我改进LLM智能体",
+      "llm_evidence": "具有经验反思学习能力的自我改进LLM智能体",
+      "canonical_evidence": "具有经验反思学习能力的自我改进LLM智能体",
+      "llm_tldr_en": "A framework enabling LLM agents to generate heuristics from past trajectories to improve task performance.",
+      "llm_tldr_cn": "一种使LLM智能体能从过去轨迹中生成启发式规则以提高任务性能的框架。",
+      "llm_tldr": "一种使LLM智能体能从过去轨迹中生成启发式规则以提高任务性能的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.25097v1",
+      "title": "ElephantBroker: A Knowledge-Grounded Cognitive Runtime for Trustworthy AI Agents",
+      "abstract": "Large Language Model based agents increasingly operate in high stakes, multi turn settings where factual grounding is critical, yet their memory systems typically rely on flat key value stores or plain vector retrieval with no mechanism to track the provenance or trustworthiness of stored knowledge. We present ElephantBroker, an open source cognitive runtime that unifies a Neo4j knowledge graph with a Qdrant vector store through the Cognee SDK to provide durable, verifiable agent memory. The system implements a complete cognitive loop (store, retrieve, score, compose, protect, learn) comprising a hybrid five source retrieval pipeline, an eleven dimension competitive scoring engine for budget constrained context assembly, a four state evidence verification model, a five stage context lifecycle with goal aware assembly and continuous compaction, a six layer cheap first guard pipeline for safety enforcement, an AI firewall providing enforceable tool call interception and multi tier safety scanning, a nine stage consolidation engine that strengthens useful patterns while decaying noise, and a numeric authority model governing multi organization identity with hierarchical access control. Architectural validation through a comprehensive test suite of over 2,200 tests spanning unit, integration, and end to end levels confirms subsystem correctness. The modular design supports three deployment tiers, five profile presets with inheritance, multi gateway isolation, and a management dashboard for human oversight, enabling configurations from lightweight memory only agents to full cognitive runtimes with enterprise grade safety and auditability.",
+      "authors": [
+        "Cristian Lupascu",
+        "Alexandru Lupascu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-26T07:03:12+00:00",
+      "link": "https://arxiv.org/pdf/2603.25097v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "trustworthy AI agents in multi-turn settings with verifiable memory",
+      "llm_evidence_cn": "多轮设置中具有可验证记忆的可信 AI 智能体",
+      "llm_evidence": "多轮设置中具有可验证记忆的可信 AI 智能体",
+      "canonical_evidence": "多轮设置中具有可验证记忆的可信 AI 智能体",
+      "llm_tldr_en": "Introduces ElephantBroker, a cognitive runtime for verifiable and grounded memory in AI agents.",
+      "llm_tldr_cn": "引入 ElephantBroker，一个为 AI 智能体提供可验证和接地记忆的认知运行时。",
+      "llm_tldr": "引入 ElephantBroker，一个为 AI 智能体提供可验证和接地记忆的认知运行时。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00717v1",
+      "title": "GRASP: Gradient Realignment via Active Shared Perception for Multi-Agent Collaborative Optimization",
+      "abstract": "Non-stationarity arises from concurrent policy updates and leads to persistent environmental fluctuations. Existing approaches like Centralized Training with Decentralized Execution (CTDE) and sequential update schemes mitigate this issue. However, since the perception of the policies of other agents remains dependent on sampling environmental interaction data, the agent essentially operates in a passive perception state. This inevitably triggers equilibrium oscillations and significantly slows the convergence speed of the system. To address this issue, we propose Gradient Realignment via Active Shared Perception (GRASP), a novel framework that defines generalized Bellman equilibrium as a stable objective for policy evolution. The core mechanism of GRASP involves utilizing the independent gradients of agents to derive a defined consensus gradient, enabling agents to actively perceive policy updates and optimize team collaboration. Theoretically, we leverage the Kakutani Fixed-Point Theorem to prove that the consensus direction $u^*$ guarantees the existence and attainability of this equilibrium. Extensive experiments on StarCraft II Multi-Agent Challenge (SMAC) and Google Research Football (GRF) demonstrate the scalability and promising performance of the framework.",
+      "authors": [
+        "Sihan Zhou",
+        "Tiantian He",
+        "Yifan Lu",
+        "Yaqing Hou",
+        "Yew-Soon Ong"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-01T10:26:22+00:00",
+      "link": "https://arxiv.org/pdf/2604.00717v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-agent collaborative optimization framework for policy evolution",
+      "llm_evidence_cn": "用于策略演化的多智能体协同优化框架",
+      "llm_evidence": "用于策略演化的多智能体协同优化框架",
+      "canonical_evidence": "用于策略演化的多智能体协同优化框架",
+      "llm_tldr_en": "Proposes GRASP to address non-stationarity in multi-agent systems through active shared perception.",
+      "llm_tldr_cn": "提出GRASP框架，通过主动共享感知解决多智能体系统中的非平稳性问题。",
+      "llm_tldr": "提出GRASP框架，通过主动共享感知解决多智能体系统中的非平稳性问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.24931v1",
+      "title": "COIN: Collaborative Interaction-Aware Multi-Agent Reinforcement Learning for Self-Driving Systems",
+      "abstract": "Multi-Agent Self-Driving (MASD) systems provide an effective solution for coordinating autonomous vehicles to reduce congestion and enhance both safety and operational efficiency in future intelligent transportation systems. Multi-Agent Reinforcement Learning (MARL) has emerged as a promising approach for developing advanced end-to-end MASD systems. However, achieving efficient and safe collaboration in dynamic MASD systems remains a significant challenge in dense scenarios with complex agent interactions. To address this challenge, we propose a novel collaborative(CO-) interaction-aware(-IN) MARL framework, named COIN. Specifically, we develop a new counterfactual individual-global twin delayed deep deterministic policy gradient (CIG-TD3) algorithm, crafted in a \"centralized training, decentralized execution\" (CTDE) manner, which aims to jointly optimize the individual objectives (navigation) and the global objectives (collaboration) of agents. We further introduce a dual-level interaction-aware centralized critic architecture that captures both local pairwise interactions and global system-level dependencies, enabling more accurate global value estimation and improved credit assignment for collaborative policy learning. We conduct extensive simulation experiments in dense urban traffic environments, which demonstrate that COIN consistently outperforms other advanced baseline methods in both safety and efficiency across various system sizes. These results highlight its superiority in complex and dynamic MASD scenarios, as further validated through real-world robot demonstrations. Supplementary videos are available at https://marmotlab.github.io/COIN/",
+      "authors": [
+        "Yifeng Zhang",
+        "Jieming Chen",
+        "Tingguang Zhou",
+        "Tanishq Duhan",
+        "Jianghong Dong",
+        "Yuhong Cao",
+        "Guillaume Sartoretti"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-03-26T01:48:25+00:00",
+      "link": "https://arxiv.org/pdf/2603.24931v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent reinforcement learning for collaborative systems",
+      "llm_evidence_cn": "用于协作系统的多智能体强化学习",
+      "llm_evidence": "用于协作系统的多智能体强化学习",
+      "canonical_evidence": "用于协作系统的多智能体强化学习",
+      "llm_tldr_en": "A MARL framework for collaborative interaction and coordination in self-driving vehicle systems.",
+      "llm_tldr_cn": "一种用于自动驾驶车辆系统协作交互和协调的多智能体强化学习框架。",
+      "llm_tldr": "一种用于自动驾驶车辆系统协作交互和协调的多智能体强化学习框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

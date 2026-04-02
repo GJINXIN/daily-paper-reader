@@ -6,73 +6,72 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-01
-- 运行时间：2026-04-01 20:05:58 UTC
+- 最新运行日期：2026-04-02
+- 运行时间：2026-04-02 20:18:21 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度复盘 17 篇前沿论文，聚焦 AI 智能体在社会动力学与实时仿真领域的突破性进展。
-重点推荐 BotVerse 实时仿真框架与半自主智能体交互研究，揭示了多智能体协作的社会演化规律。
-建议关注 LLM 规划的可靠性边界，探索 AI 如何在模拟社会与自然群体中实现精准对齐。
-- 详情：[/202604/01/README](/202604/01/README)
+今日深度解析 17 篇 AI 论文，重点攻克大模型策略沟通中的信息泄露难题与行为健康模拟。
+核心结论指出 SNEAK 框架能有效评估 LLM 的战略博弈能力，而安全感知的
+- 详情：[/202604/02/README](/202604/02/README)
 
 ### 精读区论文标签
-1. [Towards Computational Social Dynamics of Semi-Autonomous AI Agents](/202604/01/2603.28928v1-towards-computational-social-dynamics-of-semi-autonomous-ai-agents)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：AI智能体之间涌现的社会组织与集体行动
-2. [BotVerse: Real-Time Event-Driven Simulation of Social Agents](/202604/01/2603.29741v1-botverse-real-time-event-driven-simulation-of-social-agents)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：基于大语言模型智能体的高保真社会模拟及虚假信息场景
-3. [Heterogeneous Debate Engine: Identity-Grounded Cognitive Architecture for Resilient LLM-Based Ethical Tutoring](/202604/01/2603.27404v1-heterogeneous-debate-engine-identity-grounded-cognitive-architecture-for-resilient-llm-based-ethical-tutoring)  
+1. [SNEAK: Evaluating Strategic Communication and Information Leakage in Large Language Models](/202604/02/2603.29846v1-sneak-evaluating-strategic-communication-and-information-leakage-in-large-language-models)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：用于辩证交互和伦理辅导的多智能体系统
-4. [Drop the Hierarchy and Roles: How Self-Organizing LLM Agents Outperform Designed Structures](/202604/01/2603.28990v1-drop-the-hierarchy-and-roles-how-self-organizing-llm-agents-outperform-designed-structures)  
+   evidence：评估多智能体环境中的策略性通信与信息泄露
+2. [A Safety-Aware Role-Orchestrated Multi-Agent LLM Framework for Behavioral Health Communication Simulation](/202604/02/2604.00249v1-a-safety-aware-role-orchestrated-multi-agent-llm-framework-for-behavioral-health-communication-simulation)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：大模型智能体中的涌现自组织和角色发明
-5. [Self-Evolving Multi-Agent Framework for Efficient Decision Making in Real-Time Strategy Scenarios](/202604/01/2603.23875v1-self-evolving-multi-agent-framework-for-efficient-decision-making-in-real-time-strategy-scenarios)  
+   evidence：用于模拟行为健康沟通的多智能体LLM框架
+3. [Improvisational Games as a Benchmark for Social Intelligence of AI Agents: The Case of Connections](/202604/02/2604.00284v1-improvisational-games-as-a-benchmark-for-social-intelligence-of-ai-agents-the-case-of-connections)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：大语言模型智能体社会智能的基准测试
+4. [Competition and Cooperation of LLM Agents in Games](/202604/02/2604.00487v1-competition-and-cooperation-of-llm-agents-in-games)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：LLM智能体在博弈中涌现的合作与策略行为
+5. [Detecting Multi-Agent Collusion Through Multi-Agent Interpretability](/202604/02/2604.01151v1-detecting-multi-agent-collusion-through-multi-agent-interpretability)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：检测多智能体串通与隐蔽协作
+6. [Large Language Model Guided Incentive Aware Reward Design for Cooperative Multi-Agent Reinforcement Learning](/202604/02/2603.24324v2-large-language-model-guided-incentive-aware-reward-design-for-cooperative-multi-agent-reinforcement-learning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：实时策略场景下的自进化多智能体框架
-6. [Rethinking Failure Attribution in Multi-Agent Systems: A Multi-Perspective Benchmark and Evaluation](/202604/01/2603.25001v1-rethinking-failure-attribution-in-multi-agent-systems-a-multi-perspective-benchmark-and-evaluation)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统的故障归因基准
+   evidence：大语言模型引导的多智能体强化学习奖励设计
 
 ### 速读区论文标签
-1. [Mimetic Alignment with ASPECT: Evaluation of AI-inferred Personal Profiles](/202604/01/2603.26922v1-mimetic-alignment-with-aspect-evaluation-of-ai-inferred-personal-profiles)  
+1. [Grounding Social Perception in Intuitive Physics](/202604/02/2603.27410v1-grounding-social-perception-in-intuitive-physics)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：LLM智能体捕捉个人沟通特征和个人画像
-2. [On the Reliability Limits of LLM-Based Multi-Agent Planning](/202604/01/2603.26993v1-on-the-reliability-limits-of-llm-based-multi-agent-planning)  
+   evidence：模拟环境中的社会感知与双智能体交互
+2. [Mimosa Framework: Toward Evolving Multi-Agent Systems for Scientific Research](/202604/02/2603.28986v1-mimosa-framework-toward-evolving-multi-agent-systems-for-scientific-research)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体规划可靠性限制
-3. [A Deep Reinforcement Learning Framework for Closed-loop Guidance of Fish Schools via Virtual Agents](/202604/01/2603.28200v1-a-deep-reinforcement-learning-framework-for-closed-loop-guidance-of-fish-schools-via-virtual-agents)  
+   evidence：用于科学研究任务的可演化多智能体框架
+3. [Agent Q-Mix: Selecting the Right Action for LLM Multi-Agent Systems through Reinforcement Learning](/202604/02/2604.00344v1-agent-q-mix-selecting-the-right-action-for-llm-multi-agent-systems-through-reinforcement-learning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：引导生物群体中的集体运动和社会交互规则
-4. [Truth and distortion in complex networks: a global consistency approach](/202604/01/2603.28984v1-truth-and-distortion-in-complex-networks-a-global-consistency-approach)  
+   evidence：用于LLM拓扑选择的协作式多智能体强化学习
+4. [GRASP: Gradient Realignment via Active Shared Perception for Multi-Agent Collaborative Optimization](/202604/02/2604.00717v1-grasp-gradient-realignment-via-active-shared-perception-for-multi-agent-collaborative-optimization)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：在多层交互个体系统中，真相源于全局关系一致性
-5. [Emotional Support with Conversational AI: Talking to Machines About Life](/202604/01/2603.22618v1-emotional-support-with-conversational-ai-talking-to-machines-about-life)  
+   evidence：用于策略演化的多智能体协同优化框架
+5. [From Pixels to Digital Agents: An Empirical Study on the Taxonomy and Technological Trends of Reinforcement Learning Environments](/202604/02/2603.23964v1-from-pixels-to-digital-agents-an-empirical-study-on-the-taxonomy-and-technological-trends-of-reinforcement-learning-environments)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：AI伴侣交互的社会化情境过程
-6. [Empirical Comparison of Agent Communication Protocols for Task Orchestration](/202604/01/2603.22823v2-empirical-comparison-of-agent-communication-protocols-for-task-orchestration)  
+   evidence：强化学习环境向语言驱动基础智能体的演进
+6. [Experiential Reflective Learning for Self-Improving LLM Agents](/202604/02/2603.24639v1-experiential-reflective-learning-for-self-improving-llm-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体编排中智能体通信协议的比较
-7. [Towards Semantic-based Agent Communication Networks: Vision, Technologies, and Challenges](/202604/01/2603.24328v1-towards-semantic-based-agent-communication-networks-vision-technologies-and-challenges)  
+   evidence：用于复杂推理和多步问题解决的自主智能体
+7. [Experiential Reflective Learning for Self-Improving LLM Agents](/202604/02/2603.24639v2-experiential-reflective-learning-for-self-improving-llm-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于智能体的通信网络与任务协作愿景
-8. [AI-Supervisor: Autonomous AI Research Supervision via a Persistent Research World Model](/202604/01/2603.24402v2-ai-supervisor-autonomous-ai-research-supervision-via-a-persistent-research-world-model)  
+   evidence：具有经验反思学习能力的自我改进LLM智能体
+8. [COIN: Collaborative Interaction-Aware Multi-Agent Reinforcement Learning for Self-Driving Systems](/202604/02/2603.24931v1-coin-collaborative-interaction-aware-multi-agent-reinforcement-learning-for-self-driving-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于研究监督的多智能体编排框架
-9. [PERMA: Benchmarking Personalized Memory Agents via Event-Driven Preference and Realistic Task Environments](/202604/01/2603.23231v1-perma-benchmarking-personalized-memory-agents-via-event-driven-preference-and-realistic-task-environments)  
+   evidence：用于协作系统的多智能体强化学习
+9. [Efficient Benchmarking of AI Agents](/202604/02/2603.23749v1-efficient-benchmarking-of-ai-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：针对不断演变的用户需求的个性化记忆智能体
-10. [GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents](/202604/01/2603.24329v1-gameplayqa-a-benchmarking-framework-for-decision-dense-pov-synced-multi-video-understanding-of-3d-virtual-agents)  
+   evidence：多步推理AI智能体的基准测试
+10. [ELITE: Experiential Learning and Intent-Aware Transfer for Self-improving Embodied Agents](/202604/02/2603.24018v1-elite-experiential-learning-and-intent-aware-transfer-for-self-improving-embodied-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：在3D虚拟环境中对并发多智能体行为进行推理
-11. [Relaxing Constraints in Anonymous Multi Agent Path Finding for Large Agents](/202604/01/2603.24442v1-relaxing-constraints-in-anonymous-multi-agent-path-finding-for-large-agents)  
+   evidence：用于自我改进具身智能体的经验学习
+11. [ElephantBroker: A Knowledge-Grounded Cognitive Runtime for Trustworthy AI Agents](/202604/02/2603.25097v1-elephantbroker-a-knowledge-grounded-cognitive-runtime-for-trustworthy-ai-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：匿名多智能体路径规划
+   evidence：多轮设置中具有可验证记忆的可信 AI 智能体
 
 
 <div class="dpr-home-promo-card">
