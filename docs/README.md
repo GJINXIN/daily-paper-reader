@@ -6,72 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-02
-- 运行时间：2026-04-02 20:18:21 UTC
+- 最新运行日期：2026-04-03
+- 运行时间：2026-04-03 20:09:29 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度解析 17 篇 AI 论文，重点攻克大模型策略沟通中的信息泄露难题与行为健康模拟。
-核心结论指出 SNEAK 框架能有效评估 LLM 的战略博弈能力，而安全感知的
-- 详情：[/202604/02/README](/202604/02/README)
+今日深度解析 17 篇前沿成果，重点探讨 LLM 智能体在社会科学自动化及世界中心架构中的突破性应用。
+最值得关注的是人机协作平台对科研范式的重塑，以及多智能体自评估驱动的高效协作范式。
+建议从 AgentCollab 等自动化研究工具入手，探索 AI 如何在复杂科研任务中实现高效协同。
+- 详情：[/202604/03/README](/202604/03/README)
 
 ### 精读区论文标签
-1. [SNEAK: Evaluating Strategic Communication and Information Leakage in Large Language Models](/202604/02/2603.29846v1-sneak-evaluating-strategic-communication-and-information-leakage-in-large-language-models)  
+1. [LLM Agents as Social Scientists: A Human-AI Collaborative Platform for Social Science Automation](/202604/03/2604.01520v1-llm-agents-as-social-scientists-a-human-ai-collaborative-platform-for-social-science-automation)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：基于LLM智能体的社会科学自动化平台
+2. [Semantic Modeling for World-Centered Architectures](/202604/03/2604.01359v1-semantic-modeling-for-world-centered-architectures)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：评估多智能体环境中的策略性通信与信息泄露
-2. [A Safety-Aware Role-Orchestrated Multi-Agent LLM Framework for Behavioral Health Communication Simulation](/202604/02/2604.00249v1-a-safety-aware-role-orchestrated-multi-agent-llm-framework-for-behavioral-health-communication-simulation)  
+   evidence：面向机构系统和协作的世界中心多智能体系统
+3. [AgentSocialBench: Evaluating Privacy Risks in Human-Centered Agentic Social Networks](/202604/03/2604.01487v1-agentsocialbench-evaluating-privacy-risks-in-human-centered-agentic-social-networks)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：用于模拟行为健康沟通的多智能体LLM框架
-3. [Improvisational Games as a Benchmark for Social Intelligence of AI Agents: The Case of Connections](/202604/02/2604.00284v1-improvisational-games-as-a-benchmark-for-social-intelligence-of-ai-agents-the-case-of-connections)  
+   evidence：以人为本的智能体社交网络中的隐私风险
+4. [CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery](/202604/03/2604.01658v1-coral-towards-autonomous-multi-agent-evolution-for-open-ended-discovery)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：大语言模型智能体社会智能的基准测试
-4. [Competition and Cooperation of LLM Agents in Games](/202604/02/2604.00487v1-competition-and-cooperation-of-llm-agents-in-games)  
+   evidence：自主多智能体演化与协作
+5. [TRACE-Bot: Detecting Emerging LLM-Driven Social Bots via Implicit Semantic Representations and AIGC-Enhanced Behavioral Patterns](/202604/03/2604.02147v1-trace-bot-detecting-emerging-llm-driven-social-bots-via-implicit-semantic-representations-and-aigc-enhanced-behavioral-patterns)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：LLM智能体在博弈中涌现的合作与策略行为
-5. [Detecting Multi-Agent Collusion Through Multi-Agent Interpretability](/202604/02/2604.01151v1-detecting-multi-agent-collusion-through-multi-agent-interpretability)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：检测多智能体串通与隐蔽协作
-6. [Large Language Model Guided Incentive Aware Reward Design for Cooperative Multi-Agent Reinforcement Learning](/202604/02/2603.24324v2-large-language-model-guided-incentive-aware-reward-design-for-cooperative-multi-agent-reinforcement-learning)  
+   evidence：检测在线话语中的大模型驱动社交机器人及行为模式
+6. [InnerPond: Fostering Inter-Self Dialogue with a Multi-Agent Approach for Introspection](/202604/03/2603.27563v1-innerpond-fostering-inter-self-dialogue-with-a-multi-agent-approach-for-introspection)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：大语言模型引导的多智能体强化学习奖励设计
+   evidence：模拟内部视角的多智能体方法
 
 ### 速读区论文标签
-1. [Grounding Social Perception in Intuitive Physics](/202604/02/2603.27410v1-grounding-social-perception-in-intuitive-physics)  
+1. [AgentCollab: A Self-Evaluation-Driven Collaboration Paradigm for Efficient LLM Agents](/202604/03/2603.26034v1-agentcollab-a-self-evaluation-driven-collaboration-paradigm-for-efficient-llm-agents)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：模拟环境中的社会感知与双智能体交互
-2. [Mimosa Framework: Toward Evolving Multi-Agent Systems for Scientific Research](/202604/02/2603.28986v1-mimosa-framework-toward-evolving-multi-agent-systems-for-scientific-research)  
+   evidence：高效LLM智能体的协作范式
+2. [An Empirical Study of Multi-Agent Collaboration for Automated Research](/202604/03/2603.29632v1-an-empirical-study-of-multi-agent-collaboration-for-automated-research)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于科学研究任务的可演化多智能体框架
-3. [Agent Q-Mix: Selecting the Right Action for LLM Multi-Agent Systems through Reinforcement Learning](/202604/02/2604.00344v1-agent-q-mix-selecting-the-right-action-for-llm-multi-agent-systems-through-reinforcement-learning)  
+   evidence：多智能体协作结构的实证研究
+3. [LangMARL: Natural Language Multi-Agent Reinforcement Learning](/202604/03/2604.00722v1-langmarl-natural-language-multi-agent-reinforcement-learning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于LLM拓扑选择的协作式多智能体强化学习
-4. [GRASP: Gradient Realignment via Active Shared Perception for Multi-Agent Collaborative Optimization](/202604/02/2604.00717v1-grasp-gradient-realignment-via-active-shared-perception-for-multi-agent-collaborative-optimization)  
+   evidence：语言空间中的多智能体强化学习
+4. [OrgAgent: Organize Your Multi-Agent System like a Company](/202604/03/2604.01020v1-orgagent-organize-your-multi-agent-system-like-a-company)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于策略演化的多智能体协同优化框架
-5. [From Pixels to Digital Agents: An Empirical Study on the Taxonomy and Technological Trends of Reinforcement Learning Environments](/202604/02/2603.23964v1-from-pixels-to-digital-agents-an-empirical-study-on-the-taxonomy-and-technological-trends-of-reinforcement-learning-environments)  
+   evidence：用于复杂推理的分层多智能体框架
+5. [Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills](/202604/03/2603.25158v1-trace2skill-distill-trajectory-local-lessons-into-transferable-agent-skills)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：强化学习环境向语言驱动基础智能体的演进
-6. [Experiential Reflective Learning for Self-Improving LLM Agents](/202604/02/2603.24639v1-experiential-reflective-learning-for-self-improving-llm-agents)  
+   evidence：利用子智能体集群提取可迁移技能
+6. [Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills](/202604/03/2603.25158v2-trace2skill-distill-trajectory-local-lessons-into-transferable-agent-skills)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于复杂推理和多步问题解决的自主智能体
-7. [Experiential Reflective Learning for Self-Improving LLM Agents](/202604/02/2603.24639v2-experiential-reflective-learning-for-self-improving-llm-agents)  
+   evidence：用于提取智能体技能的多智能体集群
+7. [Distributed Online Submodular Maximization under Communication Delays: A Simultaneous Decision-Making Approach](/202604/03/2603.27803v1-distributed-online-submodular-maximization-under-communication-delays-a-simultaneous-decision-making-approach)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：具有经验反思学习能力的自我改进LLM智能体
-8. [COIN: Collaborative Interaction-Aware Multi-Agent Reinforcement Learning for Self-Driving Systems](/202604/02/2603.24931v1-coin-collaborative-interaction-aware-multi-agent-reinforcement-learning-for-self-driving-systems)  
+   evidence：多智能体子模最大化的分布式在线算法
+8. [HeteroHub: An Applicable Data Management Framework for Heterogeneous Multi-Embodied Agent System](/202604/03/2603.28010v1-heterohub-an-applicable-data-management-framework-for-heterogeneous-multi-embodied-agent-system)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于协作系统的多智能体强化学习
-9. [Efficient Benchmarking of AI Agents](/202604/02/2603.23749v1-efficient-benchmarking-of-ai-agents)  
+   evidence：异构多具身智能体系统
+9. [Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills](/202604/03/2603.25158v3-trace2skill-distill-trajectory-local-lessons-into-transferable-agent-skills)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多步推理AI智能体的基准测试
-10. [ELITE: Experiential Learning and Intent-Aware Transfer for Self-improving Embodied Agents](/202604/02/2603.24018v1-elite-experiential-learning-and-intent-aware-transfer-for-self-improving-embodied-agents)  
+   evidence：用于自动技能生成的并行子智能体集群
+10. [Agentic Trust Coordination for Federated Learning through Adaptive Thresholding and Autonomous Decision Making in Sustainable and Resilient Industrial Networks](/202604/03/2603.25334v1-agentic-trust-coordination-for-federated-learning-through-adaptive-thresholding-and-autonomous-decision-making-in-sustainable-and-resilient-industrial-networks)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于自我改进具身智能体的经验学习
-11. [ElephantBroker: A Knowledge-Grounded Cognitive Runtime for Trustworthy AI Agents](/202604/02/2603.25097v1-elephantbroker-a-knowledge-grounded-cognitive-runtime-for-trustworthy-ai-agents)  
+   evidence：联邦学习中的智能体信任协调
+11. [GridVAD: Open-Set Video Anomaly Detection via Spatial Reasoning over Stratified Frame Grids](/202604/03/2603.25467v2-gridvad-open-set-video-anomaly-detection-via-spatial-reasoning-over-stratified-frame-grids)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多轮设置中具有可验证记忆的可信 AI 智能体
+   evidence：通过空间推理进行视频异常检测
 
 
 <div class="dpr-home-promo-card">

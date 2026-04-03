@@ -1,84 +1,76 @@
 {
-  "generated_at": "2026-04-02T20:16:18.347533+00:00",
-  "updated_date": "20260402",
+  "generated_at": "2026-04-03T20:07:27.563235+00:00",
+  "updated_date": "20260403",
   "carryover_days": 9,
   "items": [
     {
-      "id": "2604.00842v1",
-      "title": "Proactive Agent Research Environment: Simulating Active Users to Evaluate Proactive Assistants",
-      "abstract": "Proactive agents that anticipate user needs and autonomously execute tasks hold great promise as digital assistants, yet the lack of realistic user simulation frameworks hinders their development. Existing approaches model apps as flat tool-calling APIs, failing to capture the stateful and sequential nature of user interaction in digital environments and making realistic user simulation infeasible. We introduce Proactive Agent Research Environment (Pare), a framework for building and evaluating proactive agents in digital environments. Pare models applications as finite state machines with stateful navigation and state-dependent action space for the user simulator, enabling active user simulation. Building on this foundation, we present Pare-Bench, a benchmark of 143 diverse tasks spanning communication, productivity, scheduling, and lifestyle apps, designed to test context observation, goal inference, intervention timing, and multi-app orchestration.",
+      "id": "2604.01890v1",
+      "title": "Behavior and Sublinear Algorithm for Opinion Disagreement on Noisy Social Networks",
+      "abstract": "The phenomenon of opinion disagreement has been empirically observed and reported in the literature, which is affected by various factors, such as the structure of social networks. An important discovery in network science is that most real-life networks, including social networks, are scale-free and sparse. In this paper, we study noisy opinion dynamics in sparse scale-free social networks to uncover the influence of power-law topology on opinion disagreement. We adopt the popular discrete-time DeGroot model for opinion dynamics in a graph, where nodes' opinions are subject to white noise. We first study opinion disagreement in many realistic and model networks with a scale-free topology, which approaches a constant, indicating that a scale-free structure is resistant to noise in the opinion dynamics. Moreover, existing algorithms for estimating opinion disagreement are computationally impractical for large-scale networks due to their high computational complexity. To solve this challenge, we introduce a sublinear-time algorithm to approximate this quantity with a theoretically guaranteed error. This algorithm efficiently simulates truncated random walks starting from a subset of nodes while preserving accurate estimation. Extensive experiments demonstrate its efficiency, accuracy, and scalability.",
       "authors": [
-        "Deepak Nathani",
-        "Cheng Zhang",
-        "Chang Huan",
-        "Jiaming Shan",
-        "Yinfei Yang",
-        "Alkesh Patel",
-        "Zhe Gan",
-        "William Yang Wang",
-        "Michael Saxon",
-        "Xin Eric Wang"
+        "Wanyue Xu",
+        "Yubo Sun",
+        "Mingzhe Zhu",
+        "Zuobai Zhang",
+        "Zhongzhi Zhang"
       ],
-      "primary_category": "cs.AI",
+      "primary_category": "cs.SI",
       "categories": [
-        "cs.AI",
-        "cs.LG",
-        "cs.MA"
+        "cs.SI",
+        "cs.CY"
       ],
-      "published": "2026-04-01T12:53:01+00:00",
-      "link": "https://arxiv.org/pdf/2604.00842v1",
+      "published": "2026-04-02T10:55:45+00:00",
+      "link": "https://arxiv.org/pdf/2604.01890v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "simulating active users to evaluate proactive agents",
-      "llm_evidence_cn": "模拟活跃用户以评估主动型智能体",
-      "llm_evidence": "模拟活跃用户以评估主动型智能体",
-      "canonical_evidence": "模拟活跃用户以评估主动型智能体",
-      "llm_tldr_en": "Environment for building and evaluating proactive agents through realistic user simulation.",
-      "llm_tldr_cn": "通过真实用户模拟来构建和评估主动型智能体的环境。",
-      "llm_tldr": "通过真实用户模拟来构建和评估主动型智能体的环境。",
+      "llm_evidence_en": "opinion disagreement on noisy social networks",
+      "llm_evidence_cn": "噪声社交网络中的观点分歧",
+      "llm_evidence": "噪声社交网络中的观点分歧",
+      "canonical_evidence": "噪声社交网络中的观点分歧",
+      "llm_tldr_en": "Studies opinion dynamics in scale-free social networks to understand how topology influences emergent disagreement.",
+      "llm_tldr_cn": "研究无标度社交网络中的观点动力学，揭示网络拓扑结构对观点分歧涌现现象的影响。",
+      "llm_tldr": "研究无标度社交网络中的观点动力学，揭示网络拓扑结构对观点分歧涌现现象的影响。",
       "llm_tags": [
         "query:mas-ss"
       ],
       "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "LLM powered agents for simulating social behavior",
-      "matched_requirement_id": "req-6",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
-      "paper_id": "2604.00842v1",
+      "paper_id": "2604.01890v1",
       "carry_days": 1
     },
     {
-      "id": "2604.00722v1",
-      "title": "LangMARL: Natural Language Multi-Agent Reinforcement Learning",
-      "abstract": "Large language model (LLM) agents struggle to autonomously evolve coordination strategies in dynamic environments, largely because coarse global outcomes obscure the causal signals needed for local policy refinement. We identify this bottleneck as a multi-agent credit assignment problem, which has long been studied in classical multi-agent reinforcement learning (MARL) but remains underaddressed in LLM-based systems. Building on this observation, we propose LangMARL, a framework that brings credit assignment and policy gradient evolution from cooperative MARL into the language space. LangMARL introduces agent-level language credit assignment, pioneers gradient evolution in language space for policy improvement, and summarizes task-relevant causal relations from replayed trajectories to provide dense feedback and improve convergence under sparse rewards. Extensive experiments across diverse cooperative multi-agent tasks demonstrate improved sample efficiency, interpretability, and strong generalization.",
+      "id": "2604.01608v1",
+      "title": "From Multi-Agent to Single-Agent: When Is Skill Distillation Beneficial?",
+      "abstract": "Multi-agent systems (MAS) tackle complex tasks by distributing expertise, though this often comes at the cost of heavy coordination overhead, context fragmentation, and brittle phase ordering. Distilling a MAS into a single-agent skill can bypass these costs, but this conversion lacks a principled answer for when and what to distill. Instead, the empirical outcome is surprisingly inconsistent: skill lift ranges from a 28% improvement to a 2% degradation across metrics of the exact same task. In this work, we reveal that skill utility is governed not by the task, but by the evaluation metric. We introduce Metric Freedom ($F$), the first a priori predictor of skill utility. $F$ measures the topological rigidity of a metric's scoring landscape by quantifying how output diversity couples with score variance via a Mantel test. Guided by $F$, we propose a two-stage adaptive distillation framework. Stage 1 acts as a selective extraction mechanism, extracting tools and knowledge while discarding restrictive structures on \"free\" metrics to preserve exploration. Stage 2 targets computationally intensive iterative refinement exclusively toward \"rigid\" metrics ($F \\lesssim 0.6$) to eliminate trajectory-local overfitting. Evaluating across 4 tasks, 11 datasets, and 6 metrics, $F$ strongly predicts skill utility ($ρ= -0.62$, $p < 0.05$). Strikingly, identical agent trajectories yield diametrically opposite skill lifts under rigid versus free metrics, demonstrating that skill utility is fundamentally a metric-level property. Driven by this signal, our adaptive agent matches or exceeds the original MAS while reducing cost up to 8$\\times$ and latency by up to 15$\\times$.",
       "authors": [
-        "Huaiyuan Yao",
-        "Longchao Da",
-        "Xiaoou Liu",
-        "Charles Fleming",
-        "Tianlong Chen",
-        "Hua Wei"
+        "Binyan Xu",
+        "Dong Fang",
+        "Haitao Li",
+        "Kehuan Zhang"
       ],
-      "primary_category": "cs.CL",
+      "primary_category": "cs.AI",
       "categories": [
-        "cs.CL"
+        "cs.AI"
       ],
-      "published": "2026-04-01T10:32:00+00:00",
-      "link": "https://arxiv.org/pdf/2604.00722v1",
+      "published": "2026-04-02T04:38:32+00:00",
+      "link": "https://arxiv.org/pdf/2604.01608v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "Multi-agent reinforcement learning in language space for LLM agents",
-      "llm_evidence_cn": "LLM智能体在语言空间中的多智能体强化学习",
-      "llm_evidence": "LLM智能体在语言空间中的多智能体强化学习",
-      "canonical_evidence": "LLM智能体在语言空间中的多智能体强化学习",
-      "llm_tldr_en": "LangMARL applies MARL credit assignment to language space to improve coordination among LLM agents.",
-      "llm_tldr_cn": "LangMARL将多智能体强化学习的信用分配应用于语言空间，以提高LLM智能体间的协作。",
-      "llm_tldr": "LangMARL将多智能体强化学习的信用分配应用于语言空间，以提高LLM智能体间的协作。",
+      "llm_evidence_en": "multi-agent systems and skill distillation",
+      "llm_evidence_cn": "多智能体系统与技能蒸馏",
+      "llm_evidence": "多智能体系统与技能蒸馏",
+      "canonical_evidence": "多智能体系统与技能蒸馏",
+      "llm_tldr_en": "Analyzes when distilling multi-agent systems into single agents is beneficial based on metrics.",
+      "llm_tldr_cn": "分析了何时基于评估指标将多智能体系统蒸馏为单智能体是有益的。",
+      "llm_tldr": "分析了何时基于评估指标将多智能体系统蒸馏为单智能体是有益的。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -86,48 +78,48 @@
       "matched_query_text": "Multi-Agent",
       "matched_requirement_id": "req-3",
       "selection_source": "carryover_cache",
-      "paper_id": "2604.00722v1",
+      "paper_id": "2604.01608v1",
       "carry_days": 1
     },
     {
-      "id": "2604.01020v1",
-      "title": "OrgAgent: Organize Your Multi-Agent System like a Company",
-      "abstract": "While large language model-based multi-agent systems have shown strong potential for complex reasoning, how to effectively organize multiple agents remains an open question. In this paper, we introduce OrgAgent, a company-style hierarchical multi-agent framework that separates collaboration into governance, execution, and compliance layers. OrgAgent decomposes multi-agent reasoning into three layers: a governance layer for planning and resource allocation, an execution layer for task solving and review, and a compliance layer for final answer control. By evaluating the framework across reasoning tasks, LLMs, execution modes, and execution policies, we find that multi-agent systems organized in a company-style hierarchy generally outperform other organizational structures. Besides, hierarchical coordination also reduces token consumption relative to flat collaboration in most settings. For example, for GPT-OSS-120B, the hierarchical setting improves performance over flat multi-agent system by 102.73% while reducing token usage by 74.52% on SQuAD 2.0. Further analysis shows that hierarchy helps most when tasks benefit from stable skill assignment, controlled information flow, and layered verification. Overall, our findings highlight organizational structure as an important factor in multi-agent reasoning, shaping not only effectiveness and cost, but also coordination behavior.",
+      "id": "2604.01560v1",
+      "title": "DeltaMem: Towards Agentic Memory Management via Reinforcement Learning",
+      "abstract": "Recent advances in persona-centric memory have revealed the powerful capability of multi-agent systems in managing persona memory, especially in conversational scenarios. However, these complex frameworks often suffer from information loss and are fragile across varying scenarios, resulting in suboptimal performance. In this paper, we propose DeltaMem, an agentic memory management system that formulates persona-centric memory management as an end-to-end task within a single-agent setting. To further improve the performance of our agentic memory manager, we draw inspiration from the evolution of human memory and synthesize a user-assistant dialogue dataset along with corresponding operation-level memory updating labels. Building on this, we introduce a novel Memory-based Levenshtein Distance to formalize the memory updating reward, and propose a tailored reinforcement learning framework to further enhance the management capabilities of DeltaMem. Extensive experiments show that both training-free and RL-trained DeltaMem outperform all product-level baselines across diverse long-term memory benchmarks, including LoCoMo, HaluMem, and PersonaMem.",
       "authors": [
-        "Yiru Wang",
-        "Xinyue Shen",
-        "Yaohui Han",
-        "Michael Backes",
-        "Pin-Yu Chen",
-        "Tsung-Yi Ho"
+        "Qi Zhang",
+        "Shen Huang",
+        "Chu Liu",
+        "Shouqing Yang",
+        "Junbo Zhao",
+        "Haobo Wang",
+        "Pengjun Xie"
       ],
-      "primary_category": "cs.MA",
+      "primary_category": "cs.CL",
       "categories": [
-        "cs.MA",
-        "cs.AI"
+        "cs.CL"
       ],
-      "published": "2026-04-01T15:21:14+00:00",
-      "link": "https://arxiv.org/pdf/2604.01020v1",
+      "published": "2026-04-02T03:13:53+00:00",
+      "link": "https://arxiv.org/pdf/2604.01560v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "hierarchical organization of multi-agent systems",
-      "llm_evidence_cn": "多智能体系统的层级化组织结构",
-      "llm_evidence": "多智能体系统的层级化组织结构",
-      "canonical_evidence": "多智能体系统的层级化组织结构",
-      "llm_tldr_en": "OrgAgent introduces a company-style hierarchy to improve coordination and reasoning in multi-agent systems.",
-      "llm_tldr_cn": "OrgAgent引入了公司式的层级结构，以提高多智能体系统的协作和推理能力。",
-      "llm_tldr": "OrgAgent引入了公司式的层级结构，以提高多智能体系统的协作和推理能力。",
+      "llm_evidence_en": "persona-centric memory in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的人格化记忆管理",
+      "llm_evidence": "多智能体系统中的人格化记忆管理",
+      "canonical_evidence": "多智能体系统中的人格化记忆管理",
+      "llm_tldr_en": "Proposes an RL-based agentic memory management system for persona-centric conversations.",
+      "llm_tldr_cn": "提出了一种基于强化学习的智能体记忆管理系统，用于人格化对话。",
+      "llm_tldr": "提出了一种基于强化学习的智能体记忆管理系统，用于人格化对话。",
       "llm_tags": [
         "query:mas-ss"
       ],
       "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "recent advances in multi agent social simulation",
-      "matched_requirement_id": "req-5",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
       "selection_source": "carryover_cache",
-      "paper_id": "2604.01020v1",
+      "paper_id": "2604.01560v1",
       "carry_days": 1
     }
   ]

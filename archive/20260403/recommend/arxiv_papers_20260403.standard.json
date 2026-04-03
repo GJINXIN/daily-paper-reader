@@ -1,0 +1,695 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-03T20:07:27.562010+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 13,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 35,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.01520v1",
+      "title": "LLM Agents as Social Scientists: A Human-AI Collaborative Platform for Social Science Automation",
+      "abstract": "Traditional social science research often requires designing complex experiments across vast methodological spaces and depends on real human participants, making it labor-intensive, costly, and difficult to scale. Here we present S-Researcher, an LLM-agent-based platform that assists researchers in conducting social science research more efficiently and at greater scale by \"siliconizing\" both the research process and the participant pool. To build S-Researcher, we first develop YuLan-OneSim, a large-scale social simulation system designed around three core requirements: generality via auto-programming from natural language to executable scenarios, scalability via a distributed architecture supporting up to 100,000 concurrent agents, and reliability via feedback-driven LLM fine-tuning. Leveraging this system, S-Researcher supports researchers in designing social experiments, simulating human behavior with LLM agents, analyzing results, and generating reports, forming a complete human-AI collaborative research loop in which researchers retain oversight and intervention at every stage. We operationalize LLM simulation research paradigms into three canonical reasoning modes (induction, deduction, and abduction) and validate S-Researcher through systematic case studies: inductive reproduction of cultural dynamics consistent with Axelrod's theory, deductive testing of competing hypotheses on teacher attention validated against survey data, and abductive identification of a cooperation mechanism in public goods games confirmed by human experiments. S-Researcher establishes a new human--AI collaborative paradigm for social science, in which computational simulation augments human researchers to accelerate discovery across the full spectrum of social inquiry.",
+      "authors": [
+        "Lei Wang",
+        "Yuanzi Li",
+        "Jinchao Wu",
+        "Heyang Gao",
+        "Xiaohe Bo",
+        "Xu Chen",
+        "Ji-Rong Wen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-02T01:18:56+00:00",
+      "link": "https://arxiv.org/pdf/2604.01520v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "LLM-agent-based platform for social science automation",
+      "llm_evidence_cn": "基于LLM智能体的社会科学自动化平台",
+      "llm_evidence": "基于LLM智能体的社会科学自动化平台",
+      "canonical_evidence": "基于LLM智能体的社会科学自动化平台",
+      "llm_tldr_en": "Presents a large-scale social simulation system to automate social science research.",
+      "llm_tldr_cn": "展示了一个大规模社会模拟系统，用于自动化社会科学研究。",
+      "llm_tldr": "展示了一个大规模社会模拟系统，用于自动化社会科学研究。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.01359v1",
+      "title": "Semantic Modeling for World-Centered Architectures",
+      "abstract": "We introduce world-centered multi-agent systems (WMAS) as an alternative to traditional agent-centered architectures, arguing that structured domains such as enterprises and institutional systems require a shared, explicit world representation to ensure semantic consistency, explainability, and long-term stability. We classify worlds along dimensions including ontological explicitness, normativity, etc. In WMAS, learning and coordination operate over a shared world model rather than isolated agent-local representations, enabling global consistency and verifiable system behavior. We propose semantic models as a mathematical formalism for representing such worlds. Finally, we present the Ontobox platform as a realization of WMAS.",
+      "authors": [
+        "Andrei Mantsivoda",
+        "Darya Gavrilina"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-01T20:14:56+00:00",
+      "link": "https://arxiv.org/pdf/2604.01359v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "world-centered multi-agent systems for institutional systems and coordination",
+      "llm_evidence_cn": "面向机构系统和协作的世界中心多智能体系统",
+      "llm_evidence": "面向机构系统和协作的世界中心多智能体系统",
+      "canonical_evidence": "面向机构系统和协作的世界中心多智能体系统",
+      "llm_tldr_en": "Proposes world-centered multi-agent architectures to ensure semantic consistency in structured domains.",
+      "llm_tldr_cn": "提出以世界为中心的多智能体架构，以确保结构化领域的语义一致性。",
+      "llm_tldr": "提出以世界为中心的多智能体架构，以确保结构化领域的语义一致性。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.01487v1",
+      "title": "AgentSocialBench: Evaluating Privacy Risks in Human-Centered Agentic Social Networks",
+      "abstract": "With the rise of personalized, persistent LLM agent frameworks such as OpenClaw, human-centered agentic social networks in which teams of collaborative AI agents serve individual users in a social network across multiple domains are becoming a reality. This setting creates novel privacy challenges: agents must coordinate across domain boundaries, mediate between humans, and interact with other users' agents, all while protecting sensitive personal information. While prior work has evaluated multi-agent coordination and privacy preservation, the dynamics and privacy risks of human-centered agentic social networks remain unexplored. To this end, we introduce AgentSocialBench, the first benchmark to systematically evaluate privacy risk in this setting, comprising scenarios across seven categories spanning dyadic and multi-party interactions, grounded in realistic user profiles with hierarchical sensitivity labels and directed social graphs. Our experiments reveal that privacy in agentic social networks is fundamentally harder than in single-agent settings: (1) cross-domain and cross-user coordination creates persistent leakage pressure even when agents are explicitly instructed to protect information, (2) privacy instructions that teach agents how to abstract sensitive information paradoxically cause them to discuss it more (we call it abstraction paradox). These findings underscore that current LLM agents lack robust mechanisms for privacy preservation in human-centered agentic social networks, and that new approaches beyond prompt engineering are needed to make agent-mediated social coordination safe for real-world deployment.",
+      "authors": [
+        "Prince Zizhuang Wang",
+        "Shuli Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SI"
+      ],
+      "published": "2026-04-01T23:43:23+00:00",
+      "link": "https://arxiv.org/pdf/2604.01487v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Privacy risks in human-centered agentic social networks",
+      "llm_evidence_cn": "以人为本的智能体社交网络中的隐私风险",
+      "llm_evidence": "以人为本的智能体社交网络中的隐私风险",
+      "canonical_evidence": "以人为本的智能体社交网络中的隐私风险",
+      "llm_tldr_en": "Evaluates privacy dynamics and risks in collaborative multi-agent social networks serving human users.",
+      "llm_tldr_cn": "引入AgentSocialBench，系统评估多智能体社交网络在跨域协作中的隐私保护与风险。",
+      "llm_tldr": "引入AgentSocialBench，系统评估多智能体社交网络在跨域协作中的隐私保护与风险。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.01658v1",
+      "title": "CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery",
+      "abstract": "Large language model (LLM)-based evolution is a promising approach for open-ended discovery, where progress requires sustained search and knowledge accumulation. Existing methods still rely heavily on fixed heuristics and hard-coded exploration rules, which limit the autonomy of LLM agents. We present CORAL, the first framework for autonomous multi-agent evolution on open-ended problems. CORAL replaces rigid control with long-running agents that explore, reflect, and collaborate through shared persistent memory, asynchronous multi-agent execution, and heartbeat-based interventions. It also provides practical safeguards, including isolated workspaces, evaluator separation, resource management, and agent session and health management. Evaluated on diverse mathematical, algorithmic, and systems optimization tasks, CORAL sets new state-of-the-art results on 10 tasks, achieving 3-10 times higher improvement rates with far fewer evaluations than fixed evolutionary search baselines across tasks. On Anthropic's kernel engineering task, four co-evolving agents improve the best known score from 1363 to 1103 cycles. Mechanistic analyses further show how these gains arise from knowledge reuse and multi-agent exploration and communication. Together, these results suggest that greater agent autonomy and multi-agent evolution can substantially improve open-ended discovery. Code is available at https://github.com/Human-Agent-Society/CORAL.",
+      "authors": [
+        "Ao Qu",
+        "Han Zheng",
+        "Zijian Zhou",
+        "Yihao Yan",
+        "Yihong Tang",
+        "Shao Yong Ong",
+        "Fenglu Hong",
+        "Kaichen Zhou",
+        "Chonghe Jiang",
+        "Minwei Kong",
+        "Jiacheng Zhu",
+        "Xuan Jiang",
+        "Sirui Li",
+        "Cathy Wu",
+        "Bryan Kian Hsiang Low",
+        "Jinhua Zhao",
+        "Paul Pu Liang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-02T05:59:06+00:00",
+      "link": "https://arxiv.org/pdf/2604.01658v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "autonomous multi-agent evolution and collaboration",
+      "llm_evidence_cn": "自主多智能体演化与协作",
+      "llm_evidence": "自主多智能体演化与协作",
+      "canonical_evidence": "自主多智能体演化与协作",
+      "llm_tldr_en": "Presents a framework for autonomous multi-agent evolution through shared memory and collaboration.",
+      "llm_tldr_cn": "提出了一个通过共享存储和协作实现自主多智能体演化的框架。",
+      "llm_tldr": "提出了一个通过共享存储和协作实现自主多智能体演化的框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.02147v1",
+      "title": "TRACE-Bot: Detecting Emerging LLM-Driven Social Bots via Implicit Semantic Representations and AIGC-Enhanced Behavioral Patterns",
+      "abstract": "Large Language Model-driven (LLM-driven) social bots pose a growing threat to online discourse by generating human-like content that evades conventional detection. Existing methods suffer from limited detection accuracy due to overreliance on single-modality signals, insufficient sensitivity to the specific generative patterns of Artificial Intelligence-Generated Content (AIGC), and a failure to adequately model the interplay between linguistic patterns and behavioral dynamics. To address these limitations, we propose TRACE-Bot, a unified dual-channel framework that jointly models implicit semantic representations and AIGC-enhanced behavioral patterns. TRACE-Bot constructs fine-grained representations from heterogeneous sources, including personal information data, interaction behavior data and tweet data. A dual-channel architecture captures linguistic representations via a pretrained language model and behavioral irregularities via multidimensional activity features augmented with signals from state-of-the-art (SOTA) AIGC detectors. The fused representations are then classified through a lightweight prediction head. Experiments on two public LLM-driven social bot datasets demonstrate SOTA performance, achieving accuracies of 98.46% and 97.50%, respectively. The results further indicate strong robustness against advanced bot strategies, highlighting the effectiveness of jointly leveraging implicit semantic representations and AIGC-enhanced behavioral patterns for emerging LLM-driven social bot detection.",
+      "authors": [
+        "Zhongbo Wang",
+        "Zhiyu Lin",
+        "Zhu Wang",
+        "Haizhou Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-02T15:16:14+00:00",
+      "link": "https://arxiv.org/pdf/2604.02147v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "detecting LLM-driven social bots and behavioral patterns in online discourse",
+      "llm_evidence_cn": "检测在线话语中的大模型驱动社交机器人及行为模式",
+      "llm_evidence": "检测在线话语中的大模型驱动社交机器人及行为模式",
+      "canonical_evidence": "检测在线话语中的大模型驱动社交机器人及行为模式",
+      "llm_tldr_en": "TRACE-Bot detects LLM-driven social bots by modeling semantic representations and AIGC behavioral patterns.",
+      "llm_tldr_cn": "TRACE-Bot通过建模语义表示和AIGC行为模式来检测大模型驱动的社交机器人。",
+      "llm_tldr": "TRACE-Bot通过建模语义表示和AIGC行为模式来检测大模型驱动的社交机器人。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2603.27563v1",
+      "title": "InnerPond: Fostering Inter-Self Dialogue with a Multi-Agent Approach for Introspection",
+      "abstract": "Introspection is central to identity construction and future planning, yet most digital tools approach the self as a unified entity. In contrast, Dialogical Self Theory (DST) views the self as composed of multiple internal perspectives, such as values, concerns, and aspirations, that can come into tension or dialogue with one another. Building on this view, we designed InnerPond, a research probe in the form of a multi-agent system that represents these internal perspectives as distinct LLM-based agents for introspection. Its design was shaped through iterative explorations of spatial metaphors, interaction scaffolding, and conversational orchestration, culminating in a shared spatial environment for organizing and relating multiple inner perspectives. In a user study with 17 young adults navigating career choices, participants engaged with the probe by co-creating inner voices with AI, composing relational inner landscapes, and orchestrating dialogue as observers and mediators, offering insight into how such systems could support introspection. Overall, this work offers design implications for AI-supported introspection tools that enable exploration of the self's multiplicity.",
+      "authors": [
+        "Hayeon Jeon",
+        "Dakyeom Ahn",
+        "Sunyu Pang",
+        "Yunseo Choi",
+        "Suhwoo Yoon",
+        "Joonhwan Lee",
+        "Eun-mee Kim",
+        "Hajin Lim"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-03-29T07:52:39+00:00",
+      "link": "https://arxiv.org/pdf/2603.27563v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent approach for simulating internal perspectives",
+      "llm_evidence_cn": "模拟内部视角的多智能体方法",
+      "llm_evidence": "模拟内部视角的多智能体方法",
+      "canonical_evidence": "模拟内部视角的多智能体方法",
+      "llm_tldr_en": "Uses LLM agents to represent internal perspectives for introspection based on psychological theory.",
+      "llm_tldr_cn": "利用大模型智能体代表内部视角，基于心理学理论进行自我反思模拟。",
+      "llm_tldr": "利用大模型智能体代表内部视角，基于心理学理论进行自我反思模拟。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2603.26034v1",
+      "title": "AgentCollab: A Self-Evaluation-Driven Collaboration Paradigm for Efficient LLM Agents",
+      "abstract": "Autonomous agents powered by large language models (LLMs) perform complex tasks through long-horizon reasoning and tool interaction, where a fundamental trade-off arises between execution efficiency and reasoning robustness. Models at different capability-cost levels offer complementary advantages: lower-cost models enable fast execution but may struggle on difficult reasoning segments, while stronger models provide more robust reasoning at higher computational cost. We present AgentCollab, a self-driven collaborative inference framework that dynamically coordinates models with different reasoning capacities during agent execution. Instead of relying on external routing modules, the framework uses the agent's own self-reflection signal to determine whether the current reasoning trajectory is making meaningful progress, and escalates control to a stronger reasoning tier only when necessary. To further stabilize long-horizon execution, we introduce a difficulty-aware cumulative escalation strategy that allocates additional reasoning budget based on recent failure signals. In our experiments, we instantiate this framework using a two-level small-large model setting. Experiments on diverse multi-step agent benchmarks show that AgentCollab consistently improves the accuracy-efficiency Pareto frontier of LLM agents.",
+      "authors": [
+        "Wenbo Gao",
+        "Renxi Liu",
+        "Xian Wang",
+        "Fang Guo",
+        "Shuai Yang",
+        "Xi Chen",
+        "Hui-Ling Zhen",
+        "Hanting Chen",
+        "Weizhe Lin",
+        "Xiaosong Li",
+        "Yaoyuan Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-03-27T03:07:34+00:00",
+      "link": "https://arxiv.org/pdf/2603.26034v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "collaboration paradigm for efficient LLM agents",
+      "llm_evidence_cn": "高效LLM智能体的协作范式",
+      "llm_evidence": "高效LLM智能体的协作范式",
+      "canonical_evidence": "高效LLM智能体的协作范式",
+      "llm_tldr_en": "Presents a framework for dynamic coordination between LLMs of different capacities in agent tasks.",
+      "llm_tldr_cn": "提出了一种在智能体执行过程中动态协调不同能力LLM的协作框架。",
+      "llm_tldr": "提出了一种在智能体执行过程中动态协调不同能力LLM的协作框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.25158v1",
+      "title": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
+      "abstract": "Equipping Large Language Model (LLM) agents with domain-specific skills is critical for tackling complex tasks. Yet, manual authoring creates a severe scalability bottleneck. Conversely, automated skill generation often yields fragile or fragmented results because it either relies on shallow parametric knowledge or sequentially overfits to non-generalizable trajectory-local lessons. To overcome this, we introduce Trace2Skill, a framework that mirrors how human experts author skills: by holistically analyzing broad execution experience before distilling it into a single, comprehensive guide. Instead of reacting sequentially to individual trajectories, Trace2Skill dispatches a parallel fleet of sub-agents to analyze a diverse pool of executions. It extracts trajectory-specific lessons and hierarchically consolidates them into a unified, conflict-free skill directory via inductive reasoning. Trace2Skill supports both deepening existing human-written skills and creating new ones from scratch. Experiments in challenging domains, such as spreadsheet, VisionQA and math reasoning, show that Trace2Skill significantly improves upon strong baselines, including Anthropic's official xlsx skills. Crucially, this trajectory-grounded evolution does not merely memorize task instances or model-specific quirks: evolved skills transfer across LLM scales and generalize to OOD settings. For example, skills evolved by Qwen3.5-35B on its own trajectories improved a Qwen3.5-122B agent by up to 57.65 absolute percentage points on WikiTableQuestions. Ultimately, our results demonstrate that complex agent experience can be packaged into highly transferable, declarative skills -- requiring no parameter updates, no external retrieval modules, and utilizing open-source models as small as 35B parameters.",
+      "authors": [
+        "Jingwei Ni",
+        "Yihao Liu",
+        "Xinpeng Liu",
+        "Yutao Sun",
+        "Mengyu Zhou",
+        "Pengyu Cheng",
+        "Dexin Wang",
+        "Xiaoxi Jiang",
+        "Guanjun Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-26T08:26:38+00:00",
+      "link": "https://arxiv.org/pdf/2603.25158v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "fleet of sub-agents to distill transferable skills",
+      "llm_evidence_cn": "利用子智能体集群提取可迁移技能",
+      "llm_evidence": "利用子智能体集群提取可迁移技能",
+      "canonical_evidence": "利用子智能体集群提取可迁移技能",
+      "llm_tldr_en": "Trace2Skill uses a multi-agent approach to distill broad execution experience into transferable agent skills.",
+      "llm_tldr_cn": "Trace2Skill 采用多智能体方法将广泛的执行经验提取为可迁移的智能体技能。",
+      "llm_tldr": "Trace2Skill 采用多智能体方法将广泛的执行经验提取为可迁移的智能体技能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.25158v3",
+      "title": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
+      "abstract": "Equipping Large Language Model (LLM) agents with domain-specific skills is critical for tackling complex tasks. Yet, manual authoring creates a severe scalability bottleneck. Conversely, automated skill generation often yields fragile or fragmented results because it either relies on shallow parametric knowledge or sequentially overfits to non-generalizable trajectory-local lessons. To overcome this, we introduce Trace2Skill, a framework that mirrors how human experts author skills: by holistically analyzing broad execution experience before distilling it into a single, comprehensive guide. Instead of reacting sequentially to individual trajectories, Trace2Skill dispatches a parallel fleet of sub-agents to analyze a diverse pool of executions. It extracts trajectory-specific lessons and hierarchically consolidates them into a unified, conflict-free skill directory via inductive reasoning. Trace2Skill supports both deepening existing human-written skills and creating new ones from scratch. Experiments in challenging domains, such as spreadsheet, VisionQA and math reasoning, show that Trace2Skill significantly improves upon strong baselines, including Anthropic's official xlsx skills. Crucially, this trajectory-grounded evolution does not merely memorize task instances or model-specific quirks: evolved skills transfer across LLM scales and generalize to OOD settings. For example, skills evolved by Qwen3.5-35B on its own trajectories improved a Qwen3.5-122B agent by up to 57.65 absolute percentage points on WikiTableQuestions. Ultimately, our results demonstrate that complex agent experience can be packaged into highly transferable, declarative skills -- requiring no parameter updates, no external retrieval modules, and utilizing open-source models as small as 35B parameters.",
+      "authors": [
+        "Jingwei Ni",
+        "Yihao Liu",
+        "Xinpeng Liu",
+        "Yutao Sun",
+        "Mengyu Zhou",
+        "Pengyu Cheng",
+        "Dexin Wang",
+        "Erchao Zhao",
+        "Xiaoxi Jiang",
+        "Guanjun Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-26T08:26:38+00:00",
+      "link": "https://arxiv.org/pdf/2603.25158v3",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "parallel fleet of sub-agents for automated skill generation",
+      "llm_evidence_cn": "用于自动技能生成的并行子智能体集群",
+      "llm_evidence": "用于自动技能生成的并行子智能体集群",
+      "canonical_evidence": "用于自动技能生成的并行子智能体集群",
+      "llm_tldr_en": "Trace2Skill uses a multi-agent fleet to distill execution experience into transferable skills for LLM agents.",
+      "llm_tldr_cn": "Trace2Skill利用多智能体集群将执行经验提炼为大模型智能体的可迁移技能。",
+      "llm_tldr": "Trace2Skill利用多智能体集群将执行经验提炼为大模型智能体的可迁移技能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.29632v1",
+      "title": "An Empirical Study of Multi-Agent Collaboration for Automated Research",
+      "abstract": "As AI agents evolve, the community is rapidly shifting from single Large Language Models (LLMs) to Multi-Agent Systems (MAS) to overcome cognitive bottlenecks in automated research. However, the optimal multi-agent coordination framework for these autonomous agents remains largely unexplored. In this paper, we present a systematic empirical study investigating the comparative efficacy of distinct multi-agent structures for automated machine learning optimization. Utilizing a rigorously controlled, execution-based testbed equipped with Git worktree isolation and explicit global memory, we benchmark a single-agent baseline against two multi-agent paradigms: a subagent architecture (parallel exploration with post-hoc consolidation) and an agent team architecture (experts with pre-execution handoffs). By evaluating these systems under strictly fixed computational time budgets, our findings reveal a fundamental trade-off between operational stability and theoretical deliberation. The subagent mode functions as a highly resilient, high-throughput search engine optimal for broad, shallow optimizations under strict time constraints. Conversely, the agent team topology exhibits higher operational fragility due to multi-author code generation but achieves the deep theoretical alignment necessary for complex architectural refactoring given extended compute budgets. These empirical insights provide actionable guidelines for designing future autoresearch systems, advocating for dynamically routed architectures that adapt their collaborative structures to real-time task complexity.",
+      "authors": [
+        "Yang Shen",
+        "Zhenyi Yi",
+        "Ziyi Zhao",
+        "Lijun Sun",
+        "Dongyang Li",
+        "Chin-Teng Lin",
+        "Yuhui Shi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-03-31T11:57:00+00:00",
+      "link": "https://arxiv.org/pdf/2603.29632v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "empirical study of multi-agent collaboration structures",
+      "llm_evidence_cn": "多智能体协作结构的实证研究",
+      "llm_evidence": "多智能体协作结构的实证研究",
+      "canonical_evidence": "多智能体协作结构的实证研究",
+      "llm_tldr_en": "An empirical study comparing different multi-agent coordination frameworks for automated research tasks.",
+      "llm_tldr_cn": "一项比较不同多智能体协作框架在自动化研究任务中表现的实证研究。",
+      "llm_tldr": "一项比较不同多智能体协作框架在自动化研究任务中表现的实证研究。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.25158v2",
+      "title": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
+      "abstract": "Equipping Large Language Model (LLM) agents with domain-specific skills is critical for tackling complex tasks. Yet, manual authoring creates a severe scalability bottleneck. Conversely, automated skill generation often yields fragile or fragmented results because it either relies on shallow parametric knowledge or sequentially overfits to non-generalizable trajectory-local lessons. To overcome this, we introduce Trace2Skill, a framework that mirrors how human experts author skills: by holistically analyzing broad execution experience before distilling it into a single, comprehensive guide. Instead of reacting sequentially to individual trajectories, Trace2Skill dispatches a parallel fleet of sub-agents to analyze a diverse pool of executions. It extracts trajectory-specific lessons and hierarchically consolidates them into a unified, conflict-free skill directory via inductive reasoning. Trace2Skill supports both deepening existing human-written skills and creating new ones from scratch. Experiments in challenging domains, such as spreadsheet, VisionQA and math reasoning, show that Trace2Skill significantly improves upon strong baselines, including Anthropic's official xlsx skills. Crucially, this trajectory-grounded evolution does not merely memorize task instances or model-specific quirks: evolved skills transfer across LLM scales and generalize to OOD settings. For example, skills evolved by Qwen3.5-35B on its own trajectories improved a Qwen3.5-122B agent by up to 57.65 absolute percentage points on WikiTableQuestions. Ultimately, our results demonstrate that complex agent experience can be packaged into highly transferable, declarative skills -- requiring no parameter updates, no external retrieval modules, and utilizing open-source models as small as 35B parameters.",
+      "authors": [
+        "Jingwei Ni",
+        "Yihao Liu",
+        "Xinpeng Liu",
+        "Yutao Sun",
+        "Mengyu Zhou",
+        "Pengyu Cheng",
+        "Dexin Wang",
+        "Xiaoxi Jiang",
+        "Guanjun Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-26T08:26:38+00:00",
+      "link": "https://arxiv.org/pdf/2603.25158v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent fleet for distilling agent skills",
+      "llm_evidence_cn": "用于提取智能体技能的多智能体集群",
+      "llm_evidence": "用于提取智能体技能的多智能体集群",
+      "canonical_evidence": "用于提取智能体技能的多智能体集群",
+      "llm_tldr_en": "Uses a parallel fleet of sub-agents to distill transferable skills from diverse execution experiences.",
+      "llm_tldr_cn": "利用并行子智能体集群从多样化的执行经验中提取可迁移的智能体技能。",
+      "llm_tldr": "利用并行子智能体集群从多样化的执行经验中提取可迁移的智能体技能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.25334v1",
+      "title": "Agentic Trust Coordination for Federated Learning through Adaptive Thresholding and Autonomous Decision Making in Sustainable and Resilient Industrial Networks",
+      "abstract": "Distributed intelligence in industrial networks increasingly integrates sensing, communication, and computation across heterogeneous and resource constrained devices. Federated learning (FL) enables collaborative model training in such environments, but its reliability is affected by inconsistent client behaviour, noisy sensing conditions, and the presence of faulty or adversarial updates. Trust based mechanisms are commonly used to mitigate these effects, yet most remain statistical and heuristic, relying on fixed parameters or simple adaptive rules that struggle to accommodate changing operating conditions.   This paper presents a lightweight agentic trust coordination approach for FL in sustainable and resilient industrial networks. The proposed Agentic Trust Control Layer operates as a server side control loop that observes trust related and system level signals, interprets their evolution over time, and applies targeted trust adjustments when instability is detected. The approach extends prior adaptive trust mechanisms by enabling context aware intervention decisions, rather than relying on fixed or purely reactive parameter updates. By explicitly separating observation, reasoning, and action, the proposed framework supports stable FL operation without modifying client side training or increasing communication overhead.",
+      "authors": [
+        "Paul Shepherd",
+        "Tasos Dagiuklas",
+        "Bugra Alkan",
+        "Jonathan Rodriguez"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-03-26T11:21:22+00:00",
+      "link": "https://arxiv.org/pdf/2603.25334v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agentic trust coordination in federated learning",
+      "llm_evidence_cn": "联邦学习中的智能体信任协调",
+      "llm_evidence": "联邦学习中的智能体信任协调",
+      "canonical_evidence": "联邦学习中的智能体信任协调",
+      "llm_tldr_en": "Introduces agentic trust coordination to improve reliability in federated learning networks.",
+      "llm_tldr_cn": "引入智能体信任协调机制，以提高联邦学习网络中的可靠性。",
+      "llm_tldr": "引入智能体信任协调机制，以提高联邦学习网络中的可靠性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00722v1",
+      "title": "LangMARL: Natural Language Multi-Agent Reinforcement Learning",
+      "abstract": "Large language model (LLM) agents struggle to autonomously evolve coordination strategies in dynamic environments, largely because coarse global outcomes obscure the causal signals needed for local policy refinement. We identify this bottleneck as a multi-agent credit assignment problem, which has long been studied in classical multi-agent reinforcement learning (MARL) but remains underaddressed in LLM-based systems. Building on this observation, we propose LangMARL, a framework that brings credit assignment and policy gradient evolution from cooperative MARL into the language space. LangMARL introduces agent-level language credit assignment, pioneers gradient evolution in language space for policy improvement, and summarizes task-relevant causal relations from replayed trajectories to provide dense feedback and improve convergence under sparse rewards. Extensive experiments across diverse cooperative multi-agent tasks demonstrate improved sample efficiency, interpretability, and strong generalization.",
+      "authors": [
+        "Huaiyuan Yao",
+        "Longchao Da",
+        "Xiaoou Liu",
+        "Charles Fleming",
+        "Tianlong Chen",
+        "Hua Wei"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-01T10:32:00+00:00",
+      "link": "https://arxiv.org/pdf/2604.00722v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent reinforcement learning in language space",
+      "llm_evidence_cn": "语言空间中的多智能体强化学习",
+      "llm_evidence": "语言空间中的多智能体强化学习",
+      "canonical_evidence": "语言空间中的多智能体强化学习",
+      "llm_tldr_en": "Proposes LangMARL to solve credit assignment in LLM-based multi-agent systems using language-based policy gradients.",
+      "llm_tldr_cn": "提出LangMARL框架，通过语言空间中的信用分配和策略梯度进化来优化多智能体协作。",
+      "llm_tldr": "提出LangMARL框架，通过语言空间中的信用分配和策略梯度进化来优化多智能体协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.27803v1",
+      "title": "Distributed Online Submodular Maximization under Communication Delays: A Simultaneous Decision-Making Approach",
+      "abstract": "We provide a distributed online algorithm for multi-agent submodular maximization under communication delays. We are motivated by the future distributed information-gathering tasks in unknown and dynamic environments, where utility functions naturally exhibit the diminishing-returns property, i.e., submodularity. Existing approaches for online submodular maximization either rely on sequential multi-hop communication, resulting in prohibitive delays and restrictive connectivity assumptions, or restrict each agent's coordination to its one-hop neighborhood only, thereby limiting the coordination performance. To address the issue, we provide the Distributed Online Greedy (DOG) algorithm, which integrates tools from adversarial bandit learning with delayed feedback to enable simultaneous decision-making across arbitrary network topologies. We provide the approximation performance of DOG against an optimal solution, capturing the suboptimality cost due to decentralization as a function of the network structure. Our analyses further reveal a trade-off between coordination performance and convergence time, determined by the magnitude of communication delays. By this trade-off, DOG spans the spectrum between the state-of-the-art fully centralized online coordination approach [1] and fully decentralized one-hop coordination approach [2].",
+      "authors": [
+        "Zirui Xu",
+        "Vasileios Tzoumas"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA",
+        "eess.SY",
+        "math.OC"
+      ],
+      "published": "2026-03-29T18:35:22+00:00",
+      "link": "https://arxiv.org/pdf/2603.27803v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "distributed online algorithm for multi-agent submodular maximization",
+      "llm_evidence_cn": "多智能体子模最大化的分布式在线算法",
+      "llm_evidence": "多智能体子模最大化的分布式在线算法",
+      "canonical_evidence": "多智能体子模最大化的分布式在线算法",
+      "llm_tldr_en": "Proposes a distributed greedy algorithm for multi-agent coordination under communication delays.",
+      "llm_tldr_cn": "提出了一种用于通信延迟下多智能体协作的分布式在线贪婪算法。",
+      "llm_tldr": "提出了一种用于通信延迟下多智能体协作的分布式在线贪婪算法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.25467v2",
+      "title": "GridVAD: Open-Set Video Anomaly Detection via Spatial Reasoning over Stratified Frame Grids",
+      "abstract": "Vision-Language Models (VLMs) are powerful open-set reasoners, yet their direct use as anomaly detectors in video surveillance is fragile: without calibrated anomaly priors, they alternate between missed detections and hallucinated false alarms. We argue the problem is not the VLM itself but how it is used. VLMs should function as anomaly proposers, generating open-set candidate descriptions that are then grounded and tracked by purpose-built spatial and temporal modules. We instantiate this propose-ground-propagate principle in GridVAD, a training-free pipeline that produces pixel-level anomaly masks without any domain-specific training. A VLM reasons over stratified grid representations of video clips to generate natural-language anomaly proposals. Self-Consistency Consolidation (SCC) filters hallucinations by retaining only proposals that recur across multiple independent samplings. Grounding DINO anchors each surviving proposal to a bounding box, and SAM2 propagates it as a dense mask through the anomaly interval. The per-clip VLM budget is fixed at M+1 calls regardless of video length, where M can be set according to the proposals needed. On UCSD Ped2, GridVAD achieves the highest Pixel-AUROC (77.59) among all compared methods, surpassing even the partially fine-tuned TAO (75.11) and outperforms other zero-shot approaches on object-level RBDC by over 5x. Ablations reveal that SCC provides a controllable precision-recall tradeoff: filtering improves all pixel level metrics at a modest cost in object-level recall. Efficiency experiments show GridVAD is 2.7x more call-efficient than uniform per-frame VLM querying while additionally producing dense segmentation masks.Code and qualitative video results are available at https://gridvad.github.io.",
+      "authors": [
+        "Mohamed Eltahir",
+        "Ahmed O. Ibrahim",
+        "Obada Siralkhatim",
+        "Tabarak Abdallah",
+        "Sondos Mohamed"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-03-26T14:08:41+00:00",
+      "link": "https://arxiv.org/pdf/2603.25467v2",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "video anomaly detection via spatial reasoning",
+      "llm_evidence_cn": "通过空间推理进行视频异常检测",
+      "llm_evidence": "通过空间推理进行视频异常检测",
+      "canonical_evidence": "通过空间推理进行视频异常检测",
+      "llm_tldr_en": "GridVAD uses VLMs for open-set video anomaly detection, relevant to identifying fake or unusual video content.",
+      "llm_tldr_cn": "GridVAD 使用 VLM 进行开放集视频异常检测，与识别虚假或异常视频内容相关。",
+      "llm_tldr": "GridVAD 使用 VLM 进行开放集视频异常检测，与识别虚假或异常视频内容相关。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.01020v1",
+      "title": "OrgAgent: Organize Your Multi-Agent System like a Company",
+      "abstract": "While large language model-based multi-agent systems have shown strong potential for complex reasoning, how to effectively organize multiple agents remains an open question. In this paper, we introduce OrgAgent, a company-style hierarchical multi-agent framework that separates collaboration into governance, execution, and compliance layers. OrgAgent decomposes multi-agent reasoning into three layers: a governance layer for planning and resource allocation, an execution layer for task solving and review, and a compliance layer for final answer control. By evaluating the framework across reasoning tasks, LLMs, execution modes, and execution policies, we find that multi-agent systems organized in a company-style hierarchy generally outperform other organizational structures. Besides, hierarchical coordination also reduces token consumption relative to flat collaboration in most settings. For example, for GPT-OSS-120B, the hierarchical setting improves performance over flat multi-agent system by 102.73% while reducing token usage by 74.52% on SQuAD 2.0. Further analysis shows that hierarchy helps most when tasks benefit from stable skill assignment, controlled information flow, and layered verification. Overall, our findings highlight organizational structure as an important factor in multi-agent reasoning, shaping not only effectiveness and cost, but also coordination behavior.",
+      "authors": [
+        "Yiru Wang",
+        "Xinyue Shen",
+        "Yaohui Han",
+        "Michael Backes",
+        "Pin-Yu Chen",
+        "Tsung-Yi Ho"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-01T15:21:14+00:00",
+      "link": "https://arxiv.org/pdf/2604.01020v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "hierarchical multi-agent framework for complex reasoning",
+      "llm_evidence_cn": "用于复杂推理的分层多智能体框架",
+      "llm_evidence": "用于复杂推理的分层多智能体框架",
+      "canonical_evidence": "用于复杂推理的分层多智能体框架",
+      "llm_tldr_en": "OrgAgent organizes multi-agent systems into a company-style hierarchy to improve reasoning performance.",
+      "llm_tldr_cn": "OrgAgent 将多智能体系统组织成公司式的层级结构，以提高推理性能。",
+      "llm_tldr": "OrgAgent 将多智能体系统组织成公司式的层级结构，以提高推理性能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.28010v1",
+      "title": "HeteroHub: An Applicable Data Management Framework for Heterogeneous Multi-Embodied Agent System",
+      "abstract": "Heterogeneous Multi-Embodied Agent Systems involve coordinating multiple embodied agents with diverse capabilities to accomplish tasks in dynamic environments. This process requires the collection, generation, and consumption of massive, heterogeneous data, which primarily falls into three categories: static knowledge regarding the agents, tasks, and environments; multimodal training datasets tailored for various AI models; and high-frequency sensor streams. However, existing frameworks lack a unified data management infrastructure to support the real-world deployment of such systems. To address this gap, we present \\textbf{HeteroHub}, a data-centric framework that integrates static metadata, task-aligned training corpora, and real-time data streams. The framework supports task-aware model training, context-sensitive execution, and closed-loop control driven by real-world feedback. In our demonstration, HeteroHub successfully coordinates multiple embodied AI agents to execute complex tasks, illustrating how a robust data management framework can enable scalable, maintainable, and evolvable embodied AI systems.",
+      "authors": [
+        "Xujia Li",
+        "Xin Li",
+        "Junquan Huang",
+        "Beirong Cui",
+        "Zibin Wu",
+        "Lei Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-30T04:01:05+00:00",
+      "link": "https://arxiv.org/pdf/2603.28010v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Heterogeneous Multi-Embodied Agent Systems",
+      "llm_evidence_cn": "异构多具身智能体系统",
+      "llm_evidence": "异构多具身智能体系统",
+      "canonical_evidence": "异构多具身智能体系统",
+      "llm_tldr_en": "Introduces HeteroHub, a data management framework for coordinating heterogeneous multi-embodied agents.",
+      "llm_tldr_cn": "引入 HeteroHub，一个用于协调异构多具身智能体的数据管理框架。",
+      "llm_tldr": "引入 HeteroHub，一个用于协调异构多具身智能体的数据管理框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
