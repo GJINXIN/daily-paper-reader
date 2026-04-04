@@ -1,0 +1,35 @@
+# 日报 · 2026-04-04
+
+- 生成时间：2026-04-04 20:12:09 UTC
+- 当次推荐总数：17
+- 精读区：6
+- 速读区：11
+
+## 今日简报（AI）
+今日精选 17 篇前沿论文，深度剖析大模型社交偏见消除与复杂网络中的情感极化现象。
+重点关注通过提示词知识微调降低 LLM 偏见，以及小世界与无标度网络对群体情感对立的影响。
+建议关注 AI 智能体在复杂任务中的不确定性处理及网络虚假信息的演进策略。
+
+## 精读区
+1. [Debiasing Large Language Models toward Social Factors in Online Behavior Analytics through Prompt Knowledge Tuning](/202604/04/2603.27057v1-debiasing-large-language-models-toward-social-factors-in-online-behavior-analytics-through-prompt-knowledge-tuning) （8.0/10）
+2. [Affective Polarization on Small-World and Scale-Free Networks](/202604/04/2603.27845v1-affective-polarization-on-small-world-and-scale-free-networks) （8.0/10）
+3. [Multi-Agent LLMs for Adaptive Acquisition in Bayesian Optimization](/202604/04/2603.28959v1-multi-agent-llms-for-adaptive-acquisition-in-bayesian-optimization) （8.0/10）
+4. [Proactive Agent Research Environment: Simulating Active Users to Evaluate Proactive Assistants](/202604/04/2604.00842v1-proactive-agent-research-environment-simulating-active-users-to-evaluate-proactive-assistants) （8.0/10）
+5. [Computational Foundations for Strategic Coopetition: Formalizing Sequential Interaction and Reciprocity](/202604/04/2604.01240v1-computational-foundations-for-strategic-coopetition-formalizing-sequential-interaction-and-reciprocity) （8.0/10）
+6. [From Multi-Agent to Single-Agent: When Is Skill Distillation Beneficial?](/202604/04/2604.01608v1-from-multi-agent-to-single-agent-when-is-skill-distillation-beneficial) （8.0/10）
+
+## 速读区
+1. [Beyond Disinformation: Strategic Misrepresentation across Content, Actors, Processes, and Covertness](/202604/04/2603.25883v1-beyond-disinformation-strategic-misrepresentation-across-content-actors-processes-and-covertness) （7.0/10）
+2. [Self-Organizing Multi-Agent Systems for Continuous Software Development](/202604/04/2603.25928v1-self-organizing-multi-agent-systems-for-continuous-software-development) （7.0/10）
+3. [Ask or Assume? Uncertainty-Aware Clarification-Seeking in Coding Agents](/202604/04/2603.26233v1-ask-or-assume-uncertainty-aware-clarification-seeking-in-coding-agents) （7.0/10）
+4. [MGDIL: Multi-Granularity Summarization and Domain-Invariant Learning for Cross-Domain Social Bot Detection](/202604/04/2603.27928v1-mgdil-multi-granularity-summarization-and-domain-invariant-learning-for-cross-domain-social-bot-detection) （7.0/10）
+5. [CoE: Collaborative Entropy for Uncertainty Quantification in Agentic Multi-LLM Systems](/202604/04/2603.28360v1-coe-collaborative-entropy-for-uncertainty-quantification-in-agentic-multi-llm-systems) （7.0/10）
+6. [Learning Partial Action Replacement in Offline MARL](/202604/04/2603.28573v1-learning-partial-action-replacement-in-offline-marl) （7.0/10）
+7. [MemoryCD: Benchmarking Long-Context User Memory of LLM Agents for Lifelong Cross-Domain Personalization](/202604/04/2603.25973v1-memorycd-benchmarking-long-context-user-memory-of-llm-agents-for-lifelong-cross-domain-personalization) （6.0/10）
+8. [Heddle: A Distributed Orchestration System for Agentic RL Rollout](/202604/04/2603.28101v1-heddle-a-distributed-orchestration-system-for-agentic-rl-rollout) （6.0/10）
+9. [InconLens: Interactive Visual Diagnosis of Behavioral Inconsistencies in LLM-based Agentic Systems](/202604/04/2603.28106v1-inconlens-interactive-visual-diagnosis-of-behavioral-inconsistencies-in-llm-based-agentic-systems) （6.0/10）
+10. [COvolve: Adversarial Co-Evolution of Large-Language-Model-Generated Policies and Environments via Two-Player Zero-Sum Game](/202604/04/2603.28386v1-covolve-adversarial-co-evolution-of-large-language-model-generated-policies-and-environments-via-two-player-zero-sum-game) （6.0/10）
+11. [Synergy: A Next-Generation General-Purpose Agent for Open Agentic Web](/202604/04/2603.28428v1-synergy-a-next-generation-general-purpose-agent-for-open-agentic-web) （6.0/10）
+
+---
+使用键盘方向键可在日报/论文之间快速切换。

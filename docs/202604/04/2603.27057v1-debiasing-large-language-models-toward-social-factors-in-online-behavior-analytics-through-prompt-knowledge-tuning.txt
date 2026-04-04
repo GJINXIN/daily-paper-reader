@@ -1,0 +1,358 @@
+Title: Debiasing Large Language Models toward Social Factors in Online Behavior Analytics through Prompt Knowledge Tuning
+
+URL Source: https://arxiv.org/pdf/2603.27057v1
+
+Published Time: Tue, 31 Mar 2026 00:21:55 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+> 1
+
+# Debiasing Large Language Models toward Social Factors in Online Behavior Analytics through Prompt Knowledge Tuning 
+
+Hossein Salemi, Jitin Krishnan, Hemant Purohit George Mason University, Fairfax, Virginia, United States 
+
+Abstract —Attribution theory explains how individuals interpret and attribute others’ behavior in a social context by employing personal (dispositional) and impersonal (situational) causality. Large Language Models (LLMs), trained on human-generated corpora, may implicitly mimic this social attribution process in social contexts. However, the extent to which LLMs utilize these causal attributions in their reasoning remains underexplored. Although using reasoning paradigms, such as Chain-of-Thought (CoT), has shown promising results in various tasks, ignoring social attribution in reasoning could lead to biased responses by LLMs in social contexts. In this study, we investigate the impact of incorporating a user’s goal as knowledge to infer dispositional causality and message context to infer situational causality on LLM performance. To this end, we introduce a scalable method to mitigate such biases by enriching the instruction prompts for LLMs with two prompt aids using social-attribution knowledge, based on the context and goal of a social media message. This method improves the model performance while reducing the social-attribution bias of the LLM in the reasoning on zero-shot classification tasks for behavior analytics applications. We empirically show the benefits of our method across two tasks– intent detection and theme detection on social media in the disaster domain–when considering the variability of disaster types and multiple languages of social media. Our experiments highlight the biases of three open-source LLMs: Llama3 , Mistral , and 
+
+Gemma , toward social attribution, and show the effectiveness of our mitigation strategies. Source code and datasets will be shared upon final acceptance of the paper. 
+
+Index Terms —Social-attribution Bias, Instruction-following LLMs, Prompt Engineering, Social Media, Disaster Management 
+
+I. I NTRODUCTION 
+
+# RETRIEVING intrinsic knowledge embedded in Large Language models (LLMs) to use in Natural Language Processing (NLP) problems is a critical component in engi-neering efficient computational social systems using Artificial Intelligence (AI) [ 1 ]. Especially, when LLMs are utilized for designing real-world applications in zero-shot settings, where there is no data for training the model, background knowledge plays an important role. Recent works have shown that instruction-following LLMs could leverage their background knowledge to improve zero-shot performance in tasks such as sentiment analysis [ 2] and stance detection [ 3 ]. Zero-shot Chain-of-Thought [ 4] (referred to as Zero-CoT in this paper) is one of the state-of-the-art reasoning methods that leverages the chain-of-thought capability of LLMs in a zero-shot setting to effectively utilize LLMs’ background knowledge and improve the performance of the LLMs’ inference. However, LLMs have been shown to have some intrinsic biases in the training phase and biases in prompts for instructing a LLM in the inference phase [ 5]. Thus, instruction-following LLMs require proper contextual prompts that help these models retrieve relevant knowledge to aid their inference process. Moreover, using instruction-following LLMs can be more challenging when they are used in ambiguous language understanding tasks such as behavior and affect analyses from content [ 2]. This complexity can originate from the social context, a specific domain of the task, or the innate complexity of the given task. For instance, in the disaster domain, for predicting the intent of a social media post in which the user shares a link (like Fig. 1), the LLM should consider the post from two perspectives to infer help-offering class as the intent: 1) what the user is doing (sharing information), 2) the cause of this behavior in the disaster situation (helping via informing people during disaster). While the former can be realized through analyzing the content by LLMs, understanding the latter requires paying attention to the social aspects–the user’s goal in this case. The way that individuals interpret and attribute the cause of a behavior can be explained based on the Attribution Theory [ 6] rooted in social science. Based on this theory, people may attribute the cause of a behavior to the characteristics of the person ( personal or dispositional causality ), such as the person’s desire and intent, or to the environmental events that cause the behavior ( impersonal or situational causality ). Since LLM agents are trained on human-generated corpora also, they are likely to replicate such social attributions in their reasoning. For instance, in Fig. 1, given our prompt strategy, the model attributes the behavior of sharing the link to the intention of the user to help others, which mimics the dispositional causality by humans, while the Zero-CoT strategy fails to capture this causality. This example shows that while a model can incorporate such causal reasoning to improve its outputs, it requires knowledge aids (user’s goal in this case) for accurate reasoning. Previous NLP studies have reported the neglect of social attributions, as [7] states: “... current NLP systems still largely ignore the social aspect of language. Instead, they only pay attention to what is said, not to who says it, in what context, and for which goals.” Therefore, one limitation of language models is that they sometimes focus more on lexical cues while disregarding critical social factors such as context and the user’s goal; this imbalance can adversely affect the performance of LLM-based AI systems in zero-shot classification tasks. Accordingly, in this paper, we define social-attribution bias as the tendency of LLMs to rely unevenly on dispositional (e.g., user goals) and situational (e.g., contextual) causal explanations in social reasoning. Notably, appropriate attribution depends on the 
+
+> © 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works. This is a preprint of the accepted paper for publication in IEEE Transactions on Computational Social Systems.
+> arXiv:2603.27057v1 [cs.CL] 28 Mar 2026 2Zero-CoT
+> Question: Classify the given tweet into one of the two given categories. - Help-offering: Tweets with help-offering intent are those ...
+> - Help-seeking: Tweets with help-seeking intent are those ...
+> Tweet: Anyone with #Horses that need #shelter from the #lilacfire : <URL>
+> Hint: Let's think step by step.
+
+Let's analyze the tweet step by step.
+The tweet is asking for help, specifically for horses that need shelter from the #lilacfire. This indicates that the user is seeking help, which falls under the category of "help-seeking". Therefore, I would classify this tweet as " ". help-seeking 
+
+Based on the analysis, I would classify the given tweet as "help-offering". The user is not seeking help for themselves or others, but rather providing a resource (the link) to help others (those with horses) who are in need of shelter due to the #lilacfire. The user is essentially reporting that they have a service (the link) that can provide shelter, which falls under the category of " ". help-offering 
+
+> Question: Classify the given tweet into one of the two given categories. - Help-offering: Tweets with help-offering intent are those ...
+> - Help-seeking: Tweets with help-seeking intent are those ...
+> Tweet: Anyone with #Horses that need #shelter from the #lilacfire : <URL>
+> Hint: Let's think step by step about the user’s goal.
+> The goal of the user in this tweet is to connect people who have horses that need shelter with a resource (the provided link) that can provide that shelter, likely due to the #lilacfire.
+> Ours (Goal-based)
+
+Fig. 1: Example of our Goal-based prompt for intent detection task to alleviate the social-attribution bias of Llama3 model by providing the knowledge aid of social factors, i.e., the user’s goal in this prompt. Llama3 Mistral Gemma   
+
+> Model
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Percentage (%)
+> Prediction Distribution per Model (%)
+> Prediction
+> dispositional situational unknown
+
+Fig. 2: Distribution of significant social attribution causalities in the Intent task across models, highlighting the underestimation of dispositional causality. task: intent detection primarily requires dispositional causality, whereas theme detection relies more heavily on situational causality; social-attribution bias arises when LLMs fail to adjust this causal focus accordingly. For motivation, we conducted an experiment in which, given the task description, we prompted LLMs to indicate which type of causality is more salient for the task. Fig. 2 presents the results 1 for the intent detection task across three LLMs. We observe that all models underestimate the significance of dispositional causality for intent detection task, highlighting their social-attribution bias. In this work, we investigate the social-attribution bias of open-source instruction-following LLMs and show how these biases can reduce the performance of LLMs on our behavioral analytics tasks. We argue that enriching the prompt with suitable knowledge aids derived from the social aspects (text’s context and user’s goal) of the textual message is an effective method to mitigate the social-attribution bias and enhance the performance of LLM-based AI systems in such tasks. We hypothesize that    
+
+> 1We used 10 semantically equivalent prompts and generated 20 responses per prompt using sampling-based decoding (temperature T= 0 .7, top-p= 0 .9), yielding a total of 200 responses per model.
+
+providing the user’s goal as the knowledge aid that represents the user’s desire helps the model to leverage dispositional causality, while providing the message context, which describes the environmental events in the messaging enables the model to rely on situational causality in its reasoning. Providing these knowledge aids presents another challenge that needs to be addressed. Since manually generating these knowledge aids is not practically feasible at scale, we propose a simple yet effective solution. We hypothesize that a LLM may already contain some of this knowledge, however, the LLM is unable to leverage it during the inference stage. Therefore, retrieving this knowledge from the LLM itself and providing it explicitly through the prompt improves the LLM’s performance in the zero-shot setting. In this paper, we address the following research questions to evaluate the performance of LLM-based AI systems in domain-specific tasks in social computing: 
+
+RQ1: Are LLMs biased toward leveraging social factors (context and users’ goal) that impacts their reasoning and degrades their performance in zero-shot domain-specific tasks? 
+
+RQ2: Can additional prompt aids based on social-attribution knowledge of the LLM to accurately interpret a text helps the LLM to mitigate the social-attribution biases and improve their performance in zero-shot domain-specific tasks? 
+
+RQ3: Can the proposed knowledge-based prompt strategies improve an LLM’s performance in multi-lingual settings? 
+
+Contributions. Our main contributions are as follows:  
+
+> •
+
+We analyze the social-attribution biases of three instruction-following large language models ( Llama 3,
+
+M istral , and Gemma ) in two zero-shot domain-specific tasks, including intent detection and theme detection on social media messages in disaster domain.  
+
+> •
+
+We extend the Zero-CoT pipeline with a pre-reasoning knowledge extraction step that automatically retrieves the LLM’s social-attribution knowledge about the message. This scalable approach enables the model to incorporate the retrieved knowledge during reasoning and mitigate social-attribution bias. We compare the performance of our mitigation strategy and the Zero-CoT strategy to highlight the LLMs’ biases toward these social attributions. 3
+
+TABLE I: Comparison of our method with prior context injection and external knowledge prompting approaches.                   
+
+> Method Social-attribution Knowledge Knowledge Source Instance-Specific
+> [4] ×Implicit (LLM prior) ×[8] ×Human-crafted ×[9] ×External knowledge ×[10] Partial (context only) Human-crafted ×
+> Ours Context + User Goal LLM-generated ✓
+> •
+
+To this end, we design templates for prompting LLMs with diverse prompt aids based on social-attribution knowledge of context and goal of the message in the zero-shot setting.  
+
+> •
+
+We evaluate our strategies through ablation studies to assess the impact of key factors on prompt strategies in mono-lingual and multi-lingual settings of disaster domain, as the case study. The results provide insights into the potential of our method in designing more effective LLM-based computational social systems for disaster domain. In the rest of the paper, we first review related work, and explain our methodology and the proposed prompt aid strategies based on social-attribution knowledge. We then describe the datasets and experimental setup. Finally, we discuss the results and present the findings of ablation studies. II. R ELATED WORKS 
+
+Instruction tuning has become an effective paradigm for using LLMs in diverse NLP tasks of AI systems in domain-specific applications, as it enables us to request the LLM with natural language prompts without any additional fine-tuning or needing additional datasets [ 11 ]. Previous research [ 12 ]has shown that providing natural language instructions that describe the task can leverage the intrinsic knowledge of pre-trained LLMs for different NLP tasks in zero-shot settings. Recent works [ 13 ], [ 14 ] have also demonstrated impressive performance of instruction tuning in general zero-shot NLP tasks. However, using this paradigm in more complex and domain-specific tasks is more challenging and requires task-and domain-specific descriptions. Chain-of-Thought (CoT) [ 15 ]is a paradigm that is widely used to improve the performance of these models through reasoning step by step. In zero-shot setting, Zero-CoT [ 4] is one of the state-of-the-art methods that uses this paradigm by prompting the LLM with the statement of “Let’s think step by step” . This statement acts as a hint and directs the LLM to reason about the task step by step before the inference. However, since LLMs’ reasoning processes and focus areas are unclear, social-attribution bias in LLMs can skew reasoning and undermine the Zero-CoT method’s performance in social contexts. Our method mitigates this bias in the inference stage by providing prompt aids based on social-attribution knowledge (context or user’s goal) of the input text for a given task, explicitly. More recent works have focused on leveraging LLMs in more complex classification tasks. For instance, [ 8] proposed a method for intent detection by defining different intent labels to help the LLM in inference time. [ 9 ] prompted the LLM with external knowledge that defines different traits to enable the LLM for zero-shot personality detection. Moreover, [ 10 ]utilized LLMs for stance detection by providing task description and context, and showed that providing the context is effective for stance detection task. Our method differs from prior work in two key aspects: (1) it explicitly models social-attribution knowledge, namely the context and user goal of the given text, in addition to providing task label definitions; and (2) whereas previous approaches primarily rely on human-crafted or externally defined contextual knowledge, we propose a scalable solution that leverages the LLM itself to generate this knowledge. For example, [ 10 ] employs a single human-crafted context shared across all instances, while our method utilizes the intrinsic knowledge of the LLM to generate instance-specific prompt aids based on social-attribution knowledge. This design enables scalability, which is essential for AI systems in practice. Table I compares our method with prior context injection and external knowledge prompting approaches. Prompt engineering is a key step in instruction tuning, and various prompt templates for different tasks have been proposed in previous works [ 1 ]. The LLM’s faithfulness to the given context in the prompt is another perspective explored in [16], where the authors provide prompt strategies for this purpose. Here, we follow the guidelines of the instruction-based strategy in [ 16 ] to use both the background knowledge of the LLM and the provided prompt aids based on social-attribution knowledge. III. M ETHODOLOGY 
+
+In this study, we evaluate LLMs’ performance in language understanding tasks requiring social context and propose prompt strategies to reveal the models’ social-attribution bias and improve their performance in such complex tasks. Although these models performed well in simple classification tasks in prior studies [ 13 ], [ 14 ], as we show, they still exhibit knowledge deficiencies in understanding the social aspects of the text in their reasoning process, leading to decreased performance. Fig. 3 illustrates our proposed framework to investigate the social-attribution biases of LLMs in our target tasks. In this framework, we consider the Zero-CoT pipeline, as the baseline, to first generate the task prompt based on a task prompt template, then ask the LLM to generate the baseline reasoning, and finally use the LLM to output the baseline prediction. Our mitigation pipeline adds another step before this pipeline to generate the prompt aid based on social-attribution knowledge and augment the task prompt with that. To this end, we leverage a knowledge generation template to prepare the knowledge generation prompt, and following that the LLM is used to output the social-attribution knowledge. Augmenting the task prompt with social-attribution knowledge allows us to evaluate its effect in mitigating LLM’s social-attribution bias. We propose two prompt strategies to help the model overcome its social knowledge gap. These knowledge types can be categorized into two categories as described in Table II. We argue that for each task, the prompt should be enriched with the aid based on suitable social-attribution knowledge. For intent detection, the model must focus on dispositional causality and pay attention to the user’s goal, whereas theme detection requires incorporating domain-specific context so the model can rely on situational causality in its decision-making. 4
+
+Fig. 3: Our proposed framework to investigate the social-attribution bias of LLMs in the behavioral analytics tasks. 
+
+Fig. 4: Pipeline of our proposed method. 
+
+A. Proposed Mitigation Pipeline 
+
+We propose the three-step pipeline depicted in Fig. 4 to mitigate the social-attribution bias of the LLM in our target zero-shot tasks. This pipeline extends the two-step pipeline of Zero-shot CoT method [ 4] by adding a Knowledge Generation 
+
+step and using the generated knowledge in the Reasoning Extraction step. First, in the Knowledge Generation step, given the message (Tweet) the model is asked to generate the prompt aid based on the desired social-attribution knowledge ( context 
+
+or goal ). Then, we formulate the generated knowledge aid as a hint in the Reasoning Extraction step to guide the model’s reasoning with this social-attribution knowledge. In this step, the model is prompted with a question and a list of options that guide the LLM to generate a reasoning for the given message based on the provided knowledge aid. Finally, in the Answer Prediction step, the generated reasoning and a conclusion statement are appended as parts of the answer to the previous prompt, following that the LLM is asked to complete the answer by predicting the class label for the message input from the given options. TABLE II: Motivation for designing and selecting prompt strategies based on the matching of the expected social-attribution knowledge aid for a task.       
+
+> Task Causality Description Prompt Strategy Intent Dispositional Model’s capability of understanding the user’s goal Goal-based
+> Theme Situational Model’s capability of understanding the task domain Context-based
+
+B. Prompt Strategies Context-based and Goal-based are two fundamental prompt strategies (Table II) we propose to address domain and affect -based deficiencies for social-attribution knowledge respectively. 
+
+Context-based . In domain-specific tasks, paying attention to the context of the text for LLMs is more important than general-domain tasks. For instance, in the example represented in Table III, the tweet expresses that the user is a newcomer who is helping the cleanup effort after a flood. However, the baseline method (Zero-CoT) misinterprets the user as a resident and mentions “they are affected” . Also, while “Amazing support” conveys the response activities, the baseline fails to capture the causality of the situational event (community support) to the behavior of the user (appreciation), and so selects wrong label of “Affected Individual” . In contrast, providing the summary of the tweet that contains contextual information such as “newcomer” and “community’s support” in our Context-based method helps the model to correctly consider the user as a volunteer and focus on “appreciation for the community’s support” (using situational causality), classifying the tweet into “Donations and volunteering” . We hypothesize that explicitly providing a text’s context helps the model focus on domain-related information and rely on situational causality in reasoning. Moreover, instruction-following LLMs, thanks to training on massive corpora, effectively understand and generate the context of the given text. Our experiments show that generating a text summary effectively captures its contextual information. Therefore, we first prompt the model to generate the summary of the text (see Fig. 5), and then put the generated summary as a hint in the reasoning extraction prompt to enrich the prompt with contextual information. 5
+
+TABLE III: Samples of theme detection using Llama3 model                                   
+
+> Classify the given tweet into one of the two given categories. - Donations and volunteering: Tweets requesting ... - Affected individuals: Tweets reporting injuries ... - Infrastructure and utilities: Tweets reporting ... Tweet: New to #yyc and doing my part to clean up. Amazing support. #abflood #yycflood #calgarystrong <URL>
+> Zero-CoT Context-based
+> Knowledge Aid -The summary of the tweet: A newcomer to Calgary is helping with the flood cleanup efforts and is impressed with the community’s support. Reasoning Let’s break down the tweet: * "New to #yyc and doing my part to clean up" - This suggests that the person is participating in cleanup efforts, which implies that they are affected by the flood. * "Amazing support" - This could be referring to the support from others, which is not directly related to the flood. The tweet mentions the individual is "doing my part to clean up", which indicates they are volunteering their time to help with the flood cleanup efforts. Additionally, the tweet expresses appreciation for the community’s support , which suggests that the indi-vidual is part of the response efforts. Answer Affected Individual ✗Donations and volunteering ✓
+
+Fig. 5: Examples of Context and Goal knowledge aids generated by Llama3 model. 
+
+Goal-based . A lack of knowledge about the user’s goal in writing a text can lead to misunderstandings of the text by LLMs. For instance, as we observe in Fig. 1, the baseline model fails to understand the user’s goal in sharing the link, and this leads to a wrong prediction by the model. We hypothesize that prompting the model with explicit users’ goal can help the model concentrate on the main point of the given text, while incorporating dispositional causality to eliminate this social-attribution bias and predict the correct answer. Although instruction-following LLMs can perceive the user’s goal, we argue that they may ignore that in their reasoning process. Thus, we first exploit the LLM as a goal extractor and generate the user’s goal, as shown in Fig. 5, following which we use the generated goal as the given knowledge in the prompt template. 
+
+C. Prompt Templates 
+
+We design our templates based on multi-class classification tasks, in that the task is defined as T = ( q, t, o ), where q is a question that represents the task, t is the input text for the task and o is the list of labels from which the model must select the correct label. To prompt LLMs based on the proposed strategies, we design our prompt templates for zero-shot setting. For this purpose, we first extend the task to T = ( q, t, o, H ), in which 
+
+H is the hint we design for different prompt strategies. For instance, for Zero-CoT, we use the statement "Let’s think step by step" as suggested by the authors in [ 4]. For our proposed strategies we use a pair of (h, G (t)) as the hint, in that h
+
+is a customized statement for the strategy derived from the statement of the Zero-CoT and G(t) is a generative function of the strategy to generate the context or goal of the input t. Here, we use h = "Let’s think step by step about the user’s goal" 
+
+as the statement of our goal-based strategy and h = "Let’s think step by step about the summary of the tweet" for the 
+
+context-based strategy. The designed templates for generating the context and goal knowledge aids and the template used for classification task are shown in Fig. 6 and 7 respectively. IV. E XPERIMENTS 
+
+To evaluate our hypotheses and research questions, we conduct experiments on two complex behavioral analytics tasks (intent detection and theme detection) and two settings: Mono-lingual (datasets containing English tweets) and multi-lingual (non-English datasets), during several natural disaster events. 
+
+A. Datasets 
+
+Here, we leverage various datasets in both mono-lingual (English) and multi-lingual settings to address our research questions. For the intent detection task in mono-lingual settings, we use TREC IS dataset [17 ] and select datasets of tweets regarding two wildfire events, including Lilac and Thomas , to evaluate the method in a cross-event setting as well. However, to adapt the annotated dataset to our desired consistent labels, we select messages with GoodServices , SearchAndRescue , and 
+
+InformationWanted labels as the Help-seeking samples and the messages with ServiceAvailable label as the Help-offering 
+
+samples. For our multi-lingual experiments, we use two datasets: 1) A dataset of tweets in Haitian Creole [ 18 ] posted during the Haiti Earthquake, containing two classes: Requests and 
+
+Other intents . 2) A dataset of tweets in Spanish regarding the Chile Earthquake derived from [ 19 ]. We use samples with 
+
+Requests or Needs label for binary classification, treating Not Humanitarian as the negative class. 6
+
+TABLE IV: Dataset Statistics                  
+
+> Task Lang. Event Labels (#Samples) Intent Mono Lilac (en) Help-seeking (128), Help-offering (263) Thomas (en) Help-seeking (156), Help-offering (177) Multi Haiti (ht) Requests (324), Others (196) Chile (es) Requests or Needs (64), Others (149)
+> Theme Mono Alberta (en) Donations and volunteering (220), Infrastructure and utilities (199), Affected individuals (78) Colorado (en) Donations and volunteering (149), Infrastructure and utilities (175), Affected individuals (205) Multi Chile (es) Donations and volunteering (496), Infrastructure and utilities (125), Affected individuals (377) Italy (it) Donations and volunteering (193), Infrastructure and utilities (82), Affected individuals (92)
+
+In the mono-lingual theme detection setting, we use the 
+
+CrisisLexT26 dataset [ 20 ], focusing on three themes: Donations and volunteering , Infrastructure and utilities , and Affected individuals , using English tweets from two flood events, Alberta 
+
+and Colorado . In the multi-lingual setting, we examine tweets from two earthquake events, Chile and Italy , in Spanish and Italian respectively [ 19 ]. In both cases, the classes align with the mono-lingual datasets. Table IV presents the dataset statistics. 
+
+B. Experimental Setup 
+
+In this work, we evaluate Llama3 (8B) [ 21 ], Mistral (7B) [ 22 ], and Gemma (7B) [ 23 ] as three open-source instruction-following LLMs on our two language understanding tasks. For experiments, we set the temperature to zero for deterministic results and examine its effect in our ablation studies. We use the template of Fig. 7 to generate the prompts of Zero-CoT and our proposed pipeline for classification tasks by providing the task question, class labels and their definitions, tweet, and hint statement. We additionally compare our method with Self-Debias approach [ 24 ] to evaluate the extent to which LLMs can mitigate bias solely through self-regulation, without relying on knowledge augmentation (our method). To implement this method, we adopt the template shown in Fig. 7 (excluding the Hint) and prompt the LLM to generate a revised conclusion using the instruction: “Remove bias from your answer by answering the question again with the category only,” following [ 24 ]. Further, our observations show that label order in prompts can significantly affect performance. To mitigate this bias, we evaluate all option permutations and report average results. Our ablation study highlights that our strategies are more robust to the order bias across different models and tasks. We select two behavioral analytic tasks, intent detection and theme detection, in mono-lingual (English) and multi-lingual settings to evaluate the effectiveness of our proposed methods across tasks and languages. All experiments are designed as multi-class classification tasks in which the model is asked to classify the given message into given classes. Exceptionally, in the case of intent detection on the Chile dataset which is a binary classification task, the model is asked to classify the given message into Yes or No classes based on the definition provided in the question. In our multi-class tasks, we define each class to help the model understand the task accurately and mitigate potential biases in its perception of class labels. Definition of class labels in different datasets of intent detection     
+
+> Context Generation
+> Question: What is the summary of the following tweet in a disaster situation?
+> Tweet: <tweet>
+> Answer:
+> Goal Generation
+> Question: What is the goal of the user in the following tweet?
+> Tweet: <tweet>
+> Answer:
+
+Fig. 6: Templates for context and goal knowledge generation.        
+
+> Prompt Template for Multi-class Task
+> Question: <question>
+> <label 1>: <definition of label 1>...
+> <label n>: <definition of label n>
+> Tweet: <tweet>
+> Hint: <hint statement> <social-attribution knowledge aid>
+
+Fig. 7: Prompt template for multi-class classification task. and theme detection tasks is provided in the supplementary materials. The definitions employed in our experiments are directly adopted from those provided by the dataset creators. 
+
+C. Evaluation Metric 
+
+LLMs’ bias toward social attributions and neglect of them in reasoning leads to biased responses and reduced performance. Therefore, in this work, we evaluate the bias of the methods based on the performance of the model in predicting correct labels. Our datasets, like real-world scenarios, are not balanced in different task labels. So, in this work, we report the performance of our methods in Macro-F1 score. This eliminates the effect of imbalanced classes in the datasets. V. R ESULTS 
+
+Recall that our primary objective is to assess whether the intrinsic social-attribution bias of LLMs degrades their performance in our zero-shot classification tasks, and whether our proposed method reveals and mitigates this bias in their inference stage. Here, we evaluate this hypothesis on three Instruction-following LLMs in different settings to provide deeper insights into the performance of the LLM in the target tasks and answer our research questions. 7
+
+TABLE V: The performance (macro-F1 score) of our proposed strategy in enhancing the prediction accuracy of the target models in intent detection and theme detection tasks on mono-lingual and multi-lingual datasets. The best result is bolded .                                                                                           
+
+> Task Lang Dataset Llama3 Mistral Gemma
+> Zero-CoT Self-Debias Ours Zero-CoT Self-Debias Ours Zero-CoT Self-Debias Ours
+> Intent Mono Lilac 80.8 ±1.4 79.6 ±3.2 88.7 ±0.4 77.6 ±2.7 74.0 ±3.4 81.8 ±1.2 74.0 ±1.7 76.7 ±0.4 83.8 ±0.7
+> Thomas 82.5 ±0.3 82.4 ±1.1 86.2 ±0.6 79.4 ±2.7 79.2 ±2.2 87.4 ±0.3 79.3 ±0.7 80.8 ±1.1 86.2 ±0.9
+> Multi Haiti (ht) 67.2 ±0.2 64.1 ±4.1 69.8 ±0.5 67.5 ±1.7 61.5 ±0.6 68.5 ±0.7 51.7 ±1.4 54.0 ±1.2 65.4 ±0.8
+> Chile (es) 70.0 ±0.4 72.1 ±1.5 70.9 ±0.8 71.4 ±0.6 72.4 ±1.1 71.0 ±0.6 62.6 ±0.5 62.6 ±0.5 64.4 ±0.8
+> Theme Mono Alberta 74.0 ±3.0 75.7 ±4.9 79.3 ±3.2 81.0 ±2.1 79.1 ±3.0 82.8 ±2.0 75.5 ±2.8 76.9 ±1.7 77.0 ±2.6
+> Colorado 79.4 ±2.1 79.5 ±4.2 83.2 ±1.5 83.6 ±1.6 83.0 ±2.8 84.8 ±1.0 82.6 ±1.5 84.2 ±0.7 84.2 ±1.1
+> Multi Chile (es) 67.3 ±6.2 65.6 ±7.3 72.3 ±2.7 77.9 ±2.4 78.2 ±1.6 79.6 ±1.8 70.4 ±11.8 78.6 ±5.5 72.0 ±7.7
+> Italy (it) 77.4 ±6.4 70.3 ±9.1 81.2 ±2.5 77.9 ±1.7 76.7 ±1.6 79.9 ±1.8 68.8 ±10.2 74.5 ±5.3 72.6 ±7.1
+
+A. Social-attribution Bias Analysis 
+
+To address our research questions RQ1 and RQ2 , we conducted experiments on monolingual (English) datasets to evaluate three LLMs on the target tasks and to demonstrate how our proposed prompting strategies improve baseline performance by mitigating social-attribution biases. Overall, the results in Table V show that in all target events of both tasks in the mono-lingual setting, our proposed prompt aids based on social-attribution knowledge improve the performance of baselines significantly . This observation confirms our RQ1 
+
+and reveals the presence of social-attribution biases in the LLMs . For instance, in the intent detection task, while the baseline method (Zero-CoT) on the Llama3 model results in macro-F1 scores of 80.8 and 82.5 (the best results of the baseline methods across different LLMs) in the two target events, our strategy (goal-based strategy) improves them to 88.7 and 86.2 respectively. In the theme detection task, the baseline method on Mistral shows the best results (81.0 and 83.6 for Alberta and Colorado datasets respectively) whereas they are improved to 82.8 and 84.8 respectively by our strategy (context-based). Comparing our method with Self-Debias shows that across all tasks and LLMs, our method consistently outperforms Self-Debias, with the only exception being theme detection on the Gemma model, where Self-Debias achieves competitive performance. The results also reveal that Self-Debias has an inconsistent impact across models: although it improves over Zero-CoT on Gemma, its performance is lower on Mistral. This suggests that Self-Debias is not a reliable debiasing approach across different LLMs on our target tasks. Additionally, Fig. 8 demonstrates the average of the im-provements in the performance over Zero-CoT, the baseline, by different LLMs across both target tasks and multi-lingual settings. While the results confirm the effectiveness of our strategies in both tasks, we observe that goal-based strategy for mitigating the social-attribution bias in the intent detection task results higher margin of improvements in all models in mono-lingual setting . The reason behind this observation can be explored in future works from different perspectives: 1) The intensity of the LLMs’ bias toward the user’s goal is more than that of the LLMs’ for the context of the message, so the LLMs require more knowledge about the user’s goal than the context of the message. 2) The generated goal-based knowledge aid is more informative for the LLM to accurately understand the user intent from the user-generated message than the generated context. All in all, the results answer our RQ2 and confirm that enriching the prompt with the aids based on social-attribution knowledge retrieved from the LLM alleviates the social-attribution bias of the model to improve its classification performance in our target tasks. The results highlight the importance of paying attention to the social-attribution biases in developing LLM-based AI systems for a domain. Additionally, our proposed method shows potential for mitigating them, especially in English content setting. 
+
+B. Multi-lingual Analysis 
+
+We examined our proposed strategies on several multi-lingual datasets to address our RQ3 . The results of Table V show the effectiveness of our method across different tasks, models, and languages in most cases (8 out of 12), consistently outperforming Zero-CoT and Self-Debias. While Self-Debias occasionally surpasses our method for specific model-language combinations, its gains are marginal and inconsistent. Overall, our approach provides more reliable and generalizable improvements across tasks, models, and languages, effectively mitigating social-attribution bias. Comparing the results of the improvement by our method over Zero-CoT, the baseline, in Fig. 8, (a) and (b) indicate that while our strategies are effective in multi-lingual settings as well, they demonstrate greater consistency in the English datasets. The main reason for this observation would be that different LLMs, trained on varying corpora, have distinct abilities in understanding different languages, particularly low-resource languages like Haitian Creole. For instance, in comparison to Chile dataset (Spanish language), we observe greater margins of improvement over the baseline by our method for intent detection on Haiti dataset (Haitian Creole language) across all LLMs, specifically on Gemma by 26.5%. Another direction that can be explored in future works is how social factors of a language can be captured and transferred across languages. In our case, when we generate the user’s goal from a non-English message, we cannot guarantee that the LLM captures and reflects all social-attribution knowledge of the original language in the generated prompt aids in English. The rest of the analyses use Zero-CoT as the primary baseline, as it underlies our method and shows more consistent performance in the monolingual setting. 8Llama3 Mistral Gemma   
+
+> 0
+> 2
+> 4
+> 6
+> 8
+> 10
+> 12
+> 14
+> 16
+> Relative Improvement (%)
+> 7.13 7.74
+> 10.97
+> 5.97
+> 1.83 1.96
+> Mono-Lingual
+> Intent
+> Theme
+
+(a) Llama3 Mistral Gemma   
+
+> 0
+> 2
+> 4
+> 6
+> 8
+> 10
+> 12
+> 14
+> 16
+> Relative Improvement (%)
+> 2.57
+> 0.46
+> 14.68
+> 6.17
+> 2.37 3.9
+> Multi-Lingual
+> Intent
+> Theme
+
+(b) 
+
+Fig. 8: The average of relative improvement of our strategies over Zero-CoT by different LLMs across the target tasks. 65 70 75 80 85 90 95 100 
+
+> Macro-F1
+> Llama3
+> Mistral
+> Gemma
+> Models
+> Intent Detection
+> Baseline
+> Improvement
+
+(a) 65 70 75 80 85 90 95 100  
+
+> Macro-F1
+> Llama3
+> Mistral
+> Gemma
+> Models
+> Theme Detection
+> Baseline
+> Improvement
+
+(b) 
+
+Fig. 9: The average improvement of our strategies over Zero-CoT by different LLMs in mono-lingual setting. 
+
+C. Comparative Analysis for LLMs 
+
+Different LLMs, due to their differences in the architecture and training stage, are expected to have different capabilities in understanding of the task and input. For instance, based on the result in Table V, while Llama3 shows the best result for Zero-CoT in the intent detection task on the mono-lingual datasets, Mistral outperforms the other models in the theme detection task. Fig. 9 compares the average of improvements (across two datasets) by our proposed method over Zero-CoT using different LLMs on the target tasks in the mono-lingual setting. The result demonstrates that the LLMs have different capabilities in different tasks, and none of them is predominant in all tasks . Moreover, we observe that the LLMs leverage the provided prompt aids based on social-attribution knowledge differently . For instance, while Mistral shows better performance than Gemma in the baseline for the intent detection task, the latter performs better in the presence of our goal-based knowledge aids. We address two potential reasons behind this observation for further exploration in future works: 1) Data distribution may play a significant role, as observed in Table V. For the Lilac dataset, our method achieves greater improvement in the baseline performance with Gemma compared to Mistral, whereas the Thomas dataset shows the opposite trend. 2) The way models attend to the context of input text could also be influential. However, exploring this aspect is challenging due to the black-box nature of these models. In summary, there is no universally superior LLM for all tasks, so engineers need to select the proper LLM for their target tasks in designing computational social systems. 
+
+D. Robustness Analysis: Temperature Parameter 
+
+Higher temperature values allow LLMs to generate more creative responses, potentially affecting performance. We evaluate this parameter’s impact on the results of the intent detection task across two models, Llama3 and Gemma, by setting temperature to 0.1, 0.5, and 0.9, and comparing results with the deterministic setting (temperature = 0). We ran each experiment five times and report the average performance and standard deviation for both models on the Lilac and Thomas datasets (Fig. 10). Overall, although minor fluctuations in model performance are observed at different temperatures (e.g., Fig. 10b, 10c), changing the temperature has an insignificant impact across models and datasets, with both methods (Baseline and Ours) showing the same trend. This confirms the robustness of our observations across different temperature values .Additionally, we observe that the standard deviation of our method is lower than the baseline in all experiments of this task (shorter candles in Fig. 10). This observation reveals that our proposed prompt strategies are less prone to the biases that the temperature parameter adds to the inference stage of the Zero-CoT method . Thus, our method can empower engineers to develop more robust solutions. 
+
+E. Robustness Analysis: Order Bias 
+
+The order of the given options may induce a bias in the model’s reasoning and performance. To address this issue, we report the average performance of a model (Macro-F1) across all combinations of the options given. We evaluate the robustness of our strategies toward order bias based on the standard deviation of model performance across different order settings. Fig. 11 shows the average of the standard deviation of the models’ performance (on all datasets) for different model/ task settings. We observe that in all cases our strategies result in lower standard deviation, confirming the robustness of our method compared to Zero-CoT (baseline). 
+
+F. Cross-Model Analysis 
+
+Table VI shows the results of our experiments to evaluate the cross-model impact of generating knowledge with another 9
+
+(a) (b) (c) (d) 
+
+Fig. 10: The effect of temperature parameter on the model performance in the intent detection task. Llama 3 
+
+> Intent
+> Llama 3
+> Theme
+> Mistral
+> Intent
+> Mistral
+> Theme
+> Gemma
+> Intent
+> Gemma
+> Theme
+> Model/Task
+> 0
+> 1
+> 2
+> 3
+> 4
+> 5
+> 6
+> Average of Standard Deviation
+> Comparison of Standard Deviation due to Order Bias
+> Baseline
+> Ours
+
+Fig. 11: Comparison of the order bias of methods based on the standard deviation of Macro-F1 scores across model/tasks. TABLE VI: The performance (macro-F1) comparison between the impact of using knowledge generated by model itself (Self) and by another model (Cross) for Llama3 and Gemma.                         
+
+> Task Dataset Llama3 Gemma
+> Self Cross Self Cross
+> Intent Lilac 88.7 ±0.4 84.5 ±0.8 83.8 ±0.7 86.0 ±0.7
+> Thomas 86.2 ±0.6 85.0 ±0.7 86.2 ±0.9 85.6 ±0.2
+> Theme Alberta 79.3 ±3.2 80.3 ±1.8 77.0 ±2.6 76.8 ±2.1
+> Colorado 83.2 ±1.5 83.7 ±1.5 84.2 ±1.1 83.8 ±1.3
+
+model on the performance of our method. Across both tasks and models, the performance differences between the Self and Cross settings are generally small, indicating that our method does not strongly depend on whether the knowledge is generated by the same model or by another model. While minor variations are observed—such as slight advantages for Self in intent detection and for Cross in some theme detection cases—the overall trends remain consistent. These results suggest that our approach is robust to the source of generated knowledge, supporting its generality and applicability in cross-model settings. 
+
+G. Human Evaluation of AI-generated Knowledge 
+
+To further understand the effectiveness of our approach, we conduct a human evaluation to assess the quality of the AI-generated knowledge used in our method. For each task, we select 60 samples per model (180 in total), stratified by labels and datasets, to ensure balanced coverage. We evaluate the generated knowledge using two criteria: Faithfulness, which measures whether the knowledge is factually consistent with and supported by the given tweet, and Helpfulness, which TABLE VII: Human evaluation results of AI-generated knowl-edge quality across tasks and models.                  
+
+> Task Model Helpfulness (%) Faithfulness (%) Intent Llama3 0.88 0.98 Mistral 0.88 0.98 Gemma 0.85 0.98
+> Theme Llama3 0.85 0.98 Mistral 0.95 0.98 Gemma 0.88 0.98
+
+assesses whether the knowledge provides useful information for correctly answering the task. Table VII shows that the generated knowledge is highly faithful and helpful across both tasks and models. Faithfulness remains consistently high (0.98), indicating strong factual alignment with the content of input messages and minimal hallucination. Helpfulness scores are also high, with minor variations across models and tasks, suggesting that the knowledge effectively supports task-specific reasoning. Overall, these results validate the quality and reliability of the generated knowledge underlying our method. VI. C ONCLUSION 
+
+In this paper, we explored the presence of social-attribution biases toward two social factors, including message context and user goal, in three state-of-the-art LLMs on zero-shot domain-specific classification tasks. We proposed novel prompt strategies to reveal these biases and leverage the intrinsic knowledge of LLMs to mitigate their social-attribution biases in the inference time. Our work focused on two strategies including goal-based and context-based strategies for the intent detection and theme detection tasks respectively. Our experiments conducted in mono-lingual (English) and multi-lingual settings of the disaster domain showed that our strategies outperformed the baseline across all tasks on English datasets and most multi-lingual datasets. Our results revealed the presence of social-attribution biases in the open-source instruction-following LLMs– Llama3, Mistral, and Gemma, highlighting the need to consider social-attribution biases when LLM-based AI systems are designed for social computing. Also, while the results confirmed the effectiveness of our method in improving the performance, we observed that there is no single LLM that works for all tasks. Although the goal-based strategy showed a higher margin of improvement in intent detection on 10 
+
+all models compared to the context-based strategy in the theme detection task, further exploration is needed to understand how different LLMs benefit from different prompt aids in mitigating social-attribution bias. Besides, our method demonstrated more robust results than the baseline across various temperature values and option orderings, providing a suitable solution to design AI-powered computational social systems. VII. L IMITATIONS AND FUTURE WORK 
+
+We address the following limitations of our study to provide insights for future research: 1) This work did not focus on providing the optimal prompt templates for different tasks, but rather explored the effectiveness of the proposed strategies on the manually crafted templates to reveal the existence of social-attribution biases in the LLMs and mitigate them. Future studies can explore automatic prompt template generation. 2) We focused on two social aspects of the message ( goal and 
+
+context ) to highlight and mitigate the social-attribution bias of LLMs in the intent and theme detection tasks of the disaster domain. Examining the impact of additional social attributes and their combinations as well as exploring more effective mitigation strategies on various tasks could be key future work directions. 3) Due to the uneven nature of real-world disaster events, some datasets used in this work are small and imbalanced, which can lead to higher variability in model performance. 4) Since the order of answer options in the prompt can bias LLM’s reasoning in the result, we mitigate its effect by averaging the result over all combinations of the options. However, this approach may not extend to a large number of options. Therefore, future works can explore the solutions for mitigating this type of bias as well. 5) Our method requires additional LLM calls to generate task-specific social-attribution knowledge for each instance, introducing some latency and computational overhead. However, this overhead is linear and future work can mitigate it via batching or parallel processing. REFERENCES [1] P. Liu, W. Yuan, J. Fu, Z. Jiang, H. Hayashi, and G. Neubig, “Pre-train, prompt, and predict: A systematic survey of prompting methods in natural language processing,” ACM Comput. Surv. , vol. 55, no. 9, jan 2023. [2] W. Zhang, Y. Deng, B. Liu, S. Pan, and L. Bing, “Sentiment analysis in the era of large language models: A reality check,” in Findings of the Association for Computational Linguistics: NAACL , 2024, pp. 3881–3906. [3] F. Gilardi, M. Alizadeh, and M. Kubli, “Chatgpt outperforms crowd workers for text-annotation tasks,” Proceedings of the National Academy of Sciences , vol. 120, no. 30, p. e2305016120, 2023. [4] T. Kojima, S. S. Gu, M. Reid, Y. Matsuo, and Y. Iwasawa, “Large language models are zero-shot reasoners,” in Advances in Neural Information Processing Systems , S. Koyejo, S. Mohamed, A. Agarwal, D. Belgrave, K. Cho, and A. Oh, Eds., vol. 35. Curran Associates, Inc., 2022, pp. 22 199–22 213. [5] X. Wang, Y. Xiong, B. Kang, Y. Zhang, P. S. Yu, and Y. Zhu, “Reducing negative effects of the biases of language models in zero-shot setting,” in Proceedings of the Sixteenth ACM International Conference on Web Search and Data Mining , ser. WSDM ’23. New York, NY, USA: Association for Computing Machinery, 2023, p. 904–912. [6] F. Heider, The psychology of interpersonal relations. Hoboken: John Wiley & Sons Inc, 1958. [Online]. Available: https://content.apa.org/ books/10628-000 [7] D. Hovy and D. Yang, “The importance of modeling social factors of language: Theory and practice,” in Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human language technologies , 2021, pp. 588–602. [8] S. Parikh, M. Tiwari, P. Tumbade, and Q. Vohra, “Exploring zero and few-shot techniques for intent classification,” in Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 5: Industry Track) , 2023, pp. 744–751. [9] A. V. Ganesan, Y. K. Lal, A. Nilsson, and H. A. Schwartz, “Systematic evaluation of gpt-3 for zero-shot personality estimation,” in Proceedings of the 13th Workshop on Computational Approaches to Subjectivity, Sentiment, & Social Media Analysis , 2023, pp. 390–400. [10] I. J. Cruickshank and L. H. X. Ng, “Prompting and fine-tuning open-sourced large language models for stance classification,” ACM Trans. Intell. Syst. Technol. , Mar. 2025, just Accepted. [Online]. Available: https://doi.org/10.1145/3725816 [11] P. Gupta, C. Jiao, Y.-T. Yeh, S. Mehri, M. Eskenazi, and J. P. Bigham, “Instructdial: Improving zero and few-shot generalization in dialogue through instruction tuning,” in Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing , 2022, pp. 505–525. [12] T. Brown, B. Mann, N. Ryder, M. Subbiah, J. D. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, S. Agarwal, A. Herbert-Voss, G. Krueger, T. Henighan, R. Child, A. Ramesh, D. Ziegler, J. Wu, C. Winter, C. Hesse, M. Chen, E. Sigler, M. Litwin, S. Gray, B. Chess, J. Clark, C. Berner, S. McCandlish, A. Radford, I. Sutskever, and D. Amodei, “Language models are few-shot learners,” Advances in neural information processing systems , vol. 33, pp. 1877–1901, 2020. [13] J. Wei, M. Bosma, V. Zhao, K. Guu, A. W. Yu, B. Lester, N. Du, A. M. Dai, and Q. V. Le, “Finetuned language models are zero-shot learners,” in International Conference on Learning Representations , 2022. [Online]. Available: https://openreview.net/forum?id=gEZrGCozdqR [14] S. Mishra, D. Khashabi, C. Baral, and H. Hajishirzi, “Cross-task general-ization via natural language crowdsourcing instructions,” in Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , 2022, pp. 3470–3487. [15] J. Wei, X. Wang, D. Schuurmans, M. Bosma, F. Xia, E. Chi, Q. V. Le, D. Zhou et al. , “Chain-of-thought prompting elicits reasoning in large language models,” Advances in neural information processing systems ,vol. 35, pp. 24 824–24 837, 2022. [16] W. Zhou, S. Zhang, H. Poon, and M. Chen, “Context-faithful prompting for large language models,” in Findings of the Association for Com-putational Linguistics: EMNLP 2023 . Singapore: Association for Computational Linguistics, Dec. 2023, pp. 14 544–14 556. [17] C. Buntain, R. McCreadie, and I. Soboroff, “Incident streams 2021 off the deep end: Deeper annotations and evaluations in twitter,” in 19th International Conference on Information Systems for Crisis Response and Management, ISCRAM , 2022, pp. 22–25. [18] J. Krishnan, A. Anastasopoulos, H. Purohit, and H. Rangwala, “Mul-tilingual code-switching for zero-shot cross-lingual intent prediction and slot filling,” in Proceedings of the 1st Workshop on Multilingual Representation Learning , 2021, pp. 211–223. [19] F. Alam, H. Sajjad, M. Imran, and F. Ofli, “Crisisbench: Benchmarking crisis-related social media datasets for humanitarian information process-ing,” in Proceedings of the International AAAI conference on web and social media , vol. 15, 2021, pp. 923–932. [20] A. Olteanu, S. Vieweg, and C. Castillo, “What to expect when the unexpected happens: Social media communications across crises,” in 
+
+Proceedings of the 18th ACM Conference on Computer Supported Cooperative Work & Social Computing , ser. CSCW ’15. New York, NY, USA: Association for Computing Machinery, 2015, p. 994–1009. [21] AI@Meta, “Llama 3 model card,” 2024. [Online]. Available: https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md [22] A. Q. Jiang, A. Sablayrolles, A. Mensch, C. Bamford, D. S. Chaplot, D. d. l. Casas, F. Bressand, G. Lengyel, G. Lample, L. Saulnier et al. ,“Mistral 7b,” arXiv preprint arXiv:2310.06825 , 2023. [23] G. Team, T. Mesnard, C. Hardin, R. Dadashi, S. Bhupatiraju, S. Pathak, L. Sifre, M. Rivière, M. S. Kale, J. Love et al. , “Gemma: Open models based on gemini research and technology,” arXiv preprint arXiv:2403.08295 , 2024. [24] I. O. Gallegos, R. Aponte, R. A. Rossi, J. Barrow, M. Tanjim, T. Yu, H. Deilamsalehy, R. Zhang, S. Kim, F. Dernoncourt, N. Lipka, D. Owens, and J. Gu, “Self-debiasing large language models: Zero-shot recognition and reduction of stereotypes,” in Proceedings of the 2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 2: Short Papers) ,L. Chiruzzo, A. Ritter, and L. Wang, Eds. Albuquerque, New Mexico: Association for Computational Linguistics, Apr. 2025, pp. 873–888.
