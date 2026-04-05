@@ -1,0 +1,1386 @@
+Title: Behavior and Sublinear Algorithm for Opinion Disagreement on Noisy Social Networks
+
+URL Source: https://arxiv.org/pdf/2604.01890v1
+
+Published Time: Fri, 03 Apr 2026 00:47:23 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+> 1
+
+# Behavior and Sublinear Algorithm for Opinion Disagreement on Noisy Social Networks 
+
+Wanyue Xu, Yubo Sun, Mingzhe Zhu, Zuobai Zhang, and Zhongzhi Zhang Member, IEEE 
+
+Abstract —The phenomenon of opinion disagreement has been empirically observed and reported in the literature, which is affected by various factors, such as the structure of social networks. An important discovery in network science is that most real-life networks, including social networks, are scale-free and sparse. In this paper, we study noisy opinion dynamics in sparse scale-free social networks to uncover the influence of power-law topology on opinion disagreement. We adopt the popular discrete-time DeGroot model for opinion dynamics in a graph, where nodes’ opinions are subject to white noise. We first study opinion disagreement in many realistic and model networks with a scale-free topology, which approaches a constant, indicating that a scale-free structure is resistant to noise in the opinion dynamics. Moreover, existing algorithms for estimating opinion disagreement are computationally impractical for large-scale networks due to their high computational complexity. To solve this challenge, we introduce a sublinear-time algorithm to approximate this quantity with a theoretically guaranteed error. This algorithm efficiently simulates truncated random walks starting from a subset of nodes while preserving accurate estimation. Extensive experiments demonstrate its efficiency, accuracy, and scalability. 
+
+Index Terms —Opinion dynamics, fast algorithm, graph min-ing, social network, Monte Carlo algorithm, sampling algorithm 
+
+I. I NTRODUCTION 
+
+# WIth the rapid development of Internet technology in recent years, social media and online social networks have experienced explosive growth [1], which constitute an indispensable part of people’s lives [2]. Due to the absence of geographical barriers erased by the Internet, social media and on-line social networks have created many new ways for people across the globe to exchange in real time their opinions or information about some topics or issues, resulting in a substantial change of ways people share and form opinions [3]. At the same time, the huge prevalence of online social media platforms also leads to various complex social phenomena, such as polarization [4]–[7], disagreement [8]–[11], and di-versity [12], all of which have become a hot topic of study in the literature of social science [13], control science [14], and computer science [6], [15], [16]. For better understanding the diffusion, evolution, and for-mation of opinions, as well as the social phenomena created 
+
+Wanyue Xu, Yubo Sun, Mingzhe Zhu, Zuobai Zhang, and Zhongzhi Zhang are with the College of Computer Science and Artificial Intelligence, Fudan University, Shanghai 200433, China. Wanyue Xu is also with Shanghai Key Laboratory of Brain-Machine Intelligence for Information Behavior, Shanghai 201620, China; and the School of Business and Management, Shanghai International Studies University, Shanghai 201620, China. xuwy@fudan.edu.cn; 25110890019@m.fudan.edu.cn; 21210240107@m.fudan.edu.cn; 17300240035@fudan.edu.cn; zhangzz@fudan.edu.cn. 
+
+by online social media, a rich variety of models for opinion dynamics have been developed [17]. These models have been applied to various practical scenarios [18]–[20], such as ac-counting for the Paris Agreement negotiation process [18] and the change of public opinion on the US-Iraq War [20]. Among diverse opinion dynamics models, the DeGroot model [21] is a popular one. In this model, each node has a real scalar-valued initial opinion. At each time step, every node updates its opinion by averaging the opinions of all its neighbors at the previous step. Finally, the opinions of all nodes reach consensus. Since its establishment, the DeGroot model has been modified or generalized, to incorporate various factors contributing to opinion dynamics [17], such as noise [22]– [24]. In opinion dynamics, there often exist stochastic changes for exogenous factors, such as uncertainty of communication environment and linguistic opinion, which can be represented as noise. In [22] a significant extension of the DeGroot model was proposed by including noise. For this noisy model, the opinions of nodes will not reach agreement but fluctuate around a weighted average of their opinions in long time limit, leading to opinion disagreement/diversity/discord, which is quantified by a weighted squared deviation of each node’s opinion from their average. The opinion disagreement in the noisy DeGroot model exhibits rich behavior dependent on the topology of interaction systems [23]. For example, opinion disagreement behaves as a different function of the node number in the path graph, the sparse regular graphs, and the complete binary tree. However, these graphs cannot well mimic realistic networks. It has been established [25] that most real-world networks including social networks are sparse having a small constant average degree, and display the scale-free topology, with their node degrees k following a power-law distribution P (k) ∼ k−γ
+
+with 2 < γ ⩽ 3, which has attracted much interest from the community of graph mining [26]–[29]. The scale-free structure has a strong influence on various dynamical processes taking place in power-law graphs [30]. However, the effect of scale-free topology on opinion disagreement for the noisy DeGroot model is still not well understood. Moreover, direct exact computation of opinion disagreement needs cubic time, which is time-consuming for large networks. These motivate us to explore the effect of scale-free structure on opinion disagreement and to develop efficient algorithms to solve the challenge for computing opinion disagreement. To overcome the challenge of directly computing opinion disagreement, we develop two novel approximation algorithms with theoretical guarantees. The first algorithm achieves nearly linear time complexity by combining spectral sparsification 
+
+> arXiv:2604.01890v1 [cs.SI] 2 Apr 2026 2
+
+techniques with Laplacian solvers and Johnson-Lindenstrauss lemma, carefully addressing self-loops in the graph trans-formation. The second algorithm takes a different approach through sublinear-time random walk samplings. It estimates returning probabilities of nodes via truncated walks from a carefully selected subset of nodes, avoiding matrix operations entirely. Numerical results validate its scalability and provable error bounds for networks with tens of millions of nodes. Our main contributions are summarized as follows. (i) We derive an analytical expression for the opinion disagreement on an arbitrary connected weighted non-bipartite graph G, in terms of the eigenvalues and eigenvectors of the normalized adjacency matrix associated with G, which depend on the structural properties of G.(ii) Based on the obtained expression, we examine the effect of scale-free topology on opinion disagreement by studying the noisy DeGroot model on various real and model scale-free networks, which tends to small constants, independent of the network size, indicating that scale-free structure is resistant to noise in the DeGroot model for opinion dynamics. (iii) We develop two approximation algorithms to estimate opinion disagreement, which have theoretically guaranteed errors. The first one has nearly linear time complexity with respect to the number of edges in G, while the second one is sublinear with respect to the node number. In contrast to direct exact computation of opinion disagreement, our approximation algorithms significantly reduces the time cost. (iv) We perform extensive experiments on various real-world networks and model networks, which demonstrate that our proposed approximation algorithms are both efficient and effective, with the second algorithm being scalable to large networks with over fifty millions of nodes. II. R ELATED WORK 
+
+This section is devoted to brief review of some previous work related to ours. Among different models for opinion dynamics, the De-Groot model [21] is a popular one. In this model, every individual/agent has only one scalar-valued opinion, which evolves as an average of its neighbors’ opinions. A necessary and sufficient condition for reaching consensus based on the DeGroot model was obtained in [31]. Although simple and succinct, the DeGroot model captures the role of interactions among individuals in the opinion evolution. However, the factors contributing to the propagation, evolution, and forma-tion for opinions are diverse, most of which are overlooked in the original DeGroot model. In order to better model opinion dynamics, in the past years, numerous modifications or extensions of the DeGroot model have been proposed by incorporating different aspects affecting the behavior or distribution of opinions [17]. An important extension of the DeGroot model is the Friedkin-Johnsen (FJ) model [32]. It introduces a resistance parameter for each agent to the DeGroot model, reflecting the agent’s willingness to conform with its neighbors’ opinions. In the FJ model, each agent possesses two opinions, innate opinion and expressed opinion, with the long-run expressed opinions converging but never reaching agreement. The FJ model has been applied to analyze various social phenom-ena [33], [34]. Another major variant of the DeGroot model is the Altafini model [35], where the interactions between agents can be either cooperative or antagonistic [36]. In [37], a modification of the DeGroot model is studied, where an agent updates its opinion by taking into account both its neighbors’ opinions and the opinions of its neighbors’ neighbors [38]. Moreover, existing work also extends the DeGroot model by incorporating leaders, whose opinions remain unchanged. These DeGroot models with leaders are formulated in the framework of optimization, such as maximizing the diver-sity [12] and the total opinion [39]–[44]. Finally, other variants or modifications of the DeGroot model were also proposed and studied [45], [46]. The above-mentioned models provide insights into under-standing opinion dynamics, since they capture some impor-tant aspects contributing opinion formation, including agent’s attributes, interactions among agents, and opinion updating rules. However, in the majority of currently existing models for opinion dynamics based on the DeGroot model, opinion update rules are deterministic. In practical situations, indi-vidual opinions are not governed deterministically but are subject to stochastic change from a multitude of factors, for example, exogenous factors unrelated to social influence. In order to capture exogenous noise, a noisy DeGroot model was introduced and studied [22], which was later extended to the FJ model [47]. In the noisy model, the limiting opinions do not converge but fluctuate around their weighted average, leading to opinion disagreement δ quantified by the expected mean-squared deviation of opinions, the upper and lower bounds of which were studied in [48]. While our work focuses on the noisy DeGroot model to isolate the impact of scale-free topology, several extensions of this framework merit discussion. Prior studies have proposed enhancements to opinion dynamics models that incorporate cognitive biases [49], [50], heterogeneous susceptibility to influence [51]–[54], and alternative formulations of uncer-tainty [55]–[57]. These factors better capture behavioral nu-ances in real social systems, which also deepen our under-standing of structural robustness. Dynamic network paradigms, where topology evolves with time and opinions [58], repre-sent another critical frontier for modeling real-world social networks. Notably, signed networks where edges encode trust or distrust relationships [59]–[61], also offer a natrual ex-tension for modeling opinion dynamics [62]. However, these sophisticated models often sacrifice analytical tractability for ecological validity on large-scale networks. Our choice to employ the homogeneous noisy DeGroot model creates a controlled baseline that rigorously quantifies purely topologi-cal effects in power-law networks. This foundational analysis enables future work to systematically introduce additional layers of complexity. Meanwhile, it also retains the ability to disentangle structural influences from behavioral factors. The opinion disagreement δ and its leading behavior in some typical networks with various structural properties have been deeply studied in [23], which shows that the scaling behavior for δ in different networks is rich. For a network with N3
+
+nodes, δ can behave linearly, logarithmically, or independently of N . For example, in the path graph, the ring graph, and sparse regular graphs, δ scales linearly with N ; in the complete binary tree and the 2-dimensional grid, δ grows logarithmically with N ; while in the star graph, the complete graph, regular 
+
+α-expander graphs, regular dense graphs, dense Erd¨ os-R´ enyi random graphs, and d-dimensional grids with d ⩾ 3, δ are con-stants, irrespective of N . Therefore, the behavior of opinion disagreement δ is dependent on network structure and average node degree. Thus far, the impact of scale-free structure on 
+
+δ has not been explored, despite the ubiquity of scale-free networks in real-world social and natural systems [25], [30]. While the computation [63], property [8] and optimization [5] of δ have been investigated, existing literature predominantly focuses on the FJ model, whose formulation differs from the noisy DeGroot model. Furthermore, previous evaluations have been restricted to graphs with less than 200 thousand edges, leaving the scalability issue for large-scale networks largely unresolved. III. P RELIMINARIES 
+
+In this section, we give a brief introduction to some essential concepts about a graph, its associated matrices, random walks and their relevant quantities on a graph. 
+
+A. Graph and Matrix Notation 
+
+Let G = (V, E, w ) be a connected undirected weighted network with or without self-loops, where V = {1, 2, ..., N }
+
+denotes the set of N nodes, E denotes the edge set consisting of M unordered node pairs {i, j }, i, j ∈ V , and w : E → R+
+
+is the positive edge weight function, with w(e) = we denoting the weight for edge e. The adjacency matrix A of graph G is an N ×N symmetric matrix, which encodes many topological and weighted properties of the graph, with the entry aij at row 
+
+i and column j defined as follows: aij = we if nodes i and 
+
+j are linked by an edge e ∈ E , aij = 0 otherwise. Let Ni
+
+denote the set of neighbors for node i, then the degree of i
+
+is di = P 
+
+> j∈N i
+
+aij . And the total degree dsum , the sum of degrees over all the N nodes, is dsum = PNi=1 di. The degree matrix D of graph G is a diagonal matrix whose ith diagonal entry is di. And the Laplacian of G is defined as L = D − A,which is positive semi-definite satisfying L1 = 0, where 1 and 
+
+0 represent the N -dimensional vectors with all entries being ones and zeros, respectively. The transition matrix P of a graph G is P = D−1A,which is row-stochastic. Generally, P is asymmetric with the exception of the case that G is a regular graph. However, P
+
+is similar to a real symmetric matrix S , called normalized adjacency matrix of G and defined by S = D−1/2AD −1/2 =
+
+D1/2PD −1/2. Thus, P and S have identical set of eigenval-ues. Let I stand for the identity matrix of dimension N . Then, the normalized Laplacian matrix of graph G [64] is defined as 
+
+L = I − S .
+
+B. Random Walks on a Graph 
+
+For a connected graph G, we can define a discrete-time random walk running on it. At each time step, the walker starting from its current location i jumps to a neighboring node j with probability aij /d i. Such a stochastic process is described by a Markov chain [65], characterized by the transi-tion matrix P defined above, with the ij -th entry pij = aij /d i
+
+representing the probability of moving from i to j in one time step. For a non-bipartite graph G, the random walk has a unique stationary distribution π = ( π1, π 2, · · · , π N )⊤, with 
+
+πi = di/d sum satisfying PNi=1 πi = 1 and π⊤P = π⊤. Note that for a transition matrix P, its square P2 exhibits the same row-stochastic property and stationary distribution π as P:
+
+P21 = P1 = 1, (1) 
+
+π⊤P2 = π⊤P = π⊤. (2) As will be shown later, based on graph G one can construct a new graph G′ with transition matrix P2. In this paper, we only consider non-bipartite graphs. Table I lists the frequently used notations of different types of graphs related to G throughout this paper. A fundamental quantity related to random walks               
+
+> TABLE I FREQUENTLY USED NOTATIONS .
+> Notation Description
+> G= ( V,E, w )A connected undirected weighted network.
+> PThe transition matrix of random walks on G.
+> G′The weighted graph with transition matrix P2.
+> ˜GThe sparsified graph of G′by Lemma 6.2.
+> ¯GThe graph obtained from ˜Gby deleting loops.
+
+is hitting time, also called first-passage time [66], [67]. For a random walk on graph G with transition matrix P, the hitting time from node i to node j is the expected number of jumps for a walker starting from i to visit j for the first time, denoted by 
+
+Hij (G) or Hij (P). Hitting times have found wide applications in different areas [27]. For example, the partial mean hitting time Hj (G) [68], [69] to a node j, can be used as a centrality measure of node j in graph G [70]–[72]. This quantity also plays an important role in noisy opinion dynamics [23]. 
+
+Definition 3.1: The partial mean hitting time Hj (G) is defined as the expected time for a walker arriving at node 
+
+j, which starts from a node i selected randomly according to the stationary distribution, that is, 
+
+Hj (G) = XNi=1 πiHij (G). (3) IV. D ISCRETE -T IME NOISY DEGROOT MODEL 
+
+In this section, we introduce the noisy discrete-time DeG-root model for opinion dynamics. 
+
+A. Noisy DeGroot model 
+
+We first introduce the popular discrete-time DeGroot model [21] on a graph G, where each node has a nonnegative scalar-value opinion. Let x (t) ∈ RN denote the vector of node opinions at time t, with the entry xi(t) being the opinion of node i. At time t + 1 , node i updates its opinion by averaging the opinions of all its neighbours at time t as           
+
+> xi(t+ 1) =
+> P
+> j∈N iaij xj(t)
+> P
+> j∈N iaij =P
+> j∈N ipij xj(t)
+
+, The evolution 4
+
+of node opinions can be represented in matrix form as 
+
+x (t + 1) = Px (t). After long-time evolution, the opinion vector x (t) converges to   P Ni=1 πixi(0) 1, where xi(0) is the initial opinion of node i. Thus, all nodes reach a consensus value PNi=1 πixi(0) .In [22], the discrete-time DeGroot model is extended by incorporating noise. In this case, the opinion vector evolves according to the following rule x (t + 1) = Px (t) + ϕ(t),where vector ϕ(t) = ( ϕ1(t), ϕ 2(t), · · · , ϕ N (t)) ⊤ represents zero-mean independent identically distributed noise. In this paper, we focus on the impact of network topology on the behavior of opinions. We assume that the variance of the noise 
+
+ϕi(t) at each node i is unit, and that noises at different nodes are uncorrelated. In the presence of noise, the opinion vector x (t) does not converge, with the opinions of all nodes fluctuating around the weighted average of their current opinions when t is large. These fluctuations can be characterized by the concept of opinion disagreement defined below. 
+
+Definition 4.1: The opinion disagreement for discrete-time noisy DeGroot model for opinion dynamics is defined as the weighted average of the variance of the deviation from the weighted average of current opinions for nodes, with both averages being based on the stationary distribution π:
+
+δ def 
+
+= lim  
+
+> t→∞
+
+sup XNi=1 πi var 
+
+
+
+xi(t) − XNj=1 πj xj (t)
+
+
+
+. (4) It has been shown [23] that the opinion disagreement depends on the hitting times of random walks associated with transition matrix P2 as 
+
+δ = XNi=1 π2
+
+> i
+
+XNj=1 πj Hji (P2). (5) Equation (5) explicitly reveals the relationship between dis-agreement and the hitting time: a larger hitting time makes local noise harder to average out, thereby amplifying the steady-state opinion variance. 
+
+B. Spectral Expression for Opinion Disagreement 
+
+In fact, the transition matrix P2 is associated with aconnected weighted graph G′ with loops, which can be constructed from G as follows [73]. The node set of G′ is 
+
+V = {1, 2, ..., N }, identical to that of G. For the adjacency matrix of G′, its ij th entry can be obtained by performing a two-step random walk on G. Concretely, two nodes i and j in 
+
+G′ are directly linked by an edge e′ if and only if there is a 
+
+2-length path between i and j in G. And the weight of edge 
+
+e′ is equal to the product of the degree di for node i in G and the probability that a walker starts from i and ends at j after performing two-step random walks in G. It is easy to verify that the degree of each node i in G′ is di, identical to that in 
+
+G:
+
+DP 21 = D1 = ( d1, d 2, . . . , d n)⊤ ,
+
+where the first equation is due to (1). Thus, the degree matrix of graph G′ is also D. Then, for graph G′, the normalized Laplacian matrix L(G′) is L(G′) = I − S 2 = D1/2(I −
+
+P2)D−1/2, and the Laplacian matrix L(G′) is 
+
+L(G′) = D1/2L(G′)D1/2 = D(I − P2). (6) Combining (5) with (3), opinion disagreement δ can be rewrit-ten as 
+
+δ = XNi=1 π2 
+
+> i
+
+Hi(G′). (7) Let λ1, λ 2, . . . , λ N denote the N eigenvalues of matrix 
+
+S , and let ψ1, ψ2, . . . , ψN be their corresponding mutually orthogonal unit eigenvectors. Since all λi are real, one can rearrange them in a decreasing order as 1 = λ1 > λ 2 ≥
+
+λ3 ≥ · · · ≥ λN ≥ − 1 and let λ = max {| λ2| , |λN |} . Thus, for matrix S 2 that is similar to its transition matrix P2,its eigenvalues are λ2 
+
+> i
+
+with corresponding eigenvectors ψi,
+
+i = 1 , 2, . . . , N . Then, the pseudoinverse or Moore-Penrose generalized inverse [74] of L(G′), which we denote L†(G′),can be written as L†(G′) = PNk=2 11−λ2
+
+> i
+
+ψkψ⊤ 
+
+> k
+
+. Thus, the ith diagonal entry L†
+
+> ii
+
+(G′) of L†(G′) is PNk=2 11−λ2
+
+> k
+
+ψ2
+
+> ki
+
+.Using a way similar to that in [66], the quantities 
+
+Hij (P2) and Hj (P2) can be derived and expressed as 
+
+Hij (P2) = dsum 
+
+PNk=2 11−λ2
+
+> k
+
+ ψ2 
+
+> kj
+> dj
+
+− ψki ψkj 
+
+√didj
+
+
+
+and Hi(G′) =
+
+> 1
+> πi
+
+PNk=2 11−λ2
+
+> k
+
+ψ2 
+
+> ki
+
+= 1 
+
+> πi
+
+L†
+
+> ii
+
+(G′), respectively. Therefore, the opinion disagreement δ can be represented as 
+
+δ =
+
+> N
+
+X
+
+> i=1
+
+πiNX
+
+> k=2
+
+11 − λ2
+
+> k
+
+ψ2 
+
+> ki
+
+=
+
+> N
+
+X
+
+> i=1
+
+πiL†
+
+> ii
+
+(G′) . (8) In order to better understand the formulation in (8), we compute relevant quantities in (8) for the five-node line graph and report the result in Table II. From Table II, we can see that for those relevant quantities, different nodes might have distinct values, as captured by intuition.                        
+
+> TABLE II QUANTITIES IN (8) FOR THE FIVE -NODE LINE GRAPH .node i12345
+> πi0.125 0.25 0.25 0.25 0.125
+> L†
+> ii 1.25 10.511.25
+> πiL†
+> ii 0.15625 0.25 0.125 0.25 0.15625
+
+Before closing this section, it should be pointed out that although the sum of the N terms on the right-hand sides of (4) and (8) are both equal to δ, the correspond-ing N terms in the two equations are generally not equal to each other. That is, L†
+
+> ii
+
+(G′) is often not equivalent to 
+
+var 
+
+n
+
+xi(t) − PNj=1 πj xj (t)
+
+o
+
+for t → ∞. However, (8) correlates opinion disagreement δ with and the spectra of normalized adjacency matrix, enhancing our understanding of network structure’s influence on δ. This expression for δ
+
+provides new analytical tools and insights into algorithms for computing opinion disagreement. V. O PINION DISAGREEMENT IN NETWORKS 
+
+In this section, we investigate opinion disagreement of the noisy discrete-time DeGroot model on some real and model 5
+
+TABLE III STATISTICS AND MEAN RELATIVE ERROR OF SIMULATE MC (S IM MC), A PPROX DELTA AND SAMPLE DELTA WITH VARIOUS ϵ ON SOME REAL -WORLD NETWORKS . W E INDICATE BOTH NODE NUMBER N AND EDGE NUMBER M OF LCC, POWER -LAW EXPONENT γ, OPINION DISAGREEMENT δ COMPUTED BY THE EXACT ALGORITHM (E XACT ) THROUGH (8). Network N M γ δ
+
+Mean relative error relative to δ
+
+SimMC APPROX DELTA SAMPLE DELTA 
+
+ϵ = 0 .35 ϵ = 0 .3 ϵ = 0 .25 ϵ = 0 .35 ϵ = 0 .3 ϵ = 0 .25 
+
+Zachary 34 78 2.161 1.287 0.086 0.027 0.015 0.009 0.013 0.005 0.003 bio-celegans 453 2,025 2.621 1.132 0.047 0.059 0.045 0.034 0.022 0.021 0.020 web-polblogs 643 2,280 2.021 1.300 0.019 0.053 0.031 0.031 0.007 0.005 0.005 Protein 1,458 1,948 2.879 3.081 0.089 0.017 0.008 0.006 0.013 0.009 0.008 soc-hamsterster 2,000 16,097 2.421 1.140 0.083 0.006 0.005 0.002 0.003 0.002 0.002 socfb-Amherst41 2,235 90,954 2.361 1.013 0.032 0.004 0.002 0.002 0.001 0.001 0.001 Human proteins (Vidal) 2,783 6,007 2.132 1.515 0.037 0.009 0.007 0.005 0.005 0.005 0.002 bio-grid-worm 3,343 6,437 2.161 1.681 0.066 0.056 0.029 0.027 0.008 0.006 0.003 socfb-Mich67 3,745 81,901 2.521 1.025 0.050 0.003 0.002 0.002 0.001 0.001 0.001 soc-PagesTVshow 3,892 17,239 2.74 1.766 0.044 0.007 0.002 0.002 0.004 0.003 0.002 web-EPA 4,253 8,897 2.461 1.791 0.072 0.031 0.017 0.007 0.007 0.005 0.004 web-spam 4,767 37,375 2.381 1.126 0.002 0.009 0.006 0.003 0.002 0.001 0.001 socfb-American75 6,370 217,654 2.441 1.016 0.096 0.006 0.005 0.002 0.001 0.001 0.001 socfb-MIT 6,402 251,230 2.221 1.013 0.030 0.007 0.005 0.003 0.001 0.001 0.001 Routeviews 6,474 13,895 2.462 1.617 0.062 0.092 0.058 0.049 0.005 0.005 0.003 socfb-CMU 6,621 249,959 2.301 1.014 0.038 0.007 0.006 0.004 0.001 0.001 0.001 soc-PagesGovernment 7,057 89,429 2.751 1.082 0.057 0.008 0.007 0.005 0.002 0.001 0.001 socfb-Duke14 9,885 506,437 2.061 1.010 0.075 0.007 0.006 0.005 0.001 0.001 0.001 socfb-Bingham82 10,001 362,892 2.421 1.015 – 0.005 0.004 0.003 0.001 0.001 0.001 ca-HepPh 11,204 117,619 2.081 1.177 – 0.018 0.014 0.008 0.002 0.002 0.001 socfb-Stanford3 11,586 568,309 2.001 1.011 – 0.006 0.006 0.005 0.001 0.000 0.000 socfb-Baylor93 12,799 679,815 2.061 1.010 – 0.008 0.008 0.007 0.001 0.001 0.000 ca-AstroPh 17,903 196,972 2.861 1.096 – 0.011 0.007 0.004 0.002 0.001 0.001 soc-Gplus 23,613 39,182 2.621 3.654 – 0.231 0.132 0.050 0.009 0.006 0.004 CAIDA 26,475 53,381 2.509 1.607 – 0.077 0.076 0.044 0.007 0.003 0.002 soc-PagesArtist 50,515 819,090 2.261 1.038 – 0.010 0.006 0.006 0.001 0.000 0.000 Brightkite 56,739 212,945 2.481 1.269 – 0.020 0.014 0.009 0.004 0.003 0.002 
+
+power-law networks by using (8). To demonstrate the effect of scale-free topology on opinion disagreement, we also study the opinion disagreement on a family model networks without scale-free structures. 
+
+A. Opinion Disagreement in Power-Law Real-World Networks 
+
+We first examine opinion disagreement for real-world net-works. For this purpose, we choose a large collection of real networks, all of which are scale-free having a power-law degree distribution P (k) ∼ k−γ with 2 < γ ⩽ 3. All studied networks are selected from two public datasets: Koblenz Network Collection [75] and the Network Repository [76]. Due to its cubic-time computation complexity, (8) cannot handle large-scale networks. The sizes of chosen networks are relatively small, with the largest one containing around 6×10 4
+
+nodes. The statistics of these networks are listed in Table III. For each network that is disconnected originally, we compute the opinion disagreement for its largest connected components (LCC). In Table III we report the opinion disagreement δ for the studied real scale-free networks, which shows that for all considered networks their opinion disagreement δ is very small. Particularly, δ does not increase with the network size 
+
+N , but seems to be independent of N and tends to small constants. 
+
+B. Opinion Disagreement in Model Networks 
+
+We continue to study opinion disagreement for three ran-dom model networks. These networks include two scale-free networks: Barab´ asi-Albert (BA) network [25] and random Apollonian networks [77]. Meanwhile, we also study opinion disagreement for a growing small-world network [78] without the scale-free structure. 
+
+Barab´ asi-Albert Networks. Initially, the BA network is a small connected graph containing m0 ≥ m nodes with m ≥ 1.At every time step, a new node with m links is created and connected to m different existing nodes, with the probability of being linked to an old node i proportional to the degree of i. The growth and preferential attachment procedures are repeated until the network grows to the ideal size N . For a BA network with large N , the average degree approaches 2m,and the node degrees obey a distribution of power-law form 
+
+P (k) ∼ k−3 for all m. We calculate the opinion disagreement on various BA networks with different network size N ranging from 2, 000 to 50 , 000 and different parameter m = 2 , 3, 4.We present the numerical results for opinion disagreement on all tested BA networks in Figure 1(a), which shows that the opinion disagreement of BA networks does not increase with the node number N but tends to an m-dependent constant. 
+
+Random Apollonian Networks. We proceed to study the behavior of opinion disagreement δ for the random d-dimensional Apollonian network with d ≥ 2, which is con-structed as follows [77]. Initially, the network is a (d + 2) -6
+
+clique, the complete graph with d + 2 nodes. A (d + 1) -clique is called active if it was never chosen before. At each time step, the network grows by creating a new node connecting to an active (d + 1) -clique selected randomly. The procedure of selecting active (d + 1) -cliques and creating new nodes is repeated, until the network grows to a desirable size N .The Apollonian networks have a power-law degree distribution 
+
+P (k) ∼ k−γ with the power exponent γ = 2 + 1 /(d − 1) .In Figure 1(b), we plot the numerical results about the opinion disagreement δ for random Apollonian networks with various d and N . Figure 1(b) indicates that as networks grow, the opinion disagreement δ does not increase, but converges to small constants that rely on the parameter d.
+
+Growing Small-World Networks. We finally study opin-ion disagreement in the growing small-world network model in [78]. This network evolves through sequential growth iter-ations following these rules: The initial configuration consists of three nodes arranged in a triangular formation on a circular structure. In each subsequent growth iteration, a new node is inserted into a randomly chosen position between existing nodes along the perimeter. The topological evolution then proceeds through two distinct mechanisms. In the connection phase, the new node establishes undirected edges to its two immediate spatial neighbors in the existing configuration. In the subsequent rewiring phase, the model executes the operation of removing the edge between the two neighbors of the newly connected node with probability p, which effectively introduces structural randomness while maintains connectivity. It has been proved [78] that this random network exhibits small-world properties. Furthermore, when the removing prob-ability p converges to 0, the resulting random graph exhibits similar structure of the Erd¨ os-R´ enyi random graph [78]. On the other hand, when p converges to 1, the resulting random graph is transformed into a small-world network [78]. Figure 2 reports the results for the opinion disagreement δ of growing small-world networks with various n and p. As demonstrated in Figure 2, the opinion disagreement δ grows logarithmically with the node number n for each tested p, indicating that the opinion disagreement δ of networks without scale-free structures is affected by the network size. 
+
+C. Result Analysis 
+
+The above results demonstrate that for both real and model scale-free networks, their opinion disagreement δ is small constants, independent of the number of nodes. Since for the noisy DeGroot model on a graph, their node opinions do not converge, the constant scaling is the minimum scaling that opinion disagreement can achieve. As shown in (8), the opinion disagreement of a graph is determined by the eigenvalues and eigenvectors of the normalized adjacency matrix of the graph, which are in turn determined by the graph structure. We argue that the small opinion disagreement observed for the considered power-law graphs is attributed to their scale-free structure, which can be accounted for from the following heuristic arguments. In a power-law graph G, there exist some large-degree nodes linked to many other nodes in the graph, leading to a small average shortest-path distance [79], which grows at most logarithmically with the node number N . The small-world phenomenon facilitates fast spread of opinions on the network. Equation (7) shows that opinion disagreement δ of a graph G is closely related to the partial mean hitting time 
+
+Hi(G′) on another graph G′ associated with G. It has been shown that in a scale-free small-world graph G, the hitting time between two nodes are relatively small [80]. Since G′ is denser than G [73], Hi(G′) is smaller than Hi(G), although the latter is already small in a power-law graph [69]. Number of nodes Opinion disagreement                               
+
+> (a) BA networks Number of nodes Opinion disagreement (b) Random Apollonian networks Fig. 1. Numerical results for the opinion disagreement on BA networks and random Apollonian networks. 10 00 0.0 20000. 0300 00.0 40000 .050000.0 101. 0101. 5102. 0
+> Opin  io n Disagr e em ent  𝛿
+> Num berof nod es Np=0.25 p= 0.50 p= 0.7 5
+> Fig. 2. Numerical results for the opinion disagreement on Growing Small-World networks.
+
+VI. F AST APPROXIMATION ALGORITHMS FOR 
+
+ESTIMATING OPINION DISAGREEMENT 
+
+In (8), we provide an explicit expression for opinion dis-agreement δ of a graph G, in terms of the eigenvalues and eigenvectors of the normalized adjacency matrix S . However, direct computation for all eigenvalues and eigenvectors of S
+
+takes O(N 3) time and O(N 2) space, which is intractable for huge networks. To address this computation issue, in the section, we first introduce a modification of an exiting nearly linear time algorithm [71] for estimating the partial mean hitting time to approximate δ of a graph G. We then present a sublinear time random walk based sampling algorithm to estimate δ.7
+
+A. Modified Algorithm Based on Laplacian Solvers 
+
+In this subsection, we introduce a nearly linear time method to estimate opinion disagreement, which serves as a baseline for our sampling algorithm proposed in next subsection. 
+
+1) Alternative Expression for Relevant Quantity: In (5), it is shown that the problem of computing δ can be reduced to determining the partial mean hitting time Hi(G′) on a graph 
+
+G′ derived from the original graph G, and a recent work [71] presents a nearly linear time algorithm to estimate the partial mean hitting time Hi(G) for all nodes in a graph G. Unfor-tunately, the algorithm in [71] only holds for those graphs without any self-loop, which is not applicable to Hi(G′), since 
+
+G′ contains self-loops. In order to invoke the approach in [71], a natural idea is to remove self-loops in G′. However, after deleting all self-loops from graph G′, many properties of G′
+
+may no longer be preserved, such as the transition matrix and the normalized Laplacian matrix, both of which are important for related quantities about random walks on G′, including the partial mean hitting time Hi(G′). Fortunately, for a graph with self-loops, the removal of self-loops has little influence on the Laplacian matrix. Below we express Hi(G′) in terms of the diagonal entries of the pseudoinverse for the Laplacian matrix L(G′) associated with graph G′, which is helpful for the modification of the algorithm in [71]. Formula (8) represents the opinion disagreement δ of a graph G in terms of the diagonal entries of the pseudoinverse for the normalized Laplacian matrix L(G′) for graph G′.Next we establish the relation between the diagonal entries of the normalized Laplacian matrix and the Laplacian matrix associated with a graph with or without self-loops. By using Theorem 1 in [81], it is straightforward to obtain the following result. 
+
+Lemma 6.1: [27] For a connected undirected weighted graph G = (V, E) with or without self-loops, let L† and 
+
+L† be the Moore-Penrose inverse of its Laplacian matrix 
+
+L and normalized Laplacian matrix L, respectively. Then,                   
+
+> L†=
+> 
+> I−1
+> dsum D12J D 12
+> 
+> D12L†D12
+> 
+> I−1
+> dsum D12J D 12
+> 
+> , where
+> J=11 ⊤.
+
+According to Lemma 6.1, we obtain the following formula              
+
+> D12(I−1
+> dsum D12J D 12)ei=√di(ei−π)
+
+, which leads to        
+
+> e⊤
+> iL†ei=di(ei−π)⊤L†(ei−π)
+
+. Then, the opinion dis-agreement δ of a graph G can be expressed in terms of the diagonal elements of L(G′)†, or the quadratic forms of 
+
+L(G′)†, as δ = dsum       
+
+> PNi=1 π2
+> i(ei−π)⊤L(G′)†(ei−π)
+
+, which is instrumental in the design of the modified algorithm. 
+
+2) Spectral Graph Sparsification: As can be seen from (6), direct computation of pseudoinverse L†(G′) of L(G′) needs the square of matrix P, which involves matrix multiplication taking O(N 3) time. Thus, it is infeasible to construct the graph 
+
+G′ explicitly when the number of nodes N in the original graph 
+
+G is large. In order to reduce the computation complexity, we construct Laplacian matrix L( ˜G) corresponding to graph ˜G and use it to approximate matrix L(G′).
+
+Lemma 6.2: [73] For a graph G′ with Laplacian matrix 
+
+L(G′) = D −D  D−1A2, where A and D are, respectively, the adjacency matrix and degree matrix of the associated graph 
+
+G with N nodes and M edges, one can construct a graph ˜G
+
+with Laplacian matrix L( ˜G) having O(M ϵ −2 log N ) non-zero entries, in time O(M ϵ −2 log 2 N ), such that 
+
+(1 − ϵ) x ⊤L(G′)x ≤ x ⊤L( ˜G)x ≤ (1 + ϵ) x ⊤L(G′)x
+
+holds for any vector x ∈ RN .In the sequel, we refer the technique in Lemma 6.2 to SPARSIFY (G, ϵ ), which takes a graph G and an approximation parameter ϵ, and returns a Laplacian matrix L( ˜G) correspond-ing to a graph ˜G that is much sparser than G′. Lemma 6.2 shows that the opinion disagreement δ on graph G can be well preserved, if we compute it using L†( ˜G), instead of L†(G′).Lemma 6.2 returns a sparse graph ˜G in nearly linear time with respect to the number of edges M , whose Laplacian is similar to that of G′. Since graph ˜G may contain self-loops, one cannot directly adopt the method in [71] to compute the partial mean hitting time Hi( ˜G). In order to approximate opinion disagreement δ of a graph G, we delete all self-loops in graph 
+
+˜G to obtain graph ¯G with ¯M edges. Let ¯B ∈ R ¯M ×N be the edge-node incidence matrix of graph ¯G. For every edge 
+
+e with end nodes i and j, a direction is assigned arbitrarily. Then the entry beu at row associated with edge e and column associated with nodes u is defined as follows: beu = 1 if u
+
+is the tail of e, beu = −1 if u is the head of e, and beu = 0 
+
+otherwise. Let ¯W ∈ R ¯M × ¯M be the diagonal matrix, with the diagonal corresponding to edge e being the weight of e in 
+
+¯G. Then the Laplacian matrix L( ¯G) of ¯G can be written as 
+
+L( ¯G) = L( ˜G) = ¯B⊤ ¯W ¯B. In this way, we reduce computing the diagonal element L†
+
+> ii
+
+(G′) of matrix L(G′)† in (8) to approximating the quadratic form (ei − π)⊤L( ¯G)†(ei − π)
+
+for matrix L( ¯G)† associated with graph ¯G.Note that in order to evaluate the opinion disagreement δ
+
+for graph G, we introduce three more graphs G′, ˜G, and ¯G.Although in Table I we provide a brief introduction to these graphs, we further give the main differences and connections among these graphs. First, by construction [73], every node in 
+
+G and G′ has identical degree but different number of edges, with G being sparser than G′. Thus, the properties of G and G′
+
+are often quite disparate. For example, even for unweighted 
+
+G, the corresponding G′ is weighted, indicating that G and G′
+
+have distinct degree distribution, pairwise shortest paths, and weight distribution. Second, ˜G is a spectral sparsifier of G′. In other words, ˜G is a sparse subgraph of G′, but approximates the spectral properties for Laplacian matrix of G′. In general, 
+
+˜G may not preserve the structural properties of G′. Finally, since graph ¯G is obtained from ˜G by deleting all self-loops in ˜G, these two graphs have the same Laplacian matrix and almost identical structural properties. 
+
+3) Approximation of Key Quantity: For simplicity, we write 
+
+¯L = L( ¯G) and define C(i) = ( ei − π)⊤L( ˜G)†(ei − π) = (ei − π)⊤¯L†(ei − π). Then, ¯L† =  ¯L + 1 
+
+> N
+
+J −1 − 1 
+
+> N
+
+J ,
+
+¯L¯ L† = ¯L†L = I − 1 
+
+> N
+
+J , and ¯LJ = J ¯ L = ¯L†J = J ¯ L† = O,where O denotes the zero matrix [82]. Thus, for each node 
+
+i in graph ˜G or ¯G, the quantity C(i) can be represented as C(i) = (ei − π)⊤¯L†(ei − π) = (ei − π)⊤¯L†¯L¯ L†(ei −              
+
+> π) = ( ei−π)⊤¯L†¯B⊤¯W¯B¯ L†(ei−π) = ∥¯W12¯B¯L†(ei−π)∥2
+
+,which expresses the quantity C(i) in terms of the Euclidian 8
+
+distance between two vectors ¯W 12 ¯B ¯L†ei and ¯W 12 ¯B ¯L†π of dimension ¯M .By using the Johnson-Lindenstraus (JL) Lemma [83], the Euclidian distance between two vectors ¯W 12 ¯B ¯L†ei and 
+
+¯W 12 ¯B ¯L†π can be well approximated by the distance between two vectors of low dimension. Let Q be a k × ¯M matrix with k ≥ 24 log N/ϵ 2, where each entry is equal to 1/√k or 
+
+−1/√k with identical probability 1/2. Then, (1 − ϵ)C(i) ≤∥Q ¯W 12 ¯B ¯L†(ei − π)∥2 ≤ (1 + ϵ)C(i) holds with probability at least 1 − 1/N .Despite the fact that ∥Q ¯W 12 ¯B ¯L†(ei − π)∥2 is a good approximation for ∥ ¯W 12 ¯B ¯L†(ei − π)∥2 and Q ¯W 12 ¯B can be quickly computed by sparse matrix multiplication, directly computing matrix Z = Q ¯W 12 ¯B ¯L† involves inverting ¯L + 
+
+> 1
+> N
+
+J to obtain ¯L†. In order to avoid matrix inverse operation, by using Laplacian solvers [84], [85], we alternatively solve the system of equations ¯Lz i = q i, i = 1 , 2 . . . , k , where z ⊤
+
+> i
+
+and q ⊤ 
+
+> i
+
+are, respectively, the ith row of Z and Q ¯W 12 ¯B.Here we use the Laplacian solver in [85], an algorithm x =
+
+LaplSolve (¯L, y , κ ) with complexity eO (M log(1 /κ )) , where the notation eO(·) hides poly log factors. It takes a Laplacian matrix ¯L, a column vector y , and an error parameter κ > 0
+
+as inputs, and returns a column vector x satisfying 1⊤x = 0 
+
+and ∥x − ¯L†y ∥¯L ≤ κ∥¯L†y ∥¯L, where ∥y ∥¯L = py ⊤ ¯Ly .For graph ¯G, let ¯di be the degree of node i, and ¯dsum the total degree of all nodes, and let wmax and wmin , denote the maximum and minimum edge weight, respectively. Combining the JL lemma and the Laplacian solver, C(i) can be efficiently approximated, as stated in the following lemma. 
+
+Lemma 6.3: [71] Given an approximate factor ϵ ≤ 1/2 and a k × N matrix Z that satisfies (1 − ϵ)C(i) ≤ ∥ Z (ei −
+
+π)∥2 ≤ (1 + ϵ)C(i) for any node i ∈ V of graph ¯G, as well as (1 − ϵ)∥ ¯W 12 ¯B ¯L†(ei − ej )∥2 ≤ ∥ Z (ei − ej )∥2 ≤ (1 + 
+
+ϵ)∥ ¯W 12 ¯B ¯L†(ei − ej )∥2 for any pair of nodes i, j ∈ V . Let z i
+
+be the ith row of Z and let ˜z i be an approximation of z i for all i ∈ { 1, 2, ..., k }, satisfying ∥z i − ˜z i∥¯L ≤ κ∥z i∥¯L, where 
+
+κ ≤ ϵ
+
+3¯dsum − ¯di
+
+¯dsum 
+
+s
+
+(1 − ϵ)wmin 
+
+(1 + ϵ)N 4wmax 
+
+. (9) Then for any node i ∈ V , (1 − ϵ)2C(i) ≤ ∥ ˜Z (ei − π)∥2 ≤
+
+(1 + ϵ)2C(i), where ˜Z = [˜ z 1, ˜z 2, ..., ˜z k]⊤.
+
+4) Modified Algorithm: Based on the aforementioned tech-niques, we introduce an algorithm A PPROX DELTA (G, ϵ ) to estimate the opinion disagreement δ for an arbitrary graph G.The pseudocode of the approximation algorithm is presented in Algorithm 1 and the performance is characterized in The-orem 6.4. 
+
+Theorem 6.4: There is an algorithm A PPROX DELTA (G, ϵ )
+
+with eO(M ϵ −2 log c) time and O(M ) space complexity, which inputs a scalar 0 < ϵ < 1 and a graph G = ( V, E, w ) where c = 
+
+> wmax
+> wmin
+
+and returns an approximation ˜δ for opinion disagreement 
+
+δ of the graph G, such that with high probability, (1 − ϵ)3δ ≤
+
+˜δ ≤ (1 + ϵ)3δ for the graph G.
+
+Algorithm 1: APPROX DELTA (G, ϵ )
+
+Input : G(V, E, w ): a connected undirected weighted graph 
+
+ϵ: an approximation parameter 
+
+Output : ˜δ: approximation of opinion disagreement δ in G
+
+˜G = SPARISIFY (G, ϵ )¯G: graph obtained from ˜G by removing self-loops 
+
+¯L = Laplacian of ¯G
+
+Construct a matrix Qk× ¯M , where k = ⌈24 log N/ϵ 2⌉ and each entry is ±1/√k with identical probability 
+
+for i = 1 to k do 
+
+q ⊤ 
+
+> i
+
+=the i-th row of Qk× ¯M ¯W 1/2 ¯B
+
+˜z i = LaplSolve (¯L, q i, κ ) where parameter κ is given by (9) 
+
+end 
+
+Calculate the constant vector p = ˜Z π
+
+foreach i ∈ V do 
+
+˜C(i) = ∥˜Z :,u − p∥2
+
+end 
+
+˜δ = dsum 
+
+PNi=1 π2 
+
+> i
+
+· ˜C(i)
+
+return ˜δ
+
+B. Algorithm Based on Sampling Random walks 
+
+Although A PPROX DELTA significantly reduces the running time of the accurate algorithm by directly computing the all eigenvalues and eigenvector according to (8), we observe in our experiments (Section 7) that A PPROX DELTA is still intolerable for large networks with ten million nodes. We next propose an efficient and effective random-walk based sampling algorithm estimating opinion disagreement. 
+
+1) Reformulation and Approximation for Key Quantity: We first present an alternative expression for matrix L†(G′).
+
+Lemma 6.5: The pseudoinverse L†(G′) of matrix L(G′) can be expressed as L†(G′) = P∞
+
+> i=0
+
+ S2i − ψ1ψ⊤
+
+> 1
+
+.
+
+Proof. For any positive integer i, matrix S2i can be written as S2i = PNj=1 λ2ij ψj ψ⊤ 
+
+> j
+
+= ψ1ψ⊤ 
+
+> 1
+
++ PNj=2 λ2ij ψj ψ⊤ 
+
+> j
+
+. Then, one has 
+
+L†(G′) = ( I − S2)† = XNj=2 
+
+11 − λ2
+
+> j
+
+ψj ψ⊤
+
+> j
+
+= XNj=2 
+
+X∞ 
+
+> i=0
+
+λ2ij ψj ψ⊤ 
+
+> j
+
+= X∞
+
+> i=0
+
+XNj=2 λ2ij ψj ψ⊤
+
+> j
+
+= X∞
+
+> i=0
+
+
+
+S2i − ψ1ψ⊤
+
+> 1
+
+
+
+,
+
+which completes the proof. 2
+
+Since for any positive integer i, S2i = D1/2P 2iD−1/2,the corresponding diagonal entries of matrices S2i and P 2i
+
+are equal to each other. That is, S2ikk = P 2ikk for any positive integer k. By definition of matrix P , P 2ikk is the probability of a random walk starting from node k and returning to k at the 2i-th step. Then, by Lemma 6.5, the kth diagonal entry of 
+
+L†(G′) is L†
+
+> kk
+
+(G′) = Pℓ−1
+
+> j=0
+
+(P 2jkk − πk) + P∞
+
+> j=ℓ
+
+(P 2jkk − πk),for any ℓ > 0. Below we show that for an additive error ϵ > 0,we can choose ℓ appropriately such that any diagonal entry of 
+
+L†(G′) can be approximated by the first sum within additive error ϵ/ 2.
+
+Lemma 6.6: For any ϵ > 0, if ℓ ≥ log (2 /(ϵ−ϵλ )) 2 log (1 /λ ) , then for any i ∈ { 1, 2, . . . , N }, L†
+
+> ii
+
+(G′) − Pℓ−1
+
+> j=0
+
+ P 2jii − πi
+
+ ≤ ϵ 
+
+> 2
+
+.9
+
+Proof. From Lemma 6.5, for any i ∈ { 1, 2, . . . , N }, we have 
+
+L†
+
+> ii
+
+(G′) −
+
+> ℓ−1
+
+X
+
+> j=0
+
+
+
+P 2jii − πi
+
+
+
+=
+
+> ∞
+
+X
+
+> j=0
+
+
+
+S2jii − πi
+
+
+
+−
+
+> ℓ−1
+
+X
+
+> j=0
+
+ 
+
+D−1/2P 2j D1/2
+
+> ii
+
+− πi
+
+
+
+=
+
+> ∞
+
+X
+
+> j=ℓ
+
+
+
+S2jii − πi
+
+
+
+= e⊤
+
+> i
+> ∞
+
+X
+
+> j=ℓ
+
+ S2j − πi
+
+ ei.
+
+Write ei in terms of ψ1, ψ2, · · · , ψN as ei = PNk=1 αkψk.It is easy to derive that α1 = ψ⊤ 
+
+> 1
+
+ei = πi. Then e⊤ 
+
+> i
+
+(S2j −
+
+πi)ei = PNk=2 α2
+
+> k
+
+λ2jk . Moreover, we have PNk=2 α2 
+
+> k
+
+≤
+
+PNk=1 α2 
+
+> k
+
+= e⊤ 
+
+> i
+
+ei = 1 . Thus, 
+
+e⊤
+
+> i
+
+X∞
+
+> j=ℓ
+
+ S2j − πi
+
+ ei = X∞
+
+> j=ℓ
+
+XNk=2 α2
+
+> k
+
+λ2jk
+
+≤ X∞ 
+
+> j=ℓ
+
+λ2j XNk=2 α2 
+
+> k
+
+≤ λ2ℓ
+
+1 − λ ≤ ϵ
+
+2 ,
+
+where the last inequality follows from ℓ ≥ log (2 /(ϵ−ϵλ )) 2 log (1 /λ ) . 2
+
+2) Random walks Sampling Algorithm: Lemma 6.6 shows that Pℓ−1
+
+> j=0
+
+(P 2jii − πi) is a good approximation for the ith 
+
+diagonal element L†
+
+> ii
+
+(G′) of L†(G′). Since P 2jii can be estimated by sampling random walks, we present a sam-pling algorithm for approximating δ by estimating each diagonal entry and then computing their weighted sum 
+
+δ = PNi=1 πi
+
+Pℓ−1
+
+> j=0
+
+
+
+P 2jii − πi
+
+
+
+. As shown in the following lemma, δ has an error bound. 
+
+Lemma 6.7: For any ϵ > 0 and ℓ ≥ log (2 /(ϵ−ϵλ )) 2 log (1 /λ ) , the relation δ − δ ≤ ϵ/ 2 holds. 
+
+Proof. From Lemma 6.6, we have 
+
+δ − ˆδ = XNi=1 πi L†
+
+> ii
+
+(G′) − Xℓ−1
+
+> j=0
+
+
+
+P 2jii − πi
+
+
+
+≤ ϵ
+
+2
+
+XNi=1 πi = ϵ
+
+2 ,
+
+which completes the proof. 2
+
+However, if we approximate the opinion disagreement by directly estimating PNi=1 πi
+
+Pℓ−1
+
+> j=0
+
+
+
+P 2jii − πi
+
+
+
+, we need to sample ℓ-truncated random walks for each of the N nodes, which is unacceptable for large networks. In fact, we can evaluate the opinion disagreement by only summing a small number of individuals. To achieve this goal, we introduce the following lemmas. 
+
+Lemma 6.8: (Hoeffding’s inequality [86]) Let x1, x 2, . . . , x r
+
+be r independently random variables, and let x = Pri=1 xi. If 
+
+ai ≤ xi ≤ bi holds for every 1 ≤ i ≤ r, then for any α > 0,
+
+P (|x − E(x)| ≥ α) ≤ 2e− 2α2 
+
+> Pri=1 ∆2
+> i
+
+,
+
+where ∆i = bi − ai.
+
+Lemma 6.9: Given N positive numbers x1, x 2, . . . , x N
+
+such that xi ∈ [0 , ∆i] with their sum x = PNi=1 xi,an error β > N −1/2 log 1/2 N , let ∆ = (PNi=1 ∆2 
+
+> i
+
+)1/2.If we select t = O(∆ N 1/2 log 1/2 N/β ) numbers, 
+
+xc1 , x c2 , . . . , x ct by Bernoulli trails with success probability 
+
+p = ∆N −1/2 log 1/2 (2 N )/β satisfying 0 < p < 1, and define ˜x = Pti=1 xci /(∆ N −1/2 log 1/2 (2 N )/β ), then ˜x is an approximation of the sum x of the original N numbers, satisfying |x − ˜x| ≤ N 1/2β.
+
+Proof. For each i ∈ { 1, 2, . . . , N }, let yi be N Bernoulli random variables such that P(yi = 1) = p and P(yi = 0) = 1−p, where yi = 1 indicates that the xi is selected, and yi = 0 
+
+otherwise. Let zi = xiyi be N independent random variables satisfying zi ∈ [0 , x i] ⊆ [0 , ∆i]. Denote y as the sum of the 
+
+N random variables yi, and denote a as the sum of the N
+
+random variables zi. Namely, y = PNi=1 yi and z = PNi=1 zi.By definition, y and z represent, respectively, the number of selected numbers and their sum. Then the expectation of y is 
+
+E(y) = N p , and the expectation of z is E(z) = px . According to Hoeffding’s inequality in Lemma 6.8, we obtain 
+
+P(|˜x − x| ≥ N 1/2β) = P(|z − px | /p ≥ N 1/2β)
+
+≤2e− 2p2N β 2  
+
+> P
+> i∆2
+> i
+
+≤ 1
+
+N ,
+
+finishing the proof. 2
+
+Algorithm 2: SAMPLE DELTA (G, ϵ )
+
+Input : G(V, E, w ): a connected undirected weighted graph 
+
+ϵ: an approximation parameter 
+
+Output : ˆδ: approximation of opinion disagreement δ in G
+
+ℓ ← log (2 /(ϵ−ϵλ )) 2 log (1 /λ ) , r ← 2ℓ2 log (2 N 2ℓ)
+
+> ϵ2
+
+Sample a node set X ⊂ V satisfying |X | = ⌈ N 1/2 log 1/2 N 
+
+> (1 −λ)ϵ
+
+⌉
+
+for each node i ∈ X do for j = 1 to ℓ do for k = 1 to r do 
+
+u = i
+
+for m = 1 to 2j do if u = i then 
+
+ˆδ(j) 
+
+> i
+
+← ˆδ(j) 
+
+> i
+
++ 1 
+
+end 
+
+u ← a randomly selected neighbor of u
+
+end end end end return ˆδ = N
+
+> |X |
+
+P 
+
+> i∈X
+
+πi
+
+Pℓ−1
+
+> j=0
+
+ˆδ(j) 
+
+> i
+
+/r − πi
+
+
+
+Lemma 6.9 reveals that computing δ does not require estimating all N diagonal elements of L†(G′). Instead, only a small subset of randomly selected elements of L†(G′) needs to be estimated. Based on this result, we present a fast sampling algorithm S AMPLE DELTA to approximate opinion disagreement δ, the pseudocode of which is provided in Algorithm 2. The performance of Algorithm 2 is summarized in Theorem 6.10. 
+
+Theorem 6.10: For any error parameter ϵ > 0, chose ℓ ≥ 
+
+> log (2 /(ϵ−ϵλ )) 2 log (1 /λ )
+
+. If r ≥ 2ℓ2 log (2 N ) 
+
+> ϵ2
+
+, then Algorithm 2 outputs 
+
+ˆδ as an approximation of opinion disagreement δ satisfying 
+
+|δ − ˆδ| ≤ (√N + 1) ϵ with probability  1 − 1
+
+> N
+
+2. And the running time of Algorithm 2 is O(ℓ4√N log 3/2 N/ϵ 2).
+
+Proof. We outline the proof in five phases: truncation error control, random walk estimation, node sampling, error com-position, and runtime analysis. 10 
+
+Truncation error control. The exact opinion disagreement δ
+
+involves an infinite series P∞
+
+> j=0
+
+(P 2jii − πi). By Lemma 6.6, truncating this series at ℓ terms introduces an additive error ≤
+
+ϵ/ 2 when ℓ ≥ log(2 /(ϵ(1 −λ))) 2 log(1 /λ ) . This follows from the geometric decay of the series, governed by the spectral gap 1 − λ.
+
+Random walk estimation. For each node i and walk length 
+
+2j ≤ 2ℓ, Algorithm 2 estimates P 2jii by performing r random walks. By Hoeffding’s inequality (Lemma 6.8), setting r ≥   
+
+> 2ℓ2log(2 N)
+> ϵ2
+
+ensures that the deviation between the estimated and true return probabilities satisfies |ˆδ(j) 
+
+> i
+
+/r − P 2jii | ≤ ϵ/ (2 ℓ)
+
+with probability ≥ 1 − 1/N . Union bounding over all N ℓ 
+
+terms guarantees simultaneous accuracy for all estimation with probability ≥ 1 − 1/N .
+
+Node sampling. Instead of processing all N nodes, Al-gorithm 2 uniformly samples O(√N log 1/2 N ) nodes. By Lemma 6.9, this sampling approximates the weighted sum PNi=1 πi(·) with an error less than √N ϵ , as the variance of node contributions is bounded by ∆ = 1 /(1 − λ). This step exploits the scale-free property where high-degree nodes dominate the weighted sum. 
+
+Error composition. The total error combines truncation and sampling errors: 
+
+|δ − ˆδ| ≤ | δ − δ| + |δ − ˆδ| ≤ (√N + 1) ϵ. 
+
+Both error terms hold simultaneously with probability ≥ (1 −
+
+1/N )2 by union bound. 
+
+Runtime analysis. For each of O(√N log 1/2 N ) sampled nodes, the algorithm performs r = O(ℓ2 log N/ϵ 2) random walks with maximum length 2ℓ. The total time complexity becomes: 
+
+O
+
+√N log 1/2 N · ℓ2 log Nϵ2 · ℓ2
+
+
+
+= O ℓ4√N log 3/2 Nϵ2
+
+!
+
+.
+
+This completes the proof that Algorithm 2 achieves sublin-ear runtime while preserving the error guarantee. 2
+
+Theorem 6.10 indicates that Algorithm 2 approximates opinion disagreement δ with bounded error (√N + 1) ϵ and sublinear runtime. VII. E XPERIMENTAL RESULTS 
+
+In this section, we evaluate the performance of our proposed algorithms in terms of the approximation solution quality and running time. To this end, we compare our algorithms S AM -
+
+> PLE
+
+DELTA and A PPROX DELTA against the exact algorithm given in (8) as well as other baselines, by performing extensive experiments on real and model networks. 
+
+A. Experimental Settings Datasets. Our analysis employs graph datasets sourced from two established repositories: the Koblenz Network Collec-tion [75] and Network Repository [76]. For networks ex-hibiting multiple disconnected components, we perform our experiments on their largest connected components (LCCs). Key statistics of these processed networks appear in Tables III and IV, organized by ascending network size. 
+
+Environment. We executed all numerical tests on a Linux server equipped with a 72-core 2.1GHz CPU and 256GB of RAM. Our implementation leverages the Julia program-ming environment for efficient matrix computations, partic-ularly benefiting from the Laplacians.jl package’s optimized solvers [87]. The source code is publicly accessible at https: //github.com/vivian1tsui/opinion disgreement. 
+
+Baselines and Parameters. To establish performance bench-marks, we evaluate our algorithms against conventional ap-proximation techniques. Drawing from the theoretical formu-lation in (5), which expresses opinion disagreement through node-pair hitting times, we implement S IMULATE MC. S IMU -
+
+> LATE
+
+MC estimates opinion disagreement by approximating pairwise node interactions through repeated random walk simulations. For our algorithm S AMPLE DELTA , we also need to determine the truncated length ℓ, which depends on λ and 
+
+ϵ. In our experiments, we set λ = 0 .9998 , which is very conservative since it is significantly larger than the actual values for most real networks [88], including those with more than twenty million nodes. 
+
+B. Results on Real-World Networks 
+
+We evaluate the computational efficiency and scalability of our algorithms against exact computation and the base-line S IMULATE MC under various network sizes and error parameters ϵ ∈ { 0.35 , 0.3, 0.25 }. Tables III and IV demon-strate our algorithms’ consistent speed superiority across all tested networks. Note that one can exactly compute opinion disagreement only for small networks with less than 60,000 nodes, due to its O(N 3) time complexity. Meanwhile, the time complexity of the baseline S IMULATE MC is O(N 2),as it needs to estimate hitting times of all node pairs in the network. For networks with more than 100,000 nodes in Table IV, the exact algorithm and S IMULATE MC runs out of time. For the network socfb-konect with more than 58 million nodes, A PPROX DELTA fails to complete within a day, whereas SAMPLE DELTA finishes in just over an hour, highlighting its superior efficiency and scalability. Although S AMPLE DELTA is significantly faster than A P-
+
+> PROX
+
+DELTA , both algorithms maintain comparable high ac-curacy on real-world networks. Table III compares the mean relative errors of our algorithms against the baseline S IMU -
+
+> LATE
+
+MC. Results show that our algorithms yield negligible errors, which are orders of magnitude lower than the theoret-ical guarantees. Moreover, the two relative errors are nearly identical. Thus, in addition to high efficiency, S AMPLE DELTA 
+
+provides accurate approximations for real-world networks. It is worth mentioning that for those large networks in Table IV their approximate opinion disagreement is also small, most of which is close to 1. This further verifies our claim that the opinion disagreement in scale-free networks does not increase with the network size N .
+
+C. Results on a Model Network 
+
+As shown in (8), opinion disagreement δ of a graph G is dependent on the partial mean hitting time Hi(G′) on the cor-responding graph G′. It has been proved [71] that for a graph 
+
+G, the partial mean hitting time Hi(G) is closely related to its Kemeny constant K(G) [65], defined as the expected time 11 
+
+TABLE IV THE RUNNING TIME (SECONDS ) AND ESTIMATED OPINION DISAGREEMENT OF APPROX DELTA AND SAMPLE DELTA WITH VARIOUS ϵ ON LARGE CONNECTED REAL NETWORKS . F OR EACH NETWORK , WE INDICATE THE NUMBER OF NODES AS N AND THE NUMBER OF EDGES AS M .
+
+Network N M
+
+Running time (seconds) Estimated opinion disagreement APPROX DELTA SAMPLE DELTA APPROX DELTA SAMPLE DELTA                        
+
+> ϵ= 0 .35 ϵ= 0 .3ϵ= 0 .25 ϵ= 0 .35 ϵ= 0 .3ϵ= 0 .25 ϵ= 0 .35 ϵ= 0 .3ϵ= 0 .25 ϵ= 0 .35 ϵ= 0 .3ϵ= 0 .25
+
+soc-twitter-follows 404,719 713,319 261.9 362.8 605.2 60.21 99.40 182.5 2.144 2.304 2.388 2.387 2.388 2.383 soc-delicious 536,108 1,365,961 293.3 412.0 610.8 232.4 77.47 130.0 1.675 1.670 1.705 1.684 1.682 1.681 soc-youtube-snap 1,134,890 2,987,624 417.6 613.9 896.6 184.6 62.25 101.5 1.600 1.482 1.605 1.590 1.581 1.574 soc-hyves 1,402,673 2,777,419 370.5 514.8 801.6 245.4 78.71 131.5 1.555 1.581 1.598 1.679 1.671 1.665 delaunay-n24 16,777,216 50,331,601 232.6 281.3 375.0 9.779 15.64 28.22 1.703 1.698 1.699 1.696 1.699 1.699 road-usa 23,947,347 28,854,312 3470 4708 – 30.53 46.60 81.73 4.932 4.843 – 4.895 4.891 4.902 socfb-konect 58,790,782 92,208,195 – – – 1638 2354 4338 – – – 2.237 2.256 2.254 
+
+TABLE V THE RUNNING TIME (SECONDS ) AND MEAN RELATIVE ERROR OF APPROX DELTA AND SAMPLE DELTA WITH VARIOUS ϵ FOR ESTIMATING THE KEMENY CONSTANT ON MODEL NETWORKS F′ 
+
+> g
+
+.Network K(F′ 
+
+> g
+
+)
+
+Running time (seconds) Mean relative error APPROX DELTA SAMPLE DELTA APPROX DELTA SAMPLE DELTA 
+
+ϵ = 0 .35 ϵ = 0 .3 ϵ = 0 .25 ϵ = 0 .35 ϵ = 0 .3 ϵ = 0 .25 ϵ = 0 .35 ϵ = 0 .3 ϵ = 0 .25 ϵ = 0 .35 ϵ = 0 .3 ϵ = 0 .25 
+
+F′ 
+
+> 12
+
+1.15 × 10 6 186.6 244.2 379.3 65.76 108.2 blue196.0 0.017 0.013 0.009 0.002 0.002 0.000 
+
+F′ 
+
+> 13
+
+3.45 × 10 6 425.7 590.2 836.9 114.0 174.1 328.8 0.026 0.019 0.013 0.002 0.001 0.001 
+
+F′ 
+
+> 14
+
+1.04 × 10 7 1454 2064 2895 276.4 459.3 761.3 0.026 0.019 0.013 0.001 0.001 0.001 
+
+F′ 
+
+> 15
+
+3.11 × 10 7 – – – 527.6 913.0 1610 – – – 0.002 0.001 0.001 
+
+for a walker starting from a node i to another node j chosen randomly from set V according to the stationary distribution π.Specifically, K(G) = PNj=1 πj Hj (G) = PNk=2 11−λk . Thus, we have K(G′) = PNj=1 πj Hj (G′) = PNk=2 11−λ2
+
+> k
+
+, which can be approximated by A PPROX DELTA and S AMPLE DELTA .We further validate our algorithms by comparing approx-imated Kemeny constants against exact results on a model network. The error parameter of both our algorithms is also set to be ϵ ∈ { 0.35 , 0.3, 0.25 }. The model network is called the pseudofractal scale-free web (PSFW) constructed in an iterative way [89]. Let Fg (g ≥ 0) be the PSFW after g
+
+iterations. For g = 0 , F0 consists of three nodes and three edges, which forms a triangle. For g > 0, Fg is obtained from 
+
+Fg−1 by performing the following operation for each edge e
+
+in Fg−1: create a new node and link it to both end nodes of the edge e. The construction process of the PSFW is illustrated in Figure 3. In graph Fg , there are (3 g+1 + 3) /2 nodes and 3g+1 
+
+edges. Let Pg denote the transition matrix for graph Fg , the eigenvalues of which have been explicitly determined [89]. 
+
+Lemma 7.1: For g ≥ 2, the set of eigenvalues of the transition matrix Pg for Fg consists of 1 with multiplicity one, 1 − 32s+1 with multiplicity 3g−s+3 2 for s = 0 , 1, . . . , g ,and 1 − 42s+2 with multiplicity 3g−s−32 for s = 0 , 1, . . . , g − 2.Let F′ 
+
+> g
+
+(g ≥ 0) be the network associated with the PSFW 
+
+Fg , whose transition matrix is P2 
+
+> g
+
+. According to Lemma 7.1, the Kemeny constant K(F′ 
+
+> g
+
+) of graph F′ 
+
+> g
+
+can be expressed analytically as 
+
+K(F′ 
+
+> g
+
+) = 
+
+> g
+
+X
+
+> s=0
+
+22s+1 ·  3g−s−1 + 1 
+
+2s+2 − 3 +
+
+> g−2
+
+X
+
+> s=0
+
+22s−1 ·  3g−s − 3
+
+2s+1 − 1 .
+
+(10) 
+
+We also use algorithms A PPROX DELTA and S AMPLE DELTA F2F0 F1
+
+Fig. 3. Construction of the first several iterations of the PSFW. 
+
+to estimate the Kemeny constant K(F′ 
+
+> g
+
+) on four large net-works: F′
+
+> 12
+
+, F′
+
+> 13
+
+, F′ 
+
+> 14
+
+and F′
+
+> 15
+
+, with F′ 
+
+> 15
+
+having 21,523,362 nodes. The mean relative error for A PPROX DELTA and S AM -
+
+PLE DELTA are reported in Table V, which shows our algo-rithms A PPROX DELTA and S AMPLE DELTA always achieve good performance for graphs F′ 
+
+> 12
+
+and F′
+
+> 13
+
+, but SAM -
+
+PLE DELTA is a little effective and much efficient than A P-
+
+PROX DELTA . For graphs F′
+
+> 15
+
+, A PPROX DELTA runs out of time and memory. However, S AMPLE DELTA returns results within 920 seconds, with a relative error smaller than 0.3% .
+
+D. Influence of Varying Error Parameter 
+
+Through comprehensive evaluation of algorithmic perfor-mance, we observe substantial parameter dependence on the error parameter ϵ. To quantify this relationship, we con-duct controlled experiments across diverse network scales by systematically adjusting ϵ within the range [0 .25 , 0.4] . Our investigation employs two critical measures: computational efficiency across varying network sizes and approximation accuracy of estimating Kemeny constant. 12 0.40 0 .35 0.3 0 0.25 0. 2 01 0 −0 .510 0 .010 0 .5 (a)                                                                        
+
+> 0.40 0.350.3 00.25 0.20100.0100.5101.0(b)
+> 0.40 0.350.3 00.25 0.20101.5102.0102.5(c)
+> 0.40 0.35 0.30 0.25 0. 20 10 2.0 10 2.5 10 3.0 (d)
+> 0.40 0.35 0.30 0.25 0. 20 10 2.0 10 2.5 10 3.0 (e)
+> 0.40 0.35 0.30 0.25 0. 20 10 1.0 10 1.5 10 2.0 10 2.5 (f)
+> Ru nni n g t im e ( se co  nd s)
+
+E rr or p ara m ete r 𝜖   
+
+> ApproxDelta SampleDelta
+
+Fig. 4. Running time of different algorithms with varying error parameter ϵ
+
+on real-world graphs: Protein (a), web-EPA (b), Brightkite (c), soc-delicious (d), soc-hyves (e), and delaunay-n24 (f). 
+
+1) Effect on Efficiency: Figure 4 illustrates the computa-tional complexity characteristics of our methods under dif-ferent ϵ configurations. Both algorithms demonstrate runtime patterns that correspond to their theoretical complexity factors of ϵ−2, though with distinct scaling behaviors across network sizes. On smaller networks like Protein and web-EPA, A P-
+
+PROX DELTA excels due to optimized matrix operations. How-ever, S AMPLE DELTA gains substantial efficiency advantages on massive networks like soc-hyves and delaunay-n24 through its sublinear sampling approach. This performance inversion stems from the fundamental complexity characteristics. S AM -
+
+PLE DELTA ’s runtime improvement scales with √n, making its sampling overhead only beneficial beyond certain network size thresholds. While both methods dramatically outperform con-ventional approaches, S AMPLE DELTA demonstrates superior scalability for networks with over one million nodes. 0.40 0 .35 0. 30 0 .2 5 0.20 1 0 −3 .51 0 −3 .01 0 −2 .51 0 −2 .0 ( a )                                                                         
+
+> 0.400.35 0. 300.250.20 10−3.010−2.510−2.010−1.5(b )
+> 0.400.35 0.30 0. 25 0.2 010 −3.010 −2.510 −2.010 −1.5(c )
+> 0.400.35 0.30 0. 25 0.2 010 −3.110 −3.010 −2.910 −2.8(d )
+> M e an  re  lative  e rr  or
+
+E r ro r p a ram et er 𝜖   
+
+> ApproxDelta SampleDelta
+
+Fig. 5. Mean relative error of different algorithms with varying error parameter ϵ on the pseudofractal scale-free webs: F′
+
+> 12
+
+, F′
+
+> 13
+
+, F′
+
+> 14
+
+, and F′
+
+> 15
+
+.
+
+2) Effect on Accuracy: Figure 5 reveals the accuracy characteristics of our algorithms when estimating Kemeny constants for the PSFWs. As displayed in Figure 5, S AM -
+
+PLE DELTA maintains consistently higher accuracy across all 
+
+ϵ values tested. While larger values of ϵ produce elevated relative errors, reducing the parameter to 0.3 or below yields estimation errors within acceptable bounds. This precision thresholding demonstrates effective error control mechanisms in both algorithms, with accuracy improvements plateauing when ϵ < 0.3. The observed error profiles confirm that parameter selection directly governs the fundamental trade-off between computational efficiency and estimation accuracy. VIII. C ONCLUSIONS 
+
+In this paper, we presented a study of the noisy DeGroot model on power-law graphs, with an aim to explore the impact of scale-free structure on the limiting opinions. The introduc-tion of noise prevents the opinions of agents from reaching agreement, which fluctuate around their weighted average after long-time evaluation, leading to opinion disagreement or opinion diversity, which can be measured by a quantitative index, that is, expected squared deviation. The main works of this paper are as follows. First, we studied the opinion disagreement for some representative real-world scale-free networks, BA networks, and random Apollonian networks, and found that opinion disagreement is significantly small, independent of the network size, which shows that the impact of noise on the opinion dynamics in power-law graphs is negligible, due to the scale-free structure. Then, we developed a sampling algorithm to approximate the opinion disagreement, which has a sublinear time complexity with respect to the number of nodes. Finally, we validated the efficiency and accuracy of our algorithm by extensive experiments on a large variety of realistic and model networks. While our current model relies on idealized noise assumptions, future work will focus on enhancing the framework’s robust-ness against complex environmental dynamics and potential adversarial behaviors. REFERENCES [1] H. Ledford, “How facebook, twitter and other data troves are revolu-tionizing social science,” Nature , vol. 582, no. 7812, pp. 328–330, 2020. [2] K. P. Smith and N. A. Christakis, “Social networks and health,” Annu. Rev. Sociol. , vol. 34, no. 1, pp. 405–429, 2008. [3] B. D. Anderson and M. Ye, “Recent advances in the modelling and analysis of opinion dynamics on influence networks,” Int. J. Autom. Comput. , vol. 16, no. 2, pp. 129–149, 2019. [4] A. Matakos, E. Terzi, and P. Tsaparas, “Measuring and moderating opinion polarization in social networks,” Data Min. Knowl. Discov. ,vol. 31, no. 5, pp. 1480–1505, 2017. [5] C. Musco, C. Musco, and C. E. Tsourakakis, “Minimizing polarization and disagreement in social networks,” in Proc. 2018 World Wide Web Conference . International World Wide Web Conferences Steering Committee, 2018, pp. 369–378. [6] L. Zhu, Q. Bao, and Z. Zhang, “Minimizing polarization and disagree-ment in social networks via link recommendation,” Advances in Neural Information Processing Systems , vol. 34, pp. 2072–2084, 2021. [7] S. Haddadan, C. Menghini, M. Riondato, and E. Upfal, “Republik: Reducing polarized bubble radius with link insertions,” in Proc. 14th ACM International Conference on Web Search and Data Mining , 2021, pp. 139–147. [8] J. Gaitonde, J. Kleinberg, and E. Tardos, “Adversarial perturbations of opinion dynamics in networks,” in Proc. 21st ACM Conference on Economics and Computation , 2020, pp. 471–472. [9] G. Wang, R. Zhang, and Z. Zhang, “Efficient algorithms for relevant quantities of Friedkin-Johnsen opinion dynamics model,” in Proc. 31st ACM SIGKDD International Conference on Knowledge Discovery & Data Mining . ACM, 2025, pp. 2915–2926. 13 
+
+[10] H. Sun, Y. Sun, X. Zhou, and Z. Zhang, “Fast computation and optimization for opinion-based quantities of Friedkin-Johnsen model,” in 
+
+The Thirty-ninth Annual Conference on Neural Information Processing Systems , 2025. [11] X. Qian, B.-W. Qin, H. Zhu, and W. Lin, “Opinion polarization and its connected disagreement: Modeling and modulation,” Phys. Rev. E , vol. 113, no. 1, p. L012301, 2026. [12] E. Mackin and S. Patterson, “Maximizing diversity of opinion in social networks,” in Proc. 2019 Amer. Control Conf. IEEE, 2019, pp. 2728– 2734. [13] R. Axelrod, J. J. Daymude, and S. Forrest, “Preventing extreme polar-ization of political attitudes,” Proc. Natl. Acad. Sci. U.S.A. , vol. 118, no. 50, p. e2102139118, 2021. [14] Y. Yi and S. Patterson, “Disagreement and polarization in two-party social networks,” IFAC-PapersOnLine , vol. 53, no. 2, pp. 2568–2575, 2020. [15] W. Xu, Q. Bao, and Z. Zhang, “Fast evaluation for relevant quantities of opinion dynamics,” in Proc. the Web Conference , 2021, pp. 2037–2045. [16] A. Saha, X. Ke, A. Khan, and L. V. Lakshmanan, “Voting-based opinion maximization,” in 2023 IEEE 39th International Conference on Data Engineering . IEEE, 2023, pp. 544–557. [17] H. Noorazar, “Recent advances in opinion propagation dynamics: A 2020 survey,” Eur. Phys. J. Plus , vol. 135, no. 6, p. 521, 2020. [18] C. Bernardo, L. Wang, F. Vasca, Y. Hong, G. Shi, and C. Altafini, “Achieving consensus in multilateral international negotiations: The case study of the 2015 paris agreement on climate change,” Sci. Adv. , vol. 7, no. 51, p. eabg8068, 2021. [19] N. E. Friedkin, A. V. Proskurnikov, R. Tempo, and S. E. Parsegov, “Network science on belief system dynamics under logic constraints,” 
+
+Science , vol. 354, no. 6310, pp. 321–326, 2016. [20] N. E. Friedkin and F. Bullo, “How truth wins in opinion dynamics along issue sequences,” Proc. Natl. Acad. Sci. U.S.A. , vol. 114, no. 43, pp. 11 380–11 385, 2017. [21] M. H. Degroot, “Reaching a consensus,” J. Am. Statist. Assoc. , vol. 69, no. 345, pp. 118–121, 1974. [22] L. Xiao, S. Boyd, and S.-J. Kim, “Distributed average consensus with least-mean-square deviation,” J. Parallel. Distrib. Comput. , vol. 67, no. 1, pp. 33–46, 2007. [23] A. Jadbabaie and A. Olshevsky, “Scaling laws for consensus protocols subject to noise,” IEEE Trans. Automat. Contr. , vol. 64, no. 4, pp. 1389– 1402, 2019. [24] W. Xu and Z. Zhang, “Minimizing polarization in noisy leader-follower opinion dynamics,” in Proc. 32nd ACM International Conference on Information and Knowledge Management , 2023, pp. 2856–2865. [25] A.-L. Barab´ asi and R. Albert, “Emergence of scaling in random net-works,” Science , vol. 286, no. 5439, pp. 509–512, 1999. [26] Z. Wei, X. He, X. Xiao, S. Wang, Y. Liu, X. Du, and J.-R. Wen, “PRSim: Sublinear time simrank computation on large power-law graphs,” in 
+
+Proc. 2019 International Conference on Management of Data , 2019, pp. 1042–1059. [27] W. Xu, Y. Sheng, Z. Zhang, H. Kan, and Z. Zhang, “Power-law graphs have minimal scaling of Kemeny constant for random walks,” in Proc. the Web Conference 2020 , 2020, pp. 46–56. [28] R. Mayer and H.-A. Jacobsen, “Hybrid edge partitioner: Partitioning large power-law graphs under memory constraints,” in Proc. 2021 International Conference on Management of Data , 2021, pp. 1289–1302. [29] W. Xu and Z. Zhang, “Optimal scale-free small-world graphs with minimum scaling of cover time,” ACM Trans. Knowl. Discov. Data ,vol. 17, no. 7, p. 93, 2023. [30] M. E. J. Newman, “The structure and function of complex networks,” 
+
+SIAM Rev. , vol. 45, no. 2, pp. 167–256, 2003. [31] R. L. Berger, “A necessary and sufficient condition for reaching a consensus using DeGroot’s method,” J. Am. Stat. Assoc. , vol. 76, no. 374, pp. 415–418, 1981. [32] N. E. Friedkin and E. C. Johnsen, “Social influence and opinions,” J. Math. Sociol. , vol. 15, no. 3-4, pp. 193–206, 1990. [33] U. Chitra and C. Musco, “Analyzing the impact of filter bubbles on social network polarization,” in Proc. 13th International Conference on Web Search and Data Mining , 2020, pp. 115–123. [34] S. Tu and S. Neumann, “A viral marketing-based model for opinion dynamics in online social networks,” in Proc. ACM Web Conference 2022 , 2022, pp. 1570–1578. [35] C. Altafini, “Consensus problems on networks with antagonistic interac-tions,” IEEE Trans. Autom. Control , vol. 58, no. 4, pp. 935–946, 2013. [36] X. Zhou, H. Sun, W. Xu, W. Li, and Z. Zhang, “Friedkin-Johnsen model for opinion dynamics on signed graphs,” IEEE Trans. Knowl. Data Eng. ,vol. 36, no. 12, pp. 8313–8327, 2024. [37] Q. Zhou, Z. Wu, A. H. Altalhi, and F. Herrera, “A two-step communica-tion opinion dynamics model with self-persistence and influence index for social networks based on the DeGroot model,” Inf. Sci. , vol. 519, pp. 363–381, 2020. [38] Z. Zhang, W. Xu, Z. Zhang, and G. Chen, “Opinion dynamics in social networks incorporating higher-order interactions,” Data Mining and Knowledge Discovery , vol. 38, no. 6, pp. 4001–4023, 2024. [39] E. Yildiz, A. Ozdaglar, D. Acemoglu, A. Saberi, and A. Scaglione, “Binary opinion dynamics with stubborn agents,” ACM Trans. Econ. Comput. , vol. 1, no. 4, pp. 1–30, 2013. [40] V. Luca, F. Fabio, F. Paolo, and O. Asuman, “Message passing opti-mization of harmonic influence centrality,” IEEE Trans. Control Netw. Syst. , vol. 1, no. 1, pp. 109–120, 2014. [41] V. S. Mai and E. H. Abed, “Optimizing leader influence in networks through selection of direct followers,” IEEE Trans. Autom. Control ,vol. 64, no. 3, pp. 1280–1287, 2019. [42] X. Zhou and Z. Zhang, “Maximizing influence of leaders in social networks,” in Proc. 27th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining . ACM, 2021, pp. 2400–2408. [43] X. Zhou, L. Zhu, W. Li, and Z. Zhang, “A sublinear time algorithm for opinion optimization in directed social networks via edge recom-mendation,” in Proc. 29th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining . ACM, 2023, pp. 3593–3602. [44] X. Zhou and Z. Zhang, “Opinion maximization in social networks via leader selection,” in Proc. the ACM Web Conference , 2023, pp. 133–142. [45] P. Dandekar, A. Goel, and D. T. Lee, “Biased assimilation, homophily, and the dynamics of polarization,” Proc. Natl. Acad. Sci. U.S.A. , vol. 110, no. 15, pp. 5791–5796, 2013. [46] Y. Dong, Z. Ding, L. Mart´ ınez, and F. Herrera, “Managing consensus based on leadership in opinion dynamics,” Inf. Sci. , vol. 397, pp. 187– 205, 2017. [47] S. Stern and G. Livan, “The impact of noise and topology on opinion dynamics in social networks,” R. Soc. Open Sci. , vol. 8, no. 201943, 2021. [48] E. Lovisari, F. Garin, and S. Zampieri, “Resistance-based performance analysis of the consensus algorithm over geometric graphs,” SIAM J. Control Optim. , vol. 51, no. 5, pp. 3918–3945, 2013. [49] P. Sobkowicz, “Opinion dynamics model based on cognitive biases of complex agents,” Journal of Artificial Societies and Social Simulation ,vol. 21, no. 4, p. 8, 2018. [50] T. Chen, X. Wang, and C. E. Tsourakakis, “Polarizing opinion dynamics with confirmation bias,” in Social Informatics , 2022, pp. 144–158. [51] C. Bernardo, F. Vasca, and R. Iervolino, “Heterogeneous opinion dy-namics with confidence thresholds adaptation,” IEEE Transactions on Control of Network Systems , vol. 9, no. 3, pp. 1068–1079, 2022. [52] V. Mengers, M. Raoufi, O. Brock, H. Hamann, and P. Romanczuk, “Leveraging uncertainty in collective opinion dynamics with heterogene-ity,” Sci. Rep. , vol. 14, no. 1, p. 27314, 2024. [53] R. Abebe, J. Kleinberg, D. Parkes, and C. E. Tsourakakis, “Opinion dynamics with varying susceptibility to persuasion,” in Proc. 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining , 2018, p. 1089–1098. [54] J. Liu, M. Ye, B. D. Anderson, T. Basar, and A. Nedic, “Discrete-time polar opinion dynamics with heterogeneous individuals,” in 2018 IEEE Conference on Decision and Control (CDC) , 2018, pp. 1694–1699. [55] J.-H. Cho, “Dynamics of uncertain and conflicting opinions in social networks,” IEEE Trans. Comput. Soc. Syst. , vol. 5, no. 2, pp. 518–531, 2018. [56] M. Zhan, H. Liang, G. Kou, Y. Dong, and S. Yu, “Impact of social net-work structures on uncertain opinion formation,” IEEE Trans. Comput. Soc. Syst. , vol. 6, no. 4, pp. 670–679, 2019. [57] D. Fotakis, V. Kandiros, V. Kontonis, and S. Skoulakis, “Opinion dynamics with limited information,” in Web and Internet Economics ,2018, pp. 282–296. [58] Q. He, H. Fang, J. Zhang, and X. Wang, “Dynamic opinion maximization in social networks,” IEEE Trans. Knowl. Data Eng. , vol. 35, no. 1, pp. 350–361, 2023. [59] A. Arya, P. K. Pandey, and A. Saxena, “Balanced and unbalanced triangle count in signed networks,” IEEE Trans. Knowl. Data Eng. ,vol. 35, no. 12, pp. 12 491–12 496, 2023. [60] C. He, X. Fei, Q. Cheng, H. Li, Z. Hu, and Y. Tang, “A survey of community detection in complex networks using nonnegative matrix factorization,” IEEE Trans. Comput. Soc. Syst. , vol. 9, no. 2, pp. 440– 457, 2022. [61] A. Arya and P. K. Pandey, “Sissrm: Sequentially induced signed sub-network reconstruction model for generating realistic synthetic signed 14 
+
+networks,” IEEE Trans. Comput. Soc. Syst. , vol. 11, no. 5, pp. 6476– 6486, 2024. [62] Q. He, L. Sun, X. Wang, Z. Wang, M. Huang, B. Yi, Y. Wang, and L. Ma, “Positive opinion maximization in signed social networks,” Inf. Sci. , vol. 558, pp. 34–49, 2021. [63] X. Chen, J. Lijffijt, and T. De Bie, “Quantifying and minimizing risk of conflict in social networks,” in Proc. 24th ACM SIGKDD Interna-tional Conference on Knowledge Discovery & Data Mining , 2018, p. 1197–1205. [64] F. R. Chung, Spectral Graph Theory . American Mathematical Society, Providence, RI, 1997. [65] J. G. Kemeny and J. L. Snell, Finite Markov Chains . Springer, New York, 1976. [66] L. Lov´ asz, “Random walks on graphs: A survey,” Combinatorics, Paul Erd¨ os is eighty , vol. 2, no. 1, pp. 1–46, 1993. [67] S. Condamin, O. B´ enichou, V. Tejedor, R. Voituriez, and J. Klafter, “First-passage times in complex scale-invariant media,” Nature , vol. 450, no. 7166, pp. 77–80, 2007. [68] A. Beveridge, “Centers for random walks on trees,” SIAM J. Discrete Math. , vol. 23, no. 1, pp. 300–318, 2009. [69] V. Tejedor, O. B´ enichou, and R. Voituriez, “Global mean first-passage times of random walks on complex networks,” Phys. Rev. E , vol. 80, no. 6, p. 065104, 2009. [70] C. Mavroforakis, M. Mathioudakis, and A. Gionis, “Absorbing random-walk centrality: Theory and algorithms,” in Proc. IEEE International Conference on Data Mining . IEEE, 2015, pp. 901–906. [71] Z. Zhang, W. Xu, and Z. Zhang, “Nearly linear time algorithm for mean hitting times of random walks on a graph,” in Proc. 13th International Conference on Web Search and Data Mining , 2020, pp. 726–734. [72] H. Xia, W. Xu, Z. Zhang, and Z. Zhang, “Means of hitting times for random walks on graphs: Connections, computation, and optimization,” 
+
+ACM Trans. Knowl. Discov. Data , vol. 19, no. 2, pp. 1–35, 2025. [73] D. Cheng, Y. Cheng, Y. Liu, R. Peng, and S.-H. Teng, “Efficient sampling for Gaussian graphical models via spectral sparsification,” in 
+
+Proc. 28th Conference on Learning Theory , 2015, pp. 364–390. [74] A. Ben-Israel and T. N. E. Greville, Generalized inverses: theory and applications . J. Wiley, 1974. [75] J. Kunegis, “Konect: The koblenz network collection,” in Proc. 22nd International Conference on World Wide Web , 2013, pp. 1343–1350. [76] R. Rossi and N. Ahmed, “The network data repository with interactive graph analytics and visualization,” in Proc. 29th AAAI Conference on Artificial Intelligence . AAAI, 2015, pp. 4292–4293. [77] Z. Zhang, L. Rong, and F. Comellas, “High-dimensional random Apol-lonian networks,” Physica A , vol. 364, pp. 610–618, 2006. [78] Z. Zhang, S. Zhou, Z. Shen, and J. Guan, “From regular to growing small-world networks,” Physica A: Statistical Mechanics and its Appli-cations , vol. 385, no. 2, pp. 765–772, 2007. [79] D. J. Watts and S. H. Strogatz, “Collective dynamics of ‘small-world’ networks,” Nature , vol. 393, no. 6684, pp. 440–442, 1998. [80] Y. Sheng and Z. Zhang, “Low-mean hitting time for random walks on heterogeneous networks,” IEEE Trans. Inf. Theory , vol. 65, no. 11, pp. 6898–6910, 2019. [81] E. Bozzo, “The Moore–Penrose inverse of the normalized graph Lapla-cian,” Linear Algebra Appl. , vol. 439, no. 10, pp. 3038–3043, 2013. [82] A. Ghosh, S. Boyd, and A. Saberi, “Minimizing effective resistance of a graph,” SIAM Rev. , vol. 50, no. 1, pp. 37–66, 2008. [83] W. B. Johnson and J. Lindenstrauss, “Extensions of Lipschitz mappings into a Hilbert space,” Contemp. Math. , vol. 26, pp. 189–206, 1984. [84] I. Koutis, G. L. Miller, and R. Peng, “A nearly-m log n time solver for SDD linear systems,” in 2011 IEEE 52nd Annual Symposium on Foundations of Computer Science . IEEE, 2011, pp. 590–598. [85] M. B. Cohen, R. Kyng, G. L. Miller, J. W. Pachocki, R. Peng, A. B. Rao, and S. C. Xu, “Solving SDD linear systems in nearly m log 1/2 n
+
+time,” in Proc. 46th annual ACM symposium on Theory of computing .ACM, 2014, pp. 343–352. [86] W. Hoeffding, “Probability inequalities for sums of bounded random variables,” J. Amer. Statist. Assoc. , vol. 58, no. 301, pp. 13–30, 1963. [87] R. Kyng and S. Sachdeva, “Approximate Gaussian elimination for Laplacians - fast, sparse, and simple,” in Proc. IEEE 57th Annual Symposium on Foundations of Computer Science . IEEE, 2016, pp. 573–582. [88] A. Mohaisen, A. Yun, and Y. Kim, “Measuring the mixing time of social graphs,” in Proc. 10th ACM SIGCOMM Conference on Internet Measurement , 2010, pp. 383–389. [89] P. Xie, Z. Zhang, and F. Comellas, “On the spectrum of the normalized Laplacian of iterated triangulations of graphs,” Appl. Math. Comput. ,vol. 273, pp. 1123–1129, 2016. 
+
+Wanyue Xu (S’20) received the B.Eng. degree in computer science and technology, Shangdong University, China, in 2019 and the Ph.D degree in School of Computer Science, Fudan University, China in 2024. She is currently an assistant professor with the School of Business and Management, Shanghai International Studies University, Shanghai, China. Her research interests include network science, graph data mining, social network analysis, and random walks. 
+
+Yubo Sun received the B.Eng. degree in Software Engineering Institute, East China Normal University, Shanghai, China, in 2023. He is currently pursuing the Ph.D. degree in Research Institute of Intelligent Complex Systems, Fudan University, Shanghai, China. His research interests include complex networks, graph theory, graph algorithms and graph learning. 
+
+Mingzhe Zhu received the B.Sc. degree in 2021 and the Master degree in 2024, both in the School of Computer Science, Fudan University, Shanghai, China. His research interests include network science, graph data mining, and random walks. 
+
+Zuobai Zhang received the B.Sc. degree in the School of Computer Science, Fudan University, Shanghai, China, in 2021. He is currently pursuing the doctoral degree in Mila-Quebec AI Institute, Canada. His research interests include graph algorithms, social networks, and network science. Mr. Zhang has published several papers in international journals or confer-ences, including WSDM, WWW and IEEE Transactions on Cybernetics. He won a Silver Medal in National Olympiad in Informatics of China in 2016 and several Gold Medals in ICPC Asia Regional Contests. 
+
+Zhongzhi Zhang (M’19) received the B.Sc. degree in applied mathematics from Anhui University, Hefei, China, in 1997 and the Ph.D. degree in management science and engineering from Dalian University of Technology, Dalian, China, in 2006. From 2006 to 2008, he was a Post-Doctoral Research Fellow with Fudan University, Shanghai, China, where he is currently a Full Professor with the College of Computer Science and Artificial Intelligence. Since 2019, he has been selected as one of the most cited Chinese researchers (Elsevier) every year. His current research interests include network science, graph data mining, social network analysis, computational social science, spectral graph theory, and random walks. Dr. Zhang was a recipient of the Excellent Doctoral Dissertation Award of Liaoning Province, China, in 2007, the Excellent Post-Doctor Award of Fudan University in 2008, the Shanghai Natural Science Award (third class) in 2013, the Wilkes Award for the best paper published in The Computer Journal in 2019, and the CCF Natural Science Award (second class) in 2022.

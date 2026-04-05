@@ -1,0 +1,634 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-05T19:57:47.411932+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 25,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.01890v1",
+      "title": "Behavior and Sublinear Algorithm for Opinion Disagreement on Noisy Social Networks",
+      "abstract": "The phenomenon of opinion disagreement has been empirically observed and reported in the literature, which is affected by various factors, such as the structure of social networks. An important discovery in network science is that most real-life networks, including social networks, are scale-free and sparse. In this paper, we study noisy opinion dynamics in sparse scale-free social networks to uncover the influence of power-law topology on opinion disagreement. We adopt the popular discrete-time DeGroot model for opinion dynamics in a graph, where nodes' opinions are subject to white noise. We first study opinion disagreement in many realistic and model networks with a scale-free topology, which approaches a constant, indicating that a scale-free structure is resistant to noise in the opinion dynamics. Moreover, existing algorithms for estimating opinion disagreement are computationally impractical for large-scale networks due to their high computational complexity. To solve this challenge, we introduce a sublinear-time algorithm to approximate this quantity with a theoretically guaranteed error. This algorithm efficiently simulates truncated random walks starting from a subset of nodes while preserving accurate estimation. Extensive experiments demonstrate its efficiency, accuracy, and scalability.",
+      "authors": [
+        "Wanyue Xu",
+        "Yubo Sun",
+        "Mingzhe Zhu",
+        "Zuobai Zhang",
+        "Zhongzhi Zhang"
+      ],
+      "primary_category": "cs.SI",
+      "categories": [
+        "cs.SI",
+        "cs.CY"
+      ],
+      "published": "2026-04-02T10:55:45+00:00",
+      "link": "https://arxiv.org/pdf/2604.01890v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "opinion dynamics and disagreement in social networks",
+      "llm_evidence_cn": "社交网络中的观点动力学与分歧",
+      "llm_evidence": "社交网络中的观点动力学与分歧",
+      "canonical_evidence": "社交网络中的观点动力学与分歧",
+      "llm_tldr_en": "Studies how scale-free social network topologies influence opinion disagreement and dynamics.",
+      "llm_tldr_cn": "研究无标度社交网络拓扑结构如何影响观点分歧与演化动力学。",
+      "llm_tldr": "研究无标度社交网络拓扑结构如何影响观点分歧与演化动力学。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.00319v1",
+      "title": "Collaborative AI Agents and Critics for Fault Detection and Cause Analysis in Network Telemetry",
+      "abstract": "We develop algorithms for collaborative control of AI agents and critics in a multi-actor, multi-critic federated multi-agent system. Each AI agent and critic has access to classical machine learning or generative AI foundation models. The AI agents and critics collaborate with a central server to complete multimodal tasks such as fault detection, severity, and cause analysis in a network telemetry system, text-to-image generation, video generation, healthcare diagnostics from medical images and patient records, etcetera. The AI agents complete their tasks and send them to AI critics for evaluation. The critics then send feedback to agents to improve their responses. Collaboratively, they minimize the overall cost to the system with no inter-agent or inter-critic communication. AI agents and critics keep their cost functions or derivatives of cost functions private. Using multi-time scale stochastic approximation techniques, we provide convergence guarantees on the time-average active states of AI agents and critics. The communication overhead is a little on the system, of the order of $\\mathcal{O}(m)$, for $m$ modalities and is independent of the number of AI agents and critics. Finally, we present an example of fault detection, severity, and cause analysis in network telemetry and thorough evaluation to check the algorithm's efficacy.",
+      "authors": [
+        "Syed Eqbal Alam",
+        "Zhan Shu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-31T23:33:56+00:00",
+      "link": "https://arxiv.org/pdf/2604.00319v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-actor multi-critic federated multi-agent system",
+      "llm_evidence_cn": "多角色多评论家联邦多智能体系统",
+      "llm_evidence": "多角色多评论家联邦多智能体系统",
+      "canonical_evidence": "多角色多评论家联邦多智能体系统",
+      "llm_tldr_en": "Develops algorithms for collaborative control of AI agents and critics in federated multi-agent systems.",
+      "llm_tldr_cn": "开发了联邦多智能体系统中AI智能体与评论家协同控制的算法。",
+      "llm_tldr": "开发了联邦多智能体系统中AI智能体与评论家协同控制的算法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.00556v1",
+      "title": "HabitatAgent: An End-to-End Multi-Agent System for Housing Consultation",
+      "abstract": "Housing selection is a high-stakes and largely irreversible decision problem. We study housing consultation as a decision-support interface for housing selection. Existing housing platforms and many LLM-based assistants often reduce this process to ranking or recommendation, resulting in opaque reasoning, brittle multi-constraint handling, and limited guarantees on factuality.   We present HabitatAgent, the first LLM-powered multi-agent architecture for end-to-end housing consultation. HabitatAgent comprises four specialized agent roles: Memory, Retrieval, Generation, and Validation. The Memory Agent maintains multi-layer user memory through internal stages for constraint extraction, memory fusion, and verification-gated updates; the Retrieval Agent performs hybrid vector--graph retrieval (GraphRAG); the Generation Agent produces evidence-referenced recommendations and explanations; and the Validation Agent applies multi-tier verification and targeted remediation. Together, these agents provide an auditable and reliable workflow for end-to-end housing consultation.   We evaluate HabitatAgent on 100 real user consultation scenarios (300 multi-turn question--answer pairs) under an end-to-end correctness protocol. A strong single-stage baseline (Dense+Rerank) achieves 75% accuracy, while HabitatAgent reaches 95%.",
+      "authors": [
+        "Hongyang Yang",
+        "Yanxin Zhang",
+        "Yang She",
+        "Yue Xiao",
+        "Hao Wu",
+        "Yiyang Zhang",
+        "Jiapeng Hou",
+        "Rongshan Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.ET",
+        "q-fin.CP",
+        "q-fin.RM"
+      ],
+      "published": "2026-04-01T06:59:50+00:00",
+      "link": "https://arxiv.org/pdf/2604.00556v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-powered multi-agent architecture with specialized roles",
+      "llm_evidence_cn": "具有专门角色的LLM驱动多智能体架构",
+      "llm_evidence": "具有专门角色的LLM驱动多智能体架构",
+      "canonical_evidence": "具有专门角色的LLM驱动多智能体架构",
+      "llm_tldr_en": "Presents HabitatAgent, a multi-agent system for housing consultation with specialized memory and retrieval roles.",
+      "llm_tldr_cn": "展示了HabitatAgent，一个用于住房咨询、具有专门记忆和检索角色的多智能体系统。",
+      "llm_tldr": "展示了HabitatAgent，一个用于住房咨询、具有专门记忆和检索角色的多智能体系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.00901v1",
+      "title": "Experience as a Compass: Multi-agent RAG with Evolving Orchestration and Agent Prompts",
+      "abstract": "Multi-agent Retrieval-Augmented Generation (RAG), wherein each agent takes on a specific role, supports hard queries that require multiple steps and sources, or complex reasoning. Existing approaches, however, rely on static agent behaviors and fixed orchestration strategies, leading to brittle performance on diverse, multi-hop tasks. We identify two key limitations: the lack of continuously adaptive orchestration mechanisms and the absence of behavior-level learning for individual agents. To this end, we propose HERA, a hierarchical framework that jointly evolves multi-agent orchestration and role-specific agent prompts. At the global level, HERA optimizes query-specific agent topologies through reward-guided sampling and experience accumulation. At the local level, Role-Aware Prompt Evolution refines agent behaviors via credit assignment and dual-axes adaptation along operational and behavioral principles, enabling targeted, role-conditioned improvements. On six knowledge-intensive benchmarks, HERA achieves an average improvement of 38.69\\% over recent baselines while maintaining robust generalization and token efficiency. Topological analyses reveal emergent self-organization, where sparse exploration yields compact, high-utility multi-agent networks, demonstrating both efficient coordination and robust reasoning.",
+      "authors": [
+        "Sha Li",
+        "Naren Ramakrishnan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-01T13:45:52+00:00",
+      "link": "https://arxiv.org/pdf/2604.00901v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-agent RAG with evolving orchestration",
+      "llm_evidence_cn": "具有演化编排能力的多智能体检索增强生成",
+      "llm_evidence": "具有演化编排能力的多智能体检索增强生成",
+      "canonical_evidence": "具有演化编排能力的多智能体检索增强生成",
+      "llm_tldr_en": "Proposes HERA, a framework that evolves multi-agent orchestration and role-specific prompts for complex tasks.",
+      "llm_tldr_cn": "提出了HERA框架，通过演化多智能体编排和角色提示词来处理复杂任务。",
+      "llm_tldr": "提出了HERA框架，通过演化多智能体编排和角色提示词来处理复杂任务。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.02211v1",
+      "title": "Multi-Agent Video Recommenders: Evolution, Patterns, and Open Challenges",
+      "abstract": "Video recommender systems are among the most popular and impactful applications of AI, shaping content consumption and influencing culture for billions of users. Traditional single-model recommenders, which optimize static engagement metrics, are increasingly limited in addressing the dynamic requirements of modern platforms. In response, multi-agent architectures are redefining how video recommender systems serve, learn, and adapt to both users and datasets. These agent-based systems coordinate specialized agents responsible for video understanding, reasoning, memory, and feedback, to provide precise, explainable recommendations. In this survey, we trace the evolution of multi-agent video recommendation systems (MAVRS). We combine ideas from multi-agent recommender systems, foundation models, and conversational AI, culminating in the emerging field of large language model (LLM)-powered MAVRS. We present a taxonomy of collaborative patterns and analyze coordination mechanisms across diverse video domains, ranging from short-form clips to educational platforms. We discuss representative frameworks, including early multi-agent reinforcement learning (MARL) systems such as MMRF and recent LLM-driven architectures like MACRec and Agent4Rec, to illustrate these patterns. We also outline open challenges in scalability, multimodal understanding, incentive alignment, and identify research directions such as hybrid reinforcement learning-LLM systems, lifelong personalization and self-improving recommender systems.",
+      "authors": [
+        "Srivaths Ranganathan",
+        "Abhishek Dharmaratnakar",
+        "Anushree Sinha",
+        "Debanshu Das"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-02T16:04:52+00:00",
+      "link": "https://arxiv.org/pdf/2604.02211v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent architectures for video recommendation systems",
+      "llm_evidence_cn": "视频推荐系统的多智能体架构",
+      "llm_evidence": "视频推荐系统的多智能体架构",
+      "canonical_evidence": "视频推荐系统的多智能体架构",
+      "llm_tldr_en": "Surveys the evolution of multi-agent video recommendation systems that coordinate specialized agents for reasoning.",
+      "llm_tldr_cn": "综述了多智能体视频推荐系统的演进，通过协调专门的智能体进行推理和反馈。",
+      "llm_tldr": "综述了多智能体视频推荐系统的演进，通过协调专门的智能体进行推理和反馈。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2603.27662v1",
+      "title": "A Benchmarking Methodology to Assess Open-Source Video Large Language Models in Automatic Captioning of News Videos",
+      "abstract": "News videos are among the most prevalent content types produced by television stations and online streaming platforms, yet generating textual descriptions to facilitate indexing and retrieval largely remains a manual process. Video Large Language Models (VidLLMs) offer significant potential to automate this task, but a comprehensive evaluation in the news domain is still lacking. This work presents a comparative study of eight state-of-the-art open-source VidLLMs for automatic news video captioning, evaluated on two complementary benchmark datasets: a Chilean TV news corpus (approximately 1,345 clips) and a BBC News corpus (9,838 clips). We employ lexical metrics (METEOR, ROUGE-L), semantic metrics (BERTScore, CLIPScore, Text Similarity, Mean Reciprocal Rank), and two novel fidelity metrics proposed in this work: the Thematic Fidelity Score (TFS) and Entity Fidelity Score (EFS). Our analysis reveals that standard metrics exhibit limited discriminative power for news video captioning due to surface-form dependence, static-frame insensitivity, and function-word inflation. TFS and EFS address these gaps by directly assessing thematic structure preservation and named-entity coverage in the generated captions. Results show that Gemma~3 achieves the highest overall performance across both datasets and most evaluation dimensions, with Qwen-VL as a consistent runner-up.",
+      "authors": [
+        "David Miranda Paredes",
+        "Jose M. Saavedra",
+        "Marcelo Pizarro"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-03-29T12:28:35+00:00",
+      "link": "https://arxiv.org/pdf/2603.27662v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Automatic captioning of news videos using Video Large Language Models",
+      "llm_evidence_cn": "使用视频大语言模型对新闻视频进行自动字幕生成",
+      "llm_evidence": "使用视频大语言模型对新闻视频进行自动字幕生成",
+      "canonical_evidence": "使用视频大语言模型对新闻视频进行自动字幕生成",
+      "llm_tldr_en": "Evaluates open-source Video LLMs for news video captioning, relevant to news content analysis and retrieval.",
+      "llm_tldr_cn": "评估了开源视频大模型在新闻视频字幕生成中的表现，有助于新闻内容的分析与检索。",
+      "llm_tldr": "评估了开源视频大模型在新闻视频字幕生成中的表现，有助于新闻内容的分析与检索。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.27411v1",
+      "title": "Relational Co-Adaptation in Emotionally Supportive AI: Tensions in Authentic Emotional Interaction",
+      "abstract": "The rapid advancement of AI companionship systems has positioned them as scalable interventions for addressing social isolation. Current design approaches emphasize maximizing user engagement and satisfaction, treating effective alignment between AI capabilities and user needs as an unqualified success. However, this framing may overlook a critical dimension of bidirectional human-AI alignment: when AI systems successfully align with users' expressed emotional needs, users may reciprocally adapt their relational expectations in ways that undermine authentic human connection and agency. We examine what we term the authenticity paradox: the phenomenon whereby successful bidirectional alignment in emotionally supportive AI paradoxically harms the values that motivated the intervention. Through the analysis of AI companionship for older adults as an illustrative case, we identify four key tensions that emerge when technical effectiveness generates ethical concerns: the dilemma of AI becoming users' only accessible option, mismatches between emotional needs and system-level interventions, conflicts over sense of control during vulnerable moments, and fundamental disagreements about whose values should guide system behavior.",
+      "authors": [
+        "Mengqi Shi"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-03-28T21:17:10+00:00",
+      "link": "https://arxiv.org/pdf/2603.27411v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "social isolation and human-AI alignment in AI companionship",
+      "llm_evidence_cn": "AI 陪伴系统中的社会孤立与人机对齐问题",
+      "llm_evidence": "AI 陪伴系统中的社会孤立与人机对齐问题",
+      "canonical_evidence": "AI 陪伴系统中的社会孤立与人机对齐问题",
+      "llm_tldr_en": "Explores the authenticity paradox in emotionally supportive AI and its impact on human social expectations.",
+      "llm_tldr_cn": "探讨情感支持型 AI 中的真实性悖论及其对人类社会期望的影响。",
+      "llm_tldr": "探讨情感支持型 AI 中的真实性悖论及其对人类社会期望的影响。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.28281v1",
+      "title": "Corruption-robust Offline Multi-agent Reinforcement Learning From Human Feedback",
+      "abstract": "We consider robustness against data corruption in offline multi-agent reinforcement learning from human feedback (MARLHF) under a strong-contamination model: given a dataset $D$ of trajectory-preference tuples (each preference being an $n$-dimensional binary label vector representing each of the $n$ agents' preferences), an $ε$-fraction of the samples may be arbitrarily corrupted. We model the problem using the framework of linear Markov games. First, under a uniform coverage assumption - where every policy of interest is sufficiently represented in the clean (prior to corruption) data - we introduce a robust estimator that guarantees an $O(ε^{1 - o(1)})$ bound on the Nash equilibrium gap. Next, we move to the more challenging unilateral coverage setting, in which only a Nash equilibrium and its single-player deviations are covered. In this case, our proposed algorithm achieves an $O(\\sqrtε)$ bound on the Nash gap. Both of these procedures, however, suffer from intractable computation. To address this, we relax our solution concept to coarse correlated equilibria (CCE). Under the same unilateral coverage regime, we derive a quasi-polynomial-time algorithm whose CCE gap scales as $O(\\sqrtε)$. To the best of our knowledge, this is the first systematic treatment of adversarial data corruption in offline MARLHF.",
+      "authors": [
+        "Andi Nika",
+        "Debmalya Mandal",
+        "Parameswaran Kamalaruban",
+        "Adish Singla",
+        "Goran Radanović"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-03-30T11:03:36+00:00",
+      "link": "https://arxiv.org/pdf/2603.28281v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "robustness in offline multi-agent reinforcement learning from human feedback",
+      "llm_evidence_cn": "离线多智能体人类反馈强化学习的鲁棒性",
+      "llm_evidence": "离线多智能体人类反馈强化学习的鲁棒性",
+      "canonical_evidence": "离线多智能体人类反馈强化学习的鲁棒性",
+      "llm_tldr_en": "Addresses data corruption in multi-agent reinforcement learning from human feedback using linear Markov games.",
+      "llm_tldr_cn": "利用线性马尔可夫博弈解决多智能体人类反馈强化学习中的数据损坏问题。",
+      "llm_tldr": "利用线性马尔可夫博弈解决多智能体人类反馈强化学习中的数据损坏问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.27490v1",
+      "title": "AgentSwing: Adaptive Parallel Context Management Routing for Long-Horizon Web Agents",
+      "abstract": "As large language models (LLMs) evolve into autonomous agents for long-horizon information-seeking, managing finite context capacity has become a critical bottleneck. Existing context management methods typically commit to a single fixed strategy throughout the entire trajectory. Such static designs may work well in some states, but they cannot adapt as the usefulness and reliability of the accumulated context evolve during long-horizon search. To formalize this challenge, we introduce a probabilistic framework that characterizes long-horizon success through two complementary dimensions: search efficiency and terminal precision. Building on this perspective, we propose AgentSwing, a state-aware adaptive parallel context management routing framework. At each trigger point, AgentSwing expands multiple context-managed branches in parallel and uses lookahead routing to select the most promising continuation. Experiments across diverse benchmarks and agent backbones show that AgentSwing consistently outperforms strong static context management methods, often matching or exceeding their performance with up to $3\\times$ fewer interaction turns while also improving the ultimate performance ceiling of long-horizon web agents. Beyond the empirical gains, the proposed probabilistic framework provides a principled lens for analyzing and designing future context management strategies for long-horizon agents.",
+      "authors": [
+        "Zhaopeng Feng",
+        "Liangcai Su",
+        "Zhen Zhang",
+        "Xinyu Wang",
+        "Xiaotian Zhang",
+        "Xiaobin Wang",
+        "Runnan Fang",
+        "Qi Zhang",
+        "Baixuan Li",
+        "Shihao Cai",
+        "Rui Ye",
+        "Hui Chen",
+        "Jiang Yong",
+        "Joey Tianyi Zhou",
+        "Chenxiong Qian",
+        "Pengjun Xie",
+        "Bryan Hooi",
+        "Zuozhu Liu",
+        "Jingren Zhou"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-29T02:59:27+00:00",
+      "link": "https://arxiv.org/pdf/2603.27490v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Adaptive context management for autonomous agents",
+      "llm_evidence_cn": "自主智能体的自适应上下文管理",
+      "llm_evidence": "自主智能体的自适应上下文管理",
+      "canonical_evidence": "自主智能体的自适应上下文管理",
+      "llm_tldr_en": "A state-aware routing framework to manage context capacity for long-horizon autonomous agents.",
+      "llm_tldr_cn": "一种状态感知的自适应路由框架，用于管理长程自主智能体的上下文容量。",
+      "llm_tldr": "一种状态感知的自适应路由框架，用于管理长程自主智能体的上下文容量。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2603.28348v1",
+      "title": "Proposing a Game Theory Approach to Explore Group Dynamics with Social Robot",
+      "abstract": "Integrating social robots in our group-based society, beyond the technical challenges, requires considering the social group dynamics. Following the results from preliminary exploratory studies on the influence of social robots on group decisions, the proposed research investigates whether social robots can foster cooperation among group members. To achieve this, I propose a game theory approach, employing the Public Good Game to recreate a simplified and controlled social situation where the robot's influence can be evaluated. Clarifying the role of robots in promoting collaboration among humans might have a significant impact in educational environments, enhancing student learning, as well as in workplace settings, where they could facilitate problem-solving and lead to shared solutions.",
+      "authors": [
+        "Giulia Pusceddu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.HC"
+      ],
+      "published": "2026-03-30T12:17:32+00:00",
+      "link": "https://arxiv.org/pdf/2603.28348v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "social robot influence on group dynamics and cooperation",
+      "llm_evidence_cn": "社交机器人对群体动态和合作的影响",
+      "llm_evidence": "社交机器人对群体动态和合作的影响",
+      "canonical_evidence": "社交机器人对群体动态和合作的影响",
+      "llm_tldr_en": "Investigates how social robots influence human group cooperation using game theory.",
+      "llm_tldr_cn": "利用博弈论研究社交机器人如何影响人类群体的合作。",
+      "llm_tldr": "利用博弈论研究社交机器人如何影响人类群体的合作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.27813v1",
+      "title": "MuSEAgent: A Multimodal Reasoning Agent with Stateful Experiences",
+      "abstract": "Research agents have recently achieved significant progress in information seeking and synthesis across heterogeneous textual and visual sources. In this paper, we introduce MuSEAgent, a multimodal reasoning agent that enhances decision-making by extending the capabilities of research agents to discover and leverage stateful experiences. Rather than relying on trajectory-level retrieval, we propose a stateful experience learning paradigm that abstracts interaction data into atomic decision experiences through hindsight reasoning. These experiences are organized into a quality-filtered experience bank that supports policy-driven experience retrieval at inference time. Specifically, MuSEAgent enables adaptive experience exploitation through complementary wide- and deep-search strategies, allowing the agent to dynamically retrieve multimodal guidance across diverse compositional semantic viewpoints. Extensive experiments demonstrate that MuSEAgent consistently outperforms strong trajectory-level experience retrieval baselines on both fine-grained visual perception and complex multimodal reasoning tasks. These results validate the effectiveness of stateful experience modeling in improving multimodal agent reasoning.",
+      "authors": [
+        "Shijian Wang",
+        "Jiarui Jin",
+        "Runhao Fu",
+        "Zexuan Yan",
+        "Xingjian Wang",
+        "Mengkang Hu",
+        "Eric Wang",
+        "Xiaoxi Li",
+        "Kangning Zhang",
+        "Li Yao",
+        "Wenxiang Jiao",
+        "Xuelian Cheng",
+        "Yuan Lu",
+        "Zongyuan Ge"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-03-29T18:54:31+00:00",
+      "link": "https://arxiv.org/pdf/2603.27813v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multimodal reasoning agent with stateful experiences",
+      "llm_evidence_cn": "具有状态经验的多模态推理智能体",
+      "llm_evidence": "具有状态经验的多模态推理智能体",
+      "canonical_evidence": "具有状态经验的多模态推理智能体",
+      "llm_tldr_en": "Introduces MuSEAgent, a multimodal agent that leverages stateful experiences for better decision-making.",
+      "llm_tldr_cn": "引入MuSEAgent，一种利用状态经验增强决策能力的多模态推理智能体。",
+      "llm_tldr": "引入MuSEAgent，一种利用状态经验增强决策能力的多模态推理智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00304v1",
+      "title": "Asymmetric Actor-Critic for Multi-turn LLM Agents",
+      "abstract": "Large language models (LLMs) exhibit strong reasoning and conversational abilities, but ensuring reliable behavior in multi-turn interactions remains challenging. In many real-world applications, agents must succeed in one-shot settings where retries are impossible. Existing approaches either rely on reflection or post-hoc evaluation, which require additional attempts, or assume fully trainable models that cannot leverage proprietary LLMs. We propose an asymmetric actor-critic framework for reliable conversational agents. A powerful proprietary LLM acts as the actor, while a smaller open-source critic provides runtime supervision, monitoring the actor's actions and intervening within the same interaction trajectory. Unlike training-based actor-critic methods, our framework supervises a fixed actor operating in open-ended conversational environments. The design leverages a generation-verification asymmetry: while high-quality generation requires large models, effective oversight can often be achieved by smaller ones. We further introduce a data generation pipeline that produces supervision signals for critic fine-tuning without modifying the actor. Experiments on $τ$-bench and UserBench show that our approach significantly improves reliability and task success over strong single-agent baselines. Moreover, lightweight open-source critics rival or surpass larger proprietary models in the critic role, and critic fine-tuning yields additional gains over several state-of-the-art methods.",
+      "authors": [
+        "Shuli Jiang",
+        "Zhaoyang Zhang",
+        "Yi Zhang",
+        "Shuo Yang",
+        "Wei Xia",
+        "Stefano Soatto"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-03-31T22:56:21+00:00",
+      "link": "https://arxiv.org/pdf/2604.00304v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-turn LLM agents and actor-critic framework",
+      "llm_evidence_cn": "多轮LLM智能体与行动者-评论家框架",
+      "llm_evidence": "多轮LLM智能体与行动者-评论家框架",
+      "canonical_evidence": "多轮LLM智能体与行动者-评论家框架",
+      "llm_tldr_en": "Proposes an asymmetric actor-critic framework to improve the reliability of multi-turn LLM agents.",
+      "llm_tldr_cn": "提出一种非对称行动者-评论家框架，旨在提高多轮LLM智能体在交互中的可靠性。",
+      "llm_tldr": "提出一种非对称行动者-评论家框架，旨在提高多轮LLM智能体在交互中的可靠性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.28043v1",
+      "title": "Seeing the Unseen: Rethinking Illicit Promotion Detection with In-Context Learning",
+      "abstract": "Illicit online promotion is a persistent threat that evolves to evade detection. Existing moderation systems remain tethered to platform-specific supervision and static taxonomies, a reactive paradigm that struggles to generalize across domains or uncover novel threats.   This paper presents a systematic study of In-Context Learning (ICL) as a unified framework for illicit promotion detection. Through rigorous analysis, we show that properly configured ICL achieves performance comparable to fine-tuned models using 22x fewer labeled examples. We demonstrate three key capabilities: (1) Generalization to unseen threats: ICL generalizes to new illicit categories without category-specific demonstrations, with a performance drop of less than 6% for most evaluated categories. (2) Autonomous discovery: A novel two-stage pipeline distills 2,900 free-form labels into coherent taxonomies, surfacing eight previously undocumented illicit categories such as usury and illegal immigration. (3) Cross-platform generalization: Deployed on 200,000 real-world samples from search engines and Twitter without adaptation, ICL achieves 92.6% accuracy. Furthermore, 61.8% of its uniquely flagged samples correspond to borderline or obfuscated content missed by existing detectors.   Our findings position ICL as a new paradigm for content moderation, combining the precision of specialized classifiers with cross-platform generalization and autonomous threat discovery. By shifting to inference-time reasoning, ICL offers a path toward proactively adaptive moderation systems.",
+      "authors": [
+        "Sangyi Wu",
+        "Junpu Guo",
+        "Xianghang Mi"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-03-30T05:08:59+00:00",
+      "link": "https://arxiv.org/pdf/2603.28043v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "illicit online promotion detection using in-context learning",
+      "llm_evidence_cn": "使用上下文学习检测非法在线推广信息",
+      "llm_evidence": "使用上下文学习检测非法在线推广信息",
+      "canonical_evidence": "使用上下文学习检测非法在线推广信息",
+      "llm_tldr_en": "Rethinks illicit promotion detection using ICL to generalize across domains and uncover novel threats.",
+      "llm_tldr_cn": "利用上下文学习重新思考非法推广检测，以实现跨领域泛化并发现新威胁。",
+      "llm_tldr": "利用上下文学习重新思考非法推广检测，以实现跨领域泛化并发现新威胁。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00428v1",
+      "title": "Certificate-Driven Closed-Loop Multi-Agent Path Finding with Inheritable Factorization",
+      "abstract": "Multi-agent coordination in automated warehouses and logistics is commonly modeled as the Multi-Agent Path Finding (MAPF) problem. Closed-loop MAPF algorithms improve scalability by planning only the next movement and replanning online, but this finite-horizon viewpoint can be shortsighted and makes it difficult to preserve global guarantees and exploit compositional structure. This issue is especially visible in Anytime Closed-Loop Conflict-Based Search (ACCBS), which applies Conflict-Based Search (CBS) over dynamically extended finite horizons but, under finite computational budgets, may terminate with short active prefixes in dense instances.   We introduce certificate trajectories and their associated fleet budget as a general mechanism for filtering closed-loop updates. A certificate provides a conflict-free fallback plan and a monotone upper bound on the remaining cost; accepting only certificate-improving updates yields completeness. The same budget information induces a budget-limited factorization that enables global, inheritable decomposition across timesteps. Instantiating the framework on ACCBS yields Certificate-Driven Conflict-Based Search (CDCBS). Experiments on benchmark maps show that CDCBS achieves more consistent solution quality than ACCBS, particularly in dense settings, while the proposed factorization reduces effective group size.",
+      "authors": [
+        "Jiarui Li",
+        "Runyu Zhang",
+        "Gioele Zardini"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-04-01T03:14:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.00428v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent path finding and coordination in automated environments",
+      "llm_evidence_cn": "自动化环境中的多智能体路径规划与协作",
+      "llm_evidence": "自动化环境中的多智能体路径规划与协作",
+      "canonical_evidence": "自动化环境中的多智能体路径规划与协作",
+      "llm_tldr_en": "Introduces certificate trajectories to improve scalability and global guarantees in multi-agent path finding.",
+      "llm_tldr_cn": "引入证书轨迹以提高多智能体路径规划的可扩展性和全局保证。",
+      "llm_tldr": "引入证书轨迹以提高多智能体路径规划的可扩展性和全局保证。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.28361v1",
+      "title": "Deep Research of Deep Research: From Transformer to Agent, From AI to AI for Science",
+      "abstract": "With the advancement of large language models (LLMs) in their knowledge base and reasoning capabilities, their interactive modalities have evolved from pure text to multimodality and further to agentic tool use. Consequently, their applications have broadened from question answering to AI assistants and now to general-purpose agents. Deep research (DR) represents a prototypical vertical application for general-purpose agents, which represents an ideal approach for intelligent information processing and assisting humans in discovering and solving problems, with the goal of reaching or even surpassing the level of top human scientists. This paper provides a deep research of deep research. We articulate a clear and precise definition of deep research and unify perspectives from industry's deep research and academia's AI for Science (AI4S) within a developmental framework. We position LLMs and Stable Diffusion as the twin pillars of generative AI, and lay out a roadmap evolving from the Transformer to agents. We examine the progress of AI4S across various disciplines. We identify the predominant paradigms of human-AI interaction and prevailing system architectures, and discuss the major challenges and fundamental research issues that remain. AI supports scientific innovation, and science also can contribute to AI growth (Science for AI, S4AI). We hope this paper can help bridge the gap between the AI and AI4S communities.",
+      "authors": [
+        "Yipeng Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-03-30T12:29:47+00:00",
+      "link": "https://arxiv.org/pdf/2603.28361v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evolution from LLMs to general-purpose agents",
+      "llm_evidence_cn": "从LLM到通用智能体的演进",
+      "llm_evidence": "从LLM到通用智能体的演进",
+      "canonical_evidence": "从LLM到通用智能体的演进",
+      "llm_tldr_en": "Surveys the transition of LLMs into general-purpose agents for deep research and scientific discovery.",
+      "llm_tldr_cn": "综述了LLM向通用智能体的转变，及其在深度研究和科学发现中的应用。",
+      "llm_tldr": "综述了LLM向通用智能体的转变，及其在深度研究和科学发现中的应用。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00429v1",
+      "title": "Distributed Safety-Critical Control of Multi-Agent Systems with Time-Varying Communication Topologies",
+      "abstract": "Coordinating multiple autonomous agents to reach a target region while avoiding collisions and maintaining communication connectivity is a core problem in multi-agent systems. In practice, agents have a limited communication range. Thus, network links appear and disappear as agents move, making the topology state-dependent and time-varying. Existing distributed solutions to multi-agent reach-avoid problems typically assume a fixed communication topology, and thus are not applicable when encountering discontinuities raised by time-varying topologies. This paper presents a distributed optimization-based control framework that addresses these challenges through two complementary mechanisms. First, we introduce a truncation function that converts the time-varying communication graph into a smoothly state-dependent one, ensuring that constraints remain continuous as communication links are created or removed. Second, we employ auxiliary mismatch variables with two-time-scale dynamics to decouple globally coupled state-dependent constraints, yielding a singular perturbation system that each agent can solve using only local information and neighbor communication. Through singular perturbation analysis, we prove that the distributed controller guarantees collision avoidance, connectivity preservation, and convergence to the target region. We validate the proposed framework through numerical simulations involving multi-agent navigation with obstacles and time-varying communication topologies.",
+      "authors": [
+        "Shiyu Cheng",
+        "Luyao Niu",
+        "Bhaskar Ramasubramanian",
+        "Andrew Clark",
+        "Radha Poovendran"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-04-01T03:15:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.00429v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "distributed control of multi-agent systems with varying topologies",
+      "llm_evidence_cn": "具有时变拓扑的多智能体系统分布式控制",
+      "llm_evidence": "具有时变拓扑的多智能体系统分布式控制",
+      "canonical_evidence": "具有时变拓扑的多智能体系统分布式控制",
+      "llm_tldr_en": "Develops a distributed control framework for multi-agent systems with time-varying communication links.",
+      "llm_tldr_cn": "为具有时变通信链路的多智能体系统开发了一种分布式控制框架。",
+      "llm_tldr": "为具有时变通信链路的多智能体系统开发了一种分布式控制框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

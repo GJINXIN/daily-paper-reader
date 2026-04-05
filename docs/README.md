@@ -6,73 +6,70 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-04
-- 运行时间：2026-04-04 20:12:09 UTC
+- 最新运行日期：2026-04-05
+- 运行时间：2026-04-05 19:59:42 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：16
+- 精读区：5
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 17 篇前沿论文，深度剖析大模型社交偏见消除与复杂网络中的情感极化现象。
-重点关注通过提示词知识微调降低 LLM 偏见，以及小世界与无标度网络如何驱动群体情感对立。
-建议关注 AI 智能体在处理代码不确定性时的表现，以及网络虚假信息传播的演进策略。
-- 详情：[/202604/04/README](/202604/04/README)
+今日精选 16 篇前沿成果，深度拆解了噪声社交网络中的观点分歧机制与 AI 智能体协同运维架构。
+重点推荐社交网络演化的亚线性算法突破，以及利用“智能体+评论家”模式提升网络故障检测与根因分析的精准度。
+建议关注复杂环境下的算法鲁棒性研究，并同步了解视频大模型在新闻自动化标注中的最新评测基准。
+- 详情：[/202604/05/README](/202604/05/README)
 
 ### 精读区论文标签
-1. [Debiasing Large Language Models toward Social Factors in Online Behavior Analytics through Prompt Knowledge Tuning](/202604/04/2603.27057v1-debiasing-large-language-models-toward-social-factors-in-online-behavior-analytics-through-prompt-knowledge-tuning)  
+1. [Behavior and Sublinear Algorithm for Opinion Disagreement on Noisy Social Networks](/202604/05/2604.01890v1-behavior-and-sublinear-algorithm-for-opinion-disagreement-on-noisy-social-networks)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：社交网络中的观点动力学与分歧
+2. [Collaborative AI Agents and Critics for Fault Detection and Cause Analysis in Network Telemetry](/202604/05/2604.00319v1-collaborative-ai-agents-and-critics-for-fault-detection-and-cause-analysis-in-network-telemetry)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：社会语境下的社会归因与行为分析
-2. [Affective Polarization on Small-World and Scale-Free Networks](/202604/04/2603.27845v1-affective-polarization-on-small-world-and-scale-free-networks)  
+   evidence：多角色多评论家联邦多智能体系统
+3. [HabitatAgent: An End-to-End Multi-Agent System for Housing Consultation](/202604/05/2604.00556v1-habitatagent-an-end-to-end-multi-agent-system-for-housing-consultation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：社交网络中的观点动力学与情感极化
-3. [Multi-Agent LLMs for Adaptive Acquisition in Bayesian Optimization](/202604/04/2603.28959v1-multi-agent-llms-for-adaptive-acquisition-in-bayesian-optimization)  
+   evidence：具有专门角色的LLM驱动多智能体架构
+4. [Experience as a Compass: Multi-agent RAG with Evolving Orchestration and Agent Prompts](/202604/05/2604.00901v1-experience-as-a-compass-multi-agent-rag-with-evolving-orchestration-and-agent-prompts)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于自适应搜索和决策策略的多智能体大语言模型
-4. [Proactive Agent Research Environment: Simulating Active Users to Evaluate Proactive Assistants](/202604/04/2604.00842v1-proactive-agent-research-environment-simulating-active-users-to-evaluate-proactive-assistants)  
+   evidence：具有演化编排能力的多智能体检索增强生成
+5. [Multi-Agent Video Recommenders: Evolution, Patterns, and Open Challenges](/202604/05/2604.02211v1-multi-agent-video-recommenders-evolution-patterns-and-open-challenges)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：模拟活跃用户以评估主动式助手
-5. [Computational Foundations for Strategic Coopetition: Formalizing Sequential Interaction and Reciprocity](/202604/04/2604.01240v1-computational-foundations-for-strategic-coopetition-formalizing-sequential-interaction-and-reciprocity)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多利益相关者系统中的序列交互与互惠形式化
-6. [From Multi-Agent to Single-Agent: When Is Skill Distillation Beneficial?](/202604/04/2604.01608v1-from-multi-agent-to-single-agent-when-is-skill-distillation-beneficial)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：将多智能体系统蒸馏为单智能体技能
+   evidence：视频推荐系统的多智能体架构
 
 ### 速读区论文标签
-1. [Beyond Disinformation: Strategic Misrepresentation across Content, Actors, Processes, and Covertness](/202604/04/2603.25883v1-beyond-disinformation-strategic-misrepresentation-across-content-actors-processes-and-covertness)  
+1. [A Benchmarking Methodology to Assess Open-Source Video Large Language Models in Automatic Captioning of News Videos](/202604/05/2603.27662v1-a-benchmarking-methodology-to-assess-open-source-video-large-language-models-in-automatic-captioning-of-news-videos)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：社交网络中的策略性虚假陈述与协同行为
-2. [Self-Organizing Multi-Agent Systems for Continuous Software Development](/202604/04/2603.25928v1-self-organizing-multi-agent-systems-for-continuous-software-development)  
+   evidence：使用视频大语言模型对新闻视频进行自动字幕生成
+2. [Corruption-robust Offline Multi-agent Reinforcement Learning From Human Feedback](/202604/05/2603.28281v1-corruption-robust-offline-multi-agent-reinforcement-learning-from-human-feedback)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于软件开发的自组织多智能体系统
-3. [Ask or Assume? Uncertainty-Aware Clarification-Seeking in Coding Agents](/202604/04/2603.26233v1-ask-or-assume-uncertainty-aware-clarification-seeking-in-coding-agents)  
+   evidence：离线多智能体人类反馈强化学习的鲁棒性
+3. [Proposing a Game Theory Approach to Explore Group Dynamics with Social Robot](/202604/05/2603.28348v1-proposing-a-game-theory-approach-to-explore-group-dynamics-with-social-robot)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：不确定性感知多智能体支架
-4. [MGDIL: Multi-Granularity Summarization and Domain-Invariant Learning for Cross-Domain Social Bot Detection](/202604/04/2603.27928v1-mgdil-multi-granularity-summarization-and-domain-invariant-learning-for-cross-domain-social-bot-detection)  
+   evidence：社交机器人对群体动态和合作的影响
+4. [Asymmetric Actor-Critic for Multi-turn LLM Agents](/202604/05/2604.00304v1-asymmetric-actor-critic-for-multi-turn-llm-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：社交机器人检测与信息生态健康
-5. [CoE: Collaborative Entropy for Uncertainty Quantification in Agentic Multi-LLM Systems](/202604/04/2603.28360v1-coe-collaborative-entropy-for-uncertainty-quantification-in-agentic-multi-llm-systems)  
+   evidence：多轮LLM智能体与行动者-评论家框架
+5. [Certificate-Driven Closed-Loop Multi-Agent Path Finding with Inheritable Factorization](/202604/05/2604.00428v1-certificate-driven-closed-loop-multi-agent-path-finding-with-inheritable-factorization)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：代理式多LLM系统中的不确定性量化
-6. [Learning Partial Action Replacement in Offline MARL](/202604/04/2603.28573v1-learning-partial-action-replacement-in-offline-marl)  
+   evidence：自动化环境中的多智能体路径规划与协作
+6. [Distributed Safety-Critical Control of Multi-Agent Systems with Time-Varying Communication Topologies](/202604/05/2604.00429v1-distributed-safety-critical-control-of-multi-agent-systems-with-time-varying-communication-topologies)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：离线多智能体强化学习与联合动作空间
-7. [MemoryCD: Benchmarking Long-Context User Memory of LLM Agents for Lifelong Cross-Domain Personalization](/202604/04/2603.25973v1-memorycd-benchmarking-long-context-user-memory-of-llm-agents-for-lifelong-cross-domain-personalization)  
+   evidence：具有时变拓扑的多智能体系统分布式控制
+7. [Relational Co-Adaptation in Emotionally Supportive AI: Tensions in Authentic Emotional Interaction](/202604/05/2603.27411v1-relational-co-adaptation-in-emotionally-supportive-ai-tensions-in-authentic-emotional-interaction)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于模拟用户行为与个性化的LLM智能体
-8. [Heddle: A Distributed Orchestration System for Agentic RL Rollout](/202604/04/2603.28101v1-heddle-a-distributed-orchestration-system-for-agentic-rl-rollout)  
+   evidence：AI 陪伴系统中的社会孤立与人机对齐问题
+8. [AgentSwing: Adaptive Parallel Context Management Routing for Long-Horizon Web Agents](/202604/05/2603.27490v1-agentswing-adaptive-parallel-context-management-routing-for-long-horizon-web-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体强化学习生成的编排系统
-9. [InconLens: Interactive Visual Diagnosis of Behavioral Inconsistencies in LLM-based Agentic Systems](/202604/04/2603.28106v1-inconlens-interactive-visual-diagnosis-of-behavioral-inconsistencies-in-llm-based-agentic-systems)  
+   evidence：自主智能体的自适应上下文管理
+9. [MuSEAgent: A Multimodal Reasoning Agent with Stateful Experiences](/202604/05/2603.27813v1-museagent-a-multimodal-reasoning-agent-with-stateful-experiences)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体系统行为不一致性的诊断
-10. [COvolve: Adversarial Co-Evolution of Large-Language-Model-Generated Policies and Environments via Two-Player Zero-Sum Game](/202604/04/2603.28386v1-covolve-adversarial-co-evolution-of-large-language-model-generated-policies-and-environments-via-two-player-zero-sum-game)  
+   evidence：具有状态经验的多模态推理智能体
+10. [Seeing the Unseen: Rethinking Illicit Promotion Detection with In-Context Learning](/202604/05/2603.28043v1-seeing-the-unseen-rethinking-illicit-promotion-detection-with-in-context-learning)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多智能体策略与环境的对抗性协同演化
-11. [Synergy: A Next-Generation General-Purpose Agent for Open Agentic Web](/202604/04/2603.28428v1-synergy-a-next-generation-general-purpose-agent-for-open-agentic-web)  
+   evidence：使用上下文学习检测非法在线推广信息
+11. [Deep Research of Deep Research: From Transformer to Agent, From AI to AI for Science](/202604/05/2603.28361v1-deep-research-of-deep-research-from-transformer-to-agent-from-ai-to-ai-for-science)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体在社交层面进行协商和委派的去中心化数字生态系统
+   evidence：从LLM到通用智能体的演进
 
 
 <div class="dpr-home-promo-card">
