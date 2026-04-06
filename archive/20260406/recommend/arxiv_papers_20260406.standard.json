@@ -1,0 +1,687 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-06T20:29:33.392956+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 8,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 24,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.02668v1",
+      "title": "Too Polite to Disagree: Understanding Sycophancy Propagation in Multi-Agent Systems",
+      "abstract": "Large language models (LLMs) often exhibit sycophancy: agreement with user stance even when it conflicts with the model's opinion. While prior work has mostly studied this in single-agent settings, it remains underexplored in collaborative multi-agent systems. We ask whether awareness of other agents' sycophancy levels influences discussion outcomes. To investigate this, we run controlled experiments with six open-source LLMs, providing agents with peer sycophancy rankings that estimate each peer's tendency toward sycophancy. These rankings are based on scores calculated using various static (pre-discussion) and dynamic (online) strategies. We find that providing sycophancy priors reduces the influence of sycophancy-prone peers, mitigates error-cascades, and improves final discussion accuracy by an absolute 10.5%. Thus, this is a lightweight, effective way to reduce discussion sycophancy and improve downstream accuracy.",
+      "authors": [
+        "Vira Kasprova",
+        "Amruta Parulekar",
+        "Abdulrahman AlRabah",
+        "Krishna Agaram",
+        "Ritwik Garg",
+        "Sagar Jha",
+        "Nimet Beyza Bozdag",
+        "Dilek Hakkani-Tur"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-03T03:02:42+00:00",
+      "link": "https://arxiv.org/pdf/2604.02668v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "sycophancy propagation and social influence in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的谄媚传播与社会影响",
+      "llm_evidence": "多智能体系统中的谄媚传播与社会影响",
+      "canonical_evidence": "多智能体系统中的谄媚传播与社会影响",
+      "llm_tldr_en": "Investigates how sycophancy propagates in multi-agent systems and how peer rankings can mitigate it.",
+      "llm_tldr_cn": "研究多智能体系统中谄媚行为的传播方式，以及同行排名如何减轻其影响。",
+      "llm_tldr": "研究多智能体系统中谄媚行为的传播方式，以及同行排名如何减轻其影响。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.02674v1",
+      "title": "Do Agent Societies Develop Intellectual Elites? The Hidden Power Laws of Collective Cognition in LLM Multi-Agent Systems",
+      "abstract": "Large Language Model (LLM) multi-agent systems are increasingly deployed as interacting agent societies, yet scaling these systems often yields diminishing or unstable returns, the causes of which remain poorly understood. We present the first large-scale empirical study of coordination dynamics in LLM-based multi-agent systems, introducing an atomic event-level formulation that reconstructs reasoning as cascades of coordination. Analyzing over 1.5 Million interactions across tasks, topologies, and scales, we uncover three coupled laws: coordination follows heavy-tailed cascades, concentrates via preferential attachment into intellectual elites, and produces increasingly frequent extreme events as system size grows. We show that these effects are coupled through a single structural mechanism: an integration bottleneck, in which coordination expansion scales with system size while consolidation does not, producing large but weakly integrated reasoning processes. To test this mechanism, we introduce Deficit-Triggered Integration (DTI), which selectively increases integration under imbalance. DTI improves performance precisely where coordination fails, without suppressing large-scale reasoning. Together, our results establish quantitative laws of collective cognition and identify coordination structure as a fundamental, previously unmeasured axis for understanding and improving scalable multi-agent intelligence.",
+      "authors": [
+        "Kavana Venkatesh",
+        "Jiaming Cui"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-03T03:08:07+00:00",
+      "link": "https://arxiv.org/pdf/2604.02674v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "emergent coordination dynamics in LLM multi-agent societies",
+      "llm_evidence_cn": "大模型多智能体社会中的涌现协调动态",
+      "llm_evidence": "大模型多智能体社会中的涌现协调动态",
+      "canonical_evidence": "大模型多智能体社会中的涌现协调动态",
+      "llm_tldr_en": "Studies coordination laws and emergent intellectual elites in large-scale LLM multi-agent systems.",
+      "llm_tldr_cn": "研究大规模大模型多智能体系统中的协调规律和涌现的智力精英现象。",
+      "llm_tldr": "研究大规模大模型多智能体系统中的协调规律和涌现的智力精英现象。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.03091v1",
+      "title": "CASCADE: A Cascading Architecture for Social Coordination with Controllable Emergence at Low Cost",
+      "abstract": "Creating scalable and believable game societies requires balancing authorial control with computational cost. Existing scripted NPC systems scale efficiently but are often rigid, whereas fully LLM-driven agents can produce richer social behavior at a much higher runtime cost. We present CASCADE, a three-layer architecture for low-cost, controllable social coordination in sandbox-style game worlds. A Macro State Director (Level 1) maintains discrete-time world-state variables and macro-level causal updates, while a modular Coordination Hub decomposes state changes through domain-specific components (e.g., professional and social coordination) and routes the resulting directives to tag-defined groups. Then Tag-Driven NPCs (Level 3) execute responses through behavior trees and local state/utility functions, invoking large language models only for on-demand player-facing interactions. We evaluate CASCADE through multiple micro-scenario prototypes and trace-based analysis, showing how a shared macro event can produce differentiated yet logically constrained NPC behaviors without per-agent prompting in the main simulation loop. CASCADE provides a modular foundation for scalable social simulation and future open-world authoring tools.",
+      "authors": [
+        "Yizhi Xu"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-04-03T15:16:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.03091v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLM-driven agents for believable game societies and social coordination",
+      "llm_evidence_cn": "用于可信游戏社会和社会协调的大模型驱动智能体",
+      "llm_evidence": "用于可信游戏社会和社会协调的大模型驱动智能体",
+      "canonical_evidence": "用于可信游戏社会和社会协调的大模型驱动智能体",
+      "llm_tldr_en": "A three-layer architecture for low-cost, controllable social coordination in multi-agent game worlds.",
+      "llm_tldr_cn": "一种用于多智能体游戏世界中低成本、可控社会协调的三层架构。",
+      "llm_tldr": "一种用于多智能体游戏世界中低成本、可控社会协调的三层架构。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.02677v1",
+      "title": "Beyond the AI Tutor: Social Learning with LLM Agents",
+      "abstract": "Most AI-based educational tools today adopt a one-on-one tutoring paradigm, pairing a single LLM with a single learner. Yet decades of learning science research suggest that multi-party interaction -- through peer modeling, co-construction, and exposure to diverse perspectives -- can produce learning benefits that dyadic tutoring alone cannot. In this paper, we investigate whether multi-agent LLM configurations can enhance learning outcomes beyond what a single LLM tutor provides. We present two controlled experiments spanning distinct learning contexts. In a convergent problem-solving study ($N=315$), participants tackle SAT-level math problems in a 2$\\times$2 design that varies the presence of an LLM tutor and LLM peers, each making different kinds of errors (conceptual vs.\\ arithmetic); participants who interacted with both a tutor and peers achieved the highest unassisted test accuracy. In a divergent composition study ($N=247$), participants write argumentative and creative essays with either no AI assistance, a single LLM (Claude or ChatGPT), or both Claude and ChatGPT together; while both LLM conditions improved essay quality, only the two-agent condition avoided the idea-level homogeneity that single-model assistance was found to produce. Together, these studies offer one of the first controlled investigations of multi-agent LLM learning environments, probing whether the move from one-on-one AI tutoring toward richer agent configurations can unlock the collaborative and observational benefits long documented in human social learning research.",
+      "authors": [
+        "Harsh Kumar",
+        "Zi Kang",
+        "Mu",
+        "Jonathan Vincentius",
+        "Ashton Anderson"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.CY"
+      ],
+      "published": "2026-04-03T03:17:30+00:00",
+      "link": "https://arxiv.org/pdf/2604.02677v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "social learning and multi-party interaction with LLM agents",
+      "llm_evidence_cn": "LLM智能体的社会化学习与多方交互",
+      "llm_evidence": "LLM智能体的社会化学习与多方交互",
+      "canonical_evidence": "LLM智能体的社会化学习与多方交互",
+      "llm_tldr_en": "Explores how multi-agent configurations enhance learning outcomes through social interaction.",
+      "llm_tldr_cn": "探讨多智能体配置如何通过社会交互增强学习效果。",
+      "llm_tldr": "探讨多智能体配置如何通过社会交互增强学习效果。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.01936v1",
+      "title": "Reliable News or Propagandist News? A Neurosymbolic Model Using Genre, Topic, and Persuasion Techniques to Improve Robustness in Classification",
+      "abstract": "Among news disorders, propagandist news are particularly insidious, because they tend to mix oriented messages with factual reports intended to look like reliable news. To detect propaganda, extant approaches based on Language Models such as BERT are promising but often overfit their training datasets, due to biases in data collection. To enhance classification robustness and improve generalization to new sources, we propose a neurosymbolic approach combining non-contextual text embeddings (fastText) with symbolic conceptual features such as genre, topic, and persuasion techniques. Results show improvements over equivalent text-only methods, and ablation studies as well as explainability analyses confirm the benefits of the added features.   Keywords: Information disorder, Fake news, Propaganda, Classification, Topic modeling, Hybrid method, Neurosymbolic model, Ablation, Robustness",
+      "authors": [
+        "Géraud Faye",
+        "Benjamin Icard",
+        "Morgane Casanova",
+        "Guillaume Gadek",
+        "Guillaume Gravier",
+        "Wassila Ouerdane",
+        "Céline Hudelot",
+        "Sylvain Gatepaille",
+        "Paul Égré"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-02T11:57:18+00:00",
+      "link": "https://arxiv.org/pdf/2604.01936v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Propaganda and news disorder detection using neurosymbolic models",
+      "llm_evidence_cn": "使用神经符号模型进行宣传和新闻失序检测",
+      "llm_evidence": "使用神经符号模型进行宣传和新闻失序检测",
+      "canonical_evidence": "使用神经符号模型进行宣传和新闻失序检测",
+      "llm_tldr_en": "Enhances news classification robustness against propaganda using genre and persuasion features.",
+      "llm_tldr_cn": "利用体裁和说服技术特征增强新闻分类模型对宣传内容的鲁棒性。",
+      "llm_tldr": "利用体裁和说服技术特征增强新闻分类模型对宣传内容的鲁棒性。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.02713v1",
+      "title": "Breakdowns in Conversational AI: Interactional Failures in Emotionally and Ethically Sensitive Contexts",
+      "abstract": "Conversational AI is increasingly deployed in emotionally charged and ethically sensitive interactions. Previous research has primarily concentrated on emotional benchmarks or static safety checks, overlooking how alignment unfolds in evolving conversation. We explore the research question: what breakdowns arise when conversational agents confront emotionally and ethically sensitive behaviors, and how do these affect dialogue quality? To stress-test chatbot performance, we develop a persona-conditioned user simulator capable of engaging in multi-turn dialogue with psychological personas and staged emotional pacing. Our analysis reveals that mainstream models exhibit recurrent breakdowns that intensify as emotional trajectories escalate. We identify several common failure patterns, including affective misalignments, ethical guidance failures, and cross-dimensional trade-offs where empathy supersedes or undermines responsibility. We organize these patterns into a taxonomy and discuss the design implications, highlighting the necessity to maintain ethical coherence and affective sensitivity throughout dynamic interactions. The study offers the HCI community a new perspective on the diagnosis and improvement of conversational AI in value-sensitive and emotionally charged contexts.",
+      "authors": [
+        "Jiawen Deng",
+        "Wentao Zhang",
+        "Ziyun Jiao",
+        "Fuji Ren"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-03T04:10:46+00:00",
+      "link": "https://arxiv.org/pdf/2604.02713v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Persona-conditioned user simulator for multi-turn dialogue",
+      "llm_evidence_cn": "用于多轮对话的角色条件用户模拟器",
+      "llm_evidence": "用于多轮对话的角色条件用户模拟器",
+      "canonical_evidence": "用于多轮对话的角色条件用户模拟器",
+      "llm_tldr_en": "Develops a user simulator to test conversational agents in emotionally and ethically sensitive social contexts.",
+      "llm_tldr_cn": "开发用户模拟器，用于在情感和伦理敏感的社会语境下测试对话智能体。",
+      "llm_tldr": "开发用户模拟器，用于在情感和伦理敏感的社会语境下测试对话智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.02770v1",
+      "title": "Improving Role Consistency in Multi-Agent Collaboration via Quantitative Role Clarity",
+      "abstract": "In large language model (LLM)-driven multi-agent systems, disobey role specification (failure to adhere to the defined responsibilities and constraints of an assigned role, potentially leading to an agent behaving like another) is a major failure mode \\cite{DBLP:journals/corr/abs-2503-13657}. To address this issue, in the present paper, we propose a quantitative role clarity to improve role consistency. Firstly, we construct a role assignment matrix $S(φ)=[s_{ij}(φ)]$, where $s_{ij}(φ)$ is the semantic similarity between the $i$-th agent's behavior trajectory and the $j$-th agent's role description. Then we define role clarity matrix $M(φ)$ as $\\text{softmax}(S(φ))-I$, where $\\text{softmax}(S(φ))$ is a row-wise softmax of $S(φ)$ and $I$ is the identity matrix. The Frobenius norm of $M(φ)$ quantifies the alignment between agents' role descriptions and their behaviors trajectory. Moreover, we employ the role clarity matrix as a regularizer during lightweight fine-tuning to improve role consistency, thereby improving end-to-end task performance. Experiments on the ChatDev multi-agent system show that our method substantially improves role consistency and task performance: with Qwen and Llama, the role overstepping rate decreases from $46.4\\%$ to $8.4\\%$ and from $43.4\\%$ to $0.2\\%$, respectively, and the role clarity score increases from $0.5328$ to $0.9097$ and from $0.5007$ to $0.8530$, respectively, the task success rate increases from $0.6769$ to $0.6909$ and from $0.6174$ to $0.6763$, respectively.",
+      "authors": [
+        "Guoling Zhou",
+        "Wenpei Han",
+        "Fengqin Yang",
+        "Li Wang",
+        "Yingcong Zhou",
+        "Zhiguo Fu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-03T06:28:59+00:00",
+      "link": "https://arxiv.org/pdf/2604.02770v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Improving role consistency in LLM-driven multi-agent systems",
+      "llm_evidence_cn": "提高大语言模型驱动的多智能体系统中的角色一致性",
+      "llm_evidence": "提高大语言模型驱动的多智能体系统中的角色一致性",
+      "canonical_evidence": "提高大语言模型驱动的多智能体系统中的角色一致性",
+      "llm_tldr_en": "Proposes quantitative role clarity to ensure agents adhere to assigned responsibilities in multi-agent systems.",
+      "llm_tldr_cn": "提出定量角色清晰度方法，以确保多智能体系统中智能体遵循分配的角色职责。",
+      "llm_tldr": "提出定量角色清晰度方法，以确保多智能体系统中智能体遵循分配的角色职责。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2603.27910v1",
+      "title": "GAAMA: Graph Augmented Associative Memory for Agents",
+      "abstract": "AI agents that interact with users across multiple sessions require persistent long-term memory to maintain coherent, personalized behavior. Current approaches either rely on flat retrieval-augmented generation (RAG), which loses structural relationships between memories, or use memory compression and vector retrieval that cannot capture the associative structure of multi-session conversations. There are few graph based techniques proposed in the literature, however they still suffer from hub dominated retrieval and poor hierarchical reasoning over evolving memory. We propose GAAMA, a graph-augmented associative memory system that constructs a concept-mediated hierarchical knowledge graph through a three-step pipeline: (1)~verbatim episode preservation from raw conversations, (2)~LLM-based extraction of atomic facts and topic-level concept nodes, and (3)~synthesis of higher-order reflections. The resulting graph uses four node types (episode, fact, reflection, concept) connected by five structural edge types, with concept nodes providing cross-cutting traversal paths that complement semantic similarity. Retrieval combines cosine-similarity-based $k$-nearest neighbor search with edge-type-aware Personalized PageRank (PPR) through an additive scoring function. On the LoCoMo-10 benchmark (1,540 questions across 10 multi-session conversations), GAAMA achieves 78.9\\% mean reward, outperforming a tuned RAG baseline (75.0\\%), HippoRAG (69.9\\%), A-Mem (47.2\\%), and Nemori (52.1\\%). Ablation analysis shows that augmenting graph-traversal-based ranking (Personalized PageRank) with semantic search consistently improves over pure semantic search on graph nodes (+1.0 percentage point overall).",
+      "authors": [
+        "Swarna Kamal Paul",
+        "Shubhendu Sharma",
+        "Nitin Sareen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.IR",
+        "cs.MA"
+      ],
+      "published": "2026-03-29T23:33:38+00:00",
+      "link": "https://arxiv.org/pdf/2603.27910v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "long-term memory for agents to maintain coherent social behavior",
+      "llm_evidence_cn": "智能体维持连贯社会行为的长期记忆",
+      "llm_evidence": "智能体维持连贯社会行为的长期记忆",
+      "canonical_evidence": "智能体维持连贯社会行为的长期记忆",
+      "llm_tldr_en": "Proposes a graph-augmented memory system for agents to maintain personalized behavior across sessions.",
+      "llm_tldr_cn": "提出了一种图增强记忆系统，使智能体能够跨会话维持个性化行为。",
+      "llm_tldr": "提出了一种图增强记忆系统，使智能体能够跨会话维持个性化行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2603.29020v1",
+      "title": "Emergence WebVoyager: Toward Consistent and Transparent Evaluation of (Web) Agents in The Wild",
+      "abstract": "Reliable evaluation of AI agents operating in complex, real-world environments requires methodologies that are robust, transparent, and contextually aligned with the tasks agents are intended to perform. This study identifies persistent shortcomings in existing AI agent evaluation practices that are particularly acute in web agent evaluation, as exemplified by our audit of WebVoyager, including task-framing ambiguity and operational variability that hinder meaningful and reproducible performance comparisons. To address these challenges, we introduce Emergence WebVoyager, an enhanced version of the WebVoyager benchmark that standardizes evaluation methodology through clear guidelines for task instantiation, failure handling, annotation, and reporting. Emergence WebVoyager achieves an inter-annotator agreement of 95.9\\%, indicating improved clarity and reliability in both task formulation and evaluation. Applying this framework to evaluate OpenAI Operator reveals substantial performance variation across domains and task types, with an overall success rate of 68.6\\%, substantially lower than the 87\\% previously reported by OpenAI, demonstrating the utility of our approach for more rigorous and comparable web agent evaluation.",
+      "authors": [
+        "Deepak Akkil",
+        "Mowafak Allaham",
+        "Amal Raj",
+        "Tamer Abuelsaad",
+        "Ravi Kokku"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-03-30T21:27:28+00:00",
+      "link": "https://arxiv.org/pdf/2603.29020v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evaluation of AI agents in complex real-world environments",
+      "llm_evidence_cn": "复杂真实环境下AI智能体的评估",
+      "llm_evidence": "复杂真实环境下AI智能体的评估",
+      "canonical_evidence": "复杂真实环境下AI智能体的评估",
+      "llm_tldr_en": "Standardizes evaluation for web agents to ensure consistency and transparency in the wild.",
+      "llm_tldr_cn": "为Web智能体引入标准化评估基准，以解决真实环境下的评估不一致问题。",
+      "llm_tldr": "为Web智能体引入标准化评估基准，以解决真实环境下的评估不一致问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.02988v1",
+      "title": "Self-Optimizing Multi-Agent Systems for Deep Research",
+      "abstract": "Given a user's complex information need, a multi-agent Deep Research system iteratively plans, retrieves, and synthesizes evidence across hundreds of documents to produce a high-quality answer. In one possible architecture, an orchestrator agent coordinates the process, while parallel worker agents execute tasks. Current Deep Research systems, however, often rely on hand-engineered prompts and static architectures, making improvement brittle, expensive, and time-consuming. We therefore explore various multi-agent optimization methods to show that enabling agents to self-play and explore different prompt combinations can produce high-quality Deep Research systems that match or outperform expert-crafted prompts.",
+      "authors": [
+        "Arthur Câmara",
+        "Vincent Slot",
+        "Jakub Zavrel"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.AI"
+      ],
+      "published": "2026-04-03T11:48:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.02988v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent Deep Research system with orchestrator and worker agents",
+      "llm_evidence_cn": "包含协调者和工作者智能体的多智能体深度研究系统",
+      "llm_evidence": "包含协调者和工作者智能体的多智能体深度研究系统",
+      "canonical_evidence": "包含协调者和工作者智能体的多智能体深度研究系统",
+      "llm_tldr_en": "Explores self-optimizing multi-agent systems for complex information retrieval and synthesis tasks.",
+      "llm_tldr_cn": "探索用于复杂信息检索和综合任务的自优化多智能体系统。",
+      "llm_tldr": "探索用于复杂信息检索和综合任务的自优化多智能体系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.00477v1",
+      "title": "Logarithmic Scores, Power-Law Discoveries: Disentangling Measurement from Coverage in Agent-Based Evaluation",
+      "abstract": "LLM-based agent judges are an emerging approach to evaluating conversational AI, yet a fundamental uncertainty remains: can we trust their assessments, and if so, how many are needed? Through 960 sessions with two model pairs across 15 tasks, we show that persona-based agent judges produce evaluations indistinguishable from human raters in a Turing-style validation. We then identify a score-coverage dissociation: quality scores improve logarithmically with panel size, while unique issue discoveries follow a sublinear power law-both exhibit diminishing returns, but scores saturate roughly twice as fast as discoveries. We hypothesize this reflects a power law distribution of the finding space: critical issues are discovered first by small panels, while corner cases require progressively larger panels, analogous to species accumulation curves in ecology. The mechanism traces to ensemble diversity-Big Five personality conditioning makes agents probe different quality dimensions, with expert judges acting as adversarial probes that push discovery into the tail of the finding distribution. A controlled ablation confirms that structured persona conditioning, not simple prompting, is required to produce these scaling properties.",
+      "authors": [
+        "HyunJoon Jung",
+        "William Na"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.HC",
+        "cs.MA"
+      ],
+      "published": "2026-04-01T04:44:21+00:00",
+      "link": "https://arxiv.org/pdf/2604.00477v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "persona-based agent judges for evaluating conversational AI",
+      "llm_evidence_cn": "基于人格的智能体评委用于评估对话式AI",
+      "llm_evidence": "基于人格的智能体评委用于评估对话式AI",
+      "canonical_evidence": "基于人格的智能体评委用于评估对话式AI",
+      "llm_tldr_en": "Analyzes the reliability and coverage of persona-based LLM agents as evaluators for AI systems.",
+      "llm_tldr_cn": "分析了基于人格的大模型智能体作为AI系统评估者的可靠性与覆盖率。",
+      "llm_tldr": "分析了基于人格的大模型智能体作为AI系统评估者的可靠性与覆盖率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.00137v1",
+      "title": "Open, Reliable, and Collective: A Community-Driven Framework for Tool-Using AI Agents",
+      "abstract": "Tool-integrated LLMs can retrieve, compute, and take real-world actions via external tools, but reliability remains a key bottleneck. We argue that failures stem from both tool-use accuracy (how well an agent invokes a tool) and intrinsic tool accuracy (the tool's own correctness), while most prior work emphasizes the former. We introduce OpenTools, a community-driven toolbox that standardizes tool schemas, provides lightweight plug-and-play wrappers, and evaluates tools with automated test suites and continuous monitoring. We also release a public web demo where users can run predefined agents and tools and contribute test cases, enabling reliability reports to evolve as tools change. OpenTools includes the core framework, an initial tool set, evaluation pipelines, and a contribution protocol. Experiments and evaluations show improved end-to-end reproducibility and task performance; community-contributed, higher-quality task-specific tools deliver 6%-22% relative gains over an existing toolbox across multiple agent architectures on downstream tasks and benchmarks, highlighting the importance of intrinsic tool accuracy.",
+      "authors": [
+        "Hy Dang",
+        "Quang Dao",
+        "Meng Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-03-31T18:42:36+00:00",
+      "link": "https://arxiv.org/pdf/2604.00137v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "framework for tool-using AI agents and reliability",
+      "llm_evidence_cn": "使用工具的AI智能体框架与可靠性",
+      "llm_evidence": "使用工具的AI智能体框架与可靠性",
+      "canonical_evidence": "使用工具的AI智能体框架与可靠性",
+      "llm_tldr_en": "Introduces OpenTools, a community-driven framework to improve the reliability of tool-using agents.",
+      "llm_tldr_cn": "引入OpenTools，一个旨在提高工具使用型智能体可靠性的社区驱动框架。",
+      "llm_tldr": "引入OpenTools，一个旨在提高工具使用型智能体可靠性的社区驱动框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00706v1",
+      "title": "AfrIFact: Cultural Information Retrieval, Evidence Extraction and Fact Checking for African Languages",
+      "abstract": "Assessing the veracity of a claim made online is a complex and important task with real-world implications. When these claims are directed at communities with limited access to information and the content concerns issues such as healthcare and culture, the consequences intensify, especially in low-resource languages. In this work, we introduce AfrIFact, a dataset that covers the necessary steps for automatic fact-checking (i.e., information retrieval, evidence extraction, and fact checking), in ten African languages and English. Our evaluation results show that even the best embedding models lack cross-lingual retrieval capabilities, and that cultural and news documents are easier to retrieve than healthcare-domain documents, both in large corpora and in single documents. We show that LLMs lack robust multilingual fact-verification capabilities in African languages, while few-shot prompting improves performance by up to 43% in AfriqueQwen-14B, and task-specific fine-tuning further improves fact-checking accuracy by up to 26%. These findings, along with our release of the AfrIFact dataset, encourage work on low-resource information retrieval, evidence retrieval, and fact checking.",
+      "authors": [
+        "Israel Abebe Azime",
+        "Jesujoba Oluwadara Alabi",
+        "Crystina Zhang",
+        "Iffat Maab",
+        "Atnafu Lambebo Tonja",
+        "Tadesse Destaw Belay",
+        "Folasade Peace Alabi",
+        "Salomey Osei",
+        "Saminu Mohammad Aliyu",
+        "Nkechinyere Faith Aguobi",
+        "Bontu Fufa Balcha",
+        "Blessing Kudzaishe Sibanda",
+        "Davis David",
+        "Mouhamadane Mboup",
+        "Daud Abolade",
+        "Neo Putini",
+        "Philipp Slusallek",
+        "David Ifeoluwa Adelani",
+        "Dietrich Klakow"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-01T10:08:37+00:00",
+      "link": "https://arxiv.org/pdf/2604.00706v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "automatic fact-checking and evidence extraction for social discourse",
+      "llm_evidence_cn": "针对社会话语的自动事实核查与证据提取",
+      "llm_evidence": "针对社会话语的自动事实核查与证据提取",
+      "canonical_evidence": "针对社会话语的自动事实核查与证据提取",
+      "llm_tldr_en": "Presents AfrIFact, a multilingual dataset for fact-checking and information retrieval in African languages.",
+      "llm_tldr_cn": "提出AfrIFact，一个用于非洲语言事实核查和信息检索的多语言数据集。",
+      "llm_tldr": "提出AfrIFact，一个用于非洲语言事实核查和信息检索的多语言数据集。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.00356v1",
+      "title": "Signals: Trajectory Sampling and Triage for Agentic Interactions",
+      "abstract": "Agentic applications based on large language models increasingly rely on multi-step interaction loops involving planning, action execution, and environment feedback. While such systems are now deployed at scale, improving them post-deployment remains challenging. Agent trajectories are voluminous and non-deterministic, and reviewing each one, whether through human review or auxiliary LLMs, is slow and cost-prohibitive. We propose a lightweight, signal-based framework for triaging agentic interaction trajectories. Our approach computes cheap, broadly applicable signals from live interactions and attaches them as structured attributes for trajectory triage, identifying interactions likely to be informative without affecting online agent behavior. We organize signals into a coarse-grained taxonomy spanning interaction (misalignment, stagnation, disengagement, satisfaction), execution (failure, loop), and environment (exhaustion), designed for computation without model calls. In a controlled annotation study on $τ$-bench, a widely used benchmark for tool-augmented agent evaluation, we show that signal-based sampling achieves an 82\\% informativeness rate compared to 74\\% for heuristic filtering and 54\\% for random sampling, with a 1.52x efficiency gain per informative trajectory. The advantage is robust across reward strata and task domains, confirming that signals provide genuine per-trajectory informativeness gains rather than merely oversampling obvious failures. These results show that lightweight signals can serve as practical sampling infrastructure for agentic systems, and suggest a path toward preference data construction and post-deployment optimization.",
+      "authors": [
+        "Shuguang Chen",
+        "Adil Hafeez",
+        "Salman Paracha"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-01T01:08:07+00:00",
+      "link": "https://arxiv.org/pdf/2604.00356v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "triage for agentic interactions in multi-step loops",
+      "llm_evidence_cn": "多步交互循环中智能体交互的分类与筛选",
+      "llm_evidence": "多步交互循环中智能体交互的分类与筛选",
+      "canonical_evidence": "多步交互循环中智能体交互的分类与筛选",
+      "llm_tldr_en": "Proposes a framework for triaging and analyzing voluminous LLM-based agent interaction trajectories.",
+      "llm_tldr_cn": "提出一种轻量级框架，用于对大规模LLM智能体交互轨迹进行筛选和分析。",
+      "llm_tldr": "提出一种轻量级框架，用于对大规模LLM智能体交互轨迹进行筛选和分析。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.00824v2",
+      "title": "Yet Even Less Is Even Better For Agentic, Reasoning, and Coding LLMs",
+      "abstract": "Training effective software engineering agents requires large volumes of task-specific trajectories, incurring substantial data construction costs. Inspired by the \"Less-Is-More\" hypothesis in mathematical reasoning, we investigate its extension to agentic scenarios and propose an end-to-end training framework that achieves superior agentic capabilities with fewer but higher-quality training trajectories. This is achieved via STITCH (Sliding-memory Trajectory Inference and Task Chunking Heuristic), a coarse-to-fine mechanism that filters low-value noise and retains decision-critical tokens to maximize training signal quality. We conduct experiments across multiple agent frameworks (e.g., mini-SWE-agent, MSWE-agent), model scales (30B to 355B), and multilingual settings (Python, Java, and ArkTS). On SWE-bench Verified, models trained with STITCH achieve up to 63.16% relative improvement over base models. On Multi-SWE-bench (Java), MiniMax-M2.5-STITCH achieves 43.75% with our CodeArts Agent scaffold (+16.67%). On HarmonyOS (ArkTS), GLM-4.7-STITCH improves the compilation pass rate to 61.31% (+43.34%) with less than 1K training trajectories. Our results confirm that the \"Less-Is-More\" paradigm generalizes effectively to complex agentic tasks across diverse languages and model scales.",
+      "authors": [
+        "CodeArts Model Team",
+        "Yang Ye",
+        "Jingyuan Tan",
+        "Tianyue Jiang",
+        "Ruizhe Ye",
+        "Qiankun He",
+        "Jiarui Yang",
+        "Jian Dong",
+        "Sicong Liang",
+        "Chongjian Yue",
+        "Peibai Xu",
+        "Lufan Lu",
+        "Shiguan Pang",
+        "Taotao Qian",
+        "Junbao Hu",
+        "Yuechan Hao",
+        "Ensheng Shi",
+        "Qi Zhang",
+        "Yi Hao",
+        "Na Fan",
+        "Xin Tan",
+        "Shuai Yao",
+        "Zhiwei Shen",
+        "Zongchen Li",
+        "Yanlin Wang",
+        "Chong Chen",
+        "Yuchi Ma"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-04-01T12:33:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.00824v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "training framework for agentic capabilities across multiple agent frameworks",
+      "llm_evidence_cn": "跨多个智能体框架的智能体能力训练框架",
+      "llm_evidence": "跨多个智能体框架的智能体能力训练框架",
+      "canonical_evidence": "跨多个智能体框架的智能体能力训练框架",
+      "llm_tldr_en": "Proposes STITCH to improve LLM agent training using high-quality trajectories and noise filtering.",
+      "llm_tldr_cn": "提出STITCH框架，通过高质量轨迹和噪声过滤提升大模型智能体的训练效果。",
+      "llm_tldr": "提出STITCH框架，通过高质量轨迹和噪声过滤提升大模型智能体的训练效果。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.00901v2",
+      "title": "Experience as a Compass: Multi-agent RAG with Evolving Orchestration and Agent Prompts",
+      "abstract": "Multi-agent Retrieval-Augmented Generation (RAG), wherein each agent takes on a specific role, supports hard queries that require multiple steps and sources, or complex reasoning. Existing approaches, however, rely on static agent behaviors and fixed orchestration strategies, leading to brittle performance on diverse, multi-hop tasks. We identify two key limitations: the lack of continuously adaptive orchestration mechanisms and the absence of behavior-level learning for individual agents. To this end, we propose HERA, a hierarchical framework that jointly evolves multi-agent orchestration and role-specific agent prompts. At the global level, HERA optimizes query-specific agent topologies through reward-guided sampling and experience accumulation. At the local level, Role-Aware Prompt Evolution refines agent behaviors via credit assignment and dual-axes adaptation along operational and behavioral principles, enabling targeted, role-conditioned improvements. On six knowledge-intensive benchmarks, HERA achieves an average improvement of 38.69\\% over recent baselines while maintaining robust generalization and token efficiency. Topological analyses reveal emergent self-organization, where sparse exploration yields compact, high-utility multi-agent networks, demonstrating both efficient coordination and robust reasoning.",
+      "authors": [
+        "Sha Li",
+        "Naren Ramakrishnan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-01T13:45:52+00:00",
+      "link": "https://arxiv.org/pdf/2604.00901v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent RAG with evolving orchestration and role-specific prompts",
+      "llm_evidence_cn": "具有演化编排和角色特定提示的多智能体RAG",
+      "llm_evidence": "具有演化编排和角色特定提示的多智能体RAG",
+      "canonical_evidence": "具有演化编排和角色特定提示的多智能体RAG",
+      "llm_tldr_en": "Introduces a hierarchical framework for adaptive orchestration in multi-agent retrieval systems.",
+      "llm_tldr_cn": "引入了一种用于多智能体检索系统中自适应编排的分层框架。",
+      "llm_tldr": "引入了一种用于多智能体检索系统中自适应编排的分层框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.01186v1",
+      "title": "From Validity to Inter-Subjectivity: An Argument for Reliability Signals in Search Environments",
+      "abstract": "Search engines and information platforms are increasingly scrutinized for their role in spreading misinformation. Traditional responses often focus on detecting falsehoods or verifying the ultimate validity of claims. This paper argues that such a validity-centered framing is inadequate for the epistemic challenges of search environments.",
+      "authors": [
+        "Frans van der Sluis"
+      ],
+      "primary_category": "cs.DL",
+      "categories": [
+        "cs.DL",
+        "cs.IR"
+      ],
+      "published": "2026-04-01T17:34:45+00:00",
+      "link": "https://arxiv.org/pdf/2604.01186v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "misinformation and reliability signals in search environments",
+      "llm_evidence_cn": "搜索环境中的虚假信息与可靠性信号",
+      "llm_evidence": "搜索环境中的虚假信息与可靠性信号",
+      "canonical_evidence": "搜索环境中的虚假信息与可靠性信号",
+      "llm_tldr_en": "Argues for inter-subjectivity and reliability signals to combat misinformation in information platforms.",
+      "llm_tldr_cn": "探讨搜索环境中的虚假信息挑战，建议通过可靠性信号提升信息平台的可信度。",
+      "llm_tldr": "探讨搜索环境中的虚假信息挑战，建议通过可靠性信号提升信息平台的可信度。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
