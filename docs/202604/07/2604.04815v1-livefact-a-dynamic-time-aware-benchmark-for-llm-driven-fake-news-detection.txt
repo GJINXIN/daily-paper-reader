@@ -1,0 +1,2114 @@
+Title: LiveFact: A Dynamic, Time-Aware Benchmark for LLM-Driven Fake News Detection
+
+URL Source: https://arxiv.org/pdf/2604.04815v1
+
+Published Time: Tue, 07 Apr 2026 01:55:51 GMT
+
+Number of Pages: 27
+
+Markdown Content:
+## LiveFact: A Dynamic, Time-Aware Benchmark for LLM-Driven Fake News Detection 
+
+Cheng Xu 1,4 Changhong Jin 1 Yingjie Niu 1 Nan Yan 2,4 
+
+Yuke Mei 4 Shuhao Guan 1 Liming Chen 3 M-Tahar Kechadi 1 
+
+> 1
+
+University College Dublin 2 Georgia Institute of Technology  
+
+> 3
+
+Dalian University of Technology 4 Bebxy 
+
+cheng.xu1@ucdconnect.ie tahar.kechadi@ucd.ie 
+
+Abstract 
+
+The rapid development of Large Language Models (LLMs) has transformed fake news de-tection and fact-checking tasks from simple classification to complex reasoning. However, evaluation frameworks have not kept pace. Cur-rent benchmarks are static, making them vulner-able to benchmark data contamination (BDC) and ineffective at assessing reasoning under temporal uncertainty. To address this, we intro-duce LiveFact 1 a continuously updated bench-mark that simulates the real-world "fog of war" in misinformation detection. LiveFact uses dynamic, temporal evidence sets to evaluate models on their ability to reason with evolving, incomplete information rather than on mem-orized knowledge. We propose a dual-mode evaluation: Classification Mode for final verifi-cation and Inference Mode for evidence-based reasoning, along with a component to moni-tor BDC explicitly. Tests with 22 LLMs show that open-source Mixture-of-Experts models, such as Qwen3-235B-A22B, now match or out-perform proprietary state-of-the-art systems. More importantly, our analysis finds a signifi-cant "reasoning gap." Capable models exhibit epistemic humility by recognizing unverifiable claims in early data slices-an aspect traditional static benchmarks overlook. LiveFact sets a sustainable standard for evaluating robust, tem-porally aware AI verification. 
+
+1 Introduction 
+
+Fake news detection has long been a foundational task in Natural Language Processing (NLP) and information verification, evolving from simple lin-guistic analysis to complex system verifications (Guo et al., 2022). Early research treated this as a binary classification problem, relying heavily on feature engineering, such as writing style analysis, word-frequency statistics, and sentiment patterns 
+
+> 1
+
+https://github.com/bebxy/livefact 0 2 4 6 8 10  
+
+> Resource Consumption (USD)
+> 50
+> 55
+> 60
+> 65
+> 70
+> Avg. Performance (%)
+> Qwen3-235B
+> Qwen3-30B
+> Qwen3-32B
+> Qwen3-8B
+> Qwen3-4B Llama-70B
+> Llama-8B
+> DeepSeek-V3
+> GPT-5.2
+> GPT-5.1
+> GPT-4o
+> GPT-4o-mini
+
+14× cheaper     
+
+> # Params
+> 8B 70B 235B
+> Qwen Llama
+> DeepSeek GPT
+
+Figure 1: Cost-performance trade-off on LiveFact (Nov. 2025). Qwen3-235B-A22B-Instruct-2507 achieves the best performance (72.4%), while Qwen3-30B-A3B-Instruct-2507 provides optimal cost-efficiency at 14× lower cost than comparable GPT models. 
+
+(Zhou and Zafarani, 2020). As social media plat-forms proliferated, the scope expanded to include propagation analysis, where researchers modeled the spread of information across networks to iden-tify anomalies (Rocha et al., 2021; Sadeghi et al., 2022; Mishra, 2020; Chen et al., 2023). These traditional approaches laid the groundwork for au-tomated verification, but they were largely con-strained by reliance on static features that cannot capture the semantic depth required for effective detection of fake news (Xu et al., 2025b; Xu and Kechadi, 2025). The advent of Large Language Models (LLMs) has fundamentally transformed this landscape (OpenAI, 2024; Anthropic, 2024; Team et al., 2024), shifting the paradigm from pattern recog-nition to semantic reasoning (Zhang et al., 2024b; Havrilla et al., 2024; Tong et al., 2025). Modern LLMs possess unprecedented capabilities in knowl-1
+
+> arXiv:2604.04815v1 [cs.CL] 6 Apr 2026
+
+edge retrieval, context understanding, and logical inference, enabling them to approach fact-checking with a level of sophistication that mirrors human cognition (Zhang et al., 2025; Xiao et al., 2025; Ma et al., 2024b). The task has consequently evolved from simple "true/false" classification into a com-plex reasoning challenge. Systems are now re-quired to verify claims against multi-hop evidence, identify contradictions in long-form context, and provide interpretable explanations for their verdicts (Liao et al., 2023; Atanasova et al., 2020; Alhindi et al., 2018). This shift has raised the ceiling for what is possible in automated fake news detection. However, there is a critical misalignment be-tween the rapid advancement of LLMs and the stagnation of the benchmarks used to evaluate them (Xu and Yan, 2025). The field of fake news detec-tion has not kept pace with the generative AI rev-olution, leading to a "capability-evaluation gap." Current mainstream benchmarks remain static, of-fering fixed snapshots of information that cannot challenge the dynamic capabilities of modern mod-els (e.g., OpenAI’s latest GPT-5.2 model has a knowledge cutoff of August 2025 2). They typically present a "God-view" scenario in which all relevant evidence is perfectly aggregated, ignoring the tem-poral nuances and information scarcity, which de-fine real-world fake news detection. Furthermore, because these static datasets are frequently ingested into the massive training corpora of LLMs, they carry high risks of Benchmark Data Contamination (BDC) (Xu et al., 2024; Sun et al., 2025), making it difficult to discern whether a model is genuinely reasoning or merely reciting memorized training data (Lee et al., 2022; Sainz et al., 2023; Zhou et al., 2023; McIntosh et al., 2024; Deng et al., 2024). The root cause of these limitations lies in the static nature of dataset construction, which directly conflicts with the evolving nature of news and the continuous pre-training of LLMs (White et al., 2025; Chen et al., 2025b). To bridge this gap, we must fundamentally rethink evaluation paradigms. A robust solution requires transitioning from static archives to dynamic, living benchmarks that con-tinuously update with the news cycle. Furthermore, evaluation must move beyond simple fact retrieval to test reasoning under uncertainty, simulating the "fog of war" where evidence is incomplete or evolv-ing. Only by controlling for time and BDC can we 
+
+> 2https://platform.openai.com/docs/models/ gpt-5.2
+
+accurately measure an LLM’s true utility as a fake news detection assistant. To address these issues, we introduce LiveFact ,a benchmark designed to rigorously evaluate fake news detection with LLMs in a dynamic environ-ment. LiveFact specifically contributes the follow-ing: 1. Dynamic Benchmarking: We continuously update the dataset on a monthly basis using the latest news, ensuring zero-shot evaluation on unseen events and minimizing BDC risk. 2. Sustainable Contamination Monitoring: 
+
+We employ Semantic Sensitivity Amplifier (SSA) framework (Xu et al., 2025b) with en-tity shift mechanism to explicitly measure and mitigate memorization risks. 3. Fine-Grained Temporal Evidence: We uti-lize dynamic time-sliced evidence sets (e.g., 
+
+E(−3) vs. E(+3) ) to simulate real-world infor-mation evolution. 4. Dual-Mode Evaluation: We employ both Inference Mode (reasoning based on avail-able evidence) and Classification Mode (knowledge-based verification) to disentangle reasoning skills from internal knowledge. 
+
+2 Related Work 
+
+The early era of fake news detection was defined by static datasets and feature-based learning. Pio-neering benchmarks such as LIAR (Wang, 2017) and FakeNewsNet (Shu et al., 2020) provided la-beled short statements from political contexts, en-abling classifiers that rely on linguistic cues and metadata. Subsequent iterations, such as LIAR-PLUS (Alhindi et al., 2018) and LIAR2 (Xu and Kechadi, 2024, 2023), attempted to add evidence context, while other datasets focused on social con-text and propagation graphs (Meyers et al., 2020; Gong et al., 2023; Zhu et al., 2024; Si et al., 2023; Huang et al., 2025; Cao et al., 2025; Zheng et al., 2025). While foundational, these benchmarks are not adequate for LLMs. They are typically small-scale, domain-specific (often limited to U.S. pol-itics), and, most critically, static. Thus, modern LLMs, which have likely seen this data during pre-training, can solve them via memorization rather than reasoning (White et al., 2025). Furthermore, the evidence in these older datasets is often sim-plistic, lacking the multi-hop complexity required 2Benchmark Author Type Update Evidence Temporal BDC Control Evaluation Focus                                                                                                                        
+
+> LIAR Wang (2017) Static ✗✗✗✗Classification LIAR-PLUS Alhindi et al. (2018) Static ✗✓✗✗Classification FEVER Thorne et al. (2018) Static ✗✓✗✗Classification HotpotQA Yang et al. (2018) Static ✗✓✗✗Reasoning NELA-GT-2018 Nørregaard et al. (2019) Static ✗✗✗✗Classification FakeNewsNet Shu et al. (2020) Static ✗✗✗✗Classification HoVer Jiang et al. (2020) Static ✗✓✗✗Reasoning PolitiHop Ostrowski et al. (2021) Static ✗✓✗✗Reasoning CHECKED Yang et al. (2021) Static ✗✓✓✗Classification Weibo23 Liu et al. (2024) Static ✗✓✗✗Classification MCFEND Li et al. (2024) Static ✗✓✗✗Classification FineFake Zhou et al. (2024) Static ✗✓✗✗Classification MultiHoax Shafiei et al. (2025) Static ✗✓✗✗Reasoning MMFakeBench Liu et al. (2025) Static ✗✓✗✗Classification MPPFND Zhao et al. (2025) Static ✗✓✓✗Classification TripleFact Xu and Yan (2025) Dynamic ✗✓✗Medium Classification LiveFact Ours Dynamic ✓✓✓High Reasoning & Classification
+
+Table 1: Comparison of LiveFact with existing representative fake news detection benchmarks. 
+
+to evaluate current generative models (Ostrowski et al., 2021). As LLMs have become widely used, research has shifted toward more complex, reasoning-intensive frameworks. MultiHoax (Shafiei et al., 2025) introduced false-premise questions to test critical thinking, while MMCV (Wang et al., 2025) extended verification into the multimodal domain. MUSER (Liao et al., 2023) and MSynFD (Xiao et al., 2024) introduced multi-step retrieval and syntax-aware mechanisms to handle complex nar-rative structures. Similarly, EX-FEVER (Ma et al., 2024a) emphasized explainability, requiring mod-els to generate reasoning paths. While these works represent a significant leap forward in task com-plexity, they still rely on static data snapshots, leav-ing them vulnerable to the rapid obsolescence and contamination inherent in fixed datasets. Despite these advancements, we face a "validity crisis" stemming from BDC and the lack of tempo-ral realism (Xu et al., 2025a; Zhang et al., 2024a). Static benchmarks cannot guarantee that a model is reasoning on unseen data and do not capture the temporal constraints of real-world verification (Walter et al., 2020; Chen et al., 2025a). The benchmark most closely aligned with Live-Fact’s philosophy is LiveBench 3 (White et al., 2025), which uses a regularly updated design to mitigate contamination. However, LiveBench is not designed for fake news detection; instead, it evaluates general LLM capabilities such as coding, mathematics, and data analysis. Consequently, it lacks the specific evidential reasoning structures 
+
+> 3
+
+https://livebench.ai/ 
+
+required to verify complex claims in the misinfor-mation domain. In the realm of fake news detection, the most recent attempt is TripleFact (Xu and Yan, 2025). However, it remains a highly limited concep-tual framework. Due to strict data copyright issues, the TripleFact dataset cannot be publicly released, and it lacks critical components such as continuous updates and temporal evidence slicing. Addition-ally, other recent benchmarks like FreeEval (Yu et al., 2024) and TreeEval (Li et al., 2025c) in-corporate advanced evaluation methodologies, but they do not address the specific constraints of the fake news detection domain. To the best of our knowledge, as shown in Table 1, LiveFact is the first fake news detection bench-mark to simultaneously address dynamic updates, contamination control, and temporal reasoning, fill-ing the critical gaps left by existing works. 
+
+3 The LiveFact Benchmark 
+
+3.1 Motivation 
+
+LiveFact is designed around three core principles that address the limitations identified in Section 2. First, to combat BDC, we implement continuous monthly updates using the latest news events, en-suring evaluation data remain unseen during model pre-training. Second, to assess genuine reasoning rather than knowledge retrieval, we introduce a 
+
+temporal evidence structure that simulates the "fog of war"—providing models with evidence sets of varying completeness ( E(δ)) to test their ability to recognize information gaps. Third, to disentangle reasoning from memorization, we employ a dual-mode evaluation : Classification Mode tests fac-3Stage 5 - BDC Risk Monitoring Implementation (SSA)                                   
+
+> Perform Entity Shift
+> →Create Parallel "Shifted" Dataset ( ,,)
+> Stage 1 - Event Retrieval (Daily)
+> Scrape High-Impact News (Google News API)
+> →Deduplicate & Filter →Core Event Set
+> Stage 2 - Time-Aware Evidence Construction
+> Query bounded by timestamps (,,)
+> →Temporal Evidence Sets (,,)
+> Stage 3 - Generative Claim & Context
+> Synthesize from News & Evidence
+> →Generate Background Context ( ) & Claims ( ) with labels
+> Stage 4 - Human-in-the-Loop Verification
+> Verify factual accuracy, correct inconsistencies
+> →Refine labels for Dual-Mode Evaluation
+> LiveFact Monthly Release
+> (Original & Shifted Data)
+> Formal Problem Definition
+> Model Prediction
+> (Pre-Event) (Post-Event) (Headline Date)
+> (Past Evidence)
+> (At Event Evidence)
+> (Post Event Evidence)
+> Select Time Slice ( )
+> Claim ( ) & Context ( )Input Instance Tested LLM ()
+> Verdict
+> Dual-Mode Evaluation
+> BDC Risk Monitoring (SSA)
+> Verdict
+> 1. Prediction Mode (Classification)
+> Goal: Definitive Knowledge-based Verification
+> 2. Inference Mode (Reasoning)
+> Goal: Evidence-Constraint Reasoning
+> Definitive, Time-Invariant Ground Truth ( )
+> Definitive, Time-Invariant Ground Truth ( )
+> Shifted Instance
+> ()
+> Entity Shift Mechanism (e.g., "Trump" →"Wannetta")
+> SSA Factor
+> Quantities Memorization Risk
+> Tested LLM Evaluation
+> Compare Predictions
+> →Overturn Rate
+> 𝟙
+> Original Instance
+> ()
+> Tested LLM Evaluation
+> Performance Difference
+
+A. LiveFact Monthly Development Pipeline B. Problem Formalism & Temporal Data Structure ("Fog of War") 
+
+C. Dual-Mode Evaluation & BDC Risk Monitoring (SSA Framework) Figure 2: The overall framework of the LiveFact Benchmark. (A) The Monthly Development Pipeline illustrates the continuous process of acquiring real-time events, generating claims and context via LLMs, and performing human verification. (B) The Problem Formalism specifies the task as conditional reasoning under temporal constraints, utilizing time-sliced evidence sets (e.g., Pre-Event E(−3) vs. Post-Event E(+3) ) to simulate the "fog of war." (C) The Evaluation framework details the Dual-Mode approach (separating Prediction vs. Inference capabilities) and the integration of the SSA Framework to quantify BDC risk via entity shift mechanism. 
+
+tual accuracy against ground truth, while Inference Mode tests whether models appropriately predict "Ambiguous" when evidence is insufficient. These principles are formalized in the following section. 
+
+3.2 Problem Definition 
+
+We formalize the LiveFact task as a conditional reasoning problem under temporal constraints. Let 
+
+E = {e1, e 2, . . . , e M } denote a set of M news events, where each event ej is associated with a headline date Tj . For each event ej , we construct a set of claims Cj = {cj, 1, c j, 2, . . . }, where each claim c ∈ C j is a statement about event ej . We de-note the full dataset as D = {(ci, e (ci), k i, y i)}Ni=1 ,consisting of N claim instances, where e(ci) de-notes the event associated with claim ci, ki is the static background context describing the fun-damental entities involved (e.g., "Donald Trump is the current President of the United States..."), and yi ∈ Y is the ground-truth label with Y =
+
+{REAL , FAKE , AMBIGUOUS }.To simulate the "fog of war" inherent in real-time verification, we construct time-sliced evidence sets based on the headline date of each event. For an event with headline date T , we define E(δ) as the evidence set containing only information available up to day T + δ, where δ ∈ {− 3, 0, +3 } repre-sents the temporal offset in days. For instance, 
+
+E(−3) contains evidence published at least three days before the event, E(0) includes evidence up to the headline date, and E(+3) incorporates evidence available three days after the event. Given a LLMs fθ parameterized by θ, the model predicts a verdict based on the claim, time-sliced evidence, and background context: 
+
+ˆy(δ)
+
+i = fθ
+
+ ci, E (δ)
+
+i , k i
+
+ (1) where E(δ)
+
+i denotes the evidence set at temporal offset δ for the event associated with claim ci, and 
+
+ˆy(δ)
+
+i ∈ Y is the predicted label. We evaluate models under two distinct modes: • Classification Mode (m = CLS ): The ground-truth label yCLS 
+
+i is the definitive, time-invariant verification label representing the ultimate factual status of the claim. • Inference Mode (m = INF ): The ground-truth label yINF ,(δ)
+
+i is dynamic, determined by whether the partial evidence E(δ)
+
+i is sufficient to support a correct judgment at the given tem-poral offset. Let m ∈ { CLS , INF } denote the evaluation mode, and let ym, (δ)
+
+i denote the corresponding ground-truth label (where yCLS ,(δ)
+
+i = yCLS 
+
+i is time-invariant for Classification Mode). We measure performance using accuracy and macro-averaged F1 score: 
+
+Acc mδ = 1
+
+N
+
+NX
+
+i=1 
+
+⊮ˆy(δ)
+
+i = ym, (δ)
+
+i
+
+ (2) 4F1 mδ = 1
+
+|Y| 
+
+X
+
+> y∈Y
+
+2 · P m, (δ) 
+
+> y
+
+· Rm, (δ)
+
+> y
+
+P m, (δ) 
+
+> y
+
++ Rm, (δ)
+
+> y
+
+(3) where ⊮[·] is the indicator function that returns 1 if the condition is true and 0 otherwise, and P m, (δ)
+
+> y
+
+and Rm, (δ) 
+
+> y
+
+denote precision and recall for class y ∈Y under mode m at temporal offset δ, respectively. To monitor the risk of BDC, we integrate the SSA framework (Xu et al., 2025b). For each in-stance, we generate a counterfactual claim c′ 
+
+> i
+
+via an Entity Shift mechanism, along with correspond-ing shifted evidence E′(δ) 
+
+> i
+
+and context k′
+
+> i
+
+. Key entities are replaced with semantically equivalent but fictional alternatives (e.g., "Trump" → "Wan-netta") to isolate reasoning from memorization. Let 
+
+ˆy′(δ) 
+
+> i
+
+= fθ(c′
+
+> i
+
+, E ′(δ) 
+
+> i
+
+, k ′
+
+> i
+
+) denote the prediction on the shifted instance. We define the Overturn Rate (OTR) as the pro-portion of instances where the model’s prediction changes solely due to entity replacement: 
+
+OTR = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+⊮ˆy(δ)
+
+> i
+
+̸ = ˆ y′(δ)
+
+> i
+
+ (4) Let ∆ denote the performance gap between the original and shifted evaluations: 
+
+∆ = Metric − Metric shift (5) where Metric refers to any evaluation metric (e.g., accuracy or F1 score). The final contamination indicator is: 
+
+SSA Factor = ∆ × OTR × 100 (6) A high SSA-Factor indicates that the model re-lies on spurious correlations or memorized entity-specific knowledge rather than robust evidence-based reasoning. 
+
+3.3 LiveFact Development Pipeline 
+
+As shown in Figure 2, the construction of Live-Fact is a rigorous, multi-stage process designed to ensure data freshness, accuracy, and depth. The pipeline is automated for monthly updates while incorporating human oversight to guarantee qual-ity. For this inaugural iteration, our data collection spanned November 2025. 
+
+3.3.1 Stage 1: Event Retrieval 
+
+We initiate the pipeline by collecting the latest high-impact news events. Using the Google News API, we systematically scrape trending events from the "World" section daily at 00:00 GMT. This ensures a consistent global scope for our dataset. To maintain dataset quality and reduce redundancy, we apply a rigorous deduplication and filtering process, re-moving overlapping storylines and low-relevance items. For the November 2025 cycle, this process yielded a core Event Set of 737 distinct events. 
+
+3.3.2 Stage 2: Time-Aware Evidence Construction 
+
+To support our temporal reasoning analysis ("Fog of War"), we construct evidence sets anchored to specific time offsets relative to the event’s headline date ( T ). We specifically target three distinct tem-poral offsets: δ = −3 (three days prior), δ = 0 
+
+(the event headline date), and δ = +3 (three days post-event). Leveraging Google APIs, we query for information strictly bounded by these timestamps, resulting in three discrete evidence sets for each event: E(−3) , E(0) , and E(+3) . In total, we gath-ered 25,064 distinct pieces of evidence across the 737 events, providing a rich informational back-drop for temporal analysis. Further technical speci-fications are detailed in Appendix A.1. 
+
+3.3.3 Stage 3: Claim and Context Generation 
+
+Once the raw data are aggregated, we employ Ope-nAI’s o4-mini 4, one of the most advanced reason-ing models available, to synthesize the testing com-ponents. We input the main news headline and all associated time-stamped evidence into the model to generate two key outputs: (1) a concise back-ground Context for the entities involved, and (2) a set of Claims categorized into three labels: Real, Ambiguous, and Fake. For the current dataset, this stage produced a total of 4,392 test sample claims, distributed initially as: Real (1,468), Fake (1,451), and Ambiguous (1,473). This balanced generation ensures the model is tested against diverse truth val-ues. Detailed generation prompts and parameters are provided in Appendix A.2. 
+
+3.3.4 Stage 4: Human-in-the-Loop Verification 
+
+To ensure the reliability of our ground truth, all generated content undergoes a strict human review process. Annotators verify the factual accuracy of the generated claims against the retrieved evidence and correct any inconsistencies. 
+
+> 4https://openai.com/index/ introducing-o3-and-o4-mini/
+
+5T 3 T T + 3          
+
+> 40
+> 60
+> 80
+> Score (%)
+> (a) Classification
+> T3TT+ 3
+> (b) Inference
+> Qwen GPT Llama DeepSeek Acc F1
+
+Figure 3: Temporal performance evolution for select model families across δ ∈ {− 3, 0, +3 }. Panel (a) shows Classification Mode, where scores drop at δ = −3 due to the lack of definitive evidence. Panel (b) shows Infer-ence Mode, where robust models recover accuracy by correctly predicting "Ambiguous," narrowing the per-formance gap. 
+
+Crucially, this stage involves refining the labels for our Inference Mode. In this mode, the ground truth is dynamically adjusted based on whether the provided evidence slice ( E(−3) , E(0) , or E(+3) )is sufficient for a human expert to make a correct judgment. For instance, a claim that is factually "Real" might be labeled "Ambiguous" at T − 3
+
+if the confirming evidence had not yet emerged. This adjustment results in significant shifts in label distribution across time slices, as shown in Table 2.                 
+
+> Evidence Set Real Fake Ambiguous Total Claims
+> E(−3) 346 348 3,698 4,392
+> E(0) 1,404 1,390 1,598 4,392
+> E(+3) 1,460 1,443 1,489 4,392
+
+Table 2: Dynamic Label Distribution for Inference Mode (November 2025) 
+
+As illustrated, the δ = −3 set is heavily skewed toward "Ambiguous," reflecting the high uncer-tainty of the "Fog of War" period. As time pro-gresses to δ = 0 and δ = +3 , the distribution nor-malizes as more evidence becomes available. This evolving distribution is a key feature of LiveFact, designed to test temporal adaptability. The com-plete protocol for manual review is documented in Appendix A.2. 
+
+3.3.5 Stage 5: BDC Risk Monitoring 
+
+Finally, we integrate the contamination monitor-ing component by adopting the workflow from the SSA framework (Xu et al., 2025b). To avoid over-reliance on OpenAI models that could lead to po-tential preference leakage (Li et al., 2025a), we employ the Qwen3-235B-A22B model (Yang et al., 2025) at this stage, we perform Entity Shift on the finalized Event Set, Claim Set, and Evidence Set. This process replaces specific named entities with fictional or neutral counterparts while preserving the narrative structure. By evaluating models on this parallel "shifted" dataset, we calculate the per-formance difference and OTR to derive the SSA Factor, providing a quantitative measure of BDC risk for each release cycle. Further details regard-ing this stage are provided in Appendix C.1. 
+
+3.4 Evaluation Metrics 
+
+To rigorously evaluate model performance across different modes and time slices, we employ a com-prehensive set of 12 distinct metrics. We calculate Accuracy (Acc) and F1-Macro Score (F1) for both evaluation modes (Classifica-tion, m = CLS , and Inference, m = INF ) at each of the three temporal offsets ( δ ∈ {− 3, 0, +3 }). While Accuracy provides a general view of per-formance, it can be misleading when classes are imbalanced. As demonstrated in Stage 4 (Table 2), the manual adjustment for Inference Mode cre-ates a severe class imbalance at δ = −3, where "Ambiguous" labels account for nearly 85% of the data. A model that simply guesses "Ambiguous" for every query at δ = −3 would achieve a high accuracy score without performing any genuine reasoning. The F1-Macro score treats all classes equally, preventing the majority class from domi-nating the score. This allows us to rationally eval-uate whether a model can correctly identify the rare "Real" or "Fake" instances that are verifiable at early stages, ensuring a robust assessment of rea-soning capabilities under unbalanced conditions. 
+
+4 Experiments 
+
+4.1 Experiment Setup 
+
+For our main experimental evaluation, we selected 18 representative models to ensure broad cover-age of current LLM capabilities. This selection includes 14 open-source models (spanning the Qwen3, Llama 3, DeepSeek, Kimi, and GPT-OSS families) and 4 closed-source proprietary models (from the OpenAI GPT series). This diverse co-hort ranges in scale from 1 billion to 1 trillion parameters, covering everything from lightweight edge-deployable models to flagship commercial systems. The specific architectural details, param-eter counts, and training methodologies for all 18 models are provided in Appendix B.1. All models were evaluated on the LiveFact November 2025 6Model Eval. Mode Classification Inference Avg.                                                                                                                                                                                                                                                      
+
+> Acc CLS
+> −3Acc CLS
+> 0Acc CLS
+> +3 F1 CLS
+> −3F1 CLS
+> 0F1 CLS
+> +3 Acc INF
+> −3Acc INF
+> 0Acc INF
+> +3 F1 INF
+> −3F1 INF
+> 0F1 INF
+> +3
+> Qwen3-235B-A22B-Instruct-2507 52.25 79.76 82.08 48.63 79.84 82.02 66.67 79.53 81.99 54.47 79.64 81.94 72.40
+> Qwen3-30B-A3B-Instruct-2507 55.24 75.05 77.00 52.39 74.87 76.61 64.55 74.64 76.78 55.37 74.66 76.40 69.46 Qwen3-32B 45.20 70.54 71.86 39.10 68.99 69.93 82.81 71.47 71.86 60.94 69.70 69.91 66.03 Qwen3-8B 50.84 68.88 69.83 49.12 67.79 68.44 60.29 68.67 69.65 53.76 67.82 68.30 63.62 Qwen3-4B-Instruct-2507 45.58 62.20 64.80 38.62 61.84 64.33 37.75 61.57 64.66 38.10 61.81 64.27 55.46 Llama-3.3-70B-Instruct 44.90 69.01 69.76 38.96 63.71 64.17 23.70 66.85 69.44 33.50 62.32 63.93 55.85 Llama-3.1-70B †34.77 33.45 33.47 19.52 16.75 16.80 7.90 31.99 33.29 5.10 16.20 16.73 22.16 Llama-3.1-8B-Instruct 40.69 50.05 50.20 36.53 45.67 45.11 78.69 50.16 50.09 60.26 46.89 45.14 49.96 Llama-3.2-3B †33.42 33.42 33.42 16.70 16.70 16.70 7.88 31.97 33.24 4.87 16.15 16.63 22.76 Llama-3.2-1B †33.38 33.31 33.31 16.74 16.72 16.69 7.90 31.85 33.13 4.89 16.16 16.62 21.72 DeepSeek-V3.1 43.67 64.44 63.73 38.73 66.39 66.31 78.03 64.73 63.83 55.01 66.48 66.38 61.48 Kimi-K2-Thinking ⋆45.97 57.15 54.21 45.34 61.71 59.22 58.13 56.56 54.08 42.07 61.57 59.15 54.60 gpt-oss-120b ⋆55.83 79.94 81.81 52.82 79.79 81.49 62.23 78.89 81.60 50.83 78.97 81.31 72.13 gpt-oss-20b ⋆47.84 65.55 67.42 47.16 61.33 62.32 41.46 64.32 67.28 36.53 61.07 62.34 57.05 gpt-5.2-2025-12-11 47.63 76.34 77.32 42.88 78.20 79.56 80.71 76.25 77.30 64.15 78.30 79.57 71.52 gpt-5.1-2025-11-13 51.89 78.60 81.01 47.66 79.76 82.17 68.44 78.51 80.83 53.68 79.72 81.99 72.02 gpt-4o-2024-08-06 48.84 72.29 73.98 44.45 71.38 72.83 74.61 72.95 74.13 54.99 71.94 72.98 67.11 gpt-4o-mini-2024-07-18 51.94 71.02 71.22 49.06 69.54 69.43 73.86 71.17 71.22 55.92 69.67 69.45 66.12
+
+Table 3: Performance comparison of 18 LLMs on LiveFact (November 2025). Models marked with † are base models without instruction tuning (detailed in Table 5). The best result in each column is bolded , and the second-best result is underlined . The last column, Avg., represents the average of all results tested for this model. The asterisk ⋆
+
+denotes the non-standard evaluation setting required to accommodate verbose Chain-of-Thought (CoT) outputs. 
+
+dataset. Detailed evaluation settings, including in-ference hyperparameters and prompt structures, are outlined in Appendix B.2. 
+
+4.2 General Results & Analysis 
+
+Table 3 presents the comprehensive performance of all 18 models across both Classification and Inference modes. The experimental results demon-strate a significant shift in the competitive land-scape of LLMs for complex reasoning tasks. The Qwen3-235B-A22B-Instruct model not only leads the open-source sector but also outperforms propri-etary flagship models, including gpt-5.1, achiev-ing the highest average score of 72.40%. This dominance of Mixture-of-Experts (MoE) archi-tectures—seen also in the strong performance of DeepSeek-V3.1 (61.48%) despite its massive pa-rameter count—suggests that sparse, high-capacity models are particularly well-suited for the multi-faceted nature of fake news detection, where knowl-edge retrieval must be dynamically routed. In con-trast, traditional dense models like Llama-3.3-70B lag behind their MoE counterparts, highlighting potential limitations in scaling dense architectures for nuanced reasoning tasks. 
+
+4.2.1 Instruction Tuning and Reliability 
+
+The results highlight a critical performance dis-tinction between standard instruction-tuned models and specialized "reasoning" models ( ⋆). Base mod-els ( †) consistently fail to navigate the complex formatting and reasoning constraints of the bench-mark due to structural non-compliance. A more nuanced finding, however, relates to models trained with extensive CoT reinforcement, such as Kimi-K2 and the GPT-OSS series. Initially, these models appeared to fail under standard evaluation settings (128 tokens), yielding near-zero accuracy due to truncated outputs. However, when re-evaluated with an extended limit of 1024 tokens, their perfor-mance rebounded dramatically, with gpt-oss-120b achieving a competitive 72.13% average. This sug-gests that for these architectures, "thinking" is not an optional feature but a structural necessity; they cannot be forced into immediate compliance with-out sacrificing their reasoning capabilities. We ex-plore the inherent trade-offs between this "Think-ing Mode" and standard instruction following in greater depth in Appendix D. 
+
+4.2.2 Validating the LiveFact Paradigm: The "Reasoning Gap" 
+
+A core contribution of LiveFact is its ability to differentiate between simple hallucination and gen-uine evidential reasoning. This differentiation is visualized in Figure 3, which tracks performance across the δ = −3 → δ = 0 → δ = +3 timeline. In Classification Mode, models suffer a severe per-formance drop at δ = −3 because they are forced to predict definitive labels like "Real" even when evidence is absent. However, in Inference Mode, where the ground truth is adjusted to "Ambiguous" 720 0 20 40      
+
+> Gap: Inference - Classification (%)
+> Llama-3.1-8B
+> Qwen3-32B
+> DeepSeek-V3.1
+> GPT-5.2
+> GPT-4o
+> GPT-4o-mini
+> GPT-5.1
+> Qwen3-235B-A22B
+> Kimi-K2
+> Qwen3-8B
+> Qwen3-30B-A3B
+> GPT-OSS-120B
+> GPT-OSS-20B
+> Qwen3-4B
+> Llama-3.3-70B
+> Llama-3.2-1B
+> Llama-3.2-3B
+> Llama-3.1-70B
+> Uncertainty
+> Aware
+> Over-
+> confident
+> Gap@ T3(+)
+> Gap@ T3( )
+> Gap@ T+ 3
+
+Figure 4: Analysis of the "Reasoning Gap" (Inference Score − Classification Score at δ = −3). Models with large positive gaps (green bars) effectively detect in-formation voids ("Uncertainty Aware"). Models with negative or near-zero gaps (red bars) exhibit two failure modes: instruction-tuned models are genuinely "Over-confident," while base models ( †) fail due to format non-compliance rather than reasoning deficits. 
+
+to reflect the lack of evidence, we see a massive recovery in scores for capable models. This phenomenon is further quantified in Fig-ure 4, which plots the "Reasoning Gap" (Infer-ence Accuracy minus Classification Accuracy at 
+
+δ = −3). Models with a large positive gap (e.g., Llama-3.1-8B-Instruct with +38% and Qwen3-32B with +37%) can be characterized as Uncertainty Aware . They correctly identify that the evidence is insufficient and predict "Ambiguous," aligning with the Inference ground truth. In contrast, models with negative or near-zero gaps fall into two distinct failure modes. 
+
+Instruction-tuned models such as Llama-3.3-70B-Instruct and Qwen3-4B exhibit genuine Overcon-fidence : they produce valid classification outputs but continue to hallucinate "Real" or "Fake" ver-dicts regardless of the evidence void. Base mod-els (marked with † in Table 3), however, represent a fundamentally different failure mode. As dis-cussed in Section 4.2.1, models like Llama-3.1-70B lack instruction tuning and fail primarily due to structural non-compliance —they cannot adhere to the required output format ( [[LABEL]] ), result-ing in near-random parsed predictions rather than reasoned overconfidence. This distinction is criti-cal: while overconfident models require improved calibration, base models require alignment training before their reasoning capabilities can be meaning-fully assessed. A detailed confusion matrix anal-ysis in Appendix D.3 further corroborates these findings, revealing that high-performing models ex-hibit clear "diagonalization" at δ = 0 and δ = +3 ,while base models show pathological single-class collapse. 
+
+4.2.3 Efficiency vs. Capability Analysis 
+
+We further analyze the relationship between model scale, cost, and performance using Figure 1. The figure plots the "Efficiency Frontier," revealing a non-linear relationship between resource consump-tion and utility. While massive models like Qwen3-235B-A22B and gpt-5.2 define the state-of-the-art (SOTA), they incur high operational costs ($3.65 - $9.27 per run). A compelling "efficiency sweet spot" emerges with mid-sized MoE models. As highlighted in the figure, Qwen3-30B-Instruct de-livers 69.46% average performance—within 3 per-centage points of the leader—at approximately 14x cheaper cost than gpt-5.2. This suggests that for high-volume, real-time fake news detection applica-tions, well-tuned mid-sized models offer a superior ROI compared to giant foundation models. 
+
+5 Conclusion 
+
+In this paper, we introduced LiveFact, a dynamic, time-aware benchmark designed to address the crit-ical limitations of static fake news detection evalua-tions in the era of LLMs. By shifting the paradigm from simple knowledge retrieval to temporal rea-soning under the "Fog of War," LiveFact provides a rigorous testbed for assessing whether models are genuinely reasoning or merely recalling pre-trained data. Our extensive experiments with 18 diverse LLMs reveal that while SOTA models ex-hibit strong reasoning capabilities, significant gaps remain in "epistemic humility" and instruction ad-herence, particularly among base models. Further-more, we established that mid-sized MoE archi-tectures offer a compelling balance of efficiency and performance. Finally, while the full utility of SSA will be realized through LiveFact’s monthly updates to monitor long-term BDC risk, we have validated its mechanism through a simulated BDC injection experiment detailed in Appendix C. We hope LiveFact serves as a sustainable gold standard, pushing the field toward more robust, transparent, and temporally grounded AI verification systems. 8Limitations 
+
+While LiveFact represents a significant advance-ment in dynamic, time-aware evaluation, we iden-tify three primary limitations in its current iter-ation. First, the current benchmark is predomi-nantly constructed using English-language sources from global news outlets. Consequently, it may not fully capture the cultural nuances, localized disinformation tactics, or linguistic complexities present in non-English regions, where misinforma-tion often proliferates rapidly (Shibu et al., 2025). Future work will aim to expand LiveFact into a multilingual framework, incorporating diverse regional sources to test cross-cultural reasoning capabilities. Second, our current framework fo-cuses exclusively on textual claims and evidence. However, modern misinformation increasingly re-lies on multimodal content, including manipulated images, deepfakes, and decontextualized videos (Jing et al., 2023; Khattar et al., 2019; Hu et al., 2025b). While text-based reasoning is founda-tional, it represents only one facet of the problem. We plan to extend future iterations of LiveFact to include multimodal evidence retrieval and verifi-cation tasks, aligning with the broader trajectory of LVLM (Large Vision-Language Model) devel-opment. Third, although our human-in-the-loop pipeline ensures high-quality ground truth (review synthetic data and ensure semantic consistency of entity shift data), it introduces a bottleneck regard-ing scalability. The requirement for expert review to distinguish between "Ambiguous" and "False" la-bels in Inference Mode limits the volume of claims we can release in each monthly cycle compared to fully synthetic datasets. To address this, we plan to investigate semi-automated verification protocols where reliable "Judge" models—calibrated against our human-verified corpus—can assist in the re-view process, thereby increasing dataset through-put without compromising rigor. 
+
+Ethical Considerations 
+
+We strictly adhere to ethical guidelines regarding data privacy, copyright compliance, and model us-age throughout the development of LiveFact. The application of AI assistants is limited solely to enhancing paper writing. All LLMs utilized in this study were accessed in strict accordance with their respective usage policies. For open-source models (e.g., Llama 3, Qwen3, DeepSeek), we utilized official checkpoints released under their specific community licenses. For proprietary mod-els (e.g., OpenAI GPT series), access was obtained through authorized API endpoints, complying with all terms of service regarding automated evalua-tion and benchmarking. Our evidence retrieval pipeline relies on the Google API. To rigorously respect copyright regulations and intellectual prop-erty rights, we do not scrape, store, or redistribute the full text of news articles. As detailed in Ap-pendix A.1, our dataset retains only minimal meta-data—specifically webpage titles, source names, and publication timestamps—which falls within standard fair use for research purposes, also the data does not contain any privacy-sensitive data beyond public information. This metadata is suf-ficient for models to perform retrieval-augmented reasoning without infringing on publisher content. All data and artifacts produced in LiveFact are in-tended solely for academic research to enhance the safety and reliability of AI systems. We acknowl-edge the dual-use nature of fake news research (Sun et al., 2024; Hu et al., 2025a); however, our focus remains strictly on detection and verification. In all future long-term updates of the LiveFact bench-mark, we commit to maintaining this rigorous stan-dard of compliance, ensuring that all data sourcing and model interactions continue to adhere to evolv-ing legal frameworks and ethical agreements. 
+
+References      
+
+> Tariq Alhindi, Savvas Petridis, and Smaranda Mure-san. 2018. Where is your evidence: Improving fact-checking by justification modeling. In Proceedings of the First Workshop on Fact Extraction and VERi-fication (FEVER) , pages 85–90, Brussels, Belgium. Association for Computational Linguistics. Anthropic. 2024. Introducing the next generation of claude. Pepa Atanasova, Jakob Grue Simonsen, Christina Li-oma, and Isabelle Augenstein. 2020. Generating fact checking explanations. In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics , pages 7352–7364, Online. Association for Computational Linguistics. Han Cao, Lingwei Wei, Wei Zhou, and Songlin Hu. 2025. Enhancing multi-hop fact verification with structured knowledge-augmented large language models. Proceedings of the AAAI Conference on Artificial Intelligence , 39(22):23514–23522. Jianhong Chen, Wenyi Zhang, Hongcai Ma, and Shan Yang. 2023. Rumor detection in social media based on multi-hop graphs and differential time series.
+> Mathematics , 11(16).
+
+9Sanxing Chen, Yukun Huang, and Bhuwan Dhingra. 2025a. Real-time factuality assessment from adver-sarial feedback. In Proceedings of the 63rd Annual Meeting of the Association for Computational Lin-guistics (Volume 1: Long Papers) , pages 1610–1630, Vienna, Austria. Association for Computational Lin-guistics. Simin Chen, Yiming Chen, Zexin Li, Yifan Jiang, Zhongwei Wan, Yixin He, Dezhi Ran, Tianle Gu, Haizhou Li, Tao Xie, and Baishakhi Ray. 2025b. Re-cent advances in large langauge model benchmarks against data contamination: From static to dynamic evaluation. Preprint , arXiv:2502.17521. DeepSeek-AI, Aixin Liu, Bei Feng, Bing Xue, Bingx-uan Wang, Bochao Wu, Chengda Lu, Chenggang Zhao, Chengqi Deng, Chenyu Zhang, Chong Ruan, Damai Dai, Daya Guo, Dejian Yang, Deli Chen, Dongjie Ji, Erhang Li, Fangyun Lin, Fucong Dai, and 181 others. 2025. Deepseek-v3 technical report. 
+
+Preprint , arXiv:2412.19437. Chunyuan Deng, Yilun Zhao, Yuzhao Heng, Yitong Li, Jiannan Cao, Xiangru Tang, and Arman Cohan. 2024. Unveiling the spectrum of data contamination in language model: A survey from detection to reme-diation. In Findings of the Association for Compu-tational Linguistics ACL 2024 , pages 16078–16092, Bangkok, Thailand and virtual meeting. Association for Computational Linguistics. Shuzhi Gong, Richard O. Sinnott, Jianzhong Qi, and Cecile Paris. 2023. Fake news detection through graph-based neural networks: A survey. Preprint ,arXiv:2307.12639. Aaron Grattafiori, Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schel-ten, Alex Vaughan, Amy Yang, Angela Fan, Anirudh Goyal, Anthony Hartshorn, Aobo Yang, Archi Mi-tra, Archie Sravankumar, Artem Korenev, Arthur Hinsvark, and 542 others. 2024. The llama 3 herd of models. Preprint , arXiv:2407.21783. Zhijiang Guo, Michael Schlichtkrull, and Andreas Vla-chos. 2022. A survey on automated fact-checking. 
+
+Transactions of the Association for Computational Linguistics , 10:178–206. Alexander Havrilla, Sharath Chandra Raparthy, Christo-foros Nalmpantis, Jane Dwivedi-Yu, Maksym Zhu-ravinskyi, Eric Hambro, and Roberta Raileanu. 2024. GLore: When, where, and how to improve LLM rea-soning via global and local refinements. In Forty-first International Conference on Machine Learning .Beizhe Hu, Qiang Sheng, Juan Cao, Yang Li, and Dand-ing Wang. 2025a. Llm-generated fake news induces truth decay in news ecosystem: A case study on neu-ral news recommendation. In Proceedings of the 48th International ACM SIGIR Conference on Research and Development in Information Retrieval , SIGIR ’25, page 435–445, New York, NY, USA. Association for Computing Machinery. Lingtong Hu, Zituo Wang, Jiayi Zhu, Yifan Hu, and Xianbing Wang. 2025b. Mage-fend: Multimodal adaptive fusion with guidance from llm expertise for fake news detection on short video platforms. 
+
+Knowledge-Based Systems , 329:114298. Zhongqiang Huang, Dongli Lu, and Ying Sha. 2025. Multi-hop attention diffusion graph neural networks for multimodal fake news detection. In ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) , pages 1–5. Yichen Jiang, Shikha Bordia, Zheng Zhong, Charles Dognin, Maneesh Singh, and Mohit Bansal. 2020. HoVer: A dataset for many-hop fact extraction and claim verification. In Findings of the Association for Computational Linguistics: EMNLP 2020 , pages 3441–3460, Online. Association for Computational Linguistics. Jing Jing, Hongchen Wu, Jie Sun, Xiaochang Fang, and Huaxiang Zhang. 2023. Multimodal fake news de-tection via progressive fusion networks. Information Processing & Management , 60(1):103120. Dhruv Khattar, Jaipal Singh Goud, Manish Gupta, and Vasudeva Varma. 2019. Mvae: Multimodal vari-ational autoencoder for fake news detection. In 
+
+The World Wide Web Conference , WWW ’19, page 2915–2921, New York, NY, USA. Association for Computing Machinery. Katherine Lee, Daphne Ippolito, Andrew Nystrom, Chiyuan Zhang, Douglas Eck, Chris Callison-Burch, and Nicholas Carlini. 2022. Deduplicating training data makes language models better. In Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) ,pages 8424–8445, Dublin, Ireland. Association for Computational Linguistics. Dawei Li, Renliang Sun, Yue Huang, Ming Zhong, Bo-han Jiang, Jiawei Han, Xiangliang Zhang, Wei Wang, and huan liu. 2025a. Preference leakage: A con-tamination problem in LLM-as-a-judge. In Data in Generative Models - The Bad, the Ugly, and the Greats .Sihang Li, Jin Huang, Jiaxi Zhuang, Yaorui Shi, Xi-aochen Cai, Mingjun Xu, Xiang Wang, Linfeng Zhang, Guolin Ke, and Hengxing Cai. 2025b. Scil-itllm: How to adapt llms for scientific literature under-standing. In The Thirteenth International Conference on Learning Representations .Xiang Li, Yunshi Lan, and Chao Yang. 2025c. Treeeval: Benchmark-free evaluation of large language mod-els through tree planning. Proceedings of the AAAI Conference on Artificial Intelligence , 39(23):24485– 24493. Yupeng Li, Haorui He, Jin Bai, and Dacheng Wen. 2024. Mcfend: A multi-source benchmark dataset for chi-nese fake news detection. In Proceedings of the ACM Web Conference 2024 , WWW ’24, page 4018–4027, New York, NY, USA. Association for Computing Machinery. 
+
+10 Hao Liao, Jiahao Peng, Zhanyi Huang, Wei Zhang, Guanghua Li, Kai Shu, and Xing Xie. 2023. Muser: A multi-step evidence retrieval enhancement frame-work for fake news detection. In Proceedings of the 29th ACM SIGKDD Conference on Knowledge Dis-covery and Data Mining , KDD ’23, page 4461–4472, New York, NY, USA. Association for Computing Machinery. Xuannan Liu, Zekun Li, Pei Pei Li, Huaibo Huang, Shuhan Xia, Xing Cui, Linzhi Huang, Weihong Deng, and Zhaofeng He. 2025. MMFakebench: A mixed-source multimodal misinformation detection bench-mark for LVLMs. In The Thirteenth International Conference on Learning Representations .Yahui Liu, Wanlong Bing, Shuai Ren, and Hongliang Ma. 2024. Bc-fnd: An approach based on hierarchi-cal bilinear fusion and multimodal consistency for fake news detection. IEEE Access , 12:62738–62749. Yougang Lyu, Lingyong Yan, Shuaiqiang Wang, Haibo Shi, Dawei Yin, Pengjie Ren, Zhumin Chen, Maarten de Rijke, and Zhaochun Ren. 2024. KnowTun-ing: Knowledge-aware fine-tuning for large language models. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing ,pages 14535–14556, Miami, Florida, USA. Associa-tion for Computational Linguistics. Huanhuan Ma, Weizhi Xu, Yifan Wei, Liuji Chen, Liang Wang, Qiang Liu, Shu Wu, and Liang Wang. 2024a. EX-FEVER: A dataset for multi-hop explainable fact verification. In Findings of the Association for Com-putational Linguistics: ACL 2024 , pages 9340–9353, Bangkok, Thailand. Association for Computational Linguistics. Xiaoxiao Ma, Yuchen Zhang, Kaize Ding, Jian Yang, Jia Wu, and Hao Fan. 2024b. On fake news detection with LLM enhanced semantics mining. In Proceed-ings of the 2024 Conference on Empirical Methods in Natural Language Processing , pages 508–521, Mi-ami, Florida, USA. Association for Computational Linguistics. Timothy R. McIntosh, Teo Susnjak, Tong Liu, Paul Watters, and Malka N. Halgamuge. 2024. Inade-quacies of large language model benchmarks in the era of generative artificial intelligence. Preprint ,arXiv:2402.09880. Marion Meyers, Gerhard Weiss, and Gerasimos Spanakis. 2020. Fake news detection on twitter using propagation structures. In Disinformation in Open Online Media , pages 138–158, Cham. Springer Inter-national Publishing. Rahul Mishra. 2020. Fake news detection using higher-order user to user mutual-attention progression in propagation paths. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recog-nition (CVPR) Workshops .Jeppe Nørregaard, Benjamin D. Horne, and Sibel Adalı. 2019. Nela-gt-2018: A large multi-labelled news dataset for the study of misinformation in news arti-cles. Proceedings of the International AAAI Confer-ence on Web and Social Media , 13(01):630–638. OpenAI, :, Sandhini Agarwal, Lama Ahmad, Jason Ai, Sam Altman, Andy Applebaum, Edwin Arbus, Rahul K. Arora, Yu Bai, Bowen Baker, Haiming Bao, Boaz Barak, Ally Bennett, Tyler Bertao, Nivedita Brett, Eugene Brevdo, Greg Brockman, Sebastien Bubeck, and 108 others. 2025. gpt-oss-120b & gpt-oss-20b model card. Preprint , arXiv:2508.10925. OpenAI. 2024. Gpt-4 technical report. Preprint ,arXiv:2303.08774. Wojciech Ostrowski, Arnav Arora, Pepa Atanasova, and Isabelle Augenstein. 2021. Multi-hop fact check-ing of political claims. In Proceedings of the Thir-tieth International Joint Conference on Artificial In-telligence, IJCAI-21 , pages 3892–3898. International Joint Conferences on Artificial Intelligence Organi-zation. Main Track. Oded Ovadia, Menachem Brief, Moshik Mishaeli, and Oren Elisha. 2024. Fine-tuning or retrieval? compar-ing knowledge injection in LLMs. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing , pages 237–250, Mi-ami, Florida, USA. Association for Computational Linguistics. Y.M. Rocha, G.A. de Moura, G.A. Desidério, C.H. de Oliveira, F.D. Lourenço, and L.D. de Figueiredo Nicolete. 2021. The impact of fake news on social media and its influence on health during the covid-19 pandemic: A systematic review. 
+
+Journal of Public Health , pages 1–10. Fariba Sadeghi, Amir Jalaly Bidgoly, and Hossein Amirkhani. 2022. Fake news detection on social media using a natural language inference approach. 
+
+Multimedia Tools and Applications , 81(23):33801– 33821. Oscar Sainz, Jon Campos, Iker García-Ferrero, Julen Etxaniz, Oier Lopez de Lacalle, and Eneko Agirre. 2023. NLP evaluation in trouble: On the need to mea-sure LLM data contamination for each benchmark. In Findings of the Association for Computational Linguistics: EMNLP 2023 , pages 10776–10787, Sin-gapore. Association for Computational Linguistics. Mohammadamin Shafiei, Hamidreza Saffari, and Nafise Sadat Moosavi. 2025. MultiHoax: A dataset of multi-hop false-premise questions. In Findings of the Association for Computational Linguistics: ACL 2025 , pages 10169–10187, Vienna, Austria. Associa-tion for Computational Linguistics. Hrithik Majumdar Shibu, Shrestha Datta, Md. Sumon Miah, Nasrullah Sami, Mahruba Sharmin Chowd-hury, and Md Saiful Islam. 2025. From scarcity to capability: Empowering fake news detection in low-resource languages with LLMs. In Proceedings of the First Workshop on Natural Language Process-ing for Indo-Aryan and Dravidian Languages , pages 
+
+11 100–107, Abu Dhabi. Association for Computational Linguistics. Kai Shu, Deepak Mahudeswaran, Suhang Wang, Dong-won Lee, and Huan Liu. 2020. Fakenewsnet: A data repository with news content, social context, and spatiotemporal information for studying fake news on social media. Big Data , 8(3):171–188. PMID: 32491943. Jiasheng Si, Yingjie Zhu, and Deyu Zhou. 2023. Ex-ploring faithful rationale for multi-hop fact verifica-tion via salience-aware graph learning. Proceedings of the AAAI Conference on Artificial Intelligence ,37(11):13573–13581. Yanshen Sun, Jianfeng He, Limeng Cui, Shuo Lei, and Chang-Tien Lu. 2024. Exploring the deceptive power of llm-generated fake news: A study of real-world detection challenges. Preprint , arXiv:2403.18249. Yifan Sun, Han Wang, Dongbai Li, Gang Wang, and Huan Zhang. 2025. The emperor’s new clothes in benchmarking? a rigorous examination of mitiga-tion strategies for LLM benchmark data contamina-tion. In Forty-second International Conference on Machine Learning .Rohan Taori, Ishaan Gulrajani, Tianyi Zhang, Yann Dubois, Xuechen Li, Carlos Guestrin, Percy Liang, and Tatsunori B. Hashimoto. 2023. Stanford alpaca: An instruction-following llama model. https:// github.com/tatsu-lab/stanford_alpaca .Gemini Team, Rohan Anil, Sebastian Borgeaud, Jean-Baptiste Alayrac, Jiahui Yu, Radu Soricut, Johan Schalkwyk, Andrew M. Dai, Anja Hauth, , and et al. 2024. Gemini: A family of highly capable multi-modal models. Preprint , arXiv:2312.11805. Kimi Team, Yifan Bai, Yiping Bao, Guanduo Chen, Jiahao Chen, Ningxin Chen, Ruijue Chen, Yanru Chen, Yuankun Chen, Yutian Chen, Zhuofu Chen, Jialei Cui, Hao Ding, Mengnan Dong, Angang Du, Chenzhuang Du, Dikang Du, Yulun Du, Yu Fan, and 150 others. 2025. Kimi k2: Open agentic intelligence. 
+
+Preprint , arXiv:2507.20534. James Thorne, Andreas Vlachos, Christos Christodoulopoulos, and Arpit Mittal. 2018. FEVER: a large-scale dataset for fact extraction and VERification. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers) , pages 809–819, New Orleans, Louisiana. Association for Computational Linguistics. Zhao Tong, Yimeng Gu, Huidong Liu, Qiang Liu, Shu Wu, Haichao Shi, and Xiao-Yu Zhang. 2025. Gen-erate first, then sample: Enhancing fake news detec-tion with LLM-augmented reinforced sampling. In 
+
+Proceedings of the 63rd Annual Meeting of the As-sociation for Computational Linguistics (Volume 1: Long Papers) , pages 24276–24290, Vienna, Austria. Association for Computational Linguistics. Nathan Walter, Jonathan Cohen, R. Lance Holbert, and Yasmin Morag. 2020. Fact-checking: A meta-analysis of what works and for whom. Political Com-munication , 37(3):350–375. Haoran Wang, Aman Rangapur, Xiongxiao Xu, Yue-qing Liang, Haroon Gharwi, Carl Yang, and Kai Shu. 2025. Piecing it all together: Verifying multi-hop multimodal claims. In Proceedings of the 31st Inter-national Conference on Computational Linguistics ,pages 7453–7469, Abu Dhabi, UAE. Association for Computational Linguistics. William Yang Wang. 2017. “liar, liar pants on fire”: A new benchmark dataset for fake news detection. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers) , pages 422–426, Vancouver, Canada. Association for Computational Linguistics. Colin White, Samuel Dooley, Manley Roberts, Arka Pal, Benjamin Feuer, Siddhartha Jain, Ravid Shwartz-Ziv, Neel Jain, Khalid Saifullah, Sreemanti Dey, Shubh-Agrawal, Sandeep Singh Sandha, Siddartha Venkat Naidu, Chinmay Hegde, Yann LeCun, Tom Gold-stein, Willie Neiswanger, and Micah Goldblum. 2025. Livebench: A challenging, contamination-limited LLM benchmark. In The Thirteenth International Conference on Learning Representations .Liang Xiao, Chongyang Shi, Shufeng Hao, and Zeyu Wei. 2025. Fact-augmented reasoning model for fake news detection. In Neural Information Processing ,pages 18–32, Singapore. Springer Nature Singapore. Liang Xiao, Qi Zhang, Chongyang Shi, Shoujin Wang, Usman Naseem, and Liang Hu. 2024. Msynfd: Multi-hop syntax aware fake news detection. In Proceed-ings of the ACM Web Conference 2024 , WWW ’24, page 4128–4137, New York, NY, USA. Association for Computing Machinery. Cheng Xu, Shuhao Guan, Derek Greene, and M-Tahar Kechadi. 2024. Benchmark data contamination of large language models: A survey. Preprint ,arXiv:2406.04244. Cheng Xu and M-Tahar Kechadi. 2023. Fuzzy deep hy-brid network for fake news detection. In Proceedings of the 12th International Symposium on Information and Communication Technology , SOICT ’23, page 118–125, New York, NY, USA. Association for Com-puting Machinery. Cheng Xu and M-Tahar Kechadi. 2024. An enhanced fake news detection system with fuzzy deep learning. 
+
+IEEE Access , 12:88006–88021. Cheng Xu and M-Tahar Kechadi. 2025. Analysis of semantic benchmark data contamination attack for llm-driven fake news detection. In 2025 IEEE Inter-national Conference on Big Data (BigData) , pages 3656–3664. 
+
+12 Cheng Xu and Nan Yan. 2025. TripleFact: Defend-ing data contamination in the evaluation of LLM-driven fake news detection. In Proceedings of the 63rd Annual Meeting of the Association for Compu-tational Linguistics (Volume 1: Long Papers) , pages 8808–8823, Vienna, Austria. Association for Compu-tational Linguistics. Cheng Xu, Nan Yan, Shuhao Guan, Changhong Jin, Yuke Mei, Yibing Guo, and Tahar Kechadi. 2025a. DCR: Quantifying data contamination in LLMs eval-uation. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing ,pages 23013–23031, Suzhou, China. Association for Computational Linguistics. Cheng Xu, Nan Yan, Shuhao Guan, Yuke Mei, and Tahar Kechadi. 2025b. SSA: Semantic contamina-tion of LLM-driven fake news detection. In Proceed-ings of the 2025 Conference on Empirical Methods in Natural Language Processing , pages 14748–14762, Suzhou, China. Association for Computational Lin-guistics. An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao, Chengen Huang, Chenxu Lv, Chujie Zheng, Day-iheng Liu, Fan Zhou, Fei Huang, Feng Hu, Hao Ge, Haoran Wei, Huan Lin, Jialong Tang, and 41 others. 2025. Qwen3 technical report. Preprint ,arXiv:2505.09388. Chen Yang, Xinyi Zhou, and Reza Zafarani. 2021. Checked: Chinese covid-19 fake news dataset. So-cial Network Analysis and Mining , 11(1):58. Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William Cohen, Ruslan Salakhutdinov, and Christo-pher D. Manning. 2018. HotpotQA: A dataset for diverse, explainable multi-hop question answering. In Proceedings of the 2018 Conference on Empiri-cal Methods in Natural Language Processing , pages 2369–2380, Brussels, Belgium. Association for Com-putational Linguistics. Zhuohao Yu, Chang Gao, Wenjin Yao, Yidong Wang, Zhengran Zeng, Wei Ye, Jindong Wang, Yue Zhang, and Shikun Zhang. 2024. FreeEval: A modular framework for trustworthy and efficient evaluation of large language models. In Proceedings of the 2024 Conference on Empirical Methods in Natural Lan-guage Processing: System Demonstrations , pages 1–13, Miami, Florida, USA. Association for Compu-tational Linguistics. Chaowei Zhang, Zongling Feng, Zewei Zhang, Jipeng Qiang, Guandong Xu, and Yun Li. 2025. Is llms hal-lucination usable? llm-based negative reasoning for fake news detection. Proceedings of the AAAI Con-ference on Artificial Intelligence , 39(1):1031–1039. Congzhi Zhang, Linhai Zhang, and Deyu Zhou. 2024a. Causal walk: Debiasing multi-hop fact verification with front-door adjustment. Proceedings of the AAAI Conference on Artificial Intelligence , 38(17):19533– 19541. Yadong Zhang, Shaoguang Mao, Tao Ge, Xun Wang, Yan Xia, Wenshan Wu, Ting Song, Man Lan, and Furu Wei. 2024b. LLM as a mastermind: A survey of strategic reasoning with large language models. In 
+
+First Conference on Language Modeling .Congyuan Zhao, Lingwei Wei, Ziming Qin, Wei Zhou, Yunya Song, and Songlin Hu. 2025. Mppfnd: A dataset and analysis of detecting fake news with multi-platform propagation. Preprint ,arXiv:2505.15834. Liwen Zheng, Chaozhuo Li, Litian Zhang, Haoran Jia, Senzhang Wang, Zheng Liu, and Xi Zhang. 2025. Mrr-fv: Unlocking complex fact verification with multi-hop retrieval and reasoning. Proceedings of the AAAI Conference on Artificial Intelligence ,39(24):26066–26074. Kun Zhou, Yutao Zhu, Zhipeng Chen, Wentong Chen, Wayne Xin Zhao, Xu Chen, Yankai Lin, Ji-Rong Wen, and Jiawei Han. 2023. Don’t make your llm an evaluation benchmark cheater. Preprint ,arXiv:2311.01964. Xinyi Zhou and Reza Zafarani. 2020. A survey of fake news: Fundamental theories, detection methods, and opportunities. ACM Comput. Surv. , 53(5). Ziyi Zhou, Xiaoming Zhang, Litian Zhang, Jiacheng Liu, Senzhang Wang, Zheng Liu, Xi Zhang, Chaozhuo Li, and Philip S. Yu. 2024. Fine-fake: A knowledge-enriched dataset for fine-grained multi-domain fake news detection. Preprint ,arXiv:2404.01336. Junyou Zhu, Chao Gao, Ze Yin, Xianghua Li, and Juer-gen Kurths. 2024. Propagation structure-aware graph transformer for robust and interpretable fake news detection. In Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Min-ing , KDD ’24, page 4652–4663, New York, NY, USA. Association for Computing Machinery. 
+
+A LiveFact Development Details 
+
+A.1 Temporal Evidence Sets Construction 
+
+For each event gathered in the initial collection stage, we performed a comprehensive evidence re-trieval process using the Google API. Our goal was to build a robust informational environment for each event across different temporal slices. We sent targeted requests to the API and aggregated metadata from all search results. A typical JSON response structure for an evidence item is as fol-lows:                 
+
+> 1{
+> 2" article_id ": "1 f5faebba75d590d ",
+> 3" title ": " COP30 : Oil Rich Nations Block Deal To Phase Out Fossil Fuels ",
+> 4" source ": "Al - Fanar Media ",
+
+13 5 " published_datetime ": "2025 -11 -27 T13 :19:46 Z"  
+
+> 6}
+
+The critical step in our pipeline involves the tem-poral segmentation of this data. By comparing the published_datetime of each retrieved page against the specific headline date ( T ) of the event, we categorized the data into three distinct evidence buckets: 1. E(−3) : Contains all evidence published up to three days before the headline date. 2. E(0) : Contains all evidence published up to and including the headline date. 3. E(+3) : Contains all evidence published up to three days after the headline date. This rigorous segmentation resulted in the collec-tion of 25,064 individual pieces of evidence across the 737 events, yielding a dense average of approx-imately 34 evidence items per event. This volume ensures that the models have sufficient context to perform complex reasoning rather than simple fact retrieval. 
+
+A.2 Claim and Context Generation and Human Verification 
+
+To generate high-quality claims and context, we uti-lized two distinct LLMs to assess both performance and cost-efficiency: o4-mini and gpt-4o-mini from OpenAI. We supplied each model with the event headline and the full set of associated evidence, using specialized prompts to instruct them to gen-erate: 1. Context : A neutral summary of the key entities involved; 2. Claims : A set of statements categorized as Real, Fake, or Ambiguous. The prompts used for these generations process were provide in Figure 5, 6, 7, 8 Following generation, we implemented a rigor-ous Human-in-the-Loop verification protocol. Ev-ery generated context and claim underwent a mini-mum of three rounds of independent review. The review team consisted exclusively of the paper’s authors, who are PhD-level computer science re-searchers specializing in fake news detection and natural language processing from English-speaking countries. The review criteria focused on factual consistency, linguistic naturalness, and label ac-curacy relative to the evidence. Any data point that failed to achieve consensus after three review rounds was discarded and regenerated until it met the quality standards.  
+
+> Context Generation Prompt
+> You are creating background context for a news event to help AI models understand key entities. **Event**: {event_title} **News headlines from this event**: {evidence_summary} **Task**: Provide MINIMAL background informa-tion about the KEY ENTITIES (people, organiza-tions, places) mentioned in this event. **Requirements**: 1. Focus ONLY on identifying who/what the main entities are 2. Provide brief, factual descriptions (roles, posi-tions, basic facts) 3. Keep it concise - 2-3 sentences maximum 4. Do NOT explain the event itself, only the enti-ties involved 5. Do NOT add unnecessary details or back-ground **Example**: Event: "Trump to meet with Xi as he travels to Asia to contain trade war" Context: "Trump is a businessman and politician, currently serving as the President of the United States. Xi is the President of China." **Output Format** (JSON): {{ "context": "your context text here" }} **Your JSON output**:
+
+Figure 5: Prompt for Context Generation 
+
+We compared the two models to validate the generalizability and accessibility of the LiveFact framework: • gpt-4o-mini: Selected to represent a highly versatile and cost-effective solution. The to-tal cost for the generation process using this model was approximately 2.34 USD. • o4-mini: Selected to represent a state-of-the-art inference-optimized model. The genera-tion process for this model incurred a signifi-cantly higher cost of 55.93 USD. Our analysis revealed that both models per-formed well on the task (exampled in Table 4), producing high-quality initial outputs that required minimal manual correction. This finding vali-dates the universality of the LiveFact construction pipeline, suggesting that future updates can be sus-tainably generated even with lower-cost models. However, to ensure the highest possible baseline for this inaugural release, we utilized the outputs from o4-mini for all subsequent experimental steps in this paper. 14 gpt-4o-mini o4-mini (Context) The Chinese astronauts are members of the China National Space Administration (CNSA), which is responsible for the country’s space program. Shenzhou-20 is a crewed spacecraft designed to transport astronauts to and from space, while Shenzhou-22 is an upcoming mission intended to pro-vide a lifeboat for the stranded crew. 
+
+(Context) Chinese astronauts are career space travelers trained and selected by the China National Space Administration (CNSA). The CNSA is China’s national space agency that operates the Shenzhou crewed spacecraft program, including the Shenzhou-20 and Shenzhou-22 missions to the Tiangong space station. 
+
+(Real) Three Chinese astronauts are currently stranded in space after the successful return of their colleagues aboard the Shenzhou-20, with a replacement mission, Shenzhou-22, scheduled for launch on November 25 to provide a lifeboat for the stranded crew. 
+
+(Real) After space debris damaged the Shenzhou-20 return capsule, three Chinese astronauts remain temporarily stranded aboard China’s space station while Beijing prepares to launch the uncrewed Shenzhou-22 lifeboat spacecraft on November 25 to bring them home." 
+
+(Fake) In a surprising turn of events, Chinese authorities have announced that five additional astronauts have been success-fully rescued from the Shenzhou-20 mission, leaving only two astronauts stranded in space due to a malfunction in the rescue capsule, which is expected to be operational again by December 10. 
+
+(Fake) A leaked internal bulletin from the China Manned Space Agency, obtained by Beijing News, reveals the three astronauts stranded in orbit have already consumed over 65% of their emergency oxygen and suffered two failures in their primary water-recycling unit, placing them at serious risk of critical life-support shortages before the delayed rescue craft arrives. 
+
+(Ambiguous) Following the successful rescue of their col-leagues, three more Chinese astronauts are now stranded in space, as internal documents suggest that the Chinese space agency is prioritizing a secret mission to test advanced life support systems over their immediate return, raising concerns among unnamed experts about the long-term implications for astronaut safety. 
+
+(Ambiguous) China postponed the Shenzhou-22 docking by 45 minutes—officially to fine-tune orbital alignment—but the tweak was actually aimed at slotting the lifeboat rendezvous with prime-time state TV bulletins, underscoring Beijing’s crafted image of flawless crisis management even as three astronauts remained stranded. 
+
+Table 4: Comparison of claim generation example between the gpt-4o-mini and o4-mini (Event ID: EV20251119-33). 
+
+B Experiment Details 
+
+B.1 Model Details 
+
+To comprehensively evaluate the state of LLMs in 2025, we selected a representative cohort of 18 models spanning different architectures (Dense vs. MoE), training strategies (Base, Instruct, Hybrid), and parameter scales (1B to 1T). This set includes 14 open-source models and 4 closed-source propri-etary models, categorized by family: • Qwen Family: Represents the leading edge of open-source MoE performance, ranging from the massive Qwen3-235B-A22B to the compact, edge-ready Qwen3-4B (Yang et al., 2025). • Llama Family: Includes both the standard Dense architecture (Llama 3.1 70B/8B) and recent lightweight variants (Llama 3.2 3B/1B), serving as the baseline for open-weights per-formance (Grattafiori et al., 2024). • DeepSeek & Kimi: Represent specialized massive-scale MoE models, with Kimi-K2 ex-ceeding 1 trillion parameters (DeepSeek-AI et al., 2025; Team et al., 2025). • GPT-OSS Series: This family represents high-performance open-weights implementa-tions of GPT-style architectures, developed by decentralized research collectives. Models like gpt-oss-120b and gpt-oss-20b leverage advanced MoE structures to replicate reason-ing capabilities similar to proprietary coun-terparts, offering a transparent benchmark for community-driven progress (OpenAI et al., 2025). • GPT Series (Proprietary): Serves as the commercial gold standard, including the lat-est gpt-5.2 and gpt-5.1 models alongside the efficient gpt-4o series (OpenAI, 2024). Among the 18 open-source models available in our registry (Table 5), 14 were selected for the main experimental comparison, with the remaining 4 (primarily base model variants) used in supple-mentary ablation studies (see Appendix D). This selection ensures our results cover the full spec-trum of modern AI capabilities, from cost-effective general-purpose models to the absolute peak of computational power. 15 Model Name Training Type Architecture Parameters Size                                                                                         
+
+> Qwen Series
+> Qwen3-235B-A22B-Instruct-2507 Instruction MoE 235B (22B Active) Large Qwen3-30B-A3B-Instruct-2507 Instruction MoE 30B (3B Active) Medium Qwen3-30B-A3B Hybrid MoE 30B (3B Active) Medium Qwen3-30B-A3B-Base Base MoE 30B (3B Active) Medium Qwen3-32B Hybrid Dense 32B Medium Qwen3-8B Hybrid Dense 8B Small Qwen3-8B-Base Base Dense 8B Small Qwen3-4B-Instruct-2507 Instruction Dense 4B Compact
+> Meta Llama
+> Llama-3.3-70B-Instruct Instruction Dense 70B Large Llama-3.1-70B Base Dense 70B Large Llama-3.1-8B Base Dense 8B Small Llama-3.1-8B-Instruct Instruction Dense 8B Small Llama-3.2-3B Base Dense 3B Compact Llama-3.2-1B Base Dense 1B Compact
+> DeepSeek
+> DeepSeek-V3.1 Hybrid MoE 671B (37B Active) Huge
+> Moonshot AI
+> Kimi-K2-Thinking Reasoning MoE 1T (32B Active) Huge
+> OpenAI (OSS)
+> gpt-oss-120b Reasoning MoE 120B Medium gpt-oss-20b Reasoning MoE 20B Small
+> OpenAI (GPT Series)
+> gpt-5.2-2025-12-11 Instruction ---gpt-5.1-2025-11-13 Instruction ---gpt-4o-2024-08-06 Instruction ---gpt-4o-mini-2024-07-18 Instruction ---
+
+Table 5: Overview of LLMs used in the experiments, including their training type, architecture, parameter counts, and relative size classification. Since the OpenAI GPT series models are commercial closed-source models, their related information is unavailable. 
+
+B.2 Evaluation Settings 
+
+To ensure a fair and reproducible evaluation, all models were subjected to a standardized infer-ence protocol. We set the decoding parame-ters to TEMPERATURE = 0.0 and TOP_P = 1.0 
+
+to minimize randomness and ensure determinis-tic outputs. The maximum generation length was capped at MAX_NEW_TOKENS = 128 (except for Kimi-K2-Thinking and GPT-OSS, they use 
+
+MAX_NEW_TOKENS = 1024 ) to encourage concise verdicts. Note that for certain recent OpenAI mod-els where these precise parameters are abstracted, we utilized the default "deterministic" settings pro-vided by the API. Models were prompted with a standardized tem-plate (Figure 9) instructing them to output their verdict in a strict parsable format: [[LABEL]] (e.g., 
+
+[[Real]] , [[Fake]] , or [[Ambiguous]] ). All 14 open-source models were deployed and accessed via the Tinker 5 high-performance infer-ence server, utilizing vLLM for optimized through-put. The 4 proprietary OpenAI models were ac-cessed via standard OpenAI API 6 endpoints. 
+
+B.3 Resource Consumption 
+
+Table 6 details the resource footprint for each model during the evaluation of the full LiveFact benchmark (across all three time slices). The data reveals striking disparities in the cost-to-performance ratio. High-end proprietary models like gpt-5.2 incur the highest operational costs ($9.27 per complete run), primarily due to their pricing per token. In contrast, the mid-sized open-
+
+> 5https://thinkingmachines.ai/tinker/
+> 6https://openai.com/api/
+
+16 Real Claim Generation Prompt 
+
+> You are a news fact-checker. Based on the follow-ing real news evidence, generate a FACTUALLY ACCURATE news claim. **Event**: {event_title} **Evidence from multiple news sources**: {evidence_summary} **Task**: Write a single, clear, factual claim that is: 1. Directly supported by the evidence above 2. Verifiable and accurate 3. Written as a standalone news statement (1-2 sentences) 4. Uses specific details from the evidence 5. Does NOT add any unverified information **Output Format** (JSON): {{ "claim_text": "your factual claim here" }} **Your JSON output**:
+
+Figure 6: Prompt for Real Claim Generation 
+
+source models demonstrate remarkable efficiency. For instance, Qwen3-30B-A3B-Instruct completes the benchmark for just $0.64, which is approxi-mately 14x cheaper than gpt-5.2 while retaining competitive accuracy. This efficiency is largely driven by its MoE architecture, which activates only 3B parameters per token, drastically reducing computational overhead compared to dense coun-terparts like Llama-3.1-70B ($5.22). This analysis suggests that for large-scale deployment, MoE ar-chitectures offer the optimal balance of reasoning capability and economic sustainability. 
+
+C SSA Framework Analysis 
+
+C.1 SSA Framework and Entity Shift Implementation Details 
+
+While the primary utility of the SSA framework lies in the long-term monitoring of historical bench-marks, we conducted a rigorous simulation experi-ment to validate its immediate efficacy in detecting label-level contamination. To ensure a robust exper-imental setup free from dependency on proprietary API models, we utilized the high-performing open-source model Qwen3-235B-A22B-Instruct-2507 to execute the entity shift operations, prompt used in Figure 10. The quality of this synthetic data genera-tion was strictly audited (consistent with Appendix A.2), and revealed that 98.5% of the generated entity-shifted samples were semantically consis-tent and required no further adjustment. To simulate contamination, we constructed a  
+
+> Fake Claim Generation Prompt
+> You are creating synthetic fake news examples for a research benchmark. Based on the event below, generate a FABRICATED news claim. **Event**: {event_title} **Real evidence** (for context only - your claim should CONTRADICT or FABRICATE beyond this): {evidence_summary} **Task**: Write a fake news claim that is: 1. Related to the event but NOT supported by evidence 2. Contains fabricated details (false numbers, fake quotes, wrong people, etc.) 3. Sounds plausible but is factually incorrect 4. Written as a standalone news statement (1-2 sentences) 5. Could mislead someone unfamiliar with the real story **Important**: Make it realistic fake news, not obviously absurd. **Output Format** (JSON): {{ "claim_text": "your fabricated claim here" }} **Your JSON output**:
+
+Figure 7: Prompt for Fake Claim Generation 
+
+poisoned training dataset derived from the Live-Fact T + 3 data split (Classification Mode). We mixed this specific benchmark data (formatted as instruction-response pairs) with a randomly se-lected subset of the Alpaca instruction fine-tuning dataset (Taori et al., 2023) (contaminants account for 30% of the total). This creates a scenario where the model has "seen" the exact answers to the test set during training—a direct emulation of real-world BDC. We then fine-tuned three representative models (Qwen3-30B-A3B-Instruct-2507, Qwen3-4B-Instruct-2507, and Llama-3.1-8B-Instruct) on this contaminated corpus using Low-Rank Adap-tation (LoRA). The specific hyperparameters used for this process are detailed in Table 7. We subsequently evaluated both the original "clean" models and their contaminated counterparts (marked with ⋆) on two versions of the benchmark: the Original LiveFact and the Entity Shift LiveFact. The resource consumption for this contamination simulation is provided in Table 8. 
+
+C.2 SSA Implementation Results 
+
+The results of the simulation, presented in Table 10, provide compelling evidence for the efficacy of the SSA framework. First, observe the performance on the Original 17 Ambiguous Claim Generation Prompt 
+
+You are creating synthetic data for a fact-checking benchmark. Your goal is to generate a "Hard-to-Verify" claim based on the provided event. **Event**: {event_title} **Evidence**: {evidence_summary} **Task**: Generate a single-sentence news claim that is empirically hard to verify. The claim must anchor itself in verifiable facts but introduce ambiguity through interpretation, causality, or specific unrecorded details, sounds plausible but is factually hard to confirm. However, content that contradicts facts and evidence must not appear, as this is not about creating fake news. **Constraint on Sources**: - **Avoid Over-reliance on Anonymous Sources**: Do NOT start every claim with "Sources say" or "Insiders revealed." Only use attribution logic if it provides a specific context that cannot be expressed otherwise. Also, avoid using informal expressions like “quietly” or “privately,” as this would make it too different from real news. - **Variety is Key**: Prioritize the techniques below over generic hearsay. **Required Techniques (Prioritize these over generic "insider" claims)**: 1. **Imputed Intent**: State a public figure’s private, internal motivation for a verifiable action as an objective fact (e.g., "He signed the bill *specifically to appease his donors*"). 2. **False Causality**: Connect two unrelated real facts as direct cause-and-effect without proof (e.g., "The stock drop *was a calculated response to* the leaked memo"). 3. **Subjective Framing**: Use unverifiable, qualitative descriptors to characterize a verifiable event (e.g., "The negotiations ended in *an atmosphere of mutual distrust*"). 4. **Micro-Events**: Insert a plausible but unrecorded specific physical action into a real event (e.g., "The diplomat *refused to shake hands* before the meeting started"). 5. **Unfolding Details**: Add unverifiable specifics about the timing, location, or participants of a verifiable event (e.g., "The CEO *arrived 15 minutes late* to the conference", "Trump extended a dinner invitation to the Chinese delegation after the meeting", but this detail was not included in the evidence). **Goal**: The claim should sound like a confident assertion (real news from reliable source, e.g., BBC, AP) or analysis, not just a rumor or gossip. **Output Format** (JSON): {{ "claim_text": "Your claim here" }} **Your JSON output**: 
+
+Figure 8: Prompt for Ambiguous Claim Generation 
+
+LiveFact benchmark. The contaminated models ( ⋆)achieve near-perfect accuracy scores (e.g., 99.89% for Qwen3-30B-A3B-Instruct-2507 ⋆ at T + 3 ), a massive jump from the original model’s 77.00%. This confirms that the fine-tuning successfully in-jected the specific knowledge of the benchmark into the models’ parameters; they are essentially "reciting" the memorized answers (Ovadia et al., 2024; Lyu et al., 2024; Li et al., 2025b). However, the critical insight comes from com-paring performance on the Entity Shift LiveFact. When tested on the version where entity names are swapped (e.g., "Trump" → "Wannetta"), the performance of the contaminated models drops pre-cipitously. For Qwen3-30B-A3B-Instruct-2507 ⋆,accuracy falls from 99.89% (Original) to 84.77% (Shifted). While still high due to general instruction tuning, this gap ( ∆) exposes the model’s reliance on specific entity tokens rather than generalized reasoning. This effect is quantified by the SSA Factor in Table 9. The original, clean models maintain a neg-ligible SSA Factor (e.g., 0.08 for Qwen3-30B-A3B-Instruct-2507), indicating robust, entity-agnostic reasoning. In stark contrast, the contaminated mod-els exhibit massive spikes in their SSA scores (e.g., 5.18 for Qwen3-30B-A3B-Instruct-2507 ⋆ and 6.67 for Qwen3-4B-Instruct-2507 ⋆). This drastic in-crease—driven by both the performance drop ( ∆)and the high OTR—serves as a clear, quantifiable signal of data contamination. These findings defini-tively validate that the SSA framework acts as a sensitive "litmus test" for label-level contamina-tion, justifying its integral role in the long-term maintenance of the LiveFact benchmark. 
+
+D Supplementary Analysis 
+
+D.1 Impact of Training Mode: Base, Instruct, and Hybrid 
+
+To isolate the effect of training methodology on rea-soning capabilities, we conducted an ablation study comparing different variants of the same model ar-chitectures. We examined Base models (pre-trained only), Instruct models (SFT + RLHF), and Hybrid models across the Qwen3 and Llama-3.1 families. 18 Evaluation Prompt 
+
+SYSTEM_PROMPT = """You are a fact-checking expert. Classify news claims based on evidence. Labels: - REAL: Claim is supported by evidence, factually accurate - FAKE: Claim contradicts evidence or contains false information - AMBIGUOUS: Claim cannot be definitively veri-fied IMPORTANT: Always start your response with the classification label in double brackets. Format: [[LABEL]] followed by brief reasoning. Example response: [[REAL]] The claim is supported by multiple news sources reporting the same event details.""" 
+
+USER_PROMPT_TEMPLATE = """Context: {context} Claim: "{claim}" Evidence: {evidence} Classify this claim. Start with [[REAL]], [[FAKE]], or [[AMBIGUOUS]], do not think too much.""" 
+
+Figure 9: Prompt for Evaluation 
+
+The performance results are detailed in Table 11. The analysis reveals a stark "Alignment Tax" on performance for models that lack instruction tun-ing. The Llama-3.1-8B base model collapses to near-random performance (Avg: 5.14%), primarily because it fails to adhere to the strict output for-matting required by the benchmark ( [[LABEL]] ). Without SFT, the model often continues generat-ing context or hallucinates unrelated text instead of providing a classification. In contrast, the In-struct version reaches 49.96%, demonstrating that the knowledge exists within the parameters but requires alignment to be accessible. A similar, though less catastrophic, trend is seen in Qwen3-30B-A3B, where the specific hybrid variant un-derperformed significantly (1.30%) likely due to a mismatch in prompt template expectations com-pared to the robust Instruct-2507 version (69.46%). However, an interesting anomaly emerges with Qwen3-8B-Base. Unlike its Llama counterpart, this base model exhibits surprisingly strong rea-soning capabilities, achieving an average score of 61.10%, which is competitive with the Qwen3-8B hybrid model (63.62%). Notably, in the δ = −3
+
+Inference Mode, the Base model actually outper-forms the hybrid version (83.08% vs 60.29%). This suggests that the Qwen3 base pre-training corpus may contain richer, more structured reasoning pat-terns that allow it to naturally infer the task even                                                                               
+
+> Model Name Tokens (M) Time (h) Cost ($)
+> Qwen Series
+> Qwen3-235B-A22B-Instruct-2507 4.86 8.20 3.65 Qwen3-30B-A3B-Instruct-2507 4.86 4.09 0.64 Qwen3-30B-A3B 5.09 2.87 0.71 Qwen3-30B-A3B-Base 4.72 1.86 0.60 Qwen3-32B 4.87 5.38 2.72 Qwen3-8B 4.88 2.37 0.73 Qwen3-8B-Base 4.73 2.36 0.67 Qwen3-4B-Instruct-2507 4.96 3.13 0.42
+> DeepSeek
+> DeepSeek-V3.1 4.35 3.53 5.3
+> Meta Llama
+> Llama-3.3-70B-Instruct 4.54 2.04 4.77 Llama-3.1-70B 4.36 3.02 5.22 Llama-3.1-8B 4.40 2.07 0.67 Llama-3.1-8B-Instruct 4.42 2.10 0.63 Llama-3.2-3B 4.37 1.71 0.30 Llama-3.2-1B 4.61 1.74 0.14
+> Moonshot AI
+> Kimi-K2-Thinking 4.71 14.88 5.43 Kimi-K2-Thinking ⋆7.62 60.92 12.53
+> OpenAI (OSS)
+> gpt-oss-120b 4.06 4.46 1.03 gpt-oss-120b ⋆5.50 7.00 1.28 gpt-oss-20b 4.92 2.56 0.69 gpt-oss-20b ⋆5.84 5.71 0.97
+> OpenAI (GPT Series)
+> gpt-5.2-2025-12-11 2.67 2.41 9.27 gpt-5.1-2025-11-13 2.66 1.93 6.44 gpt-4o-2024-08-06 2.30 1.37 2.28 gpt-4o-mini-2024-07-18 2.48 1.69 0.79
+
+Table 6: Resource consumption analysis for each model on the benchmark dataset. Metrics include total tokens processed, total wall-clock time in hours, and API cost in USD. Results averaged from three runs ( T − 3, T ,
+
+T + 3 ). 
+
+without explicit instruction tuning. This finding challenges the assumption that base models are uni-versally unsuitable for zero-shot reasoning tasks, provided the underlying pre-training is sufficiently robust. 
+
+D.2 The Cost of Reasoning: Verbosity vs. Compliance in Thinking Models 
+
+A critical finding from our main experiments is the distinct behavior of models heavily optimized for "Reasoning" or "Chain-of-Thought" (CoT), specifi-cally Kimi-K2-Thinking and the GPT-OSS series. In our initial screening using a standard 128-token limit (Table 12), these models appeared to fail catastrophically (e.g., Kimi-K2-Thinking scored ~1.76%). However, upon qualitative inspection (Figure 11), it became evident that the models were not hallucinating but rather engaging in extensive internal deliberation. As shown in Table 12, re-evaluating these mod-19 Hyperparameter Value 
+
+Fine-tuning Method LoRA LoRA Rank ( r) 8Dropout 0.05 Learning Rate 1 × 10 −4
+
+Optimizer Adam Batch Size 4Number of Epochs 3Loss Function Cross-Entropy 
+
+Table 7: Fine-tuning hyperparameters for BDC simula-tion experiments.             
+
+> Model Name Tokens (M) Time (h) Cost ($)
+> Qwen3-30B-A3B-Instruct-2507 24.12 3.69 5.18 Qwen3-4B-Instruct-2507 24.5 2.32 3.24 Llama-3.1-8B-Instruct 22.19 2.32 5.27
+
+Table 8: Resource consumption for the contamination simulation experiments. 
+
+els with an extended 1024-token window unlocked their true potential. gpt-oss-120b, for instance, jumped to an average accuracy of 72.13%, rivaling the best-performing Qwen models. This reveals a fundamental trade-off in current model design: "Thinking Models" prioritize exhaustive reason-ing paths over strict formatting constraints. Unlike standard Instruction-Tuned models (e.g., Qwen3-Instruct) that can "snap" to a label immediately, Reasoning models treat the prompt as a starting point for a dialectical process. While this leads to high accuracy when resources are unconstrained (Table 6), it poses significant challenges for low-latency, automated benchmarking environments where conciseness is often a proxy for adherence. 
+
+D.3 Deep Dive: Confusion Matrix Analysis 
+
+To provide a granular view of model behavior, we analyzed the confusion matrices across all model groups (Figures 12). Across all valid models (e.g., Qwen3-Instruct, GPT-4o), we observe a massive shift in prediction behavior at T − 3. In Classification Mode, the matrices show a "spray" of predictions; models struggle to differentiate classes, often defaulting to the majority class of their training data. However, in Inference Mode, the confusion matrix tightens significantly around the "Ambiguous" class. For example, Qwen3-32B correctly concentrates nearly all its mass on "Ambiguous" at T − 3 (Inference), whereas in Classification mode, it erroneously pre-                     
+
+> Model ∆OTR SSA
+> Qwen3-30B-A3B-Instruct-2507 4.90 1.53 0.08 Qwen3-30B-A3B-Instruct-2507 ⋆15.24 33.99 5.18 Qwen3-4B-Instruct-2507 6.56 2.76 0.18 Qwen3-4B-Instruct-2507 ⋆14.58 45.72 6.67 Llama-3.1-8B-Instruct 1.46 5.31 0.08 Llama-3.1-8B-Instruct ⋆13.53 39.16 5.30
+
+Table 9: SSA Factor calculation showing the clear dis-tinction between clean and contaminated ( ⋆) models. The calculation of ∆ and OTR is based on the average of six runs performed under the selected Classification and Inference modes. 
+
+dicts "Real" or "Fake" with low confidence. This confirms that the models detect the ambiguity but are forced to hallucinate in standard settings. As time progresses to T and T + 3 , the confu-sion matrices for high-performing models (GPT-5.2, Qwen3-235B) show a distinct "diagonaliza-tion." The noise from the "Ambiguous" class dissi-pates, and predictions sharpen into correct "Real" vs. "Fake" classifications. This temporal evolution proves that the benchmark successfully captures the arrival of new information. The confusion matrices for base models (e.g., Llama-3.1-8B) reveal a pathological failure mode. Rather than a distributed error pattern, these models often exhibit a single-column collapse, predicting one class (e.g., "Real") for 100% of queries re-gardless of input. This is not due to reasoning but due to a failure to condition on the evidence; the model likely defaults to the most common token in its pre-training distribution for the given prompt context. This visualizes exactly why instruction tuning is non-negotiable for reliable automated fact-checking. 20 Model Eval. Mode Classification Inference Avg. 
+
+Acc CLS  
+
+> −3
+
+Acc CLS  
+
+> 0
+
+Acc CLS  
+
+> +3
+
+F1 CLS  
+
+> −3
+
+F1 CLS  
+
+> 0
+
+F1 CLS  
+
+> +3
+
+Acc INF  
+
+> −3
+
+Acc INF  
+
+> 0
+
+Acc INF  
+
+> +3
+
+F1 INF  
+
+> −3
+
+F1 INF  
+
+> 0
+
+F1 INF 
+
+> +3
+
+Original LiveFact 
+
+Qwen3-30B-A3B-Instruct-2507 55.24 75.05 77.00 52.39 74.87 76.61 64.55 74.64 76.78 55.37 74.66 76.40 69.46 Qwen3-30B-A3B-Instruct-2507 ⋆ 84.59 99.57 99.89 83.28 99.57 99.89 59.24 97.13 99.52 52.42 97.16 99.52 89.31 Qwen3-4B-Instruct-2507 46.29 62.43 63.39 42.63 60.70 61.58 83.08 62.45 63.39 64.45 61.15 61.65 61.10 Qwen3-4B-Instruct-2507 ⋆ 77.98 98.98 99.50 74.50 98.97 99.50 53.05 96.63 99.16 52.16 96.66 99.16 87.19 Llama-3.1-8B-Instruct 40.69 50.05 50.20 36.53 45.67 45.11 78.69 50.16 50.09 60.26 46.89 45.14 49.96 Llama-3.1-8B-Instruct ⋆ 88.84 96.02 96.49 84.37 96.02 96.49 46.02 93.62 96.17 42.14 93.62 96.17 85.50 
+
+Entity Shift LiveFact 
+
+Qwen3-30B-A3B-Instruct-2507 46.93 69.85 71.40 43.17 68.82 70.16 81.63 69.08 71.31 63.35 68.89 70.08 64.56 Qwen3-30B-A3B-Instruct-2507 ⋆ 69.60 84.31 84.77 66.39 82.61 84.74 50.02 76.25 86.34 41.16 76.35 86.25 74.07 Qwen3-4B-Instruct-2507 44.22 61.18 63.91 37.98 60.49 62.95 36.16 60.61 63.87 39.56 60.61 62.99 54.54 Qwen3-4B-Instruct-2507 ⋆ 67.33 81.90 83.49 62.97 82.09 83.50 47.75 75.96 85.31 39.70 76.03 85.26 72.61 Llama-3.1-8B-Instruct 39.89 48.27 48.54 34.87 43.16 42.96 79.67 48.38 48.47 60.32 44.42 43.05 48.50 Llama-3.1-8B-Instruct ⋆ 71.43 79.62 82.67 69.57 79.72 82.70 45.47 73.54 83.49 38.29 73.72 83.36 71.97 
+
+Table 10: Performance comparison of original vs. contaminated ( ⋆) models on Original and Entity-Shifted LiveFact datasets. 
+
+Model Eval. Mode Classification Inference Avg. 
+
+Acc CLS  
+
+> −3
+
+Acc CLS  
+
+> 0
+
+Acc CLS  
+
+> +3
+
+F1 CLS  
+
+> −3
+
+F1 CLS  
+
+> 0
+
+F1 CLS  
+
+> +3
+
+Acc INF  
+
+> −3
+
+Acc INF  
+
+> 0
+
+Acc INF  
+
+> +3
+
+F1 INF  
+
+> −3
+
+F1 INF  
+
+> 0
+
+F1 INF 
+
+> +3
+
+Qwen3-30B-A3B-Instruct-2507 55.24 75.05 77.00 52.39 74.87 76.61 64.55 74.64 76.78 55.37 74.66 76.40 69.46 Qwen3-30B-A3B 3.42 0.14 0.07 6.05 0.27 0.14 2.69 0.11 0.07 2.27 0.23 0.14 1.30 Qwen3-30B-A3B-Base 46.47 55.17 54.92 43.26 51.67 51.33 76.34 54.58 54.78 55.80 51.57 51.25 53.93 Qwen3-8B 50.84 68.88 69.83 49.12 67.79 68.44 60.29 68.67 69.65 53.76 67.82 68.30 63.62 Qwen3-8B-Base 46.29 62.43 63.39 42.63 60.70 61.58 83.08 62.45 63.39 64.45 61.15 61.65 61.10 Llama-3.1-8B-Instruct 40.69 50.05 50.20 36.53 45.67 45.11 78.69 50.16 50.09 60.26 46.89 45.14 49.96 Llama-3.1-8B 11.89 3.62 3.12 12.39 5.72 4.99 1.25 3.30 3.12 1.90 5.39 5.02 5.14 
+
+Table 11: Ablation study on training methodologies across Qwen and Llama architectures. Hybrid and Instruct models generally outperform Base models, though strong base reasoning is observed in Qwen3-8B. 
+
+Model Eval. Mode Classification Inference Avg. 
+
+Acc CLS  
+
+> −3
+
+Acc CLS  
+
+> 0
+
+Acc CLS  
+
+> +3
+
+F1 CLS  
+
+> −3
+
+F1 CLS  
+
+> 0
+
+F1 CLS  
+
+> +3
+
+Acc INF  
+
+> −3
+
+Acc INF  
+
+> 0
+
+Acc INF  
+
+> +3
+
+F1 INF  
+
+> −3
+
+F1 INF  
+
+> 0
+
+F1 INF 
+
+> +3
+
+Kimi-K2-Thinking 6.72 0.20 0.23 10.51 0.40 0.45 0.64 0.16 0.23 0.82 0.33 0.45 1.76 Kimi-K2-Thinking ⋆ 45.97 57.15 54.21 45.34 61.71 59.22 58.13 56.56 54.08 42.07 61.57 59.15 54.60 gpt-oss-120b 27.19 20.13 19.54 33.87 30.98 29.85 26.48 19.67 19.51 25.04 31.00 29.90 26.10 gpt-oss-120b ⋆ 55.83 79.94 81.81 52.82 79.79 81.49 62.23 78.89 81.60 50.83 78.97 81.31 72.13 gpt-oss-20b 18.76 23.63 23.34 26.02 33.39 32.80 16.44 23.34 23.32 22.07 33.86 32.88 25.82 gpt-oss-20b ⋆ 47.84 65.55 67.42 47.16 61.33 62.32 41.46 64.32 67.28 36.53 61.07 62.34 57.05 
+
+Table 12: Performance of Reasoning Models evaluated with extended token limits (1024 tokens). The asterisk ( ⋆)denotes the non-standard evaluation setting required to accommodate verbose Chain-of-Thought outputs. 
+
+21 Entity Shift Prompt 
+
+SYSTEM_PROMPT = """You are a precise data processor for research. Your task is to perform entity shifting - replacing real-world named entities with fictional alternatives while preserving all semantic meaning. You must: 1. Replace ALL named entities (people, organizations, cities, locations, nationalities, races) with fictional alternatives, ensure these names are not widely recognized 2. Use simple, uncommon but plausible names (e.g., "Trump" → "Korwin", "United States" → "Northland", "BBC" → "GBN") 3. Keep entity types consistent (person →person, country →country, organization →organization) 4. Preserve ALL other information (dates, numbers, events, relationships, facts) 5. Ensure the SAME entity always maps to the SAME fictional name across ALL fields 6. Output valid JSON only, no markdown code blocks, no explanations""" 
+
+ENTITY_SHIFT_PROMPT = """Perform entity shifting on the following news data. Replace all named entities with fictional alternatives while preserving semantic meaning. **Original Event Title**: {event_title} **Original Context**: {context} **Original Claim**: {claim} **Original Evidence Titles** (shift ONLY these titles, keep source names as-is): {evidence_titles} **Requirements**: 1. Identify ALL named entities: PERSON names, ORGANIZATION names, LOCATION names, NATIONALITY terms 2. Replace each with a LESS RECOGNIZABLE fictional alternative 3. Use simple, uncommon but plausible names (e.g., "Prince Andrew" → "Lord Harwick", "Buckingham Palace" → "Thornfield Manor", "United Kingdom" → "Alberia") 4. Keep entity types consistent (person →person, palace →palace, country →country) 5. PRESERVE all roles, positions, relationships, dates, numbers, and facts - ONLY change entity names 6. Ensure CONSISTENT mapping: the SAME original entity ALWAYS maps to the SAME fictional name in ALL fields 7. Do NOT change news source names (BBC, Reuters, etc.) - these are metadata, not content entities 8. Evidence titles should use the SAME entity mapping as claim, context, and event_title **Output Format** (JSON only, NO markdown, NO code blocks, NO explanations): {{ "entity_mapping": {{ "Original Entity 1": "Fictional Name 1", "Original Entity 2": "Fictional Name 2" }}, "event_title_shifted": "shifted event title here", "context_shifted": "shifted context here", "claim_shifted": "shifted claim here", "evidence_titles_shifted": [ "shifted evidence title 1", "shifted evidence title 2" ]}} Output JSON only:""" 
+
+Figure 10: Prompt for Entity Shift Processing 
+
+22 Case Study: Kimi-K2-Thinking vs. Qwen3-235B-A22B-Instruct-2507 
+
+Evaluator: You are a fact-checking expert. Classify news claims based on evidence.....Claim: One student escaped as authorities intensified their search for the 24 other girls abducted by gunmen from Government Girls College in Maga, Kebbi state, northwestern Nigeria..... Classify this claim. Start with [[REAL]], [[FAKE]], or [[AMBIGUOUS]], do not think too much. Kimi-K2-Thinking: <think> The user wants me to classify a news claim based on the provided evidence. The claim is:\n\n\"One student escaped as authorities intensified their search for the 24 other girls abducted by gunmen from Government Girls College in Maga, Kebbi state, northwestern Nigeria.\"\n\nLet me analyze the evidence:\n\nKey elements of the claim:\n1. Location: Government Girls College in Maga, Kebbi state, northwestern Nigeria\n2. Event: Gunmen abducted girls\n3. Number: 24 other girls (implying 25 total, with 1 escaped)\n4. One student escaped\n5 
+
+Qwen3-235B-A22B-Instruct-2507: [[REAL]] Multiple credible sources confirm that 25 girls were abducted from Government Girls College Maga in Kebbi State, and at least one student escaped, with authorities intensifying searches for the others. Sources like BBC, CNN, NPR, and Al Jazeera consistently report these details. 
+
+Figure 11: Comparison of raw model outputs. Kimi-K2 fails to produce the required classification label, getting stuck in an internal "thought chain," whereas Qwen3 immediately delivers the structured verdict. 
+
+23 Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-235B-A22B-Inst.
+> True
+
+241 187 1040 
+
+4 885 562 
+
+7 297 1169 
+
+T 3 (CLS) 
+
+177 48 121 
+
+1 224 123 
+
+74 1097 2527 
+
+T 3 (INF) 
+
+1300 43 125 
+
+21 965 465 
+
+67 168 1238 
+
+T (CLS) 
+
+1269 42 93 
+
+21 929 440 
+
+98 205 1295 
+
+T (INF) 
+
+1368 39 61 
+
+21 999 431 
+
+70 165 1238 
+
+T+3 (CLS) 
+
+1362 39 59 
+
+21 995 427 
+
+76 169 1244 
+
+T+3 (INF) 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-30B-A3B-Inst.
+> True
+
+308 196 964 
+
+5 987 459 
+
+19 324 1130 
+
+217 53 76 
+
+5 242 101 
+
+110 1212 2376 
+
+1285 113 70 
+
+55 1076 320 
+
+170 367 936 
+
+1260 101 43 
+
+55 1035 300 
+
+195 420 983 
+
+1359 94 15 
+
+67 1100 284 
+
+191 361 921 
+
+1353 92 15 
+
+67 1095 281 
+
+197 368 924 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-30B-A3B
+> True
+
+56 78 53 
+
+57 65 35 
+
+72 88 29 
+
+1 0 1
+
+1 1 0
+
+183 230 116 
+
+3 3 0
+
+4 2 0
+
+3 1 1
+
+2 2 0
+
+3 2 0
+
+5 2 1
+
+2 2 0
+
+5 1 0
+
+3 0 0
+
+2 2 0
+
+5 1 0
+
+3 0 0
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-30B-A3B-Base
+> True
+
+598 26 844 
+
+156 260 1035 
+
+259 31 1183 
+
+331 7 8
+
+100 108 140 
+
+582 202 2914 
+
+1445 12 11 
+
+558 472 421 
+
+871 96 506 
+
+1391 12 1
+
+547 456 387 
+
+936 112 550 
+
+1453 14 1
+
+567 496 388 
+
+904 106 463 
+
+1446 14 0
+
+565 493 385 
+
+913 109 467 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-32B
+> True
+
+220 42 1206 
+
+3 348 1098 
+
+9 47 1417 
+
+185 13 148 
+
+1 113 234 
+
+46 311 3339 
+
+1275 3 190 
+
+24 516 911 
+
+99 67 1307 
+
+1251 3 150 
+
+24 498 868 
+
+123 85 1390 
+
+1344 3 121 
+
+26 506 919 
+
+104 63 1306 
+
+1339 3 118 
+
+26 503 914 
+
+109 66 1314 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-8B
+> True
+
+345 197 926 
+
+25 958 467 
+
+46 497 930 
+
+254 36 56 
+
+23 226 99 
+
+139 1390 2168 
+
+1374 31 63 
+
+210 891 350 
+
+380 333 760 
+
+1342 27 35 
+
+210 858 322 
+
+412 370 816 
+
+1430 16 22 
+
+252 915 284 
+
+425 326 722 
+
+1423 16 21 
+
+252 910 281 
+
+432 331 726 
+
+Real Fake Amb. 
+
+Predicted 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-8B-Base
+> True
+
+456 23 987 
+
+54 285 1112 
+
+147 31 1292 
+
+Real Fake Amb. 
+
+Predicted 
+
+290 16 39 
+
+45 155 148 
+
+322 168 3204 
+
+Real Fake Amb. 
+
+Predicted 
+
+1421 5 42 
+
+354 683 414 
+
+718 114 638 
+
+Real Fake Amb. 
+
+Predicted 
+
+1377 5 22 
+
+350 667 373 
+
+766 130 699 
+
+Real Fake Amb. 
+
+Predicted 
+
+1450 6 12 
+
+337 730 384 
+
+766 103 604 
+
+Real Fake Amb. 
+
+Predicted 
+
+1444 6 10 
+
+337 728 378 
+
+772 105 612 
+
+Confusion Matrices: Classification (CLS) vs Inference (INF) (Part 1/4) Figure 12: Confusion Matrices (Part 1/4) - Qwen Series. Note the sharp contrast in diagonal clarity between Instruct models and Base models. 
+
+24 Real 
+
+Fake 
+
+Amb. 
+
+> Qwen3-4B
+> True
+
+133 593 742 
+
+0 1331 120 
+
+2 932 538 
+
+T 3 (CLS) 
+
+111 86 149 
+
+0 322 26 
+
+24 2448 1225 
+
+T 3 (INF) 
+
+921 159 388 
+
+10 1236 205 
+
+62 836 575 
+
+T (CLS) 
+
+909 136 359 
+
+10 1183 197 
+
+74 912 612 
+
+T (INF) 
+
+1057 98 313 
+
+14 1217 220 
+
+78 823 572 
+
+T+3 (CLS) 
+
+1055 96 309 
+
+14 1209 220 
+
+80 833 576 
+
+T+3 (INF) 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Llama-3.3-70B-Inst.
+> True
+
+433 746 289 
+
+7 1389 55 
+
+28 1295 150 
+
+248 83 15 
+
+2 330 16 
+
+218 3017 463 
+
+1382 74 12 
+
+35 1366 50 
+
+199 991 283 
+
+1336 61 7
+
+34 1309 47 
+
+246 1061 291 
+
+1418 48 2
+
+45 1366 40 
+
+208 985 280 
+
+1412 46 2
+
+45 1358 40 
+
+214 995 280 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Llama-3.1-70B
+> True
+
+1467 1 0
+
+1391 60 0
+
+1468 5 0
+
+346 0 0
+
+347 1 0
+
+3633 65 0
+
+1468 0 0
+
+1450 1 0
+
+1473 0 0
+
+1404 0 0
+
+1389 1 0
+
+1598 0 0
+
+1468 0 0
+
+1449 2 0
+
+1473 0 0
+
+1460 0 0
+
+1441 2 0
+
+1489 0 0
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Llama-3.1-8B-Inst.
+> True
+
+502 24 940 
+
+166 177 1108 
+
+332 31 1108 
+
+294 18 34 
+
+104 142 102 
+
+602 72 3020 
+
+1414 18 36 
+
+620 521 310 
+
+1162 48 263 
+
+1366 17 21 
+
+611 514 265 
+
+1219 56 323 
+
+1448 10 10 
+
+659 546 246 
+
+1211 51 211 
+
+1440 10 10 
+
+656 545 242 
+
+1222 52 215 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Llama-3.1-8B
+> True
+
+508 3 8
+
+459 4 12 
+
+443 5 10 
+
+29 1 2
+
+32 2 4
+
+1349 9 24 
+
+143 6 16 
+
+149 9 12 
+
+146 4 7
+
+127 6 15 
+
+132 9 11 
+
+179 4 9
+
+124 7 6
+
+146 7 9
+
+137 5 6
+
+123 7 6
+
+145 7 8
+
+139 5 7
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Llama-3.2-3B
+> True
+
+1468 0 0
+
+1451 0 0
+
+1472 0 0
+
+346 0 0
+
+348 0 0
+
+3697 0 0
+
+1468 0 0
+
+1451 0 0
+
+1473 0 0
+
+1404 0 0
+
+1390 0 0
+
+1598 0 0
+
+1468 0 0
+
+1451 0 0
+
+1473 0 0
+
+1460 0 0
+
+1443 0 0
+
+1489 0 0
+
+Real Fake Amb. 
+
+Predicted 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Llama-3.2-1B
+> True
+
+1465 1 0
+
+1449 0 1
+
+1469 0 1
+
+Real Fake Amb. 
+
+Predicted 
+
+346 0 0
+
+347 0 1
+
+3690 1 1
+
+Real Fake Amb. 
+
+Predicted 
+
+1462 0 0
+
+1447 0 2
+
+1468 0 1
+
+Real Fake Amb. 
+
+Predicted 
+
+1398 0 0
+
+1386 0 2
+
+1593 0 1
+
+Real Fake Amb. 
+
+Predicted 
+
+1463 0 0
+
+1446 0 0
+
+1467 0 0
+
+Real Fake Amb. 
+
+Predicted 
+
+1455 0 0
+
+1438 0 0
+
+1483 0 0
+
+Confusion Matrices: Classification (CLS) vs Inference (INF) (Part 2/4) Figure 12 (cont.): Confusion Matrices (Part 2/4) - Qwen, Llama Series. Llama-3.1-70B, Llama-3.1-8B, Llama-3.2-3B, and Llama-3.2-1B exhibit "collapsing" behavior, predicting a single class. 
+
+25 Real 
+
+Fake 
+
+Amb. 
+
+> DeepSeek-V3.1
+> True
+
+234 82 1130 
+
+8 361 1058 
+
+26 103 1323 
+
+T 3 (CLS) 
+
+165 16 143 
+
+6 106 212 
+
+97 424 3156 
+
+T 3 (INF) 
+
+1193 20 110 
+
+25 509 776 
+
+114 87 1128 
+
+T (CLS) 
+
+1165 18 76 
+
+25 482 742 
+
+142 116 1196 
+
+T (INF) 
+
+1226 17 55 
+
+54 506 698 
+
+132 92 1067 
+
+T+3 (CLS) 
+
+1223 17 50 
+
+54 503 693 
+
+135 95 1077 
+
+T+3 (INF) 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Kimi-K2-Thinking
+> True
+
+239 76 6
+
+139 42 5
+
+104 63 14 
+
+0 0 0
+
+1 3 0
+
+481 178 25 
+
+7 2 0
+
+9 2 1
+
+6 0 0
+
+5 1 0
+
+7 2 1
+
+10 1 0
+
+8 2 0
+
+7 2 0
+
+9 0 0
+
+8 2 0
+
+7 2 0
+
+9 0 0
+
+Real 
+
+Fake 
+
+Amb. 
+
+> Kimi-K2-Thinking
+> True
+
+374 284 733 
+
+171 685 563 
+
+161 314 960 
+
+102 110 60 
+
+21 275 20 
+
+583 898 2176 
+
+951 157 66 
+
+70 1069 69 
+
+140 559 490 
+
+927 144 39 
+
+68 1025 54 
+
+166 616 532 
+
+991 92 18 
+
+91 1009 37 
+
+159 573 381 
+
+989 90 14 
+
+91 1001 37 
+
+161 583 385 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> GPT-OSS-120B
+> True
+
+55 127 257 
+
+5 540 199 
+
+0 179 599 
+
+35 20 8
+
+0 83 2
+
+25 743 1045 
+
+530 5 7
+
+4 281 6
+
+7 86 73 
+
+515 4 3
+
+4 270 4
+
+22 98 79 
+
+567 2 0
+
+4 231 3
+
+4 77 60 
+
+566 2 0
+
+4 231 3
+
+5 77 60 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> GPT-OSS-120B
+> True
+
+336 397 735 
+
+16 934 501 
+
+17 274 1182 
+
+168 89 89 
+
+2 291 55 
+
+199 1225 2274 
+
+1313 84 71 
+
+13 1247 191 
+
+102 420 951 
+
+1281 74 49 
+
+12 1199 179 
+
+135 478 985 
+
+1393 53 22 
+
+17 1257 176 
+
+103 427 943 
+
+1389 52 19 
+
+17 1249 176 
+
+107 436 946 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> GPT-OSS-20B
+> True
+
+82 174 97 
+
+49 411 118 
+
+28 299 331 
+
+50 32 1
+
+19 128 1
+
+90 724 544 
+
+586 20 1
+
+43 416 3
+
+10 204 36 
+
+576 17 0
+
+43 409 0
+
+20 214 40 
+
+599 8 0
+
+39 401 1
+
+9 227 25 
+
+598 8 0
+
+38 401 1
+
+11 227 25 
+
+Real Fake Amb. 
+
+Predicted 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> GPT-OSS-20B
+> True
+
+398 654 336 
+
+102 986 337 
+
+105 630 717 
+
+Real Fake Amb. 
+
+Predicted 
+
+150 146 40 
+
+2 333 12 
+
+453 1791 1338 
+
+Real Fake Amb. 
+
+Predicted 
+
+1277 142 32 
+
+20 1358 39 
+
+74 1119 244 
+
+Real Fake Amb. 
+
+Predicted 
+
+1248 121 18 
+
+18 1310 30 
+
+105 1188 267 
+
+Real Fake Amb. 
+
+Predicted 
+
+1399 47 11 
+
+16 1353 25 
+
+73 1130 209 
+
+Real Fake Amb. 
+
+Predicted 
+
+1395 47 7
+
+14 1347 25 
+
+79 1136 213 
+
+Confusion Matrices: Classification (CLS) vs Inference (INF) (Part 3/4) Figure 12 (cont.): Confusion Matrices (Part 3/4) - DeepSeek, Kimi, and GPT-OSS Series. The asterisk ⋆ denotes the non-standard evaluation setting required to accommodate verbose CoT outputs. 
+
+26 Real 
+
+Fake 
+
+Amb. 
+
+> gpt-4o
+> True
+
+256 164 1048 
+
+1 533 917 
+
+12 105 1356 
+
+T 3 (CLS) 
+
+183 45 118 
+
+1 119 228 
+
+85 638 2975 
+
+T 3 (INF) 
+
+1279 59 130 
+
+24 636 791 
+
+146 67 1260 
+
+T (CLS) 
+
+1251 53 100 
+
+24 619 747 
+
+174 90 1334 
+
+T (INF) 
+
+1346 47 75 
+
+30 641 780 
+
+153 58 1262 
+
+T+3 (CLS) 
+
+1343 46 71 
+
+30 640 773 
+
+156 60 1273 
+
+T+3 (INF) 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> gpt-4o-mini
+> True
+
+347 129 992 
+
+11 593 847 
+
+36 96 1341 
+
+230 42 74 
+
+4 126 218 
+
+160 650 2888 
+
+1371 39 58 
+
+71 604 776 
+
+282 47 1144 
+
+1335 34 35 
+
+70 584 736 
+
+319 72 1207 
+
+1424 21 23 
+
+86 588 777 
+
+313 44 1116 
+
+1417 21 22 
+
+86 587 770 
+
+320 45 1124 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> gpt-5.1
+> True
+
+219 241 1000 
+
+0 814 622 
+
+1 224 1246 
+
+149 54 137 
+
+0 231 105 
+
+71 994 2626 
+
+1224 88 142 
+
+0 1026 367 
+
+14 234 1202 
+
+1195 83 112 
+
+0 993 339 
+
+43 272 1260 
+
+1307 75 68 
+
+1 1046 333 
+
+16 232 1205 
+
+1302 75 65 
+
+1 1039 332 
+
+21 239 1209 
+
+Real Fake Amb. 
+
+Predicted 
+
+Real 
+
+Fake 
+
+Amb. 
+
+> gpt-5.2
+> True
+
+185 130 1131 
+
+0 585 853 
+
+6 128 1322 
+
+Real Fake Amb. 
+
+Predicted 
+
+153 45 130 
+
+0 277 61 
+
+38 521 3115 
+
+Real Fake Amb. 
+
+Predicted 
+
+1119 57 252 
+
+3 1200 165 
+
+18 366 1034 
+
+Real Fake Amb. 
+
+Predicted 
+
+1100 53 212 
+
+3 1157 147 
+
+37 413 1092 
+
+Real Fake Amb. 
+
+Predicted 
+
+1178 37 198 
+
+1 1189 154 
+
+19 364 1029 
+
+Real Fake Amb. 
+
+Predicted 
+
+1176 36 193 
+
+1 1183 152 
+
+21 371 1036 
+
+Confusion Matrices: Classification (CLS) vs Inference (INF) (Part 4/4) Figure 12 (cont.): Confusion Matrices (Part 4/4) - GPT Series. 
+
+27

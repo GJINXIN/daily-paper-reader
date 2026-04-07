@@ -6,73 +6,82 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-06
-- 运行时间：2026-04-06 20:32:30 UTC
+- 最新运行日期：2026-04-07
+- 运行时间：2026-04-07 20:32:57 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：20
+- 精读区：9
 - 速读区：11
 
 ### 今日简报（AI）
-今日聚焦多智能体系统（MAS）的群体行为，深度剖析了智能体间的“谄媚”传播与认知权力分布的幂律规律。
-研究揭示了 MAS 中存在的“唯唯诺诺”现象及智力精英化趋势，并提出通过量化角色清晰度与图增强记忆来优化协作。
-建议关注如何防范群体决策中的认知偏差，并尝试利用自优化框架提升复杂研究任务的效率。
-- 详情：[/202604/06/README](/202604/06/README)
+今日精选 20 篇前沿成果，深度复盘 LLM 多智能体模拟在社会治理与服务优化中的满分表现。
+重点关注 LLM 如何精准模拟群体态度扩散，以及 AI 智能体在协作决策中展现出的类人逻辑与鲁棒性。
+建议从社会仿真视角切入，探索 AI 智能体在提升业务效率与理解复杂人类行为中的落地价值。
+- 详情：[/202604/07/README](/202604/07/README)
 
 ### 精读区论文标签
-1. [Too Polite to Disagree: Understanding Sycophancy Propagation in Multi-Agent Systems](/202604/06/2604.02668v1-too-polite-to-disagree-understanding-sycophancy-propagation-in-multi-agent-systems)  
+1. [LLM-Agent-based Social Simulation for Attitude Diffusion](/202604/07/2604.03898v1-llm-agent-based-social-simulation-for-attitude-diffusion)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：基于大模型智能体的态度扩散和社会媒体帖子社会模拟
+2. [Optimizing Service Operations via LLM-Powered Multi-Agent Simulation](/202604/07/2604.04383v1-optimizing-service-operations-via-llm-powered-multi-agent-simulation)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：用于模拟人类行为的LLM驱动多智能体模拟
+3. [AgentSocialBench: Evaluating Privacy Risks in Human-Centered Agentic Social Networks](/202604/07/2604.01487v2-agentsocialbench-evaluating-privacy-risks-in-human-centered-agentic-social-networks)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体系统中的谄媚传播与社会影响
-2. [Do Agent Societies Develop Intellectual Elites? The Hidden Power Laws of Collective Cognition in LLM Multi-Agent Systems](/202604/06/2604.02674v1-do-agent-societies-develop-intellectual-elites-the-hidden-power-laws-of-collective-cognition-in-llm-multi-agent-systems)  
+   evidence：以人为中心的智能体社交网络与LLM智能体框架
+4. [Investigating the Impact of Subgraph Social Structure Preference on the Strategic Behavior of Networked Mixed-Motive Learning Agents](/202604/07/2604.03818v1-investigating-the-impact-of-subgraph-social-structure-preference-on-the-strategic-behavior-of-networked-mixed-motive-learning-agents)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：大模型多智能体社会中的涌现协调动态
-3. [CASCADE: A Cascading Architecture for Social Coordination with Controllable Emergence at Low Cost](/202604/06/2604.03091v1-cascade-a-cascading-architecture-for-social-coordination-with-controllable-emergence-at-low-cost)  
+   evidence：网络化学习智能体中的社会动态和策略行为
+5. [From Plausible to Causal: Counterfactual Semantics for Policy Evaluation in Simulated Online Communities](/202604/07/2604.03920v1-from-plausible-to-causal-counterfactual-semantics-for-policy-evaluation-in-simulated-online-communities)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：用于可信游戏社会和社会协调的大模型驱动智能体
-4. [Reliable News or Propagandist News? A Neurosymbolic Model Using Genre, Topic, and Persuasion Techniques to Improve Robustness in Classification](/202604/06/2604.01936v1-reliable-news-or-propagandist-news-a-neurosymbolic-model-using-genre-topic-and-persuasion-techniques-to-improve-robustness-in-classification)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：使用神经符号模型进行宣传和新闻失序检测
-5. [Beyond the AI Tutor: Social Learning with LLM Agents](/202604/06/2604.02677v1-beyond-the-ai-tutor-social-learning-with-llm-agents)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：LLM智能体的社会化学习与多方交互
-6. [Breakdowns in Conversational AI: Interactional Failures in Emotionally and Ethically Sensitive Contexts](/202604/06/2604.02713v1-breakdowns-in-conversational-ai-interactional-failures-in-emotionally-and-ethically-sensitive-contexts)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：用于多轮对话的角色条件用户模拟器
+   evidence：基于大模型的社交模拟因果反事实框架
+6. [What Do We Need for an Agentic Society?](/202604/07/2604.03938v1-what-do-we-need-for-an-agentic-society)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：智能体社会中的涌现社会现象与协作
+7. [ATSS: Detecting AI-Generated Videos via Anomalous Temporal Self-Similarity](/202604/07/2604.04029v1-atss-detecting-ai-generated-videos-via-anomalous-temporal-self-similarity)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：通过时域模式检测AI生成视频
+8. [Cognibit: From Digital Exhaustion to Real-World Connection Through Gamified Territory Control and LLM-Powered Twin Networking](/202604/07/2604.04351v1-cognibit-from-digital-exhaustion-to-real-world-connection-through-gamified-territory-control-and-llm-powered-twin-networking)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：大模型驱动的数字孪生用于行为模拟与社交发现
+9. [LiveFact: A Dynamic, Time-Aware Benchmark for LLM-Driven Fake News Detection](/202604/07/2604.04815v1-livefact-a-dynamic-time-aware-benchmark-for-llm-driven-fake-news-detection)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：大模型驱动的虚假新闻检测动态基准
 
 ### 速读区论文标签
-1. [Improving Role Consistency in Multi-Agent Collaboration via Quantitative Role Clarity](/202604/06/2604.02770v1-improving-role-consistency-in-multi-agent-collaboration-via-quantitative-role-clarity)  
+1. [Fully Byzantine-Resilient Distributed Multi-Agent Q-Learning](/202604/07/2604.02791v1-fully-byzantine-resilient-distributed-multi-agent-q-learning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：提高大语言模型驱动的多智能体系统中的角色一致性
-2. [Self-Optimizing Multi-Agent Systems for Deep Research](/202604/06/2604.02988v1-self-optimizing-multi-agent-systems-for-deep-research)  
+   evidence：拜占庭容错的分布式多智能体强化学习
+2. [When AI Agents Disagree Like Humans: Reasoning Trace Analysis for Human-AI Collaborative Moderation](/202604/07/2604.03796v1-when-ai-agents-disagree-like-humans-reasoning-trace-analysis-for-human-ai-collaborative-moderation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：包含协调者和工作者智能体的多智能体深度研究系统
-3. [GAAMA: Graph Augmented Associative Memory for Agents](/202604/06/2603.27910v1-gaama-graph-augmented-associative-memory-for-agents)  
+   evidence：用于仇恨言论审核和社会话语分析的多智能体系统
+3. [Symbolic-Vector Attention Fusion for Collective Intelligence](/202604/07/2604.03955v1-symbolic-vector-attention-fusion-for-collective-intelligence)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：自主智能体之间的集体智能与信号交换
+4. [Is a Picture Worth a Thousand Words? Adaptive Multimodal Fact-Checking with Visual Evidence Necessity](/202604/07/2604.04692v1-is-a-picture-worth-a-thousand-words-adaptive-multimodal-fact-checking-with-visual-evidence-necessity)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：使用协作智能体进行多模态事实核查
+5. [DeltaMem: Towards Agentic Memory Management via Reinforcement Learning](/202604/07/2604.01560v1-deltamem-towards-agentic-memory-management-via-reinforcement-learning)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：智能体维持连贯社会行为的长期记忆
-4. [Logarithmic Scores, Power-Law Discoveries: Disentangling Measurement from Coverage in Agent-Based Evaluation](/202604/06/2604.00477v1-logarithmic-scores-power-law-discoveries-disentangling-measurement-from-coverage-in-agent-based-evaluation)  
+   evidence：多智能体系统中的以人格为中心的记忆管理
+6. [Hierarchical Memory Orchestration for Personalized Persistent Agents](/202604/07/2604.01670v1-hierarchical-memory-orchestration-for-personalized-persistent-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于人格的智能体评委用于评估对话式AI
-5. [AfrIFact: Cultural Information Retrieval, Evidence Extraction and Fact Checking for African Languages](/202604/06/2604.00706v1-afrifact-cultural-information-retrieval-evidence-extraction-and-fact-checking-for-african-languages)  
+   evidence：个性化持久智能体的记忆编排
+7. [Beyond Message Passing: Toward Semantically Aligned Agent Communication](/202604/07/2604.02369v1-beyond-message-passing-toward-semantically-aligned-agent-communication)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：针对社会话语的自动事实核查与证据提取
-6. [Yet Even Less Is Even Better For Agentic, Reasoning, and Coding LLMs](/202604/06/2604.00824v2-yet-even-less-is-even-better-for-agentic-reasoning-and-coding-llms)  
+   evidence：大模型智能体的语义对齐通信协议
+8. [Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets](/202604/07/2604.02460v1-single-agent-llms-outperform-multi-agent-systems-on-multi-hop-reasoning-under-equal-thinking-token-budgets)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：跨多个智能体框架的智能体能力训练框架
-7. [Experience as a Compass: Multi-agent RAG with Evolving Orchestration and Agent Prompts](/202604/06/2604.00901v2-experience-as-a-compass-multi-agent-rag-with-evolving-orchestration-and-agent-prompts)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：具有演化编排和角色特定提示的多智能体RAG
-8. [From Validity to Inter-Subjectivity: An Argument for Reliability Signals in Search Environments](/202604/06/2604.01186v1-from-validity-to-inter-subjectivity-an-argument-for-reliability-signals-in-search-environments)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：搜索环境中的虚假信息与可靠性信号
-9. [Emergence WebVoyager: Toward Consistent and Transparent Evaluation of (Web) Agents in The Wild](/202604/06/2603.29020v1-emergence-webvoyager-toward-consistent-and-transparent-evaluation-of-web-agents-in-the-wild)  
+   evidence：单智能体与多智能体系统的理论对比
+9. [Differentiable Normative Guidance for Nash Bargaining Solution Recovery](/202604/07/2603.29297v1-differentiable-normative-guidance-for-nash-bargaining-solution-recovery)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：复杂真实环境下AI智能体的评估
-10. [Open, Reliable, and Collective: A Community-Driven Framework for Tool-Using AI Agents](/202604/06/2604.00137v1-open-reliable-and-collective-a-community-driven-framework-for-tool-using-ai-agents)  
+   evidence：多智能体谈判与效用分配
+10. [View-oriented Conversation Compiler for Agent Trace Analysis](/202604/07/2603.29678v2-view-oriented-conversation-compiler-for-agent-trace-analysis)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：使用工具的AI智能体框架与可靠性
-11. [Signals: Trajectory Sampling and Triage for Agentic Interactions](/202604/06/2604.00356v1-signals-trajectory-sampling-and-triage-for-agentic-interactions)  
+   evidence：用于分析复杂多智能体对话轨迹的编译器
+11. [Beyond Message Passing: A Semantic View of Agent Communication Protocols](/202604/07/2604.02369v2-beyond-message-passing-a-semantic-view-of-agent-communication-protocols)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多步交互循环中智能体交互的分类与筛选
+   evidence：用于协作的智能体通信协议
 
 
 <div class="dpr-home-promo-card">
