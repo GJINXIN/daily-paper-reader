@@ -1,0 +1,690 @@
+Title: Constraint-Induced Redistribution of Social Influence in Nonlinear Opinion Dynamics
+
+URL Source: https://arxiv.org/pdf/2604.05140v1
+
+Published Time: Wed, 08 Apr 2026 00:15:18 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+# Constraint-Induced Redistribution of Social Influence in Nonlinear Opinion Dynamics 
+
+Vishnudatta Thota, Anastasia Bizyaeva 
+
+Abstract — We study how intrinsic hard constraints on the decision dynamics of social agents shape collective decisions on multiple alternatives in a heterogeneous group. Such constraints may arise due to structural and behavioral limitations, such as adherence to belief systems in social networks or hardware limi-tations in autonomous networks. In this work, agent constraints are encoded as projections in a multi-alternative nonlinear opinion dynamics framework. We prove that projections induce an invariant subspace on which the constraints are always satisfied and study the dynamics of networked opinions on this subspace. We then show that heterogeneous pairwise alignments between individuals’ constraint vectors generate an effective weighted social graph on the invariant subspace, even when agents exchange opinions over an unweighted communication graph in practice. With analysis and simulation studies, we illustrate how the effective constraint-induced weighted graph reshapes the centrality of agents in the decision process and the group’s sensitivity to distributed inputs. 
+
+I. I NTRODUCTION 
+
+Collective decision-making is an important component of multi-agent autonomy across application domains, from navigation in multi-vehicle networks [1], [2] to task allo-cation in multi-robot teams [3], [4]. Analogous collective decision processes arise in natural social systems, where individuals form and update opinions about different options through structured social interactions [5]–[7]. In each of these settings, the collective decision outcome can depend not only on how the agents communicate, but also on how their individual constraints shape the information they exchange and act upon. In this paper, we study the interplay between heterogeneous agent constraints and outcomes of collective decisions. Principled mathematical understanding of this interplay is important both for analyzing natural social systems and for designing autonomous behaviors. Mathematical models of networked opinion dynamics, e.g., [5], [7]–[10], are used to study social interactions in multi-agent systems and to design algorithms for multi-agent autonomy. Among these, the Nonlinear Opinion Dynamics (NOD) model [11]–[13] is a tractable framework for tunably sensitive collective decision-making on multiple alternatives. In NOD, collective decisions emerge through a bifurcation that yields multistable agreement and disagreement outcomes even for homogeneous, i.e. identical, agents, and has primar-ily been studied under such homogeneity assumptions. The NOD framework is also emerging as a tool for the design of flexible cooperative autonomy across domains [14]–[17]. In  
+
+> V. Thota and A. Bizyaeva are with the Sibley School of Mechanical and Aerospace Engineering at Cornell University, Ithaca, NY, 14850; {vt279, anastasiab }@cornell.edu
+
+this paper, we build on NOD to characterize the effects of agent constraints and group heterogeneity on the outcome of multi-alternative collective decisions. Networked opinion dynamics are often constrained due to structural or behavioral limitations of the agents, such as hardware or resource limitation in the autonomous robots or social conformity to heterogeneous belief systems in social networks. Existing work has studied the effects of hetero-geneous interaction weights, confidence bounds, and inter-option coupling on opinion formation in varioud frameworks, from linear consensus dynamics to bounded confidence models [10], [18]–[21]. A related line of work considers constrained opinion dynamics, including limiting the agents’ linear opinion updates to constraint sets [22], resource allo-cation formulations with projected linear opinion dynamics [23], and opinion dynamics defined on curved manifolds such as the unit sphere [24]–[26]. Such constraints have not been considered in the NOD framework beyond the simplex constraint in [11]. In this paper, our contributions are as follows. First, we introduce hard constraints on individual agents’ opinions into the NOD framework for the first time. Analogously to the work on projected linear consensus flows [22], [23], these constraints are enforced via local projections in the agents’ opinion update dynamics. We prove that local projection con-straints induce a global invariant subspace on which individ-ual agents’ constraints are always enforced, and derive a re-duced representation of the dynamics of networked opinions on this subspace. Second, we analyze the reduced model with one-dimensional constraints and characterize the emergence of constrained network decision states via a supercritical pitchfork bifurcation and its unfolding, analogously to the unconstrained NOD. Third, we prove that heterogeneous pairwise alignments between agents’ constraint vectors gen-erate an effective weighted social graph, even when agents’ true communication graph is unweighted. We illustrate how this constraint-induced weighted graph redistributes social influence and relative sensitivity to distributed inputs, across the network, illustrating how . The paper is organized as follows. Section II contains preliminaries from matrix theory and graph theory. In Section III we introduce and analyze projection-constrained NOD and characterize the emergent influence redistribution in the presence of heterogeneous constraints for several graph types. In Section IV we present illustrative numerical simu-lations. Finally, in Section V we conclude. 
+
+> arXiv:2604.05140v1 [math.OC] 6 Apr 2026
+
+II. N OTATION AND PRELIMINARIES 
+
+Let 1n and 0n denote the n−dimensional column vector of ones and zeros, respectively. The matrix I denotes the identity matrix of appropriate dimensions. Let A ∈ Rn×m.We use ker( A) and range( A) to represent the kernel of A
+
+and range of A respectively. A is said to be irreducible if it is not similar to a block upper triangular matrix via a permutation matrix. We define sign as the sign function which return 1 (-1) for positive (negative) numbers and 0 for zero. A vector v ∈ Rn is called strictly positive if all its entries are positive and it is represented by v > 0. The matrix 
+
+P = A(AT A)−1AT ∈ Rn×n is a projection matrix that defines an orthogonal projection onto the range of A. The matrix P satisfies P 2 = P , and its complementary projection is P ⊥ = I − P .A weighted, signed graph G = ( V, E, A ) consists of a node set V = {1, . . . , n }, an edge set E ⊆ V × V , and a weighted adjacency matrix A ∈ Rn×n with entries aij ̸ = 0 
+
+if (i, j ) ∈ E and aij = 0 otherwise. We consider simple graphs, i.e. ones with no self-loops, aii = 0 for all i ∈ V . A graph is undirected if (i, j ) ∈ E if and only if (j, i ) ∈ E , and 
+
+A = AT . A graph is connected if there exists a path between every pair of distinct nodes. Equivalently A is irreducible. A graph is unweighted if aij ∈ { 0, 1} for all i, j ∈ V . We say the interaction between nodes i, j is cooperative when 
+
+aij > 0 and antagonistic when aij < 0.A graph is unsigned if aij ≥ 0 for all (i, j ) ∈ E,and signed if some edges have negative weight. A signed undirected graph G is structurally balanced if V admits a bipartition V1 ∪ V 2, with V1 ∩ V 2 = ∅, such that aij > 0 for all (i, j ) ∈ E with i, j ∈ V k, k ∈ { 1, 2}, and aij < 0 for all 
+
+(i, j ) ∈ E with i ∈ V 1, j ∈ V 2.For an undirected, unweighted d-regular network, each node i ∈ V has degree d = Pnj=1 aij . In this case, 
+
+A1n = d1n, and hence the dominant eigenvalue of the A is 
+
+λmax = d and the corresponding eigenvector is v = 1n.For an undirected, unweighted star network, let node 1 denote the central node. The dominant eigenvalue of A is 
+
+λmax = √n − 1, and the corresponding eigenvector is v =
+
+ √n − 1, 1Tn−1
+
+T . More generally, if a network is unsigned and connected, then it follows from the Perron-Frobenius Theorem [27, Theorem 2.12] that the dominant eigenvalue 
+
+λmax of A is simple, and the corresponding eigenvector v is strictly positive and unique up to scaling. This eigenvector v
+
+defines the eigenvector centrality of the network, with each component vi quantifying the relative influence of node i.The pitchfork bifurcation universal unfolding [28, Chapter III] is described by the zero sets of f (x) = q1x ± x3 + q2 +
+
+q3x2 where x ∈ R is the state, q1 is the bifurcation parameter, and q2, q 3 are unfolding parameters, with f (x) = 0 typically describing sets of equilibria of a dynamical system. When 
+
+q2 = q3 = 0 , the curves f (x) = 0 become the symmetric pitchfork bifurcation, with two symmetric equilibria branch-ing off from the x = 0 equilibrium as the bifurcation pa-rameter is varied. If one of the unfolding parameters is non-zero, the bifurcation diagram breaks up near its bifurcation point, with parameters q2, q 3 selecting one of four possible topologically distinct curves of equilibria. Let rs ∈ RNa . The kth order directional derivative of Φ at 
+
+(y∗, u ∗) is denoted as 
+
+ dkΦ 
+
+> y∗,u ∗
+
+(r1, . . . , rk)= ∂∂t 1
+
+. . . ∂∂t k
+
+Φ y∗ +
+
+> k
+
+X
+
+> s=1
+
+tsrs, u ∗
+
+! (1) 
+
+Lemma II.1 ([29]) . Consider the eigenvalue problem, 
+
+Kvi = λivi, where vi is the eigenvector corresponding to the ith eigenvalue λi and K ∈ Rn×n. Let K be a symmetric matrix, and let K (δ) ∈ Rn×n be the symmetric matrix obtained after perturbing some of the entries of K by δ.The first-order approximations of the eigenpair under the perturbation ( δ) is: 
+
+λ∗ 
+
+> i
+
+≈ λi + δ ∂λ i
+
+∂δ (2a) 
+
+v∗ 
+
+> i
+
+≈ vi + δ ∂vi
+
+∂δ (2b) 
+
+where ∂λ i 
+
+> ∂δ
+
+= vTi K′ (δ) vi, ∂vi 
+
+> ∂δ
+
+=
+
+− Fi (0) Fi (0) + 2 vivTi
+
+−1 Fi (0) F ′ 
+
+> i
+
+(δ) vi and 
+
+Fi (δ) = K (δ) − λiI . Here K′ (δ) and F ′ 
+
+> i
+
+(δ) denote the matrices formed by differentiating the elements of K (δ)
+
+and Fi (δ) matrices, respectively, with respect to δ.
+
+III. P ROJECTION -C ONSTRAINED NOD We consider Na agents forming and exchanging opinions on No options over an undirected and connected commu-nication network with a static topology. Agent interactions are encoded in graph G = ( V, E, A a), where V is the node set, E is the edge set and Aa ∈ RNa×Na is the inter-agent adjacency matrix. Here, Aa is symmetric, irreducible, with entries aij ∈ { 0, 1} and aii = 0 for all i ∈ V .Let zij ∈ R be the opinion of agent i on option j,with zij > 0( < 0) representing a preference (rejection) of option j and |zij | reflecting strength of commitment to this decision. We say zij = 0 means agent i is neutral on option j. Each agent i has a set of constraints on its opinions, for example arising from a learned belief system if it is an agent in a social network or a set of hardware con-straints if opinions represent allocation of onboard resources to tasks. We assume that each set of opinion constraints of agent i can be encoded in an orthogonal projection matrix Pi ∈ RNo×No whose complementary projection is 
+
+P ⊥ 
+
+> i
+
+= I − Pi. The opinions of agent i are represented by a vector Zi = ( zi1, · · · , z iN o )T ∈ VPi ⊆ RNo , where 
+
+VPi = {x ∈ RNo s.t. P ⊥ 
+
+> i
+
+x = 0}. The network state 
+
+Z =
+
+
+
+ZT 
+
+> 1
+
+, · · · , ZTNa
+
+T
+
+∈ VP1 × VP2 × · · · × VPNa ⊆ RNaNo
+
+represents the opinions of all the agents. Each agent i updates its opinion according to the nonlinear update rule, 
+
+˙Zi = PiFi(Z), (3a) 
+
+Fij (Z) = −dz ij + S
+
+u
+
+αz ij + γ
+
+> Na
+
+X 
+
+> k=1
+> k̸=i
+
+(Aa)ik zkj 
+
+ + bij 
+
+(3b) where Fi(Z) = ( Fi1(Z), . . . , F iN o (Z)) and S : R → R an odd sigmoidal saturating function which satisfies S(0) = 0 ,
+
+S′(0) = 1 and sign( S′′ (z)) = − sign( z). Model parameters include the attention parameter ( u > 0), damping coefficient (d > 0), social influence weight ( γ > 0), and strength of self-reinforcement of opinion ( α > 0). The parameter bij ∈ R
+
+represents an external input or intrinsic bias of agent i on option j.The saturating influence of neighbors on each agent’s opin-ion update in (3) follows the general form of multidimen-sional Nonlinear Opinion Dynamics models introduced in [12]. However, in this previous work, cross-coupling between opinions was a soft constraint that indirectly influenced the opinion evolution through imposing additional graph struc-ture into the opinion evolution equations. Distinctly from this paradigm, here we consider opinion coupling through 
+
+hard constraints encoded by the projection matrices Pi,enforced in the opinion update of each agent. In the following Proposition we prove that the hard constraint P ⊥ 
+
+> i
+
+Zi(t) = 0 is enforced along trajectories of (3) along its invariant subspace VP1 × VP2 × . . . V PNa .
+
+Proposition III.1 (Constraint Enforcement) . Consider (3) 
+
+and suppose Pi has rank k ≥ 1. Then range Pi = ker P ⊥ 
+
+> i
+
+is invariant under the flow of (3) .Proof. Suppose Zi(0) ∈ ker P ⊥ 
+
+> i
+
+. Then P ⊥ 
+
+> i
+
+Zi(0) = 0 . The time derivative ddt (P ⊥ 
+
+> i
+
+Zi) = P ⊥ 
+
+> i
+
+˙Zi = P ⊥ 
+
+> i
+
+PiFi(Z) = 0 .Therefore Zi(t) ∈ ker P ⊥ 
+
+> i
+
+for all t ≥ 0.Crucially, since each agent’s projection constraint is en-coded locally in its own update rule (3), along the invariant subspace estbalished by Proposition III.1 the constraints are enforced without requiring agents to communicate their constraint information explicitly to their neighbors. This is consistent with practical settings where constraints may reflect private, agent-specific properties such as hardware limitations, that may not be observable or secure to share over a communication network. 
+
+A. Bifurcation analysis under one-dimensional constraints 
+
+We now specialize to the case of rank-one projection constraints, in which each agent i’s constraint subspace is one-dimensional, spanned by a single vector pi ∈ RNo . We define the matrix Pi to be a projection matrix onto the span of pi in RNo ,
+
+Pi = 1
+
+∥pi∥2 pipTi = ˆ pi ˆpiT . (4) where ˆpi = pi 
+
+> ∥pi∥
+
+and the norm ∥pi∥ is the standard Euclidean L2 norm. We will refer to pi as the constraint vector and the span of pi as the constraint subspace of the 
+
+ith agent. By Proposition III.1, the flow of (3) is invariant on 
+
+VPi = span {pi} for each agent i. Therefore, on this invariant subspace, the opinion vector of agent i satisfies Zi = yi ˆpi,where yi = ˆ pTi Zi ∈ R is the effective opinion of agent 
+
+i. In the following Proposition we illustrate that restricted to the constraint subspace, the NaNo-dimensional dynamics of (3) reduce to an Na-dimensional system in the effective opinions. For every agent i, let yi ∈ R and bei ∈ R denote the projections of Zi and bi = ( bi1, . . . , b iN o )T , respectively, onto the constraint vector pi.
+
+Proposition III.2 (Reduced Dynamics) . Consider (3) re-stricted to the constraint subspace VP1 × VP2 × . . . V PNa
+
+induced by rank-one projection constraints (4) for each agent 
+
+i ∈ V . The flow is exactly characterized by dynamics of the agent’s effective opinion vector y = ( y1, . . . , y No )T ∈ RNa
+
+with effective bias be = ( be1, . . . , b eN a )T ∈ RNa , which evolves as ˙y = Φ ( y, u ) where 
+
+˙yi = Φ i (y, u ) (5) 
+
+= − dy i + ˆ pTi S
+
+u
+
+αy i ˆpi + γ
+
+> Na
+
+X 
+
+> k=1
+> k̸=i
+
+(Aa)ik yk ˆpk
+
+ + bei ,yi = ˆ pTi Zi, and bei = ˆ pTi bi.Proof. Differentiating yi = ˆ pTi Zi along trajectories of (3) yields ˙yi = ˆpTi ˙Zi = ˆpTi PiFi(Z) = ˆpTi Fi(Z). The expression then follows by direct substitution of Fij (Z) and substitution of Zi = yi ˆpi, bei .Observe that the effective bias bei of agent i in Propo-sition III.2 depends on the projection of the bias of its individual options bi along the constraint vector pi. So, if the constraint vector contains zero entries, representing an agent’s inability in performing a specific task, then no amount of bias corresponding to that option can increase the effective bias. Hence, the agents are selectively sensitive to the bias due to the presence of the projection constraints. For example, in a heterogeneous robot team, an aerial drone may have some zero entries in the projection constraint vector corresponding to the options for the ground tasks; therefore, even strong incentives for these ground tasks will not influence its effective decision, as it lacks the physical capability to perform that task. To characterize the collective decision states that emerge from (5), we analyze the bifurcations of equilibria from the neutral effective opinions in the reduced model. The Jacobian 
+
+J of Eqn. (5) has entries Jij = ∂Φi 
+
+> ∂y j
+
+for i, j ∈ { 1, · · · , N a}.The equilibria of Eqn. (5) are the level sets Φ ( y, u ) =0 which defines the bifurcation diagram of the system. Jacobian J evaluated at an equilibrium point (y∗, u ∗) is a singular matrix with rank Na − 1. Thus, the local bifurcation diagram can be described using a single variable and this point is a singular point. The Lyapunov-Schmidt reduction of Φ ( y, u ) gives h(x, u ) that results in a one-dimensional equation that describes the structure of the local bifurcation of the system given in Eqn. (5) near the equilibrium point. The Lyapunov-Schmidt reduction is derived by projecting the Taylor expansion of Φ ( y, u ) onto the Kernel of its Jacobian at the singularity [28, Chapter VII]. The implicit function theorem is used to solve for Na − 1 variables as a function of a single variable, thus approximating the local vector field orthogonal to the kernel. The Jacobian of Eqn. (5) evaluated at y = 0 is 
+
+Jy = ( uα − d)I + uγA ′
+
+> a
+
+, (6a) 
+
+[A′
+
+> a
+
+]ik = (ˆ pTi ˆpk) [ Aa]ik (6b) where A′ 
+
+> a
+
+is the transformed adjacency matrix. The presence of projection constraints leads to the emergence of an effec-tive communication network ( G′) among the agents, which is captured by the transformed adjacency matrix ( A′ 
+
+> a
+
+). The effective communication between two agents depends on the similarity of their projection constraints. Consequently, even if interactions exist between two agents, there is no effective communication if their projection constraints are orthogonal. Alternatively, this can also be interpreted as a situation in which agents with completely different priorities effectively ignore each other’s opinion, even though interaction between them is possible. In the following Theorem we classify the bifurcation of the unopinionated equilibrium y = 0 arising from a simple eigenvalue of the Adjacency matrix A′ 
+
+> a
+
+as a pitchfork bifur-cation, analogous to results established for the unconstrained NOD frameworks [11], [12], [30]. 
+
+Theorem III.3. Consider Eqn. (5) and u∗ = dα+λγ , where 
+
+λ is a simple real eigenvalue of A′ 
+
+> a
+
+with eigenvector v =(v1, . . . , v Na )T . Assume that α + λγ ̸ = 0 . For zero bias projection (be = 0), h(x, u ) has a symmetric pitchfork sin-gularity at (x, u ) = (0 , u ∗). For u > u ∗ and sufficiently small |u − u∗|, two branches of equilibria branch off from 
+
+y = 0 in a pitchfork bifurcation along a manifold tangent at 
+
+y = 0 to span {v}. When u∗ > 0 ( < 0) , the pitchfork bifur-cation happens supercritically (subcritically) with respect to 
+
+u. On the other hand, for (be̸ = 0) the bifurcation problem is an Na−parameter unfolding of the symmetric pitchfork with ∂h ∂b ei = vi.Proof. The eigenvalues of the Jacobian Jy in Eqn. (6a) are 
+
+eig( Jy ) = uα − d + uγλ . So, Jy has a single zero eigenvalue when u = u∗. The left and right eigenvector for this zero eigenvalue is v. We follow the procedure outlined in [28, Chapter I] to derive the polynomial expansion of h(x, u ) near 
+
+(x, u ) = (0 , u ∗) through third order in state variable. Since, 
+
+S is an odd sigmoidal function, S′′ (0) = 0 and S′′′ (0) <
+
+0. Hence,  d2Φ 
+
+> 0,u ∗
+
+(v1, v2) = 0 for any vl where l ∈{1, 2}. Furthermore, for zero bias projection, hx (0 , u ∗) = 0. The truncated series expansion of the Lyapunov-Schmidt reduction of Eqn. (5) about (0 , u ∗) is: 
+
+h(x, u ) = aˆux + bx 3 + vT be (7) where ˆu = u − u∗. The coefficients of expansion a, b ∈ R
+
+are as follows: 
+
+a = vT
+
+
+
+d ∂Φ
+
+∂ ˆu
+
+
+
+> 0,u ∗
+
+(v, v) = α + λγ b = vT  d3Φ 
+
+> 0,u ∗
+
+(v, v, v) = cd (u∗)2 S′′′ (0) < 0
+
+where c ≥ min i,j 
+
+
+
+αv i [ˆ pi]j + γ PNa 
+
+> k=1
+> k̸=i
+
+(Aa)ik vk [ ˆ pk]j
+
+2
+
+for i ∈ { 1, · · · , N a} and j ∈ { 1, · · · , N o}. Furthermore,  
+
+> ∂h ∂b ei
+
+= vi. The zero bias projection part of the proof follows by the recognition problem given in for the pitchfork bifurcation [28, Proposition II.9.2] applied to the reduced equation in Eqn. 7 and the definition of center manifold. The unfolding of the pitchfork for (be̸ = 0) follows from the unfolding theory. 
+
+B. Social Influence Redistribution 
+
+It follows from Eqn. (6b) that the presence of hetero-geneous projection constraints leads to the emergence of a weighted undirected communication network. We are inter-ested in understanding how these constraints redistribute the influence of agents within the network. 
+
+Corollary III.3.1. Suppose G′ is a connected and struc-turally balanced (unsigned) network. Then for the simple dominant eigenvalue λ′ 
+
+> max
+
+of A′
+
+> a
+
+, u∗ 
+
+> s
+
+= dα+λ′ 
+
+> max γ
+
+> 0 and the pitchfork bifurcation at u∗ 
+
+> s
+
+happens supercritically. 
+
+The eigenvector centrality of A′ 
+
+> a
+
+arises from two different factors: (a) the network topology of G and (b) the projection constraints. Therefore, even agents having equal influence in G can have unequal influence in G′ due to projection constraints. This is formalized in the following theorem. 
+
+Theorem III.4. Let G = ( V, E, A a) be an undirected, con-nected, d-regular network with Aa having entries [Aa]ij ∈{0, 1} and [Aa]ii = 0 ∀ i ∈ V . Let G′ be the effective com-munication network induced by the heterogeneous projection constraints. Assume that G′ is either unsigned or structurally balanced. Then, the dominant eigenvector of the Adjacency matrix A′ 
+
+> a
+
+corresponding to network G′ is not proportional to 
+
+1Na , implying that the agents no longer have equal influence. Proof. The graph G is unweighted and regular. Hence, the eigenvector centrality of Aa is 1Na and all agents in G
+
+have equal influence in the network. However, in G′, the interactions are weighted and the weights are unequal for some agents due to the heterogeneous projection constraints. Consequently, the agents no longer have the same degree. Therefore, the eigenvector centrality of A′ 
+
+> a
+
+is v′
+
+> max
+
+̸ = 1Na ,and the agents in G′ have unequal influence. Now that we have shown the unequal influence of the agents in G′ due to heterogeneous projection constraints, we next show some standard networks and their changes in the eigenvector centrality due to projection constraints. 
+
+Theorem III.5. Let G be an undirected, connected, star network, and let G′ be the effective communication network induced by the heterogeneous projection constraints. Assume that ˆp1T . ˆpj̸ = 0 , where 1 is the central node and j ∈{2, · · · , N a} are the outer nodes. The relative influence of the outer nodes is proportional to ˆp1T . ˆpj. Furthermore, the most influential agent in G and G′ remains unchanged. Proof. The graph G is an unweighted star network. The eigenvector centrality of Aa is  √Na − 1, 1TNa−1
+
+T . Hence, agent 1 is the most influential agent in G. The interac-tions in G′ are weighted due to heterogeneous projection constraints. Let S =
+
+qPNa 
+
+> i=2
+
+( ˆ p1T .ˆpi)2. The dominant eigenvalue of G′ is λ′ 
+
+> max
+
+= S and the eigenvector centrality is  S, ˆp1T . ˆp2, . . . , , ˆp1T . ˆpNa
+
+T . Hence, agent 1 is the most influential agent in G′. Furthermore, the relative influence of the outer nodes {2, · · · , N a} depends on their alignment with agent 1. The presence of heterogeneous projection constraints makes network G′ weighted, making it difficult to obtain the eigenvector centrality in closed form. Therefore, we instead analyze the first order approximations of the changes in the dominant eigenvalue and its corresponding eigenvector. 
+
+Theorem III.6. Let G be an undirected, connected, d-regular network, and let G′ be a connected network with only one node, say node 1, having heterogeneous projection constraints with respect to all other nodes. The approximate eigenvector centrality of G′ is as follows: 
+
+v′ 
+
+> max
+
+≈ 1Na +  1 − ˆp1T . ˆp2
+
+ B  −d2 + d, M T T (8) 
+
+where B = 12Na 1Na 1TNa +
+
+
+
+(Aa − dI )2†
+
+, M =(m12 , · · · , m 1Na )T ∈ RNa−1, and ˆp2 is the projection constraint of the agents j ∈ { 2, · · · , N a}. Here, m1j =
+
+PNa 
+
+> k=1
+
+[Aa]1k [Aa]kj ∈ R is the number of mutual neighbors of agent 1 and agent j and 
+
+
+
+(Aa − dI )2†
+
+is the Moore-Penrose pseudo-inverse of (Aa − dI )2.Proof. The graph G is an unweighted d-regular network. The eigenvector centrality of Aa is 1Na . The interactions in G′ are weighted due to the heterogeneous projection constraints. The interaction weights of d edges involving agent 1 is ˆp1T . ˆp2 and all other edges weights are either 0 or 1. The eigenvector centrality of A′ 
+
+> a
+
+can be approximated using Lemma II.1, with δ = ˆp1T . ˆp2 − 1 representing the change in the interaction weights involving agent 1 due to perturbation in the projection constraint of agent 1. This gives 
+
+λ′ 
+
+> max
+
+≈ d
+
+
+
+1 − 2
+
+> Na
+
+ 1 − ˆp1T . ˆp2
+
+
+
+and v′ 
+
+> max
+
+given in Eqn. (8). The following corollaries follow as simple extensions to Theorem III.6: 
+
+Corollary III.6.1. Let G in Theorem III.6 be a complete network with d = Na − 1. The eigenvector centrality is simplified using Sherman–Morrison formula [31]. 
+
+v′ 
+
+> max
+
+≈ 1Na +
+
+ 1 − ˆp1T . ˆp2
+
+
+
+Na − 2
+
+ −Na + 1 , 1TNa−1
+
+T (9) 
+
+Corollary III.6.2. Let G in Theorem III.6 be a ring network and δ =   ˆp1T . ˆp2 − 1. Here d = 2 , and the simplified approximate eigenvector centrality is as follows:  
+
+> •
+
+If Na = 3 , v′ 
+
+> max
+
+≈ 1Na − 19 δ (−2, 1, 1) T 
+
+> •
+
+If Na = 4 , v′ 
+
+> max
+
+≈ 1Na − 12 δ (−1, 0, 1, 0) T 
+
+> •
+
+If Na ≥ 5, v′ 
+
+> max
+
+≈ 1Na + 1 
+
+> Na
+
+δ PNa−1 
+
+> k=1
+
+cot 2
+
+ πk Na
+
+
+
+vk+1 
+
+where vk+1 =  1, ω k, ω 2k, · · · , ω (Na−1) k ∈ CNa and 
+
+ω = exp 
+
+ 2πi Na
+
+
+
+∈ C.
+
+Example ring networks showing the relative influence of agents are presented in Fig. 1. For the unperturbed ring, all agents are equally central. However, since the projection constraint of agent 1 is different from the rest of the group, it becomes the least central over the ring graph in both the even and odd cases, with centrality increasing monotonically with distance from this agent. 1   
+
+> 23
+> 4
+> 56
+> 1
+> 23
+> 4
+> 5
+> 67
+
+0.9 
+
+1.0 
+
+1.1 
+
+Fig. 1: Ring networks with Na = 6 and Na = 7 . Here, 
+
+δ = −0.1 and the node colors correspond to the approximate eigenvector centrality. IV. S IMULATIONS 
+
+The simulations in this section use S = tanh as the nonlinearity. We consider the custom six-agent network 
+
+G1 in Fig. 2a in which all agents share homogeneous projection constraints and agents 2 and 5 are the most central, with eigenvector centrality approximately given by 
+
+(0 .28 , 0.50 , 0.41 , 0.28 , 0.50 , 0.41) T . A non-zero bias b2 =(1 , 1, −1) T is applied only at agent 2. On the homogeneous graph, agent 2 has a positive effective bias, and skews the decision of the whole group towards the positive decision state as shown via the unfolding diagram in Fig. 2b(b). In Fig. 2b, agent 2 has a different projection constraint from the rest of the group, and its effective bias from the same input vector becomes negative, skewing the group decision towards the negative state. Simulation trajectories corresponding to these scenarios are shown in Fig. 3. This illustrates how selective sensitivity to biases from local constraints can strongly change the emergent decision in the group. In the first simulation example, change in the collective decision was induced directly by the change in a con-straint in the individual receiving task-relevant information. However, the agent decisions can also change even when the input is not applied to the agent whose projection constraint varies from the rest. This is due to changes in centrality in the induced weighted social graph. In Fig. 4, inputs are applied to agents 1 and 4, while the projection constraint of agent 2 is varied. When the constraint on agent 2 is introduced, the eigenvector centrality of G3 is 
+
+(0 .25 , 0.41 , 0.44 , 0.36 , 0.54 , 0.39) T . Observe that the central-ity index of agent 1 decreases from the homogeneous case, while that of agent 4 increases. The two were equally central under homogeneous constraints. In both the homogeneous and heterogeneous simulation, agent 1 has effective bias 
+
+be1 = 0 .52 while agent 4 has effective bias be4 = −0.42 .However due to the shift in centrality, despite having a weaker effective bias locally, agent 4 has more influence in the group decision once heterogeneity is introduced via agent 2, and most agents follow the negative decision. 1 
+
+> 2
+> 3
+> 4
+> 5
+> 6
+> 1.0 1.0
+> 1.0
+> 1.0
+> 1.0
+> 1.0
+> 1.0
+> 1.0
+> 1.0
+
+(a) G10.0 0.1 0.2 0.3 0.4   
+
+> u
+> −20
+> −10
+> 0
+> 10
+> 20
+> x
+> Stable
+> Unstable
+> u= 0.14
+
+(b) Positive unfolding 1 
+
+> 2
+> 3
+> 4
+> 5
+> 6
+> 0.9 1.0
+> 0.9
+> 0.9
+> 0.9
+> 1.0
+> 1.0
+> 1.0
+> 1.0
+
+(c) G20.0 0.1 0.2 0.3 0.4   
+
+> u
+> −20
+> −10
+> 0
+> 10
+> 20
+> x
+> Stable
+> Unstable
+> u= 0.14
+
+(d) Negative unfolding 
+
+Fig. 2: Custom networks with homogeneous (G1) and het-erogeneous (G2) projection constraints, along with their corresponding positive and negative pitchfork unfolding. G2
+
+is the effective communication network of G1 in the presence of heterogeneous projection constraints. The bias vector of agent 2 is b2 = (1 , 1, −1) T . The interaction weights are labeled near the edges. Nodes with heterogeneous projection constraints are represented using different colors. For G1,the constraint vector for all the agents is p = (1 , 1, 1) T .For these constraint vectors, the effective bias of agent 2 is 
+
+be2 = 0 .6. For G2, the constraint vectors are p2 = (1 , 1, 3) T ,
+
+p1 = p3 = p4 = p5 = p6 = (1 , 1, 1) T . For these constraint vectors, the effective bias of agent 2 is be2 = −0.3.0 500   
+
+> t
+> −2.5
+> 0.0
+> 2.5
+> zi1
+> 0500
+> t
+> zi2
+> 0500
+> t
+> zi3
+
+Fig. 3: Opinion trajectories for networks G1 and G2, repre-sented by solid blue and dashed red lines, respectively. The parameters used are u = 0 .14 , α = 1 , d = 0 .3 and γ = 0 .5.0 500   
+
+> t
+> −2.5
+> 0.0
+> 2.5
+> zi1
+> 0500
+> t
+> zi2
+> 0500
+> t
+> zi3
+
+Fig. 4: Opinion trajectories for networks with homogeneous 
+
+(G1) and heterogeneous (G3) projection constraints, repre-sented by solid blue and dashed red lines, respectively. G3
+
+is the effective communication network of G1 in the pres-ence of heterogeneous projection constraints. The parameters used are u = 0.14 , α = 1, d = 0.3 and γ = 0.5.Here, non-zero biases b1 = (0 .3, 0.3, 0.3) T and b4 =(−0.24 , −0.24 , −0.24) T . For G1, the constraint vector for all the agents is p = (1 , 1, 1) T . For G3, the constraint vectors are 
+
+p2 = (1 , 0.1, 0.1) T , p1 = p3 = p4 = p5 = p6 = (1 , 1, 1) T .V. C ONCLUSION 
+
+We studied the effects of heterogeneous hard constraints on collective decision-making in the NOD framework. We proved that projection constraints on individual agent opin-ions induce a global invariant subspace, and for rank-one constraints derived a reduced model governing the effective opinion evolution on this subspace. We showed that the reduced model undergoes a pitchfork bifurcation analogous to the unconstrained case. A key finding is that heteroge-neous pairwise alignments between agents’ constraint vectors generate an effective weighted social graph from an oth-erwise unweighted communication network, redistributing eigenvector centrality and thereby reshaping each agent’s influence over the collective decision.We characterized this redistribution for several representative graphs, and illus-trated in simulation how constraint-induced centrality shifts can reduce group decisions even when the graph topology and inputs are held fixed. In future work, we will extend this analysis to higher-rank constraint subspaces and consider time-varying constraints, where agents’ constraint vectors evolve in response to its environment, and to develop feed-back principles to deliberately shape agent constraints to achieve desired influence distributions and collective decision outcomes. REFERENCES [1] W. Ren and E. Atkins, “Distributed multi-vehicle coordinated control via local information exchange,” International Journal of Robust and Nonlinear Control: IFAC-Affiliated Journal , vol. 17, no. 10-11, pp. 1002–1033, 2007. [2] J. Rios-Torres and A. A. Malikopoulos, “Automated and cooperative vehicle merging at highway on-ramps,” IEEE Transactions on Intelli-gent Transportation Systems , vol. 18, no. 4, pp. 780–789, 2016. [3] B. P. Gerkey and M. J. Matari´ c, “A formal analysis and taxonomy of task allocation in multi-robot systems,” The International journal of robotics research , vol. 23, no. 9, pp. 939–954, 2004. [4] A. Khamis, A. Hussein, and A. Elmogy, “Multi-robot task allocation: A review of the state-of-the-art,” Cooperative robots and sensor networks 2015 , pp. 31–51, 2015. [5] M. H. DeGroot, “Reaching a consensus,” Journal of the American Statistical association , vol. 69, no. 345, pp. 118–121, 1974. [6] T. D. Seeley and S. C. Buhrman, “Group decision making in swarms of honey bees,” Behavioral Ecology and Sociobiology , vol. 45, no. 1, pp. 19–31, 1999. [7] P. Jia, A. MirTabatabaei, N. E. Friedkin, and F. Bullo, “Opinion dynamics and the evolution of social power in influence networks,” 
+
+SIAM review , vol. 57, no. 3, pp. 367–397, 2015. [8] C. Altafini, “Consensus problems on networks with antagonistic inter-actions,” IEEE transactions on automatic control , vol. 58, no. 4, pp. 935–946, 2012. [9] A. Fontan and C. Altafini, “Achieving a decision in antagonistic multi agent networks: Frustration determines commitment strength,” in 2018 IEEE Conference on Decision and Control (CDC) . IEEE, 2018, pp. 109–114. [10] G. He, Z. Shen, T. Huang, W. Zhang, and X. Wu, “Opinion dynamics with heterogeneous multiple interdependent topics on the signed social networks,” IEEE Transactions on Systems, Man, and Cybernetics: Systems , vol. 53, no. 10, pp. 6181–6193, 2023. [11] A. Bizyaeva, A. Franci, and N. E. Leonard, “Nonlinear opinion dy-namics with tunable sensitivity,” IEEE Trans. Autom. Control , vol. 68, no. 3, pp. 1415–1430, 2022. [12] ——, “Multi-topic belief formation through bifurcations over signed social networks,” IEEE Transactions on Automatic Control , vol. 70, no. 8, pp. 5082–5097, 2025. [13] N. E. Leonard, A. Bizyaeva, and A. Franci, “Fast and flexible multiagent decision-making,” Annual Review of Control, Robotics, and Autonomous Systems , vol. 7, 2024. [14] C. Cathcart, M. Santos, S. Park, and N. E. Leonard, “Proactive opinion-driven robot navigation around human movers,” in 2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) . IEEE, 2023, pp. 4052–4058. [15] T. M. Paine and M. R. Benjamin, “A model for multi-agent autonomy that uses opinion dynamics and multi-objective behavior optimization,” in 2024 IEEE International Conference on Robotics and Automation (ICRA) . IEEE, 2024, pp. 8305–8311. [16] D. Martinez-Baselga, E. Sebasti´ an, E. Montijano, L. Riazuelo, C. Sag¨ u´ es, and L. Montano, “Avocado: Adaptive optimal collision avoidance driven by opinion,” IEEE Transactions on Robotics , 2025. [17] S. Qi, Z. Tang, Z. Sun, and S. Haesaert, “Integrating opinion dynamics into safety control for decentralized airplane encounter resolution,” in 
+
+2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) . IEEE, 2025, pp. 173–178. [18] A. Mirtabatabaei and F. Bullo, “Opinion dynamics in heterogeneous networks: Convergence conjectures and theorems,” SIAM Journal on Control and Optimization , vol. 50, no. 5, pp. 2763–2785, 2012. [19] H. Liang, Y. Yang, and X. Wang, “Opinion dynamics in networks with heterogeneous confidence and influence,” Physica A: Statistical Mechanics and its Applications , vol. 392, no. 9, pp. 2248–2256, 2013. [20] G. J. Li and M. A. Porter, “Bounded-confidence model of opinion dynamics with heterogeneous node-activity levels,” Physical Review Research , vol. 5, no. 2, p. 023179, 2023. [21] X. Zhang, Q. Wang, F. Song, F. Wang, and C. Qu, “Modeling and controlling polymorphic opinion dynamics in social networks with heterogeneous sensitivities,” IEEE Transactions on Network Science and Engineering , 2026. [22] A. Nedic, A. Ozdaglar, and P. A. Parrilo, “Constrained consensus and optimization in multi-agent networks,” IEEE Transactions on Automatic Control , vol. 55, no. 4, pp. 922–938, 2010. [23] P. Wankhede, N. Mandal, S. Mart´ ınez, and P. Tallapragada, “Multi-topic projected opinion dynamics for resource allocation,” in 2025 IEEE 64th Conference on Decision and Control (CDC) . IEEE, 2025, pp. 3469–3476. [24] Z. Zhang, S. Al-Abri, and F. Zhang, “Dissensus algorithms for opinion dynamics on the sphere,” in 2021 60th IEEE Conference on Decision and Control (CDC) . IEEE, 2021, pp. 5988–5993. [25] ——, “Opinion dynamics on the sphere for stable consensus and stable bipartite dissensus,” IFAC-PapersOnLine , vol. 55, no. 13, pp. 288–293, 2022. [26] Z. Zhang, Y. Li, S. Al-Abri, and F. Zhang, “Mixed opinion dynamics on the unit sphere for multi-agent systems in social networks,” in 2025 American Control Conference (ACC) . IEEE, 2025, pp. 4824–4829. [27] F. Bullo, Lectures on Network Systems . Kindle Direct Publishing, 2024. [28] D. G. Schaeffer and I. Stewart, Singularities and groups in bifurcation theory . Springer, 1985. [29] R. Fox and M. Kapoor, “Rates of change of eigenvalues and eigen-vectors.” AIAA journal , vol. 6, no. 12, pp. 2426–2429, 1968. [30] A. Bizyaeva, T. Sorochkin, A. Franci, and N. E. Leonard, “Control of agreement and disagreement cascades with distributed inputs,” in 
+
+2021 60th IEEE Conference on Decision and Control (CDC) . IEEE, 2021, pp. 4994–4999. [31] J. Sherman and W. J. Morrison, “Adjustment of an inverse matrix corresponding to a change in one element of a given matrix,” The Annals of Mathematical Statistics , vol. 21, no. 1, pp. 124–127, 1950.

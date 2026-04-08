@@ -1,0 +1,1939 @@
+Title: Coupling Macro Dynamics and Micro States for Long-Horizon Social Simulation
+
+URL Source: https://arxiv.org/pdf/2604.05516v1
+
+Published Time: Wed, 08 Apr 2026 00:46:16 GMT
+
+Number of Pages: 19
+
+Markdown Content:
+## Coupling Macro Dynamics and Micro States for Long-Horizon Social Simulation 
+
+Yunyao Zhang 1 Yihao Ai 2 Zuocheng Ying 1 Qirui Mi 3 Junqing Yu 1 Wei Yang 1 Zikai Song 1†
+
+> 1
+
+Huazhong University of Science and Technology, Wuhan, China 
+
+> 2
+
+National University of Singapore, Singapore 
+
+> 3
+
+Institute of Automation, Chinese Academy of Sciences, Beijing, China 
+
+Abstract 
+
+Social network simulation aims to model col-lective opinion dynamics in large populations, but existing LLM-based simulators primarily fo-cus on aggregate dynamics and largely ignore individual internal states. This limits their abil-ity to capture opinion reversals driven by grad-ual individual shifts and makes them unreliable over long-horizon simulations. Unlike existing methods that collapse dynamics into macro-only updates, we propose a social simulation frame-work, MF-MDP , which tightly couples macro-level collective dynamics with micro-level indi-vidual states. We explicitly model per-agent latent opinion states with a state transition mechanism, merging individual Markov Decision Processes (micro-level) into a Mean-Field collective frame-work (macro-level). This allows individual be-haviors to gradually change internal states, rather than triggering instant reactions, enabling the sim-ulator to distinguish agents close to or far from switching, capture opinion reversals, and maintain accuracy over long-horizon simulations. Across real-world events, our MF-MDP supports stable simulation of long-horizon social events with up to 40,000 interactions (compared to ∼300 in base-line MF-LLM), while reducing long-horizon KL divergence by 75.3% (1.2490 → 0.3089) and re-versal KL by 66.9% (1.6425 → 0.5434), signifi-cantly mitigating the drift observed in MF-LLM. Code is available at https://github.com/ AI4SS/MF-MDP .
+
+1. Introduction 
+
+Simulating how collective behaviors and social structures emerge is central to understanding social diffusion, mo-  
+
+> . Correspondence to: †Zikai Song <skyesong@hust.edu.cn >.
+> Preprint. April 8, 2026.
+
+bilization, and opinion formation (Squazzoni et al., 2014; Freeman, 2004; Zhou et al., 2025). In social network simu-lation (SNS) (Gao et al., 2024; Ye et al., 2025), macroscopic public outcomes arise from the aggregation of microscopic actions, where individual decisions, belief updates, and in-formation exposure jointly shape macro-level collective dy-namics over time (Li et al., 2017; Song et al., 2025). This tight micro-macro coupling induces strong nonlinear feed-back, such that small initiating groups, delayed evidence, or localized interventions can trigger large-scale mobilization, tipping points, and opinion reversals (Lu et al., 2018b; Nie et al., 2018). Traditional paradigms, including mechanistic models (Mead-ows et al., 1974; Bouanan et al., 2019), empirical and sta-tistical models (Kong et al., 2018; Lu & Nie, 2019), and 
+
+agent-based models (Schelling, 1971; Grossi et al., 2005), capture certain macro-micro regularities but rely on static parameters or handcrafted behavioral rules. As a result, they struggle to represent evolving beliefs, delayed commitment, and feedback-driven opinion transitions at scale, motivating the need for scalable, state-aware frameworks that provide a principled interface between microscopic actions and macro-scopic collective dynamics (Schelling, 2006). Recent studies show that large language models (LLMs) (Guo et al., 2025; Wei et al., 2025; Hu et al., 2025) can endow social agents with reasoning, perception, and interaction capabilities, enabling simulations from small-scale communities (Park et al., 2023; 2024) to multi-scene social systems (Wang et al., 2025; Zhang et al., 2025b). Frameworks such as GA-S 3 (Zhang et al., 2025c), 
+
+Oasis (Yang et al., 2025b), and AgentSociety (Piao et al., 2025) rely on fully LLM-driven agents to generate rich be-haviors, but their dynamics are dominated by instantaneous, prompt-level reactions without explicit state transitions, resulting in unstable long-horizon evolution. To improve scalability and macro-level coherence, MF-LLM (Mi et al., 2025) introduces mean-field modeling into LLM-based simulation, coupling individual actions with aggregated macro signals through iterative feedback. While MF-LLM 
+
+yields coherent short-term trajectories and improved em-1
+
+> arXiv:2604.05516v1 [cs.SI] 7 Apr 2026 Under review
+
+pirical alignment, it operates as a macro-driven two-LLM simulator that over-compresses individual dynamics into macro-level signals without per-agent latent state modeling. Consequently, actions are treated as instantaneous reactions rather than state-changing events, which weakens delayed commitment, dampens variance over time, and hampers capturing the turning-point timing of opinion reversals and realistic long-horizon collective dynamics. These gaps highlight three core challenges in social simula-tion. (C1) Micro-Macro Decoupling : existing approaches focus on either micro-level individual behaviors or macro-level collective dynamics in isolation, failing to capture the tightly coupled co-evolution of both aspects in real so-cial systems. (C2) Long-Horizon Dynamics Degradation :achieving long-horizon simulation is challenging because single-scale rollouts accumulate errors over time, leading to variance damping, majority lock-in, and unrealistic trajecto-ries under delayed evidence accumulation and gradual opin-ion transitions. (C3) Unresolved Opinion Reversals : re-versal events impose a stricter requirement on long-horizon simulations. The model must not only sustain long rollouts but also capture timely and significant opinion reversals when influenced by exogenous signals. Without tightly cou-pled macro-state signals and evolving micro-agent states, simulations exhibit inertia that misses turning points or drift that overshoots, hindering realistic opinion transitions. 
+
+Contributions. To address challenges (C1-C3), we make the following contributions: 
+
+1. MF-MDP: A new social dynamic simulation frame-work that couples macro-level collective dynamics and micro-level agent states. We introduce MF-MDP , formu-lating social simulation as a Mean-Field Markov Decision Process (B ¨auerle, 2023), where the MF provides macro sig-nals and MDP performs state-conditioned decisions based on their corresponding micro states, thereby explicitly ad-dressing the micro-macro decoupling challenge ( C1 ). 
+
+2. Coupled state-transition and rollout modeling for long-horizon dynamics and opinion reversals. To address 
+
+C2 and C3 , MF-MDP couples a macro-level state transi-tion model with micro-level multi-step rollout-based action reselection. At the macro level, a temporal Transformer learns the long-term evolution of the macro state distribu-tion, providing precise distributional signals that reduce drift, variance damping, and majority lock-in, while preserv-ing accuracy over long horizons. At the micro level, agents base their actions on this evolving distribution, perform-ing multi-step rollouts: the policy LLM samples candidate actions, predicts their future impacts using the transition model, and reselects actions based on trajectory-level out-comes. This lets agents adjust their direction in response to timely exogenous signals, overcoming inertia and accurately capturing the timing and magnitude of opinion reversals. 
+
+3. Empirical Validation. Experiments on diverse real-world social events demonstrate that MF-MDP consis-tently outperforms existing methods: it significantly reduces long-horizon KL divergence by 75.3% and reversal KL by 
+
+66.9% , while mitigating the drift commonly observed in 
+
+MF-LLM . Additionally, MF-MDP maintains the scalability advantages in long-horizon scenes, enabling stable simula-tions even with up to 40,000 interactions (vs. ∼300). 
+
+2. Background and Motivation 
+
+We formalize macro-level collective dynamics as a state-aware decision process (§2.1) and show that omitting micro-level agent states induces self-reinforcing rollouts that miss opinion reversals (Prop. 2.1). 
+
+2.1. Problem and Notation Definition 
+
+We consider a social group of N agents and simulate its collective decision-making over [0 , T ]. All agents share a discrete action space A = {a1, a 2, . . . , a n} (e.g., comment, share) and state space S = {s1, s 2, . . . , s m}. The action and state of agent i at time t are ai,t and si,t , with aggregated vectors ⃗a t = [a1,t , . . . , a N,t ] and ⃗s t = [s1,t , . . . , s N,t ].Each agent has a personality descriptor pi,t , collected as ⃗p t = [ p1,t , . . . , p N,t ], which modulates its decision behav-ior. Although S and A are written as finite sets for con-venience, they correspond in practice to latent or semantic categories derived from open-ended interactions. To char-acterize macroscopic dynamics, we introduce a mean-field representation mt ∈ ∆m−1, defined as the macro state distribution over S at time t, where 
+
+∆m−1 =
+
+n
+
+x ∈ Rm 
+
+> ≥0
+
+: X
+
+> s∈S
+
+x(s) = 1 
+
+o
+
+denotes the probability simplex over S. The evolution of 
+
+mt captures how decentralized agent decisions give rise to collective behavioral trends, which we also refer to as the public mood in the context of social group simulation. The system is driven by exogenous sianals ct, which are generated endogenously within the simulator by designated information-source agents (e.g., official accounts or media reporters) at step t and then broadcast to the public. These externally grounded messages influence agent states and ac-tions and thereby shape the joint evolution of individual ac-tions and the mean-field trajectory {mt}Tt=0 , capturing both short-term responses and long-term collective dynamics in social propagation. In addition, we maintain a textual mean-field synopsis rt ∈ T, which provides a natural-language summary of recent collective trajectories and exogenous signals; together, (rt, m t) constitute the macros. 2Under review Micro Level 
+
+> Previous mean field
+
+𝑟 !"#, 𝑚 !"#
+
+···  
+
+> Topic Synopsis State
+
+Environment input 
+
+𝑥 ! ≔ 𝑟 !"#, 𝑚 !"#, 𝑝 !, 𝑐 ! CLS 
+
+State Transition Model 
+
+𝑓 ' (Transformer) 
+
+Context History x 
+
+𝑥 #:! = 𝑥 #:!"# ∥ 𝑥 !
+
+𝑞 (
+
+)
+
+> CLS
+
+K-step Rollout Consistency 
+
+Δ𝑚 (*+
+
++ Update mean field 
+
+𝑚 !, 𝑟 !              
+
+> Macro Distribution (𝑚 !)
+> Micro Agent State (𝑖 =1,…,𝑛 )
+> 1234
+
+· · · n     
+
+> 𝑓 &𝑓 &𝑓 &
+> Step t+1 Step t+2 Step t+K
+
+··· 
+
+··· 
+
+··· 
+
+> %𝑚 '()
+> %𝑚 '()%𝑚 '(*%𝑚 '(+
+
+Micro Level   
+
+> Agent local
+> state
+
+𝑧 F,!
+
+𝑠 F,!, 𝑚 !, 𝑟 !"#, 𝑐 !, 𝑝 F,!
+
+Policy Model 
+
+𝜋 G (LLM) 
+
+··· 
+
+𝑗 # 
+
+> 𝑐 !,𝑝 ",!
+> Agent personality Exogenous signal
+
+𝑐 ! 𝑝 F,!
+
+> Mean -field synopsis
+
+𝑟 !"#
+
+> State distribution
+
+𝑚 !"#
+
+𝑎 F,!
+
+Sample J dropout policy instances 
+
+> Share
+
+𝑗 H Comment 
+
+𝑗 I Exogenous signal Comment 
+
+{𝑎 F,! 
+
+> J
+
+}JK#
+
+> L
+
+∼
+
+𝜋 G ⋅ 𝑧 F,!
+
+Long -horizon reselection 
+
+···      
+
+> Δ𝑚 '(+
+> /$Δ𝑚 '(*
+> /$Δ𝑚 '()
+> /$
+> Step t+1 Step t+2 Step t+K
+
+𝒮 𝑎 !
+
+> J0
+
+𝑗 I Exogenous signal Comment 
+
+𝑎 F,!  
+
+> ⋆Real action
+
+𝛼 ! 
+
+> J0
+
+𝒮 𝑎 ' 
+
+> /1
+
+𝒮 𝑎 ' 
+
+> /2
+
+𝒮 𝑎 '   
+
+> /3
+> Low cost High cost
+
+𝑤 F,! 𝜆 
+
+< <
+
+Policy Model 𝜋 G (LLM) 
+
+Macro Level 
+
+Generate 
+
+action 𝑎 F,!
+
+t : I knew it 
+
+was fake ！
+
+t-1 : It’s 
+
+unbelievable —
+
+she’s our pride! 
+
+Best fit Poor fit 
+
+> Reselect
+> Optimize
+
+Figure 1. MF-MDP overview. (i) Macro level , an event-level state transition model (Event Transformer) updates the distributional mean field and is trained with a K-step rollout consistency objective to improve long-horizon trajectory fidelity. (ii) Micro level , a LoRA-tuned policy LLM generates actions conditioned on agent states and the mean-field signals; we sample J dropout-induced policy instances, obtain candidate actions, and score them by a K-step mean-field surrogate (distributional KL to future trajectories), yielding soft weights for action reselection and optimizing the policy via a combined auxiliary text loss and discounted long-horizon prediction loss. 
+
+2.2. Dynamics of Previous Method 
+
+The existing simulation dynamics evolve by two parameter-ized models. First, the action model πϕ(ai,t |rt, p i,t , c t), it samples the actions of i-th agent based on the current public mood (mean-field) rt, the personality of the agent pi,t at time t. Second a mean-field summarizer μθ (rt+1 |rt, at). It summarize the next public mood ( rt+1 ) based on the current actions at and the current public mood ( rt). The model iteratively updates at and rt, which stops until convergence or the reaching the terminal time T . It is obvious that this dynamic is state-ignored. 
+
+2.3. Limitations of State-ignored Dynamics. 
+
+A key parameter that tracks evolution in {mt}Tt=0 is 
+
+f (m) := E[mt+1 |mt], which indicates the expected mt+1 
+
+given the previous mt. The δm (s) := E[mt+1 (s)|mt] −
+
+m(s) indicates the expected changes of the mean field over a specific state s. We find the following proposition w.r.t. the majority state s∗ = arg max s∈S m(s) under very mild assumptions: (1). The mean-field summarizer μθ faithfully summarize the mt with a bounded error ϵ for some very small ϵ ≥ 0, i.e., 
+
+E[mt+1 (s)|mt, at] ≥ ˆq(at)( s) − ϵ, (1) where the ˆq(at) is the empirical distribution of S yet pro-jected from actions A; (2). The agents, ”on average”, align slightly toward the current majority of the public mood, i.e., 
+
+E[ˆ q(at)( s∗)|mt = m] ≥ m(s∗) + η, (2) for some η > 0.
+
+Proposition 2.1 (Self-strengthening of state-ignore dynam-ics) . After the last exogenous signals ct, the δm (s∗) ≥
+
+η − ϵ ≥ 0, for any η ≥ ϵ. 
+
+Remark 2.2 . In practice, the aggregation error ϵ is empiri-cally small because μθ is prompted and trained to produce a faithful summary (sometimes even deterministic). Conse-quently, the one-step expected majority drift δm (s∗) ≥ 0
+
+in the scenario that a clear majority of public mood exists. This implies a systematic tendency to reinforce the current majority after the last exogenous signal. Though, this does not rule out reversals of personal or public mood, yet rever-sals become increasingly rare and typically require atypical realizations of the action-sampling noise. 
+
+3. Methodology 
+
+We now introduce the MF-MDP framework (§3.1) to couple macro-level states with micro-level agent states (Fig. 1). Then, we present LCT (§3.2), a trajectory-aware algorithm for realistic reversal and long-horizon simulation. 
+
+3.1. MF-MDP Framework 
+
+To model collective public mood dynamics at scale, we formulate social propagation as a MF-MDP , where the mean field captures macro-level states distribution and the MDP formalizes micro-level agent dynamics. 3Under review 
+
+MACRO -L EVEL MEAN FIELD 
+
+Recall from §2.1 that the macroscopic mean field at time t
+
+is given by the pair 
+
+(rt, m t), rt ∈ T, m t ∈ ∆m−1,
+
+where T denotes the space of textual summaries and ∆m−1
+
+is the probability simplex over the state space S. We view these as two synchronized channels: • Textual synopsis rt: a free-form natural-language sum-mary of recent trajectories, in the same spirit as the mem-ory string in MF-LLM . It aggregates salient information about past micro-level interactions and exogenous signals into a compact macro-level description. • Distributional synopsis mt: a macro-level distribution over S, which can be instantiated in practice as the em-pirical histogram of agent states at time t. This explicitly tracks how many agents occupy each latent opinion state. When |S| is large, semantically related states may be merged into coarse buckets to keep mt low-dimensional. 
+
+Recursive update. At each time step t ≥ 1, the macro-scopic signal (rt−1, m t−1) and exogenous sianal ct drive the evolution of internal states and the public mood. First, a state transition model fψ updates all agent states and the distributional mean field: 
+
+ ⃗s t, m t
+
+ = fψ
+
+ mt−1, r t−1,⃗p t, c t
+
+, m t ∈ ∆m−1, (3) where nt ∈ N denotes the number of active agents at time t,and ⃗s t = [ s1,t , . . . , s nt,t ] and ⃗p t = [ p1,t , . . . , p nt,t ] are the corresponding vectors of individual states and personalities. After actions ⃗a t = [ a1,t , . . . , a nt,t ] have been realised at time t, the textual synopsis is updated by the MF-LLM 
+
+summariser μθ :
+
+rt = μθ
+
+ rt−1, m t,⃗a t, c t
+
+. (4) In the degenerate case where internal states and the distribu-tional mean field are ignored, the effective state collapses to the textual synopsis rt. Concretely, dropping ⃗s t and mt,we update rt only from (rt−1,⃗ a t, c t) and condition actions only on (rt−1, c t). This recursion coincides with macro-only two-LLM mean-field simulators, where a single textual mean field both conditions agent behaviour and summarizes collective trajectories. 
+
+Warm-up phase. Following MF-LLM , we employ a short warm-up phase of length twarm in which the textual syn-opsis rt is updated using ground-truth trajectories a∗ 
+
+> t
+
+and corresponding states, providing a stable initial macro de-scription. Unlike the baseline, we also initialize the dis-tributional channel from empirical data: m0 is set to the 
+
+Algorithm 1 MF-MDP Simulation Procedure 
+
+Require: Active agent pool size nt ∈ N , horizon T , warm-up length twarm ; state transition model fψ , MF-LLM summariser 
+
+μθ , agent policy πϕ; exogenous sianals {ct}Tt=1 
+
+1: Initialize: (r0, m 0), active pool descriptors ⃗p 1
+
+2: for t = 1 to T do 
+
+3: // Update distributional channel (and latent states) 4: (⃗s t, m t) ← fψ (mt−1, r t−1,⃗ p t, c t) {Eq. equation 3 }
+
+5: if t ≤ twarm then 
+
+6: // Warm-up: use background actions and states 7: ⃗ a t ←⃗a ∗ 
+
+> t
+
+; mt ← m∗
+
+> t
+
+8: else 
+
+9: // Simulation: sample actions by policy 10: for all i ∈ { 1, . . . , n t} do {active subset at step t}
+
+11: zi,t ← (si,t , r t−1, m t, c t, p i,t )
+
+12: ai,t ∼ πϕ(· | zi,t ) {Eq. equation 5 }
+
+13: end for 
+
+14: ⃗ a t ← [a1,t , . . . , a nt,t ]
+
+15: // Update textual channel 16: rt ← μθ (rt−1, m t,⃗ a t, c t) {Eq. equation 4 }
+
+17: // Environment transition (agent pool refresh) 18: ⃗ p t+1 ← REFRESH (⃗p t; t) {induces Eq. equation 6 }
+
+19: end for 
+
+20: Output: Sequence of simulated actions {⃗a t}Tt=0 
+
+historical state frequency over S rather than a uniform prior. This ensures that the mean field starts from a realistic macro configuration before simulated dynamics take over. MICRO -L EVEL AGENT MDP F ORMULATION 
+
+Given the macroscopic mean field (rt−1, m t), we model each agent as acting in a Markov decision process whose state combines private and macro-level informa-tion. For agent i, the individual state at time t is zi,t =(si,t , r t−1, m t, c t, p i,t ) ∈ Z .Each agent shares the same action space A and follows a stochastic policy 
+
+πϕ(ai,t | zi,t ) = πϕ
+
+ ai,t | si,t , r t−1, m t, c t, p i,t 
+
+ (5) which maps the current individual state to a distribution over actions, capturing that decisions are shaped jointly by inter-nal beliefs ( si,t , pi,t ) and the public context (rt−1, m t, c t).The temporal evolution of internal states is not modelled via identity-specific kernels, but through the macro-level transition encoded in the mean field. At each time step, the state model fψ produces mt from the previous macroscopic mean field and the exogenous signal, so that mt summarises the latent opinion state of the (potentially changing) agents at time t, who can be viewed as conditionally independent draws from mt (together with their personalities pi,t ) and act according to πϕ in equation 5. This recursive coupling between (rt−1, m t, c t) and agent policies yields a mean-field MDP; in the degenerate case where internal states and the distributional mean field are ignored, both actions and 4Under review 
+
+updates depend only on (rt−1, c t), recovering prior macro-only two-LLM simulators as a special case. 
+
+Environment transition dynamics. After agents com-plete their decisions at step t, the environment transitions to the next macro state. In MF-MDP, this transition jointly updates the distributional channel, the textual channel, the exogenous signal, and the active agent pool:       
+
+>  mt, r t,⃗p t+1 , c t+1
+> =T ⃗pt, m t−1, r t−1,⃗a t, c t
+> .(6)
+
+3.2. Long-Horizon Consistency Training 
+
+While MF-LLM (the textual synopsis rt) provides a scalable macroscopic summary, its fidelity can be improved from both macro and micro perspectives. We propose LCT to (1) 
+
+macro-level: the state transition model, to extract predictive macroscopic signals; and (2) micro-level: the policy model, to generate behaviorally realistic actions conditioned on these signals. STATE TRANSITION MODEL 
+
+We model macro dynamics as learning a conditional law over mean-field sequences . Let mt ∈ ∆m−1 denote the distributional mean field at step t, and define the event-level context 
+
+xt := ( rt−1, m t−1,⃗p t, c t).
+
+We instantiate the mean-field state transition model fψ as a temporal sequence Transformer that maps the context history to a prediction of the current mean field: 
+
+ˆmt = fψ
+
+ x1: t
+
+ ∈ ∆m−1,
+
+where self-attention provides a flexible mechanism to cap-ture delayed evidence accumulation by selectively attending to relevant past contexts. Given empirical trajectories {m⋆t }Tt=1 , we train fψ by match-ing the entire predicted sequence to the observed sequence using a KL-based sequence loss: 
+
+Lseq (ψ) = E
+
+" TX
+
+> t=1
+
+KL( m⋆t ∥ ˆmt)
+
+#
+
+, ˆmt = fψ (x1: t). (7) Since simulation quality depends on multi-step evolution, we further impose a rollout consistency objective over a short horizon K. Starting from the empirical state m⋆t , we generate a K-step rollout by recursively feeding the model with its own predictions: 
+
+ˆmt+k = fψ
+
+ rt+k−1, ˆmt+k−1,⃗p t+k, c t+k
+
+, (8) where the rollout is initialized at ˆmt = m⋆t and recursively applied for k = 1 , . . . , K .We then penalize the discrepancy between the rolled-out predictions and the observed future distributions: 
+
+Lroll (ψ) = E
+
+" T −KX
+
+> t=1
+> K
+
+X
+
+> k=1
+
+KL 
+
+
+
+m⋆t+k ∥ ˆm(k)
+
+> t+k
+
+ #
+
+. (9) The final training objective combines sequence fitting and rollout consistency, 
+
+Ltrans (ψ) = Lseq (ψ) + α Lroll (ψ), (10) encouraging fψ to both match observed trajectories and remain stable under short self-conditioned rollouts, which is crucial for reproducing realistic delayed-commitment and opinion reversal. POLICY MODEL OPTIMIZATION 
+
+The policy model πϕ governs microscopic decision-making conditioned on private states and the macroscopic mean-field signal. We adopt a factorized structure over the active agent set at step t,
+
+πϕ(⃗a t |⃗z t) = 
+
+> nt
+
+Y
+
+> i=1
+
+πϕ(ai,t | zi,t ), (11) which is scalable while allowing heterogeneous behaviors through agent-specific inputs. 
+
+Long-horizon action reselection with dropout policy sam-pling. Direct RL for LLM policies is often bottlenecked by action sampling, since exploring diverse behaviors re-quires many autoregressive rollouts. To enable efficient long-horizon optimization, we shift exploration from token trajectories to latent policy instances by sampling dropout subnetworks. Concretely, we sample a dropout variable 
+
+λ (implemented by in-place dropout in the forward pass), which induces a conditional policy πϕ(· | λ). We then score each λ using a long-horizon mean-field surrogate computed via the state transition model, avoiding explicit text rollouts. The full derivation is provided in Appendix B. 
+
+Training objective. We define a long-horizon cost for a candidate policy instance as 
+
+Vϕ(⃗a, λ ) = 
+
+> K
+
+X
+
+> k=1
+
+γk−1KL  m⋆t+k ∥ ˆmt+k(πϕ(⃗a), λ )  , (12) where K is the rollout horizon and γ ∈ (0 , 1] is the discount factor. We optimize a weighted prediction loss Lpred using soft weights over dropout samples:     
+
+> Lpred =
+> TX
+> t=1
+> ntX
+> i=1
+> Eλ∼ptrivial (λ)
+> h
+> wi,t (λ)Vϕ(⃗ai,t , λ )
+> i
+> ,(13)
+
+5Under review 
+
+Table 1. Comparison across simulation settings. We report distributional and classification metrics under SHORT -HORIZON , LONG -
+
+> HORIZON
+
+, and REVERSAL simulations. Lower is better ( ↓) for all metrics except Micro/Macro-F1 ( ↑). Values denote mean with improvement rate (%) relative to Direct LLM . Bold indicates the best and underline indicates the second best. 
+
+Method KL Div. ↓ Wass. Dist. ↓ DTW ↓ Macro F1 ↑ Micro F1 ↑ NLL Loss ↓
+
+SHORT -H ORIZON (D EFAULT STEPS )
+
+Direct LLM 0.1101 0.1661 0.1578 0.5805 0.6953 4.0674 
+
+Social Retrieval 0.1051 (4.54%) 0.1578 (5.00%) 0.1500 (4.94%) 0.5829 (0.41%) 0.6905 (-0.69%) 3.9532 (2.81%) 
+
+MF-LLM 0.0492 (55.31%) 0.1062 (36.06%) 0.0944 (40.18%) 0.5861 (0.96%) 0.6975 (0.32%) 3.9336 (3.29%) 
+
+MF-MDP (Ours) 0.0453 (58.86%) 0.1006 (39.43%) 0.0995 (36.95%) 0.5897 (1.58%) 0.7082 (1.86%) 3.9156 (3.73%) 
+
+LONG -H ORIZON (F ULL STEPS )
+
+Direct LLM 1.8300 0.3746 0.4003 0.3922 0.5621 4.6141 
+
+Social Retrieval 1.6554 (9.54%) 0.3515 (6.17%) 0.3816 (4.67%) 0.4014 (2.35%) 0.5962 (6.07%) 4.5294 (1.84%) 
+
+MF-LLM 1.2490 (31.75%) 0.3251 (13.21%) 0.2886 (27.91%) 0.4643 (18.38%) 0.6153 (9.46%) 3.9198 (15.05%) 
+
+MF-MDP (Ours) 0.3089 (83.12%) 0.1773 (52.67%) 0.1666 (58.38%) 0.4805 (22.51%) 0.6393 (13.73%) 3.7655 (18.39%) 
+
+REVERSAL (F ULL STEPS )
+
+Direct LLM 5.4883 0.4535 0.4377 0.3531 0.4837 4.6469 
+
+Social Retrieval 3.5539 (35.26%) 0.4432 (2.27%) 0.3978 (9.12%) 0.3690 (4.50%) 0.5017 (3.72%) 4.2002 (9.61%) 
+
+MF-LLM 1.6425 (70.08%) 0.2763 (39.06%) 0.2425 (44.59%) 0.4158 (17.76%) 0.5721 (18.27%) 3.8841 (16.41%) 
+
+MF-MDP (Ours) 0.5434 (90.10%) 0.2127 (53.10%) 0.1986 (54.63%) 0.4533 (28.38%) 0.6065 (25.39%) 3.8384 (17.40%) 
+
+where ⃗a i,t ∼ πϕ(· | λ) denotes the candidate action of agent i at step t under dropout sample λ. Here ptrivial (λ) is a tractable reference distribution for dropout sampling, and 
+
+wi,t (λ) is the soft weight over sampled λ, computed as a softmax on the corresponding long-horizon cost. To stabilize training, we add an auxiliary text-supervision loss 
+
+Ltext (ϕ) = −Eλ∼ptrivial (λ)
+
+" TX
+
+> t=1
+> nt
+
+X
+
+> i=1
+
+log πϕ
+
+ a⋆i,t | λ#
+
+. (14) 
+
+The final objective is 
+
+Ltotal (ϕ) = Lpred (ϕ) + α Ltext (ϕ). (15) 
+
+4. Experiment 
+
+4.1. Settings 
+
+Details are in the Appendix C; here we list what is used. 
+
+Model. Our framework contains two trainable components. 
+
+(1) State transition model. We use an event-level causal Transformer to predict the macro state distribution mt from historical mean-field signals. (2) Policy model. We adopt 
+
+Qwen2-1.5B-Instruct as the frozen backbone and fine-tune it with LoRA, attaching a lightweight K-step predictor to support long-horizon action selection. Training. We train for 1 epoch with learning rate 1 × 10 −5 (other detailed settings in Appendix C.1). 
+
+Dataset. We follow MF-LLM (Mi et al., 2025) and use the WEIBO corpus (Ma et al., 2016). To stress-test reversal and delayed-commitment dynamics, we additionally crawl reversal events from Weibo and Douyin and convert them into the same MF-LLM event-centric format. For WEIBO, we select test events with trajectory length > 1000 and evaluate both (i) the default rollout horizon and (ii) a long-horizon rollout over the full trajectory. For the reversal set, we always roll out the full trajectory length. 
+
+Evaluation Metrics. We adopt a micro-to-macro evalua-tion protocol. (i) Micro level, we annotate each individ-ual action into one of 8 evaluation dimensions. (ii) Macro level, we compute the action distribution over nt actions at each timestep t and report (1) KL Divergence , (2) Wasser-stein Distance , (3) DTW , (4) NLL , (5) Macro-F1 , and (6) 
+
+Micro-F1 . Details are provided in Appendix C.2. 
+
+Baselines. We compare MF-MDP against representa-tive LLM-based social simulation baselines: (1) Direct LLM (Gao et al., 2023; Park et al., 2023) , which condi-tions a vanilla LLM only on the individual profile and event topic/context; (2) Social Retrieval (Piao et al., 2025; Zhang et al., 2025b) , which augments Direct LLM with retrieved peer responses (the k most recent and k most popular com-ments); (3) MF-LLM (Mi et al., 2025) , the two-LLM mean-field simulator with a textual synopsis for summarization. 
+
+4.2. Comparison with Baselines 
+
+The main results are summarized in Table 1 (full in Ap-pendix D.1); we make three observations. 
+
+(1) Strong short-horizon performance. Under SHORT - 
+
+> HORIZON
+
+(DEFAULT STEPS) simulation, MF-LLM already achieves strong distributional and classification accuracy, indicating that a textual mean field is sufficient for capturing near-term macro trends. MF-MDP yields only a modest but consistent improvement on top of MF-LLM, suggesting that explicit state distributions and stateful dynamics mainly contribute beyond the short-horizon regime. 6Under review 
+
+Table 2. Ablation study on MF-MDP. We evaluate the contribution of LCT-State, LCT-Policy and Sampling under SHORT -HORIZON ,
+
+> LONG
+
+-HORIZON , and REVERSAL simulations. Green = improvement; Red = degradation; Bold = best.                                                                                                                                           
+
+> Method KL Div. ↓Wass. Dist. ↓DTW ↓Macro F1 ↑Micro F1 ↑NLL Loss ↓
+> SHORT -H ORIZON (D EFAULT STEPS )
+> MF-MDP (Ours) 0.0453 0.1006 0.0995 0.5897 0.7082 3.9156 w/o LCT-State 0.0449 (+0.88%) 0.1120 (-11.33%) 0.0802 (+19.40%) 0.5825 (-1.22%) 0.6828 (-3.59%) 4.0064 (-2.32%)
+> w/o LCT-Policy 0.0491 (-8.39%) 0.1051 (-4.47%) 0.0856 (+13.97%) 0.5809 (-1.49%) 0.6962 (-1.69%) 3.9403 (-0.63%)
+> w/o Sampling 0.0649 (-43.27%) 0.1115 (-10.83%) 0.1081 (-8.64%) 0.5925 (+0.47%) 0.7014 (-0.96%) 3.9206 (-0.13%) LONG -H ORIZON (F ULL STEPS )
+> MF-MDP (Ours) 0.3089 0.1773 0.1666 0.4805 0.6393 3.7655 w/o LCT-State 0.8770 (-183.91%) 0.2123 (-19.74%) 0.2104 (-26.29%) 0.4725 (-1.66%) 0.6187 (-3.22%) 3.9414 (-4.67%)
+> w/o LCT-Policy 0.5872 (-90.09%) 0.2028 (-14.38%) 0.1730 (-3.84%) 0.4314 (-10.22%) 0.5765 (-9.82%) 3.9738 (-5.53%)
+> w/o Sampling 0.3536 (-14.47%) 0.1885 (-6.32%) 0.1710 (-2.64%) 0.4482 (-6.72%) 0.5774 (-9.68%) 3.7782 (-0.34%) REVERSAL (F ULL STEPS )
+> MF-MDP (Ours) 0.5434 0.2127 0.1986 0.4533 0.6065 3.8384 w/o LCT-State 1.1748 (-116.19%) 0.2536 (-19.23%) 0.2319 (-16.77%) 0.4649 (+2.56%) 0.6232 (+2.75%) 4.0610 (-5.80%)
+> w/o LCT-Policy 0.9359 (-72.23%) 0.2396 (-12.65%) 0.1808 (+8.96%) 0.4309 (-4.94%) 0.5592 (-7.80%) 4.2301 (-10.20%)
+> w/o Sampling 0.7634 (-40.49%) 0.2281 (-7.24%) 0.1897 (+4.48%) 0.4214 (-7.04%) 0.5721 (-5.67%) 4.0404 (-5.26%)
+
+(2) Long-horizon robustness. Under LONG -HORIZON 
+
+(FULL STEPS) simulation, all baselines, including Direct LLM , Social Retrieval , and MF-LLM , degrade substantially, reflecting compounding errors when the rollout extends far beyond the default window. While MF-LLM still im-proves over Direct LLM on distributional metrics (e.g., KL 
+
+1.8300 → 1.2490 , 31.7% reduction; DTW 0.4003 →
+
+0.2886 , 27.9% reduction), its long-rollout drift remains pronounced. In contrast, MF-MDP remains stable and im-proves markedly over MF-LLM (KL 1.2490 → 0.3089 ,
+
+75.3% reduction; DTW 0.2886 → 0.1666 , 42.3% reduc-tion), demonstrating stronger long-horizon consistency in tracking collective trajectories. 
+
+(3) Reversal opinion dynamics. The reversal setting is the most challenging because it requires models to capture non-monotonic trend changes and delayed commitment. MF-LLM improves over S OCIAL RETRIEVAL on trajectory met-rics (e.g., KL 3.5539 → 1.6425 , 53.8% reduction), yet its reversal tracking remains noticeably misaligned. MF-MDP further strengthens reversal fidelity (KL 1.6425 → 0.5434 ,
+
+66.9% reduction; DTW 0.2425 → 0.1986 , 18.1% reduc-tion) and improves classification accuracy (e.g., Micro-F1 
+
+0.5721 → 0.6065 , 6.0% increase), indicating that explicit distributional signals and long-horizon consistency training better support reversal dynamics over extended timelines. 
+
+4.3. Ablation Study 
+
+We ablate LCT-State , LCT-Policy , and Sampling to as-sess their respective contributions across SHORT -HORIZON ,
+
+LONG -HORIZON , and REVERSAL simulations (Table 2). 
+
+(1) LCT-State is critical for long-horizon distribution tracking. Removing LCT-State yields the largest degra-dation on distributional metrics as the horizon extends. In 
+
+LONG -HORIZON simulation, w/o LCT-State sharply wors-ens KL ( 0.3089 → 0.8770 ) and DTW ( 0.1666 → 0.2104 ), indicating compounding errors in multi-step macro roll-outs. Similarly, in REVERSAL simulation KL rises markedly (0.5434 → 1.1748 ), showing that state-consistent mean-field evolution is crucial for non-monotonic dynamics. 
+
+(2) Sampling in LCT-Policy is the main driver of F1. 
+
+Ablating LCT-Policy degrades classification accuracy, espe-cially under long horizons. In LONG -HORIZON simulation, 
+
+w/o LCT-Policy reduces Macro-F1 ( 0.4805 → 0.4314 ) and Micro-F1 ( 0.6393 → 0.5765 ), and in R EVERSAL it further lowers Micro-F1 ( 0.6065 → 0.5592 ). Notably, removing 
+
+Sampling alone causes a comparable F1 drop (Micro-F1 
+
+0.6393 → 0.5774 in LONG -HORIZON , 0.6065 → 0.5721 in REVERSAL ), indicating that sampling-based long-horizon selection drives most of the F1 gains. 
+
+(3) Complementarity and a short-horizon trade-off. 
+
+Overall, MF-MDP is the most balanced across settings, com-bining state-level rollout consistency with sampling-based long-horizon action selection. Under SHORT -HORIZON ,
+
+w/o LCT-State and w/o LCT-Policy can slightly improve distance metrics (e.g., DTW), since short rollouts favor local curve fitting, while LCT constraints mainly ben-efit long-horizon stability and reversals. Notably, w/o LCT-State slightly improves R EVERSAL F1 (Macro-F1 
+
+0.4533 → 0.4649 , Micro-F1 0.6065 → 0.6232 ) despite worse tracking, indicating per-step label fitting at the ex-pense of coherent multi-step macro evolution. 
+
+5. Analysis and Discussion 
+
+We analyze why MF-MDP improves long-horizon stability and reversal fidelity by unpacking a key failure mode of MF-
+
+7Under review                      
+
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+Positive Negative Neutral GT MF -MDP (Ours) MF -LLM Social Retrieval Direct LLM                             
+
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+(a) Long -Horizon Comment 
+
+(a) Long -Horizon Share (b) Reversal State GT (b) Reversal State l MF -MDP (b) Reversal State MF -LLM 
+
+(b) Reversal -State Negative (b) Reversal -State Positive (b) Reversal -State Neutral 
+
+(a) Long -Horizon State (a) Long -Horizon Negative (a) Long -Horizon Positive (a) Long -Horizon Neutral      
+
+> #
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+>  $$ !&
+
+MF -MDP (Ours) MF -LLM Social Retrieval Direct LLM                          
+
+> "
+> !!
+> !!
+> #!$
+> !
+> 
+> "!#!$
+> !! !
+>     
+>   !# %
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+>  #
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+>  #
+> #
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+> $ !&
+
+(a) Long -Horizon                               
+
+> #
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+>  $$ !&
+> "
+> !!
+> !!
+> #!$
+> !
+> 
+> "!#!$
+> !! !
+>     
+>   !# %
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+>  #
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+>  #
+> #
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+> $ !&
+
+(b) Reversal 
+
+State Transition Model Policy Model 
+
+Training Steps Training Steps 
+
+> Loss
+> Loss
+
+Figure 2. Trajectory alignment of collective actions and state distributions across events. We compare Real data with MF-MDP (Ours) , MF-LLM , Social Retrieval , and Direct LLM . (a) In long-horizon simulation, MF-MDP better matches real action selection (e.g., comment and repost shares) and yields a closer fit to the real state-distribution trajectory, while baselines drift more over time. (b) In a reversal event, MF-MDP captures the macro-level state reversal, whereas MF-LLM fails to reproduce the turning point. 
+
+LLM : its macro signal is implicit and narrative-smooth , pre-serving coherence but failing to reliably control the amount 
+
+and timing of state mass that drives micro actions. MF-MDP addresses this by (i) making the macro state an explicit dis-tribution and (ii) feeding it into agent inputs, so macro shifts translate into consistent micro reallocation. Additional anal-yses are provided in Appendix D.2. 
+
+Long-horizon simulation. As shown in Fig. 2a, MF-LLM ’s textual synopsis can say “the crowd is cooling down” or “debate is intensifying”, but such narratives do not uniquely specify how much mass is Neutral versus Positive/Negative 
+
+at each step. Over long-horizons, this under-specification be-comes a control problem: different implicit interpretations yield different action mixtures, and small deviations com-pound. Baselines therefore tend to settle into a conservative regime that keeps neutrality high, mechanically increasing repost share and distorting comment share. While MF-LLM 
+
+reduces drift relative to Direct LLM and Social Retrieval , it still lacks a precise knob to regulate neutrality over time. MF-MDP makes that knob explicit. The state transition model predicts an explicit macro distribution (e.g., lower Neutral mass) and injects it into each agent’s conditioning state, creating a direct macro-to-micro constraint: when the macro state shows fewer Neutral agents, micro-level neutral tendency decreases . This reduces repost propen-sity and reallocates probability toward commenting. Con-cretely, MF-MDP’s lower predicted Neutral mass yields fewer neutral-style responses and thus fewer repost actions, bringing repost and comment shares closer to real trajecto-ries. The same mechanism also stabilizes the macro curve: trained to match future distributions, the explicit state tra-jectory stays aligned rather than drifting while the synopsis remains plausible. 
+
+Reversal simulation. As shown in Fig. 2b, reversal events are difficult because the macro signal must change direction 
+
+and then propagate to micro decisions with the correct de-lay. MF-LLM ’s synopsis is temporally smooth and lexically consistent, which aids coherence but hurts opinion reversals: even when it notes fluctuations, it often remains “moderate” and fails to express a decisive shift that would move many agents across state boundaries. Consequently, the micro policy keeps sampling actions consistent with the earlier storyline, producing inertia and missing the turning point. MF-MDP resolves this with explicit two-level coupling. At the macro level, the distributional state can represent a sharp redistribution (e.g., Neutral collapsing and Negative rising) without a gradual narrative bridge; at the micro level, agents directly observe this distribution, so the action mixture can pivot accordingly. Moreover, long-horizon consistency train-ing downweights candidates whose induced rollouts keep the macro state “middle-of-the-road” when the real future requires a reversal, and upweights those that produce the correct non-monotonic trajectory. Together, these mech-anisms reproduce both the direction change in the macro state and the behavioral switch that follows with correct temporal alignment at the micro level. 8Under review 
+
+6. Conclusion 
+
+We study large-scale social network simulation where micro-level behaviors interact with macro-level collective dynam-ics. Prior two-LLM mean-field simulators rely on macro-only updates, obscuring switching readiness and biasing rollouts toward self-reinforcing, non-reversal trajectories. We propose MF-MDP , a stateful mean-field simulator with explicit per-agent latent opinion states and a learned state transition model, turning actions into state-changing events. By scoring candidates with long-horizon trajectory agree-ment under an explicit distributional mean field, MF-MDP enables multi-step rollouts and action reselection. Across real-world events, MF-MDP improves short-horizon fidelity, strengthens long-horizon stability, and better tracks rever-sals, mitigating drift in prior mean-field simulators. 
+
+Impact Statement 
+
+This work studies simulation models of opinion dynamics in social networks, with potential benefits for understanding collective behavior and testing interventions in a controlled setting. The same techniques could be misused to optimize persuasion, amplify misinformation, or support manipula-tion at scale. We therefore frame the method as an analyti-cal/simulation tool, avoid providing deployment guidance for influencing real individuals, and encourage use with ap-propriate ethical review, transparency, and safeguards. We also note an evaluation limitation: although semantic labels are produced by an LLM annotator, our reported results rely on explicit discrete dimensions and quantitative trajectory metrics (e.g., F1 and distributional distances), while some annotation noise may remain. 
+
+References 
+
+Achiam, J., Adler, S., Agarwal, S., Ahmad, L., Akkaya, I., Aleman, F. L., Almeida, D., Altenschmidt, J., Altman, S., Anadkat, S., et al. GPT-4 Technical Report. arXiv preprint arXiv:2303.08774 , 2023. Axtell, R. Why agents?: on the varied motivations for agent computing in the social sciences , volume 17. Center on Social and Economic Dynamics Washington, DC, 2000. B ¨auerle, N. Mean field markov decision processes. Applied Mathematics & Optimization , 88(1):12, 2023. Bauso, D., Tembine, H., and Basar, T. Opinion dynamics in social networks through mean-field games. SIAM Journal on Control and Optimization , 54(6):3225–3257, 2016. Bouanan, Y., Zacharewicz, G., Ribault, J., and Vallespir, B. Discrete Event System Specification-Based Framework for Modeling and Simulation of Propagation Phenom-ena in Social Networks: Application to the Information Spreading in a Multi-Layer Social Network. Simulation ,95(5):411–427, 2019. Carmona, R., Lauri `ere, M., and Tan, Z. Model-free mean-field reinforcement learning: mean-field mdp and mean-field q-learning. The Annals of Applied Probability , 33 (6B):5334–5381, 2023. Couillet, R., Perlaza, S. M., Tembine, H., and Debbah, M. Electrical vehicles in the smart grid: A mean field game analysis. IEEE Journal on Selected Areas in Communica-tions , 30(6):1086–1096, 2012. Davidsson, P. Agent-Based Social Simulation: A Computer Science View. Journal of Artificial Societies and Social Simulation , 5(1), 2002. Epstein, J. M. and Axtell, R. Growing Artificial Societies: Social Science from the Bottom Up . Brookings Institution Press, 1996. Freeman, L. The development of social network analysis. AStudy in the Sociology of Science , 1(687):159–167, 2004. Gao, C., Lan, X., Lu, Z., Mao, J., Piao, J., Wang, H., Jin, D., and Li, Y. S ˆ3: Social-network Simulation System with Large Language Model-Empowered Agents. arXiv preprint arXiv:2307.14984 , 2023. Gao, C., Lan, X., Li, N., Yuan, Y., Ding, J., Zhou, Z., Xu, F., and Li, Y. Large language models empowered agent-based modeling and simulation: A survey and perspec-tives. Humanities and Social Sciences Communications ,11(1):1–24, 2024. Gast, N. and Van Houdt, B. A refined mean field approxi-mation. Proceedings of the ACM on Measurement and Analysis of Computing Systems , 1(2):1–28, 2017. Grimm, V., Revilla, E., Berger, U., Jeltsch, F., Mooij, W. M., Railsback, S. F., Thulke, H.-H., Weiner, J., Wiegand, T., and DeAngelis, D. L. Pattern-oriented modeling of agent-based complex systems: lessons from ecology. science ,310(5750):987–991, 2005. Grossi, D., Dignum, F., Dastani, M., and Royakkers, L. Foundations of Organizational Structures in Multiagent Systems. In Proceedings of the Fourth International Joint Conference on Autonomous Agents and Multiagent Systems , pp. 690–697, 2005. Guo, D., Yang, D., Zhang, H., Song, J., Wang, P., Zhu, Q., Xu, R., Zhang, R., Ma, S., Bi, X., et al. Deepseek-r1 incentivizes reasoning in llms through reinforcement learning. Nature , 645(8081):633–638, 2025. Helbing, D., Farkas, I., and Vicsek, T. Simulating dynamical features of escape panic. Nature , 407(6803):487–490, 2000. 9Under review 
+
+Hu, Y., Song, Z., Feng, N., Luo, Y., Yu, J., Chen, Y.-P. P., and Yang, W. Sf2t: Self-supervised fragment finetuning of video-llms for fine-grained understanding. In Pro-ceedings of the Computer Vision and Pattern Recognition Conference , pp. 29108–29117, 2025. Kong, Q., Mao, W., Chen, G., and Zeng, D. Exploring trends and patterns of popularity stage evolution in social media. 
+
+IEEE Transactions on Systems, Man, and Cybernetics: Systems , 50(10):3817–3827, 2018. Lasry, J.-M. and Lions, P.-L. Mean field games. Japanese journal of mathematics , 2(1):229–260, 2007. Lauriere, M., Perrin, S., Girgin, S., Muller, P., Jain, A., Cabannes, T., Piliouras, G., P ´erolat, J., Elie, R., Pietquin, O., et al. Scalable deep reinforcement learning algorithms for mean field games. In International conference on machine learning , pp. 12078–12095. PMLR, 2022. Li, M., Wang, X., Gao, K., and Zhang, S. A survey on information diffusion in online social networks: Models and methods. Information , 8(4):118, 2017. Li, W., Zhou, H., Yu, J., Song, Z., and Yang, W. Coupled mamba: Enhanced multimodal fusion with coupled state space model. Advances in Neural Information Processing Systems , 37:59808–59832, 2024. Li, W., Song, Z., Zhou, H., Zhang, Y., Yu, J., and Yang, W. Lora-mixer: Coordinate modular lora experts through serial attention routing. arXiv preprint arXiv:2507.00029 ,2025. Liu, Y., Liu, W., Gu, X., He, A., Wang, W., and Zhang, Y. Popsim: Social network simulation for social media popularity prediction. arXiv preprint arXiv:2512.02533 ,2025. Lu, P. and Nie, S. The strength distribution and combined duration prediction of online collective actions: Big data analysis and bp neural networks. Physica A: Statistical Mechanics and its Applications , 535:121031, 2019. Lu, P., Nie, S., Wang, Z., Jing, Z., Yang, J., Qi, Z., and Pujia, W. Predicting durations of online collective actions based on peaks’ heights. Communications in Nonlinear Science and Numerical Simulation , 55:338–354, 2018a. Lu, P., Wang, Z., Nie, S., Pujia, W., Lu, P., and Chen, B. Exploring the participate propensity in cyberspace collective actions: The 5‰ rule. Physica A: Statistical Mechanics and Its Applications , 503:582–590, 2018b. Lu, P., Yang, H., Li, H., Li, M., and Zhang, Z. Swarm intel-ligence, social force and multi-agent modeling of heroic altruism behaviors under collective risks. Knowledge-Based Systems , 214:106725, 2021. Ma, J., Gao, W., Mitra, P., Kwon, S., Jansen, B. J., Wong, K.-F., and Cha, M. Detecting rumors from microblogs with recurrent neural networks. In Proceedings of the Twenty-Fifth International Joint Conference on Artificial Intel-ligence , IJCAI’16, pp. 3818–3824. AAAI Press, 2016. ISBN 9781577357704. Meadows, D. L., Behrens, W. W., Meadows, D. H., Naill, R. F., Randers, J., and Zahn, E. Dynamics of Growth in a Finite World , volume 360. Wright-Allen Press, Cam-bridge, MA, 1974. Mi, Q., Xia, S., Song, Y., Zhang, H., Zhu, S., and Wang, J. Taxai: A dynamic economic simulator and benchmark for multi-agent reinforcement learning. arXiv preprint arXiv:2309.16307 , 2023. Mi, Q., Zhao, Z., Xia, S., Song, Y., Wang, J., and Zhang, H. Learning macroeconomic policies based on micro-foundations: A stackelberg mean field game approach. Technical report, 2024. Mi, Q., Yang, M., Yu, X., Zhao, Z., Deng, C., An, B., Zhang, H., Chen, X., and Wang, J. Mf-llm: Simulating popula-tion decision dynamics via a mean-field large language model framework. arXiv preprint arXiv:2504.21582 ,2025. Nie, S., Wang, Z., Pujia, W., Nie, Y., and Lu, P. Big data prediction of durations for online collective actions based on peak’s timing. Physica A: Statistical Mechanics and its Applications , 492:138–154, 2018. Park, J. S., O’Brien, J., Cai, C. J., Morris, M. R., Liang, P., and Bernstein, M. S. Generative Agents: Interactive Simulacra of Human Behavior. In Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology , pp. 1–22, 2023. Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C., Morris, M. R., Willer, R., Liang, P., and Bernstein, M. S. Generative agent simulations of 1,000 people, 2024. URL 
+
+https://arxiv.org/abs/2411.10109 .Piao, J., Yan, Y., Zhang, J., Li, N., Yan, J., Lan, X., Lu, Z., Zheng, Z., Wang, J. Y., Zhou, D., et al. Agentsociety: Large-scale simulation of llm-driven generative agents advances understanding of human behaviors and society. 
+
+arXiv preprint arXiv:2502.08691 , 2025. Schelling, T. C. Dynamic Models of Segregation. Journal of Mathematical Sociology , 1(2):143–186, 1971. Schelling, T. C. Micromotives and Macrobehavior . WW Norton & Company, 2006. 10 Under review 
+
+Song, Z., Luo, R., Ma, L., Tang, Y., Chen, Y.-P. P., Yu, J., and Yang, W. Temporal coherent object flow for multi-object tracking. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 39, pp. 6978–6986, 2025. Squazzoni, F. The Micro-Macro Link in Social Simulation. 
+
+Sociologica , 2(1):3–5, 2008. Squazzoni, F., Jager, W., and Edmonds, B. Social Simula-tion in the Social Sciences: A Brief Overview. Social Science Computer Review , 32(3):279–294, 2014. Tanaka, T. A theory of mean field approximation. Advances in Neural Information Processing Systems , 11, 1998. Tesfatsion, L. Agent-based computational economics: A constructive approach to economic theory. Handbook of computational economics , 2:831–880, 2006. Uhrmacher, A. M. and Weyns, D. Multi-Agent Systems: Simulation and Applications . CRC Press, 2018. Wang, L., Gao, H., Bo, X., Chen, X., and Wen, J.-R. Yulan-onesim: Towards the next generation of social simulator with large language models. In Workshop on Scaling Environments for Agents , 2025. Wang, Y., Yang, C., Li, T., Mi, X., Li, L., and Han, Z. A survey on mean-field game for dynamic management and control in space-air-ground network. IEEE Communica-tions Surveys & Tutorials , 26(4):2798–2835, 2024. Wei, H., Sun, Y., and Li, Y. Deepseek-ocr: Contexts optical compression. arXiv preprint arXiv:2510.18234 , 2025. Wei, J., Wang, X., Schuurmans, D., Bosma, M., Xia, F., Chi, E., Le, Q. V., Zhou, D., et al. Chain-of-thought prompting elicits reasoning in large language models. Advances in neural information processing systems , 35:24824–24837, 2022. Yang, A., Yu, B., Li, C., Liu, D., Huang, F., Huang, H., Jiang, J., Tu, J., Zhang, J., Zhou, J., et al. Qwen2. 5-1m technical report. arXiv preprint arXiv:2501.15383 ,2025a. Yang, J., Ye, X., Trivedi, R., Xu, H., and Zha, H. Learning deep mean field games for modeling large population behavior. arXiv preprint arXiv:1711.03156 , 2017. Yang, Y., Luo, R., Li, M., Zhou, M., Zhang, W., and Wang, J. Mean field multi-agent reinforcement learning. In 
+
+International conference on machine learning , pp. 5571– 5580. PMLR, 2018. Yang, Z., Zhang, Z., Zheng, Z., Jiang, Y., Gan, Z., Wang, Z., Ling, Z., Chen, J., Ma, M., Dong, B., Gupta, P., Hu, S., Yin, Z., Li, G., Jia, X., Wang, L., Ghanem, B., Lu, H., Lu, C., Ouyang, W., Qiao, Y., Torr, P., and Shao, J. Oasis: Open agent social interaction simulations with one million agents, 2025b. URL https://arxiv.org/ abs/2411.11581 .Ye, L., Zhang, Y., Wu, Y., Chen, Y.-P. P., Yu, J., Yang, W., and Song, Z. Mvp: Winning solution to smp challenge 2025 video track. In Proceedings of the 33rd ACM Inter-national Conference on Multimedia , pp. 14079–14085, 2025. Zhang, X., Cao, J., Wei, J., You, C., and Ding, D. Why prompt design matters and works: A complexity anal-ysis of prompt search space in llms. arXiv preprint arXiv:2503.10084 , 2025a. Zhang, X., Lin, J., Mou, X., Yang, S., Liu, X., Sun, L., Lyu, H., Yang, Y., Qi, W., Chen, Y., et al. Socioverse: A world model for social simulation powered by llm agents and a pool of 10 million real-world users. arXiv preprint arXiv:2504.10157 , 2025b. Zhang, X., Zhang, Y., Chen, Z., Yu, J., Yang, W., and Song, Z. Logical phase transitions: Understanding collapse in llm logical reasoning. arXiv preprint arXiv:2601.02902 ,2026. Zhang, Y., Song, Z., Zhou, H., Ren, W., Chen, Y.-P. P., Yu, J., and Yang, W. ga − s3: Comprehensive social network simulation with group agents. In Che, W., Nabende, J., Shutova, E., and Pilehvar, M. T. (eds.), 
+
+Findings of the Association for Computational Linguis-tics: ACL 2025 , pp. 8950–8970, Vienna, Austria, July 2025c. Association for Computational Linguistics. ISBN 979-8-89176-256-5. doi: 10.18653/v1/2025.findings-acl. 468. URL https://aclanthology.org/2025. findings-acl.468/ .Zhang, Y., Zhang, X., Sheng, J., Li, W., Yu, J., Yang, W., and Song, Z. From ambiguity to verdict: A semiotic-grounded multi-perspective agent for llm logical reasoning. arXiv preprint arXiv:2509.24765 , 2025d. Zhou, H., Cai, J., Ye, Y., Feng, Y., Gao, C., Yu, J., Song, Z., and Yang, W. Video anomaly detection with motion and appearance guided patch diffusion model. In Proceed-ings of the AAAI Conference on Artificial Intelligence ,volume 39, pp. 10761–10769, 2025. 11 Under review 
+
+## Appendix 
+
+Appendix Overview 
+
+A. Related Work 
+
+B. Derivation of the Policy Model 
+
+C. Detailed Experimental Setup 
+
+D. Additional Experimental Results and Analysis 
+
+A. Related Work 
+
+Social Simulation Systems: Foundations and Limitations 
+
+Traditional social simulation systems can be broadly classified into three paradigms. (1) Mechanistic models describe collective behavior through explicit equations or procedural dynamics such as discrete-event and system-dynamics (Lu et al., 2021; Meadows et al., 1974; Bouanan et al., 2019). (2) Empirical and statistical models identify diffusion regularities from data, including PSP (Kong et al., 2018) and peak-based participation dynamics (Lu et al., 2018a; Lu & Nie, 2019). (3) Agent-based models capture emergent phenomena from local interactions among heterogeneous agents (Davidsson, 2002; Epstein & Axtell, 1996; Squazzoni, 2008; Uhrmacher & Weyns, 2018), with applications to collective dynamics (Helbing et al., 2000), market simulations (Tesfatsion, 2006), ecosystems (Grimm et al., 2005), and public policy (Axtell, 2000; Mi et al., 2023). Despite their success, these paradigms often rely on handcrafted rules, simplified assumptions, and fixed parameters, which limits adaptability and makes robust long-horizon simulation difficult in open-ended, evolving settings. Recent advances in large language models (LLMs) (Zhang et al., 2026) offer a complementary direction: replacing brittle rule templates with contextual, generative decision-making to better generalize while preserving rich semantic interactions. 
+
+LLM-Based Agent Social Simulation: Progress and Gaps 
+
+Recent advances in LLMs (Achiam et al., 2023; Guo et al., 2025; Yang et al., 2025a; Li et al., 2024; 2025) have enabled cognitively enriched social simulations where agents communicate, reason, and adapt through natural language (Wei et al., 2022; Zhang et al., 2025d;a). At a high level, existing LLM-driven agent simulators fall into two paradigms. (1) Prompted role-play ABM. These systems drive open-ended interactions mainly through role specifications and prompting (often with lightweight memory), and are typically used in small-scale or qualitative settings; examples include Generative Agents (Park et al., 2023; 2024) and S3 (Gao et al., 2023). (2) Memory / retrieval-augmented ABM. These systems inject social context via heuristic retrieval or summarization (e.g., recent/popular responses) to improve scalability while retaining language-based decision making; examples include SocioVerse (Zhang et al., 2025b), AgentSociety (Piao et al., 2025), and GA-S 3 (Zhang et al., 2025c). Despite steady progress, most approaches remain micro-centric and depend on prompting or heuristic memory/retrieval to carry evolving context, which is often brittle and struggles to retain decision-critical information over long horizons, resulting in unstable temporal dynamics and weak quantitative alignment with real-world collective trends. 
+
+Mean Field Approximation: Motivation and Challenges 
+
+Mean field approximation (Carmona et al., 2023; Tanaka, 1998; Gast & Van Houdt, 2017) scales large multi-agent systems by replacing expensive pairwise interactions with interactions between each agent and a shared macro signal. This idea is formalized in mean-field game (MFG) theory (Lasry & Lions, 2007; Yang et al., 2018), where individual decisions and aggregate dynamics are coupled through a compact mean-field representation, and has been applied to domains such as social influence (Yang et al., 2017; Bauso et al., 2016), traffic control (Wang et al., 2024), energy optimization (Couillet et al., 2012), and economic policy (Grimm et al., 2005; Mi et al., 2024). Despite this scalability, classical MFGs assume stylized behaviors and environment models, making it difficult to capture contextual, language-mediated decisions in realistic social settings; neural mean-field variants improve expressiveness (Lauriere et al., 2022) but remain limited when interactions are open-ended and semantics-rich. Recent LLM-based simulators introduce a shared macro signal (Mi et al., 2025; Liu et al., 2025), yet macro-micro coupling remains weak: MF-LLM lacks explicit latent micro states, while PopSim relies on prompt-only design. The key challenge is to learn a compact, decision-critical mean field that supports stateful decisions and long-horizon macro evolution without drifting from real trajectories. 12 Under review 
+
+B. Derivation of the Policy Model 
+
+The policy model πϕ governs microscopic decision-making. We use a factorized policy over the active set: 
+
+πϕ(⃗a t |⃗z t) = 
+
+> nt
+
+Y
+
+> i=1
+
+πϕ(ai,t | zi,t ). (16) 
+
+Lookahead re-selection as latent-policy optimization. Starting from 
+
+max  
+
+> ϕ
+
+E⃗a∼π ϕ [R(⃗a)] , (17) introduce a latent variable λ ∼ q(λ) and the conditional policy πϕ(⃗a | λ):
+
+max  
+
+> ϕ
+
+E⃗a∼π ϕ [R(⃗a)] = 
+
+Z
+
+R(⃗a)π ϕ(⃗a) d⃗ a
+
+=
+
+Z⃗a
+
+R(⃗a)
+
+Z
+
+> λ
+
+πϕ(⃗a | λ)q(λ) dλ d⃗ a
+
+=
+
+Z
+
+> λ
+
+Z⃗a
+
+R(⃗a)π ϕ(⃗a | λ) d⃗ a
+
+
+
+q(λ) dλ 
+
+= Eλ∼q(λ)
+
+h
+
+E⃗a∼π ϕ(·| λ)[R(⃗a)] 
+
+i
+
+= Eλ∼q(λ)
+
+ ˆRϕ(λ),
+
+(18) where 
+
+ˆRϕ(λ) := E⃗a∼π ϕ(·| λ)[R(⃗a, λ )] . (19) To keep q(λ) tractable while still preferring high-reward latent instances, we regularize it toward a trivial reference ptrivial 
+
+(e.g., uniform over dropout masks), yielding a bi-level objective: 
+
+max  
+
+> ϕ
+
+max  
+
+> q
+
+Eλ∼q(λ)[ ˆRϕ(⃗a, λ )] − 1
+
+β KL(q || ptrivial ). (20) The inner maximization has the textbook solution 
+
+q∗ ∝ ptrivial (λ) exp( β ˆRϕ(⃗a, λ )) . (21) Plugging q∗ back produces a log-sum-exp form (we keep the original notation; Z(ϕ) is the corresponding normalizer): 
+
+max  
+
+> ϕ
+
+Eλ∼q∗(λ)[ ˆRϕ(⃗a, λ )] − 1
+
+β KL(q ∗|| ptrivial )= max  
+
+> ϕ
+
+Eq∗ [ ˆRϕ(⃗a, λ )] − 1
+
+β (βEq∗ [ ˆRϕ(⃗a, λ )] − log Z(ϕ))= max 
+
+> ϕ
+
+1
+
+β log Eptrivial [exp( β ˆRϕ(⃗a,λ ))] .
+
+(22) 
+
+Z(ϕ) = 
+
+Z
+
+ptrivial (λ) exp( β ˆR)dλ = Eptrivial [(exp β ˆR)] . (23) 
+
+From maximization to a weighted cost. Rewriting the maximization as minimization with V = − ˆR gives 
+
+min 
+
+> ϕ
+
+1
+
+β log Eptrivial [exp( βV ϕ(⃗a,λ ))] .
+
+13 Under review 
+
+Taking gradients reveals that the objective induces a softmax weighting over λ:
+
+∇ϕ
+
+1
+
+β log Eptrivial [exp( βV ϕ(⃗a ∗,λ ))] = 1
+
+β
+
+1
+
+Z(ϕ) ∇ϕZ(ϕ)= 1
+
+β
+
+1
+
+Z(ϕ) Ep[β exp( βV ϕ)∇ϕVϕ]= 1
+
+Z(ϕ) Ep[exp( βV ϕ)∇ϕVϕ]= Ep
+
+ exp( βV ϕ)
+
+Z(ϕ) ∇ϕVϕ
+
+
+
+.
+
+and integrating yields 1
+
+β log Eptrivial [exp( βV ϕ(⃗a ∗,λ ))] = Eptrivial [wV ϕ], (24) where 
+
+w(⃗a, λ ) = exp( βVϕ)Z( ϕ)
+
+is exactly a softmax over λ with temperature β. Therefore the final objective becomes 
+
+min  
+
+> ϕ
+
+Eλ∼ptrivial [wV ϕ(⃗a, λ )] . (25) 
+
+Instantiating the long-horizon cost. We define the long-horizon cost as a discounted divergence: 
+
+Vϕ(⃗a, λ ) = 
+
+> K
+
+X
+
+> k=1
+
+γk−1KL  m⋆t+k ∥ ˆmt+k(πϕ(⃗a), λ )  . (26) Aggregating over simulation time t and active agents nt yields the prediction loss 
+
+Lpred =
+
+> T
+
+X
+
+> t=1
+> nt
+
+X
+
+> i=1
+
+Ep[wi,t KX
+
+> k=1
+
+γk−1KL  m⋆t+k ∥ ˆmt+k(πϕ)]. (27) To stabilize optimization, we include an auxiliary text-supervision term (ground-truth actions) to reduce variance: 
+
+Ltext (ϕ) = −E
+
+" TX
+
+> t=1
+> nt
+
+X
+
+> i=1
+
+log πϕ
+
+ ⃗a ⋆i,t | λ#
+
+. (28) The following bound shows that increasing πϕ(⃗a ∗|λ) tightens the variance of the induced cost. 
+
+Theorem B.1. If ⃗a is a discrete random vector and |V ϕ| ≤ M , then Var( V ) ≤ 4M 2(1 − πϕ(⃗a ∗|λ)) 2.
+
+ˆRϕ(⃗a, λ ) − R(⃗a ∗, λ ) = X⃗a
+
+Rϕ(⃗a, λ )π ϕ(⃗a | λ) − R(⃗a ∗, λ )
+
+≤ X⃗a
+
+πϕ(⃗a | λ) |R ϕ(⃗a, λ ) − R(⃗a ∗, λ )|≤ 2M X⃗a̸=⃗a ∗
+
+πϕ(⃗a | λ)= 2 M (1 − πϕ(⃗a ∗ | λ)) .
+
+Var( ˆR) = E
+
+h
+
+( ˆR − E[ ˆR]) 2i
+
+≤ E
+
+h
+
+( ˆR − R(⃗a ∗, λ )) 2i
+
+≤ 4M 2 1 − πϕ(⃗a ∗ | λ)2. (29) Finally, we optimize πϕ via the two-term objective 
+
+Ltotal (ϕ) = Lpred (ϕ) + α Ltext (ϕ). (30) In practice, λ is instantiated by in-place dropout sampling within the forward pass, so drawing λ ∼ ptrivial corresponds to sampling dropout subnetworks, while the weights w implement a soft selection over these dropout policy instances. 14 Under review 
+
+Table 3. Model and training hyperparameters. The left block reports the state transition model (Event Transformer) used in MF-MDP; the right block reports LLM-based components fine-tuned from Qwen2-1.5B-Instruct. 
+
+State Transition (Event Transformer) Hyperparameter Mean Field (IB-Tune) Policy (IB-Tune) Policy (LCT-Tune) 
+
+Hidden size dmodel 256 Base model Qwen2-1.5B-Instruct Qwen2-1.5B-Instruct Qwen2-1.5B-Instruct #layers / #heads 3 / 8 Max sequence length 2048 2048 2048 Max sequence length 4096 Training dataset WEIBO WEIBO WEIBO Dropout 0.1 Training batch size 256 256 256 FFN dimension df f 1024 Micro batch size 8 8 8Text Encoder BERT Max epochs 1 1 1Optimizer AdamW Random Seed 46 46 46 Learning rate 2 × 10 −5 Learning rate 5 × 10 −7 5 × 10 −7 5 × 10 −7
+
+Batch size (events) 4 LoRA rank/alpha 64/64 64/64 64/64 Max epochs 20 Prediction weight αcoeff – – 0.5 Weight decay 1 × 10 −5 Lookahead horizon K – – 30 Gradient clip 1.0 #candidates J – – 4Loss function Ltrans Loss function Lmean-field Lpolicy LLCT #     
+
+> !""!""
+> !"""%
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+ $$ !& 
+
+MFSim (Ours) MF -LLM Social Retrieval Direct LLM      
+
+> "
+> !! !!
+> !!!$
+> #!$
+> !
+> 
+> "!#!$
+> !! !
+>     
+
+   !# %       
+
+> 
+>  
+>  "
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #       
+
+> 
+>  
+>  "
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #     
+
+> #
+> !""!""
+> !"""%
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+$ !& 
+
+(a) Long -Horizon     
+
+> #
+> !""!""
+> !"""%
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+ $$ !&      
+
+> "
+> !! !!
+> !!!$
+> #!$
+> !
+> 
+> "!#!$
+> !! !
+>     
+
+   !# %       
+
+> 
+>  
+>  "
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #       
+
+> 
+>  
+>  "
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #     
+
+> #
+> !""!""
+> !"""%
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+$ !& 
+
+(b) Reversal 
+
+State Transition Model Policy Model 
+
+Training Steps Training Steps 
+
+> Loss
+> Loss
+
+Figure 3. Training loss curves for MF-MDP. Left: Event Transformer (state transition model) optimized by Ltrans (KL divergence between predicted and empirical mean-field distributions). Right: Policy model optimized by Ltotal = Lpred + α Ltext , combining discounted K-step rollout discrepancy with action NLL supervision. 
+
+C. Detailed Experimental Setup 
+
+C.1. Training Curves and Hyperparameters Summary. All experiments are run on two Tesla V100S-PCIE-32GB GPUs. Table 3 reports the hyperparameters for both the state transition model (Event Transformer) and all LLM components (Mean Field IB-Tune, Policy IB-Tune, and Policy LCT-Tune), with LLMs fine-tuned from Qwen2-1.5B-Instruct using LoRA on WEIBO under a unified data format and sequence length. 
+
+Training curves. Figure 3 shows the optimization dynamics of our two core modules. The state transition model is trained with the KL-based transition loss Ltrans against the empirical mean-field distribution, while the policy model is trained with 
+
+Ltotal = Lpred + α Ltext , combining discounted K-step rollout divergence and NLL supervision on ground-truth actions. 
+
+C.2. Detailed Settings Dataset. We follow MF-LLM (Mi et al., 2025) and adopt the WEIBO corpus (Ma et al., 2016) as the primary benchmark, which contains 5,000+ real-world events with temporally ordered individual responses and rich individual profiles, covering categories such as Crime, Culture, Health, News, Politics, Sports, and Technology . To better stress-test reversal and delayed-commitment dynamics beyond the original benchmark, we additionally curate a complementary Reversal collection by crawling public discussions from Weibo and Douyin, spanning domains including Education, Economy, Society, Environment, 
+
+and Campus . We convert all newly collected data into the same MF-LLM event-centric format (event timeline, per-timestep active individual set, responses, and profiles), enabling plug-and-play training/evaluation under an identical simulation interface. The Reversal set contains much longer trajectories than WEIBO (up to 40 ,000+ timesteps), so we use full-length rollouts, as short horizons rarely exhibit reversals. For WEIBO, we evaluate long events (length > 1000 ) under both the default 300 -step rollout ( MF-LLM ) and full-trajectory settings. 15 Under review #     
+
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+ $$ !& 
+
+MF -MDP (Ours) MF -LLM Social Retrieval Direct LLM      
+
+> "
+> !!
+> !!
+> #!$
+> !
+> 
+> "!#!$
+> !! !
+>     
+
+   !# %       
+
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #       
+
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #     
+
+> #
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+$ !& 
+
+(a) Long -Horizon     
+
+> #
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+ $$ !&      
+
+> "
+> !!
+> !!
+> #!$
+> !
+> 
+> "!#!$
+> !! !
+>     
+
+   !# %       
+
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #       
+
+> 
+> 
+> 
+> ! "
+> 
+>  
+> !"
+>  
+>     
+
+ #     
+
+> #
+> !""
+> !""
+> $ "%
+> !"
+>  
+> !#"$"%
+> ""!!"
+>     
+
+$ !& 
+
+(b) Reversal 
+
+State Transition Model Policy Model 
+
+Training Steps Training Steps 
+
+> Loss
+> Loss
+
+Figure 4. Radar plot comparing MF-MDP (Ours) and three baselines ( MF-LLM , Social Retrieval , Direct LLM )— on 5 distributional metrics and 8 semantic dimensions of actions. KL Divergence (Inverse), Wasserstein Distance (Inverse), and DTW Distance (Inverse) are inversely normalized so larger values indicate better performance, alongside Macro F1 and Micro F1. Larger areas denote superior performance, with MF-MDP showing the highest semantic fidelity. 
+
+Evaluation Metrics. We adopt a micro-to-macro evaluation protocol: 
+
+(i) Micro-level (individual actions). We focus on semantic-related evaluation by annotating each generated (and real) action into one of 8 semantic dimensions using an LLM-based annotator (GPT-4o-mini). This LLM-based evaluation protocol follows prior mean-field simulators ( MF-LLM ) and has been empirically validated therein. • Rumor. Whether the action spreads the discussed claim (believes/amplifies) or counters it (questions/refutes/clarifies). • Sentiment. The expressed emotional tone (including sarcasm/irony), e.g., angry, calm, happy, sad, fear, surprise. • State. Overall polarity toward the topic: positive, negative, or neutral, including subtle negativity. • Behavior. Interaction type: share (repost/forward) vs. comment (textual response). • Stance. Position toward the topic: support, oppose, or neutral, including implicit opposition. • Belief. Perceived truthfulness: believe vs. doubt (skepticism, requests for evidence, denial). • Subjectivity. Subjective personal opinion vs. objective factual description. • Intent. Communicative goal: question (seeking clarification), promotion (disseminating), or opinion (expressing viewpoint). 
+
+(ii) Macro-level (distributional dynamics). Building on the micro-level annotations, at each timestep t we map every action into a discrete label (under a chosen dimension) and aggregate the nt actions into an empirical categorical distribution pt;we compute the same distribution ˆpt for generated actions. We then compare the real trajectory {pt}Tt=1 and the generated trajectory {ˆpt}Tt=1 using: 1. KL Divergence. KL( pt ∥ ˆpt), averaged over timesteps, penalizing mismatched probability mass and being sensitive to mode dropping. 2. Wasserstein Distance. W (pt, ˆpt), averaged over timesteps, measuring the cost of transporting probability mass and being more robust to small support shifts. 3. Dynamic Time Warping (DTW). DTW between the two time series {pt} and {ˆpt} (or scalar projections per label), evaluating temporal alignment by allowing elastic matching across timesteps and penalizing phase shifts. 16 Under review GT MF -MDP( Ours) MF -LLM Social Retrieval Direct LLM                     
+
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+>  
+> 
+>  
+> 
+> 
+> 
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+(a) Culture -Behavior Share (a) Culture -Behavior Comment (a) Culture -Belief Believe (a) Culture -Belief Doubt                     
+
+>     
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+(a) Culture -Subjectivity Objective (a) Culture -Subjectivity Subjective (a) Culture -Sentiment Happy (a) Culture -Sentiment calm                      
+
+>     
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+>  
+>    
+>  
+>  
+>  
+> 
+> 
+> 
+> 
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+(a) Culture -Intent Promotion (a) Culture -Intent Opinion (a) Culture -Rumor Spread (a) Culture -Rumor Counter                         
+
+>     
+> 
+> 
+>  
+> 
+> 
+> 
+>  
+> 
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>     
+> 
+> 
+> 
+> 
+>  
+>  
+> 
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+
+(a) Culture -Stance Support (a) Culture -Stance Oppose (a) Culture -State Positive (a) Culture -State Negative 
+
+Figure 5. Comparison on 8 semantic dimensions. We compare MF-MDP (Ours) , MF-LLM , Social Retrieval , and Direct LLM .
+
+4. Negative Log-Likelihood (NLL). The average − log πϕ(a⋆i,t | zi,t ) over all ground-truth actions, measuring how well the learned policy assigns probability to real behaviors. 5. Macro-F1. F1 computed from predicted vs. real labels and averaged across classes (treating each class equally), highlighting performance on minority labels. 6. Micro-F1. F1 computed by aggregating true/false positives across all actions before forming F1, emphasizing overall accuracy dominated by frequent labels. 
+
+D. Additional Experimental Results and Analysis 
+
+D.1. Full Results Semantic fidelity under evolving states. Fig. 4 evaluates semantic fidelity over eight semantic-related dimensions (excluding NLL Loss ); for KL /Wasserstein /DTW we use inverse normalization so higher is better. Across both long-horizon and reversal settings, MF-MDP consistently achieves the largest radar area. Most notably, MF-MDP leads by a wide margin on the State axis, showing that it best preserves state-consistent action meaning—enabled by explicitly modeling and coupling the macro sentiment distribution (positive/neutral/negative) with each agent’s latent state during decision making. This state grounding propagates to closely related dimensions. Compared with all baselines, MF-MDP shows clear gains on Sentiment and Stance , indicating that expressed attitudes track the underlying state rather than drifting with surface text patterns. We also observe a substantial improvement on Behavior , which is tightly linked to sentiment states (e.g., supportive vs. opposing engagement patterns under positive vs. negative shifts), consistent with MF-MDP’s better distributional alignment ( KL /Wass /DTW ) and higher Macro F1 /Micro F1 . Overall, the radar shapes suggest that jointly modeling macro and micro states is key to producing semantically faithful collective actions, especially when trajectories must adapt over time. 17 Under review 
+
+D.2. Full Analysis Case Events. The case events used in Fig. 2 (Events a and b) and Fig. 6 (Events A-D) are summarized in Table 4. 
+
+Long-horizon semantic alignment in full dynamic simulations. Fig. 5 plots the 10,000-step trajectories of eight semantic dimensions for event (a) in the Great-Wall long-horizon simulation. MF-MDP (red) is consistently the closest to GT (black) in both level and trend : across Behavior (Share/Comment), Subjectivity (Objective/Subjective), Intent 
+
+(Promotion/Opinion), Belief (Believe/Doubt), and Rumor (Spread/Counter), it reproduces GT-like plateaus and fluctuations rather than drifting toward saturated, nearly constant curves. MF-LLM is generally second-best but shows noticeable offsets and occasional instability, while Social Retrieval and Direct LLM frequently collapse into extreme, unbalanced patterns. The dominant gap appears on State : MF-MDP closely matches GT on both State Positive and State Negative , whereas all baselines underestimate them (curves near zero), effectively collapsing toward an overly neutral distribution. This state mismatch propagates to state-adjacent semantics— Sentiment (Happy/Calm) and Stance (Support/Oppose)—where baselines tend to produce one-sided polarity that does not follow GT’s balance. With explicit conditioning on the macro state distribution and each agent’s latent state, MF-MDP maintains coherent sentiment and stance dynamics, which further translates into more realistic Behavior trajectories over long horizons. 
+
+State reversals under exogenous signals in reversal events. Beyond the reversal case in Fig. 2(b), we further evaluate four additional reversal events with horizons ranging from 6,000 to 40,000 steps. These events feature long-run dynamics where the macro state distribution (positive/neutral/negative) can reversal under exogenous signals. As shown in Fig. 6, MF-MDP consistently captures both the turning points and the post-reversal trends, staying close to GT across events rather than converging to a stationary trajectory. This advantage comes from MF-MDP’s explicit state coupling : it conditions decisions jointly on the macro state distribution and each agent’s latent state, while injecting the exogenous signal as a direct driver of state evolution. When the exogenous signal shifts the macro distribution, MF-MDP propagates the change through agent states and back into the aggregate trajectory, producing the correct reversal dynamics. In contrast, MF-LLM 
+
+relies on a text-based, coarse macro summary that becomes increasingly blurry over long horizons; after a short warm-up, it loses discriminative state information, so the predicted state curves remain nearly unchanged even when GT reverses. This is further reflected in the fine-grained components: MF-MDP aligns best with GT on Positive , Negative , and Neutral 
+
+simultaneously, whereas baselines typically under-react and collapse toward an overly neutral or biased mixture.                            
+
+> Table 4. Representative events with opinion reversal across domains. ID Title Domain Description Distinctive Features aCelebrity Coordinated Posting Controversy Culture A public figure released a critical social media post containing an unintended scheduling arti-fact, revealing coordinated narrative behavior on online platforms. Observable evidence of organized opinion coordination; ineffective de-nial; persistent credibility erosion. bGlobal Mathematics Competition Eligibility Dispute Education An unexpected finalist from a non-traditional background initially triggered widespread admi-ration, later reversed by official findings of rule violations. Rapid shift from emotional endorse-ment to scrutiny of procedural fair-ness and integrity. AFull Registration-Based IPO Reform Economy The implementation of a registration-based IPO system, alongside market-stabilization measures, initially generated optimism but later faced skep-ticism as outcomes diverged from expectations. Transition from policy-driven enthu-siasm to institutional performance reassessment. BGradual Retirement Age Adjustment Policy Society A phased retirement age adjustment policy ini-tially sparked strong resistance, later moderated by clarifications emphasizing flexibility and vol-untariness. Shift from collective anxiety to prag-matic individual adaptation. CNuclear Wastewater Discharge and Public Response Environment A cross-border environmental discharge plan provoked intense public anxiety, followed by a gradual shift toward long-term scientific moni-toring frameworks. Opinion evolution from acute panic to evidence-based risk oversight. DUniversity Library Ha-rassment Allegation Campus An online harassment allegation prompted strong initial support for perceived victims, later complicated by additional evidence and proce-dural disclosures. Rebalancing between moral advo-cacy and procedural objectivity.
+
+18 Under review Positive Negative Neutral 
+
+GT MF -MDP (Ours) MF -LLM Social Retrieval Direct LLM 
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+   
+
+>  
+>  
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+     
+
+>  
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+     
+
+> 
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+(A) Economy -State GT (A) Economy -State MF -MDP (A) Economy -State MF -LLM 
+
+(A) Economy -State Negative (A) Economy -State Positive (A) Economy -State Neutral 
+
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+          
+
+>  
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    
+
+>  
+>   
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+(B) Society -State GT (B) Society -State MF -MDP (A) Society -State MF -LLM 
+
+(B) Society -State Negative (B) Society -State Positive (B) Society -State Neutral 
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                
+
+> 
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+      
+
+> 
+>    
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+(C) Environment -State GT (C) Environment -State MF -MDP (C) Environment -State MF -LLM 
+
+(C) Environment -State Negative (C) Environment -State Positive (C) Environment -State Neutral 
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                
+
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+      
+
+>  
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+>  
+
+(D ) Campus -State GT (D ) Campus -State MF -MDP (D) Campus -State MF -LLM 
+
+(D) Campus -State Negative (D) Campus -State Positive (D) Campus -State Neutral 
+
+Figure 6. State-distribution trajectories on four reversal events. We compare Real data with MF-MDP (Ours) , MF-LLM , Social Retrieval , and Direct LLM .
+
+19

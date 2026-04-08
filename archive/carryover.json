@@ -1,74 +1,38 @@
 {
-  "generated_at": "2026-04-07T20:29:02.693297+00:00",
-  "updated_date": "20260407",
+  "generated_at": "2026-04-08T20:01:04.788422+00:00",
+  "updated_date": "20260408",
   "carryover_days": 9,
   "items": [
     {
-      "id": "2604.04703v1",
-      "title": "Bounded Autonomy: Controlling LLM Characters in Live Multiplayer Games",
-      "abstract": "Large language models (LLMs) are bringing richer dialogue and social behavior into games, but they also expose a control problem that existing game interfaces do not directly address: how should LLM characters participate in live multiplayer interaction while remaining executable in the shared game world, socially coherent with other active characters, and steerable by players when needed? We frame this problem as bounded autonomy, a control architecture for live multiplayer games that organizes LLM character control around three interfaces: agent-agent interaction, agent-world action execution, and player-agent steering. We instantiate bounded autonomy with probabilistic reply-chain decay, an embedding-based action grounding pipeline with fallback, and whisper, a lightweight soft-steering technique that lets players influence a character's next move without fully overriding autonomy. We deploy this architecture in a live multiplayer social game and study its behavior through analyses of interaction stability, grounding quality, whisper intervention success, and formative interviews. Our results show how bounded autonomy makes LLM character interaction workable in practice, frames controllability as a distinct runtime control problem for LLM characters in live multiplayer games, and provides a concrete exemplar for future games built around this interaction paradigm.",
+      "id": "2604.06140v1",
+      "title": "On the Convergence of an Opinion-Action Coevolution Model with Bounded Confidence",
+      "abstract": "This paper presents a theoretical convergence analysis for an opinion-action coevolution model that integrates the opinion updating rule of the Hegselmann-Krause model with a utility-based decision-making mechanism. The model is reformulated into an augmented state-space representation, where the state matrix induces a time-varying social interaction digraph. The convergence analysis is grounded on two existing theoretical findings that establish convergence for the Hegselmann-Krause type of models and containment control systems with multiple stationary leaders, respectively. Results indicate that, if the structure of the interaction digraph stabilizes within finite time, the model either converges to consensus, where all agents' opinions and actions reach an identical state, or exhibits clustering, where some opinion nodes act as stationary leaders while the remaining nodes approach the convex hull formed by the leaders. Numerical simulations are then provided to validate the theoretical results.",
       "authors": [
-        "Yunjia Guo",
-        "Jinghan Zhu",
-        "Siyu Wang",
-        "Haixin Qiao"
+        "Chen Song",
+        "Angela Fontan",
+        "Rong Su",
+        "Julien M. Hendrickx",
+        "Vladimir Cvetkovic",
+        "Karl H. Johansson"
       ],
-      "primary_category": "cs.HC",
+      "primary_category": "eess.SY",
       "categories": [
-        "cs.HC"
+        "eess.SY"
       ],
-      "published": "2026-04-06T14:16:14+00:00",
-      "link": "https://arxiv.org/pdf/2604.04703v1",
+      "published": "2026-04-07T17:45:24+00:00",
+      "link": "https://arxiv.org/pdf/2604.06140v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "LLM characters and social behavior in multiplayer games",
-      "llm_evidence_cn": "多人游戏中的LLM角色与社会行为",
-      "llm_evidence": "多人游戏中的LLM角色与社会行为",
-      "canonical_evidence": "多人游戏中的LLM角色与社会行为",
-      "llm_tldr_en": "A control architecture for LLM characters to maintain social coherence in multiplayer games.",
-      "llm_tldr_cn": "一种用于多人游戏的LLM角色控制架构，旨在维持社会行为的一致性。",
-      "llm_tldr": "一种用于多人游戏的LLM角色控制架构，旨在维持社会行为的一致性。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "LLM powered agents for simulating social behavior",
-      "matched_requirement_id": "req-6",
-      "selection_source": "carryover_cache",
-      "paper_id": "2604.04703v1",
-      "carry_days": 1
-    },
-    {
-      "id": "2604.04782v1",
-      "title": "Cheap Talk, Empty Promise: Frontier LLMs easily break public promises for self-interest",
-      "abstract": "Large language models are increasingly deployed as autonomous agents in multi-agent settings where they communicate intentions and take consequential actions with limited human oversight. A critical safety question is whether agents that publicly commit to actions break those promises when they can privately deviate, and what the consequences are for both themselves and the collective. We study deception as a deviation from a publicly announced action in one-shot normal-form games, classifying each deviation by its effect on individual payoff and collective welfare into four categories: win-win, selfish, altruistic, and sabotaging. By exhaustively enumerating announcement profiles across six canonical games, nine frontier models, and varying group sizes, we identify all opportunities for each deviation type and measure how often agents exploit them. Across all settings, agents deviate from promises in approximately 56.6% of scenarios, but the character of deception varies substantially across models even at similar overall rates. Most critically, for the majority of the models, promise-breaking occurs without verbalized awareness of the fact that they are breaking promises.",
-      "authors": [
-        "Jerick Shi",
-        "Terry Jingcheng Zhang",
-        "Zhijing Jin",
-        "Vincent Conitzer"
-      ],
-      "primary_category": "cs.CY",
-      "categories": [
-        "cs.CY"
-      ],
-      "published": "2026-04-06T15:54:16+00:00",
-      "link": "https://arxiv.org/pdf/2604.04782v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "Deception and promise-breaking in multi-agent settings",
-      "llm_evidence_cn": "多智能体环境中的欺骗与违背承诺行为",
-      "llm_evidence": "多智能体环境中的欺骗与违背承诺行为",
-      "canonical_evidence": "多智能体环境中的欺骗与违背承诺行为",
-      "llm_tldr_en": "Studies how LLM agents break public promises for self-interest in multi-agent game scenarios.",
-      "llm_tldr_cn": "研究大模型智能体在多智能体博弈场景中为自身利益违背公开承诺的行为。",
-      "llm_tldr": "研究大模型智能体在多智能体博弈场景中为自身利益违背公开承诺的行为。",
+      "llm_evidence_en": "opinion-action coevolution and social interaction digraphs in agent models",
+      "llm_evidence_cn": "智能体模型中的观点-行动协同演化与社交互动有向图",
+      "llm_evidence": "智能体模型中的观点-行动协同演化与社交互动有向图",
+      "canonical_evidence": "智能体模型中的观点-行动协同演化与社交互动有向图",
+      "llm_tldr_en": "Analyzes convergence in opinion-action coevolution models to understand social consensus and interaction dynamics.",
+      "llm_tldr_cn": "分析观点-行动协同演化模型的收敛性，以理解社会共识和互动动态。",
+      "llm_tldr": "分析观点-行动协同演化模型的收敛性，以理解社会共识和互动动态。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -76,7 +40,7 @@
       "matched_query_text": "emergent social phenomena in multi agent environments",
       "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
-      "paper_id": "2604.04782v1",
+      "paper_id": "2604.06140v1",
       "carry_days": 1
     }
   ]
