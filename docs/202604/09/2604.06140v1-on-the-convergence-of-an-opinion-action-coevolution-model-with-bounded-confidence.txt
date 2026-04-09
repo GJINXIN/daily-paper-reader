@@ -1,0 +1,656 @@
+Title: On the Convergence of an Opinion-Action Coevolution Model with Bounded Confidence
+
+URL Source: https://arxiv.org/pdf/2604.06140v1
+
+Published Time: Wed, 08 Apr 2026 01:24:30 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+# On the Convergence of an Opinion–Action Coevolution Model with Bounded Confidence 
+
+Chen Song 1,2, Angela Fontan 2, Rong Su 1, Julien M. Hendrickx 3,Vladimir Cvetkovic 4, Karl H. Johansson 2
+
+Abstract — This paper presents a theoretical convergence analysis for an opinion–action coevolution model that integrates the opinion updating rule of the Hegselmann-Krause model with a utility-based decision-making mechanism. The model is reformulated into an augmented state-space representa-tion, where the state matrix induces a time-varying social interaction digraph. The convergence analysis is grounded on two existing theoretical findings that establish convergence for the Hegselmann-Krause type of models and containment control systems with multiple stationary leaders, respectively. Results indicate that, if the structure of the interaction digraph stabilizes within finite time, the model either converges to consensus, where all agents’ opinions and actions reach an identical state, or exhibits clustering, where some opinion nodes act as stationary leaders while the remaining nodes approach the convex hull formed by the leaders. Numerical simulations are then provided to validate the theoretical results. 
+
+I. I NTRODUCTION 
+
+The study of opinion dynamics has attracted substantial attention from the systems and control community in recent years [1]–[4]. A variety of mathematical models have been developed to capture how individual opinions evolve under the influence of social interactions. The most representative models include the DeGroot model [5], the Friedkin–Johnsen (FJ) model [6], and the bounded-confidence class of models [7]–[9], exemplified by the Hegselmann–Krause (HK) model [9]. In the HK model, each agent updates its opinion by averaging the opinions of those whose values differ from its own by less than a given confidence threshold. The bounded-confidence updating rule reflects the tendency of individuals to interact with others sharing similar opinions, a phenomenon known as ‘homophily’ in social psychology [10]. We refer interested readers to [2] and [3] for a compre-hensive overview of bounded confidence opinion dynamics.  
+
+> This work was supported in part by the National Research Foundation, Singapore through its Medium Sized Center for Advanced Robotics Tech-nology Innovation (CARTIN) under Project WP2.7, and in part by the project “Humanizing the Sustainable Smart City (HiSS)” within the KTH Digital Futures Research Program.
+> 1Chen Song and Rong Su are with the School of Electrical and Electronic Engineering, Nanyang Technological University, Singapore, 639798. Email: song0249@e.ntu.edu.sg; rsu@ntu.edu.sg
+> 2Chen Song, Angela Fontan, and Karl H. Johansson are with the Division of Decision and Control Systems, School of Electrical Engineering and Computer Science, KTH Royal Institute of Technology, 114 28 Stockholm, Sweden. Email: {chensong, angfon, kallej }@kth.se
+> 3Julien M. Hendrickx is with the ICTEAM Institute, UCLouvain, B-1348, Louvain-la-Neuve, Belgium. His work is supported by the “SIDDARTA” Concerted Research Action (ARC). Email: julien.hendrickx@uclouvain.be
+> 4Vladimir Cvetkovic is with the Division of Resources, Energy and In-frastructure, School of Architecture and the Built Environment, KTH Royal Institute of Technology, 114 28 Stockholm, Sweden. Email: vdc@kth.se
+
+Inspired by the attitude-behavior gap observed in social psychology [11], our earlier work [12] proposed an opinion– action coevolution model that integrates the HK-type opinion updating rule with a utility-based decision-making mecha-nism. The model employs a sequential updating mechanism, where each agent first revises its opinion based on the observed actions of its neighbors and then updates its action according to its revised opinion and the group’s average action. It has been shown in [12] that, by adjusting two key parameters, the model manages to capture a range of socio-psychological phenomena, demonstrating its conceptual va-lidity and strong relevance to actual human social behavior. However, the model remains analytically unexplored, and there is a lack of understanding of its dynamical properties. In this work, we address this research gap by establish-ing convergence results for the opinion–action coevolution model. Our main contributions are summarized as follows. First, we reformulate the model into an augmented state-space representation by defining a composite state vector that jointly encapsulates all agents’ opinions and actions. Second, we characterize the structure of the time-varying interaction digraph induced by the state matrix of the aug-mented discrete-time system. Then, we establish convergence of the system based on its structural properties and two existing theorems: one for HK-type models [13] and the other for containment control systems with multiple stationary leaders [14]. Under the assumption that the structure of the system’s interaction digraph stabilizes within finite time, we show that the discrete-time system satisfies the conditions of either one of the theorems in [13], [14], depending on the topology of the interaction digraph. Finally, the overall convergence results for the opinion-action coevolution model are illustrated through numerical simulations. The remainder of this paper is organized as follows: Section II provides technical preliminaries and introduces the HK model. Section III reviews the proposed opinion–action coevolution model and reformulates it into an augmented state-space representation. Section IV establishes the main convergence results. Section V presents numerical evidence validating the theoretical results. Finally, Section VI con-cludes the study and proposes directions for future work. II. P RELIMINARIES 
+
+Notations: The sets of nonnegative and positive integers are denoted by Z≥0 and Z>0, respectively. The cardinality of a set S is denoted by |S| . The convex hull of a set S is denoted by conv( S). The distance from a point x to a set 
+
+> arXiv:2604.06140v1 [eess.SY] 7 Apr 2026
+
+S is denoted by dist( x, S) := inf y∈S || x − y|| 2, where inf 
+
+denotes the infimum and ||·|| 2 denotes the Euclidean 2-norm. 
+
+A. Linear Algebraic Preliminaries 
+
+Given a square matrix A = [ aij ] ∈ Rn×n, the (i, j )-th entry of A is denoted as aij or [A]ij . All column vectors are denoted by bold lowercase letters, e.g., x ∈ Rn. The transpose of a matrix A or vector x is denoted as A⊤ or 
+
+x⊤. The identity matrix of dimension n × n is denoted by In ∈ Rn×n, and the symbol 1n = [1 · · · 1] ⊤ ∈ Rn
+
+denotes the column vector of all ones. A matrix A ∈ Rn×n
+
+is nonnegative if aij ≥ 0 for all i, j ∈ { 1, 2, . . . , n }. A matrix A is row-stochastic if it is nonnegative and satisfies 
+
+A1n = 1n, i.e., each row of A sums to one. A matrix 
+
+A is row-substochastic if it is nonnegative and satisfies 
+
+A1n ≤ 1n, with at least one row-sum strictly less than 1. 
+
+B. Graphs 
+
+Let G(A) = ( V, E, A ) denote a weighted digraph, where 
+
+V = {1, 2, . . . , n } is the node index set and E ⊆ V × V is the set of directed edges. The nonnegative matrix A ∈ Rn×n
+
+is the weighted adjacency matrix corresponding to G(A),where aij > 0 if and only if (j, i ) ∈ E. A self-loop 
+
+(i, i ) ∈ E is a directed edge from node i to itself. A directed walk from node i to j is an ordered sequence of edges (i, i 1), (i1, i 2), . . . , (is−1, i s), (is, j ) selected from E.For simplicity, we denote a digraph by G or G(A).A digraph G is strongly connected if there exists a directed walk from i to j for every pair of nodes i, j ∈ V , i.e., every node is reachable from every other node. A digraph G′ =(V′, E′) is called a subgraph of G = ( V, E) if V′ ⊆ V and 
+
+E′ ⊆ E ∩ (V′ ×V ′). In particular, the subgraph of G = ( V, E)
+
+induced by V′ ⊆ V is the digraph G′ = ( V′, E′), where 
+
+E′ = {(i, j ) ∈ E | i, j ∈ V ′}. A subgraph G′ is a strongly connected component (SCC) of G if it is strongly connected and any other subgraph of G strictly containing G′ is not strongly connected. A singleton SCC of G contains only one node. The condensation digraph of G, denoted by C(G), is a digraph whose nodes correspond to the SCCs of G, and there exists a directed edge from node i to node j in C(G) if and only if there exists a directed edge from a node of SCC i to a node of SCC j in G. By definition, C(G) has no self-loops. A singleton node of C(G) corresponds to a singleton SCC of G. In a digraph G, a source is a node with no incoming edges, and a sink is a node with no outgoing edges. 
+
+C. The Hegselmann-Krause Model 
+
+Let V = {1, 2, . . . , n } denote the index set of n agents. Each agent i ∈ V holds an opinion xi(t) ∈ [0 , 1] at time t
+
+regarding a certain issue. In the HK model [9], each agent’s opinion is updated as: 
+
+xi(t + 1) = 1
+
+|Ni(t)|
+
+X
+
+> j∈Ni(t)
+
+xj (t), i ∈ V , t ∈ Z≥0, (1) where Ni(t) represents agent i’s neighbor set, defined as: 
+
+Ni(t) = {j ∈ V | | xi(t) − xj (t)| ≤ ϵ}. (2) The parameter ϵ ∈ [0 , 1] indicates the homogeneous con-fidence threshold, which represents agents’ susceptibility to interpersonal social influence. It has been established in [15]– [17] that for every i ∈ V , xi(t) converges to a limit x∗
+
+> i
+
+in finite time, and for any i, j ∈ V , either x∗ 
+
+> i
+
+= x∗ 
+
+> j
+
+or 
+
+|x∗ 
+
+> i
+
+−x∗ 
+
+> j
+
+| > ϵ holds. In other words, the HK model converges in finite time and the inter-cluster distances at equilibrium are bounded below by ϵ.The following result, as stated in [13], provides a general convergence theorem applicable to the HK-type models and serves as a key tool in the convergence analysis of our model in Section IV. 
+
+Theorem 1 (Theorem 2 in [13]) . Let x : N → Rn satisfy 
+
+xi(t + 1) = 
+
+> n
+
+X
+
+> j=1
+
+aij (t)xj (t), i = 1 , . . . , n, 
+
+where aij (t) ≥ 0 for all i, j, t , and Pnj=1 aij (t) = 1 for all 
+
+i and t. Suppose that the following conditions hold: 
+
+(i) Lower bound on positive coefficients: there exists some constant α > 0 such that if aij (t) > 0, then aij (t) ≥ α
+
+for all i, j, and t.
+
+(ii) Positive diagonal coefficients: there exists some con-stant β > 0 such that aii (t) ≥ β for all i and t.
+
+(iii) Cut-balance: for any nonempty proper subset S of 
+
+{1, . . . , n }, there exist i ∈ S and j / ∈ S with aij (t) > 0
+
+if and only if there exist i′ ∈ S and j′ /∈ S with 
+
+aj′i′ (t) > 0.Then, the limit x∗ 
+
+> i
+
+= lim t→∞ xi(t) exists, ∀ i ∈ { 1, . . . , n }.Furthermore, consider the digraph G = ( V, E) in which 
+
+(j, i ) ∈ E if aij (t) > 0 infinitely often. If i and j belong to the same strongly connected component of G, then x∗ 
+
+> i
+
+= x∗ 
+
+> j
+
+.
+
+III. P ROBLEM STATEMENT 
+
+In this section, we first review the opinion–action coevo-lution model proposed in our earlier work [12], and then reformulate it into an augmented state-space representation to facilitate the subsequent convergence analysis. 
+
+A. Model Description 
+
+We consider a population of n agents, also indexed by 
+
+V = {1, 2, . . . , n }. Each agent i ∈ V is characterized by an opinion variable xi and action variable yi, where xi, y i ∈
+
+[0 , 1] . At each discrete time step t ∈ Z≥0, agents update their opinions and actions sequentially. The opinion updating rule is given by: 
+
+xi(t + 1) = 
+
+P 
+
+> j∈N i(t)
+
+yj (t) + xi(t)
+
+|N i(t)| + 1 , i ∈ V , (3) where each agent’s neighbor set Ni(t) is defined as: 
+
+Ni(t) = {j ∈ V | j̸ = i, |xi(t) − yj (t)| ≤ ϵ}, (4) where ϵ ∈ [0 , 1] is the homogeneous confidence threshold parameter as defined in the HK model. The action updating rule is given by: 
+
+yi(t + 1) = ϕ x i(t + 1) + (1 − ϕ) yavg (t), i ∈ V , (5) where yavg (t) = 1
+
+> n
+
+Pnk=1 yk(t) is the group’s average action, and ϕ ∈ [0 , 1] is the homogeneous decision weight parameter that reflects the extent to which each agent is committed to its own opinion when making a decision. When ϕ = 1 , agents are fully committed to their opinions when making a decision, i.e., yi = xi, ∀ i ∈ V . When ϕ = 0 ,agents completely conform to the group’s average action, which can be interpreted as the social norm [18]. In reality, 
+
+yavg (t) could be disseminated to each agent via social media. 
+
+Remark 1. The opinion–action coevolution model assumes that each agent’s opinion is private and known only to themselves, while their actions are public and observable to others. It has been demonstrated in [12] that this model could capture and explain several real-world phenomena from a socio-psychological perspective. We refer interested readers to [12] for a comprehensive account of our model. It is worth noting that when ϕ = 1 , our model reduces to the HK model. 
+
+B. Augmented State-Space Representation 
+
+For the analysis to be presented in Section IV, it is useful to reformulate the opinion–action coevolution model (3)–(5) into the following augmented state-space representation: 
+
+z(t + 1) = P (t) z(t), t ≥ 1, (6) where the augmented state vector is defined as: 
+
+z(t) = [ z1(t), · · · , z n(t), z n+1 (t), · · · , z 2n(t) ] ⊤
+
+= [ x1(t), · · · , x n(t), y 1(t − 1) , · · · , y n(t − 1) ] ⊤. (7) The state vector z ∈ R2n and state matrix P ∈ R2n×2n can be partitioned as follows: 
+
+z(t + 1) = 
+
+"z1(t + 1) 
+
+z2(t + 1) 
+
+#
+
+=
+
+"P11 (t) P12 (t)
+
+P21 (t) P22 (t)
+
+# " z1(t)
+
+z2(t)
+
+#
+
+,
+
+where z1 = [ z1, · · · , z n]⊤ and z2 = [ zn+1 , · · · , z 2n]⊤.To derive the state matrix P (t), we proceed as follows. Substituting (5) into (3), we obtain: 
+
+xi(t + 1) = xi(t) + ϕ P 
+
+> j∈N i(t)
+
+xj (t) + (1 − ϕ) P 
+
+> j∈N i(t)
+
+yavg (t − 1) 
+
+|N i(t)| + 1 = xi(t) + ϕ P 
+
+> j∈N i(t)
+
+xj (t) + 1−ϕn |N i(t)| Pnk=1 yk(t − 1) 
+
+|N i(t)| + 1 .
+
+Using the augmented state (7), for all i ∈ V we rewrite it as: 
+
+zi(t + 1) = zi(t) + ϕ P 
+
+> j∈N i(t)
+
+zj (t) + 1−ϕn |N i(t)| Pnk=1 zn+k(t)
+
+|N i(t)| + 1 .
+
+Thus, the block matrices P11 (t) and P12 (t) are given by: 
+
+P11 (t) 
+
+> ij
+
+=
+
+ 
+
+> 1
+> |N i(t)|+1
+
+, j = i,  
+
+> ϕ
+> |N i(t)|+1
+
+, j ∈ N i(t),
+
+0, otherwise ,i, j = 1 , . . . , n, 
+
+P12 (t) 
+
+> ij
+
+= (1 − ϕ)|N i(t)|
+
+(|N i(t)| + 1) n , i, j = 1 , . . . , n. (8) In other words, each row i of P11 (t) consists of a diagonal entry 1 
+
+> |N i(t)|+1
+
+, off-diagonal entries ϕ 
+
+> |N i(t)|+1
+
+in the neighbor columns, and 0 elsewhere, while each row i of P12 (t)
+
+contains identical entries equal to (1 −ϕ)|N i(t)|  
+
+> (|N i(t)|+1) n
+
+.Substituting yavg (t) into (5), we obtain: 
+
+yi(t) = ϕ x i(t) + 1 − ϕn
+
+> n
+
+X
+
+> k=1
+
+yk(t − 1) .
+
+Using the augmented state (7), for all i ∈ V we rewrite it as: 
+
+zn+i(t + 1) = ϕ z i(t) + 1 − ϕn
+
+> n
+
+X
+
+> k=1
+
+zn+k(t).
+
+Thus, the block matrices P21 (t) and P22 (t) are given by: 
+
+P21 (t) = ϕI n, P22 (t) = 1−ϕn 1n1⊤ 
+
+> n
+
+. (9) Note that the submatrices P21 and P22 are time-invariant, whereas P11 and P12 change over time as a function of z(t)
+
+since each agent’s neighbor set Ni(t) may be time-varying. IV. C ONVERGENCE ANALYSIS 
+
+In this section, we establish the convergence of the opinion–action coevolution model as shown in (6). We first examine the state matrix P (t), as defined in Section III-B, to verify whether it satisfies the conditions of Theorem 1 and to analyze its structural properties. Then we present the main convergence results based on these properties. 
+
+A. Properties of the State Matrix P (t)
+
+We first show that the state matrix P (t) is always row-stochastic (Lemma 1). Then, we verify that P (t) satisfies conditions (i) and (ii) of Theorem 1 when ϕ ∈ (0 , 1) 
+
+(Lemmas 2 and 3). Next, we propose a sufficient condition under which P (t) satisfies condition (iii) of Theorem 1 (Proposition 1). Lastly, we establish a key result on the connectivity of the weighted digraph associated with P (t)
+
+when ϕ ∈ (0 , 1) (Theorem 2). 
+
+Lemma 1. For all t ≥ 1, P (t) is a row-stochastic matrix. Proof. From the block matrices’ definitions in (8) and (9), it is apparent that all entries of P (t) = pij (t) ∈ R2n×2n
+
+are nonnegative for all t ≥ 1.For each row i ∈ {1, 2, . . . , n } in the upper blocks P11 (t), P 12 (t), we have: 
+
+> 2n
+
+X
+
+> j=1
+
+pij (t) = 1 + ϕ|N i(t)||N i(t)| + 1 + (1 − ϕ)|N i(t)||N i(t)| + 1 = 1 ,
+
+while for each row i ∈ { n + 1 , n + 2 , . . . , 2n} in the lower blocks P21 (t), P 22 (t), the row-sum is equal to: 
+
+> 2n
+
+X
+
+> j=1
+
+pij (t) = ϕ + (1 − ϕ)nn = 1 .
+
+In other words, P (t) is nonnegative and each row sums to one. Thus, P (t) is row-stochastic for all t ≥ 1.Lemma 2. When ϕ ∈ (0 , 1) , there exists a constant α > 
+
+0 such that if pij (t) > 0, then pij (t) ≥ α for all i, j ∈{1, 2, . . . , 2n} and t ≥ 1.Proof. When ϕ ∈ (0 , 1) , consider each block matrix:  
+
+> •
+
+P11 (t) has strictly positive entries equal to 1 
+
+> |N i(t)|+1
+
+and  
+
+> ϕ
+> |N i(t)|+1
+
+, which are bounded below by ϕn since ϕ < 1,and |N i(t)| ≤ n − 1 for all i ∈ V . 
+
+> •
+
+If |N i(t)| > 0 for some i ∈ V , P12 (t) has strictly positive entries equal to (1 −ϕ)|N i(t)| 
+
+> (|N i(t)|+1) n
+
+, which are bounded below by 1−ϕ 
+
+> 2n
+
+, achieved when |N i(t)| = 1 . 
+
+> •
+
+P21 (t) has strictly positive entries equal to ϕ, which serves as the positive lower bound itself.  
+
+> •
+
+P22 (t) has strictly positive entries equal to 1−ϕn , which serves as the positive lower bound itself. Thus, every strictly positive entry of P (t) is bounded below by α = min { ϕn , 1−ϕ 
+
+> 2n
+
+, ϕ, 1−ϕn } > 0 for all t ≥ 1.
+
+Lemma 3. When ϕ ∈ (0 , 1) , there exists a constant β > 0
+
+such that pii (t) ≥ β for all i ∈ { 1, 2, . . . , 2n} and t ≥ 1.Proof. For i ∈ { 1, . . . , n }, pii (t) = 1 
+
+> |N i(t)|+1
+
+≥ 1 
+
+> n
+
+. For i ∈{n + 1 , . . . , 2n}, pii (t) = 1−ϕn > 0. Hence, every diagonal entry of P (t) is bounded below by β = min { 1 
+
+> n
+
+, 1−ϕn } = 
+
+> 1−ϕn
+
+> 0 for all t ≥ 1.It remains to examine whether the state matrix P (t)
+
+satisfies condition (iii) of Theorem 1, namely the cut-balance property, which will be analyzed from a graph-theoretic perspective. The following proposition provides a sufficient condition for a digraph to be cut-balanced. 
+
+Proposition 1. If a digraph is strongly connected, then it is cut-balanced. Proof. Let G(A) = (V, E, A ) be a strongly connected digraph with n nodes. For any nonempty proper subset 
+
+S ⊂ V = {1, . . . , n }, its complement is denoted Sc = V \ S.Assume u ∈ S and v ∈ Sc. Since G(A) is strongly connected, there exists a directed walk from node u to node 
+
+v. This walk must include an edge (i′, j ′) ∈ E , i.e., aj′i′ > 0,where i′ ∈ S and j′ ∈ Sc. Similarly, there also exists a directed walk from node v to node u, which must contain an edge (j, i ) ∈ E , i.e., aij > 0, where i ∈ S and j ∈ Sc.Therefore, edges exist in both directions across any cut of 
+
+G(A), which proves the cut-balance property. The following theorem establishes a key structural prop-erty of the weighted digraph associated with P (t).
+
+Theorem 2. When ϕ ∈ (0 , 1) , the weighted digraph associ-ated with P (t), denoted by G P (t), has one of the following structures at any time t ≥ 1:
+
+(i) it is strongly connected; 
+
+(ii) its condensation digraph consists of one sink and multiple singleton sources. Proof. Let VP = {1, 2, . . . , 2n} denote the vertex set of 
+
+G P (t). By definition of state variables in (7), at any time step t ≥ 1, the indices {1, . . . , n } correspond to the opinion nodes with values equal to {x1(t), . . . , x n(t)}, and the indices {n + 1 , . . . , 2n} correspond to the action nodes with values equal to {y1(t − 1) , . . . , y n(t − 1) }.From (9), every entry of P22 (t) is equal to 1−ϕn , which is strictly positive when ϕ ∈ (0 , 1) . This implies that there is a directed edge from every action node to every other action node in G P (t), i.e., every action node is reachable from every other action node. Similarly, P21 (t) = ϕI n has positive diagonal entries when ϕ ∈ (0 , 1) , implying that there is a directed edge from each opinion node indexed by 
+
+i ∈ { 1, . . . , n } to its corresponding action node indexed by 
+
+n + i in G P (t). As a result, for any i, j ∈ { 1, . . . , n },opinion node i can reach action node n + j through its corresponding action node n + i, since all action nodes are mutually reachable. Define two subsets of VP as: 
+
+Ω( t) := {n + 1 , . . . , 2n} ∪ { i ∈ { 1, . . . , n } | |N i(t)| > 0},
+
+Θ( t) := {i ∈ { 1, . . . , n } | |N i(t)| = 0 },
+
+where Ω( t) ∪ Θ( t) = VP and Ω( t) ∩ Θ( t) = ∅.
+
+Case (i). If Θ( t) = ∅, or equivalently, Ω( t) = VP , then 
+
+|N i(t)| > 0 for all i ∈ { 1, . . . , n }, i.e., each agent has at least one neighbor at time t.From (8), the (i, j )-th entry of P12 (t) is given by: 
+
+P12 (t) 
+
+> ij
+
+= (1 − ϕ)|N i(t)|
+
+(|N i(t)| + 1) n , ∀ i, j ∈ { 1, . . . , n },
+
+which is strictly positive when ϕ ∈ (0 , 1) and |N i(t)| > 0.Hence, every entry of P12 (t) is strictly positive because 
+
+|N i(t)| > 0 for all i ∈ { 1, . . . , n }. This implies that there is a directed edge from every action node to every opinion node in G P (t), i.e., every opinion node is reachable from every action node. Recall that every opinion node can reach every action node. Thus, for any two opinion nodes i, j ∈ { 1, . . . , n },they are also mutually reachable. Therefore, in this case, G P (t) is strongly connected since every node is reachable from every other node. For an intuitive illustration of the digraph structure, the reader is referred to an example presented in Fig. 1(b) of Section V. 
+
+Case (ii). If Θ( t)̸ = ∅, or equivalently, Ω( t) ⊂ V P , then 
+
+∃ i ∈ { 1, . . . , n } such that |N i(t)| = 0 , i.e., at least one agent has no neighbors at time t.For each i ∈ Θ( t), the adjacency structure of opinion node i is analyzed as follows. From (8), the i-th row of 
+
+P11 (t) corresponds to the i-th row of In, with its diagonal entry equal to 1 and all other entries equal to 0. This implies that opinion node i admits a self-loop, with no incoming edges from any other opinion node. Similarly, all entries in the i-th row of P12 (t) are identically zero, indicating that opinion node i has no incoming edges from any action node. Therefore, each opinion node i ∈ Θ( t) has no incoming edges from any other node, and thus forms a singleton source in the condensation digraph of G P (t). As a byproduct, from (3), it follows that zi(t+1) = xi(t+1) = xi(t) = zi(t),i.e., the value of node i remains constant during this iteration. In contrast, every opinion node j ∈ { 1, . . . , n } \ Θ( t)
+
+remains reachable from every action node because all entries in the j-th row of P12 (t) are positive when |N j (t)| > 0.Thus, the subgraph of G P (t) induced by Ω( t) is still strongly connected, similar to Case (i), which forms an SCC of G P (t) because any other opinion node i ∈ Θ( t) is not reachable from Ω( t). The SCC formed by Ω( t) serves as a sink in the condensation digraph of G P (t) since it has no outgoing edges to any singleton source i ∈ Θ( t).As a result, in this case, the condensation digraph of 
+
+G P (t) consists of one sink and multiple singleton sources. An example digraph corresponding to this structure can be found in Fig. 2(b) of Section V. 
+
+Remark 2. It should be noted that the condition |N i(t)| > 0
+
+for all i ∈ V is both sufficient and necessary for the digraph 
+
+G P (t) to be strongly connected at time t ≥ 1. Case (i) of Theorem 2 proves sufficiency, and Case (ii) establishes necessity since G P (t) is not strongly connected if some agent has no neighbors at time t ≥ 1.
+
+B. Main Convergence Results 
+
+We are now ready to state the main convergence results for the opinion–action coevolution model. As mentioned in Remark 1, when ϕ = 1 , the model (3)-(5) reduces to the HK model [9], whose convergence has been well established in [15]–[17]. The following lemma establishes convergence of the opinion–action coevolution model when ϕ = 0 .
+
+Lemma 4. When ϕ = 0 , all agents reach a consensus in action after one update, i.e., yi(t) = yavg (0) for all i ∈ V 
+
+and t ≥ 1. Each agent’s opinion either remains constant, i.e., xi(t) = xi(1) for all t ≥ 1, if |xi(1) − yavg (0) | > ϵ ,or converges exponentially to yavg (0) , i.e., lim t→∞ xi(t) = 
+
+yavg (0) , if |xi(1) − yavg (0) | ≤ ϵ.Proof. When ϕ = 0 , from (5), yi(t + 1) = yavg (t) for all 
+
+i ∈ V and t ≥ 0, which leads to yavg (t + 1) = yavg (t)
+
+for all t ≥ 0. Thus, all agents’ actions reach a consensus at time t = 1 and remain constant afterwards, i.e., yi(t) = 
+
+yavg (0) , ∀ i ∈ V , ∀ t ≥ 1.From (4), if |xi(1) − yavg (0) | > ϵ , then agent i has no neighbors at time t = 1 . In this case, from (3), xi(2) = 
+
+xi(1) , which leads to |xi(2) − yavg (0) | > ϵ and xi(3) = 
+
+xi(2) . Hence, agent i always has no neighbors and its opinion remains constant for all t ≥ 1, i.e., xi(t) = xi(1) , ∀ t ≥ 1.Conversely, if |xi(1) − yavg (0) | ≤ ϵ, then agent i always has n−1 neighbors with identical action yavg (0) for all t ≥ 1.In this case, its opinion updating rule (3) can be rewritten as: 
+
+xi(t + 1) − yavg (0) = 1 
+
+> n
+
+(xi(t) − yavg (0)) , ∀ t ≥ 1, implying that xi(t) converges exponentially to yavg (0) with ratio 1 
+
+> n
+
+.Thus, lim t→∞ xi(t) = yavg (0) .For 0 < ϕ < 1, the digraph G P (t) necessarily belongs to one of the two structural cases presented in Theorem 2 at any time step t ≥ 1. We analyze each of the two cases in Propositions 2 and 3, respectively, and summarize the overall result in Theorem 3. The following proposition proves convergence for Case (i) of Theorem 2. 
+
+Proposition 2. Suppose that there exists a finite time instant 
+
+T > 0 such that for all t ≥ T , the weighted digraph G P (t)
+
+remains strongly connected. Then the system (6) converges to consensus, i.e., z∗ 
+
+> i
+
+= z∗ 
+
+> j
+
+, ∀ i, j ∈ { 1, . . . , 2n}.Proof. Assume that G P (t) is strongly connected for all 
+
+t ≥ T . From Proposition 1, a strongly connected digraph is cut-balanced, implying that the state matrix P (t) satisfies condition (iii) of Theorem 1 infinitely often. By Theorem 1, the limit z∗ 
+
+> i
+
+= lim t→∞ zi(t) exists for all i ∈ { 1, . . . , 2n}.Moreover, consider the limiting digraph GP = ( VP , EP ),as defined in Theorem 1, where VP = {1, . . . , 2n} and 
+
+(j, i ) ∈ E P if pij (t) > 0 infinitely often. Since P21 and 
+
+P22 are time-invariant, and G P (t) is strongly connected for all t ≥ T , implying that every entry of P12 (t) is positive infinitely often (see Remark 2), GP is also strongly con-nected. According to Theorem 1, all states reach a consensus at convergence, i.e., z∗ 
+
+> i
+
+= z∗ 
+
+> j
+
+, ∀ i, j ∈ { 1, . . . , 2n}.
+
+Remark 3. Theorem 1 is originally proposed for systems whose coefficients aij (t) are explicit functions of time t.However, it has been shown in [13] that the same result also applies to systems in which the coefficients depend on the state x. For details, see [13]. Recall from Theorem 2 that when G P (t) has more than one SCC, its condensation digraph consists of a single sink and multiple singleton sources. Following the notation introduced in the proof of Theorem 2, let Ω( t) and Θ( t)
+
+denote, respectively, the set of nodes forming the unique sink and the collection of singleton sources at time t. Under this notation, the following proposition establishes convergence for Case (ii) of Theorem 2. 
+
+Proposition 3. Suppose that there exists a finite time instant 
+
+T > 0 such that for all t ≥ T , Ω( t) = Ω := Ω( T ) and 
+
+Θ( t) = Θ := Θ( T ). Then zi(t) = zi(T ), ∀ i ∈ Θ, ∀ t ≥ T, 
+
+and lim t→∞ dist( zj (t), conv {zi(T ) | i ∈ Θ}) = 0 , ∀ j ∈
+
+Ω, i.e., the states of nodes in Ω approach the convex hull spanned by the constant states of nodes in Θ.Proof. It is apparent that G P (t) is no longer cut-balanced since each opinion node i ∈ Θ only has outgoing edges to other nodes but no incoming edges from them, making Theorem 1 not applicable. Hence, we analyze convergence for the nodes in Ω and Θ separately. From Theorem 2, if i ∈ Θ( t), then zi(t + 1) = zi(t).Under the assumption that the node membership of each SCC of G P (t) remains fixed after time T , i.e., Ω( t) = Ω := Ω( T ), Θ( t) = Θ := Θ( T ), ∀ t ≥ T , it follows that zi(t) = 
+
+zi(T ), ∀ i ∈ Θ, ∀ t ≥ T .By applying a suitable permutation to the state vector z,we obtain ˆz = [ˆ z1, ˆz2]⊤, where ˆz1 and ˆz2 correspond to the node indices in Ω and Θ, respectively. Then, the discrete-time system (6) can be rewritten as 
+
+ˆz(t+1) = 
+
+ˆz1(t + 1) ˆz2(t + 1) 
+
+
+
+=
+
+" ˆP1(t) ˆP2(t)0 I
+
+# ˆz1(t)ˆz2(t)
+
+
+
+, ∀ t ≥ T, 
+
+(10) where I and 0 denote the identity matrix and zero matrix with dimension |Θ| × | Θ| and |Θ| × | Ω|, respectively. The submatrix ˆP1(t) ∈ R|Ω|×| Ω| is row-substochastic, but each row of the combined block [ ˆP1(t) ˆP2(t)] still sums to 1. The system (10) can be viewed as a distributed contain-ment control problem with multiple stationary leaders, which has been extensively studied in the literature [14], [19], [20]. Each opinion node i ∈ Θ acts as a stationary leader since 
+
+ˆz2(t) = ˆ z2(T ) for all t ≥ T , while the nodes j ∈ Ω serve as followers whose states evolve under the influence of leaders. In addition, since ˆz is merely a permutation of z, the digraph 
+
+G  ˆP (t) associated with the state matrix ˆP (t), defined in (10), is identical to G P (t), which remains fixed within one time step t ∈ [ti, t i + 1) and switches at the next time instant ti + 1 , where ti ∈ Z>0.According to Theorem 5.3 in [14], if there exists a finite integer m > 0 such that, for any t ∈ Z>0, every follower is reachable from at least one leader in the union graph 
+
+G[A(t) + · · · + A(t + m − 1)] , where A(t) denotes the adjacency matrix of the interaction graph at time t, then all followers asymptotically converge to the convex hull spanned by the leaders’ constant values. In the special case where there is only one leader, all followers converge to its constant value and reach a consensus, as proved in Lemma 9 of [21]. For our system, as shown in the proof of Theorem 2, each opinion node i ∈ Θ has a directed edge to its corresponding action node n + i ∈ Ω, and the subgraph induced by Ω
+
+is always strongly connected. As a result, every follower 
+
+j ∈ Ω is reachable from every leader i ∈ Θ in G P (t)
+
+for all t ≥ T . Hence, in the union graph G[P (t) + · · · +
+
+P (t + m − 1)] , every follower remains reachable from every leader for all t ≥ T and m > 0. Thus, our system satisfies the conditions of Theorem 5.3 in [14], implying that the states of nodes in Ω ultimately converge to the convex hull spanned by the constant state values of nodes in Θ, i.e., 
+
+lim t→∞ dist( zj (t), conv {zi(T ) | i ∈ Θ}) = 0 , ∀ j ∈ Ω.Based on Propositions 2 and 3, the following theorem presents a general convergence result of the proposed system. 
+
+Theorem 3. Suppose that there exists a finite time instant 
+
+T ∈ Z>0 after which the structure of the weighted digraph 
+
+G P (t) stabilizes, i.e., it has a fixed number of SCCs whose node memberships remain unchanged for all t ≥ T . Then, under ϕ ∈ (0 , 1) , the proposed system (6) converges to one of the following steady states: 
+
+(i) Consensus: if G P (t) remains strongly connected; 
+
+(ii) Clustering where the states of nodes in the sink SCC approach the convex hull spanned by the constant state values of singleton source SCCs: if the condensation digraph of G P (t) contains one sink and multiple singleton sources. Proof. Case (i) follows from Proposition 2 and Case (ii) follows from Proposition 3. 
+
+Remark 4. The convergence results of Theorem 3 rely on the assumption that there exists a finite time instant beyond which the structure of digraph G P (t) stabilizes. A rigorous proof of this property is not provided here due to its analytical complexity and is left for future work. Nev-ertheless, numerical simulations show that this assumption holds consistently, as illustrated in the next section. 
+
+Remark 5. The convergence results of Theorem 3 do not rely on agents’ initial conditions xi(0) and yi(0) , because they only determine the value of the state vector at t = 1 ,namely, z(1) = [ x1(1) , · · · , x n(1) , y 1(0) , · · · , y n(0) ] ⊤, and the earlier proofs do not explicitly depend on z(1) .V. N UMERICAL SIMULATIONS 
+
+In this section, we present simulation results of two representative cases corresponding to the scenarios stated in Propositions 2 and 3, respectively. The number of agents is set to n = |V| = 10 in the simulation, resulting in 2n = 20 
+
+nodes in the digraph G P (t), where indices {1, . . . , 10 } and 
+
+{11 , . . . , 20 } correspond to the opinion states xi and action states yi, respectively, as defined in (7). Each agent’s opinion is initialized as xi(0) ∼ U [0 , 1] for all i ∈ V , where U [0 , 1] 
+
+denotes the uniform distribution on [0 , 1] . The initial action is set equal to the initial opinion, i.e., yi(0) = xi(0) , ∀ i ∈ V .From the opinion updating rule (3) and Theorem 2, a large confidence threshold ϵ increases the possibility that each agent has at least one neighbor at time t, making the digraph G P (t) more likely to be strongly connected. In contrast, when ϵ is small, agents are more likely to be isolated, leading to a digraph G P (t) composed of multiple SCCs. Figures 1 and 2 illustrate a representative example for each case separately. As shown in Fig. 1, when (ϵ, ϕ ) = (0 .3, 0.5) , all agents’ opinions and actions converge to a common value at T1 = 5 ,indicating that system (6) achieves consensus. The corre-sponding digraph G P (t) remains strongly connected for all t ≥ T1, thereby satisfying the sufficient condition for consensus stated in Proposition 2. In contrast, when (ϵ, ϕ ) = (0 .05 , 0.5) , as illustrated in Fig. 2, the agents’ opinions and actions split into several clusters and the corresponding digraph G P (t) at steady state consists of multiple SCCs. The structure of digraph 
+
+G P (t) stabilizes after T2 = 4 , satisfying the sufficient condition of Proposition 3. In this case, nodes 2, 5 and 6 (highlighted in red in Fig. 2b) have no incoming edges from other nodes, serving as leaders and forming three singleton sources in the condensation digraph of G P (t), while the remaining nodes serve as followers and constitute a single sink in the condensation digraph. Furthermore, as shown in Fig. 2c, the steady-state values of these leaders contain the two extremes among all nodes, where node 5 takes the maximum and node 6 takes the minimum. Thus, the steady-state values of nodes in the sink SCC lie within the convex hull defined by the constant state values of singleton source SCCs, consistent with Proposition 3. In summary, the two examples confirm the theoretical results of Theorem 3, illustrating that the digraph struc-ture stabilizes within finite time and that the system either 0 5 10 15 20 25 30 
+
+> Time step
+> 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+> Opinion and Action
+> Opinion Action
+
+(a) Opinion nodes Action nodes  
+
+> 12345678910 11 12 13 14 15 16 17 18 19 20
+
+(b) Fig. 1. Simulation results for (ϵ, ϕ ) = (0 .3, 0.5) : (a) Evolution of xi(t)
+
+and yi(t), where the blue and red curves represent the trajectories of xi(t)
+
+and yi(t), respectively. (b) Steady-state structure of digraph G P (t), where the blue, red, purple, and green curves denote opinion–opinion, opinion– action, action–opinion, and action–action edges, respectively. 0 10 20 30 40 50 
+
+> Time step
+> 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+> Opinion and Action
+> Opinion Action
+
+(a) Opinion nodes Action nodes 
+
+> 12345678910 11 12 13 14 15 16 17 18 19 20
+
+(b) 0 5 10 15 20   
+
+> Node index i
+> 00.2 0.4 0.6 0.8 1
+> Steady-state value  z$
+> i
+
+(c) Fig. 2. Simulation results for (ϵ, ϕ ) = (0 .05 , 0.5) : (a) Evolution of xi(t)
+
+and yi(t), where the blue and red curves represent the trajectories of xi(t)
+
+and yi(t), respectively. (b) Steady-state structure of digraph G P (t), where the blue, red, purple, and green curves denote opinion–opinion, opinion– action, action–opinion, and action–action edges, respectively. Opinion nodes highlighted in red have no incoming edges from other nodes and act as leaders. (c) Steady-state node values, where the red points correspond to the leader nodes shown in panel (b). 
+
+converges to consensus or exhibits multiple opinion–action clusters in which some opinion nodes act as stationary leaders and other nodes are eventually contained in the convex hull of the leaders. VI. C ONCLUSIONS AND FUTURE WORK 
+
+In this paper, we analyzed the convergence properties of the opinion–action coevolution model proposed in [12]. The results show that the model’s steady-state behavior is primarily governed by the agents’ homogeneous confidence threshold ϵ. When ϵ is large, agents are more susceptible to different opinions influenced by their neighbors, leading the entire population toward consensus. Conversely, when 
+
+ϵ is small, some agents become socially isolated and their opinions remain fixed, effectively acting as leaders that influence the evolution of other agents’ opinions and all actions. These analytical findings provide a solid theoretical explanation for the model’s steady-state behavior and its relevance to social dynamics. A promising direction for future work is to identify the threshold of ϵ and ϕ dividing the two convergence scenarios through sensitivity analysis. REFERENCES [1] Y. Dong, M. Zhan, G. Kou, Z. Ding, and H. Liang, “A survey on the fusion process in opinion dynamics,” Inf. Fusion , vol. 43, pp. 57–65, 2018. [2] C. Bernardo, C. Altafini, A. Proskurnikov, and F. Vasca, “Bounded confidence opinion dynamics: A survey,” Automatica , vol. 159, pp. 111302, 2024. [3] J. Lorenz, “Continuous opinion dynamics under bounded confidence: A survey,” Int. J. Mod. Phys. C , vol. 18(12), pp. 1819–1838, 2007. [4] A. Fontan and C. Altafini, “A signed network perspective on the gov-ernment formation process in parliamentary democracies,” Scientific Reports , vol. 11, no. 5134, pp. 1–17, 2021. [5] M. H. Degroot, “Reaching a consensus,” J. Am. Stat. Assoc. , vol. 69, no. 345, pp. 118–121, 1974. [6] N. E. Friedkin and E. C. Johnsen, “Social influence and opinions,” J. Math. Sociol. , vol. 15, no. 3–4, pp. 193–206, 1990. [7] G. Deffuant, D. Neau, F. Amblard, and G. Weisbuch, “Mixing beliefs among interacting agents,” Adv. Complex Syst. , vol. 3, pp. 87–98, 2000. [8] G. Deffuant, F. Amblard, G. Weisbuch, and T. Faure, “How can extremism prevail? A study based on the relative agreement interaction model,” J. Artif. Soc. Soc. Simul. , vol. 5(4), pp. 1–26, 2002. [9] R. Hegselmann and U. Krause, “Opinion dynamics and bounded confidence models, analysis, and simulation,” J. Artif. Soc. Soc. Simul. ,vol. 5, no. 3, 2002. [10] M. McPherson, L. Smith-Lovin, and J. M. Cook, “Birds of a feather: Homophily in social networks,” Annu. Rev. Sociol. , vol. 27, no. 1, pp. 415–444, 2001. [11] M. C. Claudy, M. Peterson, and A. O’Driscoll, “Understanding the attitude-behavior gap for renewable energy systems using behavioral reasoning theory,” J. Macromarketing , vol. 33, no. 4, pp. 273–287, 2013. [12] C. Song, V. Cvetkovic, and R. Su, “Why do opinions and actions diverge? A dynamic framework to explore the impact of subjec-tive norms,” IEEE Trans. Comput. Soc. Syst. , pp. 1–12, 2025, doi: 10.1109/TCSS.2025.3598697. [13] J. M. Hendrickx and J. N. Tsitsiklis, “A new condition for convergence in continuous-time consensus seeking systems,” in Proc. IEEE Conf. Decis. Control (CDC) , Orlando, FL, USA, 2011, pp. 5070–5075. [14] W. Ren and Y. Cao, Distributed Coordination of Multi-Agent Net-works: Emergent Problems, Models, and Issues . London, U.K.: Springer, 2011. [15] J. C. Dittmer, “Consensus formation under bounded confidence,” 
+
+Nonlinear Anal. Theory Methods Appl. , vol. 47, no. 7, pp. 4615–4621, 2001. [16] J. Lorenz, “A stabilization theorem for dynamics of continuous opin-ions,” Phys. A: Stat. Mech. Appl. , vol. 355, no. 1, pp. 217–223, 2005. [17] V. D. Blondel, J. M. Hendrickx, and J. N. Tsitsiklis, “On Krause’s multi-agent consensus model with state-dependent connectivity,” IEEE Trans. Autom. Control , vol. 54, no. 11, pp. 2586–2597, 2009. [18] I. Ajzen, “The theory of planned behavior,” Organ. Behav. Hum. Decis. Process. , vol. 50, no. 2, pp. 179–211, 1991. [19] W. Ren and R. Beard, Distributed Consensus in Multi-Vehicle Co-operative Control: Theory and Applications . London, U.K.: Springer, 2008. [20] P. Sekercioglu, E. Panteley, I. Sarras, A. Lor´ ıa, and J. Marzat, “Ex-ponential bipartite containment tracking over multi-leader coopetition networks,” in Proc. Am. Control Conf. (ACC) , San Diego, CA, USA, 2023, pp. 509–514. [21] A. V. Proskurnikov, R. Tempo, M. Cao, and N. E. Friedkin, “Opinion evolution in time-varying social influence networks with prejudiced agents,” IFAC-PapersOnLine , vol. 50, no. 1, pp. 11896–11901, 2017.

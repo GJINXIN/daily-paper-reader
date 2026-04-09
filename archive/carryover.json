@@ -1,47 +1,6 @@
 {
-  "generated_at": "2026-04-08T20:01:04.788422+00:00",
-  "updated_date": "20260408",
+  "generated_at": "2026-04-09T19:57:46.991847+00:00",
+  "updated_date": "20260409",
   "carryover_days": 9,
-  "items": [
-    {
-      "id": "2604.06140v1",
-      "title": "On the Convergence of an Opinion-Action Coevolution Model with Bounded Confidence",
-      "abstract": "This paper presents a theoretical convergence analysis for an opinion-action coevolution model that integrates the opinion updating rule of the Hegselmann-Krause model with a utility-based decision-making mechanism. The model is reformulated into an augmented state-space representation, where the state matrix induces a time-varying social interaction digraph. The convergence analysis is grounded on two existing theoretical findings that establish convergence for the Hegselmann-Krause type of models and containment control systems with multiple stationary leaders, respectively. Results indicate that, if the structure of the interaction digraph stabilizes within finite time, the model either converges to consensus, where all agents' opinions and actions reach an identical state, or exhibits clustering, where some opinion nodes act as stationary leaders while the remaining nodes approach the convex hull formed by the leaders. Numerical simulations are then provided to validate the theoretical results.",
-      "authors": [
-        "Chen Song",
-        "Angela Fontan",
-        "Rong Su",
-        "Julien M. Hendrickx",
-        "Vladimir Cvetkovic",
-        "Karl H. Johansson"
-      ],
-      "primary_category": "eess.SY",
-      "categories": [
-        "eess.SY"
-      ],
-      "published": "2026-04-07T17:45:24+00:00",
-      "link": "https://arxiv.org/pdf/2604.06140v1",
-      "tags": [
-        "keyword:MAS SS",
-        "query:MAS SS"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "opinion-action coevolution and social interaction digraphs in agent models",
-      "llm_evidence_cn": "智能体模型中的观点-行动协同演化与社交互动有向图",
-      "llm_evidence": "智能体模型中的观点-行动协同演化与社交互动有向图",
-      "canonical_evidence": "智能体模型中的观点-行动协同演化与社交互动有向图",
-      "llm_tldr_en": "Analyzes convergence in opinion-action coevolution models to understand social consensus and interaction dynamics.",
-      "llm_tldr_cn": "分析观点-行动协同演化模型的收敛性，以理解社会共识和互动动态。",
-      "llm_tldr": "分析观点-行动协同演化模型的收敛性，以理解社会共识和互动动态。",
-      "llm_tags": [
-        "query:mas-ss"
-      ],
-      "matched_query_tag": "query:mas-ss",
-      "matched_query_text": "emergent social phenomena in multi agent environments",
-      "matched_requirement_id": "req-7",
-      "selection_source": "carryover_cache",
-      "paper_id": "2604.06140v1",
-      "carry_days": 1
-    }
-  ]
+  "items": []
 }

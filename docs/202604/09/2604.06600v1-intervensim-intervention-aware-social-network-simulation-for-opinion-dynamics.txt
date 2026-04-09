@@ -1,0 +1,1403 @@
+Title: IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics
+
+URL Source: https://arxiv.org/pdf/2604.06600v1
+
+Published Time: Thu, 09 Apr 2026 00:39:18 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+# IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics 
+
+# Yunyao Zhang 
+
+Huazhong University of Science and Technology Wuhan, China 
+
+# Zuocheng Ying 
+
+Huazhong University of Science and Technology Wuhan, China 
+
+# Xinglang Zhang 
+
+Huazhong University of Science and Technology Wuhan, China 
+
+# Junqing Yu 
+
+Huazhong University of Science and Technology Wuhan, China 
+
+# Peng Fang 
+
+Huazhong University of Science and Technology Wuhan, China 
+
+# Xu Chen 
+
+Beijing Institute of Computer Technology and Applications China 
+
+# Wei Yang 
+
+Huazhong University of Science and Technology Wuhan, China 
+
+# Zikai Song ∗
+
+Huazhong University of Science and Technology Wuhan, China 
+
+## Abstract 
+
+LLM-based social network simulation introduces a new computa-tional approach for modeling event evolution in complex online environments. However, existing methods typically simulate social processes under a fixed event trajectory, treating the event as static once initialized and overlooking intervention dynamics, and thus fail to capture the intrinsic evolution of real social network events, where source-side interventions and collective interactions contin-uously reshape event trajectories, sometimes leading to secondary popularity explosions and collective attitude shifts. To address this limitation, we introduce an intervention -aware sim ulation frame-work, IntervenSim , that models event evolution and intervention in a closed loop. We model event developments and source-side interventions using source agents , and collective crowd reactions us-ing crowd agents , capturing their continuous co-evolution through an intervention-aware mechanism that couples source-side in-tervention, group interaction, and feedback-driven adjustment of subsequent interventions. Experiments on diverse real-world events show that IntervenSim improves MAPE by 41.6% and DTW by 66.9% over prior frameworks, while reducing computational cost with fewer yet more capable agents. These improvements indicate that IntervenSim not only simulates regular event trajectories more faithfully, but also better captures opinion dynamics under intervention in complex cases. 
+
+## CCS Concepts 
+
+• Human-centered computing → Social media ; Social network analysis ; • Computing methodologies → Modeling and simula-tion ; Distributed artificial intelligence. 
+
+## Keywords 
+
+Social network simulation, Opinion dynamics, Collective behavior, LLM agents 
+
+## 1 Introduction 
+
+Simulating how collective behaviors and social structures emerge is central to understanding social diffusion, mobilization, and opin-ion formation [ 20 , 65 ]. More broadly, social simulation provides a computational lens for studying how individual interactions accu-mulate into population-level diffusion processes and collective out-comes in open social environments. In social network simulation (SNS) [ 21 ], human interactions unfold through dynamic exchanges where information propagation, opinion dynamics, and group po-larization coevolve across complex relational networks [ 34 , 74 ]. These interdependent feedbacks make population outcomes highly nonlinear, as small initiating groups can trigger large-scale mo-bilization and cascading effects [ 44 , 52 ]. Traditional paradigms, including mechanistic models [5, 48 ], empirical and statistical mod-els [31 , 42 , 43 ], and agent-based models [17 , 60 ], capture macro-micro regularities but remain constrained by static parameters and handcrafted behavioral assumptions, limiting their ability to model adaptive cognition, evolving interaction, and intervention-sensitive opinion dynamics in open social events. These limitations motivate scalable, cognitively grounded frameworks for captur-ing intervention-aware dynamics and emergent collective behav-ior [56, 61, 87]. Recent studies show that LLMs [ 1, 76 , 88 ] can endow social agents with reasoning, perception, and interactive capabilities, en-abling simulations ranging from small-scale communities [ 56 , 57 ] to multi-scene social systems [ 22 , 85 ]. Advanced frameworks such as 
+
+GA-S 3 [ 87 ], MF-LLM [49 ], SocioVerse [ 85 ], AgentSociety [58 ], Yulan-OneSim [ 75 ], and OASIS [ 82 ] demonstrate lifelike social interactions; however, they typically operate under fixed event trajectories once initialized, lacking explicit intervention and dynamical evolution modeling, which limits their ability to capture the intrinsic evolu-tion of real social media events. Accurately modeling social dynamics with complex interven-tions involves two core challenges. (C1) Intervention-Aware Modeling , characterizing how evolving interventions shape group             
+
+> ∗Corresponding author.
+> arXiv:2604.06600v1 [cs.SI] 8 Apr 2026 Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. Traditional ABM (TA)
+> Schelling's segregation
+> TA Ours
+> Closer to the real world
+> TA Ours
+> Heterogeneity
+> Dynamic
+> IntervenSim (Ours)
+> Ours S3
+> Larger scale
+> Ours S3
+> Scalability
+> Costs
+
+10 9 10 3  
+
+> Social -network
+> Simulation System (S 3)
+
+# ··· 
+
+> Source
+> Intervention
+> Crowd
+
+Figure 1: Comparison of social simulation paradigms. Traditional ABMs (left) predict outcomes but lack behavioral heterogeneity and dynamic adaptability. LLM-based agents (right) enhance individual realism but remain limited in scalability and large-scale simulation. Our approach (middle) models society as a dynamic system of crowd and source agents, enabling scalable and realistic simulation of collective behavior. 
+
+communication and opinion over time, and (C2) Supporting Re-quirements for Intervention-Aware Simulation , which include: 
+
+(C2.1) Pre-Intervention Representation , constructing precise, entity-centric representations of heterogeneous social actors while preserving population-level alignment across diverse social con-texts; and (C2.2) Post-Intervention Dynamics , capturing how group-level attitude shifts and intervention-sensitive updates evolve through ongoing interaction and feedback. To address these challenges, we introduce IntervenSim (see Fig. 2), an intervention-aware social simulation framework for mod-eling large-scale event and opinion dynamics under evolving inter-ventions. Inspired by agenda-setting theory [46 , 62 ] and classical 
+
+opinion dynamics models [15 , 28 ], IntervenSim models event evolu-tion and intervention through three tightly coupled components: 
+
+(1) Intervention-Aware Simulation (for C1 ). We formulate event evolution and intervention as a closed-loop simulation process, replacing explicit pairwise agent interactions with structured inter-actions between source agents , which model event developments and source-side interventions, and crowd agents , which capture col-lective responses. Multi-round intervention signaling, group-level interaction, and feedback-driven adjustment jointly coordinate their co-evolution. 
+
+(2) Adaptive Crowd Representation (for C2.1 ). To support intervention-aware simulation, we introduce an adaptive crowd construction strategy based on event relevance and orientation needs, enabling scalable, population-consistent representation of heterogeneous social actors across diverse social contexts. 
+
+(3) Dynamics Modeling with Intervention Feedback (for C2.2 ). We model how public interactions and source-side interventions jointly shape opinion dynamics over time, capturing emergent out-comes such as consensus and polarization formation. This compo-nent further enables intervention-sensitive updates of group states, allowing attitude shifts to unfold through ongoing interaction and feedback. Experiments on diverse real-world online events show that In-tervenSim achieves substantial improvements of 41.6% in MAPE and 66.9% in DTW over prior frameworks, while reducing com-putational cost with fewer yet more capable agents. Case studies further confirm its ability to reproduce emergent phenomena such as intervention-driven attitude shifts and consensus-polarization transitions, showing that IntervenSim not only simulates regular event trajectories in most large-scale ordinary events more faith-fully, but also better captures opinion dynamics under intervention in complex cases. 
+
+## 2 Related Work 
+
+A full discussion of related work appears in Appendix A; we high-light the most relevant directions here. 
+
+## Social Simulation Systems 
+
+Traditional social simulation systems model how individual be-haviors shape societal structures and diffusion processes [ 20 , 65 ]. They can be grouped into three paradigms. (1) Mechanistic models 
+
+describe collective behavior through explicit equations or proce-dural dynamics such as system-dynamics and discrete-event simu-lations [ 5 , 14 , 45 , 48 ]. They capture macro-level diffusion such as epidemic spreading and online mobilization [ 44 , 51 , 52 ], but rely on fixed parameters and lack adaptive cognition. (2) Empirical and statistical models identify social diffusion patterns from data, includ-ing PSP [31 ] and peak-based participation dynamics [ 42 , 43 ]. They reveal large-scale regularities, but offer limited insight into the inter-action mechanisms underlying opinion dynamics. (3) Agent-based models capture emergent phenomena through local interactions among heterogeneous agents [ 13 , 24 , 64 , 71 ]. Classical studies such as Schelling’s segregation model [ 9, 60 , 61 ] and Sugarscape [ 17 ]show how simple local preferences produce complex societal pat-terns. Despite these advances, traditional paradigms still depend on handcrafted rules and fixed assumptions, limiting their adaptability to evolving event dynamics and their ability to model intervention-aware opinion dynamics. 
+
+## LLM-Based Agent Social Simulation 
+
+Recent advances in LLMs [ 1 , 26 ] have enabled cognitively enriched social simulations in which agents communicate, reason, and adapt through natural language. Representative systems such as Gen-erative Agents [56 , 57 ] demonstrate how LLM-driven agents [ 37 ]can support believable social reasoning and interaction in small-scale communities, while S3 [22 ], SocioVerse [85 ], AgentSociety [ 58 ], 
+
+Yulan-OneSim [75 ], and OASIS [ 82 ] extend this line toward larger IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil Attention 
+
+Guidance 
+
+Vocational math champ 
+
+suspected of cheating   
+
+> Like Comment Share View
+
+Opinion Dynamics Modeling 
+
+Reflection    
+
+> t: I knew
+> it was fake ！
+> t-1：A bit
+> suspicious.
+> Master of
+> Mathematics
+
+Interpretive 
+
+Framing  
+
+> Spectators
+> Prohibition Publicity
+> Refutation Response
+> Announcement
+
+Intervention 
+
+> Count  of  Views
+
+Results comparison: 
+
+Smaller area performs better 
+
+How to think 
+
+What to think 
+
+Source 
+
+Agents 
+
+𝐼 " ← 𝐼 #
+
+> "
+
+, … , 𝐼 $
+
+> "
+
+Source -Driven Process 
+
+Crowd 
+
+Agents 
+
+Crowd Deliberation Process 
+
+𝑠 " ← 𝛷 {𝑠 %
+
+> "
+
+, 𝑎 %
+
+> "
+
+}%&#          
+
+> '𝑎 !
+> "∼𝜋 CoT 𝑠 !
+> "#$,𝑚 !
+> "#$,𝐞 𝐭 #𝟏 ,𝑠 "#$,𝐼 "
+
+𝒞 𝒾  
+
+> 𝓉
+
+← {𝐴 %
+
+> "
+
+, 𝐷 "} 
+
+> 𝑥 ∈
+
+𝐲 𝐱 𝐭 ∈ 𝑅 𝟜         
+
+> 𝑠 !
+> ",𝑚 !
+> "∼𝑃 ⋅𝑠 !
+> "#$,𝑚 !
+> "#$,𝑎 !
+> ",𝒞 𝒾
+> 𝓉
+> IntervenSim
+> GA -S3
+> GT
+
+Figure 2: IntervenSim overview. The framework comprises two interactive processes that capture top-down intervention and bottom-up public response in social network simulation. The Source-Driven Process (left) illustrates how source agents guide public cognition through two coupled stages of intervention: Attention Guidance ( what to think ) and Interpretive Framing (how to think ), forming a two-stage intervention process that first guides public attention and then shapes interpretation. The Crowd Deliberation Process (right) models collective reasoning and opinion evolution through Chain-of-Thought decision making and dynamic attitude updates, illustrating how reflection and interaction shape population-level opinion change. The comparison (top center) shows that IntervenSim unifies interpretable reasoning with large-scale social dynamics beyond prior LLM-based simulators. 
+
+and more diverse social environments. Related evidence also sug-gests that LLMs can reproduce important structural properties of social systems, although they may still over-simplify some forms of heterogeneity [ 7]. Despite this progress, most existing frameworks still under-model evolving intervention processes and the feedback loop between source-side actions and collective responses, which limits their ability to capture intervention-sensitive event evolution, opinion dynamics, and attitude shifts in real-world social networks. 
+
+## Population-Aware Social Simulation 
+
+Beyond micro-level interaction modeling, an important line of re-search studies how to represent public response and social dynamics at macro or population scales. In communication research, agenda-setting theory and related studies explain how issue salience, inter-pretive framing, and media influence shape collective attention and public cognition over time [ 27 , 46 , 47 , 62 ]. Recent computational work further operationalizes these ideas in large-scale discourse analysis [ 18 , 39 , 67 , 70 ]. Meanwhile, population-aware modeling has begun to move from individual-level simulation toward crowd-level public response prediction. For example, GA-S 3 [ 87 ] intro-duces group agents to improve scalability and population-level coherence in social network simulation, while MF-LLM [ 49 ] and 
+
+PAC-LoRA [ 84 ] explore population-level response modeling. These studies highlight the value of macro-level representations for cap-turing large-scale collective trends, but still provide limited support for jointly modeling source-side intervention, public interaction, and intervention-sensitive opinion dynamics in a unified closed-loop framework. 
+
+## 3 Methodology 
+
+We formalize population-level decision dynamics (§3.1) and in-troduce IntervenSim , an intervention-aware social simulation framework centered on intervention-aware simulation (§3.2) and supported by representations for intervention dynamics (§3.3). 
+
+## 3.1 Problem Definition 
+
+We aim to simulate large-scale social networks in text-based envi-ronments, where event dynamics arise from temporal interactions between source agents and crowd agents. In this work, event dy-namics refers to the temporal evolution of an event as manifested in the social network through intervention-sensitive engagement trajectories and group-level opinion dynamics, rather than the full real-world state of the event itself. The environment comprises 𝑘 
+
+source agents and a population of 𝑁 crowd agents 𝐺 = {𝑔 1, . . . , 𝑔 𝑁 }.At each timestep 𝑡 , source agents produce an intervention vector 
+
+®𝐼 𝑡 = (𝐼 𝑡  
+
+> 1
+
+, . . . , 𝐼 𝑡 𝑘 ) ∈ I (C1 ), which influences the states and decisions of crowds. Each group agent represents a social cluster character-ized by domain, country, interest relevance, and population size (C2.1 ). We denote the group states as ®𝑠 𝑡 = (𝑠 𝑡  
+
+> 1
+
+, . . . , 𝑠 𝑡 𝑁 ) ∈ S and Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+their actions as ®𝑎 𝑡 = (𝑎 𝑡  
+
+> 1
+
+, . . . , 𝑎 𝑡 𝑁 ) ∈ A , which jointly drive the temporal evolution of public response. 
+
+Table 1: Types of Source-side Interventions 
+
+ID Name Description 
+
+𝐼 1 Prohibition Restricts the spread of the event to reduce its visibility. 
+
+𝐼 2 Refutation Counters misinformation to correct interpre-tive distortion. 
+
+𝐼 3 Publicity Enhances event exposure to amplify public at-tention. 
+
+𝐼 4 Response Provides institutional or opinion-leader feed-back to shape interpretation. 
+
+𝐼 5 Announcement Issues formal declarations or clarifications that reframe event meaning. 
+
+At each timestep 𝑡 , the simulator outputs an engagement vector 
+
+y𝑡 =  𝑦 𝑡 𝑥 
+
+     
+
+> 𝑥 ∈ { view ,like ,comment ,share }
+
+∈ R4,
+
+representing the predicted platform-level responses for each en-gagement type 𝑥 , while the evolving group states encode the corre-sponding opinion dynamics and attitude shifts under intervention (C2.2 ). The objective is to generate an intervention-sensitive trajec-tory over 𝑇 timesteps that reproduces the real-world evolution of social response under event e. In practice, we evaluate this objective primarily through the predicted view trajectory {𝑦 𝑡  
+
+> view
+
+}𝑇 𝑡 =1, while additionally analyzing whether the simulated process captures real-istic opinion dynamics, attitude shifts, and consensus-polarization transitions. Compared with prior settings that assume a fixed event trajectory , where the event context remains static once initialized, our setting treats event evolution as a closed-loop process in which source-side interventions, crowd deliberation, and collective feed-back continuously reshape the social trajectory of the event over time. 
+
+## 3.2 Intervention-Aware Simulation 
+
+To more realistically simulate social network dynamics, inspired by communication theories on attention guidance and interpretive framing, as well as classical theories of opinion dynamics [ 15 , 28 ,46 , 62 ], we design an intervention-aware simulation with two interactive processes: (1) Source-Driven Process , where media, gov-ernment, institutions, and opinion leaders intervene in events to guide public attention and shape interpretation; (2) Crowd Delib-eration Process , where crowd agents respond through interaction, reflection, and action, jointly driving social response and opinion dynamics over time. 
+
+Source-Driven Process. Within the IntervenSim framework, source agents represent institutional or influential actors, such as media, government, public institutions, and opinion leaders, that affect event evolution through explicit intervention actions in the so-cial network. Rather than assuming a fixed intended outcome, we model these actors as feedback-conditioned participants whose interventions depend on the current event context, the state of public response, and the evolving level of collective attention. Their interventions serve as observable public signals that can amplify visibility, provide clarification, offer interpretive guidance, issue formal responses, or restrict further diffusion. Me State                            
+
+> Thought
+> Decision -Mak
+> Summary
+> Influence
+> Update
+> Sentiment
+> Influence
+> Update
+> Influence
+> Hierarchical
+> knowledge
+> graph
+> BFS
+> Fin e-Grained
+> ID: ‘Master of
+> Mathematics ’
+> Population :62,000
+> ···
+> Attributes
+> Relevance
+> Evaluator
+> ···
+> Input ：Event description
+> and related information .
+> BFS
+> Retrieval
+> Local Storage
+> Hit
+> Update
+> Miss
+> Country
+> Domain
+> Web -enhanced
+> RAG
+> Hierarchical knowledge graph
+> Teachers
+> Educational
+> Personnel Vocation ···
+> Students
+> Full -time
+> teachers ··· ··· M aster Bachelor
+> ···
+> Coarse -Grained
+> Fine -Grained
+> Relevance Evaluator
+> subgroup
+> 0.91
+> 0.85
+> 0.72
+> 0.42
+> Layer 1
+> L2
+> ··· Bachelor M aster
+> All nodes in Layer n
+> Event 1Event 2Event n
+> Event 1Event 2
+
+Figure 3: Dynamic group generation process. The system first performs coarse-grained grouping (country and domain) and then applies fine-grained specialization to generate event-specific subgroups. Top-𝑘 ∪ (𝑅𝑒𝑙 ≥ 0.7) subgroups retained for agent instantiation. 
+
+At each timestep 𝑡 , each source agent selects an intervention 
+
+𝐼 𝑡 𝑘 ∈ I or remains inactive 𝐼 𝑡 𝑘 = ∅; the collection of these choices constitutes the intervention vector ®𝐼 𝑡 = (𝐼 𝑡 
+
+> 1
+
+, . . . , 𝐼 𝑡 𝑘 ), which may itself be empty if no source-side action is taken ( C1 ). Each inter-vention (Table 1) modulates the ongoing social trajectory of the event by altering visibility, interpretive framing, or the subsequent direction of public response. Through repeated interaction with crowd-side deliberation, these source-side signals become part of a closed-loop process that continuously reshapes event and opinion dynamics over time. These interventions collectively shape two key dimensions of source-side influence: 
+
+• Attention guidance: Source agents amplify selected events through publicity interventions, shaping what the crowd thinks about .
+
+• Interpretive framing: Source agents modulate interpretation through interventions, shaping how the crowd thinks about 
+
+them. 
+
+Crowd Deliberation Process. Crowd agents represent collective au-diences that interpret and respond to authoritative signals through discussion and reflection. They engage in iterative exchanges of information and perspectives, enabling the bottom-up evolution of collective interpretation and public response through group-level reasoning. This process establishes the cognitive bridge between source-sid actions and public understanding within the evolving social network. To model human-like decision-making and interaction among crowd agents, we design a dual-level reasoning mechanism that combines individual cognition with collective communication ( C2.2 ). Each group agent 𝑔 𝑖 maintains an internal cognitive state 𝑠 𝑡 𝑖 and an IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil 
+
+evolving memory trace 𝑚 𝑡 𝑖 , both represented in natural language form. At each timestep 𝑡 , the LLM-based Chain-of-Thought (CoT) policy 𝜋 CoT generates the next action conditioned on the agent’s previous state, memory, the event context e𝑡 −1, the aggregated population signal ¯𝑠 𝑡 −1, and source-side interventions ®𝐼 𝑡 :
+
+𝑎 𝑡 𝑖 ∼ 𝜋 CoT 
+
+ 𝑠 𝑡 −1 
+
+> 𝑖
+
+, 𝑚 𝑡 −1 
+
+> 𝑖
+
+, e𝑡 −1, ¯𝑠 𝑡 −1, ®𝐼 𝑡  (1) After action generation, agents engage in peer communication based on the produced actions, then update their internal states and memories via an environment transition: 
+
+(𝑠 𝑡 𝑖 , 𝑚 𝑡 𝑖 ) ∼ 𝑃  · | 𝑠 𝑡 −1 
+
+> 𝑖
+
+, 𝑚 𝑡 −1 
+
+> 𝑖
+
+, 𝑎 𝑡 𝑖 , C𝑡 𝑖 
+
+ (2) where C𝑡 𝑖 denotes the information exchanged with peers (e.g., shared attitudes, rationales). Subsequently, the population signal is refreshed by aggregating updated states and actions: 
+
+¯𝑠 𝑡 ← Φ {𝑠 𝑡 𝑖 , 𝑎 𝑡 𝑖 }𝑁 𝑖 =1
+
+ (3) where Φ(·) summarizes collective feedback into a global represen-tation. This ordering captures how group-level updates precede population-wide aggregation, enabling a scalable and cognitively interpretable deliberation process. Together, these processes form a unified closed-loop mechanism in which source-side interventions shape public attention and interpretation, and public responses in turn influence subsequent intervention and opinion dynamics. 
+
+## 3.3 Supporting Representations 
+
+To support intervention-aware simulation of event dynamics, we introduce two supporting representations for different stages of the simulation. (1) Adaptive Crowd Representation , which captures system states prior to interventions (pre); (2) Dynamics Modeling with Intervention Feedback , which models the temporal evolution of system states after interventions with explicit intervention feedback (post). 
+
+Adaptive Crowd Representation. To enable adaptive and scalable simulation of public behavior, IntervenSim generates crowd agents 
+
+via a two-stage generation process ( C2.1 ) that reflects how audi-ences self-organize around both general social backgrounds and event-specific relevance, as illustrated in Figure 3. We adopt a top-down hierarchical generation strategy, combining coarse-grained semantic clustering with fine-grained population specialization, guided by Retrieval-Augmented Generation (RAG) [ 33 ] and a rele-vance evaluation mechanism. 
+
+Coarse-Grained Generation. When a new event e occurs, we first extract its high-level semantic attributes, including domain d and country c, via an LLM parser. Using (d, c) as retrieval keys, we ob-tain mid-level population templates from the hierarchical graph G
+
+through Breadth-First Search (BFS). If the corresponding branch is missing, web-enhanced RAG is used to retrieve public demographic and behavioral profiles relevant to the event context. These tem-plates serve as coarse-grained population placeholders, providing stable structural priors for subsequent fine-grained specialization. 
+
+Fine-Grained Specialization. While coarse categories provide structural stability, real-world events require finer resolution. We introduce a fine-grained specialization step using a Relevance Algorithm 1 IntervenSim Simulation Procedure 
+
+Require: Event e, 𝑘 source agents, 𝑁 crowd agents  
+
+> 1:
+
+Initialize: {𝑠 0 
+
+> 𝑖
+
+, 𝑚 0 
+
+> 𝑖
+
+, 𝐴 0 
+
+> 𝑖
+
+}𝑁 𝑖 =1; set ¯𝑠 0 ← Φ( { 𝑠 0 
+
+> 𝑖
+
+, 𝐴 0 
+
+> 𝑖
+
+} )  
+
+> 2:
+
+for 𝑡 = 1 to 𝑇 do  
+
+> 3:
+
+Source agents select interventions: 
+
+®𝐼 𝑡 ← ( 𝐼 𝑡  
+
+> 1
+
+, . . . , 𝐼 𝑡 𝑘 ), where 𝐼 𝑡 𝑘 ∈ I or 𝐼 𝑡 𝑘 =∅ 
+
+> 4:
+
+Each crowd agents samples action: 
+
+𝑎 𝑡 𝑖 ∼𝜋 CoT (𝑠 𝑡 −1 
+
+> 𝑖
+
+, 𝑚 𝑡 −1 
+
+> 𝑖
+
+, e𝑡 −1, ¯𝑠 𝑡 −1, ®𝐼 𝑡 ) 
+
+> 5:
+
+Public agents communicate with peers N ( 𝑖, 𝑡 ) to form ®𝐷 𝑡 and 𝐴 𝑡 𝑖 
+
+𝐴 𝑡 𝑖 =
+
+
+
+𝜋 CoT 
+
+ 𝐴 𝑡 −1 
+
+> 𝑖
+
+, 𝑚 𝑡 −1 
+
+> 𝑖
+
+, ®𝐷 𝑡 , ®𝐼 𝑡 , if ®𝐷 𝑡 or ®𝐼 𝑡 ≠ ∅,  
+
+> 1
+> |N 𝜖 (𝑖,𝑡 ) |
+
+Í𝑗 ∈N 𝜖 (𝑖,𝑡 ) 𝐴 𝑡 −1 
+
+> 𝑗
+
+, otherwise.  
+
+> 6:
+
+Define communication signal C𝑡 𝑖 ← { 𝐴 𝑡 𝑖 , ®𝐷 𝑡 } 
+
+> 7:
+
+Update internal states: 
+
+(𝑠 𝑡 𝑖 , 𝑚 𝑡 𝑖 ) ∼ 𝑃 (· | 𝑠 𝑡 −1 
+
+> 𝑖
+
+, 𝑚 𝑡 −1 
+
+> 𝑖
+
+, 𝑎 𝑡 𝑖 , C𝑡 𝑖 ) 
+
+> 8:
+
+Aggregate ¯𝑠 𝑡 ← Φ( { 𝑠 𝑡 𝑖 , 𝑎 𝑡 𝑖 }𝑁 𝑖 =1 ) 
+
+> 9:
+
+Compute engagement vector based on ¯𝑠 𝑡 :
+
+y𝑡 =  𝑦 𝑡 𝑥 
+
+     
+
+> 𝑥 ∈{ view ,like ,comment ,share }
+
+∈ R4 
+
+> 10:
+
+Update event-level trajectory e𝑡 ← e𝑡 −1 ∪ { y𝑡 } 
+
+> 11:
+
+end for  
+
+> 12:
+
+Output: Trajectory {y𝑡  
+
+> view
+
+}𝑇 𝑡 =1 representing the simulated temporal evolution of engagement under event e
+
+Evaluator , which conditions on the retrieved coarse-grained pop-ulation templates and the event e to generate a candidate subgroup pool C𝑖 = {𝑐 1, . . . , 𝑐 𝐽 } for each coarse-grained population node. Each candidate subgroup 𝑐 𝑗 ∈ C 𝑖 receives a relevance score: 
+
+𝑠 𝑗 = Rel (𝑐 𝑗 , e) = 𝜆 ⟨𝜙 (𝑐 𝑗 ), 𝜙 (e) ⟩ ∥𝜙 (𝑐 𝑗 ) ∥ ∥ 𝜙 (e) ∥ + ( 1 − 𝜆 )𝜓 (𝑐 𝑗 , e)
+
+where 𝜙 (·) is an embedding-based semantic encoder and 𝜓 (· , ·) is an LLM prompt-based relevance score normalized to [0, 1], with 
+
+𝜆 ∈ [ 0, 1] balancing the two terms. The selected fine-grained subgroup set is defined as 
+
+Gfine  
+
+> 𝑖
+
+= TopK  {𝑐 𝑗 }𝐽 𝑗 =1, 𝑘  ∪ 𝑐 𝑗 | 𝑠 𝑗 ≥ 0.7 ,
+
+ensuring at least max {𝑘, |{ 𝑗 : 𝑠 𝑗 ≥ 0.7}|} specialized subgroups for each coarse-grained population node. The selected subgroup sets are then instantiated as fine-grained crowd agents, which col-lectively form the updated 𝐺 = {𝑔 1, . . . , 𝑔 𝑁 } used for subsequent simulation, enabling adaptive population refinement according to event-specific salience and heterogeneous discourse contexts. 
+
+Opinion Dynamics Modeling. To model realistic opinion evolution, we integrate discussion-based interactions with hybrid updating dynamics inspired by Opinion Dynamic Model [ 15 , 28 ]. At each timestep, each group agent holds an attitude state 𝐴 𝑡 𝑖 representing its evaluative stance toward the event. Agents interact with peers selected according to their interaction parameter N𝜖 (𝑖, 𝑡 ) (deter-mined by prior actions 𝑎 𝑡 𝑖 ) through comment-based discussions that transmit peer opinions and contextual content. When a discussion signal ®𝐷 𝑡 or intervention signal ®𝐼 𝑡 is detected, attitude updating follows a cognitive reasoning path; otherwise, it evolves through a dynamical model of social influence: Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+Table 2: Comparison results of all methods. The second-best score is underlined, and the best one is bold. Method 𝑊 1 ↓ MAPE ↓ DTW Z-score Ave Agent Num 
+
+Mean(e+07) ↓ Std ↓
+
+PSP [31] 0.2522 69.12% 3.40 0.4207 – –S3 [22] 0.2519 68.66% 3.09 0.4035 1.22 1000 GA-S 3 [87] 0.1477 16.48% 1.30 0.1890 0.81 16 
+
+IntervenSim (Ours) 0.1159 9.63% 0.43 0.1105 0.73 10                                
+
+> (↓21.53%) (↓41.6%) (↓66.9%) (↓41.6%)
+> 𝐴 𝑡 𝑖 =
+> 
+> 𝜋 CoT
+>  𝐴 𝑡 −1
+> 𝑖 , 𝑚 𝑡 −1
+> 𝑖 ,®𝐷 𝑡 ,®𝐼 𝑡 ,if ®𝐷 𝑡 or ®𝐼 𝑡 ≠∅,
+> 1
+> |N 𝜖 (𝑖,𝑡 ) |
+> Í𝑗 ∈N 𝜖 (𝑖,𝑡 )𝐴 𝑡 −1
+> 𝑗 ,otherwise.
+
+where 𝜖 ∈ [0, 1], and the detailed formulation of the opinion dynamics is provided in Appendix B. The corresponding communi-cation signal is defined as: C𝑡 𝑖 ← { 𝐴 𝑡 𝑖 , ®𝐷 𝑡 } (C2.2 ). This formulation couples reflective reasoning and continuous social influence within the same transition function 𝑃 , ensuring cognitive interpretability while preserving realistic opinion dynamics. Pseudocode 1 summa-rizes the IntervenSim framework. 
+
+## 4 Experiment 4.1 Settings 
+
+Model. We adopt the locally deployed LLaMA3-8B [ 16 ] as our base large language model, and additionally use Qwen2.5-7B [ 81 ] for ablation analysis. To ensure deterministic and stable outputs dur-ing all reasoning and decision-making stages, we fix the decoding temperature at 0.1. For hierarchical generation of group agents con-ditioned on event contexts, we employ the remote GPT-4o [1 ] API, which dynamically constructs agent profiles through prompt-based few-shot generation. 
+
+Dataset. We adopt the Social Network Benchmark (SNB), origi-nally introduced by GA-S 3 [87 ], to ensure comparability with prior simulations. SNB comprises real-world events from Twitter (X), Reddit, and Weibo, each annotated with title, content, metadata, and 7-day network traffic. The dataset covers diverse domains and regions, including both sudden incidents and long-term events, and contains cases involving consensus and polarization phenom-ena. Expert-curated annotations on attitude shifts and behavioral trends provide external references for evaluating traffic fit, opinion evolution, and group-level behavioral diversity. 
+
+Evaluation Metrics. We adopt a unified evaluation protocol and report results using the following metrics: 
+
+• Wasserstein Distance ( 𝑊 1) [72 ]: Evaluates the distributional dif-ference between simulated and real engagement behavior. Lower 
+
+𝑊 1 indicates closer alignment. Empirically, 𝑊 1 < 0.15 denotes high fidelity, 0.15 −0.35 indicates moderate deviation, and 𝑊 1 >
+
+0.35 reflects a clear mismatch in behavioral distribution. 
+
+• Mean Absolute Percentage Error (MAPE) [ 69 ]: Measures the relative prediction error of engagement magnitudes, evaluating the accuracy of the four-dimensional engagement vector y𝑡 ∈ R4.
+
+• Dynamic Time Warping (DTW) [ 50 ]: Assesses temporal align-ment between simulated and real view traffic trajectories {𝑦 𝑡  
+
+> view
+
+},0   
+
+> 25
+> 50
+> 75
+> 100
+> Time (s)
+> Per Agent
+> 12 16
+> 37
+> 57
+> 0
+> 16
+> 49
+> 89 GA-S 3
+> IntervenSim
+> APR IAS ODM Total
+> 0
+> 200
+> 400
+> 600
+> 800
+> Time (s)
+> Per Event
+> 45 28
+> 731
+> 351
+> 0
+> 102
+> 776
+> 482
+> GA-S 3
+> IntervenSim
+
+Figure 4: Time cost comparison between GA-S 3 and Inter-venSim across different stages. Circles represent GA-S 3, stars represent IntervenSim, solid lines indicate per-agent time, and dashed lines indicate per-event time. 
+
+evaluating the model’s ability to capture realistic fluctuation and trend dynamics. 
+
+• Z-score (Reproducibility) [11 ]: Reports the stability of results across repeated simulations. We run each configuration three times , and report the standardized deviation; |𝑍 | < 1 indicates high reproducibility. 
+
+Baselines. We compare our method against the following repre-sentative approaches: 
+
+• PSP [31 ]: Identifies popularity stage patterns in social media and applies pattern-matching techniques to forecast future trends. 
+
+• S3 [ 22 ]: Uses LLM-based individual agents to simulate virtual social networks with enhanced perception and reasoning. 
+
+• GA-S 3 [ 87 ]: A social simulation framework using static group agents with sentiment and memory dynamics to model network traffic and forecast large-scale events. 
+
+## 4.2 Comparison with Baselines 
+
+The main results are summarized in Table 2, from which several key observations can be made. 
+
+IntervenSim consistently outperforms all baselines across all evaluation metrics. Compared to the previous state-of-the-art, IntervenSim shows a 21.53% improvement in 𝑊 1 and a 41.6% im-provement in MAPE, indicating more accurate alignment with real IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil 
+
+Table 3: Ablation experiments. ℓ1 corresponds to the results of GA-S 3, ℓ8* uses Qwen2.5-7b [ 81 ]. Default settings are marked in gray. 
+
+ℓ APR IAS ODM 𝑊 1 ↓ MAPE ↓ DTW Z-score Ave Agent Num Mean ↓ Std ↓
+
+1 (GA-S 3) – – – 0.1477 16.48% 1.30e+07 0.1890 0.81 16 2 ✓ – – 0.1993 16.90% 1.33e+07 0.1903 0.74 63 – ✓ – 0.1389 15.59% 9.01e+06 0.1862 0.83 20 4 – – ✓ 0.1277 16.12% 0.79e+07 0.1873 0.89 16 5 ✓ ✓ – 0.1526 12.03% 5.05e+06 0.1808 0.76 10 6 ✓ – ✓ 0.1444 14.72% 8.30e+06 0.1854 0.78 67 – ✓ ✓ 0.1111 13.48% 4.91e+06 0.1578 0.84 20 8 (qwen2.5-7b) ✓ ✓ ✓ 0.1171 10.16% 4.47e+06 0.1217 0.76 10 9 (IntervenSim) ✓ ✓ ✓ 0.1159 9.63% 4.30e+06 0.1105 0.73 10 
+
+engagement distributions. DTW mean is reduced by 66.9% (with a 41.6% reduction in variance), showing substantially improved track-ing of temporal traffic dynamics. Z-scores remain within ±1 across three repeated runs, confirming stable and reproducible simula-tion behavior. Overall, these results suggest that IntervenSim more faithfully captures the evolution of public attention and interaction patterns in social networks. 
+
+IntervenSim shows marked advantages in modeling real-istic network traffic variations. While prior baselines can reflect overall trends, they often struggle with fine-grained temporal shifts and multi-phase transitions typical in real-world social events. Inter-venSim reduces the DTW mean by an order of magnitude (from 10 7
+
+to 10 6), indicating substantially improved alignment with temporal patterns. Importantly, it achieves these gains with fewer agents on average (10 in ours vs. 16 in GA-𝑆 3), highlighting the framework’s computational efficiency and its ability to accurately track complex social dynamics at scale. 
+
+## 4.3 Ablation Study 
+
+We perform ablation experiments to evaluate the role and efficiency of the three core modules: (1) Module Effectiveness. We individually and jointly disable each module to evaluate its contribution to overall performance. (2) Computational Efficiency. We measure the runtime overhead introduced by each module to analyze its impact on overall efficiency. 
+
+Q1: Impact of Core Modules. To answer Q1 , we perform ablations over the three core modules: 
+
+• IAS (Intervention-Aware Simulation): We remove source-driven intervention and let crowd agents evolve solely through peer deliberation. 
+
+• APR (Adaptive Public Representation): We replace event-adaptive group construction with a fixed predefined group struc-ture. 
+
+• ODM (Opinion Dynamics Modeling): We disable agent dis-cussion and attitude evolution, preventing cross-agent influence. The ablation results are summarized in Table 3. Comparing ℓ4 to 
+
+ℓ1 shows that enabling ODM significantly improves temporal align-ment, indicating the importance of multi-agent attitude evolution. Event #2                                  
+
+> Control 4
+> Control 5
+> Event #44
+> ""$"
+> !&#
+> !#
+> ##$#
+> #
+> $##
+> $#
+> " "
+> $#%
+> !#
+> #
+>     
+>     
+>     
+>     
+>     
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> !  !#
+> Count  of  Views Attitude  Index
+> Control 1
+> Control 2
+> Con
+> Con
+> Con
+> GT
+> Ours
+> #2
+> GT
+> Ours
+> #44
+> Con
+> Con
+> Event #2 Event #44
+
+Figure 5: Heatmap of five intervention and comment types versus opinion transitions. APR benefits performance primarily when combined with other modules ( ℓ5, ℓ6, ℓ9), as event-adaptive group structures help reduce mismatch between agent roles and event semantics; however, using APR alone ( ℓ2) can slightly degrade performance due to reduced agent diversity. Removing the IAS module ( ℓ3, ℓ6) leads to broad declines across all metrics, highlighting the necessity of source-driven agenda formation in stabilizing deliberation. The full model (ℓ9), integrating all three modules, achieves the best overall results. Additionally, experiments using Qwen2.5-7B ( ℓ8) show consistent gains, demonstrating that the improvements originate from the framework itself rather than a specific LLM backbone. 
+
+Q2: Impact of Time Cost and Module Efficiency. IntervenSim introduces more complex computations per agent than GA-S 3, pri-marily due to its enhanced source-driven influence and group-level interaction dynamics , which reduce large-scale redundancy at the system level (figure 4). Each module contributes the following time costs: the APR 
+
+module adds 4 seconds per agent, the IAS module adds 20 seconds, and the ODM module adds 16 seconds for inter-agent interactions. Despite the increased per-agent time (49 seconds → 89 seconds, an Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. Event #2                                             
+
+> Control 4
+> Control 5
+> Event #44 Event #54 Event #55
+> ""$"
+> !&#
+> !#
+> ##$#
+> #
+> $##
+> $#
+> " "
+> $#%
+> !#
+> #
+>     
+>     
+>     
+>     
+>     
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> !  !#
+> Count  of  Views Attitude  Index
+> Control 1
+> Control 2
+> Control 3
+> Control 4
+> Control 5
+> GT
+> Ours
+> #2
+> GT
+> Ours #44
+> #54
+> #55
+> #2
+> GT
+> Ours
+> #44
+> Control 2
+> GT
+> Ours
+> #54
+> Control 1
+> Control 2
+> Control 3
+> Control 2
+> GT
+> Ours
+> Control 3
+> #55
+> Event #2 Event #44 Event #54 Event #55
+> Prohibition Prohibition
+> Refutation
+> Publicity
+> Announcement Publicity
+> ···
+
+Figure 6: Traffic trend comparison under different ablation settings across events. Results show that interventions, their timing, and the presence of comments significantly influence traffic dynamics. Event #2                                           
+
+> Control 4
+> Control 5
+> Event #44 Event #54 Event #55
+> ""$"
+> !&#
+> !#
+> ##$#
+> #
+> $##
+> $#
+> " "
+> $#%
+> !#
+> #
+>     
+>     
+>     
+>     
+>     
+>     
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> !  !#
+> Count  of  Views Attitude  Index
+> Control 1
+> Control 2
+> Control 3
+> Control 4
+> Control 5
+> GT
+> Ours
+> #2
+> GT
+> Ours #44
+> #54
+> #55
+> #2
+> GT
+> Ours
+> #44
+> Control 2
+> GT
+> Ours
+> #54
+> Control 1
+> Control 2
+> Control 3
+> Control 2
+> GT
+> Ours
+> Control 3
+> #55
+> Event #2 Event #44 Event #54 Event #55
+
+Figure 7: Opinion evolution of different group agents across four events. Consensus, polarization, attenuation, and reinforcement patterns emerge. Opinion shifts commonly follow interventions or high-impact public comments and align with surges in event traffic. Shaded areas indicate periods of intervention or high-impact comment activity. 
+
+81.63% increase), IntervenSim reduces total simulation time per event (776 seconds → 482 seconds, a 37.89% reduction) due to the smaller number of agents required. 
+
+## 4.4 Case Study 
+
+Intervention Analysis. To evaluate the effects of the intervention-aware closed-loop mechanism, we conduct controlled experiments 
+
+on (i) intervention timing in the Source-Driven Process and (ii) the presence of communicative responses in the Crowd Deliberation Process . Each experiment compares the observed (real-timestamped) condition with event-matched counterfactual controls: 
+
+• Control 1: Disabling public commenting 
+
+• Control 2: Removing all source-side interventions 
+
+• Control 3: Changing the intervention time 
+
+• Control 4: Removing the second intervention 
+
+• Control 5: Removing the first intervention 
+
+IntervenSim accurately models how intervention type and timing influence collective attention through source-side interventions and public response. As shown in Figure 6, Inter-venSim successfully reproduces a wide range of intervention effects observed in real-world social dynamics across four representative events (detailed descriptions and characteristics are provided in the Appendix table 4). Interventions such as Publicity , Announce-ment , Response , and Refutation amplify engagement (e.g., Events #2 and #44); when occurring sequentially, they generate bi-modal or recursively rising attention patterns, as both source-side signal-ing and subsequent public discussion can trigger renewed waves of participation, reflecting how exposure and discourse jointly sus-tain collective attention. In contrast, Prohibition interventions (e.g., Events #54 and #55) produce either effective suppression or re-bound effects, depending on contextual timing and communicative openness. More detailed event-level analyses are provided in the Appendix C.1. 
+
+Opinion Dynamics. We categorize collective attitude evolution into four primary modes: 
+
+• Polarization: agents divide into opposing clusters of positive and negative attitudes. 
+
+• Consensus: attitudes converge toward a dominant shared orien-tation. 
+
+• Reinforcement: existing attitudes intensify while retaining their original polarity. 
+
+• Attenuation: attitude magnitudes weaken, indicating reduced conviction. 
+
+IntervenSim captures the co-evolution of external inter-ventions and crowd deliberation, reproducing how collective attitudes shift and reorganize through interactive commu-nication dynamics. As shown in Figure 7, across representative events, IntervenSim successfully reproduces these communicative transformations observed in real-world discourse. Sequential Pub-licity and Announcement interventions (e.g., Event #2) trigger al-ternating consensus shifts from negative to positive orientations, producing recursive engagement peaks. Single Publicity actions followed by public commentary (e.g., Event #44) generate cycles of reinforcement and polarity reversal, showing how internal deliber-ation reshapes communicative balance. Prohibition interventions IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil 
+
+(e.g., Events #54 and #55) yield contrasting outcomes: timely restric-tion attenuates negative reproduction, whereas delayed enforce-ment amplifies critical narratives due to entrenched communicative momentum. Notably, days with major attitude realignments coincide with traffic peaks, and peak amplitude correlates with the magni-tude of collective attitude shifts, indicating a tight coupling between opinion evolution and public attention. More detailed event-wise analyses are provided in the Appendix C.2. 
+
+Intervention–Opinion Correlation. As shown in Figure 5, consen-sus commonly follows announcements or refutations , while 
+
+responses often trigger polarization . Publicity tends to reinforce 
+
+existing attitudes, and prohibitions usually attenuate them, though excessive restriction can provoke backlash and renewed polariza-tion. Comments , reflecting diverse perspectives, have limited di-rect impact but may reinforce echo-chamber effects. Overall, these results suggest that different intervention types tend to guide collective attitudes toward distinct evolutionary patterns within public response .
+
+## 5 Conclusion 
+
+IntervenSim presents a large-scale and scalable framework for sim-ulating social network dynamics with interpretable structure and empirical realism. By integrating intervention-aware simulation, source-crowd interaction, and opinion dynamics modeling, it cap-tures how interventions and crowd deliberation jointly shape collec-tive attention and opinion evolution. Experimental results demon-strate that IntervenSim reproduces real-world patterns of amplifica-tion, suppression, consensus, and polarization with higher accuracy and efficiency than prior frameworks. This paradigm bridges LLM-based social agents with established social theories, providing a uni-fied foundation for future research on interpretable, data-aligned, and dynamically adaptive social simulations. 
+
+## Acknowledgments 
+
+To Robert, for the bagels and explaining CMYK and color spaces. 
+
+## References 
+
+[1] Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Floren-cia Leoni Aleman, Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et al . 2023. GPT-4 Technical Report. arXiv preprint arXiv:2303.08774 
+
+(2023). [2] Badr AlKhamissi, Muhammad ElNokrashy, Mai Alkhamissi, and Mona Diab. 2024. Investigating Cultural Alignment of Large Language Models. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , Lun-Wei Ku, Andre Martins, and Vivek Srikumar (Eds.). Association for Computational Linguistics, Bangkok, Thailand, 12404–12422. doi:10.18653/ v1/2024.acl-long.671 [3] Jacy Reese Anthis, Ryan Liu, Sean M Richardson, Austin C. Kozlowski, Bernard Koch, Erik Brynjolfsson, James Evans, and Michael S. Bernstein. 2025. Po-sition: LLM Social Simulations Are a Promising Research Method. In Forty-second International Conference on Machine Learning Position Paper Track . https: //openreview.net/forum?id=cRBg1dtj7o [4] Eytan Bakshy, Solomon Messing, and Lada A Adamic. 2015. Exposure to ideologi-cally diverse news and opinion on Facebook. Science 348, 6239 (2015), 1130–1132. [5] Youssef Bouanan, Gregory Zacharewicz, Judicael Ribault, and Bruno Vallespir. 2019. Discrete Event System Specification-Based Framework for Modeling and Simulation of Propagation Phenomena in Social Networks: Application to the Information Spreading in a Multi-Layer Social Network. Simulation 95, 5 (2019), 411–427. [6] Elizabeth Bruch and Jon Atwell. 2015. Agent-based models in empirical social research. Sociological methods & research 44, 2 (2015), 186–221. [7] Serina Chang, Alicja Chaszczewicz, Emma Wang, Maya Josifovska, Emma Pierson, and Jure Leskovec. 2024. LLMs generate structurally realistic social networks but overestimate political homophily. arXiv preprint arXiv:2408.16629 (2024). [8] Myra Cheng, Esin Durmus, and Dan Jurafsky. 2023. Marked Personas: Using Natural Language Prompts to Measure Stereotypes in Language Models. In Pro-ceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , Anna Rogers, Jordan Boyd-Graber, and Naoaki Okazaki (Eds.). Association for Computational Linguistics, Toronto, Canada, 1504–1532. doi:10.18653/v1/2023.acl-long.84 [9] Bastien Chopard and Michel Droz. 1998. Cellular Automata. Modelling of Physical 
+
+1 (1998). [10] Bernard Cecil Cohen. 2015. Press and foreign policy. (2015). [11] Alexander E Curtis, Tanya A Smith, Bulat A Ziganshin, and John A Elefteriades. 2016. The mystery of the Z-score. Aorta 4, 04 (2016), 124–130. [12] Xiongwei Dang, Wenxuan Liu, Xian Zhong, and Zheng Wang. 2025. SegTraj: A Segmented-Trajectory-Aware Spatio-Temporal Graph Convolutional Network for Social Group Detection. In Proceedings of the 33rd ACM International Conference on Multimedia (Dublin, Ireland) (MM ’25) . Association for Computing Machinery, New York, NY, USA, 4571–4579. doi:10.1145/3746027.3755506 [13] Paul Davidsson. 2002. Agent-Based Social Simulation: A Computer Science View. 
+
+Journal of Artificial Societies and Social Simulation 5, 1 (2002). [14] Kenyon B De Greene. 2012. A Systems-Based Approach to Policymaking . Springer Science & Business Media. [15] Morris H DeGroot. 1974. Reaching a consensus. Journal of the American Statistical association 69, 345 (1974), 118–121. [16] Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schelten, Amy Yang, Angela Fan, et al. 2024. The llama 3 herd of models. arXiv preprint arXiv:2407.21783 (2024). [17] Joshua M Epstein and Robert Axtell. 1996. Growing Artificial Societies: Social Science from the Bottom Up . Brookings Institution Press. [18] Anjalie Field, Doron Kliger, Shuly Wintner, Jennifer Pan, Dan Jurafsky, and Yulia Tsvetkov. 2018. Framing and Agenda-setting in Russian News: a Computational Analysis of Intricate Political Strategies. In Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing , Ellen Riloff, David Chiang, Julia Hockenmaier, and Jun’ichi Tsujii (Eds.). Association for Computational Linguistics, Brussels, Belgium, 3570–3580. doi:10.18653/v1/D18-1393 [19] Andreas Flache, Michael Mäs, Thomas Feliciani, Edmund Chattoe-Brown, Guil-laume Deffuant, Sylvie Huet, and Jan Lorenz. 2017. Models of social influence: Towards the next frontiers. Journal of Artificial Societies and Social Simulation 20, 4 (2017). [20] Linton Freeman. 2004. The development of social network analysis. A Study in the Sociology of Science 1, 687 (2004), 159–167. [21] Chen Gao, Xiaochong Lan, Nian Li, Yuan Yuan, Jingtao Ding, Zhilun Zhou, Fengli Xu, and Yong Li. 2024. Large language models empowered agent-based modeling and simulation: A survey and perspectives. Humanities and Social Sciences Communications 11, 1 (2024), 1–24. [22] Chen Gao, Xiaochong Lan, Zhihong Lu, Jinzhu Mao, Jinghua Piao, Huandong Wang, Depeng Jin, and Yong Li. 2023. S ˆ3: Social-network Simulation System with Large Language Model-Empowered Agents. arXiv preprint arXiv:2307.14984 
+
+(2023). [23] Josh A Goldstein, Jason Chao, Shelby Grossman, Alex Stamos, and Michael Tomz. 2024. How persuasive is AI-generated propaganda? PNAS nexus 3, 2 (2024), pgae034. [24] Davide Grossi, Frank Dignum, Mehdi Dastani, and Lambèr Royakkers. 2005. Foundations of organizational structures in multiagent systems. In Proceedings of the Fourth International Joint Conference on Autonomous Agents and Multiagent Systems (The Netherlands) (AAMAS ’05) . Association for Computing Machinery, New York, NY, USA, 690–697. doi:10.1145/1082473.1082578 [25] Andrew M Guess, Neil Malhotra, Jennifer Pan, Pablo Barberá, Hunt Allcott, Taylor Brown, Adriana Crespo-Tenorio, Drew Dimmery, Deen Freelon, Matthew Gentzkow, et al . 2023. How do social media feed algorithms affect attitudes and behavior in an election campaign? Science 381, 6656 (2023), 398–404. [26] Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Peiyi Wang, Qihao Zhu, Runxin Xu, Ruoyu Zhang, Shirong Ma, Xiao Bi, et al . 2025. Deepseek-r1 incen-tivizes reasoning in llms through reinforcement learning. Nature 645, 8081 (2025), 633–638. [27] Lei Guo. 2013. Toward the third level of agenda-setting theory: A network agenda setting model 1 2. In Agenda setting in a 2.0 world . Routledge, 112–133. [28] Rainer Hegselmann. 2015. Opinion dynamics and bounded confidence: models, analysis and simulation. The Journal of Artificial Societies and Social Simulation 
+
+(2015). [29] Yangliu Hu, Zikai Song, Na Feng, Yawei Luo, Junqing Yu, Yi-Ping Phoebe Chen, and Wei Yang. 2025. Sf2t: Self-supervised fragment finetuning of video-llms for fine-grained understanding. In Proceedings of the Computer Vision and Pattern Recognition Conference . 29108–29117. [30] Gary King. 2013. A solution to the ecological inference problem: Reconstructing individual behavior from aggregate data . Princeton University Press. Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+[31] Qingchao Kong, Wenji Mao, Guandan Chen, and Daniel Zeng. 2018. Explor-ing trends and patterns of popularity stage evolution in social media. IEEE Transactions on Systems, Man, and Cybernetics: Systems 50, 10 (2018), 3817–3827. [32] Messi H.J. Lee, Jacob M. Montgomery, and Calvin K. Lai. 2024. Large Language Models Portray Socially Subordinate Groups as More Homogeneous, Consistent with a Bias Observed in Humans. In Proceedings of the 2024 ACM Conference on Fairness, Accountability, and Transparency (Rio de Janeiro, Brazil) (FAccT ’24) . Association for Computing Machinery, New York, NY, USA, 1321–1340. doi:10.1145/3630106.3658975 [33] Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, et al . 2020. Retrieval-augmented generation for knowledge-intensive nlp tasks. 
+
+Advances in neural information processing systems 33 (2020), 9459–9474. [34] Mei Li, Xiang Wang, Kai Gao, and Shanshan Zhang. 2017. A survey on information diffusion in online social networks: Models and methods. Information 8, 4 (2017), 118. [35] Wenbing Li, Zikai Song, Hang Zhou, Yunyao Zhang, Junqing Yu, and Wei Yang. 2025. LoRA-Mixer: Coordinate Modular LoRA Experts Through Serial Attention Routing. arXiv preprint arXiv:2507.00029 (2025). [36] Wenbing Li, Hang Zhou, Junqing Yu, Zikai Song, and Wei Yang. 2024. Coupled mamba: Enhanced multimodal fusion with coupled state space model. Advances in Neural Information Processing Systems 37 (2024), 59808–59832. [37] Junjie Liao, Huacong Tang, Zhou Ziheng, Yizhou Wang, and Fangwei Zhong. 2026. How do Role Models Shape Collective Morality? Exemplar-Driven Moral Learning in Multi-Agent Simulation. arXiv:2603.13876 [cs.MA] https://arxiv.org/ abs/2603.13876 [38] Walter Lippmann. 2017. Public opinion . Routledge. [39] Benjamin Litterer, David Jurgens, and Dallas Card. 2023. When it Rains, it Pours: Modeling Media Storms and the News Ecosystem. In Findings of the Association for Computational Linguistics: EMNLP 2023 , Houda Bouamor, Juan Pino, and Kalika Bali (Eds.). Association for Computational Linguistics, Singapore, 6346–6361. doi:10.18653/v1/2023.findings-emnlp.420 [40] Yijun Liu, Wu Liu, Xiaoyan Gu, Allen He, Weiping Wang, and Yongdong Zhang. 2025. PopSim: Social Network Simulation for Social Media Popularity Prediction. 
+
+arXiv preprint arXiv:2512.02533 (2025). [41] Norton E Long. 1958. The local community as an ecology of games. Amer. J. Sociology 64, 3 (1958), 251–261. [42] Peng Lu and Shizhao Nie. 2019. The strength distribution and combined duration prediction of online collective actions: Big data analysis and BP neural networks. 
+
+Physica A: Statistical Mechanics and its Applications 535 (2019), 121031. [43] Peng Lu, Shizhao Nie, Zheng Wang, Ziwei Jing, Jianwu Yang, Zhongxiang Qi, and Wangmo Pujia. 2018. Predicting durations of online collective actions based on Peaks’ heights. Communications in Nonlinear Science and Numerical Simulation 
+
+55 (2018), 338–354. [44] Peng Lu, Zheng Wang, Shizhao Nie, Wangmo Pujia, Pengfei Lu, and Baosheng Chen. 2018. Exploring the participate propensity in cyberspace collective actions: The 5 ‰ rule. Physica A: Statistical Mechanics and Its Applications 503 (2018), 582–590. [45] Peng Lu, Hou Yang, Hao Li, Mengdi Li, and Zhuo Zhang. 2021. Swarm intelli-gence, social force and multi-agent modeling of heroic altruism behaviors under collective risks. Knowledge-Based Systems 214 (2021), 106725. [46] Maxwell E McCombs and Donald L Shaw. 1972. The agenda-setting function of mass media. Public opinion quarterly 36, 2 (1972), 176–187. [47] Maxwell E McCombs and Donald L Shaw. 1993. The evolution of agenda-setting research: Twenty-five years in the marketplace of ideas. Journal of communication 
+
+43, 2 (1993), 58–67. [48] Dennis L Meadows, William W Behrens, Donella H Meadows, Roger F Naill, Jørgen Randers, and Erich Zahn. 1974. Dynamics of Growth in a Finite World .Vol. 360. Wright-Allen Press, Cambridge, MA. [49] Qirui Mi, Mengyue Yang, Xiangning Yu, Zhiyu Zhao, Cheng Deng, Bo An, Haifeng Zhang, Xu Chen, and Jun Wang. 2025. MF-LLM: Simulating Population Decision Dynamics via a Mean-Field Large Language Model Framework. arXiv preprint arXiv:2504.21582 (2025). [50] Meinard Müller. 2007. Dynamic time warping. Information retrieval for music and motion (2007), 69–84. [51] Mark EJ Newman. 2002. Spread of epidemic disease on networks. Physical review E 66, 1 (2002), 016128. [52] Shizhao Nie, Zheng Wang, Wangmo Pujia, Yuan Nie, and Peng Lu. 2018. Big data prediction of durations for online collective actions based on peak’s timing. 
+
+Physica A: Statistical Mechanics and its Applications 492 (2018), 138–154. [53] Daniele Notarmuzi, Claudio Castellano, Alessandro Flammini, Dario Mazzilli, and Filippo Radicchi. 2022. Universality, Criticality and Complexity of Information Propagation in Social Media. Nature Communications 13, 1 (2022), 1308. [54] Alexandra Olteanu, Emre Kıcıman, and Carlos Castillo. 2018. A Critical Review of Online Social Data: Biases, Methodological Pitfalls, and Ethical Boundaries. In Proceedings of the Eleventh ACM International Conference on Web Search and Data Mining (Marina Del Rey, CA, USA) (WSDM ’18) . Association for Computing Machinery, New York, NY, USA, 785–786. doi:10.1145/3159652.3162004 [55] Scott E Page. 2012. Aggregation in agent-based models of economies. The Knowledge Engineering Review 27, 2 (2012), 151–162. [56] Joon Sung Park, Joseph O’Brien, Carrie Jun Cai, Meredith Ringel Morris, Percy Liang, and Michael S Bernstein. 2023. Generative Agents: Interactive Simulacra of Human Behavior. In Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology . 1–22. [57] Joon Sung Park, Carolyn Q. Zou, Aaron Shaw, Benjamin Mako Hill, Carrie Cai, Meredith Ringel Morris, Robb Willer, Percy Liang, and Michael S. Bernstein. 2024. Generative Agent Simulations of 1,000 People. arXiv:2411.10109 [cs.AI] https://arxiv.org/abs/2411.10109 [58] Jinghua Piao, Yuwei Yan, Jun Zhang, Nian Li, Junbo Yan, Xiaochong Lan, Zhihong Lu, Zhiheng Zheng, Jing Yi Wang, Di Zhou, et al . 2025. Agentsociety: Large-scale simulation of llm-driven generative agents advances understanding of human behaviors and society. arXiv preprint arXiv:2502.08691 (2025). [59] William S Robinson. 2009. Ecological correlations and the behavior of individuals. 
+
+International journal of epidemiology 38, 2 (2009), 337–341. [60] Thomas C Schelling. 1971. Dynamic Models of Segregation. Journal of Mathe-matical Sociology 1, 2 (1971), 143–186. [61] Thomas C Schelling. 2006. Micromotives and Macrobehavior . WW Norton & Company. [62] Donald L Shaw, Maxwell McCombs, David H Weaver, and Bradley J Hamm. 1999. Individuals, groups, and agenda melding: A theory of social dissonance. 
+
+International journal of public opinion research 11, 1 (1999), 2–24. [63] Zikai Song, Run Luo, Lintao Ma, Ying Tang, Yi-Ping Phoebe Chen, Junqing Yu, and Wei Yang. 2025. Temporal coherent object flow for multi-object tracking. In 
+
+Proceedings of the AAAI Conference on Artificial Intelligence , Vol. 39. 6978–6986. [64] Flaminio Squazzoni. 2008. The Micro-Macro Link in Social Simulation. Sociologica 
+
+2, 1 (2008), 3–5. [65] Flaminio Squazzoni, Wander Jager, and Bruce Edmonds. 2014. Social Simulation in the Social Sciences: A Brief Overview. Social Science Computer Review 32, 3 (2014), 279–294. [66] Kate Starbird, Ahmer Arif, and Tom Wilson. 2019. Disinformation as Collabora-tive Work: Surfacing the Participatory Nature of Strategic Information Operations. 
+
+Proc. ACM Hum.-Comput. Interact. 3, CSCW, Article 127 (Nov. 2019), 26 pages. doi:10.1145/3359229 [67] Melanie Subbiah, Amrita Bhattacharjee, Yilun Hua, Tharindu Kumarage, Huan Liu, and Kathleen McKeown. 2023. Towards Detecting Harmful Agendas in News Articles. In Proceedings of the 13th Workshop on Computational Approaches to Subjectivity, Sentiment, & Social Media Analysis , Jeremy Barnes, Orphée De Clercq, and Roman Klinger (Eds.). Association for Computational Linguistics, Toronto, Canada, 110–128. doi:10.18653/v1/2023.wassa-1.11 [68] Ziying Tan, Linbo Luo, Haiyan Yin, Yew-Soon Ong, and Wentong Cai. 2025. Crowd Dynamics Demand Adaptivity: Self-Adaptive Physics-Informed Neural Network for Crowd Simulation. In Proceedings of the 33rd ACM International Conference on Multimedia (Dublin, Ireland) (MM ’25) . Association for Computing Machinery, New York, NY, USA, 5913–5921. doi:10.1145/3746027.3754569 [69] Jeff Tayman and David A Swanson. 1999. On the validity of MAPE as a measure of population forecast accuracy. Population Research and Policy Review 18 (1999), 299–322. [70] Oren Tsur, Dan Calacci, and David Lazer. 2015. A frame of mind: Using statistical models for detection of framing and agenda setting campaigns. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers) . 1629–1638. [71] Adelinde M Uhrmacher and Danny Weyns. 2018. Multi-Agent Systems: Simulation and Applications . CRC Press. [72] Cédric Villani. 2009. The wasserstein distances. In Optimal transport: old and new . Springer, 93–111. [73] Angelina Wang, Jamie Morgenstern, and John P Dickerson. 2025. Large language models that replace human participants can harmfully misportray and flatten identity groups. Nature Machine Intelligence (2025), 1–12. [74] Chenxi Wang, Zongfang Liu, Dequan Yang, and Xiuying Chen. 2025. Decoding Echo Chambers: LLM-Powered Simulations Revealing Polarization in Social Networks. In Proceedings of the 31st International Conference on Computational Linguistics , Owen Rambow, Leo Wanner, Marianna Apidianaki, Hend Al-Khalifa, Barbara Di Eugenio, and Steven Schockaert (Eds.). Association for Computational Linguistics, Abu Dhabi, UAE, 3913–3923. https://aclanthology.org/2025.coling-main.264/ [75] Lei Wang, Heyang Gao, Xiaohe Bo, Xu Chen, and Ji-Rong Wen. 2025. Yulan-onesim: Towards the next generation of social simulator with large language models. In Workshop on Scaling Environments for Agents .[76] Haoran Wei, Yaofeng Sun, and Yukun Li. 2025. DeepSeek-OCR: Contexts Optical Compression. arXiv preprint arXiv:2510.18234 (2025). [77] Meng Wei, Zhongnian Li, Peng Ying, and Xinzheng Xu. 2025. Seeing the Undefined: Chain-of-Action for Generative Semantic Labels. In Proceedings of the 33rd ACM International Conference on Multimedia (Dublin, Ireland) (MM ’25) . Association for Computing Machinery, New York, NY, USA, 3702–3711. doi:10.1145/3746027.3755157 IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil 
+
+[78] Laura Weidinger, John Mellor, Maribeth Rauh, Conor Griffin, Jonathan Uesato, Po-Sen Huang, Myra Cheng, Mia Glaese, Borja Balle, Atoosa Kasirzadeh, et al .2021. Ethical and social risks of harm from language models. arXiv preprint arXiv:2112.04359 (2021). [79] Yanwei Xie, Weizhi Nie, Lanjun Wang, Hongshuo Tian, Changtai Shi, and An-An Liu. 2025. When Headlines Meet Minds: Empowering News Recommendations with Social Simulator. In Proceedings of the 33rd ACM International Conference on Multimedia (Dublin, Ireland) (MM ’25) . Association for Computing Machinery, New York, NY, USA, 6441–6450. doi:10.1145/3746027.3754565 [80] Tianjiao Xu, Hao Fu, Suiyang Zhang, Jianhua Yin, Tian Gan, and Liqiang Nie. 2025. Enhancing Democratic Mediation through Norm-Awareness in Generative Agent Societies. In Proceedings of the 33rd ACM International Conference on Multimedia 
+
+(Dublin, Ireland) (MM ’25) . Association for Computing Machinery, New York, NY, USA, 11404–11413. doi:10.1145/3746027.3755214 [81] An Yang, Bowen Yu, Chengyuan Li, Dayiheng Liu, Fei Huang, Haoyan Huang, Jiandong Jiang, Jianhong Tu, Jianwei Zhang, Jingren Zhou, et al . 2025. Qwen2.5-1m technical report. arXiv preprint arXiv:2501.15383 (2025). [82] Ziyi Yang, Zaibin Zhang, Zirui Zheng, Yuxian Jiang, Ziyue Gan, Zhiyu Wang, Zijian Ling, Jinsong Chen, Martz Ma, Bowen Dong, Prateek Gupta, Shuyue Hu, Zhenfei Yin, Guohao Li, Xu Jia, Lijun Wang, Bernard Ghanem, Huchuan Lu, Chaochao Lu, Wanli Ouyang, Yu Qiao, Philip Torr, and Jing Shao. 2025. OASIS: Open Agent Social Interaction Simulations with One Million Agents. arXiv:2411.11581 [cs.CL] https://arxiv.org/abs/2411.11581 [83] Liliang Ye, Yunyao Zhang, Yafeng Wu, Yi-Ping Phoebe Chen, Junqing Yu, Wei Yang, and Zikai Song. 2025. Mvp: Winning solution to smp challenge 2025 video track. In Proceedings of the 33rd ACM International Conference on Multimedia .14079–14085. [84] Jinghui Zhang, Kaiyang Wan, Longwei Xu, Ao Li, Zongfang Liu, and Xiuying Chen. 2025. From Individuals to Crowds: Dual-Level Public Response Prediction in Social Media. In Proceedings of the 33rd ACM International Conference on Multimedia (Dublin, Ireland) (MM ’25) . Association for Computing Machinery, New York, NY, USA, 5903–5912. doi:10.1145/3746027.3754828 [85] Xinnong Zhang, Jiayu Lin, Xinyi Mou, Shiyue Yang, Xiawei Liu, Libo Sun, Hanjia Lyu, Yihang Yang, Weihong Qi, Yue Chen, et al . 2025. Socioverse: A world model for social simulation powered by llm agents and a pool of 10 million real-world users. arXiv preprint arXiv:2504.10157 (2025). [86] Xinglang Zhang, Yunyao Zhang, ZeLiang Chen, Junqing Yu, Wei Yang, and Zikai Song. 2026. Logical Phase Transitions: Understanding Collapse in LLM Logical Reasoning. arXiv preprint arXiv:2601.02902 (2026). [87] Yunyao Zhang, Zikai Song, Hang Zhou, Wenfeng Ren, Yi-Ping Phoebe Chen, Junqing Yu, and Wei Yang. 2025. 𝐺𝐴 − 𝑆 3: Comprehensive Social Network Simulation with Group Agents. In Findings of the Association for Computational Linguistics: ACL 2025 , Wanxiang Che, Joyce Nabende, Ekaterina Shutova, and Mohammad Taher Pilehvar (Eds.). Association for Computational Linguistics, Vienna, Austria, 8950–8970. doi:10.18653/v1/2025.findings-acl.468 [88] Yunyao Zhang, Xinglang Zhang, Junxi Sheng, Wenbing Li, Junqing Yu, Wei Yang, and Zikai Song. 2025. From Ambiguity to Verdict: A Semiotic-Grounded Multi-Perspective Agent for LLM Logical Reasoning. arXiv preprint arXiv:2509.24765 
+
+(2025). [89] Zeyu Zhang, Jianxun Lian, Chen Ma, Yaning Qu, Ye Luo, Lei Wang, Rui Li, Xu Chen, Yankai Lin, Le Wu, Xing Xie, and Ji-Rong Wen. 2025. TrendSim: Sim-ulating Trending Topics in Social Media Under Poisoning Attacks with LLM-based Multi-agent System. In Findings of the Association for Computational Lin-guistics: NAACL 2025 , Luis Chiruzzo, Alan Ritter, and Lu Wang (Eds.). Asso-ciation for Computational Linguistics, Albuquerque, New Mexico, 2930–2949. doi:10.18653/v1/2025.findings-naacl.160 [90] Ziming Zhao, Zhaoxuan Li, Tingting Li, and Fan Zhang. 2025. Stealthy-AE: Generating Stealthy Adversarial Examples through Online Social Networks. In 
+
+Proceedings of the 33rd ACM International Conference on Multimedia (Dublin, Ireland) (MM ’25) . Association for Computing Machinery, New York, NY, USA, 3923–3931. doi:10.1145/3746027.3755240 [91] Hang Zhou, Jiale Cai, Yuteng Ye, Yonghui Feng, Chenxing Gao, Junqing Yu, Zikai Song, and Wei Yang. 2025. Video anomaly detection with motion and appearance guided patch diffusion model. In Proceedings of the AAAI Conference on Artificial Intelligence , Vol. 39. 10761–10769. Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+## Appendix Event #2 Event #7 Event #14 
+
+> Count  of  Views  Ours
+> GT
+> S3
+> PSP
+> GT
+> Ours
+> Count  of  Views
+> #7
+> #14
+> #31
+> #44
+> #49
+> #54
+> #55
+> #2
+> Prohibition
+> Refutation
+> Publicity
+> Response
+> Announcement
+> Announcement
+
+··· 
+
+> Count  of  Views
+
+IntervenSim          
+
+> Better dynamics Opinion  dynamic
+> Higher accuracy
+> Closer to real world
+> Intervention Modeling
+> Less costs
+> Less agents
+> Attitude  Index
+> Event #2 Event #44 Event #55
+
+Polarization Consensus Shift Consensus Reinforcement 
+
+> Better scalability
+> Larger scale
+
+Figure 8: Overall intuitive impact of our framework. The results demonstrate the advantages of IntervenSim, including high accuracy, robust opinion dynamics and intervention modeling, greater real-world fidelity, large-scale generalizability and scalability, and lower simulation time cost. 
+
+As shown in Fig. 8, IntervenSim demonstrates superior perfor-mance across multiple aspects. This appendix provides supplemen-tary discussions and implementation details that complement the main paper, including: 
+
+## Appendix Overview 
+
+A. Related Work 
+
+B. Opinion Dynamics Analysis 
+
+C. Detailed Experimental Setup 
+
+D. Ethical Considerations 
+
+E. Prompt Design 
+
+## A Related Work Social Simulation Systems 
+
+Traditional social simulation systems [ 51 , 53 ] model how individual behaviors collectively shape societal structures [ 20 , 65 , 83 ]. Existing paradigms can be grouped into three main categories: 
+
+(1) Mechanistic models. These approaches describe collective behavior through explicit equations or procedural rules, including system-dynamics [ 14 , 48 ] and discrete-event simulations [ 5, 45 ]. They capture macro-level diffusion processes such as epidemic spreading [ 51 ] and online mobilization [ 44 , 52 , 90 ], but rely on fixed parameters and lack adaptive cognition. IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil 
+
+(2) Empirical and statistical models. These data-driven frame-works identify regularities in social diffusion, such as PSP [ 31 ] and peak-based participation dynamics [ 42 , 43 ], revealing consistent patterns like the “5 ‰ rule” of participation [ 44 ]. While effective for large-scale pattern discovery, they offer limited explanatory power for interaction mechanisms underlying opinion dynamics. 
+
+(3) Agent-Based Social Simulation. To overcome the limitations of aggregate and rule-based models, agent-based social simulation (ABSS) offers a bottom-up approach to studying complex social phenomena [ 13 , 64 , 91 ]. By modeling heterogeneity, autonomy, and interaction among individuals, ABSS allows macro-level patterns to emerge from local decisions and cognitive mechanisms [ 24 , 71 ]. Classical works such as Schelling’s segregation model [ 9, 60 , 61 ]and Epstein & Axtell’s Sugarscape [17 ] illustrate how simple pref-erences can yield complex societal structures, while later studies incorporated organizational and normative constraints [ 24 ]. How-ever, traditional ABMs rely on handcrafted rules and static envi-ronments, limiting their ability to model dynamic evolution and intervention effects, and motivating LLM-driven simulations for scalable, adaptive social dynamics. 
+
+## LLM-Based Agent Social Simulation 
+
+Recent advances in LLMs and multimodal AI [ 29 , 35 , 36 , 63 , 81 , 86 ]have transformed agent-based social simulation [ 3, 79 ], enabling agents to communicate, reason, and adapt in natural language [ 7,56 , 57 ]. Early works such as Generative Agents [ 56 , 80 ] and S 3 [ 22 ]demonstrated lifelike social reasoning and interaction [ 77 ], estab-lishing the feasibility of LLM-driven social simulation in small-scale or medium-scale environments. Subsequent frameworks such as So-cioVerse [ 85 ], AgentSociety [ 58 ], Yulan-OneSim [75 ], and OASIS [82 ]further pushed this line toward more scalable infrastructures, richer agent coordination, and larger social environments, including sim-ulations with up to one million agents. Meanwhile, task-oriented systems such as PopSim [40 ] explore how LLM-based social network simulation can be applied to social media popularity prediction, extending agent simulation from open-ended social interaction to event-centered predictive settings. Collectively, these studies sub-stantially improve realism, scalability, and semantic richness in social simulation. However, most existing frameworks still under-model evolving intervention processes and feedback loops between source-side actions and collective responses. As a result, they re-main limited in capturing intervention-sensitive event evolution, opinion dynamics, and attitude shifts in real-world social networks, motivating the design of IntervenSim .
+
+## Population-Aware Social Simulation 
+
+Beyond micro-level interaction modeling, an important line of re-search studies how to represent public response and social dy-namics at macro or population scales. In communication research, agenda-setting theory [ 27 , 46 , 47 , 62 ] and its extensions provide a conceptual account of how issue salience, interpretive framing, and media influence shape collective attention and public cognition over time [ 10 , 38 , 41 , 89 ]. Recent computational studies further op-erationalize these ideas in large-scale discourse analysis, showing how framing, salience, and intermedia influence can be modeled from text and temporal signals [18, 39, 67, 70]. At the same time, emerging work has begun to move from individual-level simulation toward group-, crowd-, or population-level response modeling [ 12 , 68 ]. For example, GA-S 3 [87 ] intro-duces Group Agents to improve scalability and population-level coherence in social network simulation, while MF-LLM [49 ] incor-porates mean-field approximation into LLM-based simulation to improve scalability at the population level. Related work such as 
+
+PAC-LoRA [ 84 ] explicitly models public response across individual and crowd levels, further highlighting the value of macro-level representations for capturing large-scale collective trends. How-ever, these studies still provide limited support for jointly model-ing source-side intervention, public interaction, and intervention-sensitive opinion dynamics within a unified closed-loop simulation framework. Our work builds on this broader macro-level perspec-tive while focusing on how source-side interventions and collective responses co-evolve in social network events. 
+
+## B Opinion Dynamics Formulation 
+
+Definition 1 (DeGroot Model). 
+
+Let 𝐺 = (𝑉 , 𝐸 ) denote a social network, where 𝑉 represents a population of agents and 𝐸 the set of social connections among them. Let N ( 𝑖 ) = { 𝑗 | 𝑖 ∼ 𝑗 ∈ 𝐸 } denote the set of neighbors of agent 𝑖 ∈ 𝑉 . At each timestep 𝑡 , agent 𝑖 updates its opinion 𝑥 𝑖 (𝑡 )
+
+by averaging the opinions of its neighbors: 
+
+𝑓 (𝑥 (𝑡 )) 𝑖 = 1
+
+|N ( 𝑖 )| ∑︁ 𝑗 ∈ N ( 𝑖 )
+
+𝑥 𝑗 (𝑡 )
+
+While the DeGroot model has been highly influential in modeling consensus formation and social learning, it always converges to a global consensus (typically the mean of initial opinions) under mild conditions. Hence, it is insufficient to capture phenomena such as polarization or radicalization. 
+
+Definition 2 (Hegselmann–Krause Model). 
+
+The Hegselmann–Krause (HK) model extends DeGroot by intro-ducing a bounded-confidence mechanism, which restricts influence to neighbors with sufficiently similar opinions. Formally, let 
+
+N ( 𝑖, 𝑡 ) = { 𝑗 | 𝑖 ∼ 𝑗 ∧ | 𝑥 𝑖 (𝑡 ) − 𝑥 𝑗 (𝑡 )| ≤ 𝜖 }
+
+denote the set of neighbors of agent 𝑖 whose opinions lie within a confidence bound 𝜖 . The opinion update is then defined as: 
+
+𝑓 (𝑥 (𝑡 )) 𝑖 = 1
+
+|N ( 𝑖, 𝑡 )| ∑︁ 𝑗 ∈ N ( 𝑖,𝑡 )
+
+𝑥 𝑗 (𝑡 )
+
+By adjusting 𝜖 , this model generates diverse social phenomena, ranging from consensus to clustering and polarization. 
+
+Our Parameterized Model. To unify these two formulations, we introduce a confidence parameter 𝜖 ∈ [ 0, 1] that continuously inter-polates between the DeGroot and HK dynamics. Specifically, given opinions normalized to [0, 1], we define the adaptive neighborhood as 
+
+N𝜖 (𝑖, 𝑡 ) = { 𝑗 | 𝑖 ∼ 𝑗 and |𝑥 𝑖 (𝑡 ) − 𝑥 𝑗 (𝑡 )| ≤ 𝜖 },
+
+with the following limiting cases: 
+
+• 𝜖 = 0: the agent is fully self-isolated ( N0 (𝑖, 𝑡 ) = {𝑖 }), preserving its own opinion; 
+
+• 𝜖 = 1: the agent interacts with all others ( N1 (𝑖, 𝑡 ) = 𝑉 ), equivalent to the uniform DeGroot update; Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+Table 4: Summary of selected events across domains. Intervention types are color-coded as Publicity , Announcement ,Prohibition , Response , Refutation and public Comments . The color scheme matches the shaded areas in Figure 7 and Figure 10.                                    
+
+> Event ID Domain Intervention Description Distinctive Features #2 Education Publicity &Announcement A school cafeteria was reported to have served spoiled pork. A traffic surge and two explosive events of source agent intervention #7 Education Response A case of academic dishonesty led to a professor’s dismissal. A high-profile event with a viewership peak on the 3rd day. #14 Education Response 1,477 freshmen forfeited admission due to late enrollment. A regular event with views peaking on the 2nd day. #31 Sports Announcement The former head coach of the Chinese national football team was sentenced to 20 years in prison in the first instance. A highly explosive event with views peaking on the 2nd day. #44 Education Publicity A vocational school student ranked 12th in the Global Mathematics Competition but faced skepticism over group-agents comments .A high-profile event with two peak. #49 Economy Refutation A fire broke out at a World Financial Center in a certain area. A regular event with views peaking on the 2nd day. #54 Society Prohibition A university student went missing in Myanmar. A high-profile event with a viewership peak on the 3rd day. #55 Politics Prohibition A policy on gradually delaying the statutory retirement age will be implemented next year. A highly explosive event with a surge of traffic.
+
+• 0 < 𝜖 < 1: the agent interacts selectively, forming a local neigh-borhood consistent with bounded-confidence dynamics. The update rule follows: 
+
+𝑥 𝑖 (𝑡 + 1) = 1
+
+|N 𝜖 (𝑖, 𝑡 )| ∑︁ 𝑗 ∈ N 𝜖 (𝑖,𝑡 )
+
+𝑥 𝑗 (𝑡 ),
+
+which allows 𝜖 to serve as a continuous control parameter of in-teraction openness . The confidence threshold 𝜖 introduced in Eq. 1 governs the formation of adaptive neighborhoods N𝜖 (𝑖, 𝑡 ) that de-termine the range of social influence during attitude updating. 
+
+Proof. 
+
+For 𝜖 = 0, the bounded-confidence condition 
+
+|𝑥 𝑖 (𝑡 ) − 𝑥 𝑗 (𝑡 )| ≤ 0
+
+holds only when 𝑥 𝑖 (𝑡 ) = 𝑥 𝑗 (𝑡 ). Hence, N0 (𝑖, 𝑡 ) = {𝑖 }, and the update becomes 
+
+𝑥 𝑖 (𝑡 + 1) = 𝑥 𝑖 (𝑡 ),
+
+indicating that each agent remains self-isolated without external influence. For 𝜖 = 1, since all opinions are normalized to [0, 1], the inequality 
+
+|𝑥 𝑖 (𝑡 ) − 𝑥 𝑗 (𝑡 )| ≤ 1 holds for all 𝑖, 𝑗 . Thus N1 (𝑖, 𝑡 ) = 𝑉 , and the update rule reduces to the uniform DeGroot process: 
+
+𝑥 𝑖 (𝑡 + 1) = 1
+
+𝑁 ∑︁ 𝑗 ∈𝑉 
+
+𝑥 𝑗 (𝑡 ).
+
+Therefore, the proposed formulation provides a continuous bridge between the Hegselmann–Krause and DeGroot models through the single parameter 𝜖 .
+
+## C Experimental Details C.1 Controlled Intervention 
+
+As shown in Figure 6 and Figure 9, we provide detailed compar-isons across representative controlled experiments to illustrate how different intervention types and timings shape traffic dynamics. For Event #2 , which involved two sequential interventions— Publicity 
+
+followed by Announcement —the experimental setting closely repro-duced the real-world traffic pattern. In Control 4 , where the second intervention ( Announcement ) was omitted, the second engagement peak disappeared. In Control 5 , removing the first intervention (Publicity ) reduced the initial surge, leading to an overall decline in traffic volume. For Events #7, #14, and #31 , the experimental results were consistent with observed dynamics. In Control 1 , restricting com-municative responses ( Comments ) caused a moderate decrease in overall traffic. In Control 2 , without any intervention ( Response 
+
+or Announcement ), public attention remained significantly lower, underscoring the amplifying effect of intervention-driven exposure. For Event #44 , the experimental group again matched empirical trends. In the first cycle, Control 1 produced lower traffic and no secondary peak, while Control 2 , omitting the Publicity interven-tion, resulted in minimal exposure. These findings indicate that early-stage Publicity effectively triggered recursive engagement within the discussion network. For Event #49 , the experimental configuration reproduced the observed engagement trajectory. Control 1 showed reduced par-ticipation and no secondary peak, whereas Control 2 , removing the Refutation intervention, yielded higher sustained attention with a delayed peak on day three. Without refutation, discussions con-tinued circulating within the same audience cluster, reinforcing attention but lacking broader diffusion. For Event #54 , where the experimental condition included a restrictive Prohibition intervention, traffic trends aligned with real-world observations. In Control 2 , removing the Prohibition led to continued escalation of attention and persistently high engage-ment, but no secondary peak emerged. In Control 3 , delaying the 
+
+Prohibition by two days produced a similar pattern with weaker post-intervention variation, suggesting lower responsiveness to late interventions. For Event #55 , which also featured a Prohibition intervention, the experimental outcomes closely mirrored empirical dynamics. IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil Control 4                       
+
+> Control 5
+> Count  of  Views Attitude  Index
+> Control 1
+> Control 2
+> Control 3
+> Control 4
+> Control 5
+> GT
+> Ours
+> #2
+> GT
+> Ours #44
+> #54
+> #55
+> #2
+> Ours
+> #44
+> Control 2
+> GT
+> Ours
+> #54
+> Control 1
+> Control 2
+> Control 3
+> Control 2
+> GT
+> Ours
+> Control 3
+> #55
+> Event #2 Event #44 Event #54 Event #55
+> Prohibition Prohibition Publicity
+> Publicity
+> ···
+> Event #7 Event #14 Event #31 Event #49
+> Control 1
+> Control 2
+> GT
+> Ours
+> GT
+> Ours GT
+> Ours
+> GT
+> Ours
+> #7
+> #14 #31 #49
+> Control 1
+> Control 2
+> Control 1
+> Control 2
+> Control 1
+> Control 2
+> Response
+> ··· Response Announcement Refutation
+> Count  of  Views
+
+Figure 9: Additional event-level traffic trends under different intervention and control settings, validating the consistency of intervention and timing effects observed in the main results. Attitude  Index                            
+
+> Event #2 Event #44 Event #54 Event #55
+> Event #7 Event #14 Event #31 Event #49
+> Control 1
+> Control 2
+> GT
+> Ours
+> GT
+> Ours GT
+> Ours
+> GT
+> Ours
+> #7
+> #14 #31 #49
+> Control 1
+> Control 2
+> Control 1
+> Control 2
+> Control 1
+> Control 2
+> Response
+> ··· Response Announcement Refutation
+> Count  of  Views
+> Attitude  Index
+> Event #7 Event #14 Event #3 1Event #49
+
+Figure 10: Additional results on opinion dynamics under different interventions. The figure illustrates how responses tend to intensify polarization, while announcements and refutations promote collective consensus. 
+
+In Control 2 , the absence of Prohibition produced a weak initial response and no subsequent amplification. In Control 3 , applying the Prohibition earlier (day two) generated a stronger suppressive effect, significantly reducing engagement throughout the cycle and highlighting the timing sensitivity of intervention impacts. 
+
+## C.2 Opinion Dynamics Analysis 
+
+For Event #2 , the experimental group exhibited two clear atti-tude shifts among simulated crowd agents. As shown in Figure 7 (Event #2), the first shift followed a negative Publicity interven-tion, which introduced a framing change that reinforced public dissatisfaction and produced a strong wave of critical sentiment. The second shift occurred after a positive Announcement , which reframed the narrative and prompted a collective move toward supportive evaluations. These two realignments corresponded to distinct engagement peaks, reflecting how early negative framing and subsequent clarification jointly shaped the direction of public sentiment. For Event #44 , two major attitude transitions were observed. As shown in Figure 7 (Event #44), an initial Publicity interven-tion amplified early alignment, shifting public response from mild polarization toward stronger affirmation and reduced skepticism. Later, emerging skeptical comments introduced narrative contesta-tion, triggering a polarity reversal with a higher share of critical responses. The two engagement peaks thus reflect how external publicity and internal discussion jointly drive recursive opinion shifts. For Event #54 , a restrictive Prohibition intervention limited event-related discussion and weakened the ongoing spread of neg-ative sentiment (see Figure 7, Event #54). In its aftermath, some subgroups generated compensatory positive narratives, producing mild polarization with overall lower expressive intensity. Although a modest engagement peak emerged, its small magnitude suggests that information-flow constraints prevented large-scale amplifica-tion. For Event #55 , a delayed Prohibition intervention produced the opposite effect (Figure 7, Event #55). By the time the restriction was introduced, critical narratives had already consolidated in public re-sponse. The belated intervention failed to reorganize the dominant stance and instead reinforced existing negativity. Although minor positive reactions appeared briefly, they were quickly absorbed by the prevailing critical tone, illustrating the limited impact of delayed interventions on entrenched attitudes. As shown in Figure 10, Event #7 and Event #14 (responses) exhibit clear polarization patterns, where divergent interpretations and emotional amplification drive opinion bifurcation following the initial engagement peaks. In contrast, Event #31 (announce-ment) and Event #49 (refutation) display emerging consensus, as authoritative communication and factual clarification effectively realign public sentiment toward a shared evaluative stance. These observations further substantiate the general trend identified in Fig-ure 5, indicating that responses often induce polarization, whereas 
+
+announcements and refutations tend to consolidate consensus within public response. 
+
+## D Ethical Considerations 
+
+IntervenSim is intended as a research framework for intervention-aware social simulation, rather than a decision-making system for real-world governance or platform control. Because it models source-crowd interaction and opinion dynamics under intervention, Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+its outputs could be over-interpreted as prescriptions for how insti-tutions should intervene in public discourse. We do not advocate such use. (1) Abstraction of social heterogeneity. Crowd agents im-prove scalability but necessarily compress within-group diversity in cognition, motivation, and expression [ 6, 19 , 55 ]. As a result, sim-ulated attitude shifts or opinion dynamics should not be treated as faithful proxies for all individuals represented by a group [30, 59]. (2) Dependence on LLM representation fidelity. Group agents and their reasoning traces are generated by large language models, whose internal representations may reflect stereotypes, uneven cultural coverage, or biased associations[ 2, 8, 78 ]. This may dis-tort the portrayal of certain communities and misrepresent social heterogeneity [32, 73]. (3) Misuse risk of intervention modeling. Because the frame-work explicitly models intervention timing, types, and effects on collective response, it could in principle be misused to explore strategies for amplifying, suppressing, or reframing public atten-tion. Our goal is scientific analysis and comparative simulation, not operational influence deployment [23, 25, 66]. (4) Simplified platform dynamics. The current framework does not model recommendation, ranking, moderation, or cross-platform diffusion. It may therefore omit important sources of am-plification, suppression, or feedback in real-world information en-vironments [4]. (5) Data and privacy considerations. Our experiments use event-level social media data and aggregate traffic trajectories rather than individual user modeling. Nevertheless, sensitive events may still contain harmful narratives, so any future release of data, prompts, or code should follow platform terms, privacy constraints, and responsible disclosure practices [54]. 
+
+## E Prompt Design 
+
+We present the main prompts used in our framework, covering relevance reasoning for subgroup generation 5, source-side inter-vention 6, crowd deliberation 7, and group-level engagement esti-mation 8. IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil 
+
+System: 
+
+You are a relevance reasoning agent responsible for fine-grained group specialization. Your task is to expand a general population node (e.g., students ) into finer subgroups and evaluate their relevance to a given event. Event Context: 
+
+• {event_description} 
+
+Coarse Group Node: 
+
+• {group_node} 
+
+Instructions: 1. Generation: 
+
+• Generate a list of possible fine-grained subgroups under the provided general group node, grounded in the event content. 
+
+• Subgroups should reflect behavioral or contextual distinctions (e.g., discipline, role, engagement type). 
+
+2. Scoring: 
+
+• For each generated subgroup, assess how semantically aligned it is with the event content. 
+
+• Use relevance reasoning based on LLM contrastive prompts to assign a score between 0 and 1. 
+
+Output Format (JSON): 
+
+{
+
+"generated_subgroups": [ 
+
+{"name": "{subgroup_name}", "relevance": {score} },... (multiple subgroup entries) ... ]
+
+}
+
+Notes: 
+
+• The top-𝑘 most relevant subgroups will be used for agent instantiation in subsequent simulation. 
+
+• Relevance scores should be consistent with the semantic fit of the subgroup to the event context. 
+
+Example Output:                
+
+> {" generated_subgroups ": [{" name ": " master of mathematics ", " relevance ": 0.91} , {" name ": " bachelor ", " relevance ": 0.85} , {" name ": " spectator ", " relevance ": 0.72} , {" name ": " researcher ", " relevance ": 0.42} ]}
+
+Table 5: Relevance reasoning prompt for fine-grained subgroup generation and evaluation Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+System: 
+
+You are {source_agent_name}, a government/institutional/media/opinion-leader actor responsible for managing public information flow. You operate within the social network world: {world_description}, where events evolve through public response and agent interac-tions. perception: 
+
+• Time: {day_n} 
+
+• Current Event: {event_description} 
+
+• Public Opinion: {opinion_summary} 
+
+• Current Visibility: {visibility} Your State: 
+
+• Intervention History: {intervention_history} 
+
+• Policy Priority: {policy_goal} 
+
+• Assessment of Public Risk: {risk_assessment} 
+
+Reason step-by-step: 
+
+• Based on event status, public opinion, and your institutional goal, reason step-by-step to decide which intervention type to apply. 
+
+• Explain how your decision aligns with minimizing misinformation, guiding public attention, or stabilizing opinion dynamics. 
+
+• Your reasoning should explicitly connect current event visibility, opinion polarity, and risk evaluation with your chosen intervention strategy. 
+
+Output Format: The output must follow the JSON structure below:   
+
+> {"reasoning_trace": "Detailed chain-of-thought explanation", "selected_intervention": "Prohibition | Refutation | Publicity | Response | Announcement", "expected_effect": "Visibility ↓/↑| Opinion shift | Consensus building | Polarization mitigation" }
+
+Intervention Options ( 𝐼 1–𝐼 5): 
+
+A source agent may select one of five interventions according to current conditions: 
+
+(1) Prohibition — restrict event visibility to suppress escalation; 
+
+(2) Refutation — counter misinformation and restore factual accuracy; 
+
+(3) Publicity — enhance exposure to guide public focus toward official narratives; 
+
+(4) Response — provide institutional or leader feedback to shape interpretation; and 
+
+(5) Announcement — issue formal statements that reframe event meaning or provide closure. Each intervention aims to modulate information diffusion, emotional salience, or collective interpretation depending on situational needs. 
+
+Table 6: Source-agent prompt for decision-making over five intervention types ( 𝐼 1–𝐼 5). IntervenSim: Intervention-Aware Social Network Simulation for Opinion Dynamics Conference’26, November 2026, Rio de Janeiro, Brazil 
+
+System: 
+
+You are {agent_name}, a crowd agent representing collective audience opinions. You operate in the social network world: {world_description}, where events evolve through communication and reflection among agents. 
+
+Perception: Your State: 
+
+• Time: {day_n} • Cognitive State: {previous_state} 
+
+• Current Event: {event_description} • Memory Trace: {memory_trace} 
+
+• Source-side Interventions: {intervention_vector} • Interaction Range: {interaction_range} 
+
+• Aggregated Public Signal: {mean_state} • Opinion: {opinions} 
+
+Reason step-by-step: 
+
+• Considering your cognitive state, memory, and current opinions, reason step-by-step to decide your next deliberative action. 
+
+• Your reasoning should connect source-side interventions, neighboring opinions, and emotional influence to your action choice. 
+
+• Explicitly describe how you balance cognition with collective communication when selecting actions. 
+
+Output Format: The output must follow the JSON structure below: 
+
+{"reasoning_trace": "Detailed chain-of-thought explanation", "selected_action": "SelectPartner | DiscussOpinion | UpdateOpinion" }
+
+Action 1: SelectPartner 
+
+Decide your level of openness to interaction using parameter 𝜖 ∈ [ 0, 1]. 𝜖 = 1 indicates a fully connected network (open to all agents), 𝜖 = 0 means self-isolation, and 0 < 𝜖 < 1 reflects partial interaction within a local neighborhood. Select potential discussion partners according to this openness. 
+
+Output Format (JSON): 
+
+{"action": "SelectPartner", "epsilon": float in [0,1], }
+
+Action 2: DiscussOpinion 
+
+Engage in discussions with each selected neighbor individually. For every neighboring agent, respond with a message reflecting your current opinion, emotional tone, and interpretation of the event. Each response should indicate how you agree, disagree, or remain neutral toward the neighbor’s stance. 
+
+Output Format (JSON): 
+
+{"action": "DiscussOpinion", "responses": [ {"target_agent_id": "agent_id_n", "reply_content": "your message or comment", "reply_tone": "supportive | neutral | opposing" }, ... ]}
+
+Action 3: UpdateOpinion 
+
+Update your opinion based on the influence of source-side interventions or high-impact public discussions . The opinion score lies within 
+
+[− 1, 1], where negative values denote opposition and positive values indicate support. Adjust your stance considering group consensus, emotional contagion, and authoritative signals. 
+
+Output Format (JSON): 
+
+{"action": "UpdateOpinion", "updated_opinion": float in [-1,1], "update_reason": "source_intervention / group_discussion / self_reflection", }
+
+Table 7: Crowd-agent prompt for deliberative reasoning with three actions: interaction selection, discussion, and opinion updating. Conference’26, November 2026, Rio de Janeiro, Brazil Yunyao Zhang et al. 
+
+System: 
+
+You are {agent_name}, a crowd agent responsible for generating group-level engagement indicators based on collective opinion and social context. You operate in the social network world: {world_description}, where source-side interventions and crowd deliberations jointly influence information diffusion. 
+
+Perception: 
+
+• Time: {day_n} 
+
+• Current Event: {event_description} 
+
+• Source-side Interventions: {intervention_vector} 
+
+• Aggregated Public Signal: {mean_state} 
+
+Your State: 
+
+• Cognitive State: {previous_state} 
+
+• Memory Trace: {memory_trace} 
+
+• Interaction Range: {interaction_range} 
+
+• Opinion: {opinions} 
+
+Reason step-by-step: 
+
+• Analyze how collective opinion, interaction range, and source-side influence shape engagement behavior. 
+
+• Stronger positive opinions and wider interaction ranges generally correspond to higher engagement levels. 
+
+• Incorporate contextual cues from interventions and aggregated public signals when generating results. 
+
+Output Format: The output must follow the JSON structure below: 
+
+{"reasoning_trace": "Reasoning on how opinion and group features jointly affect engagement.", "engagement_vector": { "views": int, "likes": int, "comments": int, "shares": int }, "generation_reason": "Derived from opinion intensity, group characteristics, and external influence." }
+
+Table 8: Prompt for generating group-level engagement indicators ( 𝑦 4) conditioned on opinion, interaction, and source-side influence.
