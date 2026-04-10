@@ -1,0 +1,2925 @@
+Title: SYN-DIGITS: A Synthetic Control Framework for Calibrated Digital Twin Simulation
+
+URL Source: https://arxiv.org/pdf/2604.07513v1
+
+Published Time: Fri, 10 Apr 2026 00:12:56 GMT
+
+Number of Pages: 39
+
+Markdown Content:
+# SYN-DIGITS: A Synthetic Control Framework for Calibrated Digital Twin Simulation 
+
+Grace Jiarui Fan ∗ Chengpiao Huang † Tianyi Peng ‡
+
+Kaizheng Wang § Yuhang Wu ‡
+
+This version: April 8, 2026 
+
+Abstract 
+
+AI-based persona simulation—often referred to as digital twin simulation —is in-creasingly used for market research, recommender systems, and social sciences. Despite their flexibility, large language models (LLMs) often exhibit systematic bias and miscal-ibration relative to real human behavior, limiting their reliability. Inspired by synthetic control methods from causal inference, we propose SYN-DIGITS (SYN thetic Control Framework for Calibrated DIGI tal Twin Simulation), a principled and lightweight cal-ibration framework that learns latent structure from digital-twin responses and trans-fers it to align predictions with human ground truth. SYN-DIGITS operates as a post-processing layer on top of any LLM-based simulator and thus is model-agnostic. We develop a latent factor model that formalizes when and why calibration succeeds through latent space alignment conditions, and we systematically evaluate ten cali-bration methods across thirteen persona constructions, three LLMs, and two datasets. SYN-DIGITS supports both individual-level and distributional simulation for previ-ously unseen questions and unobserved populations, with provable error guarantees. Experiments show that SYN-DIGITS achieves up to 50% relative improvements in individual-level correlation and 50–90% relative reductions in distributional discrep-ancy compared to uncalibrated baselines. 1
+
+Keywords: Digital twin, Generative models, Large language models, Calibration, Synthetic control, Distribution shift 
+
+# 1 Introduction 
+
+Simulating human behavior is central to scientific inquiry and practical decision-making, yet it remains challenging due to the heterogeneity, context dependence, and latent struc-ture of human responses. Classical approaches—agent-based models, cognitive architectures, 
+
+> ∗
+
+Finance Division, Columbia Business School. 
+
+> †
+
+Department of IEOR, Columbia University 
+
+> ‡
+
+Decision, Risk, and Operations Division, Columbia Business School. 
+
+> §
+
+Department of IEOR and Data Science Institute, Columbia University 
+
+> 1
+
+Author names are ordered alphabetically. Code and data are publicly available at https://github. com/yw3453/syn-digits .
+
+1
+
+> arXiv:2604.07513v1 [cs.LG] 8 Apr 2026
+
+discrete-choice models, and latent-variable frameworks—offer structured representations but face limitations in scalability and generality (Epstein and Axtell, 1996; Bonabeau, 2002; Laird et al., 1987; Anderson et al., 2004; McFadden, 1974; Train, 2009; Lord, 2012). Large language models (LLMs) have emerged as promising human behavior simulators— often called digital twins (DTs)—due to their ability to generate coherent, context-sensitive responses across diverse domains (Aher et al., 2023; Horton, 2023; Tranchero et al., 2024; Binz et al., 2025; Toubia et al., 2025; Peng et al., 2026). However, LLMs are optimized for next-token prediction rather than faithful reproduction of human response distributions, and naïve deployment typically produces systematic deviations including biases, overconfidence, and distributional concentration (Santurkar et al., 2023; Scherrer et al., 2023; Rossi et al., 2024; Gao et al., 2025; Li et al., 2025; Hullman et al., 2026). Recent efforts to narrow this sim-to-real gap include fine-tuning on task-specific data and prompt engineering strategies such as persona descriptions and in-context examples (Cho et al., 2024; Binz et al., 2025; Kolluri et al., 2025; Cao et al., 2025; Peng et al., 2026). How-ever, fine-tuning is computationally expensive and struggles in data-scarce settings common in practice, such as between cycles of online model updates, while prompt engineering lacks principled mechanisms for correcting systematic biases. Neither paradigm provides a unified, model-agnostic framework for correcting misalignment across tasks, questions, and popula-tions. This motivates calibration methods that complement these approaches—methods that are lightweight, data-efficient, and amenable to theoretical analysis. Motivated by these desiderata, we propose SYN-DIGITS (SYN thetic Control Frame-work for Calibrated DIGI tal Twin Simulation), a post-hoc calibration layer for any LLM-based simulator—whether zero-shot, prompt-engineered, or fine-tuned. To illustrate our approach, suppose we have n DTs ˜p1, . . . , ˜pn corresponding to n real individuals p1, . . . , p n.Each DT ˜pi is constructed by prompting an LLM with individual-specific attributes (e.g., demographics or historical behavior) of pi. Furthermore, assume these DTs have been eval-uated on m questions q1, q 2, . . . , q m where human responses exist. 2 We denote the real and synthetic response matrices by Y ∈ Rn×m and ˜Y ∈ Rn×m, respectively. Our objective is to predict the human response vector Ym+1 ∈ Rn for a new question qm+1 . Existing approaches for predicting Ym+1 when it is entirely unobserved include: 1. Naïve simulation: directly prompt the digital twins to produce ˜Ym+1 and use it as a prediction for Ym+1 . This is the predominant approach in existing digital twin frameworks (Park et al., 2024; Peng et al., 2026), but it inherits the systematic biases of LLM simulation. 2. Fine-tuning: use questions q1, . . . , q m to fine-tune the LLM before predicting qm+1 .This is computationally expensive and sometimes infeasible. Even when fine-tuning is affordable, it can be brittle in practice—for instance, Toubia et al. (2025) finds that fine-tuning can perform worse than naïve simulation. 3. In-context learning: provide q1, . . . , q m and associated responses as in-context exam-ples when prompting the LLM. While cheaper than fine-tuning, this approach remains fragile and still inherits LLM simulation bias (see Table 2). 
+
+> 2As we show in Section 3.3, our framework handles missing data naturally.
+
+2˜p1
+
+˜p2
+
+˜p3
+
+˜p4
+
+⋮
+
+˜pn
+
+p1
+
+p2
+
+p3
+
+p4
+
+⋮
+
+pn
+
+q1 q2 q3 q4 q5 q6 q7 qm⋯
+
+# ? 
+
+> qm+1
+> Real Humans
+
+# 𝖸  
+
+> Digital Twins
+
+# ˜𝖸 
+
+> Questions
+
+Figure 1: An illustration of our framework. Real responses Y are observed for q1, . . . , q m; digital-twin responses ˜Y are available for all questions including qm+1 . The goal is to recover the missing half-column of real responses to qm+1 in the stacked matrix, naturally motivating a matrix-completion or synthetic-control formulation. 
+
+All three approaches attempt to improve the raw LLM output but share a fundamental limi-tation: they do not exploit the cross-domain structure between synthetic and real responses. Our key observation is that if we obtain synthetic responses ˜Ym+1 for the new question—e.g., via naïve simulation—we can expand the synthetic matrix to ˜Y ∈ Rn×(m+1) and vertically 
+
+stack Y and ˜Y . The resulting matrix contains a single missing half-column corresponding to the real responses Ym+1 . This viewpoint allows us to draw on the rich toolkit of matrix completion and synthetic control, which have a long history of success in recommender sys-tems, healthcare, econometrics, and beyond (Abadie et al., 2010; Mazumder et al., 2010; Candes and Recht, 2012; Athey et al., 2021; Agarwal et al., 2025). Building on this idea, as illustrated in Figure 1, our contributions are: 1. A principled calibration framework. We introduce SYN-DIGITS, a lightweight, data-efficient, and model-agnostic post-hoc calibration layer for digital twin simula-tions. It can complement naïve simulation, fine-tuning, in-context learning, or any other LLM-based approach. Through paired latent factor models, we derive alignment conditions under which calibration provably succeeds. 2. A comprehensive empirical study with strong performance. We evaluate ten calibration methods on two datasets across thirteen persona constructions and three LLMs, providing practical guidance on method and persona selection. SYN-DIGITS consistently achieves strong gains on the task of predicting human responses to new questions, with the best method exhibiting up to 50% relative improvement over un-calibrated baselines. 33. A unifying modeling perspective. While Figure 1 illustrates the new-question setting, the same framework extends naturally to new users (Section 6) and distribu-tional calibration (Section 7), where only aggregate distributional statistics are avail-able rather than individual responses. Our latent factor model unifies all three settings and encompasses existing reweighting methods (Leng et al., 2024; Bui et al., 2025; Wang et al., 2026) as special cases with provable error guarantees. The rest of the paper is organized as follows. Section 2 reviews related work. Sec-tion 3 introduces the problem setup, calibration methods, and an empirical motivation on MovieLens. Section 4 develops a latent factor framework that formalizes when and why cali-bration succeeds with a theoretical error analysis. Section 5 presents a systematic evaluation on a second dataset (Twin-2K-500) across thirteen persona constructions and three LLMs. Section 6 extends the framework to predict responses for new users. Section 7 develops a distribution-level calibration method with theoretical guarantees. Section 8 concludes with practical guidance, limitations, and future directions. 
+
+# 2 Related Work 
+
+Human digital twins. The concept of a digital twin —a virtual representation of a physi-cal entity or system—originated in engineering and manufacturing and has since expanded to a wide range of applied domains. A particularly important recent extension is the concept of 
+
+human digital twins , which aims to construct faithful digital representations of human behav-ior and decision-making (Nguyen, 2022; Lin et al., 2024). In consumer and market research, digital twins have emerged as AI-driven behavioral simulators of customers, driven by their speed, flexibility, and cost-effectiveness relative to traditional survey- and panel-based data collection (Toubia et al., 2025). 
+
+LLMs as human behavior simulators. A rapidly growing line of work has explored LLMs as proxies for humans in surveys, experiments, and agent-based simulations, docu-menting both promises and limitations of this paradigm (Aher et al., 2023; Horton, 2023; Santurkar et al., 2023; Scherrer et al., 2023; Gao et al., 2024; Rossi et al., 2024; Tranchero et al., 2024; Binz et al., 2025; Cao et al., 2025; Gao et al., 2025; Li et al., 2025; Peng et al., 2026; Hullman et al., 2026). Much of this literature focuses on constructing LLM-based simu-lators, showcasing downstream applications, or characterizing systematic failure modes such as distributional concentration, ideological biases, and sensitivity to prompt design. While these studies provide valuable insights into the capabilities and limitations of LLM-based simulation, they generally do not offer a versatile mechanism for systematically correcting the misalignment. 
+
+Closing the sim-to-real gap. To improve simulation fidelity, several lines of work have emerged. One approach is task-specific fine-tuning, which re-trains the LLM on domain-specific human response data (Cho et al., 2024; Binz et al., 2025; Cao et al., 2025; Orlikowski et al., 2025; Suh et al., 2025). While effective when sufficient training data is available, fine-tuning is computationally expensive and tightly coupled to the training distribution. A4complementary line of work addresses the gap at the distributional level by reweighting LLM-generated samples to match observed human response distributions (Leng et al., 2024; Bui et al., 2025; Wang et al., 2026). These methods offer a lightweight alternative to fine-tuning for distributional calibration, but do not extend to individual-level calibration. Arelated and notable line of work develops inference procedures that account for distributional misalignment between LLM and human responses (Huang et al., 2025). Our framework is complementary to all of these efforts: it provides a principled post-hoc calibration layer that can be applied on top of any simulator—zero-shot, prompt-engineered, or fine-tuned— and is designed to be data-efficient, generalizable across questions and populations, and amenable to theoretical analysis. Moreover, as we show in Section 7, existing distributional reweighting methods can be understood as special cases within our latent factor framework, which provides theoretical guarantees for their generalization to new questions. 
+
+Synthetic control and matrix completion. Our framework draws on the synthetic control literature, which traditionally constructs weighted combinations of control units to approximate counterfactual outcomes for treated units in causal inference settings (Abadie and Gardeazabal, 2003; Abadie et al., 2010; Abadie, 2021), and on matrix completion, which studies recovery of structured data matrices under low-rank and latent-factor assumptions (Candes and Recht, 2012; Athey et al., 2021). Several works in these areas are especially relevant. Agarwal et al. (2025) introduces synthetic interventions , which apply matrix-completion ideas to predict counterfactual outcomes by learning transferable structure across units—a perspective closely related to ours, though our focus is on calibrating AI-generated simulations rather than estimating causal effects. Agarwal et al. (2023) further develops causal matrix completion with theoretical guarantees under latent factor models. On the algorithmic side, Mazumder et al. (2010) proposes SoftImpute for spectral regularization-based matrix completion, and Hastie et al. (2015) develops fast alternating least squares methods for low-rank matrix recovery. Our framework repurposes these classical tools for the distinct goal of correcting systematic misalignment in digital-twin simulations, and our comprehensive empirical study identifies which among these methods are most effective in this new application domain. 
+
+# 3 Framework and Motivation 
+
+3.1 Problem Setup 
+
+Consider tabular human response data, where rows correspond to individuals and columns correspond to questions (or items). We have the real response matrix Y ∈ Rn×m and the digital-twin response matrix ˜Y ∈ Rn×(m+1) , and our goal is to predict the human response vector Ym+1 ∈ Rn for a new question qm+1 .
+
+3.2 Calibration Methods 
+
+The missing-half-column structure in Figure 1 admits two natural algorithmic paradigms. 51. Fit-and-transfer (Algorithm 1): Inspired by the classic synthetic control method (Abadie et al., 2010), this paradigm fits a predictive model M on the DT system— using DT responses to existing questions to predict those to the new question—and transfers the fitted model to the human system. We consider Ridge (Ben-Michael et al., 2021), Lasso (Hollingsworth and Wing, 2020), Elastic Net (EN) (Doudchenko and Imbens, 2016), Neural Network (NN), Synthetic Control (SC) (Abadie et al., 2010), and Synthetic Intervention (SI) (Agarwal et al., 2025) as instantiations of M.2. Direct matrix completion (Algorithm 2): This paradigm vertically stacks Y and 
+
+˜Y and directly imputes the missing half-column via matrix completion algorithms, without an explicit fit-and-transfer step. We consider rank-constrained iterative SVD (HSV) (Mazumder et al., 2010), nuclear-norm regularized SVD (SSV) (Mazumder et al., 2010), and alternating least squares (ALS) (Hastie et al., 2015). We additionally consider Synthetic Prior (SP), which uses ˜Ym+1 as a warm start for matrix completion on the human data Y alone, without leveraging the stacked structure. Unlike the other methods, SP operates on the human data Y alone, using ˜Ym+1 only as initialization. This makes it the closest analogue to standard matrix completion on real data, though it cannot be applied without the DT warm start since no real responses exist for the new question. 
+
+Algorithm 1 Fit-and-transfer            
+
+> Require: Y∈Rn×m,˜Y∈Rn×(m+1)
+> Fit model ˜Ym+1 ∼ M ( ˜Y1: m).Predict ˆYm+1 =M(Y1: m).
+
+Algorithm 2 Matrix Completion            
+
+> Require: Y∈Rn×m,˜Y∈Rn×(m+1)
+> Stack Yand ˜Yas in Figure 1. Impute stacked matrix and extract ˆYm+1 .
+
+These two paradigms are not exhaustive, but provide a broad testbed for assessing the choice of algorithm. Table 1 summarizes the ten calibration methods; detailed descriptions are in Appendix A.2 and implementation details are in Appendix A.4. 
+
+Paradigm Method Description 
+
+Fit-and-transfer Ridge ℓ2-penalized linear regression Lasso ℓ1-penalized linear regression EN Elastic net ( ℓ1 + ℓ2 penalty) NN Single-hidden-layer feedforward network with ReLU SC Simplex-constrained regression SI Linear map in SVD space Matrix Completion HSV Rank-constrained iterative SVD SSV Nuclear-norm regularized SVD ALS Alternating least squares factorization SP DT warm start + hard SVD impute on human data 
+
+> Table 1: Summary of calibration methods evaluated in this paper.
+
+63.3 Empirical Motivation on MovieLens 
+
+Dataset. We evaluate all ten methods on the MovieLens-20M dataset (Harper and Kon-stan, 2015), which contains ratings on a scale from 0.5 to 5 (half-point steps). To obtain a manageable subset with sufficient density, we select the top 500 users and 500 movies by rating count. For each user, 250 randomly selected movies and associated ratings serve as 
+
+persona information and the remaining 250 as prediction questions , yielding matrices Y and 
+
+˜Y of size 500 × 250 with the same 22% missingness pattern. 
+
+Persona construction and prompts. To obtain each persona’s simulated rating for each movie, we use the following prompt template when querying GPT-4.1-mini at temperature 
+
+0 (Toubia et al., 2025). Each movie is described by its title, genre, and top 10 tags from MovieLens, and the rating history is provided as a list of title-genre-tags-rating tuples. 
+
+System Prompt 
+
+> You, AI, are an expert in predicting human movie ratings. You are given a user’s history of movie ratings and a new movie for the same user to rate. You are also given a format instruction that specifies the type of rating you need to provide. You need to rate the movie as the user would rate it, based on the user’s history of ratings and the format instruction.
+
+User Prompt     
+
+> USER’S RATING HISTORY: {rating_history}
+> NEW MOVIE: {movie} ; GENRE: {genre} ; TOP 10 TAGS: {top_10_tags} .FORMAT INSTRUCTIONS: Only a number on a 5-star rating scale, with half-star incre-ments (0.5 - 5.0). Larger numbers indicate higher ratings.
+
+Baselines and evaluation. We compare against two baselines : a zero-shot (ZS) baseline and an in-context (IC) baseline. Both use the same prompt template above; they differ only in the content of {rating_history} . In the ZS setting, the rating history consists of the 250 persona movies only, so the LLM rates each target movie conditioned on 250 known ratings. In the IC setting, for each target movie, the rating history is augmented with the user’s ground-truth ratings on the other 249 prediction movies, giving the LLM 499 ratings as context. This is analogous to traditional few-shot prompting: the model is provided with real human ratings on existing questions as in-context examples, testing whether richer context alone can close the gap with human ground truth. See Figure 2 for an illustration of the two baselines. We perform leave-one-question-out evaluation: each column is held out in turn and pre-dicted from the remaining columns. For fit-and-transfer methods, we impute missing entries in the synthetic and real data separately using iterative hard-thresholding SVD and normal-ize each column before fitting. Performance is measured by the average Pearson correlation between predicted and true responses. 
+
+Calibration consistently outperforms baselines. Table 2 shows that all ten calibration methods substantially outperform both the zero-shot baseline ( 0.349 ) and the in-context 7? ?Predicting M6 
+
+## ? ?
+
+## ? ?                 
+
+> Predicting M7
+> Predicting M9
+> M1 M2 M3 M4 M5 M6 M7 M8 M9 M1 M2 M3 M4 M5 M6 M7 M8 M9
+
+Zero -shot (ZS) Baseline  In -context (IC) Baseline 
+
+> Persona movies (always in context)
+> Ground -truth ratings on other prediction movies (IC only)
+
+## ? Target movie being predicted 
+
+> Not in context
+
+Figure 2: Illustration of the zero-shot (ZS) and in-context (IC) baselines for a single user. Each user’s 500 movies are partitioned into 250 persona movies and 250 prediction movies. In both baselines, the LLM is prompted with a rating history ( {rating_history} in the prompt template) and asked to rate the target movie ( ■ ). In the ZS setting, the rating history consists of the 250 persona movies only ( ■ ), so the context is identical across all target movies. In the IC setting, the rating history is augmented with the user’s ground-truth ratings on the other 249 prediction movies ( ■ + ■ ), giving the LLM 499 ratings as context. The figure uses a simplified example with 5 persona movies (M1–M5) and 4 prediction movies (M6–M9). 
+
+Baselines Fit-and-transfer Matrix Completion 
+
+ZS IC Ridge Lasso EN NN SC SI HSV SSV ALS SP Corr. .349 .406 .511 .497 .524 .504 .457 .515 .473 .511 .512 .454 S.E. .005 .005 .005 .006 .005 .005 .005 .005 .008 .005 .005 .005 %∆ ZS — +16 +46 +42 +50 +44 +31 +48 +36 +46 +47 +30 %∆ IC — — +26 +22 +29 +24 +13 +27 +17 +26 +26 +12 
+
+Table 2: New-question prediction on MovieLens: average Pearson correlation, standard errors, and percentage improvements (% ∆) over the zero-shot (ZS) and in-context (IC) baselines. The best method (EN) improves over ZS by 50% and over IC by 29% .
+
+baseline ( 0.406 ). Even the weakest calibration method (SP, 0.454 ) exceeds the in-context baseline by 12% , while the best (EN, 0.524 ) improves over zero-shot by 50% and over in-context by 29% . Among the two paradigms, fit-and-transfer methods generally outperform direct matrix completion. 
+
+Calibration vs. richer context. The comparison between in-context learning and cali-bration is especially informative. In-context learning provides the LLM with ground-truth human ratings on 249 additional movies, a substantial information advantage, yet improves over zero-shot by only 16% . In contrast, even the weakest calibration method improves by 
+
+30% , and the best by 50% . This gap suggests that the sim-to-real discrepancy is not primarily an information deficiency (which more context would resolve), but a structural misalignment 
+
+between how the LLM maps inputs to ratings and how humans do. Calibration addresses 8this structural gap directly by learning and correcting the systematic mapping between the two response systems, which no amount of prompt enrichment can achieve. 
+
+Linearity of transfer. The dominance of linear methods—Ridge ( 0.511 ), EN ( 0.524 ), SI (0.515 )—over neural network ( 0.504 ) is an interesting finding. It indicates that the rela-tionship between human and DT inter-question structure is well-approximated by a linear mapping, which is consistent with the latent factor model in Section 4: if both response matrices share a common low-rank structure ( Y ≈ U V ⊤, ˜Y ≈ ˜U ˜V ⊤), then the transfer from DT to human is linear in the question embedding space. The strong performance of linear methods thus provides empirical support for the low-rank model. 
+
+DT structure transfers despite individual bias. The key intuition behind these results is that even though individual DT predictions are biased, the inter-question structure can be approximately preserved between humans and DTs, and a mapping learned on DT data can therefore generalize to real human data. We now formalize this intuition through a latent factor model and analyze Ridge regression as a representative case to understand when and why calibration succeeds. 
+
+# 4 A Latent Factor Framework 
+
+4.1 A Latent Factor Model 
+
+We assume that there exist latent user embeddings ui ∈ Rd, i ∈ [n], and latent question embeddings vj ∈ Rd, j ∈ [m], such that user i’s response to question j is represented as: 
+
+Yij = ⟨ui, v j ⟩ + εij , (4.1) where εij is random noise. Let U ∈ Rn×d and V ∈ Rm×d denote matrices whose rows are 
+
+{ui}ni=1 and {vj }mj=1 , respectively, and let E = ( εij ) ∈ Rn×m. Then (4.1) can be written compactly as: 
+
+Y = U V ⊤ + E. (4.2) This formulation is standard in recommender systems and matrix completion (Koren et al., 2009; Candes and Recht, 2012). Analogously, we model the DTs’ responses as ˜Y = ˜U ˜V ⊤ + ˜E,where ˜U and ˜V are latent embeddings induced by the LLM and ˜E is noise. SVD diagnostics on both datasets confirm that Y and ˜Y are approximately low-rank, supporting the existence of low-dimensional latent structure (Appendix A.1). 
+
+Row space inclusion condition. A key question is: when does a mapping learned on DT data transfer to human data? In the noiseless setting, Y = U V ⊤ and ˜Y = ˜U ˜V ⊤ with 
+
+rank (Y ) = rank ( ˜Y ) = d. Let v, ˜v ∈ Rd denote the latent embeddings of the new question in the human model and the DT model, respectively, and denote the unobserved human responses by Yv = U v and the observed DT responses ˜Yv = ˜U ˜v. Then, given ˜Y β = ˜Yv, exact transfer Y β = Yv holds whenever a row space inclusion condition holds: 
+
+Row ([ V ⊤, v ]) ⊆ Row ([ ˜V ⊤, ˜v]) . (4.3) 9This requires the LLM’s latent question geometry to span at least the human question geom-etry, while allowing imperfect fidelity ( ˜V̸ = V ). Intuitively, if the DT question embeddings are sufficiently rich to represent any human question, then a regression fit on the DT system transfers exactly to the human system—a direct analogue of the identifying condition in classical synthetic control (Abadie et al., 2010; Agarwal et al., 2025). 
+
+4.2 Empirical Evidence for Row Space Alignment 
+
+Though (4.3) is unlikely to hold exactly in practice, the strong empirical performance on MovieLens (Table 2) suggests that it holds approximately. We assess this by measuring the similarity between the row spaces of V ⊤ and ˜V ⊤ via the cosine of principal angles and the projection-Frobenius norm on the leading rmax = r + 2 singular directions, where r is the effective rank estimated using a rank-constrained iterative SVD hard-impute scheme with validation. As baselines, we include (i) a random N (0 , 1) matrix and (ii) a column-wise shuffled version of the real matrix, which preserves marginal column distributions. Figure 3 shows that the DT and human row spaces align substantially more closely than random baselines, providing empirical support for the approximate validity of (4.3). 0 1 2 3 4 5 6 7 8        
+
+> Rank
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Cosine of principal angle
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real 123456789
+> Rank
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> 1.2
+> 1.4
+> Projected Frobenius norm
+> (close to 0 is good, normalized by rank)
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real
+
+Figure 3: Row space alignment on MovieLens (zero-shot DT baseline): cosine of principal angles (left) and projection-Frobenius norm (right) between the row spaces of V ⊤ and ˜V ⊤, restricted to the leading rmax = r + 2 singular directions. The DT row space is substantially more aligned with the human row space than random baselines. Higher cosine similarity and lower Frobenius distance indicate closer alignment. 
+
+Interpreting the alignment structure. Figure 3 reveals a graded alignment pattern that is informative about the LLM’s internal representations. The leading singular directions, which capture the dominant axes of variation in user preferences, show near-perfect cosine similarity between the human and DT row spaces. This indicates that the LLM captures well the primary structure of how questions relate to each other (e.g., genre preferences, quality signals). As we move to later singular directions, alignment degrades, reflecting finer-grained patterns of human taste that the LLM does not fully reproduce. Crucially, the projection-Frobenius norm remains far below the random baselines even at the highest 10 ranks considered, suggesting that the LLM’s latent question space is a noisy but meaningful superset of the human one. 
+
+Approximate alignment suffices. The row space inclusion (4.3) need not hold exactly for calibration to succeed. Theorem 4.1 (proved in Appendix B.1) below formalizes this in the noisy setting. We decompose the new question embedding as v = V b + e, where b ∈ Rm
+
+are the coefficients and e ∈ Rd is the residual not representable by existing questions. Let 
+
+˜Σ = 1 
+
+> n
+
+E[ ˜Y ⊤ ˜Y ], ˜γ = 1 
+
+> n
+
+E[ ˜Y ⊤ ˜Yv], β∗ = ( ˜Σ + λI )−1 ˜γ, and r = Yv − Y β ∗. Then, the fit-and-transfer method with Ridge instantiation yields the following error bound. 
+
+Theorem 4.1 (Error on new question) .
+
+|| ˆYv − Yv|| 2 ≤ || r|| 2
+
+|{z} 
+
+> structural error
+
++ || Y || 2
+
+σmin ( ˆ˜Σ) + λ
+
+
+
+|| ˆ˜Σ − ˜Σ|| 2|| β∗|| 2 + || ˆ˜γ − ˜γ|| 2
+
+| {z }
+
+> estimation error
+
+,
+
+with || r|| 2 ≤ || U e || 2 + ||E v − E b|| 2 + || Y || 2
+
+> σmin ( ˜Σ)+ λ
+
+ λ|| b|| 2 + || ˜γ − ˜Σb|| 2
+
+.
+
+Error decomposition. Under standard concentration conditions, the estimation error 
+
+vanishes as n → ∞ . The structural error ∥r∥2 is small when alignment is approximate: when 
+
+e = 0 (the new question embedding can be represented by existing question embeddings), 
+
+σmin ( ˜Σ) > 0 (the twin responses are sufficiently diverse), λ = 0 (no regularization), and there is no noise, it reduces to ∝ ∥ ˜γ − ˜Σb∥2, which is small whenever the DT inter-question covariance structure is well aligned with the human one (cf. (4.3)), i.e., full digital-twin fidelity is not required for meaningful transfer. 
+
+# 5 Systematic Evaluation on Twin-2K-500 
+
+Having established that calibration works across a broad family of methods on MovieLens and developed a theoretical framework to explain why, we now evaluate systematically on a second dataset with thirteen distinct persona constructions, examining how the choice of LLM, prompt format, and prompting strategy interact with calibration. 
+
+5.1 Dataset and Experimental Setup 
+
+Dataset. The Twin-2K-500 dataset (Toubia et al., 2025) contains 2,058 U.S. participants and their responses to 123 demographic, psychological, behavioral, and economic questions, with 23% missing values. The original paper provides zero-shot digital twin simulations across thirteen persona constructions, making it an ideal testbed for evaluating calibration across diverse simulation strategies. 
+
+Persona constructions. The thirteen constructions vary along four axes—LLM back-bone, persona format, prompting strategy, and persona content—and are summarized in Table 3. Detailed descriptions of each construction are provided in Appendix A.3; exact 11 prompt templates, persona encoding schemes, and API settings are documented in Toubia et al. (2025). Unless otherwise noted, we use the default construction (text, GPT-4.1-mini) for all single-construction analyses. 
+
+Persona Content Strategy 
+
+Text, GPT-4.1-mini Full survey Default Text, Gemini-Flash-2.5 Full survey Default JSON, GPT-4.1-mini Full survey Default JSON, GPT-4.1 Full survey Default Text + CoT, GPT-4.1-mini Full survey Chain-of-thought Text + repeat, GPT-4.1-mini Full survey Question repetition Text, temp=0.7, GPT-4.1-mini Full survey Temperature 0.7 JSON + PO, GPT-4.1-mini Full survey Predicted output JSON + PO, GPT-4.1 Full survey Predicted output Fine-tuned GPT-4.1-mini Full survey Fine-tuned Demographics only, GPT-4.1-mini Demographics Default Summary, GPT-4.1-mini Summary Default Summary + JSON, GPT-4.1-mini Summary Default Table 3: Summary of thirteen persona constructions evaluated on Twin-2K-500. All constructions use temperature 0 unless otherwise noted. 
+
+Diagnostics and evaluation. Using the default persona construction (Text, GPT-4.1-mini), SVD diagnostics confirm that the latent structures of Twin-2K-500 match the low-rank patterns observed on MovieLens (Appendix A.1). Furthermore, Figure 4 shows that the row space alignment between human and DT responses on Twin-2K-500 closely mirrors the pattern observed on MovieLens (Figure 3), providing further empirical support for the approximate validity of the row space inclusion condition (4.3). We follow the same leave-one-question-out evaluation protocol as in Section 3.3, with the same preprocessing and evaluation metric (average Pearson correlation). 3
+
+5.2 Results 
+
+Table 4 reports the results. The central empirical finding is that calibration consistently and substantially improves fidelity : the best method outperforms the uncalibrated baseline for all thirteen constructions, with relative improvements ranging from 8.8% (JSON, GPT-4.1) to over 400% (fine-tuned GPT-4.1-mini, from .048 to .243). This confirms the MovieLens findings (Section 3.3) on a more diverse testbed. We now examine the patterns in more detail. 
+
+> 3We also computed the average correlation using Fisher’s z-transformation, following Silver and Dunlap (1987) and Park et al. (2024). The results are qualitatively the same.
+
+12 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 
+
+Rank         
+
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> Cosine of principal angle
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+
+Rank 
+
+> 0.7
+> 0.8
+> 0.9
+> 1.0
+> 1.1
+> 1.2
+> 1.3
+> 1.4
+> Projected Frobenius norm
+> (close to 0 is good, normalized by rank)
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real
+
+Figure 4: Row space alignment on Twin-2K-500 (default persona construction: text, GPT-4.1-mini): cosine of principal angles (left) and projection-Frobenius norm (right) between the row spaces of 
+
+V ⊤ and ˜V ⊤, restricted to the leading rmax = r + 2 singular directions. The DT row space aligns closely with the human row space, matching the pattern observed on MovieLens (Figure 3). 
+
+Fit-and-transfer Matrix Completion Persona BL Ridge Lasso EN NN SC SI HSV SSV ALS SP %∆
+
+Text, GPT-4.1-mini .168 
+
+> (.015)
+
+.200 
+
+> (.021)
+
+.195 
+
+> (.021)
+
+.204 
+
+> (.021)
+
+.198 
+
+> (.020)
+
+.147 
+
+> (.013)
+
+.190 
+
+> (.017)
+
+.170 
+
+> (.017)
+
+.202 
+
+> (.018)
+
+.201 
+
+> (.018)
+
+.121  
+
+> (.016)
+
++21.4 Text, Gemini-Flash-2.5 .188 
+
+> (.016)
+
+.237 
+
+> (.020)
+
+.234 
+
+> (.020)
+
+.242 
+
+> (.020)
+
+.215 
+
+> (.020)
+
+.158 
+
+> (.013)
+
+.200 
+
+> (.019)
+
+.179 
+
+> (.018)
+
+.221 
+
+> (.019)
+
+.220 
+
+> (.019)
+
+.127  
+
+> (.015)
+
++28.7 JSON, GPT-4.1-mini .175 
+
+> (.016)
+
+.211 
+
+> (.021)
+
+.195 
+
+> (.021)
+
+.214 
+
+> (.021)
+
+.207 
+
+> (.020)
+
+.158 
+
+> (.013)
+
+.210 
+
+> (.018)
+
+.185 
+
+> (.018)
+
+.213 
+
+> (.018)
+
+.213 
+
+> (.018)
+
+.137  
+
+> (.015)
+
++22.3 JSON, GPT-4.1 .205 
+
+> (.018)
+
+.213 
+
+> (.019)
+
+.201 
+
+> (.019)
+
+.220 
+
+> (.019)
+
+.215 
+
+> (.019)
+
+.156 
+
+> (.013)
+
+.211 
+
+> (.017)
+
+.181 
+
+> (.017)
+
+.223 
+
+> (.018)
+
+.222 
+
+> (.018)
+
+.124  
+
+> (.016)
+
++8.78 Text + CoT, GPT-4.1-mini .165 
+
+> (.015)
+
+.227 
+
+> (.022)
+
+.221 
+
+> (.022)
+
+.238 
+
+> (.022)
+
+.228 
+
+> (.021)
+
+.159 
+
+> (.013)
+
+.213 
+
+> (.019)
+
+.182 
+
+> (.019)
+
+.224 
+
+> (.019)
+
+.223 
+
+> (.019)
+
+.121  
+
+> (.016)
+
++44.2 Text + repeat, GPT-4.1-mini .173 
+
+> (.015)
+
+.226 
+
+> (.022)
+
+.220 
+
+> (.022)
+
+.235 
+
+> (.022)
+
+.229 
+
+> (.021)
+
+.155 
+
+> (.013)
+
+.212 
+
+> (.018)
+
+.193 
+
+> (.018)
+
+.221 
+
+> (.019)
+
+.220 
+
+> (.019)
+
+.131  
+
+> (.015)
+
++35.8 Text, temp=0.7, GPT-4.1-mini .158 
+
+> (.015)
+
+.199 
+
+> (.021)
+
+.195 
+
+> (.021)
+
+.204 
+
+> (.021)
+
+.198 
+
+> (.020)
+
+.144 
+
+> (.013)
+
+.197 
+
+> (.017)
+
+.165 
+
+> (.018)
+
+.204 
+
+> (.018)
+
+.204 
+
+> (.018)
+
+.113  
+
+> (.016)
+
++29.1 JSON + PO, GPT-4.1-mini .158 
+
+> (.014)
+
+.203 
+
+> (.020)
+
+.191 
+
+> (.019)
+
+.211 
+
+> (.020)
+
+.201 
+
+> (.019)
+
+.153 
+
+> (.013)
+
+.188 
+
+> (.017)
+
+.151 
+
+> (.017)
+
+.207 
+
+> (.019)
+
+.208 
+
+> (.019)
+
+.108  
+
+> (.015)
+
++33.5 JSON + PO, GPT-4.1 .200 
+
+> (.017)
+
+.208 
+
+> (.019)
+
+.200 
+
+> (.019)
+
+.217 
+
+> (.019)
+
+.212 
+
+> (.019)
+
+.151 
+
+> (.012)
+
+.202 
+
+> (.019)
+
+.150 
+
+> (.018)
+
+.215 
+
+> (.018)
+
+.214 
+
+> (.018)
+
+.143  
+
+> (.015)
+
++8.50 Fine-tuned GPT-4.1-mini .048 
+
+> (.008)
+
+.243 
+
+> (.019)
+
+.220 
+
+> (.018)
+
+.233 
+
+> (.018)
+
+.232 
+
+> (.018)
+
+.150 
+
+> (.012)
+
+.231 
+
+> (.018)
+
+.201 
+
+> (.018)
+
+.226 
+
+> (.017)
+
+.226 
+
+> (.017)
+
+.101  
+
+> (.016)
+
++406 Demographics only, GPT-4.1-mini .122 
+
+> (.012)
+
+.196 
+
+> (.021)
+
+.184 
+
+> (.021)
+
+.204 
+
+> (.021)
+
+.201 
+
+> (.020)
+
+.157 
+
+> (.013)
+
+.193 
+
+> (.019)
+
+.155 
+
+> (.016)
+
+.212 
+
+> (.018)
+
+.213 
+
+> (.018)
+
+.103  
+
+> (.015)
+
++74.6 Summary, GPT-4.1-mini .148 
+
+> (.013)
+
+.222 
+
+> (.020)
+
+.211 
+
+> (.020)
+
+.227 
+
+> (.020)
+
+.221 
+
+> (.020)
+
+.169 
+
+> (.013)
+
+.215 
+
+> (.018)
+
+.174 
+
+> (.015)
+
+.232 
+
+> (.018)
+
+.233 
+
+> (.018)
+
+.111  
+
+> (.016)
+
++57.4 Summary + JSON, GPT-4.1-mini .102 
+
+> (.011)
+
+.223 
+
+> (.019)
+
+.212 
+
+> (.019)
+
+.229 
+
+> (.019)
+
+.224 
+
+> (.019)
+
+.164 
+
+> (.013)
+
+.214 
+
+> (.017)
+
+.184 
+
+> (.017)
+
+.235 
+
+> (.018)
+
+.232 
+
+> (.018)
+
+.130  
+
+> (.015)
+
++130 
+
+Table 4: New-question prediction on Twin-2K-500: average Pearson correlation for thirteen persona constructions × ten calibration methods. Mean above, standard error in parentheses below. BL = Uncalibrated DT baseline. % ∆ = relative improvement of the best method (highlighted) over BL. 
+
+Stability of method rankings across personas. The relative ranking of calibration methods is remarkably stable across the thirteen persona constructions, even as baseline quality varies dramatically (from .048 to .205 ). Specifically: 13 • EN is the best or near-best method in 9 of 13 constructions, while Ridge, SSV, and ALS are also consistently effective. 
+
+• Synthetic control and synthetic prior consistently underperform other calibration meth-ods, indicating that the simplex constraint and DT-only warm starts are insufficient without exploiting inter-question transfer structure. Overall, this stability suggests that the benefit of calibration is driven primarily by the shared inter-question structure of the underlying dataset, rather than by persona-specific properties of the DT responses, and it simplifies practical method selection: practitioners can choose EN as a robust default without needing to tune the calibration method to the specific persona construction. 
+
+Calibration as an equalizer. The % ∆ column reveals a striking inverse relationship between baseline quality and relative calibration gain. Constructions with the weakest baselines—fine-tuned GPT-4.1-mini ( .048 ), summary + JSON ( .102 ), demographics only (.122 )—exhibit the largest relative improvements ( +406% , +130% , +74 .6% ), while those with the strongest baselines—JSON GPT-4.1 ( .205 ), JSON+PO GPT-4.1 ( .200 )—show the smallest gains ( +8 .78% , +8 .50% ). More importantly, the post-calibration correlations are far more tightly clustered ( .204 to .243 ) than the baselines ( .048 to .205 ). This suggests that calibration acts as an equalizer : it compresses the wide performance gap across persona con-structions and brings them to a similar level of predictive accuracy. This pattern also points to a practical use case for post-hoc calibration in data-scarce fine-tuning settings: in our ex-periments, task-specific fine-tuning led to weak generalization on unseen questions, whereas post-hoc calibration substantially improved performance without requiring retraining. 
+
+LLM backbone effects. Comparing constructions that differ only in LLM backbone illu-minates the interaction between model capacity and calibration. Pre-calibration, GPT-4.1 (.205 for JSON) substantially outperforms GPT-4.1-mini ( .175 for JSON) and Gemini-Flash-2.5 ( .188 for text), reflecting its stronger zero-shot simulation fidelity. Post-calibration, however, the ranking shifts: Gemini-Flash-2.5 achieves the highest correlation among non-enhanced-prompting constructions ( .242 vs. .223 for GPT-4.1 and .214 for GPT-4.1-mini, all with EN). This suggests that Gemini Flash’s DT responses, while less accurate individually, encode richer inter-question structure that calibration can exploit. The practical takeaway is that the best LLM for uncalibrated simulation is not necessarily the best for calibrated simulation: a cheaper model with better-structured (if noisier) responses may outperform a more expensive model after calibration. 
+
+5.3 Adaptive Transfer 
+
+Algorithm 1 always transfers the fitted model from DT data to human data. However, if the model does not predict the target question well on the DT system itself, then transferring it blindly may be counterproductive. This motivates a simple safeguard: use a fit diagnostic on the synthetic system to decide whether calibration should be applied. 14 Specifically, after fitting the regression of ˜Yv on ˜Y (Step 1 of Algorithm 1), we compute the training mean-squared error (MSE) on the synthetic data. If the training MSE is below a threshold τ , we use the calibrated predictor ˆYv = Y ˆβ; otherwise, we revert to the uncalibrated DT prediction for that target question. More generally, one could use cross-validated error on the synthetic system or other diagnostics of fit quality. 0.0 0.2 0.4 0.6 0.8 1.0      
+
+> Train MSE Threshold
+> 0.18
+> 0.20
+> 0.22
+> 0.24
+> Correlation Mean
+> Adaptive correlation
+> Full synthetic control correlation
+> Full baseline correlation 0.0 0.2 0.4 0.6 0.8 1.0
+> Train MSE Threshold
+> 0.18
+> 0.20
+> 0.22
+> 0.24
+> Correlation Mean
+> Adaptive correlation
+> Full synthetic control correlation
+> Full baseline correlation
+
+Figure 5: Adaptive transfer on Twin-2K-500 (default persona construction) with Ridge (left) and EN (right): average Pearson correlation on held-out questions as a function of the training MSE threshold τ . An optimal threshold of approximately 0.15 achieves a correlation of 0.252 for both methods, representing a 50% improvement over the DT baseline—compared to 19% (Ridge) and 
+
+21% (EN) for always-transfer calibration. 
+
+Figure 5 illustrates this adaptive rule on Twin-2K-500 (default construction) with Ridge and EN. Varying the threshold τ traces a clear performance trade-off: with an optimal threshold around 0.15 , adaptive transfer achieves a correlation of 0.252 for both methods— a 50% improvement over the DT baseline, compared to 19% (Ridge) and 21% (EN) for naïve transfer that always applies calibration. This substantial gain arises because certain questions are not well-situated in the linear span of the source questions; for these, the synthetic regression has high training MSE, signaling that transfer is unreliable. By reverting to the uncalibrated DT prediction in such cases, we avoid harmful calibration and improve overall robustness. 
+
+# 6 Predicting Responses for New Users 
+
+By symmetry of the latent factor model, alignment in the user embedding space enables a complementary task: predicting responses for a previously unseen user. Given a new user’s DT responses ˜Y (u) ∈ Rm, we apply Algorithm 1 to the transposed response matrices, swapping the roles of users and questions. The error analysis of Theorem 4.1 carries over, and the sufficient condition for exact transfer becomes a column space inclusion condition :
+
+Col (U ) ⊆ Col ( ˜U ), (6.1) requiring that the LLM’s latent user geometry is at least as rich as the human user geome-try. Empirical diagnostics confirm that this condition holds approximately as well: Figures 6 15 and 7 show that on both MovieLens and Twin-2K-500, the DT column spaces are substan-tially more aligned with the human column spaces than random baselines, mirroring the row space alignment results in Section 4.2. 0 1 2 3 4 5 6 7 8        
+
+> Rank
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> Cosine of principal angle
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real 123456789
+> Rank
+> 0.6
+> 0.8
+> 1.0
+> 1.2
+> 1.4
+> Projected Frobenius norm
+> (close to 0 is good, normalized by rank)
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real
+
+Figure 6: Column space alignment on MovieLens (zero-shot DT baseline): cosine of principal angles (left) and projection-Frobenius norm (right) between the column spaces of U and ˜U , restricted to the leading rmax = r + 2 singular directions. The DT column space aligns closely with the human column space, supporting the applicability of our framework to new-user prediction. 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0         
+
+> Rank
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> Cosine of principal angle
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+> Rank
+> 1.10
+> 1.15
+> 1.20
+> 1.25
+> 1.30
+> 1.35
+> 1.40
+> Projected Frobenius norm
+> (close to 0 is good, normalized by rank)
+> Synthetic vs Real
+> Random vs Real
+> Random Shuffled vs Real
+
+Figure 7: Column space alignment on Twin-2K-500 (default persona construction: text, GPT-4.1-mini): cosine of principal angles (left) and projection-Frobenius norm (right) between the column spaces of U and ˜U , restricted to the leading rmax = r + 2 singular directions. 
+
+Table 5 reports new-user prediction results using leave-one-user-out evaluation. For Twin-2K-500 we use the default construction (Text, GPT-4.1-mini); for MovieLens we use the zero-shot DT responses (i.e., each user’s 250 movie ratings as persona). All ten methods improve over the baseline on both datasets. On MovieLens, the best method (NN, 0.377 )improves by 53% over the baseline ( 0.246 ). On Twin-2K-500, NN ( 0.877 ) achieves 3.5% 
+
+relative improvement over the baseline ( 0.847 ). 
+
+Contrasting new-question and new-user prediction. The new-user and new-question tasks exhibit a revealing asymmetry. On Twin-2K-500, the new-user baseline is already 16 BL Fit-and-transfer Matrix completion 
+
+ZS Ridge Lasso EN NN SC SI HSV SSV ALS SP ML Corr. .246 .373 .372 .373 .377 .375 .361 .372 .372 .372 .366 S.E. .006 .006 .006 .006 .006 .006 .006 .006 .006 .006 .007 %∆ — +52 +51 +52 +53 +52 +47 +51 +51 +51 +49 2K Corr. .847 .875 .873 .875 .877 .874 .875 .873 .873 .873 .863 S.E. .002 .002 .002 .002 .002 .002 .002 .002 .002 .002 .002 %∆ — +3.3 +3.1 +3.3 +3.5 +3.2 +3.3 +3.1 +3.1 +3.1 +1.9       
+
+> Table 5: New-user prediction: average Pearson correlation, standard errors, and percentage im-provements (% ∆) over the zero-shot (ZS) baseline. ML = MovieLens, 2K = Twin-2K-500, BL = Baseline. The best method (NN) improves over BL by 53% on ML and 3.5% on 2K.
+
+high ( .847 ) compared to the new-question baseline ( .168 ), leaving much less headroom for calibration ( +3 .5% vs. +21 .4% ). This gap arises because the DT persona, constructed from a user’s full survey responses, already captures most of the individual-level variation, making the uncalibrated DT a strong predictor of each user’s response profile. In contrast, predicting how all users respond to a new question requires extrapolating inter-question structure, which is where the DT’s systematic biases are most apparent and calibration adds the most value. 
+
+Nonlinearity in user space. Unlike the new-question setting where elastic net dominates, neural network (NN) is the best method on both datasets for new-user prediction. This suggests that cross-user relationships exhibit more nonlinearity than cross-question relation-ships. One possible explanation is that user heterogeneity is inherently higher-dimensional: while question structure may follow a few dominant latent factors (e.g., genre, difficulty), user preferences involve more complex interactions that benefit from a nonlinear transfer mapping. Additionally, the performance spread across methods is dramatically narrower for new-user prediction—correlations range from .361 to .377 on MovieLens (a spread of .016 )and .863 to .877 on Twin-2K-500 (a spread of .014 )—compared to .121 to .238 (spread of 
+
+.117 ) for new-question prediction on Twin-2K-500. This compressed spread indicates that when regressing over the denser question feature space, all methods extract similar infor-mation, and the marginal gains from method choice are small relative to the gains from calibration itself. 
+
+# 7 Distribution-level Calibration 
+
+In many applications like market research or opinion polling, individual responses are un-available or unnecessary, and the primary object of interest is the marginal distribution of responses across a population. We now show that our latent factor framework also pro-vides a principled foundation for this distributional calibration task, and offers a theoretical understanding of existing methods (Leng et al., 2024; Bui et al., 2025; Wang et al., 2026). 17 7.1 The Weighted Ensemble Method 
+
+Suppose we observe only the marginal distribution Pj for each training question j ∈ [m] and wish to predict Pm+1 using {Pj }mj=1 and DT responses ˜Y ∈ Rn×(m+1) , where responses take values in [K] = {1, . . . , K }. We represent the human population as a weighted ensemble of n
+
+DTs plus K dummy twins (the k-th always selecting answer k) to ensure full support. The ensemble distribution for question j is 
+
+ˆPj (w, π ) = 
+
+> n
+
+X
+
+> i=1
+
+wiδ ˜Yij +
+
+> K
+
+X
+
+> k=1
+
+πkδk, (7.1) where (w, π ) is constrained to the probability simplex ∆n+K−1. We calibrate (w, π ) by matching (7.1) to Pj across training questions: 
+
+( ˆ w, ˆπ) = argmin 
+
+> (w,π )∈∆n+K−1
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+D
+
+
+
+Pj ˆPj (w, π )
+
+
+
+, (7.2) where D is a distribution discrepancy measure (e.g., total variation (TV) or KL divergence). The predicted distribution for the new question is then 
+
+ˆPm+1 =
+
+> n
+
+X
+
+> i=1
+
+ˆwiδ ˜Yi,m +1 +
+
+> K
+
+X
+
+> k=1
+
+ˆπkδk. (7.3) The procedure is summarized in Algorithm 3. 
+
+Algorithm 3 Distributional Prediction 
+
+Require: {Pj }mj=1 , { ˜Yij }i∈[n], j ∈[m+1] , discrepancy measure D.Fit weights ( ˆ w, ˆπ) by solving (7.2) via mirror descent. Predict ˆPm+1 by (7.3). 
+
+7.2 Theoretical Analysis 
+
+We analyze Algorithm 3 under a discrete analogue of the latent factor model. Since responses are now categorical, we adopt a linear probability model. 
+
+Assumption 7.1 (Linear probability model) . There exist human user embeddings ui =(ui, 1, . . . , u i,K ), digital twin embeddings ˜ui = (˜ ui, 1, . . . , ˜ui,K ), and shared question embeddings 
+
+vj = ( vj, 1, . . . , v j,K ) such that for each user i, question j, and response category k ∈ [K],
+
+Pr( Yij = k | ui) = ⟨ui,k , v j,k ⟩, Pr( ˜Yij = k | ˜ui) = ⟨˜ui,k , v j,k ⟩,
+
+where ui,k , ˜ui,k , v j,k ∈ Rd.
+
+The shared question embeddings make it possible for reweighting digital twins to approx-imate the human population. We further assume that user embeddings are i.i.d. 18 Assumption 7.2 (User embeddings) . The human user embeddings {ui}ni=1 are i.i.d. from 
+
+μ, and the digital twin embeddings {˜ui}ni=1 are i.i.d. from ˜μ, where ˜μ is supported on a finite set U.
+
+Finally, we impose a structural condition ensuring that the new question’s embedding can be expressed as a convex combination of training question embeddings. 
+
+Assumption 7.3 (Span of question embeddings) . There exist coefficients c1, . . . , c m ≥ 0
+
+with Pmj=1 cj = 1 such that for all k ∈ [K], vm+1 ,k = Pmj=1 cj vj,k .
+
+Under these assumptions, the following error bound holds; the proof is in Appendix B.2. We denote by ˜Pj (· | ˜ui) the conditional distribution of ˜Yij given ˜ui.
+
+Theorem 7.1 (Distributional prediction error bound) . Suppose Assumptions 7.1–7.3 hold. Let ( ˆ w, ˆπ) ∈ ∆n+K−1 be a solution to (7.2) with D = TV . Take α ∈ (0 , 1) and A > 0. With probability at least 1 − α,
+
+TV Pm+1 ,
+
+> n
+
+X
+
+> i=1
+
+ˆwi ˜Pm+1 (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+ˆπkδk
+
+!
+
+≤ m∥c∥∞
+
+"
+
+inf 
+
+> ν
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj , X
+
+> u∈U
+
+ν(u) ˜Pj (· | u)
+
+!
+
++ √3 A
+
+rK + log(4 /α )
+
+n
+
+#
+
+,
+
+where the infimum is over all reweightings ν : U → [0 , 1] with P 
+
+> u
+
+ν(u) = 1 and ν(u) ≤ A˜μ(u).
+
+Theorem 7.1 decomposes the prediction error into two interpretable components. The first term (the infimum) captures the fundamental sim-to-real gap : the best achievable distri-butional match between the human response distribution and a population-level reweighting of digital twins. This term is zero when the DT population can perfectly represent the human population through reweighting, and is positive otherwise—reflecting an irreducible misalignment. The second term, O(pK/n ), is the statistical error from finite sampling, which matches the minimax-optimal rate for estimating a K-category distribution from n
+
+samples under total variation. The multiplicative factor m∥c∥∞ captures how well the new question is represented by the training questions. When cj = 1 /m for all j (the new question is a uniform mixture of training questions), m∥c∥∞ = 1 and there is no degradation. In the worst case where the new question depends on a single training question, m∥c∥∞ = m, reflecting a loss from extrapolation. This mirrors the role of the row space condition in the individual-level analysis (Section 4.2): both require the new question to be well-represented within the span of existing questions. 
+
+7.3 Empirical Evaluation 
+
+Datasets. We evaluate Algorithm 3 on two datasets using the 2,058 digital twins from Twin-2K-500. The MovieLens dataset uses the same top 500 movies as in Section 3.3. Ratings take K = 10 values ( 0.5 to 5.0 in steps of 0.5). The OpinionQA dataset (Santurkar 19 et al., 2023) is a benchmark for evaluating opinion prediction, comprising 1,498 multiple-choice survey questions sourced from Pew Research’s American Trends Panel, covering topics such as social issues, politics, and science, with answers linked to the opinions of 60 U.S. demographic groups. We retain only questions with exactly 5 response options on a Likert scale, yielding 489 questions with K = 5 .
+
+Digital twin generation. For both datasets, we use the summary persona construction from Twin-2K-500 with GPT-4.1-mini at temperature 0. For MovieLens, each digital twin is prompted to rate all 500 movies; for OpinionQA, each digital twin is prompted to answer all 489 Likert-scale questions. The prompt templates are as follows. 
+
+System Prompt (MovieLens) 
+
+You, AI, are an expert in predicting human preferences. You are given a persona profile and a movie to rate, and also a format instruction that specifies the type of rating you need to provide. You need to rate the movie as the persona would rate it, based on the persona profile and the format instructions. 
+
+User Prompt (MovieLens) 
+
+{persona} 
+
+MOVIE: {movie} 
+
+GENRE: {genre} 
+
+TOP 10 TAGS: {top_10_tags} 
+
+FORMAT INSTRUCTIONS: Only a number on a 5-star rating scale, with half-star incre-ments (0.5 - 5.0). Larger numbers indicate higher ratings. 
+
+System Prompt (OpinionQA) 
+
+You, AI, are an expert in predicting human answers to survey questions. You are given a persona profile and a survey question to answer, and also a format instruction that specifies the type of answer you need to provide. You need to answer the survey question as the persona would answer it, based on the persona profile and the format instructions. 
+
+User Prompt (OpinionQA) 
+
+{persona} 
+
+SURVEY QUESTION: {question} 
+
+FORMAT INSTRUCTIONS: Only an integer number from 1 to 5, corresponding to the choice of answer to the survey question. 
+
+Discrepancy measures. Let P and Q be two probability distributions over [K]. We evaluate distributional calibration using the following discrepancy measures. 
+
+• Total variation distance: TV( P, Q ) = 12
+
+PKk=1 |P (k) − Q(k)|.
+
+• χ2 divergence: Dχ2 (P ∥Q) = PKk=1   
+
+> P(k)2
+> Q(k)
+
+− 1.
+
+• Kullback–Leibler (KL) divergence: DKL (P ∥Q) = PKk=1 P (k) log P (k) 
+
+> Q(k)
+
+.
+
+20 • Hellinger distance: H2(P, Q ) = 1 − PKk=1 
+
+pP (k)Q(k).
+
+Let F and G be the cumulative distribution functions (CDFs) of P and Q, respectively. We also define: 
+
+• Kolmogorov–Smirnov (KS) distance: DKS (P, Q ) = ∥F − G∥∞.
+
+• CDF ℓ1 distance: ∥F − G∥1.
+
+• CDF ℓ2 distance: ∥F − G∥22.
+
+Evaluation and optimization. Questions are split 80 /20 into training and test sets. Weights (w, π ) are optimized via mirror descent over the probability simplex. We train and evaluate across all discrepancy measures, using each measure as both a training objective and an evaluation metric. For each training objective, we evaluate three ensemble variants: (1) using both personas and dummy twins, (2) using personas only (i.e., w optimized with 
+
+π = 0 ), and (3) using dummy twins only (i.e., π optimized with w = 0 ). The baseline is the uniform-weight ensemble over the n digital twins without any calibration (i.e., wi = 1 /n for all i, πk = 0 for all k). 
+
+Results. Table 6 reports an illustrative slice of the distributional prediction results: the calibrated ensemble trained with the CDF ℓ1 objective, evaluated on all discrepancy mea-sures, for both MovieLens and OpinionQA. The full cross-metric results (training with every objective) are reported in Tables 9 and 10 in the appendix. Dataset Method TV χ2 KL Hellinger KS ℓ1 ℓ2
+
+MovieLens Calibrated 0.188 23.54 0.212 0.036 0.123 0.415 0.041 Baseline 0.381 28558 2.438 0.176 0.280 0.922 0.189 OpinionQA Calibrated 0.178 0.298 0.123 0.031 0.154 0.271 0.045 Baseline 0.350 11824 1.300 0.137 0.303 0.520 0.154   
+
+> Table 6: Distributional prediction results trained with CDF ℓ1loss, evaluated on all discrepancy measures. “Calibrated” uses personas + dummy twins. Lower is better. The calibrated ensemble substantially outperforms the uniform-weight baseline across all metrics and both datasets.
+
+In all cases, the calibrated ensemble using both personas and dummy twins substantially outperforms the uniform-weight baseline, achieving 50% to 90% relative reductions in dis-tributional divergence. Figure 8 provides a qualitative illustration on a held-out MovieLens question (trained with ℓ1 loss): the calibrated distribution closely matches the true rating distribution, while the baseline exhibits systematic bias and missing support. 
+
+Sensitivity to training objective. The full cross-metric tables (Appendix Tables 9 and 10) reveal that the choice of training objective D has a meaningful but bounded effect on test performance. On MovieLens, training with TV, KL, or Hellinger yields consistently strong performance across all test metrics, while training with CDF-based objectives ( ℓ1, ℓ2,KS) produces more variable cross-metric results—in particular, χ2 test divergence can be 21 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 
+
+> Rating
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> Probability
+> True answers
+> Trained answers
+> Naive answers
+
+Figure 8: True rating distribution (blue), calibrated ensemble (orange), and uniform-weight base-line (green) for a held-out MovieLens question. The calibrated ensemble closely matches the true distribution, while the baseline shows systematic bias and missing support. 
+
+orders of magnitude worse when training with ℓ1 or ℓ2. On OpinionQA, the pattern is simi-lar: TV and KL are the most robust training objectives, while CDF-based objectives show larger off-diagonal degradation. For practitioners without a specific target metric, our re-sults suggest that training with TV or KL divergence provides the most reliable cross-metric generalization. 
+
+Role of dummy twins. The full tables also allow direct comparison of three ensemble variants: personas + dummies, personas only, and dummies only. On diagonal entries across both datasets, using both personas and dummy twins consistently achieves the best perfor-mance, often by a substantial margin. The benefit of dummy twins is most pronounced for metrics that penalize missing support—such as χ2 divergence and KL divergence—where the “personas only” variant can produce extremely large values (e.g., χ2 > 600 on MovieLens) because the DT ensemble may not cover all response categories. The K dummy twins guar-antee full support by construction, eliminating this failure mode. However, the “dummies only” variant substantially underperforms “personas + dummies” for most metrics, confirm-ing that the DT personas carry meaningful distributional information beyond mere support coverage. 
+
+Variance retention. Figure 9 shows the distribution of variance ratios (predicted vari-ance / true variance) on MovieLens (trained with ℓ1 loss). The calibrated ensemble achieves variance ratios closer to 1 compared to the uniform-weight baseline, indicating that calibra-tion preserves the natural variability of response distributions rather than producing overly concentrated predictions. 
+
+# 8 Discussion 
+
+Summary of contributions. We present SYN-DIGITS, a post-hoc calibration framework for digital twin (DT) simulation that bridges the gap between LLM-generated synthetic 22 0.25 0.50 0.75 1.00 1.25 1.50 1.75   
+
+> Variance ratio
+> 0
+> 2
+> 4
+> 6
+> 8
+> 10
+> 12
+> Number of questions
+> naive / true
+> trained / true Figure 9: Histogram of variance ratios (predicted variance / true variance) on MovieLens (trained with ℓ1loss). The calibrated ensemble (orange) achieves variance ratios closer to 1 compared to the baseline (blue), indicating better variance retention.
+
+responses and real human behavior. The framework is grounded in paired latent factor models for the human and DT response matrices, which yield verifiable, interpretable align-ment conditions: row space inclusion for predicting responses to new questions (Section 4), and column space inclusion for predicting responses of new users (Section 6). We provide formal error bounds for both the individual-level prediction task (Theorem 4.1) and the distributional prediction task (Theorem 7.1), decomposing prediction error into structural misalignment and finite-sample estimation components. A systematic comparison of ten cal-ibration methods across thirteen persona constructions and two datasets—MovieLens and Twin-2K-500—provides practical guidance on method selection and persona design. On top of individual-level calibration, we also propose an adaptive transfer diagnostic that identifies when calibration is likely to be harmful (Section 5.3), boosting the relative improvement from 
+
+19 –21% (always-transfer) to 50% over the DT baseline on Twin-2K-500. We further extend the framework to distribution-level calibration via a weighted ensemble method (Section 7), demonstrating 50% to 90% reductions in distributional divergence. 
+
+Practical guidance. Several actionable insights emerge from our study. First, post-hoc calibration consistently and substantially improves upon uncalibrated digital twins across a wide range of settings; even the simplest linear methods (Ridge, elastic net) yield significant gains, making them a reliable default when computational simplicity is desired. Second, among the ten calibration methods evaluated, unconstrained fit-and-transfer approaches (Ridge, Lasso, elastic net, neural network) generally outperform matrix completion methods (HSV, SSV, ALS) and constrained approaches (synthetic control), suggesting that exploiting the full linear structure of the DT response matrix is more effective than imposing simplex or low-rank constraints alone. Third, persona construction matters: the choice of LLM back-bone, prompt format (text vs. JSON), and prompting strategy (chain-of-thought, question 23 repetition, predicted output) all influence calibration quality. Our 13-construction study on Twin-2K-500 (Table 4) offers a systematic basis for these design decisions—chain-of-thought and question repetition yield the highest post-calibration correlations among GPT-4.1-mini constructions, while upgrading to GPT-4.1 provides further gains. Fourth, the adaptive transfer diagnostic (Section 5.3) provides a low-cost safeguard: by checking whether the fit-ted model predicts well on the DT system itself, practitioners can avoid harmful calibration on questions that lie outside the linear span of reference questions. 
+
+Limitations. The framework currently applies to structured numerical responses only— ratings on a fixed scale, Likert-type survey items, and similar ordinal or categorical formats. Extending calibration to free-form text responses (e.g., open-ended survey answers, natural language explanations) remains an open challenge. Calibration quality also depends on the reference questions spanning a sufficiently rich latent space; when the target question lies outside this span, the row space condition fails and performance can degrade, as diagnosed by the adaptive transfer analysis (Section 5.3). Additionally, the quality of calibration is inherently bounded by the quality of the underlying DT simulation: if the LLM produces responses that are systematically misaligned with human behavior in ways not capturable by linear reweighting, calibration can only partially compensate. Computational considerations are modest for linear methods but can become relevant for distributional calibration with large DT populations, where the mirror descent optimization scales with the number of DTs. 
+
+Future directions. Several promising extensions emerge from this work. (i) Free-text responses : developing calibration methods for open-ended text, potentially via embedding-space alignment or distribution matching in semantic space, would substantially broaden applicability. (ii) Online calibration : in settings where human response data arrives sequen-tially, online updates to calibration weights could enable adaptive, real-time correction of DT predictions. (iii) Multi-task and cross-domain transfer : our framework calibrates within a single question domain; extending to transfer across domains (e.g., calibrating movie prefer-ences to predict political opinions) would further demonstrate the robustness of latent factor alignment. (iv) Richer adaptive transfer : the current threshold-based diagnostic is a simple binary rule; more sophisticated approaches, such as question-specific confidence intervals, could improve the precision of the transfer decision. 
+
+Broader impact. Digital twin simulation raises important ethical considerations. LLM-based personas that simulate human survey responses could be misused to fabricate public opinion data, manipulate market research, or generate misleading polling results. While our calibration framework improves the fidelity of such simulations, it also lowers the barrier to producing realistic synthetic data that could be difficult to distinguish from genuine human responses. Practitioners should ensure transparency about the use of synthetic data in any downstream application, and appropriate safeguards should be in place to prevent misrep-resentation of LLM outputs as authentic human opinions. On the positive side, high-fidelity DT simulation has the potential to reduce the cost and burden of large-scale human sur-veys, enable rapid prototyping of survey instruments, and provide researchers with realistic synthetic datasets for methodological development without compromising individual privacy. 24 References 
+
+Abadie, A. (2021). Using synthetic controls: Feasibility, data requirements, and method-ological aspects. Journal of Economic Literature 59 391–425. 
+
+Abadie, A. , Diamond, A. and Hainmueller, J. (2010). Synthetic control methods for comparative case studies: Estimating the effect of california’s tobacco control program. 
+
+Journal of the American Statistical Association 105 493–505. 
+
+Abadie, A. and Gardeazabal, J. (2003). The economic costs of conflict: A case study of the basque country. American economic review 93 113–132. 
+
+Agarwal, A. , Dahleh, M. , Shah, D. and Shen, D. (2023). Causal matrix completion. In The Thirty Sixth Annual Conference on Learning Theory . PMLR. 
+
+Agarwal, A. , Shah, D. and Shen, D. (2025). Synthetic interventions: Extending synthetic controls to multiple treatments. Operations Research .
+
+Aher, G. , Arriaga, R. I. and Kalai, A. T. (2023). Using large language models to simulate multiple humans and replicate human subject studies. In Proceedings of the 40th International Conference on Machine Learning . ICML’23, JMLR.org. 
+
+Anderson, J. R. , Bothell, D. , Byrne, M. D. , Douglass, S. , Lebiere, C. and Qin, Y. (2004). An integrated theory of the mind. Psychological review 111 1036. 
+
+Athey, S. , Bayati, M. , Doudchenko, N. , Imbens, G. and Khosravi, K. (2021). Matrix completion methods for causal panel data models. Journal of the American Statistical Association 116 1716–1730. 
+
+Ben-Michael, E. , Feller, A. and Rothstein, J. (2021). The augmented synthetic control method. Journal of the American Statistical Association 116 1789–1803. 
+
+Binz, M. , Akata, E. , Bethge, M. , Brändle, F. , Callaway, F. , Coda-Forno, J. ,
+
+Dayan, P. , Demircan, C. , Eckstein, M. K. , Éltető, N. et al. (2025). A foundation model to predict and capture human cognition. Nature 1–8. 
+
+Bonabeau, E. (2002). Agent-based modeling: Methods and techniques for simulating human systems. Proceedings of the National Academy of Sciences 99 7280–7287. 
+
+Bui, N. , Nguyen, H. T. , Kumar, S. , Theodore, J. , Qiu, W. , Nguyen, V. A. and 
+
+Ying, R. (2025). Mixture-of-personas language models for population simulation. arXiv preprint arXiv:2504.05019 .
+
+Candes, E. and Recht, B. (2012). Exact matrix completion via convex optimization. 
+
+Communications of the ACM 55 111–119. 
+
+Cao, Y. , Liu, H. , Arora, A. , Augenstein, I. , Röttger, P. and Hershcovich, D. 
+
+(2025). Specializing large language models to simulate survey response distributions for global populations. In Proceedings of the 2025 Conference of the Nations of the Americas 
+
+25 Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers) (L. Chiruzzo, A. Ritter and L. Wang, eds.). Association for Computational Linguistics, Albuquerque, New Mexico. 
+
+Cho, S. , Kim, J. and Kim, J. H. (2024). Llm-based doppelgänger models: Leveraging synthetic data for human-like responses in survey simulations. IEEE Access 12 178917– 178927. 
+
+Doudchenko, N. and Imbens, G. W. (2016). Balancing, regression, difference-in-differences and synthetic control methods: A synthesis. Tech. Rep. 22791, National Bureau of Economic Research. 
+
+Epstein, J. M. and Axtell, R. (1996). Growing Artificial Societies: Social Science from the Bottom Up . Brookings Institution Press. 
+
+Gao, C. , Lan, X. , Li, N. , Yuan, Y. , Ding, J. , Zhou, Z. , Xu, F. and Li, Y. (2024). Large language models empowered agent-based modeling and simulation: A survey and perspectives. Humanities and Social Sciences Communications 11 1–24. 
+
+Gao, Y. , Lee, D. , Burtch, G. and Fazelpour, S. (2025). Take caution in using llms as human surrogates. Proceedings of the National Academy of Sciences 122 e2501660122. 
+
+Harper, F. M. and Konstan, J. A. (2015). The movielens datasets: History and context. 
+
+ACM Trans. Interact. Intell. Syst. 5.
+
+Hastie, T. , Mazumder, R. , Lee, J. D. and Zadeh, R. (2015). Matrix completion and low-rank SVD via fast alternating least squares. The Journal of Machine Learning Research 16 3367–3402. 
+
+Hollingsworth, A. and Wing, C. (2020). Tactics for design and inference in synthetic control studies: An applied example using high-dimensional data. Available at SSRN 3592088. 
+
+Horton, J. J. (2023). Large language models as simulated economic agents: What can we learn from homo silicus? Tech. rep., National Bureau of Economic Research. 
+
+Huang, C. , Wu, Y. and Wang, K. (2025). How many human survey respondents is a large language model worth? an uncertainty quantification perspective. arXiv preprint arXiv:2502.17773 .
+
+Hullman, J. , Broska, D. , Sun, H. and Shaw, A. (2026). This human study did not involve human subjects: Validating llm simulations as behavioral evidence. arXiv preprint arXiv:2602.15785 .
+
+Kolluri, A. , Wu, S. , Park, J. S. and Bernstein, M. S. (2025). Finetuning llms for human behavior prediction in social science experiments. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing .26 Koren, Y. , Bell, R. and Volinsky, C. (2009). Matrix factorization techniques for recommender systems. Computer 42 30–37. 
+
+Laird, J. E. , Newell, A. and Rosenbloom, P. S. (1987). Soar: An architecture for general intelligence. Artificial intelligence 33 1–64. 
+
+Leng, Y. , Sang, Y. and Agarwal, A. (2024). Reduce disparity between llms and humans: Optimal llm sample calibration. SSRN Working Paper 4802019 .
+
+Li, A. , Chen, H. , Namkoong, H. and Peng, T. (2025). Llm generated persona is a promise with a catch. arXiv preprint arXiv:2503.16527 .
+
+Lin, Y. , Chen, L. , Ali, A. , Nugent, C. , Cleland, I. , Li, R. , Ding, J. and Ning, H. 
+
+(2024). Human digital twin: A survey. Journal of Cloud Computing 13 131. 
+
+Lord, F. M. (2012). Applications of Item Response Theory to Practical Testing Problems .Routledge. 
+
+Mazumder, R. , Hastie, T. and Tibshirani, R. (2010). Spectral regularization algorithms for learning large incomplete matrices. The Journal of Machine Learning Research 11 
+
+2287–2322. 
+
+McFadden, D. (1974). Conditional logit analysis of qualitative choice behavior. In Frontiers in Econometrics (P. Zarembka, ed.). Academic Press, New York, 105–142. 
+
+Nguyen, T. N. (2022). Toward human digital twins for cybersecurity simulations on the metaverse: Ontological and network science approach. JMIRx Med 3 e33502. 
+
+Orlikowski, M. , Pei, J. , Röttger, P. , Cimiano, P. , Jurgens, D. and Hovy, D. 
+
+(2025). Beyond demographics: Fine-tuning large language models to predict individuals’ subjective text perceptions. arXiv preprint arXiv:2502.20897 .
+
+Park, J. S. , Zou, C. Q. , Shaw, A. , Hill, B. M. , Cai, C. , Morris, M. R. , Willer, R. ,
+
+Liang, P. and Bernstein, M. S. (2024). Generative agent simulations of 1,000 people. 
+
+Peng, T. , Gui, G. , Brucks, M. , Merlau, D. J. , Fan, G. J. , Sliman, M. B. , Johnson, E. J. , Althenayyan, A. , Bellezza, S. , Donati, D. , Fong, H. , Friedman, E. ,
+
+Guevara, A. , Hussein, M. , Jerath, K. , Kogut, B. , Kumar, A. , Lane, K. , Li, H. ,
+
+Morwitz, V. , Netzer, O. , Perkowski, P. and Toubia, O. (2026). Digital twins as funhouse mirrors: Five key distortions. 
+
+Rossi, L. , Harrison, K. and Shklovski, I. (2024). The problems of llm-generated data in social science research. Sociologica: International Journal for Sociological Debate 18 
+
+145–168. 
+
+Santurkar, S. , Durmus, E. , Ladhak, F. , Lee, C. , Liang, P. and Hashimoto, T. 
+
+(2023). Whose opinions do language models reflect? In International Conference on Machine Learning . PMLR. 27 Scherrer, N. , Sh, C. , Feder, A. and Blei, D. M. (2023). Evaluating the moral beliefs encoded in llms. In Proceedings of the 37th International Conference on Neural Information Processing Systems . NIPS ’23, Curran Associates Inc., Red Hook, NY, USA. 
+
+Silver, N. C. and Dunlap, W. P. (1987). Averaging correlation coefficients: Should fisher’s z transformation be used? Journal of Applied Psychology 72 146–148. 
+
+Suh, J. , Jahanparast, E. , Moon, S. , Kang, M. and Chang, S. (2025). Language model fine-tuning on scaled survey data for predicting distributions of public opinions. 
+
+arXiv preprint arXiv:2502.16761 .
+
+Toubia, O. , Gui, G. Z. , Peng, T. , Merlau, D. J. , Li, A. and Chen, H. (2025). Database report: Twin-2k-500: A data set for building digital twins of over 2,000 people based on their answers to over 500 questions. Marketing Science .
+
+Train, K. E. (2009). Discrete Choice Methods with Simulation . Cambridge university press. 
+
+Tranchero, M. , Brenninkmeijer, C.-F. , Murugan, A. and Nagaraj, A. (2024). Theorizing with large language models. Working Paper 33033, National Bureau of Eco-nomic Research. 
+
+Vershynin, R. (2018). High-Dimensional Probability: An Introduction with Applications in Data Science . Cambridge Series in Statistical and Probabilistic Mathematics, Cambridge University Press. 
+
+Wang, B. , Khoo, Z.-Y. and Wang, J. (2026). Prompts to proxies: Emulating human preferences via a compact llm ensemble. arXiv preprint arXiv:2509.11311 .
+
+# A Additional Details 
+
+A.1 SVD Diagnostics 
+
+Figure 10 shows the SVD diagnostics for MovieLens and Twin-2K-500. 4 Both the real human response matrix Y and the DT response matrix ˜Y exhibit strong low-rank structure, with a small number of singular values explaining a large fraction of the variance. This supports the applicability of latent factor models and motivates our focus on low-rank calibration methods. 
+
+> 4Wherever SVD is applied, we demean the matrix’s columns to avoid an intercept with large magnitude.
+
+28 0 50 100 150 200 250 
+
+> Rank
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Cumulative Variance Explained (%)
+> Real
+> Synthetic
+> Stacked
+
+(a) MovieLens 0 20 40 60 80 100 120  
+
+> Rank
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Cumulative Variance Explained (%)  Real
+> Synthetic
+> Stacked
+
+(b) Twin-2K-500 
+
+Figure 10: SVD diagnostics (cumulative variance explained) for MovieLens (left; zero-shot DT baseline) and Twin-2K-500 (right; default persona construction: text, GPT-4.1-mini). Both the real human response matrix Y and the DT response matrix ˜Y exhibit strong low-rank structure. 
+
+A.2 Calibration Method Details 
+
+We describe each of the ten calibration methods summarized in Table 1. 
+
+Fit-and-transfer methods. These methods instantiate Algorithm 1 by fitting a predic-tive model M on the DT system and transferring it to the human system. The model M
+
+maps responses to existing questions to the response for the target question. 
+
+• Ridge Regression (Ridge) : ℓ2-penalized linear regression, which shrinks all coeffi-cients uniformly toward zero (Ben-Michael et al., 2021). 
+
+• Lasso Regression (Lasso) : ℓ1-penalized linear regression, which encourages sparse coefficients (Hollingsworth and Wing, 2020). 
+
+• Elastic Net Regression (EN) : A convex combination of ℓ1 and ℓ2 penalties, balanc-ing sparsity and stability (Doudchenko and Imbens, 2016). 
+
+• Neural Network (NN) : A feedforward network with a single hidden layer and ReLU activations, allowing nonlinear transfer mappings. 
+
+• Synthetic Control (SC) (Abadie et al., 2010): The classical synthetic control method, which constrains the regression weights to lie on the probability simplex (i.e., non-negative and summing to one), ensuring that the predicted response is a convex com-bination of responses to existing questions. 
+
+• Synthetic Intervention (SI) (Agarwal et al., 2025): Learning a linear mapping in the singular-value space of ˜Y and explicitly leveraging low-rank structure. It first computes the SVD of the DT response matrix, projects both DT and human responses onto the leading singular directions, and transfers the learned relationship. 29 Direct matrix completion methods. Rather than fitting a model on DT data and transferring it, these methods directly impute the missing half-column in the stacked matrix. 
+
+• Hard SVD Impute (HSV) : Iterative hard-thresholding SVD, which alternates be-tween imputing missing entries and computing a rank-constrained SVD approximation (Mazumder et al., 2010). 
+
+• Soft SVD Impute (SSV) : Replaces hard thresholding with nuclear-norm regular-ization, yielding a convex relaxation (Mazumder et al., 2010). 
+
+• Alternating Least Squares (ALS) : Alternates between fixing user factors and solv-ing for question factors, and vice versa, to find a low-rank factorization of the partially observed matrix (Hastie et al., 2015). 
+
+• Synthetic Prior (SP) : Uses the DT prediction ˜Ym+1 as an initial estimate for the missing real column Ym+1 , then applies hard SVD impute to the completed real matrix 
+
+Y to refine the estimate. This leverages the DT output as a warm start for matrix completion on the human data alone. 
+
+A.3 Persona Construction Details 
+
+The thirteen persona constructions used in the Twin-2K-500 evaluation (Table 3) are de-scribed in detail below. All constructions use temperature 0 unless otherwise noted; exact prompt templates, persona encoding schemes, and API settings are documented in Toubia et al. (2025). 1. Text, GPT-4.1-mini (default ): Full survey responses provided as free-text; simulated with GPT-4.1-mini. 2. Text, Gemini-Flash-2.5 : Same free-text persona, simulated with Gemini-Flash-2.5 to compare model-dependent fidelity. 3. JSON, GPT-4.1-mini : Survey responses encoded as structured JSON fields to assess the impact of input format. 4. JSON, GPT-4.1 : Same JSON input, using the full GPT-4.1 model to evaluate the effect of increased model capacity. 5. Text + CoT, GPT-4.1-mini : Text persona with explicit chain-of-thought reasoning instructions. 6. Text + repeat, GPT-4.1-mini : Model prompted to repeat each question and answer choice before responding, ensuring full context is processed. 7. Text, temp=0.7, GPT-4.1-mini : Same text input with default sampling tempera-ture ( 0.7) instead of 0 to evaluate the impact of generation randomness. 8. JSON + PO, GPT-4.1-mini : JSON persona using OpenAI’s Predicted Output feature for efficient structured output generation. 30 9. JSON + PO, GPT-4.1 : Same as above with the full GPT-4.1 model. 10. Fine-tuned GPT-4.1-mini : GPT-4.1-mini fine-tuned on 500 labeled personas. 11. Demographics only, GPT-4.1-mini : Persona includes only the 14 demographic variables (region, sex, age, education, race, citizenship, marital status, religion, reli-gious attendance, political party, household income, political ideology, household size, employment status). 12. Summary, GPT-4.1-mini : A concise persona summary provided instead of complete survey responses. 13. Summary + JSON, GPT-4.1-mini : Structured JSON persona augmented with an appended summary to test whether hybrid input improves results. 
+
+A.4 Calibration Method Hyperparameters 
+
+Tables 7 and 8 report the hyperparameters used for each calibration method on Movie-Lens and Twin-2K-500, respectively, for both the new-question (column) and new-user (row) prediction tasks. For the fit-and-transfer methods, the regularization multiplier scales the penalty term; for the matrix completion methods, rank and λ control the low-rank factor-ization. All neural networks use ReLU activations, Adam optimizer with learning rate 10 −3,batch size 128, and early stopping with patience 20. 
+
+Method New question New user 
+
+Ridge λ = 1000 λ = 1000 
+
+Lasso α = 0 .01 α = 0 .1
+
+Elastic net α = 0 .1, ℓ1 ratio = 0 .1 α = 1 , ℓ1 ratio = 0 .1
+
+Synthetic control λ = 10 −8 λ = 1 
+
+Neural network hidden = [16] , wd = 0 .1 hidden = [8] , wd = 1 
+
+epochs = 200 epochs = 200 
+
+Synthetic intervention rank = 50 , λ = 100 rank = 10 , λ = 100 
+
+Hard SVD impute rank = 5 rank = 2 
+
+Soft SVD impute rank = 15 , λ = 5 rank = 5 , λ = 20 
+
+ALS rank = 15 , λ = 5 rank = 3 , λ = 5 
+
+Synthetic prior rank = 8 rank = 2 
+
+> Table 7: Hyperparameters for MovieLens.
+
+31 Method New question New user 
+
+Ridge λ = 100 λ = 5000 
+
+Lasso α = 0 .001 α = 1 
+
+Elastic net α = 0 .01 , ℓ1 ratio = 0 .3 α = 1 , ℓ1 ratio = 0 .1
+
+Synthetic control λ = 10 −6 λ = 10 −6
+
+Neural network hidden = [8] , wd = 0 .05 hidden = [8 , 8] , wd = 0 .001 
+
+epochs = 200 epochs = 200 
+
+Synthetic intervention rank = 20 , λ = 100 rank = 30 , λ = 100 
+
+Hard SVD impute rank = 5 rank = 2 
+
+Soft SVD impute rank = 20 , λ = 20 rank = 10 , λ = 10 
+
+ALS rank = 20 , λ = 20 rank = 15 , λ = 0 .5
+
+Synthetic prior rank = 8 rank = 2 
+
+Table 8: Hyperparameters for Twin-2K-500. 
+
+# B Proofs 
+
+B.1 Proof of Theorem 4.1 
+
+By definition of r, ˆYv − Yv = Y ( ˆβ − β∗) − r, 
+
+so 
+
+|| ˆYv − Yv|| 2 ≤ || Y || 2 · || ˆβ − β∗|| 2 + || r|| 2.
+
+To bound || ˆβ − β∗|| 2, note that 
+
+( ˆ˜Σ + λI ) ˆβ = ˆ ˜γ, ( ˜Σ + λI )β∗ = ˜ γ. 
+
+Subtracting the two equations gives 
+
+( ˆ˜Σ + λI )( ˆβ − β∗) = ( ˜Σ − ˆ˜Σ) β∗ + (ˆ ˜γ − ˜γ).
+
+Left-multiplying both sides by ( ˆ˜Σ + λI )−1 and taking norms gives 
+
+|| ˆβ − β∗|| 2 ≤ 1
+
+σmin ( ˆ˜Σ) + λ
+
+
+
+|| ˆ˜Σ − ˜Σ|| 2 · || β∗|| 2 + || ˆ˜γ − ˜γ|| 2
+
+
+
+,
+
+where we used the fact that || ( ˆ˜Σ + λI )−1|| −12 = σmin ( ˆ˜Σ) + λ. This yields the first part of the theorem. To bound || r|| 2, note that 
+
+Yv − Y b = U v + Ev − U V b − E b
+
+= U e + Ev − E b. 
+
+32 So, 
+
+r = Yv − Y β ∗ = Yv − Y b + Y b − Y β ∗
+
+= U e + ( Ev − E b) + Y (b − β∗),
+
+which implies 
+
+|| r|| 2 ≤ || U e || 2 + ||E v − E b|| 2 + || Y || 2 · || b − β∗|| 2.
+
+To bound || b − β∗|| 2, we subtract ( ˜Σ + λI )b from both sides of ( ˜Σ + λI )β∗ = ˜ γ to get 
+
+( ˜Σ + λI )( β∗ − b) = (˜ γ − ˜Σb) − λb. 
+
+Left-multiplying both sides by ( ˜Σ + λI )−1 and taking norms gives 
+
+|| β∗ − b|| 2 ≤ 1
+
+σmin ( ˜Σ) + λ
+
+
+
+|| ˜γ − ˜Σb|| 2 + λ|| b|| 2
+
+
+
+,
+
+where we used the fact that || ( ˜Σ + λI )−1|| −12 = σmin ( ˜Σ) + λ. This yields the second part of the theorem. If we denote ∆ = ˜V − V and ∆v = ˜ v − v, then 
+
+|| ˜γ − ˜Σb|| 2 = 1
+
+n|| E{ ˜Y ⊤[ ˜U (e + ∆ v − ∆b) + ( ˜Ev − ˜Eb)] }|| 2. (B.1) To see this, note that 
+
+˜γ − ˜Σb = 1
+
+nE[ ˜Y ⊤( ˜Yv − ˜Y b )] ,
+
+where 
+
+˜Yv − ˜Y b = ˜U ˜v + ˜Ev − ˜U ˜V b − ˜Eb
+
+= ˜U (v + ∆ v − (V + ∆) b) + ( ˜Ev − ˜Eb)= ˜U (e + ∆ v − ∆b) + ( ˜Ev − ˜Eb).
+
+Then, 
+
+|| ˜γ − ˜Σb|| 2 = 1
+
+n|| E[ ˜Y ⊤( ˜Yv − ˜Y b )] || 2
+
+= 1
+
+n|| E{ ˜Y ⊤[ ˜U (e + ∆ v − ∆b) + ( ˜Ev − ˜Eb)] }|| 2.
+
+It’s possible to characterize the difference between ˜V and V using some other metrics like the projection-Frobenius norm of the two spaces, which we leave to future work. 
+
+B.2 Proof of Theorem 7.1 
+
+By Assumptions 7.1 and 7.3, for each i ∈ [n] and k ∈ [K],
+
+P( ˜Yi,m +1 = k | ˜ui) = ⟨˜ui,k , v m+1 ,k ⟩ =
+
+> m
+
+X
+
+> j=1
+
+cj ⟨˜ui,k , v j,k ⟩ =
+
+> m
+
+X
+
+> j=1
+
+cj P( ˜Yi,j = k | ˜ui),
+
+33 so ˜Pm+1 (· | ˜ui) = Pmj=1 cj ˜Pj (· | ˜ui). Taking expectation on both sides yields P( ˜Yi,m +1 = k) = 
+
+Pmj=1 cj P( ˜Yi,j = k), so ˜Pm+1 = Pmj=1 cj ˜Pj . Similarly, Pm+1 = Pmj=1 cj Pj . Thus, 
+
+TV Pm+1 ,
+
+> n
+
+X
+
+> i=1
+
+ˆwi ˜Pm+1 (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+ˆπkδk
+
+!
+
+= TV 
+
+> m
+
+X
+
+> j=1
+
+cj Pj ,
+
+> m
+
+X
+
+> j=1
+
+cj
+
+> n
+
+X
+
+> i=1
+
+ˆwi ˜Pj (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+ˆπkδk
+
+!! 
+
+≤
+
+> m
+
+X
+
+> j=1
+
+cj TV Pj ,
+
+> n
+
+X
+
+> i=1
+
+ˆwi ˜Pj (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+ˆπkδk
+
+!
+
+≤ m∥c∥∞ · 1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj ,
+
+> n
+
+X
+
+> i=1
+
+ˆwi ˜Pj (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+ˆπkδk
+
+!
+
+= m∥c∥∞ · min 
+
+> (w,π )∈∆n+K−1
+
+(
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj ,
+
+> n
+
+X
+
+> i=1
+
+wi ˜Pj (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+πkδk
+
+!) 
+
+. (B.2) Let ν∗ denote the optimal reweighting: 
+
+ν∗ = argmin 
+
+> ν
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj , X
+
+> u∈S
+
+ν(u) ˜Pj (· | u)
+
+!
+
+, (B.3) where the argmin is taken over all reweightings ν : S → [0 , 1] satisfying P 
+
+> u∈S
+
+ν(u) = 1 and 
+
+ν(u) ≤ A˜μ(u) for all u ∈ S . It induces a reweighting on the empirical distribution formed by the n digital twins: 
+
+w∗ 
+
+> i
+
+= 1
+
+Z · 1
+
+n · ν∗(˜ ui)˜μ(˜ ui) ∀i ∈ [n], where Z = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+ν∗(˜ ui)˜μ(˜ ui) .
+
+(We follow the convention that 0/0 = 0 .) Clearly, w∗ 
+
+> i
+
+≥ 0 for all i ∈ [n], and Pni=1 w∗ 
+
+> i
+
+= 1 .Then, we can bound (B.2) via 
+
+min 
+
+> (w,π )∈∆n+K−1
+
+(
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj ,
+
+> n
+
+X
+
+> i=1
+
+wi ˜Pj (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+πkδk
+
+!) 
+
+≤ 1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj ,
+
+> n
+
+X
+
+> i=1
+
+w∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+!
+
+≤ 1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj , X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u)
+
+!
+
++ 1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u),
+
+> n
+
+X
+
+> i=1
+
+w∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+!
+
+.
+
+(B.4) The first term on the right hand side of (B.4) is simply (B.3). 34 We now work on the second term on the right hand side of (B.4). Let r∗ 
+
+> i
+
+= Zw ∗ 
+
+> i
+
+=
+
+n−1 · ν∗(˜ ui)/˜μ(˜ ui), then for each j ∈ [m],
+
+E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+#
+
+=
+
+> n
+
+X
+
+> i=1
+
+X
+
+> u∈S
+
+˜μ(u) ·
+
+ 1
+
+n · ν∗(u)˜μ(u) · ˜Pj (· | u)
+
+
+
+= X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u).
+
+Therefore, using the fact that TV( P, Q ) = 12 ∥P − Q∥1 for all probability distributions P and 
+
+Q, we have 
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u),
+
+> n
+
+X
+
+> i=1
+
+w∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+!
+
+= 12m
+
+> m
+
+X
+
+> j=1
+
+X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u) −
+
+> n
+
+X
+
+> i=1
+
+w∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+> 1
+
+= 1
+
+Z · 12m
+
+> m
+
+X
+
+> j=1
+
+X
+
+> u∈S
+
+Zν ∗(u) ˜Pj (· | u) −
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+> 1
+
+≤ 1
+
+Z · 12m
+
+> m
+
+X
+
+> j=1
+
+|1 − Z| X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u)
+
+> 1
+
++ X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u) −
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+> 1
+
+!
+
+= 12Z |1 − Z| + 1
+
+m
+
+> m
+
+X
+
+> j=1
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+#
+
+> 1
+
+!
+
+. (B.5) We will now apply Hoeffding’s inequality to obtain high-probability bounds on |1 − Z|
+
+and Z. Clearly, {ν∗(˜ ui)/˜μ(˜ ui)}ni=1 are i.i.d. By definition, 0 ≤ ν∗(˜ ui)/˜μ(˜ ui) ≤ A for all 
+
+i ∈ [n]. Moreover, since ˜ui ∼ ˜μ, then 
+
+E
+
+ν∗(˜ ui)˜μ(˜ ui)
+
+
+
+= X
+
+> s∈S
+
+ν∗(s)˜μ(s) · ˜μ(s) = X
+
+> s∈S
+
+ν∗(s) = 1 .
+
+By Hoeffding’s inequality, 
+
+P |Z − 1| ≤ A
+
+rlog(4 /α )2n
+
+!
+
+= P
+
+(
+
+1
+
+n
+
+> n
+
+X
+
+> i=1
+
+ν∗(˜ ui)˜μ(˜ ui) − E
+
+ν∗(˜ ui)˜μ(˜ ui)
+
+ 
+
+≤ A
+
+rlog(4 /α )2n
+
+)
+
+≥ 1−α
+
+2 .
+
+(B.6) When this event happens, if n ≥ 2A2 log(4 /α ), then |Z − 1| ≤ 1/2, which implies Z ≥ 1/2.Substituting this into (B.5) yields that with probability at least 1 − α/ 2,
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV X
+
+> u∈S
+
+ν∗(u) ˜Pj (· | u),
+
+> n
+
+X
+
+> i=1
+
+w∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+!
+
+≤ A
+
+rlog(4 /α )2n + 1
+
+m
+
+> m
+
+X
+
+> j=1
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+#
+
+> 1
+
+. (B.7) 35 It remains to bound the second term on the right hand side of (B.7). We will use McDiarmid’s inequality (e.g., Theorem 2.9.1 in Vershynin (2018)). To this end, we view it as a function of (˜ u1, ..., ˜un). Define 
+
+φ(u′
+
+> 1
+
+, ..., u ′
+
+> n
+
+) = 1
+
+m
+
+> m
+
+X
+
+> j=1
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | u′
+
+> i
+
+) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+#
+
+> 1
+
+.
+
+For all ℓ ∈ [n] and for all (u′
+
+> 1
+
+, ..., u ′
+
+> n
+
+) and (u′′  
+
+> 1
+
+, ..., u ′′ 
+
+> n
+
+) with u′ 
+
+> j
+
+= u′′  
+
+> j
+
+∀j̸ = ℓ, by the triangle inequality, 
+
+φ(u′
+
+> 1
+
+, ..., u ′
+
+> n
+
+) − φ(u′′  
+
+> 1
+
+, ..., u ′′ 
+
+> n
+
+) ≤ 1
+
+m
+
+> m
+
+X
+
+> j=1
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | u′
+
+> i
+
+) −
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | u′′  
+
+> i
+
+)
+
+> 1
+
+≤ 1
+
+m
+
+> m
+
+X
+
+> j=1
+
+r∗ 
+
+> ℓ
+
+˜Pj (· | u′
+
+> ℓ
+
+) − ˜Pj (· | u′′  
+
+> ℓ
+
+) 1
+
+≤ 2r∗ 
+
+> ℓ
+
+= 2
+
+n · ν∗(˜ uℓ)˜μ(˜ uℓ) ≤ 2An .
+
+By McDiarmid’s inequality (e.g., Theorem 2.9.1 in Vershynin (2018)), with probability at least 1 − α/ 2,
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+#
+
+> 1
+
+≤ 1
+
+m
+
+> m
+
+X
+
+> j=1
+
+E
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+#
+
+> 1
+
++ A
+
+rlog(2 /α )2n . (B.8) To bound the expectation in (B.8), for each j ∈ [m],
+
+E
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (· | ˜ui)
+
+#
+
+> 1
+
+=
+
+> K
+
+X
+
+> k=1
+
+E
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (k | ˜ui) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (k | ˜ui)
+
+#
+
+≤
+
+vuutK
+
+> K
+
+X
+
+> k=1
+
+E
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (k | ˜ui) − E
+
+" nX
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (k | ˜ui)
+
+# ! 2
+
+(Cauchy-Schwarz) 
+
+≤
+
+vuutK
+
+> K
+
+X
+
+> k=1
+
+Var 
+
+> n
+
+X
+
+> i=1
+
+r∗ 
+
+> i
+
+˜Pj (k | ˜ui)
+
+!
+
+=
+
+vuutK
+
+> K
+
+X
+
+> k=1
+> n
+
+X
+
+> i=1
+
+(r∗ 
+
+> i
+
+)2 Var   ˜Pj (k | ˜ui) (independence) 
+
+≤
+
+vuutK
+
+> K
+
+X
+
+> k=1
+> n
+
+X
+
+> i=1
+
+An
+
+2
+
+˜Pj (k) ≤ A
+
+rKn , (B.9) 36 where the second last inequality uses the fact that for a random variable X ∈ [0 , 1] , it holds that Var( X) ≤ E[X2] ≤ E[X].Substituting (B.4), (B.7) and (B.9) into (B.2), and using a union bound, we obtain that with probability at least 1 − α,
+
+TV Pm+1 ,
+
+> n
+
+X
+
+> i=1
+
+ˆwi ˜Pm+1 (· | ˜ui) + 
+
+> K
+
+X
+
+> k=1
+
+ˆπkδk
+
+!
+
+≤ m∥c∥∞
+
+"
+
+inf 
+
+> ν
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj , X
+
+> u∈S
+
+ν(u) ˜Pj (· | u)
+
+!
+
++ A
+
+rlog(4 /α )2n + A
+
+rKn + A
+
+rlog(2 /α )2n
+
+#
+
+≤ m∥c∥∞
+
+"
+
+inf 
+
+> ν
+
+1
+
+m
+
+> m
+
+X
+
+> j=1
+
+TV Pj , X
+
+> u∈S
+
+ν(u) ˜Pj (· | u)
+
+!
+
++ √3A
+
+rK + log(4 /α )
+
+n
+
+#
+
+.
+
+This finishes the proof. 
+
+# C Full Distributional Calibration Results 
+
+Tables 9 and 10 report the full cross-metric results for Algorithm 3 on MovieLens and OpinionQA, respectively. Each row corresponds to a training objective D and each column to a test metric. Within each cell, the three rows report: (1) using both personas and dummy twins, (2) using only personas, and (3) using only dummy twins. The bottom row is the uniform-weight baseline. Each entry shows the mean and standard error. Lower is better for all metrics. 37 Train/Test  TV  χ2 KL  Hellinger  KS  ℓ1 ℓ2 MSE TV 0.154  ± 0.006 0.233  ± 0.008 0.240  ± 0.009 0.208  ± 0.018 0.587  ± 0.050 7.710  ± 4.558 0.092  ± 0.007 0.230  ± 0.014 0.263  ± 0.027 0.023  ± 0.002 0.059  ± 0.003 0.053  ± 0.004 0.123  ± 0.006 0.182  ± 0.008 0.168  ± 0.008 0.492  ± 0.029 0.962  ± 0.046 0.534  ± 0.027 0.054  ± 0.005 0.151  ± 0.013 0.072  ± 0.007 0.078 3.611 6.551 
+
+> χ2
+> 0.162  ± 0.006 0.290  ± 0.009 0.180  ± 0.007 0.187  ± 0.013 631.215  ± 68.369 0.222  ± 0.016 0.093  ± 0.006 1.439  ± 0.073 0.112  ± 0.008 0.024  ± 0.002 0.132  ± 0.006 0.030  ± 0.002 0.128  ± 0.006 0.199  ± 0.008 0.158  ± 0.008 0.525  ± 0.028 0.674  ± 0.033 0.665  ± 0.039 0.058  ± 0.006 0.107  ± 0.011 0.096  ± 0.010 0.082 0.096 0.256 KL 0.156  ± 0.006 0.284  ± 0.008 0.174  ± 0.008 0.195  ± 0.015 630.934  ± 68.337 0.230  ± 0.019 0.091  ± 0.006 1.425  ± 0.071 0.110  ± 0.009 0.023  ± 0.002 0.127  ± 0.005 0.029  ± 0.002 0.124  ± 0.006 0.200  ± 0.008 0.155  ± 0.009 0.498  ± 0.028 0.666  ± 0.029 0.646  ± 0.042 0.054  ± 0.005 0.104  ± 0.010 0.096  ± 0.011 0.077 0.084 0.243 Hellinger 0.158  ± 0.006 0.284  ± 0.008 0.173  ± 0.008 0.211  ± 0.018 631.522  ± 68.248 0.240  ± 0.021 0.094  ± 0.007 1.429  ± 0.071 0.112  ± 0.009 0.023  ± 0.002 0.126  ± 0.005 0.028  ± 0.002 0.125  ± 0.006 0.204  ± 0.008 0.155  ± 0.009 0.484  ± 0.028 0.675  ± 0.029 0.640  ± 0.042 0.053  ± 0.005 0.107  ± 0.010 0.097  ± 0.011 0.073 0.083 0.240 KS 0.177  ± 0.007 0.355  ± 0.006 0.346  ± 0.009 13.359  ± 4.572 0.719  ± 0.028 67.416  ± 17.236 0.194  ± 0.020 0.365  ± 0.012 0.799  ± 0.046 0.034  ± 0.002 0.104  ± 0.004 0.118  ± 0.005 0.118  ± 0.005 0.295  ± 0.009 0.251  ± 0.009 0.420  ± 0.023 1.540  ± 0.057 0.817  ± 0.027 0.041  ± 0.004 0.368  ± 0.023 0.152  ± 0.012 0.048 9.573 11.657
+> ℓ1
+> 0.188  ± 0.006 0.375  ± 0.006 0.337  ± 0.009 23.538  ± 8.099 0.817  ± 0.027 54.004  ± 16.720 0.212  ± 0.021 0.405  ± 0.012 0.679  ± 0.044 0.036  ± 0.002 0.115  ± 0.004 0.108  ± 0.005 0.123  ± 0.005 0.320  ± 0.009 0.251  ± 0.009 0.415  ± 0.022 1.676  ± 0.059 0.769  ± 0.029 0.041  ± 0.004 0.433  ± 0.026 0.150  ± 0.012 0.043 10.856 11.697
+> ℓ2
+> 0.212  ± 0.008 0.375  ± 0.006 0.380  ± 0.009 4.045  ± 1.250 0.817  ± 0.027 636.071  ± 67.810 0.244  ± 0.017 0.405  ± 0.012 1.712  ± 0.062 0.047  ± 0.003 0.115  ± 0.004 0.171  ± 0.005 0.129  ± 0.005 0.320  ± 0.009 0.279  ± 0.010 0.444  ± 0.022 1.676  ± 0.059 0.921  ± 0.030 0.045  ± 0.004 0.433  ± 0.026 0.189  ± 0.014 0.042 10.856 13.083 Baseline  0.381  ± 0.009  28558  ± 3095  2.438  ± 0.093  0.176  ± 0.005  0.280  ± 0.010  0.922  ± 0.030  0.189  ± 0.014  0.104
+> Table 9: Full distributional prediction results on MovieLens. Each cell shows mean  ± s.e. for three variants: personas + dummies (top), personas only (middle), dummies only (bottom). Lower is better for all metrics.
+
+38 Train/Test  TV  χ2 KL  Hellinger  KS  ℓ1 ℓ2 MSE TV 0.171  ± 0.009 0.233  ± 0.009 0.225  ± 0.011 0.255  ± 0.030 0.480  ± 0.042 0.506  ± 0.055 0.114  ± 0.011 0.232  ± 0.014 0.190  ± 0.016 0.030  ± 0.003 0.068  ± 0.003 0.047  ± 0.004 0.150  ± 0.009 0.199  ± 0.009 0.199  ± 0.011 0.284  ± 0.019 0.503  ± 0.020 0.335  ± 0.020 0.046  ± 0.006 0.089  ± 0.008 0.068  ± 0.008 0.101 1.154 2.363 
+
+> χ2
+> 0.174  ± 0.009 0.298  ± 0.015 0.220  ± 0.010 0.231  ± 0.023 325.077  ± 86.484 0.313  ± 0.029 0.114  ± 0.010 0.864  ± 0.109 0.167  ± 0.014 0.031  ± 0.003 0.106  ± 0.010 0.048  ± 0.004 0.154  ± 0.009 0.267  ± 0.015 0.203  ± 0.010 0.303  ± 0.018 0.459  ± 0.027 0.433  ± 0.023 0.048  ± 0.005 0.127  ± 0.014 0.088  ± 0.010 0.108 0.241 0.299 KL 0.174  ± 0.009 0.289  ± 0.015 0.216  ± 0.010 0.247  ± 0.027 313.010  ± 85.477 0.328  ± 0.035 0.115  ± 0.010 0.832  ± 0.106 0.164  ± 0.015 0.031  ± 0.003 0.101  ± 0.009 0.046  ± 0.004 0.154  ± 0.009 0.258  ± 0.015 0.202  ± 0.011 0.290  ± 0.018 0.442  ± 0.026 0.421  ± 0.024 0.046  ± 0.006 0.119  ± 0.014 0.088  ± 0.010 0.101 0.222 0.314 Hellinger 0.178  ± 0.009 0.289  ± 0.015 0.216  ± 0.011 0.275  ± 0.032 293.306  ± 82.262 0.351  ± 0.039 0.121  ± 0.011 0.814  ± 0.103 0.167  ± 0.016 0.032  ± 0.003 0.100  ± 0.009 0.045  ± 0.004 0.158  ± 0.009 0.258  ± 0.015 0.204  ± 0.011 0.288  ± 0.017 0.437  ± 0.026 0.417  ± 0.024 0.047  ± 0.006 0.117  ± 0.013 0.089  ± 0.011 0.100 0.214 0.324 KS 0.174  ± 0.009 0.262  ± 0.013 0.348  ± 0.016 0.270  ± 0.030 1.501  ± 0.250 274.793  ± 79.193 0.118  ± 0.011 0.322  ± 0.033 1.019  ± 0.101 0.031  ± 0.003 0.068  ± 0.006 0.133  ± 0.010 0.150  ± 0.009 0.229  ± 0.014 0.303  ± 0.016 0.275  ± 0.017 0.381  ± 0.023 0.516  ± 0.028 0.044  ± 0.005 0.092  ± 0.011 0.154  ± 0.015 0.089 0.170 5.001
+> ℓ1
+> 0.178  ± 0.009 0.276  ± 0.014 0.348  ± 0.016 0.298  ± 0.036 2.786  ± 0.526 274.793  ± 79.193 0.123  ± 0.012 0.396  ± 0.042 1.019  ± 0.101 0.031  ± 0.003 0.077  ± 0.007 0.133  ± 0.010 0.154  ± 0.009 0.241  ± 0.014 0.303  ± 0.016 0.271  ± 0.017 0.397  ± 0.023 0.516  ± 0.028 0.045  ± 0.006 0.101  ± 0.012 0.154  ± 0.015 0.087 0.168 5.003
+> ℓ2
+> 0.182  ± 0.009 0.280  ± 0.014 0.339  ± 0.016 0.282  ± 0.030 1.623  ± 0.212 25.910  ± 8.228 0.123  ± 0.011 0.362  ± 0.031 0.710  ± 0.060 0.032  ± 0.003 0.075  ± 0.006 0.118  ± 0.008 0.156  ± 0.009 0.231  ± 0.013 0.295  ± 0.015 0.281  ± 0.016 0.380  ± 0.020 0.501  ± 0.027 0.044  ± 0.005 0.089  ± 0.009 0.145  ± 0.014 0.086 0.204 4.916 Baseline  0.350  ± 0.016  11824  ± 3603  1.300  ± 0.138  0.137  ± 0.010  0.303  ± 0.016  0.520  ± 0.028  0.154  ± 0.015  0.271
+> Table 10: Full distributional prediction results on OpinionQA. Each cell shows mean  ± s.e. for three variants: personas + dummies (top), personas only (middle), dummies only (bottom). Lower is better for all metrics.
+
+39
