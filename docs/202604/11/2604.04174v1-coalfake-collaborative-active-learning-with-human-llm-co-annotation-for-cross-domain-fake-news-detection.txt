@@ -1,0 +1,603 @@
+Title: CoALFake: Collaborative Active Learning with Human-LLM Co-Annotation for Cross-Domain Fake News Detection
+
+URL Source: https://arxiv.org/pdf/2604.04174v1
+
+Published Time: Tue, 07 Apr 2026 01:08:46 GMT
+
+Number of Pages: 23
+
+Markdown Content:
+# CoALFake : Collaborative Active Learning with Human-LLM Co-Annotation for Cross-Domain Fake News Detection 
+
+## Esma A¨ ımeur 1, Gilles Brassard 2, Dorsaf Sallami 3* 
+
+Department of Computer Science and Operations Research , University of Montreal, Canada. 
+
+1Google Scholar Profile. 
+
+2Google Scholar Profile. 
+
+3Google Scholar Profile. *Corresponding author(s). E-mail(s): dorsaf.sallami@umontreal.ca; 
+
+Abstract 
+
+The proliferation of fake news across diverse domains highlights critical limitations in current detection systems, which often exhibit narrow domain specificity and poor general-ization. Existing cross-domain approaches face two key challenges: (1) reliance on labelled data, which is frequently unavailable and resource-intensive to acquire and (2) informa-tion loss caused by rigid domain categorization or neglect of domain-specific features. To address these issues, we propose CoALFake , a novel approach for cross-domain fake news detection that integrates Human-Large Language Model (LLM) co-annotation with domain-aware Active Learning (AL). Our method employs LLMs for scalable, low-cost annotation while maintaining human oversight to ensure label reliability. By integrating domain embedding techniques, the CoALFake dynamically captures both domain-specific nuances and cross-domain patterns, enabling the training of a domain-agnostic model. Fur-thermore, a domain-aware sampling strategy optimizes sample acquisition by prioritizing diverse domain coverage. Experimental results across multiple datasets demonstrate that the proposed approach consistently outperforms various baselines. Our results emphasize that Human–LLM co-annotation is a highly cost-effective approach that delivers excel-lent performance. Evaluations across several datasets show that CoALFake consistently outperforms a range of existing baselines, even with minimal human oversight. 
+
+Keywords: Cross-Domain Learning, Active Learning Large, Language Models, Human-in-the-Loop Annotation, Fake News Detection 
+
+1
+
+> arXiv:2604.04174v1 [cs.AI] 5 Apr 2026
+
+# 1 Introduction 
+
+The proliferation of fake news has become a global concern, with the rapid spread across social media platforms and influencing public opinion on critical issues such as elections, public health and climate change [1]. Therefore, in order to restrain the spread of false infor-mation, it is necessary to identify the falsity of false information before it spreads in a large number and take measures to stifle it in time [2]. Current fake news detection models are typically trained on domain-specific datasets, limiting their ability to adapt to new or underrepresented areas and causing significant per-formance drops with emerging events [3, 4]. Although automated detection has advanced, challenges remain in cross-domain scenarios. Domain-specific models often fail to general-ize due to variations in linguistic patterns, topics and terminology [5]. Additionally, domain shifts, arising from differences in vocabulary, emotions and style across domains, further restrict model adaptability [6]. To detect fake news across diverse domains, early studies [3, 7] collected and manually labelled small datasets from emerging news domains. However, such approaches depend on labelled data from emerging domains, which is often unavailable and can be costly and time-consuming to obtain. Recent advancements in transfer learning and domain adaptation show potential, but they often require complex architectures and extensive fine-tuning [8], making them impractical for dynamic, real-world applications. Some studies, such as Ma et al. [9], assign hard domain labels to news records, which can result in significant information loss. For instance, news records that span multiple domains cannot be adequately represented using rigid labelling schemes. Moreover, fake news detection models in real-world scenar-ios frequently encounter newly emerging, time-sensitive events for which no labelled data exists [10]. To address these limitations, this study proposes CoALFake , a novel framework that com-bines active learning with Human-LLM co-annotation to enable scalable and effective cross-domain fake news detection. Our approach tackles the challenge of labelling news by leveraging LLMs to reduce annotation costs and human annotators to refine the most ambigu-ous or noisy records. Additionally, CoALFake mitigates information loss by introducing a domain-agnostic classifier that balances domain-specific and cross-domain knowledge, ensur-ing robust generalization across diverse domains. Finally, through domain-aware sampling, we strategically select informative news records for annotation, ensuring the labelled dataset comprehensively represents a wide range of domains. Our contribution can be summarized in the following ways: (1) A Human-LLM co-annotation framework that improves annotation efficiency and accuracy while fostering human-AI collaboration. (2) A domain-agnostic classifier that leverages multi-task learning to balance domain-specific and cross-domain knowledge. (3) A domain-aware Active Learning (AL) strategy that ensures balanced representation of all domains, addressing the challenge of cross-domain generalization. 22 Related Works 
+
+## 2.1 Coss-Domain Fake News Detection 
+
+Numerous studies have explored cross-domain fake news detection. For example, [11] treat the detection of fake news across domains as a form of continual learning, where a model is progressively trained across multiple tasks. They analyse fake news through its spread patterns and employ continual learning strategies to tackle the challenges of cross-domain fake news detection. However, this methodology faces two primary constraints: (1) It pre-supposes the sequential arrival of news from different domains, which may not always align with real-world data flows and (2) it requires prior knowledge of the news domain, which often isn’t available. Nan et al. [12] utilized expert evaluations across several domains to assess news items, employing a domain gate to synthesize these assessments into a final ver-dict. This method heavily relies on comprehensive human-annotated datasets. Building on this, Liang et al. [13] introduced the FuDFEND model, which assigns multi-domain labels to news items. The model extracts comprehensive feature vectors and employs a discriminator to ascertain the veracity of the news. Wang et al. [6] use soft domain labels for each news item but still restrict each item to a single domain. Similarly, Ma et al. [9] categorize news records using rigid, domain-specific labels. The aforementioned methods assume that each news item is assigned to a single domain label. However, this assumption may not hold true given the complex semantics present in news articles and risks significant information loss by oversimplifying nuanced contextual details. Recent studies [3, 7] focus on collecting and manually labelling small datasets from emerging news domains. These methods employ domain adaptation techniques to fine-tune trained models for emerging domains. However, they rely on the availability of labelled data, which can be costly, time-consuming and not always accessible. Rastogi et al. [14] propose an adaptive detection method that dynamically selects the optimal model for each domain. How-ever, relying on a few handcrafted features may limit classifiers’ ability to capture complex, evolving fake news patterns. 
+
+## 2.2 Active Learning for Fake News Detection 
+
+Although active learning is well-established in machine learning, its application to fake news detection remains limited. Most current systems rely on supervised learning [15], which requires large, costly and labour-intensive labelled datasets. Some researchers apply traditional AL to fake news detection. For example, Wang et al. [16] use AL to efficiently select randomly high-quality training instances from a small ini-tial labelled set. However, their method has two main limitations: reliance on a pre-trained model introduces bias and limited adaptability to evolving data distributions. Alternative methods use hybrid architectures. Ren et al. [17] introduce a heterogeneous information net-work that combines content, author and topic for fake news detection. Their active learning framework leverages a graph neural network with hierarchical attention and an adversar-ial selector to identify high-value, diverse samples in each cycle. A related architecture by Barnab` o et al. [18] focuses exclusively on social network propagation patterns while disre-garding textual content entirely. Notably, Folino et al. [19] shifted focus to computational efficiency, demonstrating how AL can optimize memory and energy consumption in fake 3news detection systems. While existing AL methods for fake news detection remain con-fined to single-domain settings, Silva et al. [5] represent the sole effort toward cross-domain detection. However, their approach incurs high annotation costs by relying extensively on human-labelled data. To address these limitations, we integrate LLMs as annotators to reduce manual labelling efforts. Prior works [20, 21] employ LLMs in AL for automated anno-tation in other applications, but our framework uniquely combines human oversight with LLM-generated labels, ensuring scalability while mitigating risks of LLM hallucinations. 
+
+# 3 Methodology 
+
+CoALFake , illustrated in Figure 1, comprises four core components designed to enhance cross-domain fake news detection. First, human-LLM co-annotation integrates human anno-tators and LLMs to generate high-quality labels collaboratively. Second, domain embedding maps news records into a domain-specific latent space, enabling the separation of domain-invariant and domain-specific features. Third, the domain-agnostic model leverages both domain-specific embeddings and shared semantic representations to improve generalization across domains. Finally, Active Domain-Aware Sampling strategically selects underrepre-sented domains to maximize coverage and enhance detection. A detailed overview of the full pipeline is provided in Algorithm 1.   
+
+> Fig. 1 Overview of CoALFake . Data point shapes denote different domains, while colours indicate labelling phases: blue (demonstration set), gray (unlabelled), yellow (Human-LLM labelled) and green (post-classification labels).
+
+Starting with unlabelled data DPool , the proposed system begins with the selection of rep-resentative samples DSample . In the first round, samples are selected based on Eq. 1, while subsequent rounds utilize Eq. 2 for sample selection. The LLM annotates these samples 4Algorithm 1 CoALFake Pipeline  
+
+> 1:
+
+Input: Unlabelled Data ( DPool ), Demonstration Set ( Ddemo ), LLM ( P), Human Annotator (H) 
+
+> 2:
+
+Output: Trained Domain-Agnostic Classifier ( C) 
+
+> 3:
+
+Initialize Dlabelled ← ∅ , round ← 1 
+
+> 4:
+
+while not convergent do  
+
+> 5:
+
+if round = 1 then  
+
+> 6:
+
+Select DSample using Eq. 1  
+
+> 7:
+
+else  
+
+> 8:
+
+Select DSample using Eq. 2  
+
+> 9:
+
+end if  
+
+> 10:
+
+Retrieve k-NN examples S = {(xi, y i)}ki=1 from Ddemo using k-NN  
+
+> 11:
+
+Perform in-context learning as Eq. 3 to label DSample  
+
+> 12:
+
+Perform label verification as Eq. 4  
+
+> 13:
+
+Send DNoisy to human annotators for re-annotation  
+
+> 14:
+
+Update Dlabelled ← Dlabelled ∪ DSample  
+
+> 15:
+
+Compute domain embeddings as Eq. 5  
+
+> 16:
+
+Train Domain-Agnostic Classifier C using Dlabelled  
+
+> 17:
+
+Update Ddemo with new high-confidence samples  
+
+> 18:
+
+round ← round +1  
+
+> 19:
+
+end while  
+
+> 20:
+
+Return: Trained Classifier C
+
+through in-context learning as described in Eq. 3. To ensure label quality, label verification is performed according to Eq. 4 and any identified noisy labels are re-annotated by human experts. Domain embeddings are computed using Eq. 5 and the domain-agnostic model is iteratively trained with the refined dataset until convergence is achieved. 
+
+## 3.1 Domain-Aware Sampling 
+
+The model described above leverages both domain-specific and cross-domain knowledge to assess news truthfulness. However, its performance drops when detecting fake news in novel or infrequent domains, likely due to domain-specific vocabulary. To mitigate this, we propose an unsupervised active acquisition strategy that broadens domain coverage, ensuring robust performance across diverse domains. Our methodology begins by clustering news articles to identify meaningful groups within the data. For each element x we first obtain an embedding representation zx. Next, k-means clustering is performed on the set of embedded vectors {zx} to identify k distinct clusters. Each data point x is then assigned to a cluster Cj based on its proximity to the nearest centroid. To assess the quality of the clustering, we use the Silhouette Score [22]. Subsequently, the optimal number of clusters k is dynamically adjusted by iterating over a range [kmin , k max ],calculating Silhouette Scores for each value of k and selecting the k that maximizes the score, until the Silhouette Scores stabilize. Once clusters are established, we select representative samples for annotation. Instead of uniform sampling, we prioritize underrepresented domains by assigning inverse-proportional 5weights to each cluster based on its size: wj = 1  
+
+> |Cj|+ϵ
+
+, where ϵ prevents division by zero. These weights are normalized as: ˆwj = wj 
+
+> Pkm=1 wm
+
+.
+
+The number of samples from each cluster is determined by: 
+
+mj = ⌈M · ˆwj ⌉, M = |DSample | (total samples) .
+
+In traditional active learning methods, the initial training set is often randomly sampled, which can result in an unrepresentative subset. To address this cold-start problem, we propose a domain-aware, centroid-based initialization to ensure diverse and representative examples: 
+
+DSample =
+
+> k
+
+[
+
+> j=1
+
+Top-mj
+
+ x ∈ Cj , nearest to μj
+
+ (1) After initializing the training set, subsequent iterations prioritize the most informative sam-ples using an uncertainty-based approach. We select samples with the highest entropy, ensuring that the model focuses on instances where it is least confident: 
+
+DSample =
+
+> k
+
+[
+
+> j=1
+
+Top-mj
+
+ x ∈ Cj , highest entropy H(x) (2) For each sample xi ∈ Cj , the entropy is computed based on the classifier’s output probabilities as follows: 
+
+H(xi) = −
+
+> Y
+
+X
+
+> y=1
+
+p(y | xi) log p(y | xi).
+
+We select mj samples per cluster with the highest entropy (or least confidence 1−max y p(y |
+
+xi)). 
+
+## 3.2 Human-LLM Co-Annotation 
+
+3.2.1 LLM Annotation 
+
+In this step, we employ in-context learning (i.e., prompting ) to enable the LLM to perform few-shot classification without the need for model fine-tuning. LLMs demonstrate excellent generalization capabilities and perform effectively as zero-shot and few-shot annotators [23]. The process begins with a manually crafted prompt T (·, ·), which is used in conjunction with demonstration examples S = {(xi, y i)}ki=1 consisting of labelled examples and a query example xq (i.e., an unlabelled news article). Based on this prompt, the LLM generates a prediction yq , which corresponds to the label that maximizes the conditional probability 
+
+yq = arg max  
+
+> y
+
+PLM (y | T (S, x q )) (3) Here, PLM is the language model’s conditional probability distribution over the possible labels, given the prompt. 6For the demonstration examples, we build upon the approach proposed by [24], which introduces a k-Nearest Neighbours ( k-NN) retrieval strategy. This method first involves embedding the demonstration set DDemo and the query sample into vector representations. Subsequently, it retrieves the nearest k neighbours of the query to form its exemplars. The rationale behind this approach is that semantically similar examples may enhance the ability of LLMs to answer the query more accurately. We utilize Sentence-BERT [25] to construct these representations. 
+
+3.2.2 Label Verification 
+
+Once the labels are generated by the LLM, it is important to review each label and correct any inaccuracies. However, manually verifying every label produced would undermine the scalability and cost-efficiency benefits of using LLMs for annotation. Therefore, the next step is to select a subset of labels that are likely to be incorrect so they can be prioritized for human review. The literature identifies two primary methods for assessing uncertainty in LLM outputs. One approach involves having the LLM self-assess or explicitly state its confidence level [26], while the other method involves prompting the LLM multiple times with different formats to evaluate its consistency [27]. While these techniques are useful, they may not be as effective in our context due to (1) LLMs often displaying overconfidence [28] and (2) the predicted labels in our case being relatively consistent, as we focus solely on classification tasks. Therefore, we adopt Confident Learning (CL) to detect potentially erroneous labels. CL [29] can estimate the joint distribution between the noisy labels (denoted by ˜y) and the true latent labels ( y∗) through the predicted probabilities from a model θ.Let X = {(x, ˜y)}n be a noisy-labelled training set, with ˆp(˜ y=j; x, θ ) as model-predicted probabilities. For class j, compute threshold: 
+
+tj = 1
+
+|X˜y=j |
+
+X
+
+> x∈X˜y=j
+
+ˆp(˜ y=j; x, θ ).
+
+Construct a confusion matrix C˜y,y ∗ :
+
+C[i][ j] = 
+
+n
+
+x ∈ X˜y=i : ˆp(˜ y=j;x,θ )≥tj ,j=arg max ℓ ˆp(˜ y=ℓ;x,θ )≥tℓ
+
+o
+
+.
+
+Given the confident joint C˜y,y ∗ , we estimate Q˜y,y ∗ as: 
+
+ˆQ[i][ j] =   
+
+> C[i][ j]P
+> j′C[i][ j′]
+
+· | X˜y=i|
+
+P
+
+> i′,j ′
+
+ C[i′][ j′]P  
+
+> j′′ C[i′][ j′′ ]
+
+· | X˜y=i′ |
+
+ .
+
+For class i, we identify potentially mislabelled samples by selecting: 
+
+n · X 
+
+> j̸=i
+
+ˆQ[i][ j] (4) 7samples with lowest ˆp(˜ y=i; x ∈ Xi). These selected samples are flagged as the most likely to be wrongly labelled and they will be sent for human re-annotation. 
+
+3.2.3 Human Re-annotation 
+
+The LLM labels provide an initial reference, saving time for annotators. Human annotators then focus on reviewing and correcting a subset of samples flagged for potential label errors, identified during the label verification process. 
+
+## 3.3 Domain Embedding 
+
+Given a news record x where the domain label is unavailable, the proposed unsupervised domain embedding learning method leverages the textual data to represent the domain of x
+
+as a low-dimensional vector fdomain (x).Our methodology begins by clustering news articles (as in Section 3.1). Then, we compute the cosine similarity between zx and each cluster centroid μj . The centroid μj is the mean of the embedding vectors zx for all x ∈ Cj : μj = 1 
+
+> |Cj|
+
+P 
+
+> x∈Cj
+
+zx. The cosine similarity 
+
+s(x, C j ) quantifies the alignment between zx and μj : s(x, C j ) = zx·μj  
+
+> ∥zx∥ ∥ μj∥
+
+.
+
+After that, we convert similarities into probabilistic memberships p(x ∈ Cj ) using the softmax function, which ensures that the probabilities across all clusters sum to 1: 
+
+p(x ∈ Cj ) = exp ( s(x, C j )) 
+
+Pkc=1 exp ( s(x, C c)) 
+
+Here, p(x ∈ Cj ) reflects the semantic alignment of data point x with cluster Cj , empha-sizing semantic relationships rather than mere lexical overlap. Finally, a domain embedding 
+
+fdomain (x) for each x is computed by concatenating its likelihood of belonging to the clusters: 
+
+fdomain (x) = [ p(x ∈ c1) ⊕ p(x ∈ c2) ⊕ . . . ⊕ p(x ∈ ck)] (5) , where ⊕ denotes concatenation. Most prior works assign rigid labels to news records, leading to information loss, as some records span multiple domains. Hard labels fail to capture this nuance. In contrast, our approach uses low-dimensional embeddings to preserve domain complexities and retain valuable information. 
+
+## 3.4 Domain-agnostic Model 
+
+The news classification model begins by representing each news record x as a feature vec-tor finput (x), derived from its textual content. To effectively capture both domain-specific and cross-domain knowledge, the model maps finput (x) into two distinct subspaces. The first sub-space, fspecific (x) : finput (x) → Rd, focuses on domain-specific information, while the second subspace, fshared (x) : finput (x) → Rd, preserves cross-domain knowledge, where d represents the dimension of the subspaces. The concatenated representation fconcat (x) = fspecific (x) ⊕ fshared (x) is used to predict the news label yx through a decoder gpred , as follows: y′ 
+
+> x
+
+= gpred (fconcat ) and to reconstruct the input representation finput (x) using a decoder grecons , f ′input (x) = grecons (fconcat (x)) .8These operations are governed by two primary losses: 
+
+Lpred = BCE (yx, y ′
+
+> x
+
+)
+
+Lrecon = ∥finput (x) − f ′input (x)∥2
+
+To leverage domain-specific knowledge, we introduce a loss term Lspecific that trains a decoder gspecific to reconstruct domain embeddings fdomain (x) from fspecific (x), ensuring 
+
+fspecific captures domain-specific characteristics: 
+
+Lspecific = ∥fdomain (x) − gspecific (fspecific (x)) ∥2,
+
+ˆgspecific , ˆfspecific = arg min 
+
+> gspecific ,f specific
+
+Lspecific .
+
+In contrast, we train fshared to preserve cross-domain information by introducing a decoder 
+
+gshared that predicts the domain of x from fshared (x). Meanwhile, fshared is optimized to mislead 
+
+gshared by maximizing its prediction loss, ensuring a focus on cross-domain knowledge. This interaction follows a minimax game, defined as: 
+
+Lshared = ∥gshared (fshared (x)) − fdomain (x)∥2
+
+(ˆ gshared , ˆfshared ) = arg min 
+
+> fshared
+
+arg max 
+
+> gshared
+
+(−Lshared )
+
+The model employs two cross-attention modules to enhance interaction between sub-spaces. Specific-to-Shared Attention enables fshared to integrate domain-specific insights from 
+
+fspecific , while Shared-to-Specific Attention enriches fspecific with cross-domain knowledge. These mechanisms ensure effective information exchange. The attention mechanism is defined as: Attention s2s = Softmax 
+
+ QK ⊤
+
+√d
+
+
+
+V, 
+
+where Q, K and V are query, key and value matrices from the respective subspaces. Attention outputs are merged via gated residual connections: 
+
+f ′ 
+
+> shared
+
+= fshared + γs2s · LayerNorm (Wout · Attention s2s ) ,f ′ 
+
+> specific
+
+= fspecific + γs2s · LayerNorm (W ′ 
+
+> out
+
+· Attention s2s ) .
+
+Learnable gates γs2s , activated via a sigmoid function. To maintain subspace roles despite cross-attention, the model introduces two regulariza-tion terms. The Orthogonality Loss ( Lortho ) preserves subspace distinction by minimizing cosine similarity: 
+
+Lortho = ∥f ′⊤ 
+
+> specific
+
+f ′
+
+> shared
+
+∥2.
+
+9The Contrastive Loss ( Lcontrast ) enforces dissimilarity by enhancing intra-class similarity within fspecific while reducing similarity with fshared :
+
+Lcontrast = − log exp 
+
+
+
+sim 
+
+
+
+f ′
+
+> specific
+
+, f ′
+
+> specific
+
+
+
+/τ 
+
+P 
+
+> x∈{ specific ,shared }
+
+exp 
+
+
+
+sim 
+
+
+
+f ′
+
+> specific
+
+, f ′
+
+> x
+
+
+
+/τ 
+
+ .
+
+The final loss function L integrates multiple components to balance their contributions: 
+
+L = Lpred + λ1Lrecon + λ2Lspecific + λ3Lshared + λ4Lortho + λ5Lcontrast ,
+
+where λ1, . . . , λ 5 control the relative importance of each term. To manage the minimax dynamics in Lshared , the final loss Lfinal is optimized in two steps. First, all parameters except the domain classifier gshared (θ1) are updated: 
+
+θb1 = arg min 
+
+> θ1
+
+Lfinal (θ1, θ 2).
+
+Then, the domain classifier parameters ( θ2) are optimized to maximize Lshared , enhancing domain invariance: 
+
+θb2 = arg max 
+
+> θ2
+
+Lfinal (θb1, θ 2).
+
+# 4 Experiments and Results 
+
+## 4.1 Experimental Setup 
+
+4.1.1 Model Implementation 
+
+Each news record x is represented as a feature vector finput (x), extracted using Sentence-BERT [25]. This input is processed through two parallel subspaces: a domain-specific subspace fspecific (x) and a shared subspace fshared (x), both implemented as single dense layers with ReLU activation. To enable interaction, a cross-attention mechanism with two multi-head attention modules (four heads each) facilitates information exchange. In specific-to-shared attention, the shared subspace acts as the query, while the domain-specific features serve as key and value, the roles are reversed for shared-to-specific attention. The attention outputs are merged with the original subspace features via gated residual connections, con-trolled by learnable sigmoid-activated parameters. The model components include gpred , a two-layer feed-forward network with sigmoid activation in the final layer; grecons , a two-layer feed-forward network with ReLU in the hidden layer and linear activation in the output layer and gshared , a two-layer feed-forward network with sigmoid activation. The model is opti-mized using Adam with separate learning rates: 10 −4 for the generator and 10 −5 for domain classifiers 1.
+
+> 1Code availability: The code is available on GitHub at https://github.com/dorsafsallami/CoALFake.
+
+10 4.1.2 Parameter Settings 
+
+This section examines how modifying the model’s hyperparameters influences its perfor-mance on fake news detection. Figure 2 shows the model’s behaviour for various values of 
+
+λ1, λ 2, λ 3, λ 4, and λ5, each representing the weight assigned to a specific loss term. We observe that setting λ1 either too high or too low degrades performance, suggesting that the 
+
+Lrecon loss term should be given a moderate weight relative to the others. Similarly, perfor-mance declines when λ2 < 1 and when λ3 > 1. Additionally, increasing λ4 beyond 0.1 reduces the F1 score, and keeping λ5 small is essential to avoid over-clustering.    
+
+> Fig. 2 Overall F1-Scores with different hyperparameters: λ1, λ 2, λ 3, λ 4,and λ5.
+
+We examine the sensitivity of the model’s performance to other parameters: the latent dimension ( d), the number of epochs and the batch size in Figure 3. Overall, the model yields consistent performance for d > 512 , epochs > 300 and batch size < 128 . 
+
+> Fig. 3 Overall F1-Scores with different hyperparameters: Embedding Dimension (d), Epochs and Batch Size.
+
+After performing a grid search, we set the hyperparameters in our model as follows: λ1 =1, λ 2 = 1 , λ 3 = 0 .5, λ 4 = 0 .1, λ 5 = 0 .1, latent dimension d = 512 , epochs = 300 and batch size = 128 . For baseline models, we used their default parameters from the original papers. 
+
+4.1.3 Dataset 
+
+We integrate three fake news datasets, PolitiFact (politics), GossipCop (celebrity) [30] and CoAID (healthcare) [31], to construct a comprehensive cross-domain news dataset. From each dataset, we randomly select 100 examples to form the demonstration set DDemo . The remaining data is split, with 75% allocated to the training candidate pool DPool and 25% 11 reserved for testing. Performance is evaluated separately for each domain using its respective test instances, based on four key metrics: Accuracy (Acc), Precision (Prec), Recall (Rec) and F1 Score (F1). 
+
+4.1.4 Model Baselines 
+
+We compare our model with several widely used baselines: • HPNF [32]: This model extracts multiple features, including structural and temporal char-acteristics, from a news article’s propagation network to form its feature representation. A Logistic Regression classifier is then applied to distinguish between fake and real news. The 
+
+HPNF+LIWC variant enhances this approach by integrating feature vectors from HPNF with those derived from LIWC. • AE [33]: This method employs an Auto-Encoder architecture to learn latent represen-tations of news records based on their propagation networks. These representations are subsequently used to identify fake news. • SAFE [34]: A multimodal method for fake news detection, SAFE learns separate latent representations for each modality of a news record while also constructing a joint representation that captures cross-modality insights. • EDDFN [5]: This model leverages both domain-specific and cross-domain knowledge in news records to improve fake news detection across diverse domains. Additionally, an unsupervised technique selects a subset of unlabelled but informative news records for manual annotation. • MDFEND [35]: This approach employs domain-specific experts to extract features from news articles, while domain gates assign varying weights to these experts based on their relevance. The final feature vector is obtained by aggregating the outputs of these experts. • FuDFEND [13]: This model begins by utilizing the final layer of the BERT Transformer block to transform news articles into word embedding vectors. A GRU module then gener-ates multi-domain tags for each news item. The feature extraction module integrates these multi-domain tag features to construct the final comprehensive feature vector. • DITFEND [36]: This model transfers coarse-grained domain-level knowledge by training a general model on data from all domains using a meta-learning approach. To facilitate fine-grained instance-level knowledge transfer, a language model is trained specifically on the target domain. This model evaluates the transferability of each data instance from the source domains and re-weights their contributions accordingly. • SLFEND [6]: This model enhances feature extraction through the use of soft labels. A novel Leap GRU mechanism filters out irrelevant words, allowing the membership function module to generate soft labels for each news item. These soft labels aid in extracting multi-domain features, leading to a comprehensive feature representation. To ensure a fair comparison, all baseline models were trained using the same mixed-domain dataset (PolitiFact, GossipCop, and CoAID) as CoALFake . This consistent training setup eliminates domain-related variance and ensures that performance differences reflect model design rather than differences in data exposure. 12 4.1.5 Sampling Strategy Baselines 
+
+We compare our proposed sampling strategy with some common strategies for thorough comparisons: • Random Selection ; We use random selection as a baseline, which samples uniformly from 
+
+DPool . Since the pool data and test data generally share the same distribution, the sampled batch is expected to be i.i.d. (independent and identically distributed) with the test data. • Maximum Entropy : Entropy is a widely used measure of uncertainty [37]. Data points with the highest entropy according to the model M are selected for annotation. The selection is based on the following criterion: 
+
+arg max 
+
+> x∈DPool
+
+− X
+
+> y∈Y
+
+PM (y|x) log PM (y|x)
+
+ .
+
+• Least Confidence : Culotta et al. [38] propose a method where examples are ranked based on the probability assigned by M to the predicted class ˆy. The data point with the highest confidence (i.e., the model’s least uncertainty) is chosen for annotation. The selection is made according to: 
+
+arg max 
+
+> x∈DPool
+
+(1 − PM (ˆ y|x)) .
+
+• K-Means Diversity Sampling : Diversity sampling aims to select batches of data that are heterogeneous in the feature space. Following [39], we apply k-means clustering to the L2-normalized embeddings of M4, and then sample the nearest neighbours of the k cluster centres. 
+
+4.1.6 Co-annotation Setup 
+
+We adopt OpenAI’s GPT-3.5-Turbo language model as the backbone for the LLM. For the demonstration examples, we apply k-NN example retrieval, setting k to 5, consistent with prior experiments [24]. For the label verification model, we use a multinomial logistic regres-sion classifier to identify label errors [29]. The built-in stochastic gradient descent optimizer in the open-sourced fastText library [40] is used with the following settings: initial learning rate = 0.1, embedding dimension = 100 and n-gram = 3. Out-of-sample predicted probabil-ities are obtained via 5-fold cross-validation. For the re-annotation, we select 20% of noisy labels to be re-annotated by humans after testing different values (Section 4.4). 
+
+## 4.2 Results 
+
+Overall Results: The results, as shown in Table 1, demonstrate that CoALFake consistently outperforms all other models in terms of accuracy, precision, recall and F1 score. For instance, on the Politifact dataset, CoALFake achieves an F1 score of 0.92, signif-icantly surpassing the next best baseline model, which scores 0.85. Likewise, CoALFake 
+
+achieves F1 scores of 0.91 and 0.95 on the Gossipcop and CoAID datasets, respectively, fur-ther underscoring its superior performance. In contrast to models like FuDFEND [13] and SLFEND [6], which use hard labels to represent the domain of a news record, our approach 13 Table 1 Evaluation results of CoALFake and baseline models on three datasets.                                                                                                                                                                                       
+
+> Model Politifact Gossipcop CoAID Acc Prec Rec F1 Acc Prec Rec F1 Acc Prec Rec F1 HPNF [32] 0.69 0.69 0.68 0.68 0.72 0.70 0.68 0.69 0.90 0.65 0.69 0.67 HPNF + LIWC [32] 0.70 0.72 0.70 0.71 0.73 0.71 0.70 0.70 0.91 0.68 0.70 0.69 AE [33] 0.78 0.78 0.77 0.77 0.83 0.82 0.80 0.81 0.92 0.68 0.67 0.67 SAFE [34] 0.79 0.78 0.77 0.77 0.83 0.82 0.79 0.80 0.93 0.75 0.74 0.74 EDDFN [5] 0.84 0.83 0.83 0.83 0.87 0.84 0.83 0.83 0.97 0.87 0.86 0.86 MDFEND [35] 0.85 0.87 0.84 0.85 0.83 0.82 0.89 0.83 0.95 0.89 0.87 0.93 FuDFEND [13] 0.89 0.88 0.84 0.90 0.89 0.87 0.84 0.91 0.96 0.87 0.80 0.94 DITFEND [36] 0.85 0.82 0.80 0.85 0.86 0.86 0.83 0.80 0.97 0.86 0.84 0.94 SLFEND [6] 0.91 0.87 0.84 0.93 0.91 0.92 0.90 0.92 0.92 0.86 0.85 0.95
+> GPT-3.5 turbo (Prompting) 0.73 0.73 0.73 0.73 0.61 0.60 0.60 0.61 0.62 0.61 0.61 0.61
+> CoALFake 0.92 0.91 0.88 0.93 0.91 0.90 0.91 0.93 0.96 0.91 0.88 0.95
+> Ablation Study (-) Cross-Attention 0.78 0.77 0.61 0.85 0.86 0.86 0.90 0.90 0.87 0.81 0.87 0.90 (-) Domain-specific 0.87 0.87 0.83 0.88 0.89 0.90 0.89 0.92 0.92 0.88 0.87 0.93 (-) Domain-shared 0.90 0.89 0.86 0.91 0.89 0.89 0.90 0.92 0.94 0.89 0.87 0.93
+
+employs a vector to represent domain likelihood. This allows CoALFake to accurately cap-ture the probability of each record belonging to different domains. While EDDFN [5] and MDFEND [35] focus on integrating domain-specific and cross-domain knowledge, they may not fully leverage shared knowledge across domains or adapt as effectively to new domains. 
+
+CoALFake , however, excels in domain adaptation, with its dynamic attention mechanisms and ability to efficiently share knowledge across domains, contributing to its superior per-formance. These distinctions highlight the importance and effectiveness of our approach in comparison to the best baseline models. A noteworthy observation throughout our experiments is that using GPT-3.5 Turbo (Prompting) to directly detect fake news underperforms compared to our model, which is trained on labels generated by GPT-3.5 Turbo. These results partially correspond with prior findings in knowledge distillation [41] and pseudo-label-based learning [42], which, while sharing similar frameworks, differ slightly in their settings compared to CoALFake .
+
+Ablation Study: The results from the ablation study emphasize the critical role of each feature in the model’s overall performance. For example, when cross-attention is removed, the accuracy on the Gossipcop dataset drops from 0.91 to 0.86, demonstrating that this mechanism is vital for enhancing model accuracy. Likewise, removing domain-specific or domain-shared features results in a noticeable decrease in performance across all metrics, fur-ther underscoring the significance of these features in improving the model’s robustness and effectiveness in fake news detection. Consequently, it is crucial to include a domain-specific layer to preserve domain-specific knowledge, a separate cross-domain layer for transferring common knowledge and a cross-attention mechanism to facilitate interaction between the two subspaces. 14 4.3 Evaluation of Domain-Aware Sampling 
+
+Figure 4 illustrates the performance of CoALFake with different active learning strategies (Section 4.1.5) across all datasets. Among these methods, domain-aware sampling consis-tently outperforms the others, achieving the highest F1 scores at every sample percentage. In contrast, random sampling exhibits the lowest performance, with a slower and more gradual improvement in F1 scores.  
+
+> Fig. 4 CoALFake ’s performance with different sampling strategies.
+
+Uncertainty-based methods, i.e., maximal entropy and least confidence, significantly out-perform the random baseline, demonstrating faster convergence and higher F1 scores by the end of the iterations. Although k-means clustering promotes diversity in feature space, its performance remains closely aligned with that of random sampling. Our proposed sam-pling strategy, which integrates both uncertainty and diversity, surpasses all other sampling strategies, achieving superior performance across datasets. 
+
+## 4.4 Evaluation of Human-LLM Co-annotation 
+
+In this section, we evaluate the effectiveness of our proposed co-annotation framework. We focus on two aspects: (1) how prompting strategies influence LLM inference quality and (2) how human re-annotation impacts model performance and labeling cost. 
+
+4.4.1 Plain Instructions vs. k-NN Examples 
+
+We access OpenAI APIs through the Azure service, utilizing GPT-3.5 Turbo as the LLM annotator for our experiments. The temperature is set to 0. Below the prompt used for annotation:  
+
+> Listing 1 Annotation Prompt.
+
+I need your assistance in evaluating the authenticity of a news article. I will provide you the news article. You have to answer only 
+
+with Fake or Real. 
+
+15 I will give you some examples of news. Your answer after [ output] should be consistent with the following examples: [example 1]: [input news]: [news text: {...}] [output]: [This is {...} news] [example 2]: [input news]: [news text: {...}] [output]: [This is {...} news] [target news]: [input news]: [news text: {...}] [output] 
+
+Table 2 compares its inference performance using plain instructions versus when we add 
+
+k-NN examples. The results show that optimized prompts significantly boost performance          
+
+> Table 2 Comparison Plain Instructions vs. Optimized Prompts. Politifact Gossipcop CoAID Base Instruction 0.89 0.84 0.81 +k-NN Examples 0.93 0.93 0.95
+
+compared to plain instructions, emphasizing the value of tailored, context-rich prompts for handling challenging tasks. 
+
+4.4.2 Cost vs. Performance Analysis 
+
+In this section, we compare the labelling costs of GPT-3.5-turbo and crowdsourced labelling. For simplicity, we exclude costs related to GPT-3.5-turbo template selection, human labeler selection and other factors, focusing solely on the cost per label charged by the API or crowdsourcing platform. The GPT-3.5-turbo API offered by OpenAI charges based on the number of tokens used for encoding and generation. According to OpenAI’s pricing 2, the cost is $3.00 for input and $6.00 for output per 1 million tokens. Since the sequence length can vary significantly between different datasets, the cost of labelling a single instance with GPT-3.5-turbo also varies. Additionally, various few-shot labelling strategies with GPT-3.5-turbo incur different costs, with more shots leading to a higher labelling cost due to the longer prompt. For our experiments, we track the number of tokens used in each API call. We estimate the crowdsourcing labelling price from Google Cloud Platform 3. For labeling classification tasks, it charges 1000 units (50 tokens per unit) for $129 in Tier 1 and $90 in 
+
+> 2https://platform.openai.com/docs/pricing
+> 3https://cloud.google.com/ai-platform/data-labeling/pricing#labeling costs
+
+16 Tier 2. We adopt the average cost from Tier 1 and Tier 2 as the human labelling cost. For generation tasks, there is no detailed instruction, as the rate can vary significantly based on task difficulty. Therefore, we follow the cost of classification tasks by charging $0.11 per 50 tokens. It is important to note that actual human labelling is often more expensive. For example, the same instance is labelled by multiple labelers for majority voting and some datasets are labelled by experts rather than through crowdsourcing. Figure 5 illustrates the relationship between human re-annotation, model performance and labelling cost. As human involvement increases, F1 scores consistently improve across all three datasets. Without human re-annotation, Politifact, Gossipcop and CoAID achieve ini-tial F1 scores of 0.773, 0.8027 and 0.8907, respectively. Even a small amount of human input (5–10%) yields noticeable gains, while a more substantial increase to 20% results in a sig-nificant performance boost, Politifact and Gossipcop reach approximately 0.93 and CoAID nears 0.95. Beyond this point, additional human annotations lead to diminishing returns, with full re-annotation achieving F1 scores of 0.949, 0.942 and 0.96. However, these perfor- 
+
+> Fig. 5 F1 Score and Labelling Cost vs. Percentage of Human Re-annotation.
+
+mance improvements come at a considerable cost. While fully automated labelling is highly economical at $9.21, incorporating 20% human re-annotation raises the cost substantially to around $122.57. Beyond this threshold, the cost continues to escalate sharply, reaching nearly $576.01 for full human annotation, while the corresponding performance improve-ments remain marginal. These findings suggest that 20% human re-annotation balances cost and performance effectively, surpassing baselines. 17 4.4.3 Evaluation of Using LLM Labeling vs. LLM as Detector 
+
+To assess the role of LLMs in CoALFake , we compare two paradigms: (1) using GPT-3.5-Turbo directly as a detector and (2) using GPT-3.5-Turbo solely as an annotator to generate training labels for a downstream model. As shown in Table 1, GPT-3.5-Turbo used in a prompting-based setting underperforms compared to a model trained on its generated labels within the CoALFake pipeline. While this result may initially seem to benefit from the hybrid human–LLM annotation loop, we further isolate the effect by comparing it against the 0% human re-annotation condition shown in Figure 5, where the model is trained using only raw GPT-3.5 annotations without human cor-rection. Even in this purely LLM-labeled scenario, CoALFake achieves higher performance than GPT-3.5 used directly as a detector. For example, on the PolitiFact dataset, GPT-3.5 achieves an F1 score of 0.73, whereas CoALFake achieves 0.77. On GossipCop, the scores are 0.61 vs. 0.80, and on CoAID, 0.61 vs. 0.89. These results highlight a key insight: LLMs are more effective as annotators than as stan-dalone detectors. Training a domain-aware model on LLM-generated annotations allows for better generalization, particularly in cross-domain settings, supporting the design choice of incorporating LLMs into a human-in-the-loop learning framework rather than relying on them for direct classification. 
+
+# 5 Discussion 
+
+In this section, we present a comparative discussion of CoALFake in the context of existing human–AI annotation frameworks, followed by a reflection on its limitations and the broader societal and ethical implications. 
+
+## 5.1 Beyond Pre-Annotation: Comparing CoALFake with Human–AI Annotation Frameworks 
+
+While human-AI collaborative annotation has been widely explored, most existing frame-works adopt a simplistic model in which machine-generated annotations are either directly validated by humans or loosely combined in ensemble schemes. A commonly used approach is automatic pre-annotation followed by human correction [43], which has shown promise in reducing annotation time, but only when pre-annotations are highly accurate [44]. In contrast, low-quality pre-annotations have been found to yield degraded label quality [45]. 
+
+CoALFake advances beyond this baseline. Instead of relying on static or opaque ML pre-annotators, it leverages the adaptive capabilities of LLMs. Moreover, it integrates a label verification mechanism using CL to identify likely label errors, thereby avoiding the ineffi-ciencies of blanket human review. This design ensures that human expertise is focused where it is most needed, resulting in a much more efficient and reliable annotation pipeline. Unlike prior frameworks that treat human and AI contributions as interchangeable or apply human validation uniformly, CoALFake establishes a principled and asymmetrical col-laboration model: LLMs handle the scalable annotation workload, while humans provide strategic oversight. This structured division of labor not only enhances annotation quality but also significantly reduces manual effort. 18 5.2 Limitations 
+
+Although CoALFake demonstrates strong empirical performance, several limitations remain. First, the framework relies on the original dataset labels as a proxy for human re-annotations. This assumption may limit generalizability across different platforms, contexts, or expert annotation standards. Second, the effectiveness of our label verification step can vary depend-ing on task complexity and model calibration. Third, the performance of the LLM annotator (GPT-3.5-Turbo) plays a central role in the quality of CoALFake ’s labels. Due to resource constraints, we did not evaluate other LLMs. Future work should assess the generaliz-ability of CoALFake across different LLMs. Fourth, while CoALFake is evaluated across multiple domains, its ability to generalize to entirely unseen domains remains untested. A leave-one-domain-out evaluation setting or testing on external datasets would better vali-date cross-domain robustness. Finally, the human re-annotation process may be improved by providing LLM-generated explanations. 
+
+## 5.3 Societal and Ethical Implications 
+
+The use of LLMs for fake news detection introduces a range of societal and ethical consider-ations that go beyond accuracy. While CoALFake integrates human oversight to mitigate the risks of erroneous AI-generated annotations, it is important to acknowledge broader concerns around human–machine collaboration in high-stakes domains like news and media. First, CoALFake is designed around selective human verification, where LLMs serve as scalable annotators, and humans intervene only in cases identified as likely mislabeled. This asymmetrical structure still values human judgment in critical decision points. However, this paradigm also raises concerns about the diminishing role of human expertise and increased reliance on algorithmic outputs. Second, the presence of LLMs in the fake news detection pipeline may inadvertently shape public discourse, especially when used to annotate large-scale content. If unchecked, LLMs may encode and reinforce latent biases present in training data, leading to biased labeling of politically or culturally sensitive content. While CoAL-Fake mitigates this by incorporating human re-annotation and uncertainty estimation, broader deployments would require transparent auditing mechanisms and bias detection tools. Third, there are legal and regulatory issues around using commercial LLMs for annotation, espe-cially when handling sensitive or personally identifiable content. Ensuring data privacy and model accountability is essential for responsible deployment. 
+
+# 6 Conclusion and Future Work 
+
+This paper introduces CoALFake , a novel framework for cross-domain fake news detection that integrates Human–LLM co-annotation with domain-aware active learning. The proposed approach reduces human annotation costs while improving generalization across diverse domains. By leveraging both domain-specific and cross-domain representations, CoALFake 
+
+demonstrates consistent performance improvements over existing baselines. Future work may extend this system in several directions. First, multimodal detection can be explored by incorporating images, metadata, or user interaction features, which may enhance the robustness of fake news detection. Second, given the rapid advancement of 19 LLMs, future iterations may benefit from employing next-generation LLMs. An ensemble-based annotation strategy, using multiple LLMs with majority voting, could further improve label quality. Additionally, the quality of few-shot prompting could be enhanced by investigat-ing task-specific or adaptive prompt design. Finally, the human re-annotation process could be facilitated by providing LLM-generated explanations; carefully designed explanations may assist annotators in resolving ambiguous cases and improving annotation consistency. 
+
+# References 
+
+[1] Sallami, D., Gueddiche, A., A¨ ımeur, E.: From hype to reality: Revealing the accuracy and robustness of transformer-based models for fake news detection (2023) [2] Sallami, D., A¨ ımeur, E.: Exploring beyond detection: a review on fake news prevention and mitigation techniques. Journal of Computational Social Science 8(1), 1–38 (2025) [3] Li, J., Wang, L., He, J., Zhang, Y., Liu, A.: Improving rumor detection by class-based adversarial domain adaptation. In: Proceedings of the 31st ACM International Conference on Multimedia, pp. 6634–6642 (2023) [4] A¨ ımeur, E., Brassard, G., Sallami, D.: Too focused on accuracy to notice the fallout: Towards socially responsible fake news detection. In: Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society, vol. 8, pp. 55–65 (2025) [5] Silva, A., Luo, L., Karunasekera, S., Leckie, C.: Embracing domain differences in fake news: Cross-domain fake news detection using multi-modal data. In: Proceedings of the AAAI Conference on Artificial Intelligence, vol. 35, pp. 557–565 (2021) [6] Wang, D., Zhang, W., Wu, W., Guo, X.: Soft-label for multi-domain fake news detection. IEEE Access (2023) [7] Lin, H., Ma, J., Chen, L., Yang, Z., Cheng, M., Chen, G.: Detect rumors in microblog posts for low-resource domains via adversarial contrastive learning. arXiv preprint arXiv:2204.08143 (2022) [8] Lu, Y., Bartolo, M., Moore, A., Riedel, S., Stenetorp, P.: Fantastically ordered prompts and where to find them: Overcoming few-shot prompt order sensitivity. arXiv preprint arXiv:2104.08786 (2021) [9] Ma, X., Zhang, Y., Ding, K., Yang, J., Wu, J., Fan, H.: On fake news detection with llm enhanced semantics mining. In: Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing, pp. 508–521 (2024) [10] Wang, X., Meng, J., Zhao, D., Meng, X., Sun, H.: Fake news detection based on multi-modal domain adaptation. Neural Computing and Applications, 1–13 (2025) [11] Han, Y., Karunasekera, S., Leckie, C.: Graph neural networks with continual learning for fake news detection from social media. arXiv preprint arXiv:2007.03316 (2020) 20 [12] Nan, Q., Cao, J., Zhu, Y., Wang, Y., Li, J.: Mdfend: Multi-domain fake news detec-tion. In: Proceedings of the 30th ACM International Conference on Information & Knowledge Management, pp. 3343–3347 (2021) [13] Liang, C., Zhang, Y., Li, X., Zhang, J., Yu, Y.: Fudfend: fuzzy-domain for multi-domain fake news detection. In: CCF International Conference on Natural Language Processing and Chinese Computing, pp. 45–57 (2022). Springer [14] Rastogi, S., Gill, S.S., Bansal, D.: An adaptive approach for fake news detection in social media: single vs cross domain. In: 2021 International Conference on Computational Science and Computational Intelligence (CSCI), pp. 1401–1405 (2021). IEEE [15] Amri, S., Sallami, D., A¨ ımeur, E.: Exmulf: An explainable multimodal content-based fake news detection system. In: International Symposium on Foundations and Practice of Security, pp. 177–187 (2021). Springer [16] Wang, Y., Yang, W., Ma, F., Xu, J., Zhong, B., Deng, Q., Gao, J.: Weak supervi-sion for fake news detection via reinforcement learning. In: Proceedings of the AAAI Conference on Artificial Intelligence, vol. 34, pp. 516–523 (2020) [17] Ren, Y., Wang, B., Zhang, J., Chang, Y.: Adversarial active learning based hetero-geneous graph neural network for fake news detection. In: 2020 IEEE International Conference on Data Mining (ICDM), pp. 452–461 (2020). IEEE [18] Barnab` o, G., Siciliano, F., Castillo, C., Leonardi, S., Nakov, P., Da San Martino, G., Silvestri, F.: Deep active learning for misinformation detection using geometric deep learning. Online Social Networks and Media 33 , 100244 (2023) [19] Folino, F., Folino, G., Guarascio, M., Pontieri, L., Zicari, P.: Towards data-and compute-efficient fake-news detection: An approach combining active learning and pre-trained language models. SN Computer Science 5(5), 470 (2024) [20] Xiao, R., Dong, Y., Zhao, J., Wu, R., Lin, M., Chen, G., Wang, H.: Freeal: Towards human-free active learning in the era of large language models. In: The 2023 Conference on Empirical Methods in Natural Language Processing [21] Zhang, R., Li, Y., Ma, Y., Zhou, M., Zou, L.: Llmaaa: Making large language mod-els as active annotators. In: Findings of the Association for Computational Linguistics: EMNLP 2023, pp. 13088–13103 (2023) [22] Shahapure, K.R., Nicholas, C.: Cluster quality analysis using silhouette score. In: 2020 IEEE 7th International Conference on Data Science and Advanced Analytics (DSAA), pp. 747–748 (2020). IEEE [23] Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J.D., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., et al. : Language models are few-shot learners. Advances in neural information processing systems 33 , 1877–1901 (2020) 21 [24] Liu, J., Shen, D., Zhang, Y., Dolan, B., Carin, L., Chen, W.: What makes good in-context examples for gpt-3? arXiv preprint arXiv:2101.06804 (2021) [25] Reimers, N.: Sentence-bert: Sentence embeddings using siamese bert-networks. arXiv preprint arXiv:1908.10084 (2019) [26] Lin, S., Hilton, J., Evans, O.: Teaching models to express their uncertainty in words. Transactions on Machine Learning Research (2022) [27] Wang, X., Wei, J., Schuurmans, D., Le, Q.V., Chi, E.H., Narang, S., Chowdhery, A., Zhou, D.: Self-consistency improves chain of thought reasoning in language models. In: The Eleventh International Conference on Learning Representations (2022) [28] Xiong, M., Hu, Z., Lu, X., LI, Y., Fu, J., He, J., Hooi, B.: Can llms express their uncertainty? an empirical evaluation of confidence elicitation in llms. In: The Twelfth International Conference on Learning Representations (2023) [29] Northcutt, C., Jiang, L., Chuang, I.: Confident learning: Estimating uncertainty in dataset labels. Journal of Artificial Intelligence Research 70 , 1373–1411 (2021) [30] Shu, K., Mahudeswaran, D., Wang, S., Lee, D., Liu, H.: Fakenewsnet: A data repository with news content, social context, and spatiotemporal information for studying fake news on social media. Big data 8(3), 171–188 (2020) [31] Cui, L., Lee, D.: Coaid: Covid-19 healthcare misinformation dataset. arXiv preprint arXiv:2006.00885 (2020) [32] Shu, K., Cui, L., Wang, S., Lee, D., Liu, H.: defend: Explainable fake news detection. In: Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining, pp. 395–405 (2019) [33] Silva, A., Han, Y., Luo, L., Karunasekera, S., Leckie, C.: Embedding partial propagation network for fake news early detection. In: CIKM (Workshops), vol. 2699 (2020) [34] Zhou, X., Wu, J., Zafarani, R.: : Similarity-aware multi-modal fake news detection. In: Pacific-Asia Conference on Knowledge Discovery and Data Mining, pp. 354–367 (2020). Springer [35] Zhu, Y., Sheng, Q., Cao, J., Nan, Q., Shu, K., Wu, M., Wang, J., Zhuang, F.: Memory-guided multi-view multi-domain fake news detection. IEEE Transactions on Knowledge and Data Engineering 35 (7), 7178–7191 (2022) [36] Nan, Q., Wang, D., Zhu, Y., Sheng, Q., Shi, Y., Cao, J., Li, J.: Improving fake news detection of influential domain via domain-and instance-level transfer. In: Proceed-ings of the 29th International Conference on Computational Linguistics, pp. 2834–2848 (2022) [37] Settles, B.: Active learning literature survey (2009) 22 [38] Culotta, A., McCallum, A.: Reducing labeling effort for structured prediction tasks. In: AAAI, vol. 5, pp. 746–751 (2005) [39] Yuan, M., Lin, H.-T., Boyd-Graber, J.: Cold-start active learning through self-supervised language modeling. In: Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP), pp. 7935–7948 (2020) [40] Joulin, A., Grave, E., Bojanowski, P., Mikolov, T.: Bag of tricks for efficient text clas-sification. In: Proceedings of the 15th Conference of the European Chapter of the Association for Computational Linguistics: Volume 2, Short Papers (2017). Association for Computational Linguistics [41] Wang, Z.: Zero-shot knowledge distillation from a decision-based black-box model. In: International Conference on Machine Learning, pp. 10675–10685 (2021). PMLR [42] Min, Z., Ge, Q., Tai, C.: Why the pseudo label based semi-supervised learning algorithm is effective? arXiv e-prints, 2211 (2022) [43] Skeppstedt, M.: Annotating named entities in clinical text by combining pre-annotation and active learning. In: 51st Annual Meeting of the Association for Computational Linguistics Proceedings of the Student Research Workshop, pp. 74–80 (2013) [44] Mikulov´ a, M., Straka, M., ˇ Stˇ ep´ anek, J., ˇ Stˇ ep´ ankov´ a, B., Hajiˇ c, J.: Quality and efficiency of manual annotation: Pre-annotation bias. arXiv preprint arXiv:2306.09307 (2023) [45] South, B.R., Mowery, D., Suo, Y., Leng, J., Ferr´ andez, O., Meystre, S.M., Chapman, W.W.: Evaluating the effects of machine pre-annotation and an interactive annotation interface on manual de-identification of clinical text. Journal of biomedical informatics 
+
+50 , 162–172 (2014) 23

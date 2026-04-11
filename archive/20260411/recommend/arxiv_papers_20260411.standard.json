@@ -1,0 +1,480 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-11T19:55:16.594950+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 14,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.04174v1",
+      "title": "CoALFake: Collaborative Active Learning with Human-LLM Co-Annotation for Cross-Domain Fake News Detection",
+      "abstract": "The proliferation of fake news across diverse domains highlights critical limitations in current detection systems, which often exhibit narrow domain specificity and poor generalization. Existing cross-domain approaches face two key challenges: (1) reliance on labelled data, which is frequently unavailable and resource intensive to acquire and (2) information loss caused by rigid domain categorization or neglect of domain-specific features. To address these issues, we propose CoALFake, a novel approach for cross-domain fake news detection that integrates Human-Large Language Model (LLM) co-annotation with domain-aware Active Learning (AL). Our method employs LLMs for scalable, low-cost annotation while maintaining human oversight to ensure label reliability. By integrating domain embedding techniques, the CoALFake dynamically captures both domain specific nuances and cross-domain patterns, enabling the training of a domain agnostic model. Furthermore, a domain-aware sampling strategy optimizes sample acquisition by prioritizing diverse domain coverage. Experimental results across multiple datasets demonstrate that the proposed approach consistently outperforms various baselines. Our results emphasize that human-LLM co-annotation is a highly cost-effective approach that delivers excellent performance. Evaluations across several datasets show that CoALFake consistently outperforms a range of existing baselines, even with minimal human oversight.",
+      "authors": [
+        "Esma Aïmeur",
+        "Gilles Brassard",
+        "Dorsaf Sallami"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-05T16:42:50+00:00",
+      "link": "https://arxiv.org/pdf/2604.04174v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Human-LLM co-annotation for cross-domain fake news detection",
+      "llm_evidence_cn": "人机协作标注用于跨领域虚假新闻检测",
+      "llm_evidence": "人机协作标注用于跨领域虚假新闻检测",
+      "canonical_evidence": "人机协作标注用于跨领域虚假新闻检测",
+      "llm_tldr_en": "Proposes CoALFake, a collaborative active learning approach for scalable and accurate fake news detection.",
+      "llm_tldr_cn": "提出了CoALFake，一种通过人机协作主动学习进行跨领域虚假新闻检测的方法。",
+      "llm_tldr": "提出了CoALFake，一种通过人机协作主动学习进行跨领域虚假新闻检测的方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.05120v1",
+      "title": "Designing Digital Humans with Ambient Intelligence",
+      "abstract": "Digital humans are lifelike virtual agents capable of natural conversation and are increasingly deployed in domains like retail and finance. However, most current digital humans operate in isolation from their surroundings and lack contextual awareness beyond the dialogue itself. We address this limitation by integrating ambient intelligence (AmI) - i.e., environmental sensors, IoT data, and contextual modeling - with digital human systems. This integration enables situational awareness of the user's environment, anticipatory and proactive assistance, seamless cross-device interactions, and personalized long-term user support. We present a conceptual framework defining key roles that AmI can play in shaping digital human behavior, a design space highlighting dimensions such as proactivity levels and privacy strategies, and application-driven patterns with case studies in financial and retail services. We also discuss an architecture for ambient-enabled digital humans and provide guidelines for responsible design regarding privacy and data governance. Together, our work positions ambient intelligent digital humans as a new class of interactive agents powered by AI that respond not only to users' queries but also to the context and situations in which the interaction occurs.",
+      "authors": [
+        "Mengyu Chen",
+        "Pranav Deshpande",
+        "Runqing Yang",
+        "Elvir Azanli",
+        "Joseph Ligman",
+        "Shaohan Hu",
+        "Richard Chen"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.MA"
+      ],
+      "published": "2026-04-06T19:33:19+00:00",
+      "link": "https://arxiv.org/pdf/2604.05120v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "virtual agents with contextual awareness and social behavior",
+      "llm_evidence_cn": "具有上下文感知和社会行为的虚拟智能体",
+      "llm_evidence": "具有上下文感知和社会行为的虚拟智能体",
+      "canonical_evidence": "具有上下文感知和社会行为的虚拟智能体",
+      "llm_tldr_en": "Integrates ambient intelligence with digital humans to enable proactive and context-aware social interactions.",
+      "llm_tldr_cn": "将环境智能与数字人结合，实现具有主动性和上下文感知能力的社交互动。",
+      "llm_tldr": "将环境智能与数字人结合，实现具有主动性和上下文感知能力的社交互动。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.05333v2",
+      "title": "Graph of Skills: Dependency-Aware Structural Retrieval for Massive Agent Skills",
+      "abstract": "Skill usage has become a core component of modern agent systems and can substantially improve agents' ability to complete complex tasks. In real-world settings, where agents must monitor and interact with numerous personal applications, web browsers, and other environment interfaces, skill libraries can scale to thousands of reusable skills. Scaling to larger skill sets introduces two key challenges. First, loading the full skill set saturates the context window, driving up token costs, hallucination, and latency. In this paper, we present Graph of Skills (GoS), an inference-time structural retrieval layer for large skill libraries. GoS constructs an executable skill graph offline from skill packages, then at inference time retrieves a bounded, dependency-aware skill bundle through hybrid semantic-lexical seeding, reverse-weighted Personalized PageRank, and context-budgeted hydration. On SkillsBench and ALFWorld, GoS improves average reward by 43.6% over the vanilla full skill-loading baseline while reducing input tokens by 37.8%, and generalizes across three model families: Claude Sonnet, GPT-5.2 Codex, and MiniMax. Additional ablation studies across skill libraries ranging from 200 to 2,000 skills further demonstrate that GoS consistently outperforms both vanilla skills loading and simple vector retrieval in balancing reward, token efficiency, and runtime.",
+      "authors": [
+        "Dawei Liu",
+        "Zongxia Li",
+        "Hongyang Du",
+        "Xiyang Wu",
+        "Shihang Gui",
+        "Yongbei Kuang",
+        "Lichao Sun"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-07T02:09:11+00:00",
+      "link": "https://arxiv.org/pdf/2604.05333v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "structural retrieval for massive agent skills",
+      "llm_evidence_cn": "大规模智能体技能的结构化检索",
+      "llm_evidence": "大规模智能体技能的结构化检索",
+      "canonical_evidence": "大规模智能体技能的结构化检索",
+      "llm_tldr_en": "Develops Graph of Skills to efficiently manage and retrieve thousands of skills for large-scale agent systems.",
+      "llm_tldr_cn": "开发了技能图谱，用于高效管理和检索大规模智能体系统中的数千种技能。",
+      "llm_tldr": "开发了技能图谱，用于高效管理和检索大规模智能体系统中的数千种技能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.05120v2",
+      "title": "Designing Digital Humans with Ambient Intelligence",
+      "abstract": "Digital humans are lifelike virtual agents capable of natural conversation and are increasingly deployed in domains like retail and finance. However, most current digital humans operate in isolation from their surroundings and lack contextual awareness beyond the dialogue itself. We address this limitation by integrating ambient intelligence (AmI) - i.e., environmental sensors, IoT data, and contextual modeling - with digital human systems. This integration enables situational awareness of the user's environment, anticipatory and proactive assistance, seamless cross-device interactions, and personalized long-term user support. We present a conceptual framework defining key roles that AmI can play in shaping digital human behavior, a design space highlighting dimensions such as proactivity levels and privacy strategies, and application-driven patterns with case studies in financial and retail services. We also discuss an architecture for ambient-enabled digital humans and provide guidelines for responsible design regarding privacy and data governance. Together, our work positions ambient intelligent digital humans as a new class of interactive agents powered by AI that respond not only to users' queries but also to the context and situations in which the interaction occurs.",
+      "authors": [
+        "Mengyu Chen",
+        "Pranav Deshpande",
+        "Runqing Yang",
+        "Elvir Azanli",
+        "Joseph Ligman",
+        "Shaohan Hu",
+        "Richard Chen"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.MA"
+      ],
+      "published": "2026-04-06T19:33:19+00:00",
+      "link": "https://arxiv.org/pdf/2604.05120v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "virtual agents with contextual awareness and social behavior",
+      "llm_evidence_cn": "具有上下文感知和社会行为的虚拟智能体",
+      "llm_evidence": "具有上下文感知和社会行为的虚拟智能体",
+      "canonical_evidence": "具有上下文感知和社会行为的虚拟智能体",
+      "llm_tldr_en": "Integrates ambient intelligence with digital humans to enable proactive and context-aware social interactions.",
+      "llm_tldr_cn": "将环境智能与数字人结合，实现具有主动性和上下文感知能力的社交互动。",
+      "llm_tldr": "将环境智能与数字人结合，实现具有主动性和上下文感知能力的社交互动。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.07272v1",
+      "title": "ClickGuard: A Trustworthy Adaptive Fusion Framework for Clickbait Detection",
+      "abstract": "The widespread use of clickbait headlines, crafted to mislead and maximize engagement, poses a significant challenge to online credibility. These headlines employ sensationalism, misleading claims, and vague language, underscoring the need for effective detection to ensure trustworthy digital content. The paper introduces, ClickGuard: a trustworthy adaptive fusion framework for clickbait detection. It combines BERT embeddings and structural features using a Syntactic-Semantic Adaptive Fusion Block (SSAFB) for dynamic integration. The framework incorporates a hybrid CNN-BiLSTM to capture patterns and dependencies. The model achieved 96.93% testing accuracy, outperforming state-of-the-art approaches. The model's trustworthiness is evaluated using LIME and Permutation Feature Importance (PFI) for interpretability and perturbation analysis. These methods assess the model's robustness and sensitivity to feature changes by measuring the average prediction variation. Ablation studies validated the SSAFB's effectiveness in optimizing feature fusion. The model demonstrated robust performance across diverse datasets, providing a scalable, reliable solution for enhancing online content credibility by addressing syntactic-semantic modelling challenges. Code of the work is available at: https://github.com/palindromeRice/ClickBait_Detection_Architecture",
+      "authors": [
+        "Chhavi Dhiman",
+        "Naman Chawla",
+        "Riya Dhami",
+        "Gaurav Kumar",
+        "Ganesh Naik"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-08T16:33:47+00:00",
+      "link": "https://arxiv.org/pdf/2604.07272v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "clickbait detection for online credibility",
+      "llm_evidence_cn": "在线可信度的点击诱饵检测",
+      "llm_evidence": "在线可信度的点击诱饵检测",
+      "canonical_evidence": "在线可信度的点击诱饵检测",
+      "llm_tldr_en": "Introduces ClickGuard, a fusion framework for detecting clickbait to ensure digital content trust.",
+      "llm_tldr_cn": "引入ClickGuard框架，通过融合语义和结构特征来检测点击诱饵，提升内容可信度。",
+      "llm_tldr": "引入ClickGuard框架，通过融合语义和结构特征来检测点击诱饵，提升内容可信度。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.06430v1",
+      "title": "Asynchronous Distributed Bandit Submodular Maximization under Heterogeneous Communication Delays",
+      "abstract": "We study asynchronous distributed decision-making for scalable multi-agent bandit submodular maximization. We are motivated by distributed information-gathering tasks in unknown environments and under heterogeneous inter-agent communication delays. To enable scalability despite limited communication delays, existing approaches restrict each agent to coordinate only with its one-hop neighbors. But these approaches assume homogeneous communication delays among the agents and a synchronous global clock. In practice, however, delays are heterogeneous, and agents operate with mismatched local clocks. That is, each agent does not receive information from all neighbors at the same time, compromising decision-making. In this paper, we provide an asynchronous coordination algorithm to overcome the challenges. We establish a provable approximation guarantee against the optimal synchronized centralized solution, where the suboptimality gap explicitly depends on communication delays and clock mismatches. The bounds also depend on the topology of each neighborhood, capturing the effect of distributed decision-making via one-hop-neighborhood messages only. We validate the approach through numerical simulations on multi-camera area monitoring.",
+      "authors": [
+        "Pranjal Sharma",
+        "Zirui Xu",
+        "Vasileios Tzoumas"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.MA"
+      ],
+      "published": "2026-04-07T20:13:04+00:00",
+      "link": "https://arxiv.org/pdf/2604.06430v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "asynchronous distributed multi-agent decision-making",
+      "llm_evidence_cn": "异步分布式多智能体决策",
+      "llm_evidence": "异步分布式多智能体决策",
+      "canonical_evidence": "异步分布式多智能体决策",
+      "llm_tldr_en": "Studies scalable multi-agent decision-making under heterogeneous communication delays and mismatched clocks.",
+      "llm_tldr_cn": "研究了在异构通信延迟和时钟不同步情况下的可扩展多智能体分布式决策。",
+      "llm_tldr": "研究了在异构通信延迟和时钟不同步情况下的可扩展多智能体分布式决策。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.07911v1",
+      "title": "Dynamic Attentional Context Scoping: Agent-Triggered Focus Sessions for Isolated Per-Agent Steering in Multi-Agent LLM Orchestration",
+      "abstract": "Multi-agent LLM orchestration systems suffer from context pollution: when N concurrent agents compete for the orchestrator's context window, each agent's task state, partial outputs, and pending questions contaminate the steering interactions of every other agent, degrading decision quality. We introduce Dynamic Attentional Context Scoping (DACS), a mechanism in which the orchestrator operates in two asymmetric modes. In Registry mode it holds only lightweight per-agent status summaries (<=200 tokens each), remaining responsive to all agents and the user. When an agent emits a SteeringRequest, the orchestrator enters Focus(a_i) mode, injecting the full context of agent a_i while compressing all other agents to their registry entries. Context isolation is agent-triggered, asymmetric, and deterministic: the context window contains exactly F(a_i) + R_{-i} during steering, eliminating cross-agent contamination without requiring context compression or retrieval. We evaluate DACS across four experimental phases totalling 200 trials: Phase 1 tests N in {3,5,10} (60 trials); Phase 2 tests agent heterogeneity and adversarial dependencies (60 trials); Phase 3 tests decision density up to D=15 (40 trials); Phase 4 uses autonomous LLM agents for free-form questions (40 trials, Claude Haiku 4.5). Across all 8 synthetic scenarios, DACS achieves 90.0--98.4% steering accuracy versus 21.0--60.0% for a flat-context baseline (p < 0.0001 throughout), with wrong-agent contamination falling from 28--57% to 0--14% and context efficiency ratios of up to 3.53x. The accuracy advantage grows with N and D; keyword matching is validated by LLM-as-judge across all phases (mean kappa=0.909). DACS outperforms the flat-context baseline by +17.2pp at N=3 (p=0.0023) and +20.4pp at N=5 (p=0.0008) in Phase 4, with the advantage growing with N confirmed by two independent judges.",
+      "authors": [
+        "Nickson Patel"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-04-09T07:26:42+00:00",
+      "link": "https://arxiv.org/pdf/2604.07911v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "context management in multi-agent LLM orchestration",
+      "llm_evidence_cn": "多智能体LLM编排中的上下文管理",
+      "llm_evidence": "多智能体LLM编排中的上下文管理",
+      "canonical_evidence": "多智能体LLM编排中的上下文管理",
+      "llm_tldr_en": "Proposes a dynamic context scoping mechanism to prevent interference between concurrent agents in multi-agent systems.",
+      "llm_tldr_cn": "提出一种动态上下文范围机制，防止多智能体系统中并发智能体之间的干扰。",
+      "llm_tldr": "提出一种动态上下文范围机制，防止多智能体系统中并发智能体之间的干扰。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.06696v1",
+      "title": "AgentGate: A Lightweight Structured Routing Engine for the Internet of Agents",
+      "abstract": "The rapid development of AI agent systems is leading to an emerging Internet of Agents, where specialized agents operate across local devices, edge nodes, private services, and cloud platforms. Although recent efforts have improved agent naming, discovery, and interaction, efficient request dispatch remains an open systems problem under latency, privacy, and cost constraints. In this paper, we present AgentGate, a lightweight structured routing engine for candidate-aware agent dispatch. Instead of treating routing as unrestricted text generation, AgentGate formulates it as a constrained decision problem and decomposes it into two stages: action decision and structural grounding. The first stage determines whether a query should trigger single-agent invocation, multi-agent planning, direct response, or safe escalation, while the second stage instantiates the selected action into executable outputs such as target agents, structured arguments, or multi-step plans. To adapt compact models to this setting, we further develop a routing-oriented fine-tuning scheme with candidate-aware supervision and hard negative examples. Experiments on a curated routing benchmark with several 3B--7B open-weight models show that compact models can provide competitive routing performance in constrained settings, and that model differences are mainly reflected in action prediction, candidate selection, and structured grounding quality. These results indicate that structured routing is a feasible design point for efficient and privacy-aware agent systems, especially when routing decisions must be made under resource-constrained deployment conditions.",
+      "authors": [
+        "Yujun Cheng",
+        "Enfang Cui",
+        "Hao Qin",
+        "Zhiyuan Liang",
+        "Qi Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-08T05:22:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.06696v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "routing engine for Internet of Agents",
+      "llm_evidence_cn": "智能体互联网的路由引擎",
+      "llm_evidence": "智能体互联网的路由引擎",
+      "canonical_evidence": "智能体互联网的路由引擎",
+      "llm_tldr_en": "Presents a structured routing engine to improve efficiency in multi-agent system request dispatch.",
+      "llm_tldr_cn": "提出一种结构化路由引擎，用于优化多智能体系统中的请求分发效率。",
+      "llm_tldr": "提出一种结构化路由引擎，用于优化多智能体系统中的请求分发效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.08401v1",
+      "title": "Verify Before You Commit: Towards Faithful Reasoning in LLM Agents via Self-Auditing",
+      "abstract": "In large language model (LLM) agents, reasoning trajectories are treated as reliable internal beliefs for guiding actions and updating memory. However, coherent reasoning can still violate logical or evidential constraints, allowing unsupported beliefs repeatedly stored and propagated across decision steps, leading to systematic behavioral drift in long-horizon agentic systems. Most existing strategies rely on the consensus mechanism, conflating agreement with faithfulness. In this paper, inspired by the vulnerability of unfaithful intermediate reasoning trajectories, we propose \\textbf{S}elf-\\textbf{A}udited \\textbf{Ve}rified \\textbf{R}easoning (\\textsc{SAVeR}), a novel framework that enforces verification over internal belief states within the agent before action commitment, achieving faithful reasoning. Concretely, we structurally generate persona-based diverse candidate beliefs for selection under a faithfulness-relevant structure space. To achieve reasoning faithfulness, we perform adversarial auditing to localize violations and repair through constraint-guided minimal interventions under verifiable acceptance criteria. Extensive experiments on six benchmark datasets demonstrate that our approach consistently improves reasoning faithfulness while preserving competitive end-task performance.",
+      "authors": [
+        "Wenhao Yuan",
+        "Chenchen Lin",
+        "Jian Chen",
+        "Jinfeng Xu",
+        "Xuehe Wang",
+        "Edith Cheuk Han Ngai"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-09T16:01:03+00:00",
+      "link": "https://arxiv.org/pdf/2604.08401v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "faithful reasoning in LLM agents",
+      "llm_evidence_cn": "大语言模型智能体中的忠实推理",
+      "llm_evidence": "大语言模型智能体中的忠实推理",
+      "canonical_evidence": "大语言模型智能体中的忠实推理",
+      "llm_tldr_en": "Introduces a self-auditing framework to ensure logical and evidential consistency in LLM agent reasoning.",
+      "llm_tldr_cn": "引入自审计框架，以确保大语言模型智能体在推理过程中的逻辑和证据一致性。",
+      "llm_tldr": "引入自审计框架，以确保大语言模型智能体在推理过程中的逻辑和证据一致性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.07681v1",
+      "title": "Multi-Agent Orchestration for High-Throughput Materials Screening on a Leadership-Class System",
+      "abstract": "The integration of Artificial Intelligence (AI) with High-Performance Computing (HPC) is transforming scientific workflows from human-directed pipelines into adaptive systems capable of autonomous decision-making. Large language models (LLMs) play a critical role in autonomous workflows; however, deploying LLM-based agents at scale remains a significant challenge. Single-agent architectures and sequential tool calls often become serialization bottlenecks when executing large-scale simulation campaigns, failing to utilize the massive parallelism of exascale resources. To address this, we present a scalable, hierarchical multi-agent framework for orchestrating high-throughput screening campaigns. Our planner-executor architecture employs a central planning agent to dynamically partition workloads and assign subtasks to a swarm of parallel executor agents. All executor agents interface with a shared Model Context Protocol (MCP) server that orchestrates tasks via the Parsl workflow engine. To demonstrate this framework, we employed the open-weight gpt-oss-120b model to orchestrate a high-throughput screening of the Computation-Ready Experimental (CoRE) Metal-Organic Framework (MOF) database for atmospheric water harvesting. The results demonstrate that the proposed agentic framework enables efficient and scalable execution on the Aurora supercomputer, with low orchestration overhead and high task completion rates. This work establishes a flexible paradigm for LLM-driven scientific automation on HPC systems, with broad applicability to materials discovery and beyond.",
+      "authors": [
+        "Thang Duc Pham",
+        "Harikrishna Tummalapalli",
+        "Fakhrul Hasan Bhuiyan",
+        "Álvaro Vázquez Mayagoitia",
+        "Christine Simpson",
+        "Riccardo Balin",
+        "Venkatram Vishwanath",
+        "Murat Keçeli"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-09T01:01:11+00:00",
+      "link": "https://arxiv.org/pdf/2604.07681v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "hierarchical multi-agent framework for large-scale simulation campaigns",
+      "llm_evidence_cn": "用于大规模模拟任务的分层多智能体框架",
+      "llm_evidence": "用于大规模模拟任务的分层多智能体框架",
+      "canonical_evidence": "用于大规模模拟任务的分层多智能体框架",
+      "llm_tldr_en": "Introduces a scalable multi-agent orchestration framework for high-throughput scientific simulations.",
+      "llm_tldr_cn": "介绍了一种用于高通量科学模拟的大规模可扩展分层多智能体编排框架。",
+      "llm_tldr": "介绍了一种用于高通量科学模拟的大规模可扩展分层多智能体编排框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.07945v1",
+      "title": "Incremental Residual Reinforcement Learning Toward Real-World Learning for Social Navigation",
+      "abstract": "As the demand for mobile robots continues to increase, social navigation has emerged as a critical task, driving active research into deep reinforcement learning (RL) approaches. However, because pedestrian dynamics and social conventions vary widely across different regions, simulations cannot easily encompass all possible real-world scenarios. Real-world RL, in which agents learn while operating directly in physical environments, presents a promising solution to this issue. Nevertheless, this approach faces significant challenges, particularly regarding constrained computational resources on edge devices and learning efficiency. In this study, we propose incremental residual RL (IRRL). This method integrates incremental learning, which is a lightweight process that operates without a replay buffer or batch updates, with residual RL, which enhances learning efficiency by training only on the residuals relative to a base policy. Through the simulation experiments, we demonstrated that, despite lacking a replay buffer, IRRL achieved performance comparable to those of conventional replay buffer-based methods and outperformed existing incremental learning approaches. Furthermore, the real-world experiments confirmed that IRRL can enable robots to effectively adapt to previously unseen environments through the real-world learning.",
+      "authors": [
+        "Haruto Nagahisa",
+        "Kohei Matsumoto",
+        "Yuki Tomita",
+        "Yuki Hyodo",
+        "Ryo Kurazume"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-04-09T08:08:37+00:00",
+      "link": "https://arxiv.org/pdf/2604.07945v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "reinforcement learning for social navigation in physical environments",
+      "llm_evidence_cn": "物理环境中社交导航的强化学习",
+      "llm_evidence": "物理环境中社交导航的强化学习",
+      "canonical_evidence": "物理环境中社交导航的强化学习",
+      "llm_tldr_en": "Proposes incremental residual RL for robots to learn social navigation conventions in the real world.",
+      "llm_tldr_cn": "提出增量残差强化学习，使机器人能在现实世界中学习社交导航规范。",
+      "llm_tldr": "提出增量残差强化学习，使机器人能在现实世界中学习社交导航规范。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.07970v1",
+      "title": "Karma Mechanisms for Decentralised, Cooperative Multi Agent Path Finding",
+      "abstract": "Multi-Agent Path Finding (MAPF) is a fundamental coordination problem in large-scale robotic and cyber-physical systems, where multiple agents must compute conflict-free trajectories with limited computational and communication resources. While centralised optimal solvers provide guarantees on solution optimality, their exponential computational complexity limits scalability to large-scale systems and real-time applicability. Existing decentralised heuristics are faster, but result in suboptimal outcomes and high cost disparities. This paper proposes a decentralised coordination framework for cooperative MAPF based on Karma mechanisms - artificial, non-tradeable credits that account for agents' past cooperative behaviour and regulate future conflict resolution decisions. The approach formulates conflict resolution as a bilateral negotiation process that enables agents to resolve conflicts through pairwise replanning while promoting long-term fairness under limited communication and without global priority structures. The mechanism is evaluated in a lifelong robotic warehouse multi-agent pickup-and-delivery scenario with kinematic orientation constraints. The results highlight that the Karma mechanism balances replanning effort across agents, reducing disparity in service times without sacrificing overall efficiency. Code: https://github.com/DerKevinRiehl/karma_dmapf",
+      "authors": [
+        "Kevin Riehl",
+        "Julius Schlapbach",
+        "Anastasios Kouvelas",
+        "Michail A. Makridis"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.RO"
+      ],
+      "published": "2026-04-09T08:35:13+00:00",
+      "link": "https://arxiv.org/pdf/2604.07970v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralised coordination framework for multi-agent path finding",
+      "llm_evidence_cn": "多智能体路径规划的去中心化协作框架",
+      "llm_evidence": "多智能体路径规划的去中心化协作框架",
+      "canonical_evidence": "多智能体路径规划的去中心化协作框架",
+      "llm_tldr_en": "Proposes a Karma-based credit mechanism for efficient and fair decentralized multi-agent path finding.",
+      "llm_tldr_cn": "提出一种基于Karma信用机制的去中心化多智能体路径规划协作框架。",
+      "llm_tldr": "提出一种基于Karma信用机制的去中心化多智能体路径规划协作框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

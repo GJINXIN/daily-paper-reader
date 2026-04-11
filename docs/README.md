@@ -6,73 +6,58 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-10
-- 运行时间：2026-04-10 20:27:39 UTC
+- 最新运行日期：2026-04-11
+- 运行时间：2026-04-11 19:56:33 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：12
+- 精读区：1
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度研读 17 篇 AI 论文，聚焦大模型虚假新闻防御与数字孪生仿真校准。
-重点推荐图增强的可解释防伪框架及 SYN-DIGITS 模拟技术，显著提升了复杂系统的决策可信度。
-建议关注多智能体协作中的安全边界与行为基准，确保 AI 在实际应用中合规且受控。
-- 详情：[/202604/10/README](/202604/10/README)
+今日聚焦跨域虚假新闻治理，深度解析人机协作主动学习框架 CoALFake。
+核心结论指出 LLM 与人类协同标注能显著提升检测效能，同时探讨了环境智能下的数字人设计。
+建议读者关注 AI 如何在复杂任务中辅助人类决策，探索协同标注在内容安全领域的应用。
+- 详情：[/202604/11/README](/202604/11/README)
 
 ### 精读区论文标签
-1. [A Graph-Enhanced Defense Framework for Explainable Fake News Detection with LLM](/202604/10/2604.06666v1-a-graph-enhanced-defense-framework-for-explainable-fake-news-detection-with-llm)  
+1. [CoALFake: Collaborative Active Learning with Human-LLM Co-Annotation for Cross-Domain Fake News Detection](/202604/11/2604.04174v1-coalfake-collaborative-active-learning-with-human-llm-co-annotation-for-cross-domain-fake-news-detection)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：基于LLM的可解释虚假新闻检测
-2. [SYN-DIGITS: A Synthetic Control Framework for Calibrated Digital Twin Simulation](/202604/10/2604.07513v1-syn-digits-a-synthetic-control-framework-for-calibrated-digital-twin-simulation)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：用于社会科学的基于大语言模型的人格模拟
-3. [More Capable, Less Cooperative? When LLMs Fail At Zero-Cost Collaboration](/202604/10/2604.07821v1-more-capable-less-cooperative-when-llms-fail-at-zero-cost-collaboration)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：大语言模型智能体的协调与协作失败
-4. [Reinforcement learning with reputation-based adaptive exploration promotes the evolution of cooperation](/202604/10/2604.08103v1-reinforcement-learning-with-reputation-based-adaptive-exploration-promotes-the-evolution-of-cooperation)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体强化学习中合作行为的演化
-5. [From Safety Risk to Design Principle: Peer-Preservation in Multi-Agent LLM Systems and Its Implications for Orchestrated Democratic Discourse Analysis](/202604/10/2604.08465v1-from-safety-risk-to-design-principle-peer-preservation-in-multi-agent-llm-systems-and-its-implications-for-orchestrated-democratic-discourse-analysis)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体话语分析中的涌现对齐现象
-6. [Constraint-Induced Redistribution of Social Influence in Nonlinear Opinion Dynamics](/202604/10/2604.05140v2-constraint-induced-redistribution-of-social-influence-in-nonlinear-opinion-dynamics)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：社会智能体中的集体决策与舆论动力学
+   evidence：人机协作标注用于跨领域虚假新闻检测
 
 ### 速读区论文标签
-1. [From Debate to Decision: Conformal Social Choice for Safe Multi-Agent Deliberation](/202604/10/2604.07667v1-from-debate-to-decision-conformal-social-choice-for-safe-multi-agent-deliberation)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统中的社会选择与商议
-2. [Same Outcomes, Different Journeys: A Trace-Level Framework for Comparing Human and GUI-Agent Behavior in Production Search Systems](/202604/10/2604.07929v1-same-outcomes-different-journeys-a-trace-level-framework-for-comparing-human-and-gui-agent-behavior-in-production-search-systems)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：大模型驱动的智能体在搜索系统中模拟人类行为
-3. [AgentHazard: A Benchmark for Evaluating Harmful Behavior in Computer-Use Agents](/202604/10/2604.02947v1-agenthazard-a-benchmark-for-evaluating-harmful-behavior-in-computer-use-agents)  
+1. [Designing Digital Humans with Ambient Intelligence](/202604/11/2604.05120v1-designing-digital-humans-with-ambient-intelligence)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：计算机使用智能体中涌现的有害行为
-4. [ClawArena: Benchmarking AI Agents in Evolving Information Environments](/202604/10/2604.04202v1-clawarena-benchmarking-ai-agents-in-evolving-information-environments)  
+   evidence：具有上下文感知和社会行为的虚拟智能体
+2. [Designing Digital Humans with Ambient Intelligence](/202604/11/2604.05120v2-designing-digital-humans-with-ambient-intelligence)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：在演化且矛盾的信息环境中对AI智能体进行基准测试
-5. [TwinLoop: Simulation-in-the-Loop Digital Twins for Online Multi-Agent Reinforcement Learning](/202604/10/2604.06610v1-twinloop-simulation-in-the-loop-digital-twins-for-online-multi-agent-reinforcement-learning)  
+   evidence：具有上下文感知和社会行为的虚拟智能体
+3. [Asynchronous Distributed Bandit Submodular Maximization under Heterogeneous Communication Delays](/202604/11/2604.06430v1-asynchronous-distributed-bandit-submodular-maximization-under-heterogeneous-communication-delays)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：结合数字孪生的多智能体强化学习
-6. [AV-SQL: Decomposing Complex Text-to-SQL Queries with Agentic Views](/202604/10/2604.07041v1-av-sql-decomposing-complex-text-to-sql-queries-with-agentic-views)  
+   evidence：异步分布式多智能体决策
+4. [AgentGate: A Lightweight Structured Routing Engine for the Internet of Agents](/202604/11/2604.06696v1-agentgate-a-lightweight-structured-routing-engine-for-the-internet-of-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：专门化LLM智能体流水线
-7. [Designing for Accountable Agents: a Viewpoint](/202604/10/2604.07204v1-designing-for-accountable-agents-a-viewpoint)  
+   evidence：智能体互联网的路由引擎
+5. [Multi-Agent Orchestration for High-Throughput Materials Screening on a Leadership-Class System](/202604/11/2604.07681v1-multi-agent-orchestration-for-high-throughput-materials-screening-on-a-leadership-class-system)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统内部智能体的问责机制
-8. [Structured Distillation of Web Agent Capabilities Enables Generalization](/202604/10/2604.07776v1-structured-distillation-of-web-agent-capabilities-enables-generalization)  
+   evidence：用于大规模模拟任务的分层多智能体框架
+6. [Incremental Residual Reinforcement Learning Toward Real-World Learning for Social Navigation](/202604/11/2604.07945v1-incremental-residual-reinforcement-learning-toward-real-world-learning-for-social-navigation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于模块化智能体角色和合成轨迹生成的LLM组件
-9. [Agentization of Digital Assets for the Agentic Web: Concepts, Techniques, and Benchmark](/202604/10/2604.04226v1-agentization-of-digital-assets-for-the-agentic-web-concepts-techniques-and-benchmark)  
+   evidence：物理环境中社交导航的强化学习
+7. [Karma Mechanisms for Decentralised, Cooperative Multi Agent Path Finding](/202604/11/2604.07970v1-karma-mechanisms-for-decentralised-cooperative-multi-agent-path-finding)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：多智能体路径规划的去中心化协作框架
+8. [Graph of Skills: Dependency-Aware Structural Retrieval for Massive Agent Skills](/202604/11/2604.05333v2-graph-of-skills-dependency-aware-structural-retrieval-for-massive-agent-skills)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体网络中的自主交互与群体智能
-10. [Search, Do not Guess: Teaching Small Language Models to Be Effective Search Agents](/202604/10/2604.04651v1-search-do-not-guess-teaching-small-language-models-to-be-effective-search-agents)  
+   evidence：大规模智能体技能的结构化检索
+9. [ClickGuard: A Trustworthy Adaptive Fusion Framework for Clickbait Detection](/202604/11/2604.07272v1-clickguard-a-trustworthy-adaptive-fusion-framework-for-clickbait-detection)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：训练小语言模型作为搜索智能体
-11. [Graph of Skills: Dependency-Aware Structural Retrieval for Massive Agent Skills](/202604/10/2604.05333v1-graph-of-skills-dependency-aware-structural-retrieval-for-massive-agent-skills)  
+   evidence：在线可信度的点击诱饵检测
+10. [Dynamic Attentional Context Scoping: Agent-Triggered Focus Sessions for Isolated Per-Agent Steering in Multi-Agent LLM Orchestration](/202604/11/2604.07911v1-dynamic-attentional-context-scoping-agent-triggered-focus-sessions-for-isolated-per-agent-steering-in-multi-agent-llm-orchestration)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：海量智能体技能的结构化检索
+   evidence：多智能体LLM编排中的上下文管理
+11. [Verify Before You Commit: Towards Faithful Reasoning in LLM Agents via Self-Auditing](/202604/11/2604.08401v1-verify-before-you-commit-towards-faithful-reasoning-in-llm-agents-via-self-auditing)  
+   标签：评分：6.0/10、query:mas-ss
+   evidence：大语言模型智能体中的忠实推理
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,1942 @@
+Title: Microsoft Word - Manuscript
+
+URL Source: https://arxiv.org/pdf/2604.07272v1
+
+Published Time: Thu, 09 Apr 2026 01:17:01 GMT
+
+Number of Pages: 25
+
+Markdown Content:
+# ClickGuard: A Trustworthy Adaptive Fusion Framework for 
+
+# Clickbait Detection          
+
+> 1Chhavi Dhiman, 2Naman Chawla, 3Riya Dhami, 4Gaurav Kumar, 5Ganesh Naik
+> 2Department of Computer Science & Engineering, Bhagwan Parshuram Institute of Technology, Delhi, India
+> 3Department of Electronics & Communication Engineering, Bhagwan Parshuram Institute of Technology, Delhi, India
+> 1,4 Department of Electronics and Communication Engineering, Delhi Technological University, Delhi, India
+> 5College of Medicine & Public Health, Flinders University, Bedford Park. SA-5042, Australia
+> namanc184csec21@bpitindia.edu.in ,riya58eceb21@bpitindia.edu.in ,chhavi.dhiman@dtu.ac.in ,kr.zgaurav@gmail.com ,
+> ganesh.naik@flinders.edu.au
+
+Abstract 
+
+The widespread use of clickbait headlines, crafted to mislead and maximize engagement, poses a significant 
+
+challenge to online credibility. These headlines employ sensationalism, misleading claims, and vague language, 
+
+underscoring the need for effective detection to ensure trustworthy digital content. The paper introduces, 
+
+ClickGuard: a trustworthy adaptive fusion framework for clickbait detection. It combines BERT embeddings and 
+
+structural features using a Syntactic-Semantic Adaptive Fusion Block (SSAFB) for dynamic integration. The 
+
+framework incorporates a hybrid CNN-BiLSTM to capture patterns and dependencies. The model achieved 
+
+96.93% testing accuracy, outperforming state-of-the-art approaches. The model's trustworthiness is evaluated 
+
+using LIME and Permutation Feature Importance (PFI) for interpretability and perturbation analysis. These 
+
+methods assess the model's robustness and sensitivity to feature changes by measuring the average prediction 
+
+variation. Ablation studies validated the SSAFB's effectiveness in optimizing feature fusion. The model 
+
+demonstrated robust performance across diverse datasets, providing a scalable, reliable solution for enhancing 
+
+online content credibility by addressing syntactic-semantic modelling challenges. Code of the work is available 
+
+at: https://github.com/palindromeRice/ClickBait_Detection_Architecture 
+
+Keyword: Clickbait Detection, Syntactic-Semantic Fusion, Deep Learning Text Classification, Contextual 
+
+embeddings, PFI (Permutation Feature Importance), LIME. 
+
+## 1. Introduction 
+
+The presence of online media and the its pursuit of user engagement has given rise to the phenomenon of 
+
+“clickbait”. The term “clickbait” refers to the use of dramatic or misleading content designed to pique the user’s 
+
+interest, in an effort to increase web traffic or earn online advertising money. Clickbait tactics often employ vague 
+
+language, exaggerated claims, or some shocking revelations that misrepresent the actual meaning of the associated 
+
+content. This practice has become more and more common across news websites, social media platforms, content 
+
+aggregators, and online advertising [1].They affect the credibility and trustworthiness of digital information 
+
+sources, and also adds to the spread of misinformation [2]. Thus, effective methods [3]. for detecting and 
+
+mitigating clickbait have emerged. Effective clickbait identification can contribute to higher quality content, 
+
+better user experiences, and a more transparent and trustworthy digital environment. Previous efforts [4] [5] in the 
+
+field of clickbait detection have focused on developing computational models and techniques to identify and 
+
+classify clickbait content. Recently, researchers have investigated a variety of approaches, including feature-based 
+
+classification models [6], deep learning techniques [7] [8]. By leveraging large datasets and sophisticated neural 
+
+networks, these approaches [9] [10] aim to learn robust representations and patterns that can accurately distinguish between genuine and clickbait content. The use of linguistic variables [11], such as part-of-speech tags, sentiment 
+
+analysis [6] [12] to identify clickbait headlines [6], has played a key role for significant feature learning. Prominent 
+
+strategies in this domain also include the use of convolutional neural networks (CNNs) [13] [14] and recurrent 
+
+neural networks (RNNs) [9] to model the sequential and semantic aspects of text data. Additionally, attention 
+
+mechanism [15] [16] has been employed to identify and prioritize the most salient linguistic cues indicative of 
+
+clickbait. Whereas, multimodal approaches [7] [17] [16] incorporating visual and contextual signals alongside 
+
+textual data, have also shown promise in enhancing clickbait detection performance. Despite these advancements, 
+
+several challenges persist. Using syntactic and semantic approaches, several studies [3] [5] [18] [19] have 
+
+encountered significant challenges. While early efforts employed traditional machine learning models [4] with 
+
+handcrafted features like word frequencies and sentiment analysis [6]. They often suffered from low accuracy 
+
+rates and inability to capture complex semantic and syntactic patterns present in clickbait headlines. Subsequent 
+
+work leveraged deep learning techniques such as recurrent neural networks (RNNs) [9] to automatically learn 
+
+textual representations, however, these models still faced challenges in handling long-range dependencies and 
+
+intricate linguistic constructs [14], especially for languages like Chinese with complex semantic and syntactic 
+
+structures [20]. Although LSTM-based models [13] [18] attempted to address long-term context dependencies, 
+
+could not fully utilize the syntactic information inherent in text [21]. In this paper, to address long-term context 
+
+dependencies, inherent syntactic information, we propose ClickGuard, a Syntactic-Semantic Adaptive fusion-
+
+based Clickbait Detection Framework. The major contribution of this paper are as follows: 
+
+i. Proposed a robust clickbait detection framework - ClickGuard that adaptively learns inherent syntactic and 
+
+semantic features of the clickbait by defining a Syntactic-Semantic Adaptive Fusion Block (SSAFB). 
+
+SSAFB leverages BERT (Bidirectional Encoder Representations from Transformers) and BiLSTM 
+
+(Bidirectional Long Short-Term Memory) networks to learn two stage semantic and syntactic features 
+
+adaptively. 
+
+ii. The study provides the insights about model stability and reliability using comprehensive robustness checks 
+
+by introducing perturbations in text, grammar, semantics, and punctuation to evaluate. It confirms the 
+
+proposed ClickGuard to stand against different kinds of perturbations observed. 
+
+iii. The study also analyses model interpretability and PFI (Permutation Feature Importance) using LIME (Local 
+
+Interpretable Model-agnostic Explanations) to visualise feature distribution across learnt feature set, 
+
+enhancing transparency and incorporating perturbation analysis for robustness. 
+
+The rest of paper is organised as follows: Section II discussed related works; Section III covers the proposed 
+
+methodology in detail. In Section IV experimental details are discussed. In Section V conclusion is drawn, 
+
+also highlighting future perspectives. 
+
+## 2. Related Works 
+
+The field of clickbait detection has seen significant advancements over the past few years. Researchers have 
+
+explored a myriad of approaches and methodologies to address the challenges associated with this problem 
+
+statement. This section provides a comprehensive review of the key contributions and trends in this domain, 
+
+classified into various categories based on the underlying techniques and methodologies. 2.1 Syntactic and Semantic Feature Learning 
+
+The learning of syntactic and semantic features plays a crucial role in enhancing the performance of natural 
+
+language processing (NLP) models. Syntactic features capture the structural aspects of language, such as 
+
+grammar and sentence structure, while semantic features focus on the meaning and contextual understanding 
+
+of words and phrases. Leveraging these characteristics [20] Liu et al proposed the Multiple Features for 
+
+their WeChat Clickbait Detection framework leveraging BERT, BiLSTM, Graph Attention Networks 
+
+(GANs), and user behaviour, and validate its superior performance on a new Chinese WeChat Clickbait 
+
+Dataset over existing methods. A similar research methodology [18] focused their deep learning framework 
+
+for clickbait detection, utilizing Part of Speech Analysis and an LSTM network, achieving 97% accuracy, 
+
+outperforming state-of-the-art methods during their tenure of research. The importance of syntactic and 
+
+semantic features in clickbait detection has been highlighted by [19] Pujahari and Sisodia through the exploit 
+
+of clustering technique based on word vector similarity using t-Stochastic Neighbourhood Embedding (t-
+
+SNE) approach. Their research findings indicated that only one categorization technique is not efficient 
+
+enough to combat clickbait articles. Traditional machine learning models like SVM, decision trees, and 
+
+random forests require extensive manual feature engineering for optimal performance. In contrast, [22] 
+
+Thakur et al. proposed a Recurrent Neural Network (RNN) approach to capture syntactic dependencies, 
+
+potentially eliminating the need for handcrafted features by allowing the model to learn relevant 
+
+representations automatically. [3] Elayashar et al. used extensive and robust syntactic feature engineering 
+
+solidifying the claim that syntactic features are indeed important for classifying clickbait texts. MCBD model 
+
+[23] too analysed both titles and body contents using a multilayer gated convolutional network and an 
+
+attention-fused deep relevance matching network (ARMN) highlighting their importance for title-content 
+
+relevancy for effective clickbait detection. [24] Ma et al. also followed an AI-based clickbait detection system 
+
+which utilized 18 lexicon and format-based features, achieving 98.42% accuracy. 
+
+2.2 Attention Based Feature Learning 
+
+Attention mechanisms have revolutionised the field of natural language processing and have shown great 
+
+potential in various applications, including clickbait detection. These mechanisms allow models to focus on 
+
+the most relevant parts of the input data, enhancing the learning of intricate patterns and dependencies. An 
+
+attention-based method [25] proposed by Wei et al. used WordNet for semantic guidance. Knowledge-
+
+Enhanced Clickbait Detector (KED) outperformed state-of-the-art and pretrained models (BERT, RoBERTa, 
+
+XLNet) in clickbait detection, even with limited data, and enhanced pretrained models' performance in the 
+
+semi-supervised domain. Attention fused Transformers [1] along with traditional regression techniques have 
+
+also been used to enhance the original model’s performance. [25] Yi et al. suggested the use of an auto encoder 
+
+along with their presented Contrastive Variational Modelling (CVM) for simultaneous text generation and 
+
+prediction to enhance clickbait detection. 
+
+2.3 Graph Neural Networks 
+
+Graph Neural Networks (GNNs) have gained significant attention in recent years for their ability to model 
+
+and analyse data with inherent graph structures. Unlike traditional neural networks, GNNs can effectively 
+
+capture relationships and dependencies between entities represented as nodes and edges in a graph. This unique capability makes GNNs particularly suitable for tasks involving social networks, molecular chemistry, 
+
+and recommendation systems, where interactions among entities are complex and non-linear. An approach 
+
+[26] featuring the use of Recurrent Graph Feature Network (RGFN) for clickbait detection, integrating text 
+
+features and word positions in a title-word heterogeneous graph has been proposed which used a GRU 
+
+aggregation function and fixed-length sampling. A similar approach [27] has also been used by Do et al. 
+
+utilising both shallow and Deep representations along with GNNs for the task of fake news detection 
+
+demonstrating the equivalence of mean-field and graph convolutional layers for enhanced detection 
+
+capabilities. Wang et al. [28] made use of graph convolutional networks within a counterfactual 
+
+recommendation framework to address clickbait issues, reducing the influence of misleading exposure 
+
+features and improving user satisfaction by leveraging causal inference. 
+
+2.4 Generative Adversarial Network 
+
+Generative Adversarial Networks (GANs) have significantly advanced the field of style transfer, particularly 
+
+in the context of converting text styles such as clickbait and non-clickbait. GANs, especially CycleGAN 
+
+models, employ a cycle consistency loss in addition to the traditional generator-discriminator setup, 
+
+facilitating the unsupervised transformation of text styles. They incorporated semantic and syntactic features 
+
+to enhance the legibility and contextual relevance of the transformed text, demonstrating their utility in 
+
+addressing the challenges of text-based style transfer in domains like clickbait detection. Agarwal and Kundu 
+
+[29] proposed the use of CycleGAN-based models, specifically StyleTransformer, for unsupervised clickbait 
+
+style transfer between factual news titles and sensational clickbait headlines, and incorporated semantic and 
+
+syntactic features of clickbait text into the StyleTransformer model to aid in style transfer while preserving 
+
+meaning. 
+
+## 3. Proposed work 
+
+The presented work proposes a novel semantic-syntactic adaptive attention-based clickbait detection 
+
+architecture. It identifies clickbait and non-clickbait headlines presented as short text. In a simplified manner, 
+
+headlines identification task can be framed as a binary classification problem. Let 𝑐 = {𝑐 ଴, 𝑐 ଵ} represent the 
+
+binary set of classes, where 𝑐 ଴ denotes non-clickbait and 𝑐 ଵ denotes clickbait. Let H be the set of all headlines, 
+
+and let 𝑇 ⊆ 𝐻 × 𝐶 be the training set of labelled headlines used to train the model. We aim to learn a function 
+
+𝐹 ∶ 𝐻 → 𝐶 that maps each headline ℎ௜ ∈ 𝐻 to its corresponding class 𝑐 ௝ ∈ 𝐶 . Specifically, we seek to find: 
+
+𝐹 (ℎ௜) = 𝑐 ௝, ∀ ℎ௜ ∈ 𝐻 , where 𝑐 ௝ ∈ 𝐶 . The training process involves optimizing the parameters 𝜃 of the function 
+
+F to minimize a loss function 𝐿 ൫𝐹 (ℎ௜, 𝜃 ), 𝑐 ௝൯, where 𝐿 measures the discrepancy between the predicted class 
+
+𝐹 (ℎ௜, 𝜃 ) and the true class 𝑐 ௝, such that 
+
+𝜃 ∗ = 𝑎𝑟𝑔 𝑚𝑖𝑛 ఏ ∑ 𝐿 ൫𝐹 (ℎ௜, 𝜃 ), 𝑐 ௝൯൫௛೔,௖ೕ൯∈் (1) 
+
+The proposed ClickGuard architecture for clickbait detection is presented in Figure 1 that works in three 
+
+phases. In first phase, given headline text is translated in the distinct representation in embedding space by 
+
+learning BERT based contextual features and structural feature set, i.e., 𝑆 = { 𝑃𝑂𝑆 , 𝑆𝐹𝐺 } , ensuring robust 
+
+clickbait detection. In second phase, the syntactic and semantic information present in the distinct feature embeddings is highlighted using Syntactic-Sematic Adaptive Fusion Block (SSAFB). Whereas, third phase 
+
+deals with prediction of headline class as clickbait or non-clickbait using sequence of dense layers. 
+
+3.1 Dataset Preparation 
+
+Let D be the collection of data sources used in our study, comprising three distinct datasets: Dataset 1 [30] 
+
+(𝐷 ଵ), Dataset 2 [31] ( 𝐷 ଶ), Dataset 3 [32] ( 𝐷 ଷ). We define H as the collection of headlines extracted from these 
+
+sources H(i). is defined as the extracted headline from the 𝑖 ௧௛ data item, as represented by Eq. (2): 
+
+𝐻 (𝑖 ) = ቐ
+
+𝐷 ଵ(𝑖 ), 𝑖𝑓 𝐷 ଵ(𝑖 ) = 𝑇𝑒𝑥𝑡𝑢𝑎𝑙 𝑑𝑎𝑡𝑎 
+
+𝐷 ଶ(𝑖 ), 𝑖𝑓 𝐷 ଶ(𝑖 ) = 𝑇𝑒𝑥𝑡𝑢𝑎𝑙 𝑑𝑎𝑡𝑎 
+
+𝐷 ଷ(𝑖 ), 𝑖𝑓 𝐷 ଷ(𝑖 ) = 𝑇𝑒𝑥𝑡𝑢𝑎𝑙 𝑑𝑎𝑡𝑎 
+
+(2) 
+
+where 𝑖 is the index which is repeated for the collection of data items with range [0: (| 𝐷 | − 1 )] . 𝐷 ଵ, 𝐷 ଶ , and 
+
+𝐷 ଷ all contains textual data. Additionally, since 𝐷 ଶ and 𝐷 ଷ were found to be imbalanced, we applied class 
+
+weighting to adjust for this imbalance. The class weights were assigned accordingly to both labels to ensure a 
+
+more balanced representation and mitigate bias in the dataset. The resulting collection 𝐻 contains headlines 
+
+from all three datasets as textual data. The received text headlines need to be pre-processed before projecting 
+
+them into a distinct embedding space. The preprocessing steps of the given headlines include: 
+
+i. Tokenization: Converting text into individual tokens for further analysis. 
+
+ii. Removal of Special Characters and Numbers: Ensuring the text is clean and free from irrelevant 
+
+symbols. 
+
+iii. Removal of Special Characters and Numbers: Ensuring the text is clean and free from irrelevant 
+
+symbols. 
+
+iv. Stop Word Removal: Eliminating common but uninformative words. 
+
+v. Lemmatization: Reducing words to their base or root form to normalize variations. 
+
+vi. POS Tagging: Ensuring extracted text retains the characteristics of headlines by identifying nouns, 
+
+verbs, and other syntactic components 
+
+vii. Feature Extraction: Extracting key linguistic features, such as punctuation counts, part-of-speech 
+
+distributions, and sentence structure indicators. 
+
+viii. Length Filtering: Retaining headlines within a predefined length range to maintain consistency. 
+
+ix. Standardization: Applying feature scaling to normalize extracted linguistic features 
+
+Post data preparation, the dataset is given as D = {( 𝑡 ௜, 𝑙 ௜)| 𝑖 = 1,2, . . 𝑁 } where 𝑡 ௜ represents the text of the 
+
+𝑖 ௧௛ record and 𝑙 ௜ represents the corresponding label. 
+
+The Figure 1 illustrates the proposed ClickGuard Framework, integrating contextual and structural feature 
+
+encoders. BERT and Multihead Attention captures semantic features, while hybrid CNN and Bi-LSTM extract 
+
+syntactic features. Both are fused via a Syntactic-Semantic Adaptive Fusion Block (SSAFB) with dynamic 
+
+weighting (α, 𝑤 ଵ, 𝑤 ଶ) followed by classification stage. 
+
+3.2 Contextual Feature Encoder 
+
+The contextual feature encoder plays a critical role in capturing subtle textual nuances necessary for identifying 
+
+clickbait. Prior research [20] [31] highlights the importance of contextual embeddings, which enhance detection accuracy by focusing on the intricate linguistic cues inherent in clickbait content. Additionally, it 
+
+emphasizes that detecting subtle variations in language relies heavily on understanding the broader context. 
+
+Let 𝑡 ௜ represent the 𝑖 ௧௛ text in the dataset. The text 𝑡 ௜ is first tokenized using the BERT tokenizer, converting 
+
+it into a sequence of input IDs ( 𝑖𝑛𝑝𝑢𝑡_𝑖𝑑𝑠 ௜ : 𝐵𝐸𝑅𝑇_𝑇𝑜𝑘𝑒𝑛𝑖𝑧𝑒𝑟(𝑡 ௜)), attention masks 
+
+(𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛_𝑚𝑎𝑠𝑘𝑠 ௜ : 𝐺𝑒𝑛𝑒𝑟𝑎𝑡𝑒_𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛_𝑚𝑎𝑠𝑘𝑠(𝑖𝑛𝑝𝑢𝑡_𝑖𝑑𝑠 ௜ )), and token type IDs 
+
+( 𝑡𝑜𝑘𝑒𝑛_𝑡𝑦𝑝𝑒_𝑖𝑑𝑠 ௜ : 𝐺𝑒𝑛𝑒𝑟𝑎𝑡𝑒_𝑡𝑜𝑘𝑒𝑛_𝑡𝑦𝑝𝑒_𝑖𝑑𝑠(𝑖𝑛𝑝𝑢𝑡_𝑖𝑑𝑠 ௜ ). The tokenized output, consisting of both the 
+
+input ids and attention masks, and token type ids is represented as 𝐻 ௦௘௤ , as given below in Eq. (3).  
+
+> Figure 1. Proposed ClickGuard Architecture ;SFG: Sentence Feature Generation; POS: Part-of-Speech; SSAFB: Syntactic-Semantic Adaptive
+> Fusion Block; MHA: Multihead Attention
+
+𝐻 ௦௘௤ = {( 𝑖𝑛𝑝𝑢𝑡_𝑖𝑑𝑠 ௜ , 𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛_𝑚𝑎𝑠𝑘𝑠 ௜ , 𝑡𝑜𝑘𝑒𝑛_𝑡𝑦𝑝𝑒_𝑖𝑑𝑠 ௜ )| 𝑖 = 1,2, . . , 𝑁 } (3) 
+
+where 𝐻 ௦௘௤ is the sequence of tokenized embeddings for all N samples. Next, the tokenized embeddings are 
+
+processed using Multi-Head Attention (MHA) with four attention heads (ℎ = 4) to extract contextual features, 
+
+denoted by 𝐹 ௖ where 𝐹 ௖ = 𝑀𝐻𝐴 ൫𝐻 ௦௘௤ ൯. This operation allows the model to capture intricate dependencies by 
+
+attending to different parts of the input sequence simultaneously, thereby enriching the understanding of 
+
+contextual relationships and nuances within the text. In the Multihead Attention mechanism, the input 
+
+sequence Χ is projected into 𝑞𝑢𝑒𝑟𝑖𝑒𝑠 (𝑄 ), 𝑘𝑒𝑦𝑠 (𝐾 ), and 𝑣𝑎𝑙𝑢𝑒𝑠 (𝑉 ) using learnable weight matrices specific 
+
+to each attention head 𝑖 ∈ (1 𝑡𝑜 4 ), as shown in Eq. (4): 
+
+𝑄 ௜ = 𝑋𝑊 ௜
+
+> ொ
+
+; 𝐾 ௜ = 𝑋𝑊 ௜௄; 𝑉 ௜ = 𝑋𝑊 ௜௏ (4) 
+
+𝑇𝑒𝑥𝑡 𝑐𝑜𝑟𝑝𝑢𝑠 
+
+𝐵𝐸𝑅𝑇         
+
+> 𝑀𝐻𝐴
+> {𝛼 ,𝑤 1,𝑤 2}
+> 𝑣
+> 𝐷
+> 𝐴𝑑𝑗
+> 𝑃
+> 𝑃𝑢𝑛𝑐
+> 𝑆𝑙 ௪
+> 𝑃𝑟𝑒𝑝
+> Classification Block
+> 𝐹𝐶  𝐿𝑎𝑦𝑒𝑟 𝐹𝐶  𝐿𝑎𝑦𝑒𝑟
+> 𝐹𝐶 ଵ 𝐿𝑎𝑦𝑒𝑟
+> 𝐹𝐶 ଶ 𝐿𝑎𝑦𝑒𝑟
+> 𝑃 ௦௣ 𝑃 ௣௡
+> SFG
+> POS
+> 𝑃 ௙௣
+> 𝑁
+> 𝐴𝑑𝑣
+> 𝑆𝑡 ௪
+> 𝑛 _𝑄 ௠
+> 𝑛 _𝑐 ℎ𝑎𝑟
+> 𝑛 _𝑤𝑜𝑟𝑑𝑠
+> 𝑛 _𝐸 ௠1×1
+> 𝐶𝑁𝑁
+> 1×1
+> 𝐶𝑁𝑁
+> 𝑩𝒊  − 𝑳𝑺𝑻𝑴
+> Syntactic-
+> Semantic
+> Adaptive Fusion
+> Block (SSAFB) Structural Feature
+> Encoder
+> Contextual Feature
+> Encoder
+> 𝑆𝑖𝑔𝑚𝑜𝑖𝑑
+> 𝑛 _#
+
+𝐸 ௢௨௧ 
+
+𝐸 ௢௨௧ 
+
+𝐹 ௦
+
+𝐹 ௖𝐻 ௦௘௤ where 𝑊 ௜
+
+> ொ
+
+, 𝑊 ௜௄, 𝑊 ௜௏ ∈ ℝ ௗ೘೚೏೐೗ ×ௗೖ are the learnable weight matrices associated with each head, and 𝑑 ௞ is the 
+
+dimension of each head. The attention mechanism for each head is computed as given in Eq. (5). 
+
+Attention (𝑄 ௜, 𝐾 ௜ , 𝑉 ௜) = softmax ൬ொ೔௄೔
+
+> ೅
+> ඥௗೖ
+
+൰ 𝑉 ௜ (5) 
+
+This computation allows each head to focus on different aspects of the input sequence by weighing the 
+
+importance of each token relative to others. The outputs from all four attention heads are concatenated and 
+
+linearly transformed using an output projection matrix 𝑊 ଴, as shown: MultiHead (𝑄 , 𝐾 , 𝑉 ) =
+
+Concat (ℎ𝑒𝑎𝑑 ଵ, ℎ 𝑒𝑎𝑑 ଶ, ℎ 𝑒𝑎𝑑 ଷ , ℎ 𝑒𝑎𝑑 ସ)𝑊 ଴, where 𝑊 ଴ ∈ ℝ ସௗ ೖ×ௗ೘೚೏೐೗ is the learnable output projection 
+
+matrix. Finally, a residual connection and layer normalization are applied to ensure stable learning, as shown 
+
+in Eq. (6): 
+
+𝑍 = 𝐿𝑎𝑦𝑒𝑟𝑁𝑜𝑟𝑚 ൫𝑋 + MultiHead (𝑄 , 𝐾 , 𝑉 )൯ (6) 
+
+3.3 Structural Feature Encoder 
+
+The encoder learns structural pattern of the sentences by encapsulating both syntactic and semantic features 
+
+of a given sample to distinctly identify clickbait and non-clickbait, given as structural feature set, i.e., 𝑆 =
+
+{ 𝑃𝑂𝑆 , 𝑆𝐹𝐺 }. The feature set includes 18 set of features, as reported in Table I. The SFG, which encapsulate 
+
+semantic patterns of the text are represented with number of characters ( 𝑛 ௖௛௔௥ ), the number of words ( 𝑛 ௪௢௥ௗ௦ ), 
+
+the number of question marks ( 𝑛 ொ೘ ), the number of exclamation marks ( 𝑛 ா೘ ), and the number of hashtags 
+
+(𝑛 #). Parts of speech (POS) features, on the other hand, capture both syntactic and semantic dependencies. 
+
+They provide meaningful structural information about the sentence and also offer insights into the roles and 
+
+functions of words, which vary for clickbait and non-clickbait. The POS covered for analysis are the number 
+
+of first-person pronouns ( 𝑃 ௙௣ ), the number of second-person pronouns ( 𝑃 ௦௣ ), the number of possessive 
+
+pronouns ( 𝑃 ௣௡ ), the number of nouns ( 𝑁 ), the number of verbs ( 𝑉 ), the number of adjectives ( 𝐴𝑑𝑗 ), the number 
+
+of adverbs ( 𝐴𝑑𝑣 ), the number of pronouns ( 𝑃 ), the number of prepositions ( 𝑃𝑟𝑒𝑝 ), the number of punctuations 
+
+(𝑃𝑢𝑛𝑐 ), the number of determiners ( 𝐷 ), the number of stop words ( 𝑆𝑡 ௪), and the number of slang words ( 𝑆𝑙 ௪)
+
+as shown in Table 1. To better illustrate the differences in feature set representations between clickbait and 
+
+non-clickbait content, a visual depiction is presented in Figure 2. It shows that (a) clickbait headlines 
+
+predominantly display a moderate length, with a distribution peak between 55-60 characters and 
+
+> Table1: Description of Structural Feature Set ( 𝑺 )
+
+S.No. Components Feature Set 
+
+1 POS 𝑃 ௙௣ , 𝑃 ௦௣ , 𝑃 ௣௡ , 𝑁 , 𝑉 , 𝐴𝑑𝑗 , 𝐴𝑑𝑣 , 𝑃 , 𝑃𝑟𝑒𝑝 , 𝑃𝑢𝑛𝑐 , 𝐷 , 𝑆𝑡 ௪, 𝑆𝑙 ௪
+
+2 SFG 𝑛 ௖௛௔௥ , 𝑛 ௪௢௥ௗ௦ , 𝑛 ொ೘ , 𝑛 ா೘ , 𝑛 #Figure 2. Histogram of features for (a) Clickbait and (b) Non-Clickbait Headlines from Dataset1 
+
+approximately 8 words, reflecting a near-normal distribution. In contrast, (b) non-clickbait headlines are 
+
+generally shorter, peaking around 40 characters and 5-7 words, with a distribution that is notably right-skewed. 
+
+Also, Figures 3 illustrates distinct linguistic patterns between clickbait and non-clickbait as word clouds of 
+
+Top 20 verbs, adjectives, adverbs, determiners, nouns, prepositions, pronouns, punctuations, stop words, slang 
+
+words. Clickbait titles (Figure 3 (a)) frequently employ prepositions such as "of" and "with" alongside direct 
+
+pronouns ("you," "your"), establishing a personalized tone aimed at immediate engagement. Emotive verbs 
+
+(𝑎 )       
+
+> Top 20 verbs (Clickbait) Top 20 adjectives (Clickbait) Top 20 adverbs (Clickbait) Top 20 determiners (Clickbait)
+> Top 20 nouns (Clickbait) Top 20 pronouns (Clickbait) Top 20 prepositions (Clickbait) Top 20 punctuations (Clickbait)
+> Top 20 slang_words (Clickbait) Top 20 stop_words (Clickbait)
+
+(𝑎 ) (𝑏 )Figure 3. Top 20 (𝑎 ) Clickbait and (𝑏 ) non-clickbait feature word clouds generated from Dataset1 
+
+("make," "know") and adjectives ("real," "best") enhance the appeal, while abundant punctuation and slang 
+
+terms (e.g., "bae," "dead") create a conversational and attention-grabbing style. In contrast, non-clickbait titles 
+
+(Figure 3 (b)) utilizes a broader range of prepositions ("by," "for") and neutral pronouns ("their," "his"), 
+
+promoting an objective tone. Verbs such as "killed" and "found" and descriptive adjectives ("new," 
+
+"Australian") emphasize factual reporting, with minimal slang and punctuation to maintain clarity and 
+
+neutrality. This linguistic divergence underscores clickbait’s reliance on emotive and engaging language, in 
+
+contrast to the straightforward and informative approach of non-clickbait titles. 
+
+3.3.1 Hybrid CNN-BiLSTM Feature Extraction Module 
+
+Given the extracted structural feature set 𝑆 = {𝑃𝑂𝑆, 𝑆𝐹𝐺 } described earlier, the hybrid CNN-BiLSTM module 
+
+further refines feature extraction by enhancing the representation of both syntactic and semantic patterns. The 
+
+model processes an input sequence 𝑈 ∈ ℝ ௅×ௗ where 𝐿 denotes the sequence length and 𝑑 represents the 
+
+embedding dimension. The CNN component applies a convolutional layer with a filter 𝑊 ∈ ℝ ௛×ௗ and bias 
+
+𝑏 𝜖 ℛ over windows of ℎ consecutive words. This convolution operation generates feature maps 𝑐 as shown in 
+
+Eq. (7). 
+
+𝑐 ௜ = 𝑓 (𝑊. 𝑈 ௜:௜ା௛ିଵ + 𝑏 ) (7) 
+
+where 𝑓 denotes the ReLU activation function. The convolutional layer captures essential 𝑛 -gram patterns within 
+
+the input sequence, thereby contributing to a more nuanced representation of the underlying syntactic and 
+
+semantic features. These refined feature maps enable the model to effectively capture localized patterns and 
+
+structural information inherent in both clickbait and non-clickbait text, which are subsequently passed to the 
+
+BiLSTM layer for further contextual encoding. Following feature extraction by the convolutional layers, the 
+
+Bidirectional Long Short-Term Memory (BiLSTM) network is employed to capture long-range dependencies 
+
+(𝑏 )       
+
+> Top 20 verbs (non-clickbait) Top 20 adjectives (non-clickbait) Top 20 adverbs (non-clickbait) Top 20 determiners (non-clickbait)
+> Top 20 nouns (non-clickbait) Top 20 pronouns (non-clickbait) Top 20 prepositions (non-clickbait) Top 20 punctuations (non-clickbait)
+> Top 20 slang_words (non-clickbait) Top 20 stop_words (non-clickbait)
+
+and contextual information from both forward and backward directions. The sequence of feature maps 
+
+{𝑐 ଵ, 𝑐 ଶ, … , 𝑐 ௅ି௛ାଵ } generated by the CNN layers serves as input to the BiLSTM. This stage is crucial for 
+
+integrating both syntactic and semantic information over the entire sequence, ensuring that the contextual 
+
+relationships among words are effectively encoded. The BiLSTM processes the feature maps to produce hidden 
+
+states {ℎଵ, ℎ ଶ, … , ℎ ௅ି௛ାଵ } at each time step: Forwards LSTM: ℎ௧
+
+ሬሬሬ⃗ = 𝐿𝑆𝑇𝑀 ൫𝑐 ௧, ℎ ௧ିଵ 
+
+ሬሬሬሬሬሬሬሬ⃗ ൯ and Backward LSTM: ℎ௧⃖ሬሬሬ =
+
+𝐿𝑆𝑇𝑀 ൫𝑐 ௧, ℎ ௧ାଵ ⃖ሬሬሬሬሬሬሬሬ൯. The final hidden state at each time step ℎ௧ is obtained by concatenating the forward and 
+
+backward hidden states, i.e., ℎ௧ =ൣ ℎ௧
+
+ሬሬሬ⃗ ; ℎ ௧⃖ሬሬሬ൧. he integration of forward and backward information captures both 
+
+preceding and succeeding contextual cues, enriching sentence understanding. The BiLSTM complements the 
+
+CNN’s localized feature extraction by modelling sequential dependencies, forming a robust architecture for 
+
+distinguishing clickbait from non-clickbait text. 
+
+3.4 Syntactic-Semantic Adaptation Fusion Block (SSAFB) 
+
+Our architecture employs a dual-pathway framework to capture the complex characteristics of clickbait and non-
+
+clickbait text. Pathway 1 processes contextual features from BERT embeddings and extracts sequential 
+
+dependencies using LSTM layers, capturing higher-order semantic relationships. Pathway 2 focuses on local 
+
+pattern extraction through convolutional operations and bidirectional LSTMs, enhancing feature interaction across 
+
+sequences. Together, these pathways create a robust feature space, enabling effective classification. Figure 4 
+
+depicts the detailed layer-wise architecture of the proposed model, which integrates both contextual and structural 
+
+features. These features, denoted as 𝐹 ௖ representing contextual features and 𝐹 ௦ representing structural features, are 
+
+fused through the Syntactic-Semantic Adaptive Fusion Block (SSAFB). The following sections detail the specific 
+
+operations and roles of each pathway.         
+
+> Figure 4. Syntactic-Semantic Adaptive Fusion Block (SSAFB)
+> 𝐿𝑆𝑇𝑀 ௫ଵ
+> 𝐿𝑆𝑇𝑀 ௫ଶ
+> 𝐹𝐶
+> 𝐹𝐶
+> 𝐿𝑆𝑇𝑀 ௬ଶ
+> 𝐿𝑆𝑇𝑀 ௬ଵ
+> 1×512
+> 1×64
+> 1×64
+> 1×32
+
+𝜔 ଵ
+
+𝜔 ଶ     
+
+> Layer(type) Shape(output)
+> Input (None,64)
+> Attention Mask (None,64)
+> Token Type (None,64)
+> MHA (None, 64,768)
+> Contextual
+> Feature Encoder
+> SSAFB
+
+𝐹 ௖
+
+𝐹 ௦
+
+𝐸 ௢௨௧  
+
+> Layer(type) Shape(output)
+
+𝑋 ଷ (None, 768) 
+
+𝑌 ଷ (None, 768) 
+
+𝑍 (None, 1536) 
+
+𝑍 ஽௘௡௦௘ (None, 768) 
+
+> 𝑋 ଵ
+> 𝑋 ଵ
+> 𝑋 ଶ
+
+𝐹 ௗ௜௙௙    
+
+> 𝑌 ଵ
+> 𝑌 ଵ𝑌 ଶ
+> Structural
+> Feature Encoder
+> Layer(type) Shape(output)
+> Feature Input (None,10)
+> Refined Feature
+> processing
+> (None, 64), (None,
+> 100)
+> Classification Block
+> 𝑋 ଷ
+> 𝑌 ଷ
+
+𝛼 3.4.1 Pathway 1: Contextual Feature Processing and Sequential Dependency Modelling 
+
+In Pathway 1, the contextual features 𝐹 ௖ 𝜖 ℝ ே×଺ସ ×଻଺଼ obtained from the BERT embedding layer followed by a 
+
+multi-head attention layer denoted as 𝐴 𝜖 ℝ ே×଺ସ ×଻଺଼ . The attention-enhanced features 𝐹 ௖ are passed through two 
+
+sequential LSTM layers to capture complex dependencies, as X1, X2. To retain salient information, a global max 
+
+pooling operation is applied to 𝑋 ଵ, yielding a compact representation, 𝑋 ଵ_௣௢௢௟ . Since the pooled representation has 
+
+a lower dimension than the original BERT output, dimension transformation is applied to match the dimensionality 
+
+at both LSTM layers. 
+
+To adaptively balance the contributions of pooled BERT embeddings and sequential LSTM outputs, an adaptive 
+
+weighting layer assigns learnable weights 𝜔1 and 𝜔2 to form the final contextual representation, as 𝑋 ଷ.
+
+Algorithm 1: Proposed SSAFB Algorithm 
+
+3.4.2 Pathway 2: Feature Processing and Sequential Dependency Extraction 
+
+In Pathway 2, additional input features 𝑓 ௜௡௣௨௧ ∈ ℝ ே×ଵ଴ where 𝑁 is the batch size and 10 is the feature 
+
+dimensionality, are processed through a custom feature extraction model that leverages convolutional and 
+
+bidirectional LSTM layers. The extracted features undergo a series of transformations, including convolution of 
+
+input features and then passing it through BiLSTM. The output is then expanded dimensionally to form a three-
+
+dimensional tensor. This representation is passed through two LSTM layers, capturing deeper sequential 
+
+dependencies. The first LSTM layer produces an intermediate sequence output 𝑌 ଵ . After Applying a global max 
+
+pooling operation enhances the most salient features, defined as 𝑌 ௣௢௢௟௘ௗ . Since the pooled representation has a 
+
+different dimensionality, it is adjusted as 𝑌 ௣௢௢௟௘ௗ _௔ௗ௝௨௦௧௘ௗ . A second LSTM layer reduces the sequence to a fixed-
+
+size representation from 𝑌 ଶ to 𝑌 ଶ_௔ௗ௝௨௦௧௘ௗ . To combine structural and sequential representations, an adaptive 
+
+weighting layer dynamically assigns learnable weights as 𝑌 ଷ. The algorithm for SSAFB based feature fusion 
+
+mechanism is reported in Algorithm 1. 
+
+SSAFB ( 𝑭 𝒄 , 𝑭 𝒅𝒊𝒇𝒇 , 𝑭 𝒔 )
+
+Pathway 1 ( 𝑭 𝒄 , 𝑭 𝒅𝒊𝒇𝒇 )
+
+𝑋 ଵ = 𝐿𝑆𝑇𝑀 ௫ଵ (𝐹 ௖) 𝜖 ℝ ே×ଷଶ ×ହଵଶ & 𝑋 ଶ = 𝐿𝑆𝑇𝑀 ௫ଶ (𝑋 ଵ) 𝜖 ℝ ே×ଷଶ ×ଶହ଺ 
+
+𝑋 ଵ_௣௢௢௟ = 𝐺𝑙𝑜𝑏𝑎𝑙𝑀𝑎𝑥𝑃𝑜𝑜𝑙𝑖𝑛𝑔 (𝑋 ଵ)
+
+Dimension Transformation: 
+
+𝑋 ଵ_௔ௗ௝௨௦௧௘ௗ = 𝐷𝑒𝑛𝑠𝑒 ோ௘௅௎ ൫𝑋 ଵ_௣௢௢௟ , 768 ൯
+
+𝑋 ଶ_௔ௗ௝௨௦௧௘ௗ = 𝐷𝑒𝑛𝑠𝑒 ோ௘௅௎ (𝑋 ଶ, 768 )
+
+𝑋 ଷ = 𝐴𝑑𝑎𝑝𝑡𝑖𝑣𝑒𝑊𝑒𝑖𝑔ℎ𝑡𝑖𝑛𝑔([𝐹 ஽௜௙௙ , 𝑋 ଵ_௔ௗ௝௨௦௧௘ௗ ]) & 𝑋 ଷ = 𝐴𝑑𝑎𝑝𝑡𝑖𝑣𝑒𝑊𝑒𝑖𝑔ℎ𝑡𝑖𝑛𝑔([𝑋 ଷ, 𝑋 ଶ_௔ௗ௝௨௦௧௘ௗ ]) 
+
+Pathway 2 ( 𝑭 𝒅𝒊𝒇𝒇 , 𝑭 𝒔 )
+
+𝑌 ଵ = 𝐿𝑆𝑇𝑀 ௬ଵ (𝑭 𝒔 ) 𝜖 ℝ ே×ଵଶ଼ & 𝑌 ଶ = 𝐿𝑆𝑇𝑀 ௬ଶ (𝑌 ଵ) 𝜖 ℝ ே×ଵଶ଼ 
+
+𝑌 ଶ = 𝐷𝑟𝑜𝑝𝑜𝑢𝑡 (𝑌 ଶ, 0.4 )
+
+𝑌 ௣௢௢௟௘ௗ = 𝐺𝑙𝑜𝑏𝑎𝑙𝑀𝑎𝑥𝑃𝑜𝑜𝑙𝑖𝑛𝑔 (𝑌 ଵ)
+
+Dimension Transformation: 
+
+𝑌 ଶ_௔ௗ௝௨௦௧௘ௗ = 𝐷𝑒𝑛𝑠𝑒 ோ௘௅௎ (𝑌 ଶ, 768 )
+
+𝑌 ௣௢௢௟௘ௗ _௔ௗ௝௨௦௧௘ௗ = 𝐷𝑒𝑛𝑠𝑒 ோ௘௅௎ ൫𝑌 ௣௢௢௟௘ௗ , 768 ൯
+
+𝒀 𝟑 = 𝐴𝑑𝑎𝑝𝑡𝑖𝑣𝑒𝑊𝑒𝑖𝑔ℎ𝑡𝑖𝑛𝑔([𝑝𝑟𝑜𝑐𝑒𝑠𝑠𝑒𝑑_𝑓𝑒𝑎𝑡𝑢𝑟𝑒𝑠, 𝑌 ௣௢௢௟௘ௗ _௔ௗ௝௨௦௧௘ௗ ]) 
+
+𝒀 𝟑 = 𝐴𝑑𝑎𝑝𝑡𝑖𝑣𝑒𝑊𝑒𝑖𝑔 ℎ𝑡𝑖𝑛𝑔 ([𝑌 ଷ, 𝑌 ଶ_௔ௗ௝௨௦௧௘ௗ ])3.5 Classification Block 
+
+The outputs from Pathway 1 and Pathway 2, specifically the dense-transformed versions 𝑋 ଷ and 𝑌 ଷ, are 
+
+concatenated to form a comprehensive feature representation, 𝑍 = [𝑋 ଷ | 𝑌 ଷ]. This feature vector is passed through 
+
+a dense transformation with a ReLU activation function given by Eq. (8) 
+
+𝑍 ௗ௘௡௦௘ = 𝜎 ோ௘௅௎ (𝑊 ସ𝑍 + 𝑏 ସ) (8) 
+
+Finally, the model produces the classification prediction 𝑍 ௣௥௘ௗ using a Sigmoid activation function: Finally, the 
+
+classification probability vector 𝑍 ௣௥௘ௗ is generated using a Sigmoid activation function, as shown in Eq. (9) 
+
+𝑍 ௣௥௘ௗ = 𝜎 ௌ௜௚௠௢௜ௗ (𝑊 ହ𝑍 ௗ௘௡௦௘ + 𝑏 ହ) (9) 
+
+where 𝑍 ௣௥௘ௗ 𝜖 ℝே×ଵ represents the probability of the sample being Click bait or Non-Clickbait. 
+
+## 4. Experimental Results 
+
+To evaluate the performance and robustness of our proposed model, we utilised three distinct datasets- dataset1, 
+
+each undergoing specific preprocessing steps to ensure data quality and consistency. Below, we provide detailed 
+
+descriptions of each dataset along with the preprocessing methods employed. 
+
+Dataset 1: Headlines Dataset 
+
+The first dataset, referred to as ‘Dataset 1’ in this study, is derived from [30]. It consists of 32,000 headlines from 
+
+various news domains including ‘ViralStories’, ‘Scoopwhoop’, ‘Thatscoop’, ‘ViralNova’, ‘Upworthy’, 
+
+‘Buzzfeed’, ‘The Hindu’, ‘The Guardian’, ‘New York Times’, and ‘Wikinews’. This dataset is balanced, 
+
+containing 15,999 clickbait headlines and 16,001 non-clickbait headlines. Each headline is labelled as either 
+
+clickbait (1) or non-clickbait (0). The figure 6 (a) illustrate structural features in clickbait versus non-clickbait 
+
+headlines. Clickbait headlines heavily use question marks, emphasizing curiosity-driven engagement. In contrast, 
+
+non-clickbait headlines display a balanced use of structural features like hashtags, question marks and exclamation 
+
+marks, indicating varied punctuation for informative purposes. 
+
+Dataset 2: Webis Clickbait Corpus 2017 
+
+The second dataset, referred to as ‘Dataset 2’ in this study, is sourced from [31] . It 
+
+comprises 22,033 posts, having 15,536 clickbait class samples and 6,497 as non-clickbait class samples following 
+
+the preprocessing phase. The data for clickbait headlines was collected from web domains such as ‘The Huffington 
+
+Post’, ‘The Times of India’, ‘NewsWeek’, and ‘BuzzFeed’. Non-clickbait headlines were sourced from domains 
+
+including ‘The Indian Express’, ‘National Geographic’, ‘The Wall Street Journal’, ‘The Economist’, ‘The 
+
+Guardian’, and ‘The Hindu’. This dataset was published online in January 2017. The preprocessing steps included: 
+
+To accurately label the data, Amazon Mechanical Turk was used to assign labels on a 4-point scale: Not click 
+
+baiting (0.0) ; Slightly click baiting (0.33) ; Considerably click baiting (0.66) ; Heavily click baiting (1.0). We 
+
+grouped "Not click baiting" (0.0) and "Slightly click baiting" (0.33) under the non-clickbait label and 
+
+"Considerably click baiting" (0.66) and "Heavily click baiting" (1.0) under the clickbait label. 
+
+Dataset 3: ClickBait Challenge 2017 Dataset The third dataset sourced from [32] was collected from Reddit, Facebook, and Twitter to minimize platform-
+
+specific biases, especially given limitations like Twitter’s 140-character cap. Clickbait samples were sourced from 
+
+/r/SavedYouAClick, @HuffPoSpoilers, and StopClickbait, all focused on exposing clickbait. Non-clickbait 
+
+samples came from strictly moderated subreddits /r/news and /r/worldnews to ensure quality. Three independent 
+
+assessors validated each headline, achieving high inter-assessor agreement. The dataset contains total 2388 
+
+samples, 814 clickbait and 1,574 non-clickbait class samples, with labels determined by majority vote. 
+
+(a) (b) 
+
+(c)   
+
+> Figure 6: Radar charts depicting feature distribution for clickbait and non clickbait headlines across three datasets; Dataset 1(a), Dataset 2
+> (b), and Dataset 3 (c)
+
+Figure 6 illustrates the distribution of linguistic features distinguishing Clickbait from non-clickbait headlines 
+
+across three datasets. In Dataset 1, clickbait headlines exhibit a higher frequency of question marks 𝑛 _( 𝑄 _𝑚 ),
+
+exclamation marks (𝑛 _( 𝐸 _𝑚 )) , and word count (𝑛 _𝑤𝑜𝑟𝑑𝑠 ), alongside in creased usage of first-person pronouns 
+
+(𝑃 _𝑓𝑝 ) and possessive pronouns (𝑃 _𝑝𝑛 ), reflecting a direct and engaging style. Conversely, non-clickbait head 
+
+lines demonstrate a stronger reliance on adjectives (𝐴𝑑𝑗 ), adverbs (𝐴𝑑𝑣 ), and prepositions (𝑃𝑟𝑒𝑝 ), indicative of 
+
+a more descriptive and informative structure. In Dataset 2, while clickbait headlines continue to prioritize word 
+
+and character count (𝑛 _𝑐 ℎ𝑎𝑟 ), (𝑛 _𝑤𝑜𝑟𝑑𝑠 ) the influence of punctuation-based features is diminished, whereas 
+
+non-clickbait headlines emphasize determiners (𝐷 ) and adjectives (𝐴𝑑𝑗 ). In Dataset 3, clickbait headlines display 
+
+an even greater dependence on rhetorical markers such as question marks 𝑛 _( 𝑄 _𝑚 ) and exclamation marks  
+
+> 0
+> 0.02
+> 0.04
+> 0.06
+> 0.08
+> 0.1
+> n_char n_words
+> n_(Q_m )
+> n_(E_m )
+> P_fp
+> P_sp
+> P_pn
+> N
+> V
+> Adj
+> Adv
+> P
+> Prep
+> Punc
+> D
+> St_w
+> n_#
+> Sl_w
+
+Dataset 1   
+
+> Clickbait Non-clickbait
+> 0
+> 0.02
+> 0.04
+> 0.06
+> 0.08
+> 0.1
+> n_char n_words
+> n_(Q_m )
+> n_(E_m )
+> P_fp
+> P_sp
+> P_pn
+> N
+> V
+> Adj
+> Adv
+> P
+> Prep
+> Punc
+> D
+> St_w
+> n_#
+> Sl_w
+
+Dataset 2   
+
+> Clickbait Non-clickbait
+> 0
+> 0.02
+> 0.04
+> 0.06
+> 0.08
+> 0.1
+> n_char n_words
+> n_(Q_m )
+> n_(E_m )
+> P_fp
+> P_sp
+> P_pn
+> N
+> V
+> Adj
+> Adv
+> P
+> Prep
+> Punc
+> D
+> St_w
+> n_#
+> Sl_w
+
+Dataset 3  
+
+> Clickbait Non-clickbait
+
+(𝑛 _( 𝐸 _𝑚 ), with increased variability in the use of adverbs (𝐴𝑑𝑣 ) and determiners (𝐷 ). Non-clickbait headlines, 
+
+however, maintain a consistent preference for length-related features (𝑛 _𝑐 ℎ𝑎𝑟 ), (𝑛 _𝑤𝑜𝑟𝑑𝑠 ) and exhibit a higher 
+
+reliance on nouns (𝑁 ) and adjectives (𝐴𝑑𝑗 ), reinforcing a structured and fact-based writing style. Across all 
+
+datasets, clickbait headlines consistently leverage punctuation based (𝑃𝑢𝑛𝑐 ) and pronoun-based (𝑃 ) features, 
+
+while non-clickbait head lines prioritize length, descriptive elements, and syntactic complexity. These findings 
+
+highlight dataset-specific variations in linguistic patterns and em phasize the necessity of accounting for such 
+
+diversity when developing clickbait detection models. 
+
+4.1 Dataset Preprocessing 
+
+The dataset demanded data preprocessing before starting training process, as listed below: 
+
+ Handling Missing Values: The initial step involves cleaning the dataset by removing any records containing 
+
+missing values. The dataset 𝐷 is defined as: 𝐷 = {( 𝑡 ௜, 𝑙 ௜)| 𝑡 ௜ ≠ 𝑁𝑈𝐿𝐿 , 𝑖 = 1,2, … 𝑁 }, where 𝑡 ௜ represents 
+
+the text input and 𝑙 ௜ is the associated label. 
+
+ Text Normalization: To maintain consistency, text undergoes normalization by converting all text to 
+
+lowercase and eliminating unnecessary whitespace. The normalized text 𝑡 ௜ 
+
+> ,,
+
+is computed by firstly, 
+
+converting to lowercase: 𝑡 ௜ 
+
+> ,
+
+= 𝐿𝑜𝑤𝑒𝑟𝑐𝑎𝑠𝑒 (𝑡 ௜) and then removing whitespace: 𝑡 ௜ 
+
+> ,,
+
+= 𝐿𝑜𝑤𝑒𝑟𝑐𝑎𝑠𝑒 ൫𝑡 ௜ 
+
+> ,
+
+൯. This 
+
+ensures that 𝑡 ௜ 
+
+> ,,
+
+is in a standardized format suitable for further processing. 
+
+ Label Preparation: The labels 𝑙 ௜ remain in their original binary format for classification. Unlike one-hot 
+
+encoding used for multi-class classification, binary labels are directly used in the model. The final label set 
+
+is: 𝐿 = {𝑙 ௜ | 𝑖 = 1,2, … 𝑁 } where 𝑙 ௜ ∈ {0,1} and 𝑁 is the total number of instances. 
+
+ Tokenization and Attention Masks: The input texts 𝑡 ௜ are tokenized using BERT tokenizer to produce 
+
+𝑖𝑛𝑝𝑢𝑡 _𝑖𝑑𝑠 ௜, 𝑡𝑜𝑘𝑒𝑛 _𝑡𝑦𝑝𝑒 _𝑖𝑑𝑠 ௜ and 𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛 _𝑚𝑎𝑠𝑘𝑠 ௜ . The tokenized representations ensure effective 
+
+feature extraction and learning in subsequent layers. 
+
+ Feature Extraction: In addition to tokenized representations, further syntactic and semantic features 𝑓 ௜ are 
+
+extracted from each text 𝑡 ௜ using a predefined feature extraction function. Let 𝐹 represent the set of extracted 
+
+features: 𝐹 = {𝑓 ௜ | 𝑓 ௜ = 𝐸𝑥𝑡𝑟𝑎𝑐𝑡 _𝐹𝑒𝑎𝑡𝑢𝑟𝑒𝑠 (𝑡 ௜), 𝑖 = 1,2. . 𝑁 }. These features include both POS features and 
+
+SFG features. The extracted features capture relevant syntactic structures and semantic dependencies within 
+
+the text, enhancing classification performance. 
+
+ Feature Scaling: To ensure numerical stability and consistency, extracted features 𝐹 are standardized using 
+
+a StandardScaler, transforming them to a zero-mean and unit-variance format. The scaled feature set is 
+
+represented as: 𝐹 ∗ = 𝑆𝑡𝑎𝑛𝑑𝑎𝑟𝑑𝑖𝑧𝑒 (𝐹 ) where 𝐹 ∗ represents the transformed feature set ready for model 
+
+training. 
+
+ Dataset Splitting: The dataset is split into training and testing subsets using an 80-20 split. Let 𝐷 ௧௥௔௜௡ and 
+
+𝐷 ௧௘௦௧ represent the training and testing datasets, respectively, as : 𝐷 ௧௥௔௜௡ = ൛൫ 𝑡 ௜
+
+> ,,
+
+, 𝑖𝑛𝑝𝑢𝑡 _𝑖𝑑𝑠 ௜ ,
+
+𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛 _𝑚𝑎𝑠𝑘𝑠 ௜, 𝑡𝑜𝑘𝑒𝑛 _𝑡𝑦𝑝𝑒 _𝑖𝑑𝑠 ௜ , 𝑓 ௜, 𝑙 ௜൯| 𝑖 ∈ 𝑇𝑟𝑎𝑖𝑛 ூ௡ௗ௜௖௘௦ ൟ and 𝐷 ௧௘௦௧ = ൛൫ 𝑡 ௜
+
+> ,,
+
+, 𝑖𝑛𝑝𝑢𝑡 _𝑖𝑑𝑠 ௜ ,
+
+𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛 _𝑚𝑎𝑘𝑠 ௜ , 𝑡𝑜𝑘𝑒𝑛 _𝑡𝑦𝑝𝑒 _𝑖𝑑𝑠 ௜ , 𝑓 ௜, 𝑙 ௜ )൯| 𝑖 ∈ 𝑇𝑒𝑠𝑡 ூ௡ௗ௜௖௘௦ ൟ where 𝑇𝑟𝑎𝑖𝑛 ௜௡ௗ௜௖௘௦ and 𝑇𝑒𝑠𝑡 ௜௡ௗ௜௖௘௦ are 
+
+determined based on the stratified split. 
+
+ Model Input Representation : The pre-processed dataset is used to generate inputs for the model. Let 𝑇 be 
+
+the collection of normalized texts and 𝐹 ∗ be the corresponding set of extracted features. The input to the model for the 𝑖 ௧௛ instance is represented as: 𝑋 ௜ = {𝑖𝑛𝑝𝑢𝑡_𝑖𝑑𝑠 ௜ , 𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛_𝑚𝑎𝑠𝑘𝑠 ௜ , 𝑡𝑜𝑘𝑒𝑛_𝑡𝑦𝑝𝑒_𝑖𝑑𝑠 ௜ , 𝑓 ௜},
+
+where 𝑖𝑛𝑝𝑢𝑡_𝑖𝑑𝑠 ௜ , 𝑎𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛_𝑚𝑎𝑠𝑘𝑠 ௜ , and 𝑡𝑜𝑘𝑒𝑛_𝑡𝑦𝑝𝑒_𝑖𝑑𝑠 ௜ are derived from the tokenization process, 
+
+and 𝑓 ௜ represents additional features. The label set 𝑌 is given by 𝑌 = {𝑙𝑎𝑏𝑒𝑙 ௜ | 𝑖 ∈ [1, 𝑁 ]} .
+
+This comprehensive preprocessing pipeline ensures that both X and Y are formatted for effective model 
+
+training and evaluation. 
+
+The preprocessing pipeline can be visualised through Figure 7 which begins with three datasets containing 
+
+headline-label pairs. For each input headline, an example is quoted such as "21 Secrets Chinese Restaurants 
+
+Waiters Will Never Tell You”. Two sets of features are extracted. First, the headline is analysed to assign part-of-
+
+speech (POS) labels to each word, such as Noun or Verb. This analysis produces a 1×13 vector that represents the 
+
+syntactic roles of the words. Second, key syntactic elements, including numbers, punctuation, and keywords, are 
+
+identified and captured, resulting in a 1×5 vector. These extracted features, representing both syntactic and 
+
+semantic aspects, are then used in subsequent classification tasks to provide a comprehensive representation of 
+
+the headline. 
+
+> Figure 7. Preprocessing Pipeline Architecture for SFG features
+> 𝐷𝑎𝑡𝑎𝑠𝑒𝑡 1
+> 𝐷𝑎𝑡𝑎𝑠𝑒𝑡 2
+> 𝐷𝑎𝑡𝑎𝑠𝑒𝑡 3
+
+𝐻𝑒𝑎𝑑𝑙𝑖𝑛𝑒𝑠𝐿𝑎𝑏𝑒𝑙𝑠 
+
+𝐻𝑒𝑎𝑑𝑙𝑖𝑛𝑒𝑠𝐿𝑎𝑏𝑒𝑙𝑠 
+
+𝐻𝑒𝑎𝑑𝑙𝑖𝑛𝑒𝑠𝐿𝑎𝑏𝑒𝑙𝑠         
+
+> "𝟐𝟏 𝑺𝒆𝒄𝒓𝒆𝒕𝒔 𝑪𝒉𝒊𝒏𝒆𝒔𝒆 𝑹𝒆𝒔𝒕𝒂𝒓𝒂𝒖𝒏𝒕𝒔 𝑾𝒂𝒊𝒕𝒆𝒓𝒔 𝑾𝒊𝒍𝒍 𝑵𝒆𝒗𝒆𝒓 𝑻𝒆𝒍𝒍 𝒀𝒐𝒖 "
+
+𝑷𝑶𝑺 𝑭𝒆𝒂𝒕𝒖𝒓𝒆𝒔       
+
+> 1×13
+> 𝐶𝑁𝑁
+> 1×5
+> 1×18
+> 𝐶𝑁𝑁
+
+𝑊𝑜𝑟𝑑𝑠 𝑇𝑎𝑔𝑠 
+
+Preprocessing Pipeline 
+
+𝑺𝒆𝒏𝒕𝒆𝒏𝒄𝒆 𝑭𝒆𝒂𝒕𝒖𝒓𝒆𝒔  
+
+> 𝑛 _𝑐 ℎ𝑎𝑟
+> 𝑛 _𝑄 ௠
+> 𝑛 _𝐸 ௠𝑛 _#
+
+957 
+
+0
+
+0
+
+0
+
+> 𝑁
+> 21
+> 𝑆𝑒𝑐𝑟𝑒𝑡𝑠
+> 𝐶 ℎ𝑖𝑛𝑒𝑠𝑒
+> 𝑅𝑒𝑠𝑡𝑎𝑟𝑎𝑢𝑛𝑡𝑠
+> 𝑊𝑎𝑖𝑡𝑒𝑟𝑠
+> 𝑊𝑖𝑙𝑙
+> 𝑁𝑒𝑣𝑒𝑟
+> 𝑇𝑒𝑙𝑙
+> 𝑌𝑜𝑢
+> .
+> 𝐴𝑑𝑣
+> .
+
+𝑣                 
+
+> 𝑃
+> .
+> .
+> 𝑃 ௦௣
+> 𝑆𝑡 ௪
+> ′𝑆𝑒𝑐𝑟𝑒𝑡𝑠 ′′𝑇𝑒𝑙𝑙 ′′𝑌𝑜𝑢 ′′𝑁𝑒𝑣𝑒𝑟 ′′𝑌𝑜𝑢 ′0′𝑊𝑖𝑙𝑙 ,𝑁𝑒𝑣𝑒𝑟 ,𝑌𝑜𝑢 ′900𝟎 𝟎 000𝟎 57
+> .
+> ..
+> 0
+
+To optimize feature selection and enhance model performance, Recursive Feature Elimination (RFE) is applied 
+
+after the initial extraction of features i.e. (POS features+ SFG features) during training. This technique ranks 
+
+feature importance and iteratively removes less significant features until a subset of the most relevant features is 
+
+obtained. The reduced feature set Fᇱ is defined as 𝐹 ᇱ = {𝑓 ௜ᇱ | 𝑓 ௜ᇱ ⊆ 𝐹 , |𝐹 ᇱ| = 10 }. Once RFE has been applied, the 
+
+selected features undergo scaling to standardize the feature values. Scaling is applied to ensure that each feature 
+
+has a mean of zero and a standard deviation of one, thereby improving the model’s ability to converge during 
+
+training. Let 𝑆 (𝑓 ௜ᇱ) represent the scaled features given by 𝑆 (𝑓 ௜ᇱ) = ௙೔ᇲି ఓ (௙೔ᇲ) 
+
+> ఙ൫௙೔ᇲ൯
+
+; for 𝑖 = 1,2, . . ,10 where 𝜇 (𝑓 ௜ᇱ) and 
+
+𝜎 (𝑓 ௜ᇱ) represent the mean and standard deviation of the feature 𝑓 ௜ᇱ respectively. This scaling process ensures that 
+
+all features are on a comparable scale, leading to more stable model training and improved predictive performance. 
+
+For Hyperparameter Tuning Bayesian optimization is used to fine-tune the base learning rate, 𝛼 ௕௔௦௘ , within a 
+
+cyclic learning rate schedule. The cyclic learning rate (CLR) strategy dynamically adjusts the learning rate 
+
+between a fixed maximum and the optimized base rate during training. CLR not only accelerates convergence but 
+
+also mitigates the risk of becoming trapped in local minima by cyclically varying the learning rate within 
+
+predefined bounds. The objective is to identify the optimal base learning rate, 𝛼 ௕௔௦௘  
+
+> ∗
+
+that minimizes the validation 
+
+loss, mathematically given as Eq. (41): 
+
+𝛼 ௕௔௦௘  
+
+> ∗
+
+= arg 𝑚𝑖𝑛 (𝔼 [𝐿 (𝑦 , 𝑦 ො)]) (10) 
+
+where 𝐿 represents the loss function, and 𝑦 ො is the model output. The optimization process begins with the 
+
+construction of a surrogate model, 𝑝 (𝑓 |𝐷 ), using Gaussian processes, where 𝐷 is the set of evaluated base learning 
+
+rates and their corresponding objective values. The optimal value for 𝛼 ௕௔௦௘ after tuning is approximately 
+
+5.4485 × 10 ି ଺ .
+
+The learning rate at epoch 𝑡 , denoted as 𝜂 (𝑡 ), is defined as follows: 
+
+𝜂 (𝑡 ) = 𝜂 ௠௜௡ + భ
+
+> మ
+
+(𝜂 ௠௔௫ − 𝜂 ௠௜௡ )൫1 + cos ൫೟ ೘೚೏ ೅ 
+
+> ೅
+
+𝜋 ൯൯ (11) 
+
+where, 𝜂 ௠௔௫ = 1 × 10 ିଷ represents the maximum learning rate, 𝜂 ௠௜௡ = 1 × 10 ି ଺ represents the minimum 
+
+learning rate, 𝑇 denotes the cycle length, dictating the period over which the learning rate completes one full cycle. 
+
+The cyclic learning rate strategy synergizes with the Bayesian optimization process by leveraging the optimized 
+
+learning rates to achieve superior model performance and generalization. 
+
+In Fig. 8 training and validation - accuracy curve and loss curves are plotted in column 1 and column 2 
+
+respectively. The proposed architecture demonstrated early convergence, with both training and validation -
+
+accuracy and loss metrics plateauing, suggesting limited gains from further training without modifications to the 
+
+learning strategy or architecture. The results indicate the architecture’s efficacy and stability, making it a promising 
+
+option for similar applications .(a) (b)   
+
+> (c) (d)
+> (e) (f)
+> Figure 8. Training vs Validation accuracy for Dataset 1(a), Dataset 2(c), Dataset 3(e) and Training vs Validation loss for dataset 1(b), Dataset
+> 2(d), Dataset 3 (f)
+
+Ablation Study: An ablation study is systematically carried out that evaluates the contribution of different 
+
+architectural components by analyzing their impact on training accuracy, validation accuracy, and loss. The 
+
+configurations tested include models using only contextual features, structural features, and Part-of-Speech (POS) 
+
+features, as well as various combinations integrating multihead attention (MHA) and the proposed adaptive 
+
+weighting mechanism (SSAFB with alpha). The results demonstrate that integrating structural and contextual 
+
+features consistently enhances model performance compared to individual feature sets. The POS-only model 
+
+achieves a test accuracy of 0.88 with a test loss of 0.65, highlighting its strong predictive capacity. Structural 
+
+features (SFG + POS) improve accuracy to 0.89 with a reduced test loss of 0.63, suggesting better generalization.          
+
+> 70.0
+> 75.0
+> 80.0
+> 85.0
+> 90.0
+> 95.0
+> 100.0
+> 12345678910
+> Accuracy
+> Epochs
+
+Dataset 1 - Accuracy Curve           
+
+> Training Accuracy Test Accuracy
+> 0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 12345678910
+> Loss
+> Epochs
+
+Dataset 1- Loss Curve           
+
+> Training Loss Test Loss
+> 70
+> 75
+> 80
+> 85
+> 90
+> 95
+> 100
+> 12345678910
+> Accuracy
+> Epochs
+
+Dataset 2           
+
+> Training Accuracy Test Accuracy
+> 0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 12345678910
+> Loss
+> Epochs
+
+Dataset 2           
+
+> Training Loss Test Loss
+> 20
+> 30
+> 40
+> 50
+> 60
+> 70
+> 80
+> 90
+> 100
+> 12345678910
+> Accuracy
+> Epochs
+
+Dataset 3           
+
+> Training Accuracy Test Accuracy
+> 0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 12345678910
+> Loss
+> Epochs
+
+Dataset 3  
+
+> Training Loss Test Loss
+
+Table 2: Ablation study of the proposed SSAFB architecture for Dataset 1 
+
+Model Training 
+
+Accuracy 
+
+Test 
+
+Accuracy 
+
+Training 
+
+Loss 
+
+Test 
+
+Loss 
+
+contextual features Only (without alpha) 0.62 0.63 1.05 1.08 
+
+SFG Only 0.72 0.72 0.85 0.88 
+
+POS Features only 0.89 0.88 0.60 0.65 
+
+Structural features only (SFG+POS) 0.90 0.88 0.57 0.63 
+
+Structural features + Contextual features without 
+
+MHA 0.93 0.90 0.49 0.54 
+
+Structural features + Contextual features with 
+
+MHA 0.94 0.91 0.45 0.51 
+
+Structural features + Contextual features with 
+
+MHA+ SSA FB without alpha 0.95 0.93 0.40 0.46 
+
+Structural features + Contextual features+ 
+
+SSA FB with alpha (proposed) 0.97 0.98 0.32 0.39 
+
+Table 3: Comparison of the experimental results of our proposed model with the existing systems 
+
+Method Models used Feature selection Datasets used Accuracy (%) 
+
+H. Dang et al. [5] CNN, BERT Title, prompt template, 
+
+summary 
+
+News Clickbait dataset 
+
+Webis-Clickbait-17 
+
+News Clickbait dataset 
+
+:80.03 
+
+Webis -Clickbait -17: 75.6 
+
+B. Gamage et al. [7] LSTM, CNN 
+
+Title text, thumbnail image, 
+
+user comments, audio 
+
+transcript, video tags, video 
+
+statistics (views, likes, 
+
+dislikes) 
+
+Custom dataset of 
+
+~14,000 YouTube videos 
+
+(8,591 clickbait, 5,049 
+
+non-clickbait) 
+
+94 
+
+F. Wei and U. T. 
+
+Nguyen [10] CNN, BERT Human semantic via Wordnet, 
+
+linguistic knowledge graphs 
+
+Clickbait Challenge, 
+
+FNC Challenge datasets 
+
+clickbait challenge dataset: 
+
+89.2 
+
+FNC challenge: 92.8 
+
+S. Kaur et al. [13] CNN, LSTM 
+
+Bag of Words (BOW), noun 
+
+extraction, similarity, 
+
+readability, and formality. 
+
+Dataset 1 [30] 
+
+Dataset 2 [31] 
+
+Dataset 3 [32] 
+
+Dataset 1: 95.8 
+
+Dataset 2: 89.44 
+
+Dataset 3: 94.21 
+
+Q. Meng et al. [23] BERT 
+
+Title, body content, inter and 
+
+intra semantic matching 
+
+layers 
+
+Clickbait17 62.18 (Precision) 
+
+X. Yi et al. [25] BERT News headlines, tweets, body, 
+
+encodings 
+
+News Clickbait Detection 
+
+Tweet Clickbait 
+
+Detection, 
+
+NELA 
+
+News Clickbait Detection: 
+
+81.3 
+
+Tweet Clickbait Detection: 
+
+86 
+
+NELA: 83.9 
+
+ClickGuard (Ours) CNN+BiLSTM, 
+
+BERT 
+
+BERT embeddings: 
+
+contextual word 
+
+representations; Structural 
+
+features: POS tags, named 
+
+entities, linguistic patterns 
+
+Dataset 1 [30] 
+
+Dataset 2 [31] 
+
+Dataset 3 [32] 
+
+Dataset 1: 98.30 
+
+Dataset 2 : 94.39 
+
+Dataset 3: 92.05 
+
+Adding contextual features without MHA further increases ac curacy to 0.90, while incorporating MHA refines 
+
+feature interactions, raising accuracy to 0.91 with a test loss of 0.51. The introduction of SSAFB without adaptive 
+
+weighting (𝛼 ) improves accuracy to 0.93 and lowers test loss to 0.46, reinforcing its role in feature refinement. 
+
+The proposed model, integrating SSAFB with adaptive weighting, achieves the highest accuracy of 0.96 and the 
+
+lowest test loss of 0.39, demonstrating its effectiveness in optimizing feature interactions. These findings 
+
+underscore the importance of combining structural and contextual features with attention mechanisms and 
+
+adaptive weighting to enhance model generalization and predictive performance. Figure 9. Perturbation Analysis (dataset1) 
+
+The comparative evaluation of the proposed model against state-of-the-arts [5], [7], [10], [13], [23] and [25] as 
+
+reported in Table 3, the model shows robust performance with a training accuracy of 96.93% and a validation 
+
+accuracy of 95.69%, positioning it competitively among existing methodologies. It surpasses [5] approach, which 
+
+tops out at 75.6% accuracy, highlighting the effectiveness of our model's architecture. However, it falls short of 
+
+the high accuracy benchmarks set by [7], who achieve up to 98% accuracy in their analysis of a multimodal 
+
+dataset. This variance highlights the impact of dataset characteristics on model efficacy, with it’s success partially 
+
+due to the richer informational context provided by multimodal inputs, compared to the textual data constraints in 
+
+our study. Moreover, while [10] architecture model achieves superior accuracy in specialized environments, such 
+
+as 92.8% in the FNC Challenge dataset, our model maintains consistent performance across conventional text-
+
+based datasets, suggesting broad applicative reliability. 
+
+Perturbation Analysis: The susceptibility of the model to variations in input data was systematically evaluated 
+
+through a Perturbation Analysis, as reported in Figure 9. This analysis measures the extent of Average Prediction 
+
+Change induced by different perturbative methods. Perturbations involving "shuffle_words" (0.079) and 
+
+"stopword_removal" (0.078) markedly influence the prediction outcomes, indicating a pronounced dependence 
+
+on the sequential arrangement of words and the presence of stopwords. Lesser, yet significant, modifications to 
+
+the model’s predictions are observed with "random_deletion" (0.071), "typos" (0.068), and "synonyms" (0.066). 
+
+These results elucidate the model’s acute sensitivity to minor alterations in input, which suggests that while the 
+
+incorporation of concatenated SSAFB features advances interpretability, it simultaneously heightens the model's 
+
+reliance on specific lexical configurations. Addressing this sensitivity is crucial for improving the robustness of 
+
+the model, ensuring its efficacy and reliability in practical deployment scenarios where input variability is 
+
+prevalent. 
+
+Figure 10 illustrates the temporal evolution of contextual features within a deep learning model across three key 
+
+epochs (1, 5, and 10), utilizing t-Distributed Stochastic Neighbour Embedding (t-SNE) to project the high-
+
+dimensional data into a two-dimensional space for clearer visualization. The analysis is divided into two sub-
+
+figures to compare the development of features under different conditions: raw contextual features Figure 10 (a) 
+
+and those enhanced by Multi-Head Attention (MHA) in Figure 10 (b). Figure 10 (a) captures the progression of 
+
+raw contextual features. At Epoch 1, the data points are widely dispersed, indicative of an initial undifferentiated             
+
+> 0.483 0.485 0.483 0.482 0.484
+> 0.458 0.481 0.42 0.475 0.487
+> 0.068 0.066 0.078 0.071 0.079
+> 0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> Sensitivity (%)
+> Perturbation Types
+
+Perturbation Analysis: Average Prediction Change   
+
+> POS SFG SSAFB
+
+Fig. 10 t-SNE Features Visualisation (a) Contextual features, (b) Contextual features with MHA 
+
+Fig. 11 t-SNE features visualisation to show the impact of Recursive Feature Elimination (RFE) (a) SFG features without RFE, (b) SFG 
+
+features with RFE           
+
+> (a) Contextual features
+> Epoch 5 Epoch 10
+> (b) Contextual features with MHA
+> Epoch 1
+> Epoch 1 Epoch 5 Epoch 10
+> (a) SFG features without RFE
+> Epoch 1 Epoch 5 Epoch 10
+> (b) SFG features with RFE
+> Epoch 1 Epoch 5 Epoch 10
+
+(a) (b) 
+
+> Fig. 12 LIME visualization for Top-5 contributing SSAFB concatenated features (a) Clickbait sample & (b) Non-clickbait sample
+
+(𝑎) 
+
+> Fig. 13 Radar visualization of SSAFB concatenated features for Dataset 1
+
+state of feature representations. As the training progresses to Epoch 5 and Epoch 10, the values begin to converge 
+
+into denser clusters. The model’s ability to discriminate and generalize improves with training, enhancing feature 
+
+refinement. Figure 10 (b) illustrates the impact of incorporating an MHA block on contextual features. At Epoch 
+
+1, clustering is more pronounced than in Figure 10 (a), indicating MHA’s role in structuring features early. By 
+
+Epoch 5, compact clusters emerge, and at Epoch 10, tightly grouped configurations with clear boundaries highlight 
+
+improved precision. The comparison between Figures 10 (a) and (b) visually underscores MHA’s contribution to 
+
+feature organization, interpretability, and discriminative capability—key for tasks requiring precise feature 
+
+analysis and robust performance. 
+
+Figure 11 presents t-SNE visualizations comparing feature distributions across epochs with and without recursive 
+
+feature elimination (RFE). In Figure 10 (a) showing SFG features without RFE, Epoch 1 shows minimal class 
+
+separation. By Epoch 5, moderate dispersion occurs, but overlap persists. At Epoch 10, clusters remain loosely    
+
+> -0.04
+> -0.02
+> 0
+> 0.02
+> 0.04
+> 0.06
+> n_char
+> n_words
+> n_(Q_m )
+> n_(E_m )
+> P_fp
+> P_sp
+> P_pn
+> N
+> V
+> Adj
+> Adv
+> P
+> Prep
+> Punc
+> D
+> St_w
+> n_#
+> Sl_w
+> Clickbait Non-clickbait
+> Local Explanation for Class Clickbait Local Explanation for Class Non-clickbait
+> Feature Weight Feature Weight
+> noun
+> s
+> stop_words
+> num_char
+> adverbs
+> preposition
+> s
+> num_word
+> s
+> stop_words
+> noun
+> s
+> adjective
+> s
+> Example- “18 Things You'll Only Know
+> If You're Not A Morning Person”
+> Example- “200 People Missing as
+> Ferry Sinks in Indonesia”
+> num_word
+> s
+
+defined, indicating limited feature discrimination. In contrast, Figure 11 (b) SFG features with RFE shows better 
+
+dispersion at Epoch 1, with clearer differentiation. By Epoch 5, distinct clusters emerge, and at Epoch 10, well-
+
+structured, compact clusters are evident, demonstrating RFE’s role in refining feature representations and 
+
+improving model interpretability. This analysis highlights RFE’s effectiveness in enhancing feature separation, 
+
+facilitating early dispersion, and progressively strengthening class discrimination, thereby optimizing 
+
+model performance. 
+
+Figure 12 & 13 provides LIME and Radar visualizations for two sample headlines, illustrating how the model 
+
+evaluates feature contributions in classifying text as either clickbait (Label 1) or non-clickbait (Label 0). These 
+
+visualizations help unpack the role of specific linguistic features in the decision-making process for individual 
+
+predictions. For the clickbait headline “18 Things You’ll Only Know If You’re Not A Morning Person”, the 
+
+features ‘stop_words’ (St_w) and ‘pronouns’ (P) play a substantial positive role in supporting the clickbait 
+
+classification. Other features like ‘num_words’ (n_words), ‘adverbs’ (Adv), and ‘determiners’ (D) also contribute 
+
+positively, emphasizing the detail-oriented and engaging style typical of clickbait. Meanwhile, features such as 
+
+‘nouns’, ‘prepositions’ (Prep), and ‘first_person_pronouns’ (P_fp) negatively influence the prediction, reflecting 
+
+their reduced importance in identifying clickbait. On the other hand, the non-clickbait headline “200 People 
+
+Missing as Ferry Sinks in Indonesia” reveals a different pattern. Features like ‘stop_words’ (St_w), ‘determiners’ 
+
+(D), and ‘adverbs’ (Adv) strongly contribute to the classification, highlighting the concise and factual nature of 
+
+non-clickbait content. However, features such as ‘nouns’ (N), ‘adjectives’ (Adj), and ‘prepositions’ (Prep) 
+
+negatively affect the classification, indicating their lesser role in this type of headline. These examples highlight 
+
+how the model utilizes specific linguistic patterns to differentiate between the two headline types. By shedding 
+
+light on the impact of individual features, the LIME visualizations improve the transparency of the model’s 
+
+reasoning process. This transparency not only reinforces confidence in the predictions but also ensures the model’s 
+
+outputs align with human understanding, making it more dependable for real-world applications. 
+
+## 5. Conclusion and Future Scope 
+
+This study presents a novel ClickGuard, a syntactic-semantic adaptive fusion-based clickbait detection 
+
+architecture. By leveraging the synergy of contextual embeddings and structural features through the Syntactic-
+
+Semantic Adaptive Fusion Block (SSAFB), the proposed model demonstrated its robustness, achieving state-of-
+
+the-art performance across multiple datasets. The integration of hybrid CNN-BiLSTM architecture further enabled 
+
+the effective modeling of both local and sequential dependencies, enhancing the detection of nuanced patterns in 
+
+clickbait headlines. Extensive evaluations, including ablation studies and perturbation analyses, validated the 
+
+model's robustness and interpretability, confirming its reliability for real-world applications. The integration of 
+
+LIME and permutation feature importance within this framework represents a significant step towards enhancing 
+
+model transparency. However, future research could focus on advancing these methods to generate more granular 
+
+insights into decision-making processes. Moreover, exploring transformer-based architectures and graph neural 
+
+networks (GNNs) for incorporating hierarchical and relational information might yield further improvements in 
+
+detection accuracy and efficiency. In conclusion, ClickGuard offers a scalable and adaptable solution for 
+
+mitigating the challenges posed by clickbait, contributing to a more credible and trustworthy digital information 
+
+ecosystem. Future advancements in this domain will benefit from a deeper integration of multimodal features, 
+
+advanced interpretability mechanisms, and adaptation to evolving online content patterns. Conflict-of-interest Statement: Not Applicable 
+
+## References 
+
+[1] V. Indurthi, B. Syed, M. Gupta and V. Varma, "Predicting Clickbait Strength in Online Social Media," in 
+
+Proceedings of the 28th International Conference on Computational Linguistics , Barcelona, International 
+
+Committee on Computational Linguistics, 2020, pp. 4835--4846. 
+
+[2] C. Boididou, S. Papadopoulos, . M. Zampoglou, L. Apostolidis, O. Papadopoulou and Y. Kompatsiaris, 
+
+"Detection and visualization of misleading content on Twitter," International Journal of Multimedia 
+
+Information Retrieval, vol. 7, pp. 71-86, 2018. 
+
+[3] A. Elyashar, J. Bendahan and R. Puzis, "Detecting Clickbait in Online Social Media: You Won’t Believe 
+
+How We Did It," in Cyber Security, Cryptology, and Machine Learning , Springer International Publishing, 
+
+2022, pp. 377-387. 
+
+[4] I. Ahmad, M. A. Alqarni, A. A. Almazroi and A. Tariq, "Experimental Evaluation of Clickbait Detection 
+
+Using Machine Learning," Intelligent Automation & Soft Computing, vol. 26, pp. 13335-1344, 2020. 
+
+[5] H. Deng, Y. Zhu, Y. Wang, J. Qiang, Y. Yuan, Y. Li and . R. Zhang, "Prompt-tuning for Clickbait Detection 
+
+via Text Summarization," arXiv:2404.11206, 2024. 
+
+[6] S. Adhikari, . S. Thapa and U. Naser, "Explainable hybrid word representations for sentiment analysis of 
+
+financial news," Neural Networks, vol. 164, pp. 115-123, 2023. 
+
+[7] B. Gamage, A. Labib, A. Joomun, C. H. Lim and K. Wong, "Baitradar: A Multi-Model Clickbait Detection 
+
+Algorithm Using Deep Learning," in ICASSP 2021 - 2021 IEEE International Conference on Acoustics, 
+
+Speech and Signal Processing (ICASSP) , 2021, pp. 2665-2669. 
+
+[8] S. Chen, X. Du, J. Zhao, H. Huang and X. Chen, "A syntactic dependency method for aspect-level sentiment 
+
+classification by deep learning," Measurement and Control, vol. 56, pp. 1057-1065, 2023. 
+
+[9] A. Razaque, B. Alotaibi, M. Alotaibi, F. Amsaad, A. Manasov, S. Hariri and B. Yergaliyeva, "Blockchain-
+
+Enabled Deep Recurrent Neural Network Model for Clickbait Detection," IEEE Access, vol. 10, pp. 3144-
+
+3163, 2022. 
+
+[10] F. Wei and U. T. Nguyen, "An Attention-Based Neural Network Using Human Semantic Knowledge and Its 
+
+Application to Clickbait Detection," IEEE Open Journal of the Computer Society, vol. 3, pp. 217--232, 
+
+2022. 
+
+[11] M. Marreddy, . S. R. Oota, L. S. Vakada, . V. C. Chinni and R. Mamidi, "Clickbait detection in telugu: 
+
+Overcoming nlp challenges in resource-poor languages using benchmarked techniques," International Joint 
+
+Conference on Neural Networks (IJCNN), pp. 1-8, 2021. 
+
+[12] L. Bacco, A. Cimino, F. Dell’Orletta and M. Merone, "Explainable sentiment analysis: a hierarchical 
+
+transformer-based extractive summarization approach.," Electronics, vol. 10, p. 2195, 2021. 
+
+[13] S. Kaur, P. Kumar and P. Kumaraguru, "Detecting clickbaits using two-phase hybrid CNN-LSTM biterm 
+
+model," Expert Systems with Applications, vol. 151, p. 113350, 2020. 
+
+[14] T. Zhang and X. Zhang, "A polarization fusion network with geometric feature embedding for SAR ship 
+
+classification," Pattern Recognition, vol. 123, p. 108365, 2022. [15] C. Wu, F. Wu, T. Qi and Y. Huang, "Clickbait Detection with Style-aware Title Modeling and Co-attention," 
+
+in Chinese Computational Linguistics: 19th China National Conference, CCL 2020, Hainan, China, 
+
+October 30--November 1, 2020, Proceedings 19 , Springer, 2020, pp. 430-443. 
+
+[16] A. Yadav and D. K. Vishwakarma, "A Deep Multi-level Attentive Network for Multimodal Sentiment 
+
+Analysis," ACM Transactions on Multimedia Computing, Communications, and Applications, vol. 19, no. 
+
+1, pp. 1-19, 2023. 
+
+[17] S. Song, J. Liu, Y. Li and Z. Guo, "Modality compensation network: Cross-modal adaptation for action 
+
+recognition," IEEE Transactions on Image Processing, vol. 29, pp. 3957-3969, 2020. 
+
+[18] B. Naeem, A. Khan, M. O. Beg and H. Mujtaba, "A deep learning framework for clickbait detection on 
+
+social area network using natural language cues," Journal of Computational Social Science, vol. 3, 2020. 
+
+[19] A. Pujahari and D. S. Sisodia, "Clickbait detection using multiple categorisation techniques," Journal of 
+
+Information Science, vol. 47, pp. 118-128, 2021. 
+
+[20] T. Liu, K. Yu, L. Wang, X. Zhang, H. Zhou and X. Wu, "Clickbait detection on WeChat: A deep model 
+
+integrating semantic and syntactic information,," Knowledge-Based Systems, 2022. 
+
+[21] N. Bhoj, A. R. Dwivedi, A. Tripathi and B. Pandey, "LSTM Powered Identification of Clickbait Content on 
+
+Entertainment and News Websites," in 2021 13th International Conference on Computational Intelligence 
+
+and Communication Networks (CICN) , vol. 2021, IEEE, 2021, pp. 29--33. 
+
+[22] D. S. Thakur and S. Kurhade, "Context-based Clickbait identification using Deep Learning," in 2021 
+
+International Conference on Communication information and Computing Technology (ICCICT) , Mumbai, 
+
+2021. 
+
+[23] Q. Meng, B. Liu, X. Sun, H. Yan, C. Liang, J. Cao, R. K.-W. Lee and X. Bao, "Attention-fused deep 
+
+relevancy matching network for clickbait detection," IEEE Transactions on Computational Social Systems, 
+
+2022. 
+
+[24] Y.-W. Ma, J.-L. Chen, L.-D. Chen and Y.-M. Huang, "Intelligent Clickbait News Detection System Based 
+
+on Artificial Intelligence and Feature Engineering," IEEE Transactions on Engineering Management, pp. 
+
+1558-0040, 2022. 
+
+[25] X. Yi, J. Zhang, W. Li, X. Wang and X. Xie, "Clickbait Detection via Contrastive Variational Modelling of 
+
+Text and Label," in Internation Joint Conference on Artificial Intelligence , Monteral, Canada, 2022. 
+
+[26] Y. Wang, H. Zhang, J. Zhu, Y. Li and L. Feng, "RGFN: Recurrent Graph Feature Network for ClickBait 
+
+Detection," 2021 International Conference on High Performance Big Data and Intelligent Systems 
+
+(HPBD&IS), pp. 151-156, 2021. 
+
+[27] L. Xiao, Q. Zhang, C. Shi, S. Wang, U. Naseem and L. Hu, "MSynFD: Multi-hop Syntax aware Fake News 
+
+Detection," in Association for Computing Machinery , New York, 2024. 
+
+[28] W. Wang, F. Feng, X. He, H. Zhang and T.-S. Chua, "Clicks can be Cheating: Counterfactual 
+
+Recommendation for Mitigating Clickbait Issue," in Proceedings of the 44th International ACM SIGIR 
+
+Conference on Research and Development in Information Retrieval , Canada, 2021. 
+
+[29] M. Agarwal and S. Kundu, "GAN-based Unsupervised Clickbait Style Transfer". 
+
+[30] A. Chakraborty, B. Paranjape, S. Kakarla and N. Ganguly, "Stop Clickbait: Detecting and preventing 
+
+clickbaits in online news media," in 2016 IEEE/ACM International Conference on Advances in Social 
+
+Networks Analysis and Mining (ASONAM) , 2016, pp. 9-16. [31] S. R. Khater, O. H. Al-sahlee, D. M. Daoud and M. S. A. El-Seoud, "Clickbait Detection," in Proceedings 
+
+of the 7th international conference on software and information engineering , 2018, pp. 111-115. 
+
+[32] A. Agrawal, "Clickbait detection using deep learning," in 2016 2nd International Conference on Next 
+
+Generation Computing Technologies (NGCT) , 2016, pp. 268-272. 
+
+[33] W. Wei and X. Wan, "Learning to Identify Ambiguous and Misleading News Headlines," arXiv preprint 
+
+arXiv:1705.06031, 2017. 
+
+[34] S. Yoon, K. Park, J. Shin, H. Lim, S. Won, M. Cha and K. Jung, "Detecting incongruity between news 
+
+headline and body text via a deep hierarchical encoder," in Proceedings of the AAAI conference on artificial 
+
+intelligence , 2019, pp. 791-800.
