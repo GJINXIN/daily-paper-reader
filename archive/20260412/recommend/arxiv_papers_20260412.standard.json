@@ -1,0 +1,550 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-12T19:44:20.240006+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 12,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.03586v1",
+      "title": "MultiPress: A Multi-Agent Framework for Interpretable Multimodal News Classification",
+      "abstract": "With the growing prevalence of multimodal news content, effective news topic classification demands models capable of jointly understanding and reasoning over heterogeneous data such as text and images. Existing methods often process modalities independently or employ simplistic fusion strategies, limiting their ability to capture complex cross-modal interactions and leverage external knowledge. To overcome these limitations, we propose MultiPress, a novel three-stage multi-agent framework for multimodal news classification. MultiPress integrates specialized agents for multimodal perception, retrieval-augmented reasoning, and gated fusion scoring, followed by a reward-driven iterative optimization mechanism. We validate MultiPress on a newly constructed large-scale multimodal news dataset, demonstrating significant improvements over strong baselines and highlighting the effectiveness of modular multi-agent collaboration and retrieval-augmented reasoning in enhancing classification accuracy and interpretability.",
+      "authors": [
+        "Tailong Luo",
+        "Hao Li",
+        "Rong Fu",
+        "Xinyue Jiang",
+        "Huaxuan Ding",
+        "Yiduo Zhang",
+        "Zilin Zhao",
+        "Simon Fong",
+        "Guangyin Jin",
+        "Jianyuan Ni"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-04T04:25:26+00:00",
+      "link": "https://arxiv.org/pdf/2604.03586v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-agent framework for multimodal news classification",
+      "llm_evidence_cn": "多模态新闻分类的多智能体框架",
+      "llm_evidence": "多模态新闻分类的多智能体框架",
+      "canonical_evidence": "多模态新闻分类的多智能体框架",
+      "llm_tldr_en": "A multi-agent framework for interpretable multimodal news classification using perception and reasoning agents.",
+      "llm_tldr_cn": "一种用于可解释多模态新闻分类的多智能体框架，利用感知和推理智能体处理异构数据。",
+      "llm_tldr": "一种用于可解释多模态新闻分类的多智能体框架，利用感知和推理智能体处理异构数据。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.06562v1",
+      "title": "On Emotion-Sensitive Decision Making of Small Language Model Agents",
+      "abstract": "Small language models (SLM) are increasingly used as interactive decision-making agents, yet most decision-oriented evaluations ignore emotion as a causal factor influencing behavior. We study emotion-sensitive decision making by combining representation-level emotion induction with a structured game-theoretic evaluation. Emotional states are induced using activation steering derived from crowd-validated, real-world emotion-eliciting texts, enabling controlled and transferable interventions beyond prompt-based methods. We introduce a benchmark built around canonical decision templates that span cooperative and competitive incentives under both complete and incomplete information. These templates are instantiated using strategic scenarios from \\textsc{Diplomacy}, \\textsc{StarCraft II}, and diverse real-world personas. Experiments across multiple model families in various architecture and modalities, show that emotional perturbations systematically affect strategic choices, but the resulting behaviors are often unstable and not fully aligned with human expectations. Finally, we outline an approach to improve robustness to emotion-driven perturbations.",
+      "authors": [
+        "Jiaju Lin",
+        "Xingjian Du",
+        "Qingyun Wu",
+        "Ellen Wenting Zou",
+        "Jindong Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-08T01:24:13+00:00",
+      "link": "https://arxiv.org/pdf/2604.06562v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "emotion-sensitive decision making in game-theoretic evaluation",
+      "llm_evidence_cn": "博弈论评估中的情感敏感决策",
+      "llm_evidence": "博弈论评估中的情感敏感决策",
+      "canonical_evidence": "博弈论评估中的情感敏感决策",
+      "llm_tldr_en": "Studies how induced emotional states affect the decision-making of small language model agents.",
+      "llm_tldr_cn": "研究诱导情感状态如何影响小语言模型智能体的决策行为。",
+      "llm_tldr": "研究诱导情感状态如何影响小语言模型智能体的决策行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.08206v1",
+      "title": "\"Theater of Mind\" for LLMs: A Cognitive Architecture Based on Global Workspace Theory",
+      "abstract": "Modern Large Language Models (LLMs) operate fundamentally as Bounded-Input Bounded-Output (BIBO) systems. They remain in a passive state until explicitly prompted, computing localized responses without intrinsic temporal continuity. While effective for isolated tasks, this reactive paradigm presents a critical bottleneck for engineering autonomous artificial intelligence. Current multi-agent frameworks attempt to distribute cognitive load but frequently rely on static memory pools and passive message passing, which inevitably leads to cognitive stagnation and homogeneous deadlocks during extended execution. To address this structural limitation, we propose Global Workspace Agents (GWA), a cognitive architecture inspired by Global Workspace Theory. GWA transitions multi-agent coordination from a passive data structure to an active, event-driven discrete dynamical system. By coupling a central broadcast hub with a heterogeneous swarm of functionally constrained agents, the system maintains a continuous cognitive cycle. Furthermore, we introduce an entropy-based intrinsic drive mechanism that mathematically quantifies semantic diversity, dynamically regulating generation temperature to autonomously break reasoning deadlocks. Coupled with a dual-layer memory bifurcation strategy to ensure long-term cognitive continuity, GWA provides a robust, reproducible engineering framework for sustained, self-directed LLM agency.",
+      "authors": [
+        "Wenlong Shang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-04-09T13:06:43+00:00",
+      "link": "https://arxiv.org/pdf/2604.08206v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent frameworks and cognitive architecture for LLMs",
+      "llm_evidence_cn": "多智能体框架与大语言模型认知架构",
+      "llm_evidence": "多智能体框架与大语言模型认知架构",
+      "canonical_evidence": "多智能体框架与大语言模型认知架构",
+      "llm_tldr_en": "Proposes a cognitive architecture for LLM agents to overcome stagnation in multi-agent systems.",
+      "llm_tldr_cn": "提出一种大语言模型认知架构，旨在解决多智能体系统中的认知停滞问题。",
+      "llm_tldr": "提出一种大语言模型认知架构，旨在解决多智能体系统中的认知停滞问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.03602v1",
+      "title": "Kill Webs by Collaborative & Self-organizing Agents (CSOAs)",
+      "abstract": "A single agent represents a single system capable of ingesting local data, indexing, cataloging information, performing knowledge pattern discovery, and separating patterns and anomalies from data. Multiple agents work collaboratively in a peer-to-peer network. Each agent has a peer list. Such multiple agents' collaboration can be modeled as cooperative games. Each agent optimizes its own objective locally. We show that each agent self-organizes or converges to its best value and the whole agent network achieves the best social welfare based on both the quantum adiabatic evolution transformation (QAET), and quantum intelligence game (QIG) or the QAET-QIG framework. We apply the QAET-QIG framework to the kill web concept that can potentially improve the traditional kill chain process or the find, fix, track, target, engage, and assess (F2T2EA) process. The improvement is measured in the values of powerful global optimization, distributed lethality, and load balancing. We show a use case of the QAET-QIG frame in a potential application of mixed sensors, platforms, weapons, and effects.",
+      "authors": [
+        "Ying Zhao",
+        "Charles C. Zhou"
+      ],
+      "primary_category": "cs.ET",
+      "categories": [
+        "cs.ET"
+      ],
+      "published": "2026-04-04T06:06:33+00:00",
+      "link": "https://arxiv.org/pdf/2604.03602v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "collaborative and self-organizing multi-agent network",
+      "llm_evidence_cn": "协作与自组织的多智能体网络",
+      "llm_evidence": "协作与自组织的多智能体网络",
+      "canonical_evidence": "协作与自组织的多智能体网络",
+      "llm_tldr_en": "Proposes a framework for collaborative agents to achieve social welfare through quantum-inspired games.",
+      "llm_tldr_cn": "提出一种通过量子启发博弈实现多智能体协作与社会福利最大化的框架。",
+      "llm_tldr": "提出一种通过量子启发博弈实现多智能体协作与社会福利最大化的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.04059v1",
+      "title": "Humans Integrate, Agents Fix: How Agent-Authored Pull Requests Are Referenced in Practice",
+      "abstract": "Although coding agents have introduced new coordination dynamics in collaborative software development, detailed interactions in practice remain underexplored, especially for the code review process. In this study, we mine agent-authored PR references from the AIDev dataset and introduce a taxonomy to characterize the intent of these references across Human-to-Agent and Agent-to-Agent interactions in the form of Pull Requests (i.e. PRs). Our analysis shows that while humans initiate most references to agent-authored PRs, a substantial portion of these interactions are AI-assisted, indicating the emergence of meta-collaborative workflows, where humans mostly use references to build new features, whereas agents make them to fix errors. We further find that referencing/referenced PRs are associated with substantially longer lifespans and review times compared to isolated PRs, suggesting higher coordination or integration effort. We then list three key takeaways as potential future research directions into how to utilize these dynamics for optimizing AI coding agents in the code review process.",
+      "authors": [
+        "Islem Khemissi",
+        "Moataz Chouchen",
+        "Dong Wang",
+        "Raula Gaikovina Kula"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-04-05T11:04:46+00:00",
+      "link": "https://arxiv.org/pdf/2604.04059v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "human-agent and agent-agent coordination in collaborative software development",
+      "llm_evidence_cn": "协作软件开发中的人机与机机协同",
+      "llm_evidence": "协作软件开发中的人机与机机协同",
+      "canonical_evidence": "协作软件开发中的人机与机机协同",
+      "llm_tldr_en": "Analyzes how humans and agents interact through pull requests in collaborative coding environments.",
+      "llm_tldr_cn": "分析了在协作编程环境中，人类和智能体如何通过拉取请求进行交互。",
+      "llm_tldr": "分析了在协作编程环境中，人类和智能体如何通过拉取请求进行交互。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.03755v1",
+      "title": "Can Humans Tell? A Dual-Axis Study of Human Perception of LLM-Generated News",
+      "abstract": "Can humans tell whether a news article was written by a person or a large language model (LLM)? We investigate this question using JudgeGPT, a study platform that independently measures source attribution (human vs. machine) and authenticity judgment (legitimate vs. fake) on continuous scales. From 2,318 judgments collected from 1,054 participants across content generated by six LLMs, we report five findings: (1) participants cannot reliably distinguish machine-generated from human-written text (p > .05, Welch's t-test); (2) this inability holds across all tested models, including open-weight models with as few as 7B parameters; (3) self-reported domain expertise predicts judgment accuracy (r = .35, p < .001) whereas political orientation does not (r = -.10, n.s.); (4) clustering reveals distinct response strategies (\"Skeptics\" vs. \"Believers\"); and (5) accuracy degrades after approximately 30 sequential evaluations due to cognitive fatigue. The answer, in short, is no: humans cannot reliably tell. These results indicate that user-side detection is not a viable defense and motivate system-level countermeasures such as cryptographic content provenance.",
+      "authors": [
+        "Alexander Loth",
+        "Martin Kappes",
+        "Marc-Oliver Pahl"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY",
+        "cs.AI",
+        "cs.CL",
+        "cs.HC"
+      ],
+      "published": "2026-04-04T15:03:42+00:00",
+      "link": "https://arxiv.org/pdf/2604.03755v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "human perception of LLM-generated fake news and authenticity judgment",
+      "llm_evidence_cn": "人类对LLM生成的虚假新闻的感知与真实性判断",
+      "llm_evidence": "人类对LLM生成的虚假新闻的感知与真实性判断",
+      "canonical_evidence": "人类对LLM生成的虚假新闻的感知与真实性判断",
+      "llm_tldr_en": "Studies human ability to distinguish between human-written and LLM-generated news articles.",
+      "llm_tldr_cn": "研究了人类区分人工撰写和LLM生成的社交新闻文章的能力。",
+      "llm_tldr": "研究了人类区分人工撰写和LLM生成的社交新闻文章的能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.04895v1",
+      "title": "Agentic Federated Learning: The Future of Distributed Training Orchestration",
+      "abstract": "Although Federated Learning (FL) promises privacy and distributed collaboration, its effectiveness in real-world scenarios is often hampered by the stochastic heterogeneity of clients and unpredictable system dynamics. Existing static optimization approaches fail to adapt to these fluctuations, resulting in resource underutilization and systemic bias. In this work, we propose a paradigm shift towards Agentic-FL, a framework where Language Model-based Agents (LMagents) assume autonomous orchestration roles. Unlike rigid protocols, we demonstrate how server-side agents can mitigate selection bias through contextual reasoning, while client-side agents act as local guardians, dynamically managing privacy budgets and adapting model complexity to hardware constraints. More than just resolving technical inefficiencies, this integration signals the evolution of FL towards decentralized ecosystems, where collaboration is negotiated autonomously, paving the way for future markets of incentive-based models and algorithmic justice. We discuss the reliability (hallucinations) and security challenges of this approach, outlining a roadmap for resilient multi-agent systems in federated environments.",
+      "authors": [
+        "Rafael O. Jarczewski",
+        "Gabriel U. Talasso",
+        "Leandro Villas",
+        "Allan M. de Souza"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-06T17:43:30+00:00",
+      "link": "https://arxiv.org/pdf/2604.04895v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM-based agents for federated learning orchestration",
+      "llm_evidence_cn": "基于大语言模型的智能体用于联邦学习编排",
+      "llm_evidence": "基于大语言模型的智能体用于联邦学习编排",
+      "canonical_evidence": "基于大语言模型的智能体用于联邦学习编排",
+      "llm_tldr_en": "Uses LLM agents to autonomously orchestrate distributed federated learning and manage system dynamics.",
+      "llm_tldr_cn": "利用大语言模型智能体自主编排分布式联邦学习并管理系统动态。",
+      "llm_tldr": "利用大语言模型智能体自主编排分布式联邦学习并管理系统动态。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.06132v1",
+      "title": "Claw-Eval: Toward Trustworthy Evaluation of Autonomous Agents",
+      "abstract": "Large language models are increasingly deployed as autonomous agents executing multi-step workflows in real-world software environments. However, existing agent benchmarks suffer from three critical limitations: (1) trajectory-opaque grading that checks only final outputs, (2) underspecified safety and robustness evaluation, and (3) narrow modality coverage and interaction paradigms. We introduce Claw-Eval, an end-to-end evaluation suite addressing all three gaps. It comprises 300 human-verified tasks spanning 9 categories across three groups (general service orchestration, multimodal perception and generation, and multi-turn professional dialogue). Every agent action is recorded through three independent evidence channels (execution traces, audit logs, and environment snapshots), enabling trajectory-aware grading over 2,159 fine-grained rubric items. The scoring protocol evaluates Completion, Safety, and Robustness, reporting Average Score, Pass@k, and Pass^k across three trials to distinguish genuine capability from lucky outcomes. Experiments on 14 frontier models reveal that: (1) trajectory-opaque evaluation is systematically unreliable, missing 44% of safety violations and 13% of robustness failures that our hybrid pipeline catches; (2) controlled error injection primarily degrades consistency rather than peak capability, with Pass^3 dropping up to 24% while Pass@3 remains stable; (3) multimodal performance varies sharply, with most models performing poorer on video than on document or image, and no single model dominating across all modalities. Beyond benchmarking, Claw-Eval highlights actionable directions for agent development, shedding light on what it takes to build agents that are not only capable but reliably deployable.",
+      "authors": [
+        "Bowen Ye",
+        "Rang Li",
+        "Qibin Yang",
+        "Yuanxin Liu",
+        "Linli Yao",
+        "Hanglong Lv",
+        "Zhihui Xie",
+        "Chenxin An",
+        "Lei Li",
+        "Lingpeng Kong",
+        "Qi Liu",
+        "Zhifang Sui",
+        "Tong Yang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-07T17:43:18+00:00",
+      "link": "https://arxiv.org/pdf/2604.06132v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "evaluation of autonomous agents in multi-step workflows",
+      "llm_evidence_cn": "多步工作流中自主智能体的评估",
+      "llm_evidence": "多步工作流中自主智能体的评估",
+      "canonical_evidence": "多步工作流中自主智能体的评估",
+      "llm_tldr_en": "Introduces Claw-Eval, a suite for evaluating autonomous agents across multimodal and multi-turn tasks.",
+      "llm_tldr_cn": "引入 Claw-Eval，一个用于评估自主智能体在多模态和多轮任务中表现的套件。",
+      "llm_tldr": "引入 Claw-Eval，一个用于评估自主智能体在多模态和多轮任务中表现的套件。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.06409v1",
+      "title": "Say Something Else: Rethinking Contextual Privacy as Information Sufficiency",
+      "abstract": "LLM agents increasingly draft messages on behalf of users, yet users routinely overshare sensitive information and disagree on what counts as private. Existing systems support only suppression (omitting sensitive information) and generalization (replacing information with an abstraction), and are typically evaluated on single isolated messages, leaving both the strategy space and evaluation setting incomplete. We formalize privacy-preserving LLM communication as an \\textbf{Information Sufficiency (IS)} task, introduce \\textbf{free-text pseudonymization} as a third strategy that replaces sensitive attributes with functionally equivalent alternatives, and propose a \\textbf{conversational evaluation protocol} that assesses strategies under realistic multi-turn follow-up pressure. Across 792 scenarios spanning three power-relation types (institutional, peer, intimate) and three sensitivity categories (discrimination risk, social cost, boundary), we evaluate seven frontier LLMs on privacy at two granularities, covertness, and utility. Pseudonymization yields the strongest privacy\\textendash utility tradeoff overall, and single-message evaluation systematically underestimates leakage, with generalization losing up to 16.3 percentage points of privacy under follow-up.",
+      "authors": [
+        "Yunze Xiao",
+        "Wenkai Li",
+        "Xiaoyuan Wu",
+        "Ningshan Ma",
+        "Yueqi Song",
+        "Weihao Xuan"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-07T19:44:45+00:00",
+      "link": "https://arxiv.org/pdf/2604.06409v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM agents drafting messages and conversational evaluation",
+      "llm_evidence_cn": "LLM智能体代拟消息与对话评估",
+      "llm_evidence": "LLM智能体代拟消息与对话评估",
+      "canonical_evidence": "LLM智能体代拟消息与对话评估",
+      "llm_tldr_en": "Formalizes privacy-preserving LLM communication as an information sufficiency task with new strategies.",
+      "llm_tldr_cn": "将LLM通信中的隐私保护形式化为信息充足性任务，并提出新的脱敏策略。",
+      "llm_tldr": "将LLM通信中的隐私保护形式化为信息充足性任务，并提出新的脱敏策略。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.06873v1",
+      "title": "Generating Local Shields for Decentralised Partially Observable Markov Decision Processes",
+      "abstract": "Multi-agent systems under partial observation often struggle to maintain safety because each agent's locally chosen action does not, in general, determine the resulting joint action. Shielding addresses this by filtering actions based on the current state, but most existing techniques either assume access to a shared centralised global state or employ memoryless local filters that cannot consider interaction history.   We introduce a shield process algebra with guarded choice and recursion for specifying safe global behaviour in communication-free Dec-POMDP settings. From a shield process, we compile a process automaton, then a global Mealy machine as a safe joint-action filter, and finally project it to local Mealy machines whose states are belief-style subsets of the global Mealy machine states consistent with each agent's observations, and which output per-agent safe action sets.   We implement the pipeline in Rust and integrate PRISM, the Probabilistic Symbolic Model Checker, to compute best- and worst-case safety probabilities independently of the agents' policies. A multi-agent path-finding case study demonstrates how different shield processes substantially reduce collisions compared to the unshielded baseline while exhibiting varying levels of expressiveness and conservatism.",
+      "authors": [
+        "Haoran Yang",
+        "Nobuko Yoshida"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-04-08T09:36:52+00:00",
+      "link": "https://arxiv.org/pdf/2604.06873v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "safety in decentralised multi-agent systems",
+      "llm_evidence_cn": "去中心化多智能体系统的安全性",
+      "llm_evidence": "去中心化多智能体系统的安全性",
+      "canonical_evidence": "去中心化多智能体系统的安全性",
+      "llm_tldr_en": "Introduces a shield process algebra to ensure safety in communication-free decentralised multi-agent environments.",
+      "llm_tldr_cn": "引入屏蔽进程代数，以确保无通信去中心化多智能体环境中的安全性。",
+      "llm_tldr": "引入屏蔽进程代数，以确保无通信去中心化多智能体环境中的安全性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.07645v1",
+      "title": "PRIME: Training Free Proactive Reasoning via Iterative Memory Evolution for User-Centric Agent",
+      "abstract": "The development of autonomous tool-use agents for complex, long-horizon tasks in collaboration with human users has become the frontier of agentic research. During multi-turn Human-AI interactions, the dynamic and uncertain nature of user demands poses a significant challenge; agents must not only invoke tools but also iteratively refine their understanding of user intent through effective communication. While recent advances in reinforcement learning offer a path to more capable tool-use agents, existing approaches require expensive training costs and struggle with turn-level credit assignment across extended interaction horizons. To this end, we introduce PRIME (Proactive Reasoning via Iterative Memory Evolution), a gradient-free learning framework that enables continuous agent evolvement through explicit experience accumulation rather than expensive parameter optimization. PRIME distills multi-turn interaction trajectories into structured, human-readable experiences organized across three semantic zones: successful strategies, failure patterns, and user preferences. These experiences evolve through meta-level operations and guide future agent behavior via retrieval-augmented generation. Our experiments across several diverse user-centric environments demonstrate that PRIME achieves competitive performance with gradient-based methods while offering cost-efficiency and interpretability. Together, PRIME presents a practical paradigm for building proactive, collaborative agents that learn from Human-AI interaction without the computational burden of gradient-based training.",
+      "authors": [
+        "Prince Zizhuang Wang",
+        "Shuli Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-08T23:11:12+00:00",
+      "link": "https://arxiv.org/pdf/2604.07645v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "user-centric agent for multi-turn Human-AI interactions",
+      "llm_evidence_cn": "以用户为中心的多轮人机交互智能体",
+      "llm_evidence": "以用户为中心的多轮人机交互智能体",
+      "canonical_evidence": "以用户为中心的多轮人机交互智能体",
+      "llm_tldr_en": "A training-free framework for proactive reasoning in user-centric agents via iterative memory evolution.",
+      "llm_tldr_cn": "一种通过迭代记忆演化实现用户中心智能体主动推理的免训练框架。",
+      "llm_tldr": "一种通过迭代记忆演化实现用户中心智能体主动推理的免训练框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.08148v1",
+      "title": "Clickbait detection: quick inference with maximum impact",
+      "abstract": "We propose a lightweight hybrid approach to clickbait detection that combines OpenAI semantic embeddings with six compact heuristic features capturing stylistic and informational cues. To improve efficiency, embeddings are reduced using PCA and evaluated with XGBoost, GraphSAGE, and GCN classifiers. While the simplified feature design yields slightly lower F1-scores, graph-based models achieve competitive performance with substantially reduced inference time. High ROC--AUC values further indicate strong discrimination capability, supporting reliable detection of clickbait headlines under varying decision thresholds.",
+      "authors": [
+        "Soveatin Kuntur",
+        "Panggih Kusuma Ningrum",
+        "Anna Wróblewska",
+        "Maria Ganzha",
+        "Marcin Paprzycki"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-09T12:09:14+00:00",
+      "link": "https://arxiv.org/pdf/2604.08148v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "clickbait detection using graph-based models",
+      "llm_evidence_cn": "使用图模型进行点击诱饵检测",
+      "llm_evidence": "使用图模型进行点击诱饵检测",
+      "canonical_evidence": "使用图模型进行点击诱饵检测",
+      "llm_tldr_en": "Proposes a lightweight hybrid approach for efficient clickbait detection using semantic and stylistic features.",
+      "llm_tldr_cn": "提出一种结合语义和风格特征的轻量级点击诱饵检测方法。",
+      "llm_tldr": "提出一种结合语义和风格特征的轻量级点击诱饵检测方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.07791v1",
+      "title": "SEARL: Joint Optimization of Policy and Tool Graph Memory for Self-Evolving Agents",
+      "abstract": "Recent advances in Reinforcement Learning with Verifiable Rewards (RLVR) have demonstrated significant potential in single-turn reasoning tasks. With the paradigm shift toward self-evolving agentic learning, models are increasingly expected to learn from trajectories by synthesizing tools or accumulating explicit experiences. However, prevailing methods typically rely on large-scale LLMs or multi-agent frameworks, which hinder their deployment in resource-constrained environments. The inherent sparsity of outcome-based rewards also poses a substantial challenge, as agents typically receive feedback only upon completion of tasks. To address these limitations, we introduce a Tool-Memory based self-evolving agentic framework SEARL. Unlike approaches that directly utilize interaction experiences, our method constructs a structured experience memory that integrates planning with execution. This provides a novel state abstraction that facilitates generalization across analogous contexts, such as tool reuse. Consequently, agents extract explicit knowledge from historical data while leveraging inter-trajectory correlations to densify reward signals. We evaluate our framework on knowledge reasoning and mathematics tasks, demonstrating its effectiveness in achieving more practical and efficient learning.",
+      "authors": [
+        "Xinshun Feng",
+        "Xinhao Song",
+        "Lijun Li",
+        "Gongshen Liu",
+        "Jing Shao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-04-09T04:38:47+00:00",
+      "link": "https://arxiv.org/pdf/2604.07791v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "self-evolving agentic framework",
+      "llm_evidence_cn": "自我演进的智能体框架",
+      "llm_evidence": "自我演进的智能体框架",
+      "canonical_evidence": "自我演进的智能体框架",
+      "llm_tldr_en": "A tool-memory based framework for self-evolving agents to learn from trajectories in resource-constrained settings.",
+      "llm_tldr_cn": "一种基于工具记忆的自我演进智能体框架，使智能体能在资源受限环境下从轨迹中学习。",
+      "llm_tldr": "一种基于工具记忆的自我演进智能体框架，使智能体能在资源受限环境下从轨迹中学习。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.08174v1",
+      "title": "Value-Guidance MeanFlow for Offline Multi-Agent Reinforcement Learning",
+      "abstract": "Offline multi-agent reinforcement learning (MARL) aims to learn the optimal joint policy from pre-collected datasets, requiring a trade-off between maximizing global returns and mitigating distribution shift from offline data. Recent studies use diffusion or flow generative models to capture complex joint policy behaviors among agents; however, they typically rely on multi-step iterative sampling, thereby reducing training and inference efficiency. Although further research improves sampling efficiency through methods like distillation, it remains sensitive to the behavior regularization coefficient. To address the above-mentioned issues, we propose Value Guidance Multi-agent MeanFlow Policy (VGM$^2$P), a simple yet effective flow-based policy learning framework that enables efficient action generation with coefficient-insensitive conditional behavior cloning. Specifically, VGM$^2$P uses global advantage values to guide agent collaboration, treating optimal policy learning as conditional behavior cloning. Additionally, to improve policy expressiveness and inference efficiency in multi-agent scenarios, it leverages classifier-free guidance MeanFlow for both policy training and execution. Experiments on tasks with both discrete and continuous action spaces demonstrate that, even when trained solely via conditional behavior cloning, VGM$^2$P efficiently achieves performance comparable to state-of-the-art methods.",
+      "authors": [
+        "Teng Pang",
+        "Zhiqiang Dong",
+        "Yan Zhang",
+        "Rongjian Xu",
+        "Guoqiang Wu",
+        "Yilong Yin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-04-09T12:31:43+00:00",
+      "link": "https://arxiv.org/pdf/2604.08174v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "offline multi-agent reinforcement learning policy",
+      "llm_evidence_cn": "离线多智能体强化学习策略",
+      "llm_evidence": "离线多智能体强化学习策略",
+      "canonical_evidence": "离线多智能体强化学习策略",
+      "llm_tldr_en": "Introduces a flow-based policy for efficient offline multi-agent reinforcement learning.",
+      "llm_tldr_cn": "引入一种基于流的策略，用于提高离线多智能体强化学习的效率。",
+      "llm_tldr": "引入一种基于流的策略，用于提高离线多智能体强化学习的效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
