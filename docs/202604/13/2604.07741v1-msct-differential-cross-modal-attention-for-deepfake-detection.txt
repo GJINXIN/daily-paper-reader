@@ -1,0 +1,161 @@
+Title: MSCT: Differential Cross-Modal Attention for Deepfake Detection
+
+URL Source: https://arxiv.org/pdf/2604.07741v1
+
+Published Time: Fri, 10 Apr 2026 00:27:27 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+# MSCT : DIFFERENTIAL CROSS-MODAL ATTENTION FOR DEEPFAKE DETECTION 
+
+# Fangda Wei 1 Miao Liu 1 Yingxue Wang 2 Jing Wang 1 Shenghui Zhao 1⋆ Nan Li 21 Beijing Institute of Technology, China  
+
+> 2
+
+# China Academy of Electronics and Information Technology, China 
+
+ABSTRACT 
+
+Audio-visual deepfake detection typically employs a comple-mentary multi-modal model to check the forgery traces in the video. These methods primarily extract forgery traces through audio-visual alignment, which results from the in-consistency between audio and video modalities. However, the traditional multi-modal forgery detection method has the problem of insufficient feature extraction and modal align-ment deviation. To address this, we propose a multi-scale cross-modal transformer encoder (MSCT) for deepfake de-tection. Our approach includes a multi-scale self-attention to integrate the features of adjacent embeddings and a dif-ferential cross-modal attention to fuse multi-modal features. Our experiments demonstrate competitive performance on the FakeAVCeleb dataset, validating the effectiveness of the pro-posed structure. 
+
+Index Terms — Audio-visual fusion, deepfake detection, transformer encoder, attention module 
+
+1. INTRODUCTION 
+
+In recent years, deep generative algorithms have advanced rapidly. Notably, the rapid development of technologies like variational autoencoders (VAE) [1], generative adversarial networks (GAN) [2], and diffusion models [3] has enabled easy creation of synthetic videos—posing severe threats to individuals, society, and nations. To address deepfakes, re-searchers have proposed solutions spanning single modalities (video, audio) and multi-modality. Single-modal deepfake detection relies on a single input modality, such as audio [4] or vision [5]. However, these methods are constrained by their single-modality input, mak-ing them hard to handle more flexible deepfake generation techniques. To address this limitation, numerous studies have proposed multi-modal deepfake detection algorithms [6] that fuse information from audio and video modalities. Current multi-modal deepfake detection methods primarily leverage audio-visual consistency, focusing on inter-modal inconsis-tencies between audio and video. For instance, Mittal et al. 
+
+> Thanks to National Natural Science Foundation of China(No.62571037) and Science and Technology Project of Inner Mongolia Autonomous Region (2023YFSW0006) agency for funding.
+
+Fig. 1 . The video and audio parts corresponding to each frame contains incomplete text information [7] used audio-video emotional mismatch as a cue for multi-modal deepfake detection. Chugh et al. [8] employed a modal detuning score (MDS) to quantify audio-video discrepancies. Zou et al. [6] proposed intra-modal and inter-modal regu-larization techniques, enhancing multi-modal model perfor-mance via audio-visual consistency. As noted earlier, most multi-modal deepfake detection models enhance performance by aligning modalities via cross-modal similarity measurement. With the advance-ment of attention mechanisms, some works [9, 10] have improved alignment by fusing audio-video features through cross-modal attention. However, we argue that traditional cross-modal attention may conflict with multi-modal forgery detection. Specifically, cross-modal attention derives queries and keys from different modalities and generates attention matrices via matrix multiplication—yet most deepfake de-tection tasks rely on modal alignment losses for cross-modal alignment. These losses require cross-modal similarity of fake videos to approach 0 and that of real videos to approach 1. As a result, attention matrices of fake videos are con-strained while those of real videos are enhanced, reducing the model’s sensitivity to forged video regions but increasing it to real content. Such real-video-biased attention is detrimental to deepfake detection. Additionally, current models demand stronger temporal awareness. Most algorithms only extract complex spatial information within frames [6], while lack-ing multi-scale temporal feature extraction. In most cases, a single frame contains incomplete information—its remaining semantic details may reside in adjacent frames—yet frame-level feature extraction fails to fully capture comprehensive semantic information, as illustrated in Fig.1 .
+
+> arXiv:2604.07741v1 [cs.CV] 9 Apr 2026
+
+Fig. 2 . Our proposed approach consists of encoder and classification block (A CLS, V CLS, M CLS). The encoder contains pre-encoder (A E, V E) and transformer module, which consists of self attention (SA) and cross attention (CA). To address the problems, we propose two task-specific attention modules for more accurate extraction of forgery information. First, we design a differential cross-modal attention module: by introducing attention matrix differ-ences, it enables the model to better focus on fake video cues and enhances compatibility between cross-modal atten-tion and cross-modal alignment loss. Second, we propose a multi-scale self-attention module: it extracts multi-scale fea-tures in the temporal dimension, allowing each embedding to adaptively integrate information from adjacent embeddings. Evaluated on the FakeAVCeleb dataset, our method achieves outstanding performance. 
+
+2. METHODOLOGY 
+
+This section introduces our multi-modal deepfake detection framework ( Fig.2 ), which comprises a single-modal feature extraction module and a multi-modal feature fusion module. Built on this framework, we focus on detailing our proposed multi-scale self-attention module and differential cross-modal attention module. 
+
+2.1. Audio-visual deepfake detection model 
+
+The pre-processed audio and visual channel inputs are de-noted as xa ∈ RB×Ca×T and xv ∈ RB×Cv ×T ×H×W . The 
+
+Ca = 104 and Cv = 3 represent the number of audio and vi-sual feature channels, respectively. The overall multi-modal detection labels are denoted as ym. In addition, ya and yv
+
+are defined as the individual labels for the audio and visual modalities. 
+
+2.1.1. Feature extraction and regularization 
+
+Firstly, we obtain the output fi ∈ RB×T ×C of each modality via the pre-encoder, where i represents the specific modality and C represents the feature dimension. To further extract the forgery features, fi is fed into the transformer module, yielding the output Zi = [ zcls , z 1, z 2, ..., z T ] with zt ∈ RB×C
+
+Following MRDF-CE [6], We regularize the transformer output [z1, ..., z T ]. Specifically, we use cross-modal align-ment loss to align paired audio-visual signals, and cross-entropy-based modality-specific regularization to preserve modality-specific details. For multi-modal classification, we concatenate the zcls of each modality and feed them into the classifier. 
+
+2.2. Attention module 
+
+To better align alignment loss with cross-modal attention, we propose a differential cross-modal attention module. Further-more, to equip the transformer encoder with the capability of multi-scale time information perception, we introduce a multi-scale self-attention module. 
+
+2.2.1. Differential cross-modal attention module 
+
+Inspired by the Differential Transformer [11], we propose a differential cross-modal attention(DCA, Fig.3 ) that is more suitable for the multi-modal deepfake detection tasks. Taking the modality A branch as an example, QB cross , QA, KA,and VA derived through four linear layers. Following tradi-tional attention mechanisms, the attention matrix is computed via matrix multiplication as follows: 
+
+(Attn BA = QB cross KTA
+
+Attn AA = QAKTA
+
+(1) We define Attn AA − Attn BA as the cross-modal atten-tion matrix Dif f Attn A. Ultimately, the cross-modal output is obtained by multiplying Dif f Attn A and VA. The cross-modal alignment loss enforces that the cross-modal similar-ity of fake videos tends toward 0. Since Attn AA is a self-attention matrix, its intrinsic similarity remains unaffected by the cross-modal loss. In contrast, Attn BA functions as a cross-modal attention matrix: the lower the cross-modal simi-larity of a fake video, the stronger the constraints imposed on 
+
+Attn BA . This mechanism enhances Dif f Attn A for fake videos, thereby facilitating more effective capture of forgery traces. The modality B branch is the same as A.
+
+Fig. 3 . Differential cross-modal attention module 
+
+2.2.2. Multi-scale self-attention module 
+
+The traditional multi-head attention module lacks the capabil-ity to integrate multi-scale information across different em-beddings. To address this limitation, we proposed a Multi-scale Self-Attention module (MSSA, Fig.4 ). The input vector is passed through three linear layers to obtain Q, K, V ∈ RB×T ×C . These are transformed into multi-head representations Q, K, V ∈ RB×h×T ×Chead ,where h denotes the number of heads. We split K into four parts along the head dimension, each part is processed via 2D convolution at a specific scale, yielding outputs 
+
+Ki ∈ RB× h   
+
+> 4×T×Chead
+
+. We then concatenate all Ki along the head dimension and compute the matrix product with Q
+
+to generate the attention matrix Attn ∈ RB×h×T ×T . Finally, the output is obtained by multiplying Attn with V .The K matrix is processed using 2D convolution, which integrates information from adjacent embeddings in a multi-scale manner. This operation enhances the representational capacity of embeddings and endows the transformer with greater flexibility in the time domain. 
+
+Fig. 4 . Multi-scale self-attention module 
+
+2.3. Loss function 
+
+We utilize cross-entropy loss ( Lce ) to regularize single-modal classification and optimize multi-modal classification: 
+
+Lmce = −
+
+> k
+
+X
+
+> c=1
+
+(ycm × log exp (fθ (xm)c)
+
+Pkc=1 exp (fθ (xm)c) ) (2) Where k = 2 for binary deepfake detection, and fθ (·) rep-resents the classification module. xm (where m = [ a, v, a v ])serves as the input to the classification module. Additionally, we define the cross-modal alignment loss as follows: 
+
+Lc = yna v × (1 − dn) + (1 − yna v ) × max (0 , d n) (3) The similarity between modalities is measured by dn =    
+
+> xna·xnv
+> ∥xna∥∥ xnv∥
+
+. Where n denotes the n-th sample in the batch, 
+
+xna and xnv denote the output embedding [z1, ..., z T ] from the transformer in each modal branch. Finally, we optimize the model using the following formula: 
+
+L = λace Lace + λvce Lvce + λa v ce La v ce + λcLc (4) 
+
+Table 1 . Comparison with other methods on FakeAVCeleb 
+
+Method ACC ↑ AUC ↑
+
+VFD [12] 81.52 86.11 MDS [8] 82.80 86.50 AVOID-DF [13] 83.70 89.20 MRDF-CE [6] 94.05 92.43 BusterX [14] 96.30 -Ours 98.75 98.83 3. EXPERIMENTS 3.1. Datasets 
+
+We evaluated our method on the public dataset FakeAVCeleb [15]. This dataset comprises 500 real videos and over 20,000 fake videos, with data categorized into four dis-tinct types: RealAudio-RealVideo (RARV), FakeAudio-RealVideo (FARV), RealAudio-FakeVideo (RAFV), and FakeAudio-FakeVideo (FAFV). For the sake of fairness in evaluation, we divided the dataset such that the four data types were maintained at a 1:1:1:1 ratio. Given the significant redundancy present in video frames, we employed DLIB to locate the key facial regions in each frame. We then cropped these facial regions to serve as the core input frames for subsequent processing. 
+
+3.2. Experimental setup 
+
+Following the design paradigm of prior audio-visual meth-ods [6], we adopt a linear projection layer as the audio pre-encoder. To better capture discriminative information from video frames, we use an adapted Res2Net [16] as the visual pre-encoder—specifically, integrating a wavelet convolution module [17] at the Res2Net’s front end to extract multi-scale visual features. Additionally, we introduce the Convolutional Block Attention Module (CBAM) [18] between consecutive Res2Net backbone layers, boosting the model’s feature ex-pression. For multi-modal feature fusion and further process-ing, the audio-visual transformer module consists of 6 trans-former blocks—this balances model capacity and computa-tional efficiency. During training, the model was optimized with the Adam optimizer for 200 epochs to ensure conver-gence to stable performance. 
+
+4. RESULTS AND ANALYSIS 
+
+In this section, we evaluated the performance of the model. In addition, each module was analyzed in detail through ablation experiments. 
+
+4.1. Test results and analysis 
+
+We compare the performance of our proposed model against other methods on the FakeAVCeleb dataset, with detailed re-sults presented in Table 1 . Notably, our model achieves com-petitive and strong performance on the FakeAVCeleb dataset: it reaches a classification accuracy of 98 .75% and an AUC score of 98 .83% . These results explicitly demonstrate that our model exhibits strong discriminative ability in distinguishing between real and fake audio-visual content compared to ex-isting advanced baselines. 
+
+4.2. Ablation study 
+
+To boost our model’s fake audio-visual cue extraction, the transformer encoder adopts differential cross-modal attention (DCA ) and multi-scale self-attention (M SSA ). To compare the performance of each module, we set up four experiments by replacing the attention layer in the transformer. We assume that CA and SA represent traditional cross-modal attention and traditional self-attention, respectively. As shown in Ta-ble 2 , both DCA and M SSA improve model performance, with DCA bringing a more pronounced gain. 
+
+Table 2 . Ablation study 
+
+Model ACC ↑ AUC ↑
+
+CA + SA 96.75 96.17 
+
+CA + M SSA 97.00 97.00 
+
+DCA + SA 98.00 98.00 
+
+DCA + M SSA 98.75 98.83 4.3. Visual Results and Analysis 
+
+We visualized the deepfake prediction results of our model and baseline methods via T-SNE in Fig.5 . As clearly illus-trated in the figure, the baseline model struggles to distin-guish between the RA-RV and RA-FV categories, whereas our model—by expanding the embedding perception scale and replacing cross-modal attention—achieves enhanced dis-criminative ability. 
+
+(a) CA + SA (b) CA + M SSA 
+
+(c) DCA + SA (d) DCA + M SSA 
+
+Fig. 5 . Comparison of T-SNE results of different models. 
+
+5. CONCLUSION 
+
+This paper proposes two novel attention modules specifically designed for integration into the transformer encoder of multi-modal deepfake detection systems. Specifically, cross-modal differential attention enhances the model’s compatibility with multi-modal deepfake detection tasks by leveraging atten-tion matrix differences. Multi-scale self-attention boosts the model’s ability to perceive adjacent embeddings via multiple convolutional layers, enabling multi-scale visual perception. Compared with representative existing methods, our approach achieves competitive performance on the public dataset. 6. REFERENCES 
+
+[1] Diederik P Kingma and Max Welling, “Auto-encoding variational bayes,” arXiv.org , 2014. [2] Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio, “Generative adversar-ial networks,” Commun. ACM , vol. 63, no. 11, pp. 139–144, Oct. 2020. [3] Jonathan Ho, Ajay Jain, and Pieter Abbeel, “Denois-ing diffusion probabilistic models,” in Advances in Neural Information Processing Systems , H. Larochelle, M. Ranzato, R. Hadsell, M.F. Balcan, and H. Lin, Eds. 2020, vol. 33, pp. 6840–6851, Curran Associates, Inc. [4] Xiaohuan Chen, Wenhuan Lu, Ruiteng Zhang, Junhai Xu, Xugang Lu, Lin Zhang, and Jianguo Wei, “Contin-ual unsupervised domain adaptation for audio deepfake detection,” in ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) , 2025, pp. 1–5. [5] Yuting Xu, Jian Liang, Gengyun Jia, Ziming Yang, Yan-hao Zhang, and Ran He, “Tall: Thumbnail layout for deepfake video detection,” in 2023 IEEE/CVF Inter-national Conference on Computer Vision (ICCV) , 2023, pp. 22601–22611. [6] Heqing Zou, Meng Shen, Yuchen Hu, Chen Chen, Eng Siong Chng, and Deepu Rajan, “Cross-modality and within-modality regularization for audio-visual deepfake detection,” in ICASSP 2024 - 2024 IEEE In-ternational Conference on Acoustics, Speech and Signal Processing (ICASSP) , 2024, pp. 4900–4904. [7] Trisha Mittal, Uttaran Bhattacharya, Rohan Chandra, Aniket Bera, and Dinesh Manocha, “Emotions don’t lie: An audio-visual deepfake detection method using affec-tive cues,” in Proceedings of the 28th ACM International Conference on Multimedia , New York, NY, USA, 2020, MM ’20, p. 2823–2832, Association for Computing Ma-chinery. [8] Komal Chugh, Parul Gupta, Abhinav Dhall, and Ra-manathan Subramanian, “Not made for each other-audio-visual dissonance-based deepfake detection and localization,” in Proceedings of the 28th ACM Interna-tional Conference on Multimedia , New York, NY, USA, 2020, MM ’20, p. 439–447, Association for Computing Machinery. [9] Miao Liu, Jing Wang, Xinyuan Qian, and Haizhou Li, “Audio-visual temporal forgery detection us-ing embedding-level fusion and multi-dimensional con-trastive loss,” IEEE Transactions on Circuits and Sys-tems for Video Technology , vol. 34, no. 8, pp. 6937– 6948, 2024. [10] Ruijie Tao, Zexu Pan, Rohan Kumar Das, Xinyuan Qian, Mike Zheng Shou, and Haizhou Li, “Is someone speak-ing?: Exploring long-term temporal features for audio-visual active speaker detection,” in Proceedings of the 29th ACM International Conference on Multimedia .Oct. 2021, MM ’21, p. 3927–3935, ACM. [11] Tianzhu Ye, Li Dong, Yuqing Xia, Yutao Sun, Yi Zhu, Gao Huang, and Furu Wei, “Differential transformer,” in The Thirteenth International Conference on Learning Representations , 2025. [12] Harry Cheng, Yangyang Guo, Tianyi Wang, Qi Li, Xiao-jun Chang, and Liqiang Nie, “Voice-face homogeneity tells deepfake,” ACM Trans. Multimedia Comput. Com-mun. Appl. , vol. 20, no. 3, Nov. 2023. [13] Wenyuan Yang, Xiaoyu Zhou, Zhikai Chen, Bofei Guo, Zhongjie Ba, Zhihua Xia, Xiaochun Cao, and Kui Ren, “Avoid-df: Audio-visual joint learning for detecting deepfake,” IEEE Transactions on Information Forensics and Security , vol. 18, pp. 2015–2029, 2023. [14] Haiquan Wen, Yiwei He, Zhenglin Huang, Tianxiao Li, Zihan Yu, Xingru Huang, Lu Qi, Baoyuan Wu, Xiangtai Li, and Guangliang Cheng, “Busterx: Mllm-powered ai-generated video forgery detection and explanation,” 2025. [15] Hasam Khalid, Shahroz Tariq, Minha Kim, and Si-mon S. Woo, “FakeAVCeleb: A novel audio-video mul-timodal deepfake dataset,” in Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 2) , 2021. [16] Shang-Hua Gao, Ming-Ming Cheng, Kai Zhao, Xin-Yu Zhang, Ming-Hsuan Yang, and Philip Torr, “Res2net: A new multi-scale backbone architecture,” IEEE Trans. Pattern Anal. Mach. Intell. , vol. 43, no. 2, pp. 652–662, Feb. 2021. [17] Shahaf E. Finder, Roy Amoyal, Eran Treister, and Oren Freifeld, “Wavelet convolutions for large receptive fields,” in Computer Vision – ECCV 2024: 18th Eu-ropean Conference, Milan, Italy, September 29–Octo-ber 4, 2024, Proceedings, Part LIV , Berlin, Heidelberg, 2024, p. 363–380, Springer-Verlag. [18] Sanghyun Woo, Jongchan Park, Joon-Young Lee, and In So Kweon, “Cbam: Convolutional block attention module,” in Computer Vision – ECCV 2018: 15th Euro-pean Conference, Munich, Germany, September 8–14, 2018, Proceedings, Part VII , Berlin, Heidelberg, 2018, p. 3–19, Springer-Verlag.
