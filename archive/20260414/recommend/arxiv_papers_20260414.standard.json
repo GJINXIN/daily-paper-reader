@@ -1,0 +1,749 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-14T20:38:26.745495+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 12,
+    "deep_cap": 6,
+    "deep_selected": 9,
+    "quick_candidates": 10,
+    "quick_skim_target": 11,
+    "quick_selected": 10
+  },
+  "deep_dive": [
+    {
+      "id": "2604.09746v1",
+      "title": "CONSCIENTIA: Can LLM Agents Learn to Strategize? Emergent Deception and Trust in a Multi-Agent NYC Simulation",
+      "abstract": "As large language models (LLMs) are increasingly deployed as autonomous agents, understanding how strategic behavior emerges in multi-agent environments has become an important alignment challenge. We take a neutral empirical stance and construct a controlled environment in which strategic behavior can be directly observed and measured. We introduce a large-scale multi-agent simulation in a simplified model of New York City, where LLM-driven agents interact under opposing incentives. Blue agents aim to reach their destinations efficiently, while Red agents attempt to divert them toward billboard-heavy routes using persuasive language to maximize advertising revenue. Hidden identities make navigation socially mediated, forcing agents to decide when to trust or deceive. We study policy learning through an iterative simulation pipeline that updates agent policies across repeated interaction rounds using Kahneman-Tversky Optimization (KTO). Blue agents are optimized to reduce billboard exposure while preserving navigation efficiency, whereas Red agents adapt to exploit remaining weaknesses. Across iterations, the best Blue policy improves task success from 46.0% to 57.3%, although susceptibility remains high at 70.7%. Later policies exhibit stronger selective cooperation while preserving trajectory efficiency. However, a persistent safety-helpfulness trade-off remains: policies that better resist adversarial steering do not simultaneously maximize task completion. Overall, our results show that LLM agents can exhibit limited strategic behavior, including selective trust and deception, while remaining highly vulnerable to adversarial persuasion.",
+      "authors": [
+        "Aarush Sinha",
+        "Arion Das",
+        "Soumyadeep Nag",
+        "Charan Karnati",
+        "Shravani Nag",
+        "Chandra Vadhan Raj",
+        "Aman Chadha",
+        "Vinija Jain",
+        "Suranjana Trivedy",
+        "Amitava Das"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-10T06:33:57+00:00",
+      "link": "https://arxiv.org/pdf/2604.09746v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Emergent strategic behavior and deception in a large-scale multi-agent social simulation",
+      "llm_evidence_cn": "大规模多智能体社会模拟中出现的涌现性策略行为与欺骗",
+      "llm_evidence": "大规模多智能体社会模拟中出现的涌现性策略行为与欺骗",
+      "canonical_evidence": "大规模多智能体社会模拟中出现的涌现性策略行为与欺骗",
+      "llm_tldr_en": "Simulates LLM agents in a NYC environment to study emergent strategic behaviors like deception and trust.",
+      "llm_tldr_cn": "在纽约市模拟环境中研究大模型智能体在对立动机下涌现出的欺骗与信任等策略性行为。",
+      "llm_tldr": "在纽约市模拟环境中研究大模型智能体在对立动机下涌现出的欺骗与信任等策略性行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11161v1",
+      "title": "A Simulation-Based Method for Testing Collaborative Learning Scaffolds Using LLM-Based Multi-Agent Systems",
+      "abstract": "Background: Traditional research on collaborative learning scaffolding is often time-consuming and resource-heavy, which hinders the rapid iteration and optimization of instructional strategies. LLM-based multi-agent systems have recently emerged as a powerful tool to simulate complex social interactions and provide a novel paradigm for educational research. Objectives: This study proposes an LLM-based multi-agent simulation approach to investigate collaborative learning processes and the effectiveness of instructional scaffolds prior to actual classroom deployment. The research specifically examines the feasibility of simulating group discussions and the alignment of these simulations with established learning science theories. Methods: The simulation system was implemented using the MetaGPT framework and GPT-4o, comprising one teacher agent and five distinct student roles (Leader, Supporter, Expounder, Rebutter, and Summarizer). Two scaffolding strategies, \"Deep Think before Speak\" and \"Direct Speak\", were compared across ten classical Chinese poetry appreciation tasks. Evaluation was conducted through discourse analysis of quality and behavior. Results and Conclusions: The introduction of the \"Deep Think before Speak\" scaffold significantly improved the agents' discourse diversity and interaction depth while notably reducing content repetitiveness. Behavioral analysis showed that the scaffold encouraged more complex interaction patterns, such as reflecting, rebutting, and explaining. These findings align with the ICAP framework, as the scaffold prompted agents to move from simple \"Active\" participation to \"Constructive\" and \"Interactive\" knowledge co-construction. This study demonstrates the feasibility and ecological validity of using LLM-based multi-agent systems to simulate authentic collaborative learning dynamics.",
+      "authors": [
+        "Han Wua",
+        "Lishan Zhang",
+        "Chunming Lu"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.MA"
+      ],
+      "published": "2026-04-13T08:25:17+00:00",
+      "link": "https://arxiv.org/pdf/2604.11161v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "LLM-based multi-agent systems to simulate complex social interactions in collaborative learning",
+      "llm_evidence_cn": "基于大语言模型的多智能体系统模拟协作学习中的复杂社会互动",
+      "llm_evidence": "基于大语言模型的多智能体系统模拟协作学习中的复杂社会互动",
+      "canonical_evidence": "基于大语言模型的多智能体系统模拟协作学习中的复杂社会互动",
+      "llm_tldr_en": "Proposes an LLM-based multi-agent simulation to study collaborative learning and instructional scaffolds.",
+      "llm_tldr_cn": "提出一种基于大语言模型的多智能体模拟方法，用于研究协作学习过程和教学支架的有效性。",
+      "llm_tldr": "提出一种基于大语言模型的多智能体模拟方法，用于研究协作学习过程和教学支架的有效性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11466v1",
+      "title": "SLALOM: Simulation Lifecycle Analysis via Longitudinal Observation Metrics for Social Simulation",
+      "abstract": "Large Language Model (LLM) agents offer a potentially-transformative path forward for generative social science but face a critical crisis of validity. Current simulation evaluation methodologies suffer from the \"stopped clock\" problem: they confirm that a simulation reached the correct final outcome while ignoring whether the trajectory leading to it was sociologically plausible. Because the internal reasoning of LLMs is opaque, verifying the \"black box\" of social mechanisms remains a persistent challenge. In this paper, we introduce SLALOM (Simulation Lifecycle Analysis via Longitudinal Observation Metrics), a framework that shifts validation from outcome verification to process fidelity. Drawing on Pattern-Oriented Modeling (POM), SLALOM treats social phenomena as multivariate time series that must traverse specific SLALOM gates, or intermediate waypoint constraints representing distinct phases. By utilizing Dynamic Time Warping (DTW) to align simulated trajectories with empirical ground truth, SLALOM offers a quantitative metric to assess structural realism, helping to differentiate plausible social dynamics from stochastic noise and contributing to more robust policy simulation standards.",
+      "authors": [
+        "Juhoon Lee",
+        "Joseph Seering"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-13T13:40:50+00:00",
+      "link": "https://arxiv.org/pdf/2604.11466v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "longitudinal observation metrics for generative social science and LLM agents",
+      "llm_evidence_cn": "生成式社会科学与LLM智能体的纵向观察指标",
+      "llm_evidence": "生成式社会科学与LLM智能体的纵向观察指标",
+      "canonical_evidence": "生成式社会科学与LLM智能体的纵向观察指标",
+      "llm_tldr_en": "A framework for validating the process fidelity of LLM-based social simulations.",
+      "llm_tldr_cn": "一个用于验证基于LLM的社会模拟过程保真度的框架。",
+      "llm_tldr": "一个用于验证基于LLM的社会模拟过程保真度的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11721v1",
+      "title": "Evaluating Cooperation in LLM Social Groups through Elected Leadership",
+      "abstract": "Governing common-pool resources requires agents to develop enduring strategies through cooperation and self-governance to avoid collective failure. While foundation models have shown potential for cooperation in these settings, existing multi-agent research provides little insight into whether structured leadership and election mechanisms can improve collective decision making. The lack of such a critical organizational feature ubiquitous in human society presents a significant shortcoming of the current methods. In this work we aim to directly address whether leadership and elections can support improved social welfare and cooperation through multi-agent simulation with LLMs. We present our open-source framework that simulates leadership through elected personas and candidate-driven agendas and carry out an empirical study of LLMs under controlled governance conditions. Our experiments demonstrate that having elected leadership improves social welfare scores by 55.4% and survival time by 128.6% across a range of high performing LLMs. Through the construction of an agent social graph we compute centrality metrics to assess the social influence of leader personas and also analyze rhetorical and cooperative tendencies revealed through a sentiment analysis on leader utterances. This work lays the foundation for further study of election mechanisms in multi-agent systems toward navigating complex social dilemmas.",
+      "authors": [
+        "Ryan Faulkner",
+        "Anushka Deshpande",
+        "David Guzman Piedrahita",
+        "Joel Z. Leibo",
+        "Zhijing Jin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-04-13T16:57:11+00:00",
+      "link": "https://arxiv.org/pdf/2604.11721v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "multi-agent simulation with LLMs for social groups",
+      "llm_evidence_cn": "使用LLM进行社会群体的多智能体模拟",
+      "llm_evidence": "使用LLM进行社会群体的多智能体模拟",
+      "canonical_evidence": "使用LLM进行社会群体的多智能体模拟",
+      "llm_tldr_en": "Investigates how leadership and elections affect cooperation in LLM-based social multi-agent simulations.",
+      "llm_tldr_cn": "研究领导力和选举机制如何影响基于LLM的社交多智能体模拟中的合作。",
+      "llm_tldr": "研究领导力和选举机制如何影响基于LLM的社交多智能体模拟中的合作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.04634v1",
+      "title": "Preserving Forgery Artifacts: AI-Generated Video Detection at Native Scale",
+      "abstract": "The rapid advancement of video generation models has enabled the creation of highly realistic synthetic media, raising significant societal concerns regarding the spread of misinformation. However, current detection methods suffer from critical limitations. They rely on preprocessing operations like fixed-resolution resizing and cropping. These operations not only discard subtle, high-frequency forgery traces but also cause spatial distortion and significant information loss. Furthermore, existing methods are often trained and evaluated on outdated datasets that fail to capture the sophistication of modern generative models. To address these challenges, we introduce a comprehensive dataset and a novel detection framework. First, we curate a large-scale dataset of over 140K videos from 15 state-of-the-art open-source and commercial generators, along with Magic Videos benchmark designed specifically for evaluating ultra-realistic synthetic content. In addition, we propose a novel detection framework built on the Qwen2.5-VL Vision Transformer, which operates natively at variable spatial resolutions and temporal durations. This native-scale approach effectively preserves the high-frequency artifacts and spatiotemporal inconsistencies typically lost during conventional preprocessing. Extensive experiments demonstrate that our method achieves superior performance across multiple benchmarks, underscoring the critical importance of native-scale processing and establishing a robust new baseline for AI-generated video detection.",
+      "authors": [
+        "Zhengcen Li",
+        "Chenyang Jiang",
+        "Hang Zhao",
+        "Shiyang Zhou",
+        "Yunyang Mo",
+        "Feng Gao",
+        "Fan Yang",
+        "Qiben Shan",
+        "Shaocong Wu",
+        "Jingyong Su"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-04-06T12:36:08+00:00",
+      "link": "https://arxiv.org/pdf/2604.04634v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "AI-generated video detection to combat misinformation",
+      "llm_evidence_cn": "针对虚假信息传播的AI生成视频检测",
+      "llm_evidence": "针对虚假信息传播的AI生成视频检测",
+      "canonical_evidence": "针对虚假信息传播的AI生成视频检测",
+      "llm_tldr_en": "Introduces a framework and dataset for detecting AI-generated videos at native scale to combat misinformation.",
+      "llm_tldr_cn": "提出一种原生尺度的AI生成视频检测框架和数据集，旨在应对虚假信息的传播。",
+      "llm_tldr": "提出一种原生尺度的AI生成视频检测框架和数据集，旨在应对虚假信息的传播。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.08963v2",
+      "title": "Aligned Agents, Biased Swarm: Measuring Bias Amplification in Multi-Agent Systems",
+      "abstract": "While Multi-Agent Systems (MAS) are increasingly deployed for complex workflows, their emergent properties-particularly the accumulation of bias-remain poorly understood. Because real-world MAS are too complex to analyze entirely, evaluating their ethical robustness requires first isolating their foundational mechanics. In this work, we conduct a baseline empirical study investigating how basic MAS topologies and feedback loops influence prejudice. Contrary to the assumption that multi-agent collaboration naturally dilutes bias, we hypothesize that structured workflows act as echo chambers, amplifying minor stochastic biases into systemic polarization. To evaluate this, we introduce Discrim-Eval-Open, an open-ended benchmark that bypasses individual model neutrality through forced comparative judgments across demographic groups. Analyzing bias cascades across various structures reveals that architectural sophistication frequently exacerbates bias rather than mitigating it. We observe systemic amplification even when isolated agents operate neutrally, and identify a 'Trigger Vulnerability' where injecting purely objective context drastically accelerates polarization. By stripping away advanced swarm complexity to study foundational dynamics, we establish a crucial baseline: structural complexity does not guarantee ethical robustness. Our code is available at https://github.com/weizhihao1/MAS-Bias.",
+      "authors": [
+        "Keyu Li",
+        "Jin Gao",
+        "Dequan Wang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-10T05:06:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.08963v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "emergent properties and bias amplification in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的涌现属性与偏见放大",
+      "llm_evidence": "多智能体系统中的涌现属性与偏见放大",
+      "canonical_evidence": "多智能体系统中的涌现属性与偏见放大",
+      "llm_tldr_en": "Investigates how multi-agent topologies and feedback loops amplify biases into systemic polarization.",
+      "llm_tldr_cn": "研究多智能体拓扑和反馈循环如何将微小偏见放大为系统性极化。",
+      "llm_tldr": "研究多智能体拓扑和反馈循环如何将微小偏见放大为系统性极化。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.09711v1",
+      "title": "Head-wise Modality Specialization within MLLMs for Robust Fake News Detection under Missing Modality",
+      "abstract": "Multimodal fake news detection (MFND) aims to verify news credibility by jointly exploiting textual and visual evidence. However, real-world news dissemination frequently suffers from missing modality due to deleted images, corrupted screenshots, and similar issues. Thus, robust detection in this scenario requires preserving strong verification ability for each modality, which is challenging in MFND due to insufficient learning of the low-contribution modality and scarce unimodal annotations. To address this issue, we propose Head-wise Modality Specialization within Multimodal Large Language Models (MLLMs) for robust MFND under missing modality. Specifically, we first systematically study attention heads in MLLMs and their relationship with performance under missing modality, showing that modality-critical heads serve as key carriers of unimodal verification ability through their modality specialization. Based on this observation, to better preserve verification ability for the low-contribution modality, we introduce a head-wise specialization mechanism that explicitly allocates these heads to different modalities and preserves their specialization through lower-bound attention constraints. Furthermore, to better exploit scarce unimodal annotations, we propose a Unimodal Knowledge Retention strategy that prevents these heads from drifting away from the unimodal knowledge learned from limited supervision. Experiments show that our method improves robustness under missing modality while preserving performance with full multimodal input.",
+      "authors": [
+        "Kai Qian",
+        "Weijie Shi",
+        "Jiaqi Wang",
+        "Mengze Li",
+        "Hao Chen",
+        "Yue Cui",
+        "Hanghui Guo",
+        "Ziyi Liu",
+        "Jia Zhu",
+        "Jiajie Xu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.CL"
+      ],
+      "published": "2026-04-08T04:13:55+00:00",
+      "link": "https://arxiv.org/pdf/2604.09711v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multimodal fake news detection using MLLMs",
+      "llm_evidence_cn": "使用多模态大模型进行虚假新闻检测",
+      "llm_evidence": "使用多模态大模型进行虚假新闻检测",
+      "canonical_evidence": "使用多模态大模型进行虚假新闻检测",
+      "llm_tldr_en": "Proposes a specialized MLLM architecture for robust fake news detection under missing modality scenarios.",
+      "llm_tldr_cn": "提出一种专门的MLLM架构，用于在模态缺失的情况下进行鲁棒的虚假新闻检测。",
+      "llm_tldr": "提出一种专门的MLLM架构，用于在模态缺失的情况下进行鲁棒的虚假新闻检测。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11312v1",
+      "title": "Network Effects and Agreement Drift in LLM Debates",
+      "abstract": "Large Language Models (LLMs) have demonstrated an unprecedented ability to simulate human-like social behaviors, making them useful tools for simulating complex social systems. However, it remains unclear to what extent these simulations can be trusted to accurately capture key social mechanisms, particularly in highly unbalanced contexts involving minority groups. This paper uses a network generation model with controlled homophily and class sizes to examine how LLM agents behave collectively in multi-round debates. Moreover, our findings highlight a particular directional susceptibility that we term \\textit{agreement drift}, in which agents are more likely to shift toward specific positions on the opinion scale. Overall, our findings highlight the need to disentangle structural effects from model biases before treating LLM populations as behavioral proxies for human groups.",
+      "authors": [
+        "Erica Cau",
+        "Andrea Failla",
+        "Giulio Rossetti"
+      ],
+      "primary_category": "cs.SI",
+      "categories": [
+        "cs.SI",
+        "cs.AI",
+        "cs.CY",
+        "cs.MA",
+        "physics.soc-ph"
+      ],
+      "published": "2026-04-13T11:16:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.11312v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLMs for simulating complex social systems and agreement drift",
+      "llm_evidence_cn": "用于模拟复杂社会系统和协议漂移的LLM",
+      "llm_evidence": "用于模拟复杂社会系统和协议漂移的LLM",
+      "canonical_evidence": "用于模拟复杂社会系统和协议漂移的LLM",
+      "llm_tldr_en": "Examines collective behavior and opinion shifts in LLM-based multi-round social debates.",
+      "llm_tldr_cn": "研究基于LLM的多轮社会辩论中的集体行为和观点转变。",
+      "llm_tldr": "研究基于LLM的多轮社会辩论中的集体行为和观点转变。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11712v1",
+      "title": "A Distributed Bilevel Framework for the Macroscopic Optimization of Multi-Agent Systems",
+      "abstract": "In this paper, we propose a novel distributed algorithm to optimize the emergent macroscopic behavior of large-scale multi-agent systems via microscopic actions. We cast this task as a bilevel optimization problem, where the upper level formalizes the desired macroscopic target behavior through a suitable performance criterion, which is shaped in the lower level by leveraging a compressed aggregate representation estimating the macroscopic state. More precisely, the macroscopic state is parametrized by an exponential-family of distributions and constructed from the multi-agent microscopic configuration. The proposed algorithm integrates a distributed estimation mechanism, through which each agent reconstructs the macroscopic state locally, with a hypergradient-based update of the microscopic states aimed at improving the collective macroscopic behavior. We prove convergence to the set of stationary points of the bilevel problem via timescale separation arguments. Numerical simulations validate the effectiveness of the proposed method.",
+      "authors": [
+        "Riccardo Brumali",
+        "Guido Carnevale",
+        "Sonia Martínez",
+        "Giuseppe Notarstefano"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-04-13T16:46:37+00:00",
+      "link": "https://arxiv.org/pdf/2604.11712v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Optimizing emergent macroscopic behavior in large-scale multi-agent systems",
+      "llm_evidence_cn": "优化大规模多智能体系统中的涌现宏观行为",
+      "llm_evidence": "优化大规模多智能体系统中的涌现宏观行为",
+      "canonical_evidence": "优化大规模多智能体系统中的涌现宏观行为",
+      "llm_tldr_en": "Introduces a distributed bilevel framework to optimize emergent macroscopic behaviors through microscopic agent actions.",
+      "llm_tldr_cn": "引入分布式双层框架，通过微观智能体动作优化多智能体系统中的涌现宏观行为。",
+      "llm_tldr": "引入分布式双层框架，通过微观智能体动作优化多智能体系统中的涌现宏观行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.07003v2",
+      "title": "EmoMAS: Emotion-Aware Multi-Agent System for High-Stakes Edge-Deployable Negotiation with Bayesian Orchestration",
+      "abstract": "Large language models (LLMs) has been widely used for automated negotiation, but their high computational cost and privacy risks limit deployment in privacy-sensitive, on-device settings such as mobile assistants or rescue robots. Small language models (SLMs) offer a viable alternative, yet struggle with the complex emotional dynamics of high-stakes negotiation. We introduces EmoMAS, a Bayesian multi-agent framework that transforms emotional decision-making from reactive to strategic. EmoMAS leverages a Bayesian orchestrator to coordinate three specialized agents: game-theoretic, reinforcement learning, and psychological coherence models. The system fuses their real-time insights to optimize emotional state transitions while continuously updating agent reliability based on negotiation feedback. This mixture-of-agents architecture enables online strategy learning without pre-training. We further introduce four high-stakes, edge-deployable negotiation benchmarks across debt, healthcare, emergency response, and educational domains. Through extensive agent-to-agent simulations across all benchmarks, both SLMs and LLMs equipped with EmoMAS consistently surpass all baseline models in negotiation performance while balancing ethical behavior. These results show that strategic emotional intelligence is also the key driver of negotiation success. By treating emotional expression as a strategic variable within a Bayesian multi-agent optimization framework, EmoMAS establishes a new paradigm for effective, private, and adaptive negotiation AI suitable for high-stakes edge deployment.",
+      "authors": [
+        "Yunbo Long",
+        "Yuhan Liu",
+        "Liming Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-08T12:20:06+00:00",
+      "link": "https://arxiv.org/pdf/2604.07003v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Emotion-aware multi-agent system for simulating complex negotiation dynamics",
+      "llm_evidence_cn": "用于模拟复杂谈判动态的情感感知多智能体系统",
+      "llm_evidence": "用于模拟复杂谈判动态的情感感知多智能体系统",
+      "canonical_evidence": "用于模拟复杂谈判动态的情感感知多智能体系统",
+      "llm_tldr_en": "Develops a Bayesian multi-agent framework to handle emotional dynamics in high-stakes automated negotiations.",
+      "llm_tldr_cn": "开发了一个贝叶斯多智能体框架，用于处理高风险自动谈判中的情感动态。",
+      "llm_tldr": "开发了一个贝叶斯多智能体框架，用于处理高风险自动谈判中的情感动态。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.08931v1",
+      "title": "Enhancing LLM Problem Solving via Tutor-Student Multi-Agent Interaction",
+      "abstract": "Human cognitive development is shaped not only by individual effort but by structured social interaction, where role-based exchanges such as those between a tutor and a learner, enable solutions that neither could achieve alone. Inspired by these developmental principles, we ask the question whether a tutor-student multi-agent system can create a synergistic effect by pushing Large Language Model (LLM) beyond what it can do within existing frameworks. To test the idea, we adopt autonomous coding problem domain where two agents instantiated from the same LLM assigned asymmetric roles: a student agent generates and iteratively refines solutions, while a tutor agent provides structured evaluative feedback without access to ground-truth answers. In our proposed framework (PETITE), we aim to extract better problem-solving performance from one model by structuring its interaction through complementary roles, rather than relying on stronger supervisory models or heterogeneous ensembles. Our model is evaluated on the APPS coding benchmark against state-of-the-art approaches of Self-Consistency, Self-Refine, Multi-Agent Debate, and Multi-Agent Review. The results show that our model achieves similar or higher accuracy while consuming significantly fewer tokens. These results suggest that developmentally grounded role-differentiated interaction structures provide a principled and resource-efficient paradigm for enhancing LLM problem-solving through structured peer-like interactions. Index Terms- Peer Tutoring, Scaffolding, Large Language Models, Multi-Agent Systems, Code Generation",
+      "authors": [
+        "Nurullah Eymen Özdemir",
+        "Erhan Oztop"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-10T03:56:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.08931v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "tutor-student multi-agent interaction for problem solving",
+      "llm_evidence_cn": "导师-学生多智能体交互解决问题",
+      "llm_evidence": "导师-学生多智能体交互解决问题",
+      "canonical_evidence": "导师-学生多智能体交互解决问题",
+      "llm_tldr_en": "Explores how structured social interaction between LLM agents improves problem-solving capabilities.",
+      "llm_tldr_cn": "探索LLM智能体之间结构化的社交互动如何提升解决问题的能力。",
+      "llm_tldr": "探索LLM智能体之间结构化的社交互动如何提升解决问题的能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.08643v1",
+      "title": "Creator Incentives in Recommender Systems: A Cooperative Game-Theoretic Approach for Stable and Fair Collaboration in Multi-Agent Bandits",
+      "abstract": "User interactions in online recommendation platforms create interdependencies among content creators: feedback on one creator's content influences the system's learning and, in turn, the exposure of other creators' contents. To analyze incentives in such settings, we model collaboration as a multi-agent stochastic linear bandit problem with a transferable utility (TU) cooperative game formulation, where a coalition's value equals the negative sum of its members' cumulative regrets.   We show that, for identical (homogenous) agents with fixed action sets, the induced TU game is convex under mild algorithmic conditions, implying a non-empty core that contains the Shapley value and ensures both stability and fairness. For heterogeneous agents, the game still admits a non-empty core, though convexity and Shapley value core-membership are no longer guaranteed. To address this, we propose a simple regret-based payout rule that satisfies three out of the four Shapley axioms and also lies in the core. Experiments on MovieLens-100k dataset illustrate when the empirical payout aligns with -- and diverges from -- the Shapley fairness across different settings and algorithms.",
+      "authors": [
+        "Ramakrishnan Krishnamurthy",
+        "Arpit Agarwal",
+        "Lakshminarayanan Subramanian",
+        "Maximilian Nickel"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CY",
+        "cs.GT",
+        "cs.SI"
+      ],
+      "published": "2026-04-09T17:45:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.08643v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent bandits in recommendation platforms",
+      "llm_evidence_cn": "推荐平台中的多智能体老虎机模型",
+      "llm_evidence": "推荐平台中的多智能体老虎机模型",
+      "canonical_evidence": "推荐平台中的多智能体老虎机模型",
+      "llm_tldr_en": "Analyzes creator incentives and collaboration in recommendation systems using multi-agent game theory.",
+      "llm_tldr_cn": "利用多智能体博弈论分析推荐系统中的创作者激励与协作。",
+      "llm_tldr": "利用多智能体博弈论分析推荐系统中的创作者激励与协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.09502v2",
+      "title": "Strategic Algorithmic Monoculture: Experimental Evidence from Coordination Games",
+      "abstract": "AI agents increasingly operate in multi-agent environments where outcomes depend on coordination. We distinguish primary algorithmic monoculture -- baseline action similarity -- from strategic algorithmic monoculture, whereby agents adjust similarity in response to incentives. We implement a simple experimental design that cleanly separates these forces, and deploy it on human and large language model (LLM) subjects. LLMs exhibit high levels of baseline similarity (primary monoculture) and, like humans, they regulate it in response to coordination incentives (strategic monoculture). While LLMs coordinate extremely well on similar actions, they lag behind humans in sustaining heterogeneity when divergence is rewarded.",
+      "authors": [
+        "Gonzalo Ballestero",
+        "Hadi Hosseini",
+        "Samarth Khanna",
+        "Ran I. Shorrer"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.GT",
+        "cs.MA",
+        "econ.TH"
+      ],
+      "published": "2026-04-10T17:14:46+00:00",
+      "link": "https://arxiv.org/pdf/2604.09502v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM agents in multi-agent environments and strategic coordination behavior",
+      "llm_evidence_cn": "多智能体环境中的LLM智能体及其策略性协作行为",
+      "llm_evidence": "多智能体环境中的LLM智能体及其策略性协作行为",
+      "canonical_evidence": "多智能体环境中的LLM智能体及其策略性协作行为",
+      "llm_tldr_en": "This paper explores how LLM agents exhibit algorithmic monoculture and strategic coordination in multi-agent games.",
+      "llm_tldr_cn": "本文探讨了LLM智能体在多智能体博弈中表现出的算法单一性及策略性协作行为。",
+      "llm_tldr": "本文探讨了LLM智能体在多智能体博弈中表现出的算法单一性及策略性协作行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.09285v1",
+      "title": "SAGE: A Service Agent Graph-guided Evaluation Benchmark",
+      "abstract": "The development of Large Language Models (LLMs) has catalyzed automation in customer service, yet benchmarking their performance remains challenging. Existing benchmarks predominantly rely on static paradigms and single-dimensional metrics, failing to account for diverse user behaviors or the strict adherence to structured Standard Operating Procedures (SOPs) required in real-world deployments. To bridge this gap, we propose SAGE (Service Agent Graph-guided Evaluation), a universal multi-agent benchmark for automated, dual-axis assessment. SAGE formalizes unstructured SOPs into Dynamic Dialogue Graphs, enabling precise verification of logical compliance and comprehensive path coverage. We introduce an Adversarial Intent Taxonomy and a modular Extension Mechanism, enabling low-cost deployment across domains and facilitating automated dialogue data synthesis. Evaluation is conducted via a framework where Judge Agents and a Rule Engine analyze interactions between User and Service Agents to generate deterministic ground truth. Extensive experiments on 27 LLMs across 6 industrial scenarios reveal a significant ``Execution Gap'' where models accurately classify intents but fail to derive correct subsequent actions. We also observe ``Empathy Resilience'', a phenomenon where models maintain polite conversational facades despite underlying logical failures under high adversarial intensity. Code and resources are available at https://anonymous.4open.science/r/SAGE-Bench-4CD3/.",
+      "authors": [
+        "Ling Shi",
+        "Yuqin Dai",
+        "Ziyin Wang",
+        "Ning Gao",
+        "Wei Zhang",
+        "Chaozheng Wang",
+        "Yujie Wang",
+        "Wei He",
+        "Jinpeng Wang",
+        "Deiyi Xiong"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-10T12:55:23+00:00",
+      "link": "https://arxiv.org/pdf/2604.09285v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent benchmark for automated assessment of service agents",
+      "llm_evidence_cn": "用于服务智能体自动化评估的多智能体基准测试",
+      "llm_evidence": "用于服务智能体自动化评估的多智能体基准测试",
+      "canonical_evidence": "用于服务智能体自动化评估的多智能体基准测试",
+      "llm_tldr_en": "Proposes a graph-guided multi-agent benchmark to evaluate service agents' compliance with procedures.",
+      "llm_tldr_cn": "提出 SAGE 多智能体基准，通过动态对话图评估服务智能体对标准作业程序的逻辑合规性。",
+      "llm_tldr": "提出 SAGE 多智能体基准，通过动态对话图评估服务智能体对标准作业程序的逻辑合规性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.11353v1",
+      "title": "Leader-Follower Density Control of Multi-Agent Systems with Interacting Followers: Feasibility and Convergence Analysis",
+      "abstract": "We address density control problems for large-scale multi-agent systems in leader-follower settings, where a group of controllable leaders must steer a population of followers toward a desired spatial distribution. Unlike prior work, we explicitly account for follower-follower interactions, capturing realistic behaviors such as flocking and collision avoidance. Within a macroscopic framework based on partial differential equations governing the density dynamics, we derive (i) necessary and sufficient feasibility conditions linking the target distribution to interaction strength, diffusion, and leader mass, and (ii) a feedback control law guaranteeing local stability with an explicit estimate of the basin of attraction. Our analysis reveals sharp feasibility thresholds, phase transitions beyond which no control effort can achieve the desired configuration. Numerical simulations in one- and two-dimensional domains validate the theoretical results at the macroscopic level, and agent-based simulations on finite populations confirm the practical deployability of the proposed framework.",
+      "authors": [
+        "Beniamino Di Lorenzo",
+        "Gian Carlo Maffettone",
+        "Mario di Bernardo"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-04-13T11:50:48+00:00",
+      "link": "https://arxiv.org/pdf/2604.11353v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "density control of large-scale multi-agent systems",
+      "llm_evidence_cn": "大规模多智能体系统的密度控制",
+      "llm_evidence": "大规模多智能体系统的密度控制",
+      "canonical_evidence": "大规模多智能体系统的密度控制",
+      "llm_tldr_en": "Develops control laws for steering large-scale multi-agent populations while accounting for interactions.",
+      "llm_tldr_cn": "开发了在考虑个体间相互作用的情况下引导大规模多智能体种群的控制律。",
+      "llm_tldr": "开发了在考虑个体间相互作用的情况下引导大规模多智能体种群的控制律。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.09960v1",
+      "title": "Human vs. Machine Deception: Distinguishing AI-Generated and Human-Written Fake News Using Ensemble Learning",
+      "abstract": "The rapid adoption of large language models has introduced a new class of AI-generated fake news that coexists with traditional human-written misinformation, raising important questions about how these two forms of deceptive content differ and how reliably they can be distinguished. This study examines linguistic, structural, and emotional differences between human-written and AI-generated fake news and evaluates machine learning and ensemble-based methods for distinguishing these content types. A document-level feature representation is constructed using sentence structure, lexical diversity, punctuation patterns, readability indices, and emotion-based features capturing affective dimensions such as fear, anger, joy, sadness, trust, and anticipation. Multiple classification models, including logistic regression, random forest, support vector machines, extreme gradient boosting, and a neural network, are applied alongside an ensemble framework that aggregates predictions across models. Model performance is assessed using accuracy and area under the receiver operating characteristic curve. The results show strong and consistent classification performance, with readability-based features emerging as the most informative predictors and AI-generated text exhibiting more uniform stylistic patterns. Ensemble learning provides modest but consistent improvements over individual models. These findings indicate that stylistic and structural properties of text provide a robust basis for distinguishing AI-generated misinformation from human-written fake news.",
+      "authors": [
+        "Samuel Jaeger",
+        "Calvin Ibeneye",
+        "Aya Vera-Jimenez",
+        "Dhrubajyoti Ghosh"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-10T23:51:28+00:00",
+      "link": "https://arxiv.org/pdf/2604.09960v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Distinguishing AI-generated and human-written fake news using linguistic and emotional features",
+      "llm_evidence_cn": "利用语言和情感特征区分AI生成与人类编写的虚假新闻",
+      "llm_evidence": "利用语言和情感特征区分AI生成与人类编写的虚假新闻",
+      "canonical_evidence": "利用语言和情感特征区分AI生成与人类编写的虚假新闻",
+      "llm_tldr_en": "Analyzes differences between human and AI fake news to improve detection using ensemble learning methods.",
+      "llm_tldr_cn": "分析人类与AI虚假新闻的差异，利用集成学习方法提升虚假新闻检测效果。",
+      "llm_tldr": "分析人类与AI虚假新闻的差异，利用集成学习方法提升虚假新闻检测效果。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.09744v1",
+      "title": "MPAC: A Multi-Principal Agent Coordination Protocol for Interoperable Multi-Agent Collaboration",
+      "abstract": "The AI agent ecosystem has converged on two protocols: the Model Context Protocol (MCP) for tool invocation and Agent-to-Agent (A2A) for single-principal task delegation. Both assume a single controlling principal, meaning one person or organization that owns every agent. When independent principals' agents must coordinate over shared state, such as engineers' coding agents editing the same repository, family members planning a shared trip, or agents from different organizations negotiating a joint decision, neither protocol applies, and coordination collapses to ad-hoc chat, manual merging, or silent overwrites. We present MPAC (Multi-Principal Agent Coordination Protocol), an application-layer protocol that fills this gap with explicit coordination semantics across five layers: Session, Intent, Operation, Conflict, and Governance. MPAC makes intent declaration a precondition for action, represents conflicts as first-class structured objects, and supports human-in-the-loop arbitration through a pluggable governance layer. The specification defines 21 message types, three state machines with normative transition tables, Lamport-clock causal watermarking, two execution models, three security profiles, and optimistic concurrency control on shared state. We release two interoperable reference implementations in Python and TypeScript with 223 tests, a JSON Schema suite, and seven live multi-agent demos. A controlled three-agent code review benchmark shows a 95 percent reduction in coordination overhead and a 4.8 times wall-clock speedup versus a serialized human-mediated baseline, with per-agent decision time preserved. The speedup comes from eliminating coordination waits, not compressing model calls. Specification, implementations, and demos are open source.",
+      "authors": [
+        "Kaiyang Qian",
+        "Xinmin Fang",
+        "Zhengxiong Li"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-10T01:12:05+00:00",
+      "link": "https://arxiv.org/pdf/2604.09744v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "protocol for multi-principal agent coordination",
+      "llm_evidence_cn": "多主体智能体协作协议",
+      "llm_evidence": "多主体智能体协作协议",
+      "canonical_evidence": "多主体智能体协作协议",
+      "llm_tldr_en": "Proposes MPAC protocol to enable interoperable coordination between agents owned by different principals.",
+      "llm_tldr_cn": "提出MPAC协议，旨在解决不同所有者所属智能体之间的互操作协作与状态共享问题。",
+      "llm_tldr": "提出MPAC协议，旨在解决不同所有者所属智能体之间的互操作协作与状态共享问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10938v1",
+      "title": "AgentWebBench: Benchmarking Multi-Agent Coordination in Agentic Web",
+      "abstract": "Agentic Web is an emerging paradigm where autonomous agents help users use online information. As the paradigm develops, content providers are also deploying agents to manage their data and serve it through controlled interfaces. This shift moves information access from centralized retrieval to decentralized coordination. To study this setting, we introduce AgentWebBench, a benchmark that evaluates how well a user agent synthesizes answers by interacting with website-specific content agents. We evaluate four tasks that cover common web information needs, spanning ranked retrieval (web search, web recommendation) and open-ended synthesis (question answering, deep research). Across seven advanced LLMs and three coordination strategies, multi-agent coordination generally lags behind centralized retrieval as expected, because user agent cannot directly access the corpus, but the gap shrinks with model scale and can even outperform centralized retrieval on question answering. This benchmark also enables us to study properties of the emerging paradigm of the digital world. We find that decentralized access concentrates traffic toward a small set of websites, test time scaling improves both interaction reliability and task performance, and strong results require sufficient interactions guided by careful planning. Finally, our failure analysis suggests that user agents need better planning and answer synthesis, while content agents need more reliable retrieval and evidence quality. Code, data, and APIs are released on https://github.com/cxcscmu/AgentWebBench.",
+      "authors": [
+        "Shanshan Zhong",
+        "Kate Shen",
+        "Chenyan Xiong"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-04-13T03:18:34+00:00",
+      "link": "https://arxiv.org/pdf/2604.10938v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "benchmarking multi-agent coordination in decentralized web environments",
+      "llm_evidence_cn": "去中心化网络环境下的多智能体协作基准测试",
+      "llm_evidence": "去中心化网络环境下的多智能体协作基准测试",
+      "canonical_evidence": "去中心化网络环境下的多智能体协作基准测试",
+      "llm_tldr_en": "AgentWebBench evaluates multi-agent coordination for information synthesis in the emerging Agentic Web.",
+      "llm_tldr_cn": "AgentWebBench基准测试评估了新兴智能体网络中多智能体协作进行信息综合的能力。",
+      "llm_tldr": "AgentWebBench基准测试评估了新兴智能体网络中多智能体协作进行信息综合的能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.11523v1",
+      "title": "PAC-BENCH: Evaluating Multi-Agent Collaboration under Privacy Constraints",
+      "abstract": "We are entering an era in which individuals and organizations increasingly deploy dedicated AI agents that interact and collaborate with other agents. However, the dynamics of multi-agent collaboration under privacy constraints remain poorly understood. In this work, we present $PAC\\text{-}Bench$, a benchmark for systematic evaluation of multi-agent collaboration under privacy constraints. Experiments on $PAC\\text{-}Bench$ show that privacy constraints substantially degrade collaboration performance and make outcomes depend more on the initiating agent than the partner. Further analysis reveals that this degradation is driven by recurring coordination breakdowns, including early-stage privacy violations, overly conservative abstraction, and privacy-induced hallucinations. Together, our findings identify privacy-aware multi-agent collaboration as a distinct and unresolved challenge that requires new coordination mechanisms beyond existing agent capabilities.",
+      "authors": [
+        "Minjun Park",
+        "Donghyun Kim",
+        "Hyeonjong Ju",
+        "Seungwon Lim",
+        "Dongwook Choi",
+        "Taeyoon Kwon",
+        "Minju Kim",
+        "Jinyoung Yeo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-13T14:26:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.11523v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent collaboration and coordination breakdowns",
+      "llm_evidence_cn": "多智能体协作与协作崩溃分析",
+      "llm_evidence": "多智能体协作与协作崩溃分析",
+      "canonical_evidence": "多智能体协作与协作崩溃分析",
+      "llm_tldr_en": "PAC-BENCH evaluates how privacy constraints impact performance and coordination in multi-agent collaboration.",
+      "llm_tldr_cn": "PAC-BENCH评估了隐私约束如何影响多智能体协作中的性能表现与协调机制。",
+      "llm_tldr": "PAC-BENCH评估了隐私约束如何影响多智能体协作中的性能表现与协调机制。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
