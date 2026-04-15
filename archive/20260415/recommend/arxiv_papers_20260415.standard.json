@@ -1,0 +1,658 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-15T20:44:05.032065+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 12,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.11840v1",
+      "title": "When Reasoning Models Hurt Behavioral Simulation: A Solver-Sampler Mismatch in Multi-Agent LLM Negotiation",
+      "abstract": "Large language models are increasingly used as agents in social, economic, and policy simulations. A common assumption is that stronger reasoning should improve simulation fidelity. We argue that this assumption can fail when the objective is not to solve a strategic problem, but to sample plausible boundedly rational behavior. In such settings, reasoning-enhanced models can become better solvers and worse simulators: they can over-optimize for strategically dominant actions, collapse compromise-oriented terminal behavior, and sometimes exhibit a diversity-without-fidelity pattern in which local variation survives without outcome-level fidelity. We study this solver-sampler mismatch in three multi-agent negotiation environments adapted from earlier simulation work: an ambiguous fragmented-authority trading-limits scenario, an ambiguous unified-opposition trading-limits scenario, and a new-domain grid-curtailment case in emergency electricity management. We compare three reflection conditions, no reflection, bounded reflection, and native reasoning, across two primary model families and then extend the same protocol to direct OpenAI runs with GPT-4.1 and GPT-5.2. Across all three experiments, bounded reflection produces substantially more diverse and compromise-oriented trajectories than either no reflection or native reasoning. In the direct OpenAI extension, GPT-5.2 native ends in authority decisions in 45 of 45 runs across the three experiments, while GPT-5.2 bounded recovers compromise outcomes in every environment. The contribution is not a claim that reasoning is generally harmful. It is a methodological warning: model capability and simulation fidelity are different objectives, and behavioral simulation should qualify models as samplers, not only as solvers.",
+      "authors": [
+        "Sandro Andric"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-04-12T13:36:10+00:00",
+      "link": "https://arxiv.org/pdf/2604.11840v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "LLM agents for social and behavioral simulation",
+      "llm_evidence_cn": "用于社会和行为模拟的LLM智能体",
+      "llm_evidence": "用于社会和行为模拟的LLM智能体",
+      "canonical_evidence": "用于社会和行为模拟的LLM智能体",
+      "llm_tldr_en": "Analyzes how reasoning-enhanced LLMs can negatively impact the fidelity of multi-agent social simulations.",
+      "llm_tldr_cn": "分析了增强推理能力的LLM如何对多智能体社会模拟的保真度产生负面影响。",
+      "llm_tldr": "分析了增强推理能力的LLM如何对多智能体社会模拟的保真度产生负面影响。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12250v1",
+      "title": "How memory can affect collective and cooperative behaviors in an LLM-Based Social Particle Swarm",
+      "abstract": "This study examines how model-specific characteristics of Large Language Model (LLM) agents, including internal alignment, shape the effect of memory on their collective and cooperative dynamics in a multi-agent system. To this end, we extend the Social Particle Swarm (SPS) model, in which agents move in a two-dimensional space and play the Prisoner's Dilemma with neighboring agents, by replacing its rule-based agents with LLM agents endowed with Big Five personality scores and varying memory lengths. Using Gemini-2.0-Flash, we find that memory length is a critical parameter governing collective behavior: even a minimal memory drastically suppressed cooperation, transitioning the system from stable cooperative clusters through cyclical formation and collapse of clusters to a state of scattered defection as memory length increased. Big Five personality traits correlated with agent behaviors in partial agreement with findings from experiments with human participants, supporting the validity of the model. Comparative experiments using Gemma~3:4b revealed the opposite trend: longer memory promoted cooperation, accompanied by the formation of dense cooperative clusters. Sentiment analysis of agents' reasoning texts showed that Gemini interprets memory increasingly negatively as its length grows, while Gemma interprets it less negatively, and that this difference persists in the early phase of experiments before the macro-level dynamics converge. These results suggest that model-specific characteristics of LLMs, potentially including alignment, play a fundamental role in determining emergent social behavior in Generative Agent-Based Modeling, and provide a micro-level cognitive account of the contradictions found in prior work on memory and cooperation.",
+      "authors": [
+        "Taisei Hishiki",
+        "Takaya Arita",
+        "Reiji Suzuki"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.GT",
+        "cs.MA"
+      ],
+      "published": "2026-04-14T03:54:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.12250v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "LLM agents in multi-agent system for collective behavior",
+      "llm_evidence_cn": "多智能体系统中的大语言模型代理集体行为",
+      "llm_evidence": "多智能体系统中的大语言模型代理集体行为",
+      "canonical_evidence": "多智能体系统中的大语言模型代理集体行为",
+      "llm_tldr_en": "Explores how memory affects cooperation in LLM-based multi-agent social particle swarm simulations.",
+      "llm_tldr_cn": "探讨了记忆如何影响基于大语言模型的多智能体社会粒子群模拟中的合作行为。",
+      "llm_tldr": "探讨了记忆如何影响基于大语言模型的多智能体社会粒子群模拟中的合作行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11975v1",
+      "title": "M2HRI: An LLM-Driven Multimodal Multi-Agent Framework for Personalized Human-Robot Interaction",
+      "abstract": "Multi-robot systems hold significant promise for social environments such as homes and hospitals, yet existing multi-robot works treat robots as functionally identical, overlooking how robots individual identity shape user perception and how coordination shapes multi-robot behavior when such individuality is present. To address this, we introduce M2HRI, a multimodal multi-agent framework built on large language models that equips each robot with distinct personality and long-term memory, alongside a coordination mechanism conditioned on these differences. In a controlled user study (n = 105) in a multi-agent human-robot interaction (HRI) scenario, we find that LLM-driven personality traits are significantly distinguishable and enhance interaction quality, long-term memory improves personalization and preference awareness, and centralized coordination significantly reduces overlap while improving overall interaction quality. Together, these results demonstrate that both agent individuality and structured coordination are essential for coherent and socially appropriate multi-agent HRI. Project website and code are available at https://project-m2hri.github.io/.",
+      "authors": [
+        "Shaid Hasan",
+        "Breenice Lee",
+        "Sujan Sarker",
+        "Tariq Iqbal"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-04-13T19:08:05+00:00",
+      "link": "https://arxiv.org/pdf/2604.11975v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLM-driven multi-agent framework for social environments",
+      "llm_evidence_cn": "用于社交环境的LLM驱动多智能体框架",
+      "llm_evidence": "用于社交环境的LLM驱动多智能体框架",
+      "canonical_evidence": "用于社交环境的LLM驱动多智能体框架",
+      "llm_tldr_en": "Equips robots with LLM-driven personalities and memory for personalized social interaction.",
+      "llm_tldr_cn": "为机器人配备LLM驱动的个性和记忆，以实现个性化的社交互动。",
+      "llm_tldr": "为机器人配备LLM驱动的个性和记忆，以实现个性化的社交互动。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12184v1",
+      "title": "TRUST Agents: A Collaborative Multi-Agent Framework for Fake News Detection, Explainable Verification, and Logic-Aware Claim Reasoning",
+      "abstract": "TRUST Agents is a collaborative multi-agent framework for explainable fact verification and fake news detection. Rather than treating verification as a simple true-or-false classification task, the system identifies verifiable claims, retrieves relevant evidence, compares claims against that evidence, reasons under uncertainty, and generates explanations that humans can inspect. The baseline pipeline consists of four specialized agents. A claim extractor uses named entity recognition, dependency parsing, and LLM-based extraction to identify factual claims. A retrieval agent performs hybrid sparse and dense search using BM25 and FAISS. A verifier agent compares claims with retrieved evidence and produces verdicts with calibrated confidence. An explainer agent then generates a human-readable report with explicit evidence citations. To handle complex claims more effectively, we introduce a research-oriented extension with three additional components: a decomposer agent inspired by LoCal-style claim decomposition, a Delphi-inspired multi-agent jury with specialized verifier personas, and a logic aggregator that combines atomic verdicts using conjunction, disjunction, negation, and implication. We evaluate both pipelines on the LIAR benchmark against fine-tuned BERT, fine-tuned RoBERTa, and a zero-shot LLM baseline. Although supervised encoders remain stronger on raw metrics, TRUST Agents improves interpretability, evidence transparency, and reasoning over compound claims. Results also show that retrieval quality and uncertainty calibration remain the main bottlenecks in trustworthy automated fact verification.",
+      "authors": [
+        "Gautama Shastry Bulusu Venkata",
+        "Santhosh Kakarla",
+        "Maheedhar Omtri Mohan",
+        "Aishwarya Gaddam"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-14T01:31:14+00:00",
+      "link": "https://arxiv.org/pdf/2604.12184v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-agent framework for fake news detection",
+      "llm_evidence_cn": "用于虚假新闻检测的多智能体框架",
+      "llm_evidence": "用于虚假新闻检测的多智能体框架",
+      "canonical_evidence": "用于虚假新闻检测的多智能体框架",
+      "llm_tldr_en": "Develops a collaborative multi-agent system for explainable fact verification and fake news detection.",
+      "llm_tldr_cn": "开发了一个协作式多智能体系统，用于可解释的事实核查和虚假新闻检测。",
+      "llm_tldr": "开发了一个协作式多智能体系统，用于可解释的事实核查和虚假新闻检测。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12776v1",
+      "title": "EvoSpark: Endogenous Interactive Agent Societies for Unified Long-Horizon Narrative Evolution",
+      "abstract": "Realizing endogenous narrative evolution in LLM-based multi-agent systems is hindered by the inherent stochasticity of generative emergence. In particular, long-horizon simulations suffer from social memory stacking, where conflicting relational states accumulate without resolution, and narrative-spatial dissonance, where spatial logic detaches from the evolving plot. To bridge this gap, we propose EvoSpark, a framework specifically designed to sustain logically coherent long-horizon narratives within Endogenous Interactive Agent Societies. To ensure consistency, the Stratified Narrative Memory employs a Role Socio-Evolutionary Base as living cognition, dynamically metabolizing experiences to resolve historical conflicts. Complementarily, Generative Mise-en-Scène mechanism enforces Role-Location-Plot alignment, synchronizing character presence with the narrative flow. Underpinning these is the Unified Narrative Operation Engine, which integrates an Emergent Character Grounding Protocol to transform stochastic sparking into persistent characters. This engine establishes a substrate that expands a minimal premise into an open-ended, evolving story world. Experiments demonstrate that EvoSpark significantly outperforms baselines across diverse paradigms, enabling the sustained generation of expressive and coherent narrative experiences.",
+      "authors": [
+        "Shiyu He",
+        "Minchi Kuang",
+        "Mengxian Wang",
+        "Bin Hu",
+        "Tingxiang Gu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-14T14:16:06+00:00",
+      "link": "https://arxiv.org/pdf/2604.12776v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Endogenous interactive agent societies for long-horizon narratives",
+      "llm_evidence_cn": "用于长程叙事演化的内生交互智能体社会",
+      "llm_evidence": "用于长程叙事演化的内生交互智能体社会",
+      "canonical_evidence": "用于长程叙事演化的内生交互智能体社会",
+      "llm_tldr_en": "Proposes EvoSpark to maintain narrative consistency and social memory in long-term multi-agent simulations.",
+      "llm_tldr_cn": "提出EvoSpark框架，旨在维持长期多智能体模拟中的叙事逻辑一致性和社会记忆。",
+      "llm_tldr": "提出EvoSpark框架，旨在维持长期多智能体模拟中的叙事逻辑一致性和社会记忆。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.06728v1",
+      "title": "URMF: Uncertainty-aware Robust Multimodal Fusion for Multimodal Sarcasm Detection",
+      "abstract": "Multimodal sarcasm detection (MSD) aims to identify sarcastic intent from semantic incongruity between text and image. Although recent methods have improved MSD through cross-modal interaction and incongruity reasoning, they often assume that all modalities are equally reliable. In real-world social media, however, textual content may be ambiguous and visual content may be weakly relevant or even irrelevant, causing deterministic fusion to introduce noisy evidence and weaken robust reasoning. To address this issue, we propose Uncertainty-aware Robust Multimodal Fusion (URMF), a unified framework that explicitly models modality reliability during interaction and fusion. URMF first employs multi-head cross-attention to inject visual evidence into textual representations, followed by multi-head self-attention in the fused semantic space to enhance incongruity-aware reasoning. It then performs unified unimodal aleatoric uncertainty modeling over text, image, and interaction-aware latent representations by parameterizing each modality as a learnable Gaussian posterior. The estimated uncertainty is further used to dynamically regulate modality contributions during fusion, suppressing unreliable modalities and yielding a more robust joint representation. In addition, we design a joint training objective integrating task supervision, modality prior regularization, cross-modal distribution alignment, and uncertainty-driven self-sampling contrastive learning. Experiments on public MSD benchmarks show that URMF consistently outperforms strong unimodal, multimodal, and MLLM-based baselines, demonstrating the effectiveness of uncertainty-aware fusion for improving both accuracy and robustness.",
+      "authors": [
+        "Zhenyu Wang",
+        "Weichen Cheng",
+        "Weijia Li",
+        "Junjie Mou",
+        "Zongyou Zhao",
+        "Guoying Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.MM"
+      ],
+      "published": "2026-04-08T06:50:43+00:00",
+      "link": "https://arxiv.org/pdf/2604.06728v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multimodal sarcasm detection in real-world social media",
+      "llm_evidence_cn": "真实社交媒体中的多模态讽刺检测",
+      "llm_evidence": "真实社交媒体中的多模态讽刺检测",
+      "canonical_evidence": "真实社交媒体中的多模态讽刺检测",
+      "llm_tldr_en": "Proposes a robust multimodal fusion framework to detect sarcasm by modeling modality reliability in social media.",
+      "llm_tldr_cn": "提出一种鲁棒的多模态融合框架，通过建模社交媒体中的模态可靠性来检测讽刺。",
+      "llm_tldr": "提出一种鲁棒的多模态融合框架，通过建模社交媒体中的模态可靠性来检测讽刺。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.06111v1",
+      "title": "ACE-Bench: Agent Configurable Evaluation with Scalable Horizons and Controllable Difficulty under Lightweight Environments",
+      "abstract": "Existing Agent benchmarks suffer from two critical limitations: high environment interaction overhead (up to 41\\% of total evaluation time) and imbalanced task horizon and difficulty distributions that make aggregate scores unreliable. To address these issues, we propose ACE-Bench built around a unified grid-based planning task, where agents must fill hidden slots in a partially completed schedule subject to both local slot constraints and global constraints. Our benchmark offers fine-grained control through two orthogonal axes: Scalable Horizons, controlled by the number of hidden slots $H$, and Controllable Difficulty, governed by a decoy budget $B$ that determines the number of globally misleading decoy candidates. Crucially, all tool calls are resolved via static JSON files under a Lightweight Environment design, eliminating setup overhead and enabling fast, reproducible evaluation suitable for training-time validation. We first validate that H and B provide reliable control over task horizon and difficulty, and that ACE-Bench exhibits strong domain consistency and model discriminability. We then conduct comprehensive experiments across 13 models of diverse sizes and families over 6 domains, revealing significant cross-model performance variation and confirming that ACE-Bench provides interpretable and controllable evaluation of agent reasoning.",
+      "authors": [
+        "Wang Yang",
+        "Chaoda Song",
+        "Xinpeng Li",
+        "Debargha Ganguly",
+        "Chuang Ma",
+        "Shouren Wang",
+        "Zhihao Dou",
+        "Yuli Zhou",
+        "Vipin Chaudhary",
+        "Xiaotian Han"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-07T17:21:28+00:00",
+      "link": "https://arxiv.org/pdf/2604.06111v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent configurable evaluation benchmark",
+      "llm_evidence_cn": "可配置的智能体评估基准",
+      "llm_evidence": "可配置的智能体评估基准",
+      "canonical_evidence": "可配置的智能体评估基准",
+      "llm_tldr_en": "Proposes ACE-Bench for evaluating agents with controllable difficulty and scalable horizons in grid-based tasks.",
+      "llm_tldr_cn": "提出ACE-Bench，用于在网格规划任务中评估具有可控难度和可扩展视野的智能体。",
+      "llm_tldr": "提出ACE-Bench，用于在网格规划任务中评估具有可控难度和可扩展视野的智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.10895v1",
+      "title": "Teaching Robots to Interpret Social Interactions through Lexically-guided Dynamic Graph Learning",
+      "abstract": "For a robot to be called socially intelligent, it must be able to infer users internal states from their current behaviour, predict the users future behaviour, and if required, respond appropriately. In this work, we investigate how robots can be endowed with such social intelligence by modelling the dynamic relationship between user's internal states (latent) and actions (observable state). Our premise is that these states arise from the same underlying socio-cognitive process and influence each other dynamically. Drawing inspiration from theories in Cognitive Science, we propose a novel multi-task learning framework, termed as \\textbf{SocialLDG} that explicitly models the dynamic relationship among the states represent as six distinct tasks. Our framework uses a language model to introduce lexical priors for each task and employs dynamic graph learning to model task affinity evolving with time. SocialLDG has three advantages: First, it achieves state-of-the-art performance on two challenging human-robot social interaction datasets available publicly. Second, it supports strong task scalability by learning new tasks seamlessly without catastrophic forgetting. Finally, benefiting from explicit modelling task affinity, it offers insights on how different interactions unfolds in time and how the internal states and observable actions influence each other in human decision making.",
+      "authors": [
+        "Tongfei Bian",
+        "Mathieu Chollet",
+        "Tanaya Guha"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.RO"
+      ],
+      "published": "2026-04-13T01:56:00+00:00",
+      "link": "https://arxiv.org/pdf/2604.10895v1",
+      "tags": [
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "interpreting social interactions via graph learning",
+      "llm_evidence_cn": "通过图学习解释社会互动",
+      "llm_evidence": "通过图学习解释社会互动",
+      "canonical_evidence": "通过图学习解释社会互动",
+      "llm_tldr_en": "Proposes a framework for robots to infer and predict human social states and behaviors.",
+      "llm_tldr_cn": "提出一种多任务学习框架，使机器人能够推断并预测人类的社会状态与行为。",
+      "llm_tldr": "提出一种多任务学习框架，使机器人能够推断并预测人类的社会状态与行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.07745v1",
+      "title": "The Cartesian Cut in Agentic AI",
+      "abstract": "LLMs gain competence by predicting words in human text, which often reflects how people perform tasks. Consequently, coupling an LLM to an engineered runtime turns prediction into control: outputs trigger interventions that enact goal-oriented behavior. We argue that a central design lever is where control resides in these systems. Brains embed prediction within layered feedback controllers calibrated by the consequences of action. By contrast, LLM agents implement Cartesian agency: a learned core coupled to an engineered runtime via a symbolic interface that externalizes control state and policies. The split enables bootstrapping, modularity, and governance, but can induce sensitivity and bottlenecks. We outline bounded services, Cartesian agents, and integrated agents as contrasting approaches to control that trade off autonomy, robustness, and oversight.",
+      "authors": [
+        "Tim Sainburg",
+        "Caleb Weinreb"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "q-bio.NC"
+      ],
+      "published": "2026-04-09T03:03:06+00:00",
+      "link": "https://arxiv.org/pdf/2604.07745v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM agents implement Cartesian agency via a symbolic interface",
+      "llm_evidence_cn": "LLM智能体通过符号接口实现笛卡尔代理",
+      "llm_evidence": "LLM智能体通过符号接口实现笛卡尔代理",
+      "canonical_evidence": "LLM智能体通过符号接口实现笛卡尔代理",
+      "llm_tldr_en": "Analyzes the design of agentic AI systems where LLMs are coupled to runtimes to enact goal-oriented behavior.",
+      "llm_tldr_cn": "分析了智能体AI系统的设计，探讨了LLM如何与运行环境结合以实现目标导向行为。",
+      "llm_tldr": "分析了智能体AI系统的设计，探讨了LLM如何与运行环境结合以实现目标导向行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.11954v1",
+      "title": "Dynamic Multi-Robot Task Allocation under Uncertainty and Communication Constraints: A Game-Theoretic Approach",
+      "abstract": "We study dynamic multi-robot task allocation under uncertain task completion, time-window constraints, and incomplete information. Tasks arrive online over a finite horizon and must be completed within specified deadlines, while agents operate from distributed hubs with limited sensing and communication. We model incomplete information through hub-based sensing regions that determine task visibility and a communication graph that governs inter-hub information exchange. Using this framework, we propose Iterative Best Response (IBR), a decentralized policy in which each agent selects the task that maximizes its marginal contribution to the locally observed welfare. We compare IBR against three baselines: Earliest Due Date first (EDD), Hungarian algorithm, and Stochastic Conflict-Based Allocation (SCoBA), on a city-scale package-delivery domain with up to 100 drones and varying task arrival scenarios. Under full and sparse communication, IBR achieves competitive task-completion performance with lower computation time.",
+      "authors": [
+        "Maria G. Mendoza",
+        "Pan-Yang Su",
+        "Bryce L. Ferguson",
+        "S. Shankar Sastry"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.GT",
+        "cs.RO"
+      ],
+      "published": "2026-04-13T18:48:51+00:00",
+      "link": "https://arxiv.org/pdf/2604.11954v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-robot task allocation and decentralized policy",
+      "llm_evidence_cn": "多机器人任务分配与去中心化策略",
+      "llm_evidence": "多机器人任务分配与去中心化策略",
+      "canonical_evidence": "多机器人任务分配与去中心化策略",
+      "llm_tldr_en": "Proposes a game-theoretic approach for decentralized multi-robot task allocation under uncertainty.",
+      "llm_tldr_cn": "提出一种博弈论方法，用于不确定环境下的去中心化多机器人任务分配。",
+      "llm_tldr": "提出一种博弈论方法，用于不确定环境下的去中心化多机器人任务分配。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10159v1",
+      "title": "ODUTQA-MDC: A Task for Open-Domain Underspecified Tabular QA with Multi-turn Dialogue-based Clarification",
+      "abstract": "The advancement of large language models (LLMs) has enhanced tabular question answering (Tabular QA), yet they struggle with open-domain queries exhibiting underspecified or uncertain expressions. To address this, we introduce the ODUTQA-MDC task and the first comprehensive benchmark to tackle it. This benchmark includes: (1) a large-scale ODUTQA dataset with 209 tables and 25,105 QA pairs; (2) a fine-grained labeling scheme for detailed evaluation; and (3) a dynamic clarification interface that simulates user feedback for interactive assessment. We also propose MAIC-TQA, a multi-agent framework that excels at detecting ambiguities, clarifying them through dialogue, and refining answers. Experiments validate our benchmark and framework, establishing them as a key resource for advancing conversational, underspecification-aware Tabular QA research.",
+      "authors": [
+        "Zhensheng Wang",
+        "ZhanTeng Lin",
+        "Wenmian Yang",
+        "Kun Zhou",
+        "Yiquan Zhang",
+        "Weijia Jia"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.DB",
+        "cs.IR",
+        "cs.MA"
+      ],
+      "published": "2026-04-11T11:11:54+00:00",
+      "link": "https://arxiv.org/pdf/2604.10159v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent framework for dialogue-based clarification",
+      "llm_evidence_cn": "基于对话澄清的多智能体框架",
+      "llm_evidence": "基于对话澄清的多智能体框架",
+      "canonical_evidence": "基于对话澄清的多智能体框架",
+      "llm_tldr_en": "Introduces a multi-agent framework to resolve ambiguities in open-domain tabular question answering.",
+      "llm_tldr_cn": "引入多智能体框架来解决开放域表格问答中的歧义问题。",
+      "llm_tldr": "引入多智能体框架来解决开放域表格问答中的歧义问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.12262v1",
+      "title": "CascadeDebate: Multi-Agent Deliberation for Cost-Aware LLM Cascades",
+      "abstract": "Cascaded LLM systems coordinate models of varying sizes with human experts to balance accuracy, cost, and abstention under uncertainty. However, single-model tiers at each stage often struggle with ambiguous queries, triggering premature escalations to costlier models or experts due to under-confidence and inefficient compute scaling. CascadeDebate addresses this gap by inserting multi-agent deliberation directly at each tier's escalation boundary. Confidence-based routers activate lightweight agent ensembles only for uncertain cases, enabling consensus-driven resolution of ambiguities internally without invoking higher-cost upgrades. Our unified architecture alternates single-model inference with selective multi-agent deliberation across model scales, culminating in human experts as the final fallback. This design scales test-time compute dynamically according to query difficulty. Across five benchmarks spanning science, medicine, and general knowledge, CascadeDebate outperforms strong single-model cascades and standalone multi-agent systems by up to 26.75 percent. An online threshold optimizer proves essential, boosting accuracy by 20.98 to 52.33 percent relative improvement over fixed policies and enabling elastic adaptation to real-world distributions.",
+      "authors": [
+        "Raeyoung Chang",
+        "Dongwook Kwon",
+        "Jisoo Lee",
+        "Nikhil Verma"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-14T04:26:39+00:00",
+      "link": "https://arxiv.org/pdf/2604.12262v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent deliberation for LLM cascades",
+      "llm_evidence_cn": "大语言模型级联中的多智能体研讨",
+      "llm_evidence": "大语言模型级联中的多智能体研讨",
+      "canonical_evidence": "大语言模型级联中的多智能体研讨",
+      "llm_tldr_en": "Uses multi-agent deliberation to resolve ambiguities in LLM cascades, balancing cost and accuracy.",
+      "llm_tldr_cn": "利用多智能体研讨解决LLM级联中的歧义，平衡成本与准确性。",
+      "llm_tldr": "利用多智能体研讨解决LLM级联中的歧义，平衡成本与准确性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10513v1",
+      "title": "Agent Mentor: Framing Agent Knowledge through Semantic Trajectory Analysis",
+      "abstract": "AI agent development relies heavily on natural language prompting to define agents' tasks, knowledge, and goals. These prompts are interpreted by Large Language Models (LLMs), which govern agent behavior. Consequently, agentic performance is susceptible to variability arising from imprecise or ambiguous prompt formulations. Identifying and correcting such issues requires examining not only the agent's code, but also the internal system prompts generated throughout its execution lifecycle, as reflected in execution logs.   In this work, we introduce an analytics pipeline implemented as part of the Agent Mentor open-source library that monitors and incrementally adapts the system prompts defining another agent's behavior. The pipeline improves performance by systematically injecting corrective instructions into the agent's knowledge. We describe its underlying mechanism, with particular emphasis on identifying semantic features associated with undesired behaviors and using them to derive corrective statements.   We evaluate the proposed pipeline across three exemplar agent configurations and benchmark tasks using repeated execution runs to assess effectiveness. These experiments provide an initial exploration of automating such a mentoring pipeline within future agentic governance frameworks. Overall, the approach demonstrates consistent and measurable accuracy improvements across diverse configurations, particularly in settings dominated by specification ambiguity. For reproducibility, we released our code as open source under the Agent Mentor library.",
+      "authors": [
+        "Roi Ben-Gigi",
+        "Yuval David",
+        "Fabiana Fournier",
+        "Lior Limonad",
+        "Dany Moshkovich",
+        "Hadar Mulian",
+        "Segev Shlomov"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-12T08:02:54+00:00",
+      "link": "https://arxiv.org/pdf/2604.10513v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "analytics pipeline for monitoring and adapting LLM agent behavior",
+      "llm_evidence_cn": "用于监控和调整LLM智能体行为的分析流水线",
+      "llm_evidence": "用于监控和调整LLM智能体行为的分析流水线",
+      "canonical_evidence": "用于监控和调整LLM智能体行为的分析流水线",
+      "llm_tldr_en": "Introduces a tool to analyze and adapt agent system prompts to improve performance and consistency in LLM agents.",
+      "llm_tldr_cn": "引入一种分析和调整智能体系统提示词的工具，以提高LLM智能体的性能和一致性。",
+      "llm_tldr": "引入一种分析和调整智能体系统提示词的工具，以提高LLM智能体的性能和一致性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.12461v1",
+      "title": "CIA: Inferring the Communication Topology from LLM-based Multi-Agent Systems",
+      "abstract": "LLM-based Multi-Agent Systems (MAS) have demonstrated remarkable capabilities in solving complex tasks. Central to MAS is the communication topology which governs how agents exchange information internally. Consequently, the security of communication topologies has attracted increasing attention. In this paper, we investigate a critical privacy risk: MAS communication topologies can be inferred under a restrictive black-box setting, exposing system vulnerabilities and posing significant intellectual property threats. To explore this risk, we propose Communication Inference Attack (CIA), a novel attack that constructs new adversarial queries to induce intermediate agents' reasoning outputs and models their semantic correlations through the proposed global bias disentanglement and LLM-guided weak supervision. Extensive experiments on MAS with optimized communication topologies demonstrate the effectiveness of CIA, achieving an average AUC of 0.87 and a peak AUC of up to 0.99, thereby revealing the substantial privacy risk in MAS.",
+      "authors": [
+        "Yongxuan Wu",
+        "Xixun Lin",
+        "He Zhang",
+        "Nan Sun",
+        "Kun Wang",
+        "Chuan Zhou",
+        "Shirui Pan",
+        "Yanan Cao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-14T08:48:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.12461v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "communication topology in LLM-based multi-agent systems",
+      "llm_evidence_cn": "基于LLM的多智能体系统通信拓扑",
+      "llm_evidence": "基于LLM的多智能体系统通信拓扑",
+      "canonical_evidence": "基于LLM的多智能体系统通信拓扑",
+      "llm_tldr_en": "Investigates privacy risks by inferring communication topologies in LLM-based multi-agent systems.",
+      "llm_tldr_cn": "通过推断基于LLM的多智能体系统中的通信拓扑来研究隐私风险。",
+      "llm_tldr": "通过推断基于LLM的多智能体系统中的通信拓扑来研究隐私风险。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.11201v2",
+      "title": "CocoaBench: Evaluating Unified Digital Agents in the Wild",
+      "abstract": "LLM agents now perform strongly in software engineering, deep research, GUI automation, and various other applications, while recent agent scaffolds and models are increasingly integrating these capabilities into unified systems. Yet, most evaluations still test these capabilities in isolation, which leaves a gap for more diverse use cases that require agents to combine different capabilities. We introduce CocoaBench, a benchmark for unified digital agents built from human-designed, long-horizon tasks that require flexible composition of vision, search, and coding. Tasks are specified only by an instruction and an automatic evaluation function over the final output, enabling reliable and scalable evaluation across diverse agent infrastructures. We also present CocoaAgent, a lightweight shared scaffold for controlled comparison across model backbones. Experiments show that current agents remain far from reliable on CocoaBench, with the best evaluated system achieving only 45.1% success rate. Our analysis further points to substantial room for improvement in reasoning and planning, tool use and execution, and visual grounding.",
+      "authors": [
+        "CocoaBench Team",
+        "Shibo Hao",
+        "Zhining Zhang",
+        "Zhiqi Liang",
+        "Tianyang Liu",
+        "Yuheng Zha",
+        "Qiyue Gao",
+        "Jixuan Chen",
+        "Zilong Wang",
+        "Zhoujun Cheng",
+        "Haoxiang Zhang",
+        "Junli Wang",
+        "Hexi Jin",
+        "Boyuan Zheng",
+        "Kun Zhou",
+        "Yu Wang",
+        "Feng Yao",
+        "Licheng Liu",
+        "Yijiang Li",
+        "Zhifei Li",
+        "Zhengtao Han",
+        "Pracha Promthaw",
+        "Tommaso Cerruti",
+        "Xiaohan Fu",
+        "Ziqiao Ma",
+        "Jingbo Shang",
+        "Lianhui Qin",
+        "Julian McAuley",
+        "Eric P. Xing",
+        "Zhengzhong Liu",
+        "Rupesh Kumar Srivastava",
+        "Zhiting Hu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-13T09:00:10+00:00",
+      "link": "https://arxiv.org/pdf/2604.11201v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Benchmark for unified digital agents across diverse tasks",
+      "llm_evidence_cn": "跨多样化任务的统一数字智能体基准测试",
+      "llm_evidence": "跨多样化任务的统一数字智能体基准测试",
+      "canonical_evidence": "跨多样化任务的统一数字智能体基准测试",
+      "llm_tldr_en": "Presents CocoaBench to evaluate unified agents combining vision, search, and coding in long-horizon tasks.",
+      "llm_tldr_cn": "提出了CocoaBench，用于评估在长程任务中结合视觉、搜索和代码能力的统一智能体。",
+      "llm_tldr": "提出了CocoaBench，用于评估在长程任务中结合视觉、搜索和代码能力的统一智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.12657v1",
+      "title": "Multi-Agent Digital Twins for Strategic Decision-Making using Active Inference",
+      "abstract": "Active Inference is an emerging framework providing a quantitative account of behavioral processes in neuroscience and a principled approach to decision-making under uncertainty. Its application to agency problems is natural, offering an autopoietic interpretation of action while addressing classical challenges such as the exploration-exploitation trade-off. Recently, Active Inference has been applied to digital twin scenarios for adaptive and predictive modeling of complex systems. In this work, we extend Active Inference to multi-agent digital twins in which agents interact within a shared environment while maintaining decentralized generative models. Our multi-agent framework features two innovations: (i) contextual inference to improve adaptability in dynamic environments, and (ii) the integration of streaming machine learning within agents' generative structures, enabling tunable goal-oriented behavior while preserving efficiency and scalability. The framework is illustrated through a Cournot competition example, providing a digital twin representation of a socio-economic system and highlighting its potential for coordinated decision-making in multi-agent contexts.",
+      "authors": [
+        "Francesco Maria Mancinelli",
+        "Matteo Torzoni",
+        "Domenico Maisto",
+        "Francesco Donnarumma",
+        "Alberto Corigliano",
+        "Giovanni Pezzulo",
+        "Andrea Manzoni"
+      ],
+      "primary_category": "cs.CE",
+      "categories": [
+        "cs.CE"
+      ],
+      "published": "2026-04-14T12:25:24+00:00",
+      "link": "https://arxiv.org/pdf/2604.12657v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent digital twins for strategic decision-making",
+      "llm_evidence_cn": "用于战略决策的多智能体数字孪生",
+      "llm_evidence": "用于战略决策的多智能体数字孪生",
+      "canonical_evidence": "用于战略决策的多智能体数字孪生",
+      "llm_tldr_en": "Extends Active Inference to multi-agent digital twins for adaptive modeling of complex systems.",
+      "llm_tldr_cn": "将主动推理扩展到多智能体数字孪生，用于复杂系统的自适应建模。",
+      "llm_tldr": "将主动推理扩展到多智能体数字孪生，用于复杂系统的自适应建模。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
