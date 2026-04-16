@@ -6,70 +6,64 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-15
-- 运行时间：2026-04-15 20:45:57 UTC
+- 最新运行日期：2026-04-16
+- 运行时间：2026-04-16 19:51:47 UTC
 - 运行状态：成功
-- 本次总论文数：16
-- 精读区：5
+- 本次总论文数：14
+- 精读区：3
 - 速读区：11
 
 ### 今日简报（AI）
-今日聚焦 16 篇前沿成果，深度拆解推理模型与记忆机制在多智能体社交博弈中的核心作用。
-满分论文揭示了 LLM 谈判中“求解器-采样器失配”导致的仿真偏差，并证实记忆是驱动社交粒子群群体协作的关键。
-建议关注推理增强对行为仿真真实性的潜在干扰，探索更具“人味”且高效的 AI 协作范式。
-- 详情：[/202604/15/README](/202604/15/README)
+今日深度解析 14 篇前沿论文，聚焦 LLM 辩论中的共识漂移与大规模智能体社会的治理蓝图。
+重点关注网络效应对模型协议的影响，以及如何通过帕森斯制度架构规范互联网级的智能体协作。
+建议关注智能体在软件工程与多模态路由中的落地，提前布局从单体智能迈向群体协作的治理范式。
+- 详情：[/202604/16/README](/202604/16/README)
 
 ### 精读区论文标签
-1. [When Reasoning Models Hurt Behavioral Simulation: A Solver-Sampler Mismatch in Multi-Agent LLM Negotiation](/202604/15/2604.11840v1-when-reasoning-models-hurt-behavioral-simulation-a-solver-sampler-mismatch-in-multi-agent-llm-negotiation)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：用于社会和行为模拟的LLM智能体
-2. [How memory can affect collective and cooperative behaviors in an LLM-Based Social Particle Swarm](/202604/15/2604.12250v1-how-memory-can-affect-collective-and-cooperative-behaviors-in-an-llm-based-social-particle-swarm)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：多智能体系统中的大语言模型代理集体行为
-3. [M2HRI: An LLM-Driven Multimodal Multi-Agent Framework for Personalized Human-Robot Interaction](/202604/15/2604.11975v1-m2hri-an-llm-driven-multimodal-multi-agent-framework-for-personalized-human-robot-interaction)  
+1. [Network Effects and Agreement Drift in LLM Debates](/202604/16/2604.11312v2-network-effects-and-agreement-drift-in-llm-debates)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：用于社交环境的LLM驱动多智能体框架
-4. [TRUST Agents: A Collaborative Multi-Agent Framework for Fake News Detection, Explainable Verification, and Logic-Aware Claim Reasoning](/202604/15/2604.12184v1-trust-agents-a-collaborative-multi-agent-framework-for-fake-news-detection-explainable-verification-and-logic-aware-claim-reasoning)  
+   evidence：LLM智能体在多轮辩论中的集体行为及协议漂移
+2. [Governance by Design: A Parsonian Institutional Architecture for Internet-Wide Agent Societies](/202604/16/2604.11337v1-governance-by-design-a-parsonian-institutional-architecture-for-internet-wide-agent-societies)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：用于虚假新闻检测的多智能体框架
-5. [EvoSpark: Endogenous Interactive Agent Societies for Unified Long-Horizon Narrative Evolution](/202604/15/2604.12776v1-evospark-endogenous-interactive-agent-societies-for-unified-long-horizon-narrative-evolution)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：用于长程叙事演化的内生交互智能体社会
+   evidence：互联网规模智能体社会及涌现社会行为的治理
+3. [Learning Probabilistic Responsibility Allocations for Multi-Agent Interactions](/202604/16/2604.13128v1-learning-probabilistic-responsibility-allocations-for-multi-agent-interactions)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：学习多智能体交互中的责任分配以实现社会合规
 
 ### 速读区论文标签
-1. [URMF: Uncertainty-aware Robust Multimodal Fusion for Multimodal Sarcasm Detection](/202604/15/2604.06728v1-urmf-uncertainty-aware-robust-multimodal-fusion-for-multimodal-sarcasm-detection)  
+1. [Modality-Native Routing in Agent-to-Agent Networks: A Multimodal A2A Protocol Extension](/202604/16/2604.12213v1-modality-native-routing-in-agent-to-agent-networks-a-multimodal-a2a-protocol-extension)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：真实社交媒体中的多模态讽刺检测
-2. [Teaching Robots to Interpret Social Interactions through Lexically-guided Dynamic Graph Learning](/202604/15/2604.10895v1-teaching-robots-to-interpret-social-interactions-through-lexically-guided-dynamic-graph-learning)  
+   evidence：智能体间网络的跨模态协议
+2. [Agentic Insight Generation in VSM Simulations](/202604/16/2604.12421v1-agentic-insight-generation-in-vsm-simulations)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：通过图学习解释社会互动
-3. [Dynamic Multi-Robot Task Allocation under Uncertainty and Communication Constraints: A Game-Theoretic Approach](/202604/15/2604.11954v1-dynamic-multi-robot-task-allocation-under-uncertainty-and-communication-constraints-a-game-theoretic-approach)  
+   evidence：用于模拟中多跳推理的智能体架构
+3. [AgentForge: Execution-Grounded Multi-Agent LLM Framework for Autonomous Software Engineering](/202604/16/2604.13120v1-agentforge-execution-grounded-multi-agent-llm-framework-for-autonomous-software-engineering)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多机器人任务分配与去中心化策略
-4. [CascadeDebate: Multi-Agent Deliberation for Cost-Aware LLM Cascades](/202604/15/2604.12262v1-cascadedebate-multi-agent-deliberation-for-cost-aware-llm-cascades)  
+   evidence：用于自主软件工程且包含智能体协作的多智能体大模型框架
+4. [Cross-Domain Query Translation for Network Troubleshooting: A Multi-Agent LLM Framework with Privacy Preservation and Self-Reflection](/202604/16/2604.13353v1-cross-domain-query-translation-for-network-troubleshooting-a-multi-agent-llm-framework-with-privacy-preservation-and-self-reflection)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：大语言模型级联中的多智能体研讨
-5. [CIA: Inferring the Communication Topology from LLM-based Multi-Agent Systems](/202604/15/2604.12461v1-cia-inferring-the-communication-topology-from-llm-based-multi-agent-systems)  
+   evidence：用于查询翻译的分层多智能体大模型架构
+5. [Topology Estimation for Open Multi-Agent Systems](/202604/16/2604.13628v1-topology-estimation-for-open-multi-agent-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于LLM的多智能体系统通信拓扑
-6. [Multi-Agent Digital Twins for Strategic Decision-Making using Active Inference](/202604/15/2604.12657v1-multi-agent-digital-twins-for-strategic-decision-making-using-active-inference)  
+   evidence：开放式多智能体系统中的交互拓扑识别
+6. [$π$-Play: Multi-Agent Self-Play via Privileged Self-Distillation without External Data](/202604/16/2604.14054v1--play-multi-agent-self-play-via-privileged-self-distillation-without-external-data)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于战略决策的多智能体数字孪生
-7. [ACE-Bench: Agent Configurable Evaluation with Scalable Horizons and Controllable Difficulty under Lightweight Environments](/202604/15/2604.06111v1-ace-bench-agent-configurable-evaluation-with-scalable-horizons-and-controllable-difficulty-under-lightweight-environments)  
+   evidence：用于复杂信息寻求任务的多智能体自我博弈
+7. [SEARL: Joint Optimization of Policy and Tool Graph Memory for Self-Evolving Agents](/202604/16/2604.07791v2-searl-joint-optimization-of-policy-and-tool-graph-memory-for-self-evolving-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：可配置的智能体评估基准
-8. [The Cartesian Cut in Agentic AI](/202604/15/2604.07745v1-the-cartesian-cut-in-agentic-ai)  
+   evidence：用于从轨迹中学习的自我进化智能体框架和多智能体框架
+8. [Beyond Stochastic Exploration: What Makes Training Data Valuable for Agentic Search](/202604/16/2604.08124v1-beyond-stochastic-exploration-what-makes-training-data-valuable-for-agentic-search)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：LLM智能体通过符号接口实现笛卡尔代理
-9. [ODUTQA-MDC: A Task for Open-Domain Underspecified Tabular QA with Multi-turn Dialogue-based Clarification](/202604/15/2604.10159v1-odutqa-mdc-a-task-for-open-domain-underspecified-tabular-qa-with-multi-turn-dialogue-based-clarification)  
+   evidence：用于智能体搜索推理的分层经验
+9. [Self-Distilled Reinforcement Learning for Co-Evolving Agentic Recommender Systems](/202604/16/2604.10029v1-self-distilled-reinforcement-learning-for-co-evolving-agentic-recommender-systems)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：基于对话澄清的多智能体框架
-10. [Agent Mentor: Framing Agent Knowledge through Semantic Trajectory Analysis](/202604/15/2604.10513v1-agent-mentor-framing-agent-knowledge-through-semantic-trajectory-analysis)  
+   evidence：推荐智能体与用户智能体之间的多轮交互
+10. [HARPO: Hierarchical Agentic Reasoning for User-Aligned Conversational Recommendation](/202604/16/2604.10048v1-harpo-hierarchical-agentic-reasoning-for-user-aligned-conversational-recommendation)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于监控和调整LLM智能体行为的分析流水线
-11. [CocoaBench: Evaluating Unified Digital Agents in the Wild](/202604/15/2604.11201v2-cocoabench-evaluating-unified-digital-agents-in-the-wild)  
+   evidence：使用分层推理的对话式推荐智能体框架
+11. [Functional Misalignment in Human-AI Interactions on Digital Platforms](/202604/16/2604.11459v1-functional-misalignment-in-human-ai-interactions-on-digital-platforms)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：跨多样化任务的统一数字智能体基准测试
+   evidence：社交媒体推荐算法及其对社会行为和信任侵蚀的影响
 
 
 <div class="dpr-home-promo-card">
