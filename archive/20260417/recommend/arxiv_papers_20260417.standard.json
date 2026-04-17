@@ -1,0 +1,600 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-17T19:48:51.498593+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 7,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 9,
+    "quick_skim_target": 11,
+    "quick_selected": 9
+  },
+  "deep_dive": [
+    {
+      "id": "2604.14691v1",
+      "title": "CAMO: An Agentic Framework for Automated Causal Discovery from Micro Behaviors to Macro Emergence in LLM Agent Simulations",
+      "abstract": "LLM-empowered agent simulations are increasingly used to study social emergence, yet the micro-to-macro causal mechanisms behind macro outcomes often remain unclear. This is challenging because emergence arises from intertwined agent interactions and meso-level feedback and nonlinearity, making generative mechanisms hard to disentangle. To this end, we introduce \\textbf{\\textsc{CAMO}}, an automated \\textbf{Ca}usal discovery framework from \\textbf{M}icr\\textbf{o} behaviors to \\textbf{M}acr\\textbf{o} Emergence in LLM agent simulations. \\textsc{CAMO} converts mechanistic hypotheses into computable factors grounded in simulation records and learns a compact causal representation centered on an emergent target $Y$. \\textsc{CAMO} outputs a computable Markov boundary and a minimal upstream explanatory subgraph, yielding interpretable causal chains and actionable intervention levers. It also uses simulator-internal counterfactual probing to orient ambiguous edges and revise hypotheses when evidence contradicts the current view. Experiments across four emergent settings demonstrate the promise of \\textsc{CAMO}.",
+      "authors": [
+        "Xiangning Yu",
+        "Yuwei Guo",
+        "Yuqi Hou",
+        "Xiao Xue",
+        "Qun Ma"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.CY"
+      ],
+      "published": "2026-04-16T06:49:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.14691v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Causal discovery from micro behaviors to macro emergence in LLM simulations",
+      "llm_evidence_cn": "LLM智能体模拟中从微观行为到宏观涌现的因果发现",
+      "llm_evidence": "LLM智能体模拟中从微观行为到宏观涌现的因果发现",
+      "canonical_evidence": "LLM智能体模拟中从微观行为到宏观涌现的因果发现",
+      "llm_tldr_en": "Introduces a framework to discover causal mechanisms behind social emergence in LLM agent simulations.",
+      "llm_tldr_cn": "提出一个框架，用于发现LLM智能体模拟中社会涌现背后的因果机制。",
+      "llm_tldr": "提出一个框架，用于发现LLM智能体模拟中社会涌现背后的因果机制。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10290v1",
+      "title": "AI Organizations are More Effective but Less Aligned than Individual Agents",
+      "abstract": "AI is increasingly deployed in multi-agent systems; however, most research considers only the behavior of individual models. We experimentally show that multi-agent \"AI organizations\" are simultaneously more effective at achieving business goals, but less aligned, than individual AI agents. We examine 12 tasks across two practical settings: an AI consultancy providing solutions to business problems and an AI software team developing software products. Across all settings, AI Organizations composed of aligned models produce solutions with higher utility but greater misalignment compared to a single aligned model. Our work demonstrates the importance of considering interacting systems of AI agents when doing both capabilities and safety research.",
+      "authors": [
+        "Judy Hanwen Shen",
+        "Daniel Zhu",
+        "Siddarth Srinivasan",
+        "Henry Sleight",
+        "Lawrence T. Wagner",
+        "Morgan Jane Matthews",
+        "Erik Jones",
+        "Jascha Sohl-Dickstein"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-11T17:13:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.10290v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "emergent behavior in AI organizations",
+      "llm_evidence_cn": "AI组织中的涌现行为",
+      "llm_evidence": "AI组织中的涌现行为",
+      "canonical_evidence": "AI组织中的涌现行为",
+      "llm_tldr_en": "Studies how multi-agent AI organizations achieve higher utility but lower alignment than individuals.",
+      "llm_tldr_cn": "研究多智能体AI组织如何比单个智能体获得更高效用但更低对齐度。",
+      "llm_tldr": "研究多智能体AI组织如何比单个智能体获得更高效用但更低对齐度。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.14386v1",
+      "title": "Coalition Formation in LLM Agent Networks: Stability Analysis and Convergence Guarantees",
+      "abstract": "Large Language Model (LLM) agents are increasingly deployed in multi-agent systems requiring strategic coordination. While recent work has analyzed LLM behavior in two-player games, coalition formation, where $n$ agents dynamically form cooperative groups, remains theoretically uncharacterized. We present the first framework grounding coalition formation in LLM agent networks in hedonic game theory with formal stability guarantees. We introduce the LLM Coalition Formation Game (LCFG), establish sufficient conditions for Nash-stable partitions, and prove complexity results. Our analysis reveals that LLM agents exhibit bounded rationality characterized by $ε$-rational preferences; we provide both deterministic existence guarantees and consistency-driven stability bounds whose predictions are consistent with empirical outcomes. Experiments with GPT-4, Claude-3, and Llama-3 across 2,400 episodes validate our framework: LLM coalitions achieve Nash stability in 73.2% of cases under our Coalition-of-Thought (CoalT) protocol, compared to 58.4% under chain-of-thought and 41.8% under standard prompting ($p < 0.001$). Our framework provides theoretical foundations for designing stable multi-agent LLM systems.",
+      "authors": [
+        "Dongxin Guo",
+        "Jikun Wu",
+        "Siu-Ming Yiu"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.AI"
+      ],
+      "published": "2026-04-15T19:59:30+00:00",
+      "link": "https://arxiv.org/pdf/2604.14386v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Coalition formation and stability in LLM agent networks",
+      "llm_evidence_cn": "LLM智能体网络中的联盟形成与稳定性",
+      "llm_evidence": "LLM智能体网络中的联盟形成与稳定性",
+      "canonical_evidence": "LLM智能体网络中的联盟形成与稳定性",
+      "llm_tldr_en": "Provides a theoretical framework for coalition formation in LLM agent networks using game theory.",
+      "llm_tldr_cn": "基于博弈论为LLM智能体网络中的联盟形成提供首个理论框架及稳定性保证。",
+      "llm_tldr": "基于博弈论为LLM智能体网络中的联盟形成提供首个理论框架及稳定性保证。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.15044v1",
+      "title": "CoGrid & the Multi-User Gymnasium: A Framework for Multi-Agent Experimentation",
+      "abstract": "The increasing integration of artificial intelligence (AI) in everyday life brings with it new challenges and questions for regarding how humans interact with autonomous agents. Multi-agent experiments, where humans and AI act together, can offer important opportunities to study social decision making, but there is a lack of accessible tooling available to researchers to run such experiments. We introduce two tools designed to reduce these barriers. The first, CoGrid, is a multi-agent grid-based simulation library with dual NumPy and JAX backends. The second, Multi-User Gymnasium (MUG), translates such simulation environments directly into interactive web-based experiments. MUG supports interactions with arbitrary numbers of humans and AI, utilizing either server-authoritative or peer-to-peer networking with rollback netcode to account for latency. Together, these tools can enable researchers to deploy studies of human-AI interaction, facilitating inquiry into core questions of psychology, cognition, and decision making and their relationship to human-AI interaction. Both tools are open source and available to the broader research community. Documentation and source code is available at {cogrid, multi-user-gymnasium}.readthedocs.io. This paper details the functionality of these tools and presents several case studies to illustrate their utility in human-AI multi-agent experimentation.",
+      "authors": [
+        "Chase McDonald",
+        "Cleotilde Gonzalez"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-04-16T14:10:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.15044v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "framework for multi-agent experimentation and social decision making",
+      "llm_evidence_cn": "多智能体实验和社会决策框架",
+      "llm_evidence": "多智能体实验和社会决策框架",
+      "canonical_evidence": "多智能体实验和社会决策框架",
+      "llm_tldr_en": "Introduces CoGrid and MUG tools to facilitate human-AI multi-agent experiments and social simulation.",
+      "llm_tldr_cn": "介绍了CoGrid和MUG工具，旨在促进人类与AI的多智能体实验和社会模拟。",
+      "llm_tldr": "介绍了CoGrid和MUG工具，旨在促进人类与AI的多智能体实验和社会模拟。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.09917v1",
+      "title": "Toward Explanatory Equilibrium: Verifiable Reasoning as a Coordination Mechanism under Asymmetric Information",
+      "abstract": "LLM-based agents increasingly coordinate decisions in multi-agent systems, often attaching natural-language reasoning to actions. However, reasoning is neither free nor automatically reliable: it incurs computational cost and, without verification, may degenerate into persuasive cheap talk. We introduce Explanatory Equilibrium as a design principle for explanation-aware multi-agent systems and study a regime in which agents exchange structured reasoning artifacts-auditable claims paired with concise text-while receivers apply bounded verification through probabilistic audits under explicit resource constraints. We contribute (i) a minimal mechanism-level exchange-audit model linking audit intensity, misreporting incentives, and reasoning costs, and (ii) empirical evidence from a finance-inspired LLM setting involving a Trader and a Risk Manager. In ambiguous, borderline proposals, auditable artifacts prevent the cost of silence driven by conservative validation under asymmetric information: without structured claims, approval and welfare collapse. By contrast, structured reasoning unlocks coordination while maintaining consistently low bad-approval rates across audit intensities, audit budgets, and incentive regimes. Our results suggest that scalable, safety-preserving coordination in LLM-based multi-agent systems depends not only on audit strength, but more fundamentally on disciplined externalization of reasoning into partially verifiable artifacts.",
+      "authors": [
+        "Feliks Bańka",
+        "Jarosław A. Chudziak"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.GT"
+      ],
+      "published": "2026-04-10T21:21:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.09917v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-based agents coordination in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的大模型智能体协作",
+      "llm_evidence": "多智能体系统中的大模型智能体协作",
+      "canonical_evidence": "多智能体系统中的大模型智能体协作",
+      "llm_tldr_en": "Introduces Explanatory Equilibrium for verifiable reasoning in multi-agent systems under asymmetric information.",
+      "llm_tldr_cn": "提出了解释性均衡原则，用于在非对称信息环境下实现多智能体系统的可验证推理协作。",
+      "llm_tldr": "提出了解释性均衡原则，用于在非对称信息环境下实现多智能体系统的可验证推理协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10460v1",
+      "title": "Toward Accountable AI-Generated Content on Social Platforms: Steganographic Attribution and Multimodal Harm Detection",
+      "abstract": "The rapid growth of generative AI has introduced new challenges in content moderation and digital forensics. In particular, benign AI-generated images can be paired with harmful or misleading text, creating difficult-to-detect misuse. This contextual misuse undermines the traditional moderation framework and complicates attribution, as synthetic images typically lack persistent metadata or device signatures. We introduce a steganography enabled attribution framework that embeds cryptographically signed identifiers into images at creation time and uses multimodal harmful content detection as a trigger for attribution verification. Our system evaluates five watermarking methods across spatial, frequency, and wavelet domains. It also integrates a CLIP-based fusion model for multimodal harmful-content detection. Experiments demonstrate that spread-spectrum watermarking, especially in the wavelet domain, provides strong robustness under blur distortions, and our multimodal fusion detector achieves an AUC-ROC of 0.99, enabling reliable cross-modal attribution verification. These components form an end-to-end forensic pipeline that enables reliable tracing of harmful deployments of AI-generated imagery, supporting accountability in modern synthetic media environments. Our code is available at GitHub: https://github.com/bli1/steganography",
+      "authors": [
+        "Xinlei Guan",
+        "David Arosemena",
+        "Tejaswi Dhandu",
+        "Kuan Huang",
+        "Meng Xu",
+        "Miles Q. Li",
+        "Bingyu Shen",
+        "Ruiyang Qin",
+        "Umamaheswara Rao Tida",
+        "Boyang Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.CR",
+        "cs.ET"
+      ],
+      "published": "2026-04-12T04:57:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.10460v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multimodal harm detection and attribution for AI-generated content on social platforms",
+      "llm_evidence_cn": "社交平台上AI生成内容的跨模态危害检测与归因",
+      "llm_evidence": "社交平台上AI生成内容的跨模态危害检测与归因",
+      "canonical_evidence": "社交平台上AI生成内容的跨模态危害检测与归因",
+      "llm_tldr_en": "Proposes a framework for detecting harmful AI-generated multimodal content and verifying its origin.",
+      "llm_tldr_cn": "提出一种检测有害AI生成多模态内容并验证其来源的框架。",
+      "llm_tldr": "提出一种检测有害AI生成多模态内容并验证其来源的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.11741v1",
+      "title": "Collaborative Multi-Agent Scripts Generation for Enhancing Imperfect-Information Reasoning in Murder Mystery Games",
+      "abstract": "Vision-language models (VLMs) have shown impressive capabilities in perceptual tasks, yet they degrade in complex multi-hop reasoning under multiplayer game settings with imperfect and deceptive information. In this paper, we study a representative multiplayer task, Murder Mystery Games, which require inferring hidden truths based on partial clues provided by roles with different intentions. To address this challenge, we propose a collaborative multi-agent framework for evaluating and synthesizing high-quality, role-driven multiplayer game scripts, enabling fine-grained interaction patterns tailored to character identities (i.e., murderer vs. innocent). Our system generates rich multimodal contexts, including character backstories, visual and textual clues, and multi-hop reasoning chains, through coordinated agent interactions. We design a two-stage agent-monitored training strategy to enhance the reasoning ability of VLMs: (1) chain-of-thought based fine-tuning on curated and synthetic datasets that model uncertainty and deception; (2) GRPO-based reinforcement learning with agent-monitored reward shaping, encouraging the model to develop character-specific reasoning behaviors and effective multimodal multi-hop inference. Extensive experiments demonstrate that our method significantly boosts the performance of VLMs in narrative reasoning, hidden fact extraction, and deception-resilient understanding. Our contributions offer a scalable solution for training and evaluating VLMs under uncertain, adversarial, and socially complex conditions, laying the groundwork for future benchmarks in multimodal multi-hop reasoning under imperfect information.",
+      "authors": [
+        "Keyang Zhong",
+        "Junlin Xie",
+        "Hefeng Wu",
+        "Haofeng Li",
+        "Guanbin Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-13T17:16:23+00:00",
+      "link": "https://arxiv.org/pdf/2604.11741v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent framework for role-driven social interaction and reasoning",
+      "llm_evidence_cn": "用于角色驱动社会互动和推理的多智能体框架",
+      "llm_evidence": "用于角色驱动社会互动和推理的多智能体框架",
+      "canonical_evidence": "用于角色驱动社会互动和推理的多智能体框架",
+      "llm_tldr_en": "A collaborative multi-agent framework for generating scripts to study reasoning in multiplayer games with deception.",
+      "llm_tldr_cn": "一个协作式多智能体框架，通过生成剧本来研究具有欺骗性的多人游戏中的推理。",
+      "llm_tldr": "一个协作式多智能体框架，通过生成剧本来研究具有欺骗性的多人游戏中的推理。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.11753v1",
+      "title": "Agentic Aggregation for Parallel Scaling of Long-Horizon Agentic Tasks",
+      "abstract": "We study parallel test-time scaling for long-horizon agentic tasks such as agentic search and deep research, where multiple rollouts are generated in parallel and aggregated into a final response. While such scaling has proven effective for chain-of-thought reasoning, agentic tasks pose unique challenges: trajectories are long, multi-turn, and tool-augmented, and outputs are often open-ended. Aggregating only final answers discards rich information from trajectories, while concatenating all trajectories exceeds the model's context window. To address this, we propose AggAgent, an aggregation agent that treats parallel trajectories as an environment. We equip it with lightweight tools to inspect candidate solutions and search across trajectories, enabling it to navigate and synthesize information on demand. Across six benchmarks and three model families (GLM-4.7, Qwen3.5, MiniMax-M2.5), AggAgent outperforms all existing aggregation methods-by up to 5.3% absolute on average and 10.3% on two deep research tasks-while adding minimal overhead, as the aggregation cost remains bounded by a single agentic rollout. Our findings establish agentic aggregation as an effective and cost-efficient approach to parallel test-time scaling.",
+      "authors": [
+        "Yoonsang Lee",
+        "Howard Yen",
+        "Xi Ye",
+        "Danqi Chen"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-13T17:26:31+00:00",
+      "link": "https://arxiv.org/pdf/2604.11753v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Agentic aggregation for parallel scaling of long-horizon multi-agent tasks",
+      "llm_evidence_cn": "用于长程多智能体任务并行扩展的智能体聚合",
+      "llm_evidence": "用于长程多智能体任务并行扩展的智能体聚合",
+      "canonical_evidence": "用于长程多智能体任务并行扩展的智能体聚合",
+      "llm_tldr_en": "Introduces AggAgent to aggregate parallel trajectories for better performance in long-horizon agentic tasks.",
+      "llm_tldr_cn": "引入 AggAgent 来聚合并行轨迹，以提升长程智能体任务的性能。",
+      "llm_tldr": "引入 AggAgent 来聚合并行轨迹，以提升长程智能体任务的性能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.11548v1",
+      "title": "SemaClaw: A Step Towards General-Purpose Personal AI Agents through Harness Engineering",
+      "abstract": "The rise of OpenClaw in early 2026 marks the moment when millions of users began deploying personal AI agents into their daily lives, delegating tasks ranging from travel planning to multi-step research. This scale of adoption signals that two parallel arcs of development have reached an inflection point. First is a paradigm shift in AI engineering, evolving from prompt and context engineering to harness engineering-designing the complete infrastructure necessary to transform unconstrained agents into controllable, auditable, and production-reliable systems. As model capabilities converge, this harness layer is becoming the primary site of architectural differentiation. Second is the evolution of human-agent interaction from discrete tasks toward a persistent, contextually aware collaborative relationship, which demands open, trustworthy and extensible harness infrastructure. We present SemaClaw, an open-source multi-agent application framework that addresses these shifts by taking a step towards general-purpose personal AI agents through harness engineering. Our primary contributions include a DAG-based two-phase hybrid agent team orchestration method, a PermissionBridge behavioral safety system, a three-tier context management architecture, and an agentic wiki skill for automated personal knowledge base construction.",
+      "authors": [
+        "Ningyan Zhu",
+        "Huacan Wang",
+        "Jie Zhou",
+        "Feiyu Chen",
+        "Shuo Zhang",
+        "Ge Chen",
+        "Chen Liu",
+        "Jiarou Wu",
+        "Wangyi Chen",
+        "Xiaofeng Mou",
+        "Yi Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-13T14:37:53+00:00",
+      "link": "https://arxiv.org/pdf/2604.11548v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Infrastructure for controllable and reliable personal AI agents",
+      "llm_evidence_cn": "可控且可靠的个人AI智能体基础设施",
+      "llm_evidence": "可控且可靠的个人AI智能体基础设施",
+      "canonical_evidence": "可控且可靠的个人AI智能体基础设施",
+      "llm_tldr_en": "Discusses harness engineering to transform unconstrained agents into reliable production systems.",
+      "llm_tldr_cn": "探讨“治理工程”，旨在为个人AI智能体提供可控、可审计且可靠的生产级基础设施。",
+      "llm_tldr": "探讨“治理工程”，旨在为个人AI智能体提供可控、可审计且可靠的生产级基础设施。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.13472v1",
+      "title": "Bridging MARL to SARL: An Order-Independent Multi-Agent Transformer via Latent Consensus",
+      "abstract": "Cooperative multi-agent reinforcement learning (MARL) is widely used to address large joint observation and action spaces by decomposing a centralized control problem into multiple interacting agents. However, such decomposition often introduces additional challenges, including non-stationarity, unstable training, weak coordination, and limited theoretical guarantees. In this paper, we propose the Consensus Multi-Agent Transformer (CMAT), a centralized framework that bridges cooperative MARL to a hierarchical single-agent reinforcement learning (SARL) formulation. CMAT treats all agents as a unified entity and employs a Transformer encoder to process the large joint observation space. To handle the extensive joint action space, we introduce a hierarchical decision-making mechanism in which a Transformer decoder autoregressively generates a high-level consensus vector, simulating the process by which agents reach agreement on their strategies in latent space. Conditioned on this consensus, all agents generate their actions simultaneously, enabling order-independent joint decision making and avoiding the sensitivity to action-generation order in conventional Multi-Agent Transformers (MAT). This factorization allows the joint policy to be optimized using single-agent PPO while preserving expressive coordination through the latent consensus. To evaluate the proposed method, we conduct experiments on benchmark tasks from StarCraft II, Multi-Agent MuJoCo, and Google Research Football. The results show that CMAT achieves superior performance over recent centralized solutions, sequential MARL methods, and conventional MARL baselines. The code for this paper is available at:https://github.com/RS2002/CMAT .",
+      "authors": [
+        "Zijian Zhao",
+        "Jing Gao",
+        "Sen Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-15T04:52:22+00:00",
+      "link": "https://arxiv.org/pdf/2604.13472v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent reinforcement learning and Transformer-based coordination",
+      "llm_evidence_cn": "多智能体强化学习与基于Transformer的协作",
+      "llm_evidence": "多智能体强化学习与基于Transformer的协作",
+      "canonical_evidence": "多智能体强化学习与基于Transformer的协作",
+      "llm_tldr_en": "Proposes a Transformer-based framework to bridge multi-agent and single-agent reinforcement learning.",
+      "llm_tldr_cn": "提出一种基于Transformer的框架，连接多智能体与单智能体强化学习。",
+      "llm_tldr": "提出一种基于Transformer的框架，连接多智能体与单智能体强化学习。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.12231v1",
+      "title": "Thought-Retriever: Don't Just Retrieve Raw Data, Retrieve Thoughts for Memory-Augmented Agentic Systems",
+      "abstract": "Large language models (LLMs) have transformed AI research thanks to their powerful internal capabilities and knowledge. However, existing LLMs still fail to effectively incorporate the massive external knowledge when interacting with the world. Although retrieval-augmented LLMs are proposed to mitigate the issue, they are still fundamentally constrained by the context length of LLMs, as they can only retrieve top-K raw data chunks from the external knowledge base which often consists of millions of data chunks. Here we propose Thought-Retriever, a novel model-agnostic algorithm that helps LLMs generate output conditioned on arbitrarily long external data, without being constrained by the context length or number of retrieved data chunks. Our key insight is to let an LLM fully leverage its intermediate responses generated when solving past user queries (thoughts), filtering meaningless and redundant thoughts, organizing them in thought memory, and retrieving the relevant thoughts when addressing new queries. This effectively equips LLM-based agents with a self-evolving long-term memory that grows more capable through continuous interaction. Besides algorithmic innovation, we further meticulously prepare a novel benchmark, AcademicEval, which requires an LLM to faithfully leverage ultra-long context to answer queries based on real-world academic papers. Extensive experiments on AcademicEval and two other public datasets validate that Thought-Retriever remarkably outperforms state-of-the-art baselines, achieving an average increase of at least 7.6% in F1 score and 16% in win rate across various tasks. More importantly, we further demonstrate two exciting findings: (1) Thought-Retriever can indeed help LLM self-evolve after solving more user queries; (2) Thought-Retriever learns to leverage deeper thoughts to answer more abstract user queries.",
+      "authors": [
+        "Tao Feng",
+        "Pengrui Han",
+        "Guanyu Lin",
+        "Ge Liu",
+        "Jiaxuan You"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.IR"
+      ],
+      "published": "2026-04-14T03:11:36+00:00",
+      "link": "https://arxiv.org/pdf/2604.12231v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "memory-augmented agentic systems",
+      "llm_evidence_cn": "记忆增强的智能体系统",
+      "llm_evidence": "记忆增强的智能体系统",
+      "canonical_evidence": "记忆增强的智能体系统",
+      "llm_tldr_en": "Proposes Thought-Retriever to help LLM agents generate output conditioned on long external data.",
+      "llm_tldr_cn": "提出Thought-Retriever算法，帮助大模型智能体基于长外部数据生成输出。",
+      "llm_tldr": "提出Thought-Retriever算法，帮助大模型智能体基于长外部数据生成输出。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.14564v1",
+      "title": "MARS$^2$: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation",
+      "abstract": "Reinforcement learning (RL) paradigms have demonstrated strong performance on reasoning-intensive tasks such as code generation. However, limited trajectory diversity often leads to diminishing returns, which constrains the achievable performance ceiling. Search-enhanced RL alleviates this issue by introducing structured exploration, which remains constrained by the single-agent policy priors. Meanwhile, leveraging multiple interacting policies can acquire more diverse exploratory signals, but existing approaches are typically decoupled from structured search. We propose \\textbf{MARS$^2$} (Multi-Agent Reinforced Tree-Search Scaling), a unified RL framework in which multiple independently-optimized agents collaborate within a shared tree-structured search environment. MARS$^2$ models the search tree as a learnable multi-agent interaction environment, enabling heterogeneous agents to collaboratively generate and refine candidate solutions within a shared search topology. To support effective learning, we introduce a path-level group advantage formulation based on tree-consistent reward shaping, which facilitates effective credit assignment across complex search trajectories. Experiments on code generation benchmarks show that MARS$^2$ consistently improves performance across diverse model combinations and training settings, demonstrating the effectiveness of coupling multi-agent collaboration with tree search for enhancing reinforcement learning. Our code is publicly available at https://github.com/TsinghuaC3I/MARTI.",
+      "authors": [
+        "Pengfei Li",
+        "Shijie Wang",
+        "Fangyuan Li",
+        "Yikun Fu",
+        "Kaifeng Liu",
+        "Kaiyan Zhang",
+        "Dazhi Zhang",
+        "Yuqiang Li",
+        "Biqing Qi",
+        "Bowen Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-16T02:52:24+00:00",
+      "link": "https://arxiv.org/pdf/2604.14564v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multiple independently-optimized agents collaborate",
+      "llm_evidence_cn": "多个独立优化的智能体协作",
+      "llm_evidence": "多个独立优化的智能体协作",
+      "canonical_evidence": "多个独立优化的智能体协作",
+      "llm_tldr_en": "Proposes MARS2, a framework for scaling multi-agent tree search via RL for reasoning tasks.",
+      "llm_tldr_cn": "提出MARS2框架，通过强化学习扩展多智能体树搜索以处理推理任务。",
+      "llm_tldr": "提出MARS2框架，通过强化学习扩展多智能体树搜索以处理推理任务。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.13817v1",
+      "title": "RPS: Information Elicitation with Reinforcement Prompt Selection",
+      "abstract": "Large language models (LLMs) have shown remarkable capabilities in dialogue generation and reasoning, yet their effectiveness in eliciting user-known but concealed information in open-ended conversations remains limited. In many interactive AI applications, such as personal assistants, tutoring systems, and legal or clinical support, users often withhold sensitive or uncertain information due to privacy concerns, ambiguity, or social hesitation. This makes it challenging for LLMs to gather complete and contextually relevant inputs. In this work, we define the problem of information elicitation in open-ended dialogue settings and propose Reinforcement Prompt Selection (RPS), a lightweight reinforcement learning framework that formulates prompt selection as a sequential decision-making problem. To analyze this problem in a controlled setting, we design a synthetic experiment, where a reinforcement learning agent outperforms a random query baseline, illustrating the potential of policy-based approaches for adaptive information elicitation. Building on this insight, RPS learns a policy over a pool of prompts to adaptively elicit concealed or incompletely expressed information from users through dialogue. We also introduce IELegal, a new benchmark dataset constructed from real legal case documents, which simulates dialogue-based information elicitation tasks aimed at uncovering case-relevant facts. In this setting, RPS outperforms static prompt baselines, demonstrating the effectiveness of adaptive prompt selection for eliciting critical information in LLM-driven dialogue systems.",
+      "authors": [
+        "Tao Wang",
+        "Jingyao Lu",
+        "Xibo Wang",
+        "Haonan Huang",
+        "Su Yao",
+        "Zhiqiang Hu",
+        "Xingyan Chen",
+        "Enmao Diao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-04-15T12:51:01+00:00",
+      "link": "https://arxiv.org/pdf/2604.13817v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "information elicitation in open-ended social dialogue",
+      "llm_evidence_cn": "开放式社会对话中的信息引导",
+      "llm_evidence": "开放式社会对话中的信息引导",
+      "canonical_evidence": "开放式社会对话中的信息引导",
+      "llm_tldr_en": "Proposes a reinforcement learning framework to help LLMs elicit concealed information in interactive dialogues.",
+      "llm_tldr_cn": "提出了一种强化学习框架，帮助大语言模型在交互式对话中引导出隐藏信息。",
+      "llm_tldr": "提出了一种强化学习框架，帮助大语言模型在交互式对话中引导出隐藏信息。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.14687v1",
+      "title": "M2-PALE: A Framework for Explaining Multi-Agent MCTS--Minimax Hybrids via Process Mining and LLMs",
+      "abstract": "Monte-Carlo Tree Search (MCTS) is a fundamental sampling-based search algorithm widely used for online planning in sequential decision-making domains. Despite its success in driving recent advances in artificial intelligence, understanding the behavior of MCTS agents remains a challenge for both developers and users. This difficulty stems from the complex search trees produced through the simulation of numerous future states and their intricate relationships. A known weakness of standard MCTS is its reliance on highly selective tree construction, which may lead to the omission of crucial moves and a vulnerability to tactical traps. To resolve this, we incorporate shallow, full-width Minimax search into the rollout phase of multi-agent MCTS to enhance strategic depth. Furthermore, to demystify the resulting decision-making logic, we introduce \\textsf{M2-PALE} (MCTS--Minimax Process-Aided Linguistic Explanations). This framework employs process mining techniques, specifically the Alpha Miner, iDHM, and Inductive Miner algorithms, to extract underlying behavioral workflows from agent execution traces. These process models are then synthesized by LLMs to generate human-readable causal and distal explanations. We demonstrate the efficacy of our approach in a small-scale checkers environment, establishing a scalable foundation for interpreting hybrid agents in increasingly complex strategic domains.",
+      "authors": [
+        "Yiyu Qian",
+        "Liyuan Zhao",
+        "Tim Miller"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-16T06:46:32+00:00",
+      "link": "https://arxiv.org/pdf/2604.14687v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "explaining multi-agent MCTS behavior using LLMs",
+      "llm_evidence_cn": "使用大模型解释多智能体蒙特卡洛树搜索行为",
+      "llm_evidence": "使用大模型解释多智能体蒙特卡洛树搜索行为",
+      "canonical_evidence": "使用大模型解释多智能体蒙特卡洛树搜索行为",
+      "llm_tldr_en": "A framework to explain complex multi-agent search behaviors using process mining and LLMs.",
+      "llm_tldr_cn": "一个利用流程挖掘和大模型来解释复杂多智能体搜索行为的框架。",
+      "llm_tldr": "一个利用流程挖掘和大模型来解释复杂多智能体搜索行为的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.15078v1",
+      "title": "Where are the Humans? A Scoping Review of Fairness in Multi-agent AI Systems",
+      "abstract": "Rapid advances in Generative AI are giving rise to increasingly sophisticated Multi-Agent AI (MAAI) systems. While AI fairness has been extensively studied in traditional predictive scenarios, its examination in MAAI remains nascent and fragmented. This scoping review critically synthesizes existing research on fairness in MAAI systems. Through a qualitative content analysis of 23 selected studies, we identify five archetypal approaches. Our findings reveal that fairness in MAAI systems is often addressed superficially, lacks robust normative foundations, and frequently overlooks the complex dynamics introduced by agent autonomy and system-level interactions. We argue that fairness must be embedded structurally throughout the development lifecycle of MAAI, rather than appended as a post-hoc consideration. Meaningful evaluation requires explicit human oversight, normative clarity, and a precise articulation of fairness objectives and beneficiaries. This review provides a foundation for advancing fairness research in MAAI systems by highlighting critical gaps, exposing prevailing limitations, and suggesting pathways.",
+      "authors": [
+        "Simeon Allmendinger",
+        "Luca Deck",
+        "Lucas Mueller"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-16T14:41:07+00:00",
+      "link": "https://arxiv.org/pdf/2604.15078v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "fairness in multi-agent AI systems",
+      "llm_evidence_cn": "多智能体AI系统中的公平性",
+      "llm_evidence": "多智能体AI系统中的公平性",
+      "canonical_evidence": "多智能体AI系统中的公平性",
+      "llm_tldr_en": "A scoping review of fairness in multi-agent AI systems, identifying gaps in current research and normative foundations.",
+      "llm_tldr_cn": "对多智能体AI系统公平性的范围审查，识别了当前研究中的空白和规范基础。",
+      "llm_tldr": "对多智能体AI系统公平性的范围审查，识别了当前研究中的空白和规范基础。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

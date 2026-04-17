@@ -6,64 +6,67 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-16
-- 运行时间：2026-04-16 19:51:47 UTC
+- 最新运行日期：2026-04-17
+- 运行时间：2026-04-17 19:50:46 UTC
 - 运行状态：成功
-- 本次总论文数：14
-- 精读区：3
-- 速读区：11
+- 本次总论文数：15
+- 精读区：6
+- 速读区：9
 
 ### 今日简报（AI）
-今日深度解析 14 篇前沿论文，聚焦 LLM 辩论中的共识漂移与大规模智能体社会的治理蓝图。
-重点关注网络效应对模型协议的影响，以及如何通过帕森斯制度架构规范互联网级的智能体协作。
-建议关注智能体在软件工程与多模态路由中的落地，提前布局从单体智能迈向群体协作的治理范式。
-- 详情：[/202604/16/README](/202604/16/README)
+今日深度复盘 15 篇前沿论文，聚焦多智能体系统从微观因果发现到宏观组织效能的演化逻辑。
+核心结论指出 CAMO 框架能自动化揭示智能体模拟的涌现规律，而 AI 组织虽比个体更高效却更难实现价值对齐。
+建议普通读者关注多智能体协作中的“效率-对齐”权衡，并尝试将自动化脚本应用于剧本杀等复杂推理场景。
+- 详情：[/202604/17/README](/202604/17/README)
 
 ### 精读区论文标签
-1. [Network Effects and Agreement Drift in LLM Debates](/202604/16/2604.11312v2-network-effects-and-agreement-drift-in-llm-debates)  
+1. [CAMO: An Agentic Framework for Automated Causal Discovery from Micro Behaviors to Macro Emergence in LLM Agent Simulations](/202604/17/2604.14691v1-camo-an-agentic-framework-for-automated-causal-discovery-from-micro-behaviors-to-macro-emergence-in-llm-agent-simulations)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：LLM智能体模拟中从微观行为到宏观涌现的因果发现
+2. [AI Organizations are More Effective but Less Aligned than Individual Agents](/202604/17/2604.10290v1-ai-organizations-are-more-effective-but-less-aligned-than-individual-agents)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：LLM智能体在多轮辩论中的集体行为及协议漂移
-2. [Governance by Design: A Parsonian Institutional Architecture for Internet-Wide Agent Societies](/202604/16/2604.11337v1-governance-by-design-a-parsonian-institutional-architecture-for-internet-wide-agent-societies)  
+   evidence：AI组织中的涌现行为
+3. [Coalition Formation in LLM Agent Networks: Stability Analysis and Convergence Guarantees](/202604/17/2604.14386v1-coalition-formation-in-llm-agent-networks-stability-analysis-and-convergence-guarantees)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：互联网规模智能体社会及涌现社会行为的治理
-3. [Learning Probabilistic Responsibility Allocations for Multi-Agent Interactions](/202604/16/2604.13128v1-learning-probabilistic-responsibility-allocations-for-multi-agent-interactions)  
+   evidence：LLM智能体网络中的联盟形成与稳定性
+4. [CoGrid & the Multi-User Gymnasium: A Framework for Multi-Agent Experimentation](/202604/17/2604.15044v1-cogrid--the-multi-user-gymnasium-a-framework-for-multi-agent-experimentation)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：多智能体实验和社会决策框架
+5. [Toward Explanatory Equilibrium: Verifiable Reasoning as a Coordination Mechanism under Asymmetric Information](/202604/17/2604.09917v1-toward-explanatory-equilibrium-verifiable-reasoning-as-a-coordination-mechanism-under-asymmetric-information)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：学习多智能体交互中的责任分配以实现社会合规
+   evidence：多智能体系统中的大模型智能体协作
+6. [Toward Accountable AI-Generated Content on Social Platforms: Steganographic Attribution and Multimodal Harm Detection](/202604/17/2604.10460v1-toward-accountable-ai-generated-content-on-social-platforms-steganographic-attribution-and-multimodal-harm-detection)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：社交平台上AI生成内容的跨模态危害检测与归因
 
 ### 速读区论文标签
-1. [Modality-Native Routing in Agent-to-Agent Networks: A Multimodal A2A Protocol Extension](/202604/16/2604.12213v1-modality-native-routing-in-agent-to-agent-networks-a-multimodal-a2a-protocol-extension)  
+1. [Collaborative Multi-Agent Scripts Generation for Enhancing Imperfect-Information Reasoning in Murder Mystery Games](/202604/17/2604.11741v1-collaborative-multi-agent-scripts-generation-for-enhancing-imperfect-information-reasoning-in-murder-mystery-games)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于角色驱动社会互动和推理的多智能体框架
+2. [Agentic Aggregation for Parallel Scaling of Long-Horizon Agentic Tasks](/202604/17/2604.11753v1-agentic-aggregation-for-parallel-scaling-of-long-horizon-agentic-tasks)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：智能体间网络的跨模态协议
-2. [Agentic Insight Generation in VSM Simulations](/202604/16/2604.12421v1-agentic-insight-generation-in-vsm-simulations)  
+   evidence：用于长程多智能体任务并行扩展的智能体聚合
+3. [Bridging MARL to SARL: An Order-Independent Multi-Agent Transformer via Latent Consensus](/202604/17/2604.13472v1-bridging-marl-to-sarl-an-order-independent-multi-agent-transformer-via-latent-consensus)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于模拟中多跳推理的智能体架构
-3. [AgentForge: Execution-Grounded Multi-Agent LLM Framework for Autonomous Software Engineering](/202604/16/2604.13120v1-agentforge-execution-grounded-multi-agent-llm-framework-for-autonomous-software-engineering)  
+   evidence：多智能体强化学习与基于Transformer的协作
+4. [MARS$^2$: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation](/202604/17/2604.14564v1-mars2-scaling-multi-agent-tree-search-via-reinforcement-learning-for-code-generation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于自主软件工程且包含智能体协作的多智能体大模型框架
-4. [Cross-Domain Query Translation for Network Troubleshooting: A Multi-Agent LLM Framework with Privacy Preservation and Self-Reflection](/202604/16/2604.13353v1-cross-domain-query-translation-for-network-troubleshooting-a-multi-agent-llm-framework-with-privacy-preservation-and-self-reflection)  
+   evidence：多个独立优化的智能体协作
+5. [M2-PALE: A Framework for Explaining Multi-Agent MCTS--Minimax Hybrids via Process Mining and LLMs](/202604/17/2604.14687v1-m2-pale-a-framework-for-explaining-multi-agent-mcts--minimax-hybrids-via-process-mining-and-llms)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于查询翻译的分层多智能体大模型架构
-5. [Topology Estimation for Open Multi-Agent Systems](/202604/16/2604.13628v1-topology-estimation-for-open-multi-agent-systems)  
+   evidence：使用大模型解释多智能体蒙特卡洛树搜索行为
+6. [Where are the Humans? A Scoping Review of Fairness in Multi-agent AI Systems](/202604/17/2604.15078v1-where-are-the-humans-a-scoping-review-of-fairness-in-multi-agent-ai-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：开放式多智能体系统中的交互拓扑识别
-6. [$π$-Play: Multi-Agent Self-Play via Privileged Self-Distillation without External Data](/202604/16/2604.14054v1--play-multi-agent-self-play-via-privileged-self-distillation-without-external-data)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：用于复杂信息寻求任务的多智能体自我博弈
-7. [SEARL: Joint Optimization of Policy and Tool Graph Memory for Self-Evolving Agents](/202604/16/2604.07791v2-searl-joint-optimization-of-policy-and-tool-graph-memory-for-self-evolving-agents)  
+   evidence：多智能体AI系统中的公平性
+7. [SemaClaw: A Step Towards General-Purpose Personal AI Agents through Harness Engineering](/202604/17/2604.11548v1-semaclaw-a-step-towards-general-purpose-personal-ai-agents-through-harness-engineering)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于从轨迹中学习的自我进化智能体框架和多智能体框架
-8. [Beyond Stochastic Exploration: What Makes Training Data Valuable for Agentic Search](/202604/16/2604.08124v1-beyond-stochastic-exploration-what-makes-training-data-valuable-for-agentic-search)  
+   evidence：可控且可靠的个人AI智能体基础设施
+8. [Thought-Retriever: Don't Just Retrieve Raw Data, Retrieve Thoughts for Memory-Augmented Agentic Systems](/202604/17/2604.12231v1-thought-retriever-dont-just-retrieve-raw-data-retrieve-thoughts-for-memory-augmented-agentic-systems)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于智能体搜索推理的分层经验
-9. [Self-Distilled Reinforcement Learning for Co-Evolving Agentic Recommender Systems](/202604/16/2604.10029v1-self-distilled-reinforcement-learning-for-co-evolving-agentic-recommender-systems)  
+   evidence：记忆增强的智能体系统
+9. [RPS: Information Elicitation with Reinforcement Prompt Selection](/202604/17/2604.13817v1-rps-information-elicitation-with-reinforcement-prompt-selection)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：推荐智能体与用户智能体之间的多轮交互
-10. [HARPO: Hierarchical Agentic Reasoning for User-Aligned Conversational Recommendation](/202604/16/2604.10048v1-harpo-hierarchical-agentic-reasoning-for-user-aligned-conversational-recommendation)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：使用分层推理的对话式推荐智能体框架
-11. [Functional Misalignment in Human-AI Interactions on Digital Platforms](/202604/16/2604.11459v1-functional-misalignment-in-human-ai-interactions-on-digital-platforms)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：社交媒体推荐算法及其对社会行为和信任侵蚀的影响
+   evidence：开放式社会对话中的信息引导
 
 
 <div class="dpr-home-promo-card">
