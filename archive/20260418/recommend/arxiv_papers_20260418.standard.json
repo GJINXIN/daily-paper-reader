@@ -1,0 +1,608 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-18T20:12:25.257762+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 12,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.13705v1",
+      "title": "Beyond Arrow's Impossibility: Fairness as an Emergent Property of Multi-Agent Collaboration",
+      "abstract": "Fairness in language models is typically studied as a property of a single, centrally optimized model. As large language models become increasingly agentic, we propose that fairness emerges through interaction and exchange. We study this via a controlled hospital triage framework in which two agents negotiate over three structured debate rounds. One agent is aligned to a specific ethical framework via retrieval-augmented generation (RAG), while the other is either unaligned or adversarially prompted to favor demographic groups over clinical need. We find that alignment systematically shapes negotiation strategies and allocation patterns, and that neither agent's allocation is ethically adequate in isolation, yet their joint final allocation can satisfy fairness criteria that neither would have reached alone. Aligned agents partially moderate bias through contestation rather than override, acting as corrective patches that restore access for marginalized groups without fully converting a biased counterpart. We further observe that even explicitly aligned agents exhibit intrinsic biases toward certain frameworks, consistent with known left-leaning tendencies in LLMs. We connect these limits to Arrow's Impossibility Theorem: no aggregation mechanism can simultaneously satisfy all desiderata of collective rationality, and multi-agent deliberation navigates rather than resolves this constraint. Our results reposition fairness as an emergent, procedural property of decentralized agent interaction, and the system rather than the individual agent as the appropriate unit of evaluation.",
+      "authors": [
+        "Sayan Kumar Chaki",
+        "Antoine Gourru",
+        "Julien Velcin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.GT",
+        "cs.MA"
+      ],
+      "published": "2026-04-15T10:34:35+00:00",
+      "link": "https://arxiv.org/pdf/2604.13705v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "fairness as an emergent property of multi-agent collaboration",
+      "llm_evidence_cn": "公平性作为多智能体协作的涌现属性",
+      "llm_evidence": "公平性作为多智能体协作的涌现属性",
+      "canonical_evidence": "公平性作为多智能体协作的涌现属性",
+      "llm_tldr_en": "Demonstrates how ethical fairness emerges from negotiation and interaction between agentic LLMs.",
+      "llm_tldr_cn": "展示了伦理公平性如何通过大模型智能体之间的谈判和交互涌现。",
+      "llm_tldr": "展示了伦理公平性如何通过大模型智能体之间的谈判和交互涌现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.15267v1",
+      "title": "CoopEval: Benchmarking Cooperation-Sustaining Mechanisms and LLM Agents in Social Dilemmas",
+      "abstract": "It is increasingly important that LLM agents interact effectively and safely with other goal-pursuing agents, yet, recent works report the opposite trend: LLMs with stronger reasoning capabilities behave _less_ cooperatively in mixed-motive games such as the prisoner's dilemma and public goods settings. Indeed, our experiments show that recent models -- with or without reasoning enabled -- consistently defect in single-shot social dilemmas.   To tackle this safety concern, we present the first comparative study of game-theoretic mechanisms that are designed to enable cooperative outcomes between rational agents _in equilibrium_. Across four social dilemmas testing distinct components of robust cooperation, we evaluate the following mechanisms: (1) repeating the game for many rounds, (2) reputation systems, (3) third-party mediators to delegate decision making to, and (4) contract agreements for outcome-conditional payments between players. Among our findings, we establish that contracting and mediation are most effective in achieving cooperative outcomes between capable LLM models, and that repetition-induced cooperation deteriorates drastically when co-players vary. Moreover, we demonstrate that these cooperation mechanisms become _more effective_ under evolutionary pressures to maximize individual payoffs.",
+      "authors": [
+        "Emanuel Tewolde",
+        "Xiao Zhang",
+        "David Guzman Piedrahita",
+        "Vincent Conitzer",
+        "Zhijing Jin"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.AI",
+        "cs.CL",
+        "cs.CY",
+        "cs.MA"
+      ],
+      "published": "2026-04-16T17:40:30+00:00",
+      "link": "https://arxiv.org/pdf/2604.15267v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Benchmarking LLM agents in social dilemmas and cooperation mechanisms",
+      "llm_evidence_cn": "在社会困境和协作机制中对LLM智能体进行基准测试",
+      "llm_evidence": "在社会困境和协作机制中对LLM智能体进行基准测试",
+      "canonical_evidence": "在社会困境和协作机制中对LLM智能体进行基准测试",
+      "llm_tldr_en": "Evaluates game-theoretic mechanisms to sustain cooperation among LLM agents in social dilemma environments.",
+      "llm_tldr_cn": "评估在社会困境环境下维持LLM智能体之间合作的博弈论机制。",
+      "llm_tldr": "评估在社会困境环境下维持LLM智能体之间合作的博弈论机制。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11545v1",
+      "title": "Heterophily as a generative mechanism for self-organized synergistic interdependencies",
+      "abstract": "Understanding what and how causal dynamical mechanisms generate collective phenomena is a central challenge in complexity science. Recent studies have focused on identifying the mechanisms underlying the synergistic interdependencies that characterise these phenomena in systems with fixed interaction structures. Yet, real-world systems displaying collective phenomena, such as brains, societies, and ecosystems, are adaptive: interactions change in time. Here, we show that heterophily is a minimal local adaptive mechanism for the emergence of self-organized synergistic interdependencies. We study a paradigmatic spin-glass-like model with co-evolving couplings to show how heterophily generates the conditions for synergy to emerge. By solving the minimal $N=3$ case analytically, we reveal the precise mechanism: heterophily weakens pairwise dependencies while inducing high-order dependencies via geometric constraints on the configurations it selects. Together, these two effects underpin synergy. Numerical simulations confirm that this mechanism persists in large systems and that it is robust under parameter heterogeneities and dynamics. We demonstrate the applicability of our results by showing how heterophily can disrupt polarization while promoting synergistic information dynamics of opinions, where individuals' opinions are better explained by group-level influences than by pairwise ones. These results offer a parsimonious route to self-organized synergistic interdependencies in information-processing systems, with potential applications in computational social science, neuroscience, and biology.",
+      "authors": [
+        "Enrico Caprioglio",
+        "Luc Berthouze"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph",
+        "nlin.AO"
+      ],
+      "published": "2026-04-13T14:37:08+00:00",
+      "link": "https://arxiv.org/pdf/2604.11545v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "emergence of self-organized synergistic interdependencies in societies",
+      "llm_evidence_cn": "社会中自组织协同相互依赖的涌现",
+      "llm_evidence": "社会中自组织协同相互依赖的涌现",
+      "canonical_evidence": "社会中自组织协同相互依赖的涌现",
+      "llm_tldr_en": "Explores heterophily as a mechanism for the emergence of collective phenomena in adaptive social systems.",
+      "llm_tldr_cn": "探讨异质性作为自适应社会系统中集体现象涌现的机制。",
+      "llm_tldr": "探讨异质性作为自适应社会系统中集体现象涌现的机制。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12685v1",
+      "title": "Signed DeGroot-Friedkin Dynamics with Interdependent Topics",
+      "abstract": "This paper investigates DeGroot-Friedkin (DF) dynamics over signed influence networks with interdependent topics. We propose a multi-topic signed framework that combines repelling interpersonal interactions with cross-issue self-appraisal, examining how antagonism and topic interdependence shape the evolution of agent-level social power. When the logic matrices (for topic interdependence) of all agents share a common dominant left eigenvector, we identify structural conditions under which the original dynamics admit an exact reduction to an explicit scalar DF map. This yields a complete classification of limiting social power configurations into pluralistic, mixed, and vertex-dominant types. In all three cases, the dynamics are globally convergent, and in the first two the ordering induced by the interaction centrality is preserved. We further show local robustness under small heterogeneous perturbations of the logic matrices. We also clarify what changes when this common-eigenvector structure is lost. These results extend signed social power dynamics beyond the standard nonnegative scalar setting and shed light on the robustness and scope of centrality-based social power formation in multi-topic signed influence systems.",
+      "authors": [
+        "Yangyang Luan",
+        "Muhammad Ahsan Razaq",
+        "Xiaoqun Wu",
+        "Claudio Altafini"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph",
+        "eess.SY",
+        "math.OC"
+      ],
+      "published": "2026-04-14T12:57:11+00:00",
+      "link": "https://arxiv.org/pdf/2604.12685v1",
+      "tags": [
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "evolution of agent-level social power in influence networks",
+      "llm_evidence_cn": "影响网络中智能体层面社会权力的演变",
+      "llm_evidence": "影响网络中智能体层面社会权力的演变",
+      "canonical_evidence": "影响网络中智能体层面社会权力的演变",
+      "llm_tldr_en": "Analyzes how antagonism and topic interdependence shape social power dynamics in multi-agent networks.",
+      "llm_tldr_cn": "分析了对抗性和话题相互依赖如何塑造多智能体网络中的社会权力动态。",
+      "llm_tldr": "分析了对抗性和话题相互依赖如何塑造多智能体网络中的社会权力动态。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.08988v1",
+      "title": "SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment",
+      "abstract": "Current LLM-based agents demonstrate strong performance in episodic task execution but remain constrained by static toolsets and episodic amnesia, failing to accumulate experience or optimize strategies across task boundaries. While the Self-Evolving Agent (SEA) paradigm has been previously proposed, this paper contributes a new formal definition of SEA grounded in digital embodiment and continuous cross-task evolution, and introduces SEA-Eval, the first benchmark designed to evaluate SEA characteristics across two dimensions, intra-task execution reliability and long-term evolutionary performance. By organizing tasks into sequential streams and analyzing Success Rate and Token Consumption over time, SEA-Eval quantifies evolutionary gain and structural stability in ways that existing episodic benchmarks cannot. Empirical evaluations reveal a significant evolutionary bottleneck in current state-of-the-art frameworks, where identical success rates mask up to 31.2 times differences in token consumption and divergent evolutionary trajectories under sequential analysis. SEA-Eval provides a rigorous scientific foundation for advancing agents from mere task executors toward genuinely self-evolving digital entities.",
+      "authors": [
+        "Sihang Jiang",
+        "Lipeng Ma",
+        "Zhonghua Hong",
+        "Keyi Wang",
+        "Zhiyu Lu",
+        "Shisong Chen",
+        "Jinghao Zhang",
+        "Tianjun Pan",
+        "Weijia Zhou",
+        "Jiaqing Liang",
+        "Yanghua Xiao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-10T05:49:50+00:00",
+      "link": "https://arxiv.org/pdf/2604.08988v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "evaluation of self-evolving agents and long-term performance",
+      "llm_evidence_cn": "自我进化智能体的评估及其长期演化性能",
+      "llm_evidence": "自我进化智能体的评估及其长期演化性能",
+      "canonical_evidence": "自我进化智能体的评估及其长期演化性能",
+      "llm_tldr_en": "Proposes a benchmark for evaluating self-evolving agents, focusing on continuous cross-task evolution and reliability.",
+      "llm_tldr_cn": "提出一个评估自我进化智能体的基准，关注跨任务的持续演化能力与执行可靠性。",
+      "llm_tldr": "提出一个评估自我进化智能体的基准，关注跨任务的持续演化能力与执行可靠性。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.12102v2",
+      "title": "Spatial Atlas: Compute-Grounded Reasoning for Spatial-Aware Research Agent Benchmarks",
+      "abstract": "We introduce compute-grounded reasoning (CGR), a design paradigm for spatial-aware research agents in which every answerable sub-problem is resolved by deterministic computation before a language model is asked to generate. Spatial Atlas instantiates CGR as a single Agent-to-Agent (A2A) server that handles two challenging benchmarks: FieldWorkArena, a multimodal spatial question-answering benchmark spanning factory, warehouse, and retail environments, and MLE-Bench, a suite of 75 Kaggle machine learning competitions requiring end-to-end ML engineering. A structured spatial scene graph engine extracts entities and relations from vision descriptions, computes distances and safety violations deterministically, then feeds computed facts to large language models, thereby avoiding hallucinated spatial reasoning. Entropy-guided action selection maximizes information gain per step and routes queries across a three-tier frontier model stack (OpenAI + Anthropic). A self-healing ML pipeline with strategy-aware code generation, a score-driven iterative refinement loop, and a prompt-based leak audit registry round out the system. We evaluate across both benchmarks and show that CGR yields competitive accuracy while maintaining interpretability through structured intermediate representations and deterministic spatial computations.",
+      "authors": [
+        "Arun Sharma"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-04-13T22:22:07+00:00",
+      "link": "https://arxiv.org/pdf/2604.12102v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent-to-Agent (A2A) server for spatial-aware research agents",
+      "llm_evidence_cn": "用于空间感知研究智能体的智能体对智能体服务器",
+      "llm_evidence": "用于空间感知研究智能体的智能体对智能体服务器",
+      "canonical_evidence": "用于空间感知研究智能体的智能体对智能体服务器",
+      "llm_tldr_en": "Introduces a compute-grounded reasoning paradigm for spatial-aware multi-agent research benchmarks.",
+      "llm_tldr_cn": "为空间感知多智能体研究基准引入了一种基于计算的推理范式。",
+      "llm_tldr": "为空间感知多智能体研究基准引入了一种基于计算的推理范式。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.09823v1",
+      "title": "Agentic Workflows for Resolving Conflict Over Shared Resources: A Power Grid Application",
+      "abstract": "The increasing use of LLM-based agents to support decision-making and control across diverse domains motivates the need for systematic deconfliction of their proposed actions. We present a deconfliction framework for coordinating multiple agents that formally encapsulate individual applications, each proposing potentially conflicting actions over shared resources. Conflicts are resolved through three deconfliction modes: bilateral negotiation, structured mediation, and procedural (deterministic) deconfliction. We define design principles for large language model-based client agents, including a chain-of-thought style reasoning process, and introduce an iterative weighted-consensus mechanism that does not require the applications themselves to solve optimization problems. The framework is domain agnostic and supports both numeric and non-numeric decisions. Its performance is demonstrated on a power distribution use case with conflicting advanced distribution management system applications for cost optimization and resilience, coordinating diesel generators and battery energy storage systems.",
+      "authors": [
+        "Shiva Poudel",
+        "Thiagarajan Ramachandran",
+        "Orestis Vasios",
+        "Andrew P. Reiman"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-04-10T18:55:56+00:00",
+      "link": "https://arxiv.org/pdf/2604.09823v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "deconfliction framework for coordinating multiple LLM-based agents",
+      "llm_evidence_cn": "协调多个基于大语言模型的智能体的冲突解决框架",
+      "llm_evidence": "协调多个基于大语言模型的智能体的冲突解决框架",
+      "canonical_evidence": "协调多个基于大语言模型的智能体的冲突解决框架",
+      "llm_tldr_en": "Presents a framework for resolving conflicts among multiple agents sharing resources in power grid apps.",
+      "llm_tldr_cn": "提出一种解决电网应用中共享资源的多个智能体之间冲突的框架。",
+      "llm_tldr": "提出一种解决电网应用中共享资源的多个智能体之间冲突的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.12129v1",
+      "title": "Aethon: A Reference-Based Replication Primitive for Constant-Time Instantiation of Stateful AI Agents",
+      "abstract": "The transition from stateless model inference to stateful agentic execution is reshaping the systems assumptions underlying modern AI infrastructure. While large language models have made persistent, tool-using, and collaborative agents technically viable, existing runtime architectures remain constrained by materialization-heavy instantiation models that impose significant latency and memory overhead.   This paper introduces Aethon, a reference-based replication primitive for near-constant-time instantiation of stateful AI agents. Rather than reconstructing agents as fully materialized objects, Aethon represents each instance as a compositional view over stable definitions, layered memory, and local contextual overlays. By shifting instantiation from duplication to reference, Aethon decouples creation cost from inherited structure.   We present the conceptual framework, system architecture, and memory model underlying Aethon, including layered inheritance and copy-on-write semantics. We analyze its implications for complexity, scalability, multi-agent orchestration, and enterprise governance. We argue that reference-based instantiation is not merely an optimization, but a more appropriate systems abstraction for production-scale agentic software.   Aethon points toward a new class of AI infrastructure in which agents become lightweight, composable execution identities that can be spawned, specialized, and governed at scale.",
+      "authors": [
+        "Swanand Rao",
+        "Kiran Kashalkar",
+        "Parvathi Somashekar",
+        "Priya Krishnan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.AR",
+        "cs.DC",
+        "cs.MA"
+      ],
+      "published": "2026-04-13T23:23:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.12129v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "infrastructure for constant-time instantiation of stateful AI agents",
+      "llm_evidence_cn": "用于有状态AI智能体常数时间实例化的基础设施",
+      "llm_evidence": "用于有状态AI智能体常数时间实例化的基础设施",
+      "canonical_evidence": "用于有状态AI智能体常数时间实例化的基础设施",
+      "llm_tldr_en": "Presents a system for efficient instantiation of stateful agents, supporting large-scale agentic simulations.",
+      "llm_tldr_cn": "提出一种高效实例化有状态智能体的系统，支持大规模智能体模拟。",
+      "llm_tldr": "提出一种高效实例化有状态智能体的系统，支持大规模智能体模拟。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.10866v2",
+      "title": "OccuBench: Evaluating AI Agents on Real-World Professional Tasks via Language Environment Simulation",
+      "abstract": "AI agents are expected to perform professional work across hundreds of occupational domains (from emergency department triage to nuclear reactor safety monitoring to customs import processing), yet existing benchmarks can only evaluate agents in the few domains where public environments exist. We introduce OccuBench, a benchmark covering 100 real-world professional task scenarios across 10 industry categories and 65 specialized domains, enabled by Language Environment Simulators (LESs) that simulate domain-specific environments through LLM-driven tool response generation. Our multi-agent synthesis pipeline automatically produces evaluation instances with guaranteed solvability, calibrated difficulty, and document-grounded diversity. OccuBench evaluates agents along two complementary dimensions: task completion across professional domains and environmental robustness under controlled fault injection (explicit errors, implicit data degradation, and mixed faults). We evaluate 15 frontier models across 8 model families and find that: (1) no single model dominates all industries, as each has a distinct occupational capability profile; (2) implicit faults (truncated data, missing fields) are harder than both explicit errors (timeouts, 500s) and mixed faults, because they lack overt error signals and require the agent to independently detect data degradation; (3) larger models, newer generations, and higher reasoning effort consistently improve performance. GPT-5.2 improves by 27.5 points from minimal to maximum reasoning effort; and (4) strong agents are not necessarily strong environment simulators. Simulator quality is critical for LES-based evaluation reliability. OccuBench provides the first systematic cross-industry evaluation of AI agents on professional occupational tasks.",
+      "authors": [
+        "Xiaomeng Hu",
+        "Yinger Zhang",
+        "Fei Huang",
+        "Jianhong Tu",
+        "Yang Su",
+        "Lianghao Deng",
+        "Yuxuan Liu",
+        "Yantao Liu",
+        "Dayiheng Liu",
+        "Tsung-Yi Ho"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-13T00:27:32+00:00",
+      "link": "https://arxiv.org/pdf/2604.10866v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM-driven environment simulation for AI agents",
+      "llm_evidence_cn": "基于LLM驱动的AI智能体环境模拟",
+      "llm_evidence": "基于LLM驱动的AI智能体环境模拟",
+      "canonical_evidence": "基于LLM驱动的AI智能体环境模拟",
+      "llm_tldr_en": "Introduces a benchmark for evaluating AI agents across professional domains using language environment simulators.",
+      "llm_tldr_cn": "引入了一个基准，利用语言环境模拟器评估AI智能体在专业领域的表现。",
+      "llm_tldr": "引入了一个基准，利用语言环境模拟器评估AI智能体在专业领域的表现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.12206v1",
+      "title": "Socially Fluent, Socially Awkward: Artificial Intelligence Relational Talk Backfires in Commercial Interactions",
+      "abstract": "Advancements in Artificial Intelligence (AI) technologies' social fluency are being integrated into commercial interactions. As tools such as OpenAI's assistant are integrated into platforms such as Shopify, Klarna, and Visa, understanding consumer responses to AI social features become essential. One such feature is relational talk, an informal and non-obligatory social communication embedded in transactional exchanges. Across four experiments, we find: 1) a negative main effect of AI relational talk on satisfaction, mediated by expectancy violation and perceived interaction awkwardness, and 2) goal-relevant relational talk to attenuate this effect. This paper extends the literature by challenging the assumption that increased social fluency will improve satisfaction, and highlights the complexity of integrating social features into AI systems. It also identifies awkwardness as a key emotional response and barrier to effective human-AI interaction, showing that even in the absence of real social repercussions, perceived awkwardness in AI-led commercial interactions can elicit negative responses.",
+      "authors": [
+        "Stephanie Kwari Dharmaputri",
+        "Anish Nagpal",
+        "Greg Nyilasy",
+        "Jing Lei"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-04-14T02:34:13+00:00",
+      "link": "https://arxiv.org/pdf/2604.12206v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI social features and relational talk in commercial interactions",
+      "llm_evidence_cn": "商业交互中的人工智能社会特征与关系谈话",
+      "llm_evidence": "商业交互中的人工智能社会特征与关系谈话",
+      "canonical_evidence": "商业交互中的人工智能社会特征与关系谈话",
+      "llm_tldr_en": "Investigates how AI's social fluency and relational talk affect consumer satisfaction in interactions.",
+      "llm_tldr_cn": "研究了人工智能的社交流利度和关系谈话如何影响交互中的消费者满意度。",
+      "llm_tldr": "研究了人工智能的社交流利度和关系谈话如何影响交互中的消费者满意度。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.12285v1",
+      "title": "GAM: Hierarchical Graph-based Agentic Memory for LLM Agents",
+      "abstract": "To sustain coherent long-term interactions, Large Language Model (LLM) agents must navigate the tension between acquiring new information and retaining prior knowledge. Current unified stream-based memory systems facilitate context updates but remain vulnerable to interference from transient noise. Conversely, discrete structured memory architectures provide robust knowledge retention but often struggle to adapt to evolving narratives. To address this, we propose GAM, a hierarchical Graph-based Agentic Memory framework that explicitly decouples memory encoding from consolidation to effectively resolve the conflict between rapid context perception and stable knowledge retention. By isolating ongoing dialogue in an event progression graph and integrating it into a topic associative network only upon semantic shifts, our approach minimizes interference while preserving long-term consistency. Additionally, we introduce a graph-guided, multi-factor retrieval strategy to enhance context precision. Experiments on LoCoMo and LongDialQA indicate that our method consistently outperforms state-of-the-art baselines in both reasoning accuracy and efficiency.",
+      "authors": [
+        "Zhaofen Wu",
+        "Hanrong Zhang",
+        "Fulin Lin",
+        "Wujiang Xu",
+        "Xinran Xu",
+        "Yankai Chen",
+        "Henry Peng Zou",
+        "Shaowen Chen",
+        "Weizhi Zhang",
+        "Xue Liu",
+        "Philip S. Yu",
+        "Hongwei Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-14T04:53:00+00:00",
+      "link": "https://arxiv.org/pdf/2604.12285v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Graph-based memory for LLM agents in long-term interactions",
+      "llm_evidence_cn": "LLM智能体长期交互的图结构记忆",
+      "llm_evidence": "LLM智能体长期交互的图结构记忆",
+      "canonical_evidence": "LLM智能体长期交互的图结构记忆",
+      "llm_tldr_en": "Introduces a hierarchical graph-based memory to help LLM agents balance new information and stable knowledge.",
+      "llm_tldr_cn": "引入分层图结构记忆框架，帮助LLM智能体在长期交互中平衡新信息获取与旧知识保留。",
+      "llm_tldr": "引入分层图结构记忆框架，帮助LLM智能体在长期交互中平衡新信息获取与旧知识保留。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.13151v1",
+      "title": "Exploration and Exploitation Errors Are Measurable for Language Model Agents",
+      "abstract": "Language Model (LM) agents are increasingly used in complex open-ended decision-making tasks, from AI coding to physical AI. A core requirement in these settings is the ability to both explore the problem space and exploit acquired knowledge effectively. However, systematically distinguishing and quantifying exploration and exploitation from observed actions without access to the agent's internal policy remains challenging. To address this, we design controllable environments inspired by practical embodied AI scenarios. Each environment consists of a partially observable 2D grid map and an unknown task Directed Acyclic Graph (DAG). The map generation can be programmatically adjusted to emphasize exploration or exploitation difficulty. To enable policy-agnostic evaluation, we design a metric to quantify exploration and exploitation errors from agent's actions. We evaluate a variety of frontier LM agents and find that even state-of-the-art models struggle on our task, with different models exhibiting distinct failure modes. We further observe that reasoning models solve the task more effectively and show both exploration and exploitation can be significantly improved through minimal harness engineering. We release our code \\href{https://github.com/jjj-madison/measurable-explore-exploit}{here}.",
+      "authors": [
+        "Jaden Park",
+        "Jungtaek Kim",
+        "Jongwon Jeong",
+        "Robert D. Nowak",
+        "Kangwook Lee",
+        "Yong Jae Lee"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-14T17:59:57+00:00",
+      "link": "https://arxiv.org/pdf/2604.13151v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "measuring exploration and exploitation for language model agents",
+      "llm_evidence_cn": "衡量语言模型智能体的探索与利用",
+      "llm_evidence": "衡量语言模型智能体的探索与利用",
+      "canonical_evidence": "衡量语言模型智能体的探索与利用",
+      "llm_tldr_en": "Provides a method to quantify exploration and exploitation behaviors in LLM-based agents.",
+      "llm_tldr_cn": "提供了一种量化大语言模型智能体探索与利用行为的方法。",
+      "llm_tldr": "提供了一种量化大语言模型智能体探索与利用行为的方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.13824v1",
+      "title": "Beyond State Consistency: Behavior Consistency in Text-Based World Models",
+      "abstract": "World models have been emerging as critical components for assessing the consequences of actions generated by interactive agents in online planning and offline evaluation. In text-based environments, world models are typically evaluated and trained with single-step metrics such as Exact Match, aiming to improve the similarity between predicted and real-world states, but such metrics have been shown to be insufficient for capturing actual agent behavior. To address this issue, we introduce a new behavior-aligned training paradigm aimed at improving the functional consistency between the world model and the real environment. This paradigm focuses on optimizing a tractable step-level metric named Behavior Consistency Reward (BehR), which measures how much the likelihood of a logged next action changes between the real state and the world-model-predicted state under a frozen Reference Agent. Experiments on WebShop and TextWorld show that BehR-based training improves long-term alignment in several settings, with the clearest gains in WebShop and less movement in near-ceiling regimes, while preserving or improving single-step prediction quality in three of four settings. World models trained with BehR also achieve lower false positives in offline surrogate evaluation and show modest but encouraging gains in inference-time lookahead planning.",
+      "authors": [
+        "Youling Huang",
+        "Guanqiao Chen",
+        "Junchi Yao",
+        "Lu Wang",
+        "Fangkai Yang",
+        "Chao Du",
+        "ChenZhuo Zhao",
+        "Pu Zhao",
+        "Qingwei Lin",
+        "Saravan Rajmohan",
+        "Dongmei Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-04-15T12:56:45+00:00",
+      "link": "https://arxiv.org/pdf/2604.13824v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "assessing consequences of actions generated by interactive agents",
+      "llm_evidence_cn": "评估交互式智能体生成的动作后果",
+      "llm_evidence": "评估交互式智能体生成的动作后果",
+      "canonical_evidence": "评估交互式智能体生成的动作后果",
+      "llm_tldr_en": "Proposes a behavior-aligned training paradigm for text-based world models to improve agent consistency.",
+      "llm_tldr_cn": "提出了一种基于文本的世界模型行为对齐训练范式，以提高智能体的一致性。",
+      "llm_tldr": "提出了一种基于文本的世界模型行为对齐训练范式，以提高智能体的一致性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15003v1",
+      "title": "Flow of Truth: Proactive Temporal Forensics for Image-to-Video Generation",
+      "abstract": "The rapid rise of image-to-video (I2V) generation enables realistic videos to be created from a single image but also brings new forensic demands. Unlike static images, I2V content evolves over time, requiring forensics to move beyond 2D pixel-level tampering localization toward tracing how pixels flow and transform throughout the video. As frames progress, embedded traces drift and deform, making traditional spatial forensics ineffective. To address this unexplored dimension, we present **Flow of Truth**, the first proactive framework focusing on temporal forensics in I2V generation. A key challenge lies in discovering a forensic signature that can evolve consistently with the generation process, which is inherently a creative transformation rather than a deterministic reconstruction. Despite this intrinsic difficulty, we innovatively redefine video generation as *the motion of pixels through time rather than the synthesis of frames*. Building on this view, we propose a learnable forensic template that follows pixel motion and a template-guided flow module that decouples motion from image content, enabling robust temporal tracing. Experiments show that Flow of Truth generalizes across commercial and open-source I2V models, substantially improving temporal forensics performance.",
+      "authors": [
+        "Yuzhuo Chen",
+        "Zehua Ma",
+        "Han Fang",
+        "Hengyi Wang",
+        "Guanjie Wang",
+        "Weiming Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-16T13:27:12+00:00",
+      "link": "https://arxiv.org/pdf/2604.15003v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "temporal forensics for image-to-video generation and truth flow",
+      "llm_evidence_cn": "图像转视频生成的时序取证与真相流向",
+      "llm_evidence": "图像转视频生成的时序取证与真相流向",
+      "canonical_evidence": "图像转视频生成的时序取证与真相流向",
+      "llm_tldr_en": "Introduces a proactive temporal forensics framework to detect manipulations in generated videos.",
+      "llm_tldr_cn": "引入主动时序取证框架，用于检测生成视频中的篡改行为。",
+      "llm_tldr": "引入主动时序取证框架，用于检测生成视频中的篡改行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15027v1",
+      "title": "Quality-Aware Calibration for AI-Generated Image Detection in the Wild",
+      "abstract": "Significant progress has been made in detecting synthetic images, however most existing approaches operate on a single image instance and overlook a key characteristic of real-world dissemination: as viral images circulate on the web, multiple near-duplicate versions appear and lose quality due to repeated operations like recompression, resizing and cropping. As a consequence, the same image may yield inconsistent forensic predictions based on which version has been analyzed. In this work, to address this issue we propose QuAD (Quality-Aware calibration with near-Duplicates) a novel framework that makes decisions based on all available near-duplicates of the same image. Given a query, we retrieve its online near-duplicates and feed them to a detector: the resulting scores are then aggregated based on the estimated quality of the corresponding instance. By doing so, we take advantage of all pieces of information while accounting for the reduced reliability of images impaired by multiple processing steps. To support large-scale evaluation, we introduce two datasets: AncesTree, an in-lab dataset of 136k images organized in stochastic degradation trees that simulate online reposting dynamics, and ReWIND, a real-world dataset of nearly 10k near-duplicate images collected from viral web content. Experiments on several state-of-the-art detectors show that our quality-aware fusion improves their performance consistently, with an average gain of around 8% in terms of balanced accuracy compared to plain average. Our results highlight the importance of jointly processing all the images available online to achieve reliable detection of AI-generated content in real-world applications. Code and data are publicly available at https://grip-unina.github.io/QuAD/",
+      "authors": [
+        "Fabrizio Guillaro",
+        "Vincenzo De Rosa",
+        "Davide Cozzolino",
+        "Luisa Verdoliva"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-16T13:56:52+00:00",
+      "link": "https://arxiv.org/pdf/2604.15027v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI-generated image detection for viral content",
+      "llm_evidence_cn": "针对病毒式传播内容的AI生成图像检测",
+      "llm_evidence": "针对病毒式传播内容的AI生成图像检测",
+      "canonical_evidence": "针对病毒式传播内容的AI生成图像检测",
+      "llm_tldr_en": "Proposes a framework to improve synthetic image detection by analyzing multiple near-duplicate versions online.",
+      "llm_tldr_cn": "提出一种通过分析网络上多个近重复版本来改进合成图像检测的框架。",
+      "llm_tldr": "提出一种通过分析网络上多个近重复版本来改进合成图像检测的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
