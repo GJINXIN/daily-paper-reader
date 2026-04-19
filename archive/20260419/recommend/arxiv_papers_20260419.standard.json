@@ -1,0 +1,613 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-19T19:39:58.711770+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 14,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.12179v1",
+      "title": "AgenticAI-DialogGen: Topic-Guided Conversation Generation for Fine-Tuning and Evaluating Short- and Long-Term Memories of LLMs",
+      "abstract": "Recent advancements in Large Language Models (LLMs) have improved their ability to process extended conversational contexts, yet fine-tuning and evaluating short- and long-term memories remain difficult due to the absence of datasets that encode both short- and long-term conversational history. Existing conversational datasets lack memory grounding, overlook topic continuity, or rely on costly human annotation. To address these gaps, we introduce AgenticAI-DialogGen, a modular agent-based framework that generates persona-grounded and topic-guided conversations without human supervision. The framework uses LLM agents to extract knowledge graphs, identify topics, build speaker personas, and simulate topic-guided conversations from unstructured conversations. A QA module generates memory-grounded Question Answer (QA) pairs drawn from short- and long-term conversational histories. We also generated a new dataset entitled, TopicGuidedChat (TGC), where long-term memory is encoded as speaker-specific knowledge graphs and short-term memory as newly generated topic-guided conversations. Evaluations depict that AgenticAI-DialogGen yields higher conversational quality and LLMs fine-tuned on TGC dataset achieve improved performance on memory-grounded QA tasks.",
+      "authors": [
+        "Manoj Madushanka Perera",
+        "Adnan Mahmood",
+        "Kasun Eranda Wijethilake",
+        "Quan Z. Sheng"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.IR"
+      ],
+      "published": "2026-04-14T01:17:24+00:00",
+      "link": "https://arxiv.org/pdf/2604.12179v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM agents to simulate persona-grounded conversations",
+      "llm_evidence_cn": "LLM智能体模拟基于人格的对话",
+      "llm_evidence": "LLM智能体模拟基于人格的对话",
+      "canonical_evidence": "LLM智能体模拟基于人格的对话",
+      "llm_tldr_en": "A framework using LLM agents to generate topic-guided social conversations for memory evaluation.",
+      "llm_tldr_cn": "利用LLM智能体生成主题引导的社交对话，用于评估大模型的记忆能力。",
+      "llm_tldr": "利用LLM智能体生成主题引导的社交对话，用于评估大模型的记忆能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10470v1",
+      "title": "From Query to Counsel: Structured Reasoning with a Multi-Agent Framework and Dataset for Legal Consultation",
+      "abstract": "Legal consultation question answering (Legal CQA) presents unique challenges compared to traditional legal QA tasks, including the scarcity of high-quality training data, complex task composition, and strong contextual dependencies. To address these, we construct JurisCQAD, a large-scale dataset of over 43,000 real-world Chinese legal queries annotated with expert-validated positive and negative responses, and design a structured task decomposition that converts each query into a legal element graph integrating entities, events, intents, and legal issues. We further propose JurisMA, a modular multi-agent framework supporting dynamic routing, statutory grounding, and stylistic optimization. Combined with the element graph, the framework enables strong context-aware reasoning, effectively capturing dependencies across legal facts, norms, and procedural logic. Trained on JurisCQAD and evaluated on a refined LawBench, our system significantly outperforms both general-purpose and legal-domain LLMs across multiple lexical and semantic metrics, demonstrating the benefits of interpretable decomposition and modular collaboration in Legal CQA.",
+      "authors": [
+        "Mingfei Lu",
+        "Yi Zhang",
+        "Mengjia Wu",
+        "Yue Feng"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-12T05:49:37+00:00",
+      "link": "https://arxiv.org/pdf/2604.10470v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent framework for legal consultation and social discourse",
+      "llm_evidence_cn": "用于法律咨询和社会话语的多智能体框架",
+      "llm_evidence": "用于法律咨询和社会话语的多智能体框架",
+      "canonical_evidence": "用于法律咨询和社会话语的多智能体框架",
+      "llm_tldr_en": "Develops JurisMA, a multi-agent framework and dataset for complex legal consultation and reasoning.",
+      "llm_tldr_cn": "开发了JurisMA，一个用于复杂法律咨询和推理的多智能体框架及数据集。",
+      "llm_tldr": "开发了JurisMA，一个用于复杂法律咨询和推理的多智能体框架及数据集。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.13592v1",
+      "title": "Foresight Optimization for Strategic Reasoning in Large Language Models",
+      "abstract": "Reasoning capabilities in large language models (LLMs) have generally advanced significantly. However, it is still challenging for existing reasoning-based LLMs to perform effective decision-making abilities in multi-agent environments, due to the absence of explicit foresight modeling. To this end, strategic reasoning, the most fundamental capability to anticipate the counterpart's behaviors and foresee its possible future actions, has been introduced to alleviate the above issues. Strategic reasoning is fundamental to effective decision-making in multi-agent environments, yet existing reasoning enhancement methods for LLMs do not explicitly capture its foresight nature. In this work, we introduce Foresight Policy Optimization (FoPO) to enhance strategic reasoning in LLMs, which integrates opponent modeling principles into policy optimization, thereby enabling explicit consideration of both self-interest and counterpart influence. Specifically, we construct two curated datasets, namely Cooperative RSA and Competitive Taboo, equipped with well-designed rules and moderate difficulty to facilitate a systematic investigation of FoPO in a self-play framework. Our experiments demonstrate that FoPO significantly enhances strategic reasoning across LLMs of varying sizes and origins. Moreover, models trained with FoPO exhibit strong generalization to out-of-domain strategic scenarios, substantially outperforming standard LLM reasoning optimization baselines.",
+      "authors": [
+        "Jiashuo Wang",
+        "Jiawen Duan",
+        "Jian Wang",
+        "Kaitao Song",
+        "Chunpu Xu",
+        "Johnny K. W. Ho",
+        "Fenggang Yu",
+        "Wenjie Li",
+        "Johan F. Hoorn"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-15T07:55:41+00:00",
+      "link": "https://arxiv.org/pdf/2604.13592v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "strategic reasoning in multi-agent environments",
+      "llm_evidence_cn": "多智能体环境中的策略推理",
+      "llm_evidence": "多智能体环境中的策略推理",
+      "canonical_evidence": "多智能体环境中的策略推理",
+      "llm_tldr_en": "Enhances LLM decision-making in multi-agent environments through explicit foresight policy optimization.",
+      "llm_tldr_cn": "通过显式预见策略优化，增强LLM在多智能体环境中的决策能力。",
+      "llm_tldr": "通过显式预见策略优化，增强LLM在多智能体环境中的决策能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.15236v1",
+      "title": "Agentic Microphysics: A Manifesto for Generative AI Safety",
+      "abstract": "This paper advances a methodological proposal for safety research in agentic AI. As systems acquire planning, memory, tool use, persistent identity, and sustained interaction, safety can no longer be analysed primarily at the level of the isolated model. Population-level risks arise from structured interaction among agents, through processes of communication, observation, and mutual influence that shape collective behaviour over time. As the object of analysis shifts, a methodological gap emerges. Approaches focused either on single agents or on aggregate outcomes do not identify the interaction-level mechanisms that generate collective risks or the design variables that control them. A framework is required that links local interaction structure to population-level dynamics in a causally explicit way, allowing both explanation and intervention. We introduce two linked concepts. Agentic microphysics defines the level of analysis: local interaction dynamics where one agent's output becomes another's input under specific protocol conditions. Generative safety defines the methodology: growing phenomena and elicit risks from micro-level conditions to identify sufficient mechanisms, detect thresholds, and design effective interventions.",
+      "authors": [
+        "Federico Pierucci",
+        "Matteo Prandi",
+        "Marcantonio Bracale Syrnikov",
+        "Marcello Galisai",
+        "Piercosma Bisconti"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY",
+        "cs.AI"
+      ],
+      "published": "2026-04-16T17:11:28+00:00",
+      "link": "https://arxiv.org/pdf/2604.15236v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "population-level risks from structured interaction among agents",
+      "llm_evidence_cn": "智能体结构化交互产生的群体层面风险",
+      "llm_evidence": "智能体结构化交互产生的群体层面风险",
+      "canonical_evidence": "智能体结构化交互产生的群体层面风险",
+      "llm_tldr_en": "Proposes a framework for analyzing safety risks arising from collective agent behaviors and interactions.",
+      "llm_tldr_cn": "提出了一个分析智能体集体行为和交互产生的群体安全风险的框架。",
+      "llm_tldr": "提出了一个分析智能体集体行为和交互产生的群体安全风险的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.11427v1",
+      "title": "METRO: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues",
+      "abstract": "Developing non-collaborative dialogue agents traditionally requires the manual, unscalable codification of expert strategies. We propose \\ours, a method that leverages large language models to autonomously induce both strategy actions and planning logic directly from raw transcripts. METRO formalizes expert knowledge into a Strategy Forest, a hierarchical structure that captures both short-term responses (nodes) and long-term strategic foresight (branches). Experimental results across two benchmarks show that METRO demonstrates promising performance, outperforming existing methods by an average of 9%-10%. Our further analysis not only reveals the success behind METRO (strategic behavioral diversity and foresight), but also demonstrates its robust cross-task transferability. This offers new insights into building non-collaborative agents in a cost-effective and scalable way. Our code is available at https://github.com/Humphrey-0125/METRO.",
+      "authors": [
+        "Haofu Yang",
+        "Jiaji Liu",
+        "Chen Huang",
+        "Faguo Wu",
+        "Wenqiang Lei",
+        "See-Kiong Ng"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-13T13:12:02+00:00",
+      "link": "https://arxiv.org/pdf/2604.11427v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Inducing strategy from expert dialogue for non-collaborative agents",
+      "llm_evidence_cn": "从专家对话中为非协作智能体归纳策略",
+      "llm_evidence": "从专家对话中为非协作智能体归纳策略",
+      "canonical_evidence": "从专家对话中为非协作智能体归纳策略",
+      "llm_tldr_en": "METRO leverages LLMs to autonomously induce strategic planning logic from raw dialogue transcripts.",
+      "llm_tldr_cn": "METRO利用大模型从原始对话文本中自动归纳战略规划逻辑，提升非协作对话能力。",
+      "llm_tldr": "METRO利用大模型从原始对话文本中自动归纳战略规划逻辑，提升非协作对话能力。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10383v1",
+      "title": "Agentic Video Generation: From Text to Executable Event Graphs via Tool-Constrained LLM Planning",
+      "abstract": "Existing multi-agent video generation systems use LLM agents to orchestrate neural video generators, producing visually impressive but semantically unreliable outputs with no ground truth annotations. We present an agentic system that inverts this paradigm: instead of generating pixels, the LLM constructs a formal Graph of Events in Space and Time (GEST) -- a structured specification of actors, actions, objects, and temporal constraints -- which is then executed deterministically in a 3D game engine. A staged LLM refinement pipeline fails entirely at this task (0 of 50 attempts produce an executable specification), motivating a fundamentally different architecture based on a separation of concerns: the LLM handles narrative planning through natural language reasoning, while a programmatic state backend enforces all simulator constraints through validated tool calls, guaranteeing that every generated specification is executable by construction. The system uses a hierarchical two-agent architecture -- a Director that plans the story and a Scene Builder that constructs individual scenes through a round-based state machine -- with dedicated Relation Subagents that populate the logical and semantic edge types of the GEST formalism that procedural generation leaves empty, making this the first approach to exercise the full expressive capacity of the representation. We evaluate in two stages: autonomous generation against procedural baselines via a 3-model LLM jury, where agentic narratives win 79% of text and 74% of video comparisons; and seeded generation where the same text is given to our system, VEO 3.1, and WAN 2.2, with human annotations showing engine-generated videos substantially outperform neural generators on physical validity (58% vs 25% and 20%) and semantic alignment (3.75/5 vs 2.33 and 1.50).",
+      "authors": [
+        "Nicolae Cudlenco",
+        "Mihai Masala",
+        "Marius Leordeanu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-11T23:51:13+00:00",
+      "link": "https://arxiv.org/pdf/2604.10383v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent video generation using LLM agents",
+      "llm_evidence_cn": "使用LLM智能体的多智能体视频生成",
+      "llm_evidence": "使用LLM智能体的多智能体视频生成",
+      "canonical_evidence": "使用LLM智能体的多智能体视频生成",
+      "llm_tldr_en": "Uses LLM agents to plan executable event graphs for semantically reliable video generation.",
+      "llm_tldr_cn": "利用LLM智能体规划可执行事件图，实现语义可靠的视频生成。",
+      "llm_tldr": "利用LLM智能体规划可执行事件图，实现语义可靠的视频生成。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.11427v2",
+      "title": "METRO: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues",
+      "abstract": "Developing non-collaborative dialogue agents traditionally requires the manual, unscalable codification of expert strategies. We propose \\ours, a method that leverages large language models to autonomously induce both strategy actions and planning logic directly from raw transcripts. METRO formalizes expert knowledge into a Strategy Forest, a hierarchical structure that captures both short-term responses (nodes) and long-term strategic foresight (branches). Experimental results across two benchmarks show that METRO demonstrates promising performance, outperforming existing methods by an average of 9%-10%. Our further analysis not only reveals the success behind METRO (strategic behavioral diversity and foresight), but also demonstrates its robust cross-task transferability. This offers new insights into building non-collaborative agents in a cost-effective and scalable way. Our code is available at https://github.com/Humphrey-0125/METRO.",
+      "authors": [
+        "Haofu Yang",
+        "Jiaji Liu",
+        "Chen Huang",
+        "Faguo Wu",
+        "Wenqiang Lei",
+        "See-Kiong Ng"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-13T13:12:02+00:00",
+      "link": "https://arxiv.org/pdf/2604.11427v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "strategy induction for non-collaborative dialogues",
+      "llm_evidence_cn": "非协作对话的策略归纳",
+      "llm_evidence": "非协作对话的策略归纳",
+      "canonical_evidence": "非协作对话的策略归纳",
+      "llm_tldr_en": "Induces strategic behavior and planning logic from expert dialogues using LLMs.",
+      "llm_tldr_cn": "利用LLM从专家对话中归纳策略行为和规划逻辑。",
+      "llm_tldr": "利用LLM从专家对话中归纳策略行为和规划逻辑。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10866v1",
+      "title": "OccuBench: Evaluating AI Agents on Real-World Professional Tasks via Language World Models",
+      "abstract": "AI agents are expected to perform professional work across hundreds of occupational domains (from emergency department triage to nuclear reactor safety monitoring to customs import processing), yet existing benchmarks can only evaluate agents in the few domains where public environments exist. We introduce OccuBench, a benchmark covering 100 real-world professional task scenarios across 10 industry categories and 65 specialized domains, enabled by Language World Models (LWMs) that simulate domain-specific environments through LLM-driven tool response generation. Our multi-agent synthesis pipeline automatically produces evaluation instances with guaranteed solvability, calibrated difficulty, and document-grounded diversity. OccuBench evaluates agents along two complementary dimensions: task completion across professional domains and environmental robustness under controlled fault injection (explicit errors, implicit data degradation, and mixed faults). We evaluate 15 frontier models across 8 model families and find that: (1) no single model dominates all industries, as each has a distinct occupational capability profile; (2) implicit faults (truncated data, missing fields) are harder than both explicit errors (timeouts, 500s) and mixed faults, because they lack overt error signals and require the agent to independently detect data degradation; (3) larger models, newer generations, and higher reasoning effort consistently improve performance. GPT-5.2 improves by 27.5 points from minimal to maximum reasoning effort; and (4) strong agents are not necessarily strong environment simulators. Simulator quality is critical for LWM-based evaluation reliability. OccuBench provides the first systematic cross-industry evaluation of AI agents on professional occupational tasks.",
+      "authors": [
+        "Xiaomeng Hu",
+        "Yinger Zhang",
+        "Fei Huang",
+        "Jianhong Tu",
+        "Yang Su",
+        "Lianghao Deng",
+        "Yuxuan Liu",
+        "Yantao Liu",
+        "Dayiheng Liu",
+        "Tsung-Yi Ho"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-13T00:27:32+00:00",
+      "link": "https://arxiv.org/pdf/2604.10866v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent synthesis pipeline for evaluating AI agents",
+      "llm_evidence_cn": "用于评估AI智能体的多智能体合成流水线",
+      "llm_evidence": "用于评估AI智能体的多智能体合成流水线",
+      "canonical_evidence": "用于评估AI智能体的多智能体合成流水线",
+      "llm_tldr_en": "Evaluates AI agents across 100 professional domains using LLM-driven environment simulation.",
+      "llm_tldr_cn": "利用大模型驱动的环境模拟，在100个专业领域评估AI智能体的表现。",
+      "llm_tldr": "利用大模型驱动的环境模拟，在100个专业领域评估AI智能体的表现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.12066v1",
+      "title": "Mathematics Teachers Interactions with a Multi-Agent System for Personalized Problem Generation",
+      "abstract": "Large language models can increasingly adapt educational tasks to learners characteristics. In the present study, we examine a multi-agent teacher-in-the-loop system for personalizing middle school math problems. The teacher enters a base problem and desired topic, the LLM generates the problem, and then four AI agents evaluate the problem using criteria that each specializes in (mathematical accuracy, authenticity, readability, and realism). Eight middle school mathematics teachers created 212 problems in ASSISTments using the system and assigned these problems to their students. We find that both teachers and students wanted to modify the fine-grained personalized elements of the real-world context of the problems, signaling issues with authenticity and fit. Although the agents detected many issues with realism as the problems were being written, there were few realism issues noted by teachers and students in the final versions. Issues with readability and mathematical hallucinations were also somewhat rare. Implications for multi-agent systems for personalization that support teacher control are given.",
+      "authors": [
+        "Candace Walkington",
+        "Theodora Beauchamp",
+        "Fareya Ikram",
+        "Merve Koçyiğit Gürbüz",
+        "Fangli Xia",
+        "Margan Lee",
+        "Andrew Lan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CY"
+      ],
+      "published": "2026-04-13T21:10:52+00:00",
+      "link": "https://arxiv.org/pdf/2604.12066v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent teacher-in-the-loop system for problem generation",
+      "llm_evidence_cn": "用于题目生成的教师在环多智能体系统",
+      "llm_evidence": "用于题目生成的教师在环多智能体系统",
+      "canonical_evidence": "用于题目生成的教师在环多智能体系统",
+      "llm_tldr_en": "Explores a multi-agent system where LLM agents evaluate math problems based on specific pedagogical criteria.",
+      "llm_tldr_cn": "探讨了一个多智能体系统，其中LLM智能体根据特定的教学标准评估数学问题。",
+      "llm_tldr": "探讨了一个多智能体系统，其中LLM智能体根据特定的教学标准评估数学问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10968v1",
+      "title": "YIELD: A Large-Scale Dataset and Evaluation Framework for Information Elicitation Agents",
+      "abstract": "Most conversational agents (CAs) are designed to satisfy user needs through user-driven interactions. However, many real-world settings, such as academic interviewing, judicial proceedings, and journalistic investigations, involve broader institutional decision-making processes and require agents that can elicit information from users. In this paper, we introduce Information Elicitation Agents (IEAs) in which the agent's goal is to elicit information from users to support the agent's institutional or task-oriented objectives. To enable systematic research on this setting, we present YIELD, a 26M-token dataset of 2,281 ethically sourced, human-to-human dialogues. Moreover, we formalize information elicitation as a finite-horizon POMDP and propose novel metrics tailored to IEAs. Pilot experiments on multiple foundation LLMs show that training on YIELD improves their alignment with real elicitation behavior and findings are corroborated by human evaluation. We release YIELD under CC BY 4.0. The dataset, project code, evaluation tools, and fine-tuned model adapters are available at: https://github.com/infosenselab/yield.",
+      "authors": [
+        "Victor De Lima",
+        "Grace Hui Yang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-13T04:12:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.10968v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agents for information elicitation in social/institutional settings",
+      "llm_evidence_cn": "在社会/机构场景中进行信息获取的智能体",
+      "llm_evidence": "在社会/机构场景中进行信息获取的智能体",
+      "canonical_evidence": "在社会/机构场景中进行信息获取的智能体",
+      "llm_tldr_en": "Introduces a dataset and framework for agents designed to elicit information in institutional decision-making contexts.",
+      "llm_tldr_cn": "为旨在机构决策背景下获取信息的智能体引入了数据集和评估框架。",
+      "llm_tldr": "为旨在机构决策背景下获取信息的智能体引入了数据集和评估框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.12735v1",
+      "title": "AffectAgent: Collaborative Multi-Agent Reasoning for Retrieval-Augmented Multimodal Emotion Recognition",
+      "abstract": "LLM-based multimodal emotion recognition relies on static parametric memory and often hallucinates when interpreting nuanced affective states. In this paper, given that single-round retrieval-augmented generation is highly susceptible to modal ambiguity and therefore struggles to capture complex affective dependencies across modalities, we introduce AffectAgent, an affect-oriented multi-agent retrieval-augmented generation framework that leverages collaborative decision-making among agents for fine-grained affective understanding. Specifically, AffectAgent comprises three jointly optimized specialized agents, namely a query planner, an evidence filter, and an emotion generator, which collaboratively perform analytical reasoning to retrieve cross-modal samples, assess evidence, and generate predictions. These agents are optimized end-to-end using Multi-Agent Proximal Policy Optimization (MAPPO) with a shared affective reward to ensure consistent emotion understanding. Furthermore, we introduce Modality-Balancing Mixture of Experts (MB-MoE) and Retrieval-Augmented Adaptive Fusion (RAAF), where MB-MoE dynamically regulates the contributions of different modalities to mitigate representation mismatch caused by cross-modal heterogeneity, while RAAF enhances semantic completion under missing-modality conditions by incorporating retrieved audiovisual embeddings. Extensive experiments on MER-UniBench demonstrate that AffectAgent achieves superior performance across complex scenarios. Our code will be released at: https://github.com/Wz1h1NG/AffectAgent.",
+      "authors": [
+        "Zeheng Wang",
+        "Zitong Yu",
+        "Yijie Zhu",
+        "Bo Zhao",
+        "Haochen Liang",
+        "Taorui Wang",
+        "Wei Xia",
+        "Jiayu Zhang",
+        "Zhishu Liu",
+        "Hui Ma",
+        "Fei Ma",
+        "Qi Tian"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-14T13:49:19+00:00",
+      "link": "https://arxiv.org/pdf/2604.12735v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent retrieval-augmented generation for multimodal understanding",
+      "llm_evidence_cn": "用于多模态理解的多智能体检索增强生成",
+      "llm_evidence": "用于多模态理解的多智能体检索增强生成",
+      "canonical_evidence": "用于多模态理解的多智能体检索增强生成",
+      "llm_tldr_en": "Introduces AffectAgent, a multi-agent framework for fine-grained multimodal emotion recognition using RAG.",
+      "llm_tldr_cn": "引入 AffectAgent，一个利用多智能体协作进行细粒度多模态情感识别的框架。",
+      "llm_tldr": "引入 AffectAgent，一个利用多智能体协作进行细粒度多模态情感识别的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.11427v3",
+      "title": "METRO: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues",
+      "abstract": "Developing non-collaborative dialogue agents traditionally requires the manual, unscalable codification of expert strategies. We propose \\ours, a method that leverages large language models to autonomously induce both strategy actions and planning logic directly from raw transcripts. METRO formalizes expert knowledge into a Strategy Forest, a hierarchical structure that captures both short-term responses (nodes) and long-term strategic foresight (branches). Experimental results across two benchmarks show that METRO demonstrates promising performance, outperforming existing methods by an average of 9%-10%. Our further analysis not only reveals the success behind METRO (strategic behavioral diversity and foresight), but also demonstrates its robust cross-task transferability. This offers new insights into building non-collaborative agents in a cost-effective and scalable way. Our code is available at https://github.com/Humphrey-0125/METRO.",
+      "authors": [
+        "Haofu Yang",
+        "Jiaji Liu",
+        "Chen Huang",
+        "Faguo Wu",
+        "Wenqiang Lei",
+        "See-Kiong Ng"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-13T13:12:02+00:00",
+      "link": "https://arxiv.org/pdf/2604.11427v3",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "inducing strategies for non-collaborative dialogue agents",
+      "llm_evidence_cn": "为非协作对话智能体归纳策略",
+      "llm_evidence": "为非协作对话智能体归纳策略",
+      "canonical_evidence": "为非协作对话智能体归纳策略",
+      "llm_tldr_en": "Proposes METRO to autonomously induce strategic logic from expert transcripts for non-collaborative dialogues.",
+      "llm_tldr_cn": "提出METRO方法，从专家对话文本中自动归纳非协作对话的战略逻辑。",
+      "llm_tldr": "提出METRO方法，从专家对话文本中自动归纳非协作对话的战略逻辑。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.13592v2",
+      "title": "Foresight Optimization for Strategic Reasoning in Large Language Models",
+      "abstract": "Reasoning capabilities in large language models (LLMs) have generally advanced significantly. However, it is still challenging for existing reasoning-based LLMs to perform effective decision-making abilities in multi-agent environments, due to the absence of explicit foresight modeling. To this end, strategic reasoning, the most fundamental capability to anticipate the counterpart's behaviors and foresee its possible future actions, has been introduced to alleviate the above issues. Strategic reasoning is fundamental to effective decision-making in multi-agent environments, yet existing reasoning enhancement methods for LLMs do not explicitly capture its foresight nature. In this work, we introduce Foresight Policy Optimization (FoPO) to enhance strategic reasoning in LLMs, which integrates opponent modeling principles into policy optimization, thereby enabling explicit consideration of both self-interest and counterpart influence. Specifically, we construct two curated datasets, namely Cooperative RSA and Competitive Taboo, equipped with well-designed rules and moderate difficulty to facilitate a systematic investigation of FoPO in a self-play framework. Our experiments demonstrate that FoPO significantly enhances strategic reasoning across LLMs of varying sizes and origins. Moreover, models trained with FoPO exhibit strong generalization to out-of-domain strategic scenarios, substantially outperforming standard LLM reasoning optimization baselines.",
+      "authors": [
+        "Jiashuo Wang",
+        "Jiawen Duan",
+        "Jian Wang",
+        "Kaitao Song",
+        "Chunpu Xu",
+        "Johnny K. W. Ho",
+        "Fenggang Yu",
+        "Wenjie Li",
+        "Johan F. Hoorn"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-15T07:55:41+00:00",
+      "link": "https://arxiv.org/pdf/2604.13592v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "strategic reasoning and foresight in multi-agent environments",
+      "llm_evidence_cn": "多智能体环境中的战略推理与预见",
+      "llm_evidence": "多智能体环境中的战略推理与预见",
+      "canonical_evidence": "多智能体环境中的战略推理与预见",
+      "llm_tldr_en": "Proposes Foresight Policy Optimization to enhance strategic reasoning and decision-making in multi-agent settings.",
+      "llm_tldr_cn": "提出预见策略优化（FoPO），增强大模型在多智能体环境中的战略推理能力。",
+      "llm_tldr": "提出预见策略优化（FoPO），增强大模型在多智能体环境中的战略推理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.12284v1",
+      "title": "WebAgentGuard: A Reasoning-Driven Guard Model for Detecting Prompt Injection Attacks in Web Agents",
+      "abstract": "Web agents powered by vision-language models (VLMs) enable autonomous interaction with web environments by perceiving and acting on both visual and textual webpage content to accomplish user-specified tasks. However, they are highly vulnerable to prompt injection attacks, where adversarial instructions embedded in HTML or rendered screenshots can manipulate agent behavior and lead to harmful outcomes such as information leakage. Existing defenses, including system prompt defenses and direct fine-tuning of agents, have shown limited effectiveness. To address this issue, we propose a defense framework in which a web agent operates in parallel with a dedicated guard agent, decoupling prompt injection detection from the agent's own reasoning. Building on this framework, we introduce WebAgentGuard, a reasoning-driven, multimodal guard model for prompt injection detection. We construct a synthetic multimodal dataset using GPT-5 spanning 164 topics and 230 visual and UI design styles, and train the model via reasoning-intensive supervised fine-tuning followed by reinforcement learning. Experiments across multiple benchmarks show that WebAgentGuard consistently outperforms strong baselines while preserving agent utility, without introducing additional latency.",
+      "authors": [
+        "Yulin Chen",
+        "Tri Cao",
+        "Haoran Li",
+        "Yue Liu",
+        "Yibo Li",
+        "Yufei He",
+        "Le Minh Khoi",
+        "Yangqiu Song",
+        "Shuicheng Yan",
+        "Bryan Hooi"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-04-14T04:50:35+00:00",
+      "link": "https://arxiv.org/pdf/2604.12284v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent framework for web agent security",
+      "llm_evidence_cn": "用于Web智能体安全的多智能体框架",
+      "llm_evidence": "用于Web智能体安全的多智能体框架",
+      "canonical_evidence": "用于Web智能体安全的多智能体框架",
+      "llm_tldr_en": "Uses a dual-agent system to protect web agents from prompt injection attacks.",
+      "llm_tldr_cn": "采用双智能体系统保护Web智能体免受提示注入攻击。",
+      "llm_tldr": "采用双智能体系统保护Web智能体免受提示注入攻击。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.14256v1",
+      "title": "Evaluation of Agents under Simulated AI Marketplace Dynamics",
+      "abstract": "Modern information access ecosystems consist of mixtures of systems, such as retrieval systems and large language models, and increasingly rely on marketplaces to mediate access to models, tools, and data, making competition between systems inherent to deployment. In such settings, outcomes are shaped not only by benchmark quality but also by competitive pressure, including user switching, routing decisions, and operational constraints. Yet evaluation is still largely conducted on static benchmarks with accuracy-focused measures that assume systems operate in isolation. This mismatch makes it difficult to predict post-deployment success and obscures competitive effects such as early-adoption advantages and market dominance. We introduce Marketplace Evaluation, a simulation-based paradigm that evaluates information access systems as participants in a competitive marketplace. By simulating repeated interactions and evolving user and agent preferences, the framework enables longitudinal evaluation and marketplace-level metrics, such as retention and market share, that complement and can extend beyond traditional accuracy-based metrics. We formalize the framework and outline a research agenda, motivated by business and economics, around marketplace simulation, metrics, optimization, and adoption in evaluation campaigns like TREC.",
+      "authors": [
+        "To Eun Kim",
+        "Alireza Salemi",
+        "Hamed Zamani",
+        "Fernando Diaz"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.AI"
+      ],
+      "published": "2026-04-15T15:01:36+00:00",
+      "link": "https://arxiv.org/pdf/2604.14256v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "simulated AI marketplace dynamics and agent competition",
+      "llm_evidence_cn": "模拟AI市场动态与智能体竞争",
+      "llm_evidence": "模拟AI市场动态与智能体竞争",
+      "canonical_evidence": "模拟AI市场动态与智能体竞争",
+      "llm_tldr_en": "Introduces a marketplace simulation to evaluate agents under competitive and dynamic deployment conditions.",
+      "llm_tldr_cn": "引入市场模拟环境，在竞争和动态部署条件下评估智能体表现。",
+      "llm_tldr": "引入市场模拟环境，在竞争和动态部署条件下评估智能体表现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

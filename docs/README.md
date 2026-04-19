@@ -6,67 +6,67 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-18
-- 运行时间：2026-04-18 20:13:46 UTC
+- 最新运行日期：2026-04-19
+- 运行时间：2026-04-19 19:41:28 UTC
 - 运行状态：成功
 - 本次总论文数：15
 - 精读区：4
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度解析 15 篇前沿成果，聚焦多智能体协作如何突破“阿罗不可能定理”并解决社会困境。
-重点推荐 CoopEval 基准，它揭示了公平性可作为协作的涌现属性，为 LLM 维持长期合作提供了新路径。
-建议关注智能体在电力资源分配及真实职业任务模拟（OccuBench）中的演化能力与实战表现。
-- 详情：[/202604/18/README](/202604/18/README)
+今日深度解析 15 篇 AI 论文，重点攻克多智能体框架在法律咨询与长短期记忆对话生成中的实战表现。
+法律咨询多智能体推理框架与主题引导的记忆微调技术成为核心，显著提升了复杂场景下的逻辑性与持久交互能力。
+推荐开发者尝试将多智能体协作引入垂直行业，并利用专家对话数据进行
+- 详情：[/202604/19/README](/202604/19/README)
 
 ### 精读区论文标签
-1. [Beyond Arrow's Impossibility: Fairness as an Emergent Property of Multi-Agent Collaboration](/202604/18/2604.13705v1-beyond-arrows-impossibility-fairness-as-an-emergent-property-of-multi-agent-collaboration)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：公平性作为多智能体协作的涌现属性
-2. [CoopEval: Benchmarking Cooperation-Sustaining Mechanisms and LLM Agents in Social Dilemmas](/202604/18/2604.15267v1-coopeval-benchmarking-cooperation-sustaining-mechanisms-and-llm-agents-in-social-dilemmas)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：在社会困境和协作机制中对LLM智能体进行基准测试
-3. [Heterophily as a generative mechanism for self-organized synergistic interdependencies](/202604/18/2604.11545v1-heterophily-as-a-generative-mechanism-for-self-organized-synergistic-interdependencies)  
+1. [From Query to Counsel: Structured Reasoning with a Multi-Agent Framework and Dataset for Legal Consultation](/202604/19/2604.10470v1-from-query-to-counsel-structured-reasoning-with-a-multi-agent-framework-and-dataset-for-legal-consultation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：社会中自组织协同相互依赖的涌现
-4. [Signed DeGroot-Friedkin Dynamics with Interdependent Topics](/202604/18/2604.12685v1-signed-degroot-friedkin-dynamics-with-interdependent-topics)  
+   evidence：用于法律咨询和社会话语的多智能体框架
+2. [AgenticAI-DialogGen: Topic-Guided Conversation Generation for Fine-Tuning and Evaluating Short- and Long-Term Memories of LLMs](/202604/19/2604.12179v1-agenticai-dialoggen-topic-guided-conversation-generation-for-fine-tuning-and-evaluating-short--and-long-term-memories-of-llms)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：影响网络中智能体层面社会权力的演变
+   evidence：LLM智能体模拟基于人格的对话
+3. [Foresight Optimization for Strategic Reasoning in Large Language Models](/202604/19/2604.13592v1-foresight-optimization-for-strategic-reasoning-in-large-language-models)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体环境中的策略推理
+4. [Agentic Microphysics: A Manifesto for Generative AI Safety](/202604/19/2604.15236v1-agentic-microphysics-a-manifesto-for-generative-ai-safety)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：智能体结构化交互产生的群体层面风险
 
 ### 速读区论文标签
-1. [SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment](/202604/18/2604.08988v1-sea-eval-a-benchmark-for-evaluating-self-evolving-agents-beyond-episodic-assessment)  
+1. [METRO: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues](/202604/19/2604.11427v1-metro-towards-strategy-induction-from-expert-dialogue-transcripts-for-non-collaborative-dialogues)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：自我进化智能体的评估及其长期演化性能
-2. [Agentic Workflows for Resolving Conflict Over Shared Resources: A Power Grid Application](/202604/18/2604.09823v1-agentic-workflows-for-resolving-conflict-over-shared-resources-a-power-grid-application)  
+   evidence：从专家对话中为非协作智能体归纳策略
+2. [METRO: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues](/202604/19/2604.11427v2-metro-towards-strategy-induction-from-expert-dialogue-transcripts-for-non-collaborative-dialogues)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：协调多个基于大语言模型的智能体的冲突解决框架
-3. [OccuBench: Evaluating AI Agents on Real-World Professional Tasks via Language Environment Simulation](/202604/18/2604.10866v2-occubench-evaluating-ai-agents-on-real-world-professional-tasks-via-language-environment-simulation)  
+   evidence：非协作对话的策略归纳
+3. [Mathematics Teachers Interactions with a Multi-Agent System for Personalized Problem Generation](/202604/19/2604.12066v1-mathematics-teachers-interactions-with-a-multi-agent-system-for-personalized-problem-generation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于LLM驱动的AI智能体环境模拟
-4. [Spatial Atlas: Compute-Grounded Reasoning for Spatial-Aware Research Agent Benchmarks](/202604/18/2604.12102v2-spatial-atlas-compute-grounded-reasoning-for-spatial-aware-research-agent-benchmarks)  
+   evidence：用于题目生成的教师在环多智能体系统
+4. [AffectAgent: Collaborative Multi-Agent Reasoning for Retrieval-Augmented Multimodal Emotion Recognition](/202604/19/2604.12735v1-affectagent-collaborative-multi-agent-reasoning-for-retrieval-augmented-multimodal-emotion-recognition)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：用于多模态理解的多智能体检索增强生成
+5. [Foresight Optimization for Strategic Reasoning in Large Language Models](/202604/19/2604.13592v2-foresight-optimization-for-strategic-reasoning-in-large-language-models)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：多智能体环境中的战略推理与预见
+6. [Evaluation of Agents under Simulated AI Marketplace Dynamics](/202604/19/2604.14256v1-evaluation-of-agents-under-simulated-ai-marketplace-dynamics)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：模拟AI市场动态与智能体竞争
+7. [Agentic Video Generation: From Text to Executable Event Graphs via Tool-Constrained LLM Planning](/202604/19/2604.10383v1-agentic-video-generation-from-text-to-executable-event-graphs-via-tool-constrained-llm-planning)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于空间感知研究智能体的智能体对智能体服务器
-5. [Aethon: A Reference-Based Replication Primitive for Constant-Time Instantiation of Stateful AI Agents](/202604/18/2604.12129v1-aethon-a-reference-based-replication-primitive-for-constant-time-instantiation-of-stateful-ai-agents)  
+   evidence：使用LLM智能体的多智能体视频生成
+8. [OccuBench: Evaluating AI Agents on Real-World Professional Tasks via Language World Models](/202604/19/2604.10866v1-occubench-evaluating-ai-agents-on-real-world-professional-tasks-via-language-world-models)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于有状态AI智能体常数时间实例化的基础设施
-6. [Socially Fluent, Socially Awkward: Artificial Intelligence Relational Talk Backfires in Commercial Interactions](/202604/18/2604.12206v1-socially-fluent-socially-awkward-artificial-intelligence-relational-talk-backfires-in-commercial-interactions)  
+   evidence：用于评估AI智能体的多智能体合成流水线
+9. [YIELD: A Large-Scale Dataset and Evaluation Framework for Information Elicitation Agents](/202604/19/2604.10968v1-yield-a-large-scale-dataset-and-evaluation-framework-for-information-elicitation-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：商业交互中的人工智能社会特征与关系谈话
-7. [GAM: Hierarchical Graph-based Agentic Memory for LLM Agents](/202604/18/2604.12285v1-gam-hierarchical-graph-based-agentic-memory-for-llm-agents)  
+   evidence：在社会/机构场景中进行信息获取的智能体
+10. [METRO: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues](/202604/19/2604.11427v3-metro-towards-strategy-induction-from-expert-dialogue-transcripts-for-non-collaborative-dialogues)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：LLM智能体长期交互的图结构记忆
-8. [Exploration and Exploitation Errors Are Measurable for Language Model Agents](/202604/18/2604.13151v1-exploration-and-exploitation-errors-are-measurable-for-language-model-agents)  
+   evidence：为非协作对话智能体归纳策略
+11. [WebAgentGuard: A Reasoning-Driven Guard Model for Detecting Prompt Injection Attacks in Web Agents](/202604/19/2604.12284v1-webagentguard-a-reasoning-driven-guard-model-for-detecting-prompt-injection-attacks-in-web-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：衡量语言模型智能体的探索与利用
-9. [Beyond State Consistency: Behavior Consistency in Text-Based World Models](/202604/18/2604.13824v1-beyond-state-consistency-behavior-consistency-in-text-based-world-models)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：评估交互式智能体生成的动作后果
-10. [Flow of Truth: Proactive Temporal Forensics for Image-to-Video Generation](/202604/18/2604.15003v1-flow-of-truth-proactive-temporal-forensics-for-image-to-video-generation)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：图像转视频生成的时序取证与真相流向
-11. [Quality-Aware Calibration for AI-Generated Image Detection in the Wild](/202604/18/2604.15027v1-quality-aware-calibration-for-ai-generated-image-detection-in-the-wild)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：针对病毒式传播内容的AI生成图像检测
+   evidence：用于Web智能体安全的多智能体框架
 
 
 <div class="dpr-home-promo-card">
