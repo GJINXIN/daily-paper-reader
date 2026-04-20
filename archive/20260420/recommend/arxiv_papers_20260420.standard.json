@@ -1,0 +1,653 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-20T20:36:55.445049+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 12,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.15372v1",
+      "title": "The Synthetic Media Shift: Tracking the Rise, Virality, and Detectability of AI-Generated Multimodal Misinformation",
+      "abstract": "As generative AI advances, the distinction between authentic and synthetic media is increasingly blurred, challenging the integrity of online information. In this study, we present CONVEX, a large-scale dataset of multimodal misinformation involving miscaptioned, edited, and AI-generated visual content, comprising over 150K multimodal posts with associated notes and engagement metrics from X's Community Notes. We analyze how multimodal misinformation evolves in terms of virality, engagement, and consensus dynamics, with a focus on synthetic media. Our results show that while AI-generated content achieves disproportionate virality, its spread is driven primarily by passive engagement rather than active discourse. Despite slower initial reporting, AI-generated content reaches community consensus more quickly once flagged. Moreover, our evaluation of specialized detectors and vision-language models reveals a consistent decline in performance over time in distinguishing synthetic from authentic images as generative models evolve. These findings highlight the need for continuous monitoring and adaptive strategies in the rapidly evolving digital information environment.",
+      "authors": [
+        "Zacharias Chrysidis",
+        "Stefanos-Iordanis Papadopoulos",
+        "Symeon Papadopoulos"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.MM"
+      ],
+      "published": "2026-04-15T14:12:00+00:00",
+      "link": "https://arxiv.org/pdf/2604.15372v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "tracking virality and detectability of AI-generated multimodal misinformation",
+      "llm_evidence_cn": "追踪AI生成的模态误导信息的传播与可检测性",
+      "llm_evidence": "追踪AI生成的模态误导信息的传播与可检测性",
+      "canonical_evidence": "追踪AI生成的模态误导信息的传播与可检测性",
+      "llm_tldr_en": "Analyzes the spread and detection of multimodal AI-generated fake news on social media platforms.",
+      "llm_tldr_cn": "分析了社交媒体平台上多模态AI生成虚假新闻的传播和检测。",
+      "llm_tldr": "分析了社交媒体平台上多模态AI生成虚假新闻的传播和检测。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.15937v1",
+      "title": "Polarization by Default: Auditing Recommendation Bias in LLM-Based Content Curation",
+      "abstract": "Large Language Models (LLMs) are increasingly deployed to curate and rank human-created content, yet the nature and structure of their biases in these tasks remains poorly understood: which biases are robust across providers and platforms, and which can be mitigated through prompt design. We present a controlled simulation study mapping content selection biases across three major LLM providers (OpenAI, Anthropic, Google) on real social media datasets from Twitter/X, Bluesky, and Reddit, using six prompting strategies (\\textit{general}, \\textit{popular}, \\textit{engaging}, \\textit{informative}, \\textit{controversial}, \\textit{neutral}). Through 540,000 simulated top-10 selections from pools of 100 posts across 54 experimental conditions, we find that biases differ substantially in how structural and how prompt-sensitive they are. Polarization is amplified across all configurations, toxicity handling shows a strong inversion between engagement- and information-focused prompts, and sentiment biases are predominantly negative. Provider comparisons reveal distinct trade-offs: GPT-4o Mini shows the most consistent behavior across prompts; Claude and Gemini exhibit high adaptivity in toxicity handling; Gemini shows the strongest negative sentiment preference. On Twitter/X, where author demographics can be inferred from profile bios, political leaning bias is the clearest demographic signal: left-leaning authors are systematically over-represented despite right-leaning authors forming the pool plurality in the dataset, and this pattern largely persists across prompts.",
+      "authors": [
+        "Nicolò Pagan",
+        "Christopher Barrie",
+        "Chris Andrew Bail",
+        "Petter Törnberg"
+      ],
+      "primary_category": "cs.SI",
+      "categories": [
+        "cs.SI",
+        "cs.AI",
+        "cs.CL",
+        "cs.CY",
+        "cs.MA"
+      ],
+      "published": "2026-04-17T10:55:21+00:00",
+      "link": "https://arxiv.org/pdf/2604.15937v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "simulation study of content selection biases on real social media datasets",
+      "llm_evidence_cn": "在真实社交媒体数据集上对内容选择偏见的模拟研究",
+      "llm_evidence": "在真实社交媒体数据集上对内容选择偏见的模拟研究",
+      "canonical_evidence": "在真实社交媒体数据集上对内容选择偏见的模拟研究",
+      "llm_tldr_en": "Audits recommendation bias in LLM-based content curation using large-scale social media simulations.",
+      "llm_tldr_cn": "通过大规模社交媒体模拟，审计大语言模型在内容推荐中的偏见。",
+      "llm_tldr": "通过大规模社交媒体模拟，审计大语言模型在内容推荐中的偏见。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.16022v1",
+      "title": "SocialGrid: A Benchmark for Planning and Social Reasoning in Embodied Multi-Agent Systems",
+      "abstract": "As Large Language Models (LLMs) transition from text processors to autonomous agents, evaluating their social reasoning in embodied multi-agent settings becomes critical. We introduce SocialGrid, an embodied multi-agent environment inspired by Among Us that evaluates LLM agents on planning, task execution, and social reasoning. Our evaluations reveal that even the strongest open model (GPT-OSS-120B) achieves below 60% accuracy in task completion and planning, with agents getting stuck in repetitive behaviors or failing to navigate basic obstacles. Since poor navigation confounds evaluation of social intelligence, SocialGrid offers an optional Planning Oracle to isolate social reasoning from planning deficits. While planning assistance improves task completion, social reasoning remains a bottleneck: agents fail to detect deception at near-random chance regardless of scale, relying on shallow heuristics rather than accumulating behavioral evidence. SocialGrid provides automatic failure analysis and fine-grained metrics, enabling developers to diagnose and improve their agents. We also establish a competitive leaderboard using Elo ratings from adversarial league play.",
+      "authors": [
+        "Hikaru Shindo",
+        "Hanzhao Lin",
+        "Lukas Helff",
+        "Patrick Schramowski",
+        "Kristian Kersting"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-04-17T12:51:46+00:00",
+      "link": "https://arxiv.org/pdf/2604.16022v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "evaluating social reasoning in embodied multi-agent environments",
+      "llm_evidence_cn": "评估具身多智能体环境中的社会推理",
+      "llm_evidence": "评估具身多智能体环境中的社会推理",
+      "canonical_evidence": "评估具身多智能体环境中的社会推理",
+      "llm_tldr_en": "Introduces a benchmark to evaluate LLM agents on planning and social reasoning in multi-agent settings.",
+      "llm_tldr_cn": "引入了一个基准，用于评估大模型智能体在多智能体环境中的规划和社会推理能力。",
+      "llm_tldr": "引入了一个基准，用于评估大模型智能体在多智能体环境中的规划和社会推理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10614v1",
+      "title": "Kinetic models of opinion-driven epidemic dynamics modulated by graphons",
+      "abstract": "We introduce kinetic models to simulate epidemic spread while accounting for individuals' opinions on protective behaviors. Opinion exchanges occur on a social network represented by a graphon, leading to scenarios with or without opinion leaders. We prove convergence to equilibrium in the strong $L^1$ norm via relative entropy methods and in homogeneous Sobolev spaces $\\dot{H}^{-s}$, $s \\in \\big(\\frac{1}{2},1\\big)$, using Fourier-based techniques. We then design a structure-preserving scheme for the coupled opinion-epidemiological system, highlighting graphon effects: opinion leaders supporting protective behaviors limit disease spread, whereas influenceable individuals may shift toward opposing views, worsening epidemics. Finally, we introduce a time-dependent quantity, analogous to the reproduction number, whose oscillations can generate epidemic waves without explicit external forcing. The MATLAB code implementing our algorithms is made publicly available.",
+      "authors": [
+        "Andrea Bondesan",
+        "Jacopo Borsotti",
+        "Mattia Fontana"
+      ],
+      "primary_category": "math.AP",
+      "categories": [
+        "math.AP",
+        "physics.soc-ph",
+        "q-bio.PE"
+      ],
+      "published": "2026-04-12T12:42:00+00:00",
+      "link": "https://arxiv.org/pdf/2604.10614v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "simulating opinion-driven epidemic dynamics in social networks",
+      "llm_evidence_cn": "模拟社交网络中舆论驱动的流行病动态",
+      "llm_evidence": "模拟社交网络中舆论驱动的流行病动态",
+      "canonical_evidence": "模拟社交网络中舆论驱动的流行病动态",
+      "llm_tldr_en": "Models the interplay between individual opinions and epidemic spread using kinetic equations on graphons.",
+      "llm_tldr_cn": "利用 graphon 上的动力学方程模拟了个人观点与流行病传播之间的相互作用。",
+      "llm_tldr": "利用 graphon 上的动力学方程模拟了个人观点与流行病传播之间的相互作用。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12772v1",
+      "title": "A Multi-Agent Feedback System for Detecting and Describing News Events in Satellite Imagery",
+      "abstract": "Changes in satellite imagery often occur over multiple time steps. Despite the emergence of bi-temporal change captioning datasets, there is a lack of multi-temporal event captioning datasets (at least two images per sequence) in remote sensing. This gap exists because (1) searching for visible events in satellite imagery and (2) labeling multi-temporal sequences require significant time and labor. To address these challenges, we present SkyScraper, an iterative multi-agent workflow that geocodes news articles and synthesizes captions for corresponding satellite image sequences. Our experiments show that SkyScraper successfully finds 5x more events than traditional geocoding methods, demonstrating that agentic feedback is an effective strategy for surfacing new multi-temporal events in satellite imagery. We apply our framework to a large database of global news articles, curating a new multi-temporal captioning dataset with 5,000 sequences. By automatically identifying imagery related to news events, our work also supports journalism and reporting efforts.",
+      "authors": [
+        "Madeline Anderson",
+        "Mikhail Klassen",
+        "Ash Hoover",
+        "Kerri Cahoy"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.MA"
+      ],
+      "published": "2026-04-14T14:12:19+00:00",
+      "link": "https://arxiv.org/pdf/2604.12772v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent workflow for detecting news events",
+      "llm_evidence_cn": "用于检测新闻事件的多智能体工作流",
+      "llm_evidence": "用于检测新闻事件的多智能体工作流",
+      "canonical_evidence": "用于检测新闻事件的多智能体工作流",
+      "llm_tldr_en": "Uses a multi-agent system to detect and describe news events by geocoding articles and analyzing imagery.",
+      "llm_tldr_cn": "利用多智能体系统通过地理编码文章和分析图像来检测和描述新闻事件。",
+      "llm_tldr": "利用多智能体系统通过地理编码文章和分析图像来检测和描述新闻事件。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.13418v1",
+      "title": "MERRIN: A Benchmark for Multimodal Evidence Retrieval and Reasoning in Noisy Web Environments",
+      "abstract": "Motivated by the underspecified, multi-hop nature of search queries and the multimodal, heterogeneous, and often conflicting nature of real-world web results, we introduce MERRIN (Multimodal Evidence Retrieval and Reasoning in Noisy Web Environments), a human-annotated benchmark for evaluating search-augmented agents. MERRIN measures AI agents' ability to identify relevant modalities, retrieve multimodal evidence, and perform multi-hop reasoning over noisy web sources. It differs from prior work in three important aspects: (1) using natural language queries without explicit modality cues, (2) incorporating underexplored modalities such as video and audio, and (3) requiring the retrieval of complex, often noisy or conflicting multimodal evidence during web search. We evaluate diverse search agents powered by ten models, including strong closed-source models (e.g., GPT-5.4-mini, Gemini 3/3.1 Flash/Pro) and open-weight models (Qwen3-4B/30B/235B), across three search settings (no search, native search, and agentic search). Our results show that MERRIN is highly challenging: the average accuracy across all agents is 22.3%, with the best-performing agent reaching only 40.1%. We further observe that while stronger agents like Gemini Deep Research achieve higher performance, gains are modest due to over-exploration; they take more steps and use more tools, but are often distracted by conflicting or partially relevant web content, leading to incorrect answers. Compared to humans, these agents consume more resources yet achieve lower accuracy, largely due to inefficient source selection and an overreliance on text modalities. These findings highlight the need for search agents capable of robust search and reasoning across diverse modalities in noisy web environments, making MERRIN a valuable testbed for evaluating such capabilities.",
+      "authors": [
+        "Han Wang",
+        "David Wan",
+        "Hyunji Lee",
+        "Thinh Pham",
+        "Mikaela Cankosyan",
+        "Weiyuan Chen",
+        "Elias Stengel-Eskin",
+        "Tu Vu",
+        "Mohit Bansal"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-04-15T02:37:47+00:00",
+      "link": "https://arxiv.org/pdf/2604.13418v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multimodal evidence retrieval including video and audio from noisy web sources",
+      "llm_evidence_cn": "从嘈杂的网络资源中检索包括视频和音频在内的多模态证据",
+      "llm_evidence": "从嘈杂的网络资源中检索包括视频和音频在内的多模态证据",
+      "canonical_evidence": "从嘈杂的网络资源中检索包括视频和音频在内的多模态证据",
+      "llm_tldr_en": "A benchmark for evaluating agents on multimodal retrieval and reasoning across noisy web content like video.",
+      "llm_tldr_cn": "一个用于评估智能体在视频等嘈杂网络内容中进行多模态检索和推理能力的基准。",
+      "llm_tldr": "一个用于评估智能体在视频等嘈杂网络内容中进行多模态检索和推理能力的基准。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10547v1",
+      "title": "Agent^2 RL-Bench: Can LLM Agents Engineer Agentic RL Post-Training?",
+      "abstract": "We introduce Agent^2 RL-Bench, a benchmark for evaluating agentic RL post-training -- whether LLM agents can autonomously design, implement, and run complete RL pipelines that improve foundation models. This capability is important because RL post-training increasingly drives model alignment and specialization, yet existing benchmarks remain largely static: supervised fine-tuning alone yields strong results, leaving interactive RL engineering untested. Agent^2 RL-Bench addresses this with six tasks across three levels -- from static rule-based training to closed-loop online RL with trajectory collection -- each adding a structural requirement that prior levels do not impose. The benchmark provides isolated workspaces with a grading API, runtime instrumentation that records every submission and code revision, and automated post-hoc analysis that generates structured run reports, enabling the first automated diagnostic of agent-driven post-training behavior. Across multiple agent stacks spanning five agent systems and six driver LLMs, we find that agents achieve striking interactive gains -- on ALFWorld, an RL-only agent improves from 5.97 to 93.28 via SFT warm-up and GRPO with online rollouts -- yet make only marginal progress on others (DeepSearchQA: +2.75 within evaluation noise), and that driver choice has a large effect on interactive tasks -- within the same scaffold, switching drivers changes interactive improvement from near-zero to +78pp. More broadly, the benchmark reveals that supervised pipelines dominate agent-driven post-training under fixed budgets, with online RL succeeding as the final best route only on ALFWorld. Code is available at https://github.com/microsoft/RD-Agent/tree/main/rdagent/scenarios/rl/autorl_bench.",
+      "authors": [
+        "Wanyi Chen",
+        "Xiao Yang",
+        "Xu Yang",
+        "Tianming Sha",
+        "Qizheng Li",
+        "Zhuo Wang",
+        "Bowen Xian",
+        "Fang Kong",
+        "Weiqing Liu",
+        "Jiang Bian"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-12T09:35:27+00:00",
+      "link": "https://arxiv.org/pdf/2604.10547v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM agents for autonomous RL engineering and post-training",
+      "llm_evidence_cn": "用于自主强化学习工程和后训练的LLM智能体",
+      "llm_evidence": "用于自主强化学习工程和后训练的LLM智能体",
+      "canonical_evidence": "用于自主强化学习工程和后训练的LLM智能体",
+      "llm_tldr_en": "A benchmark to evaluate if LLM agents can autonomously design and run reinforcement learning pipelines.",
+      "llm_tldr_cn": "一个评估LLM智能体能否自主设计并运行强化学习流水线的基准测试。",
+      "llm_tldr": "一个评估LLM智能体能否自主设计并运行强化学习流水线的基准测试。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15687v1",
+      "title": "Preference Estimation via Opponent Modeling in Multi-Agent Negotiation",
+      "abstract": "Automated negotiation in complex, multi-party and multi-issue settings critically depends on accurate opponent modeling. However, conventional numerical-only approaches fail to capture the qualitative information embedded in natural language interactions, resulting in unstable and incomplete preference estimation. Although Large Language Models (LLMs) enable rich semantic understanding of utterances, it remains challenging to quantitatively incorporate such information into a consistent opponent modeling. To tackle this issue, we propose a novel preference estimation method integrating natural language information into a structured Bayesian opponent modeling framework. Our approach leverages LLMs to extract qualitative cues from utterances and converts them into probabilistic formats for dynamic belief tracking. Experimental results on a multi-party benchmark demonstrate that our framework improves the full agreement rate and preference estimation accuracy by integrating probabilistic reasoning with natural language understanding.",
+      "authors": [
+        "Yuta Konishi",
+        "Kento Yamamoto",
+        "Eisuke Sonomoto",
+        "Rikuho Takeda",
+        "Ryo Furukawa",
+        "Yusuke Muraki",
+        "Takafumi Shimizu",
+        "Kazuma Fukumura",
+        "Yuya Kanemoto",
+        "Takayuki Ito",
+        "Shiyao Ding"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-17T04:20:43+00:00",
+      "link": "https://arxiv.org/pdf/2604.15687v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "opponent modeling in multi-agent negotiation",
+      "llm_evidence_cn": "多智能体谈判中的对手建模",
+      "llm_evidence": "多智能体谈判中的对手建模",
+      "canonical_evidence": "多智能体谈判中的对手建模",
+      "llm_tldr_en": "Integrates LLM-extracted qualitative cues into Bayesian frameworks for better multi-agent negotiation modeling.",
+      "llm_tldr_cn": "将大模型提取的定性线索集成到贝叶斯框架中，以改进多智能体谈判建模。",
+      "llm_tldr": "将大模型提取的定性线索集成到贝叶斯框架中，以改进多智能体谈判建模。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.10923v1",
+      "title": "Mem$^2$Evolve: Towards Self-Evolving Agents via Co-Evolutionary Capability Expansion and Experience Distillation",
+      "abstract": "While large language model--powered agents can self-evolve by accumulating experience or by dynamically creating new assets (i.e., tools or expert agents), existing frameworks typically treat these two evolutionary processes in isolation. This separation overlooks their intrinsic interdependence: the former is inherently bounded by a manually predefined static toolset, while the latter generates new assets from scratch without experiential guidance, leading to limited capability growth and unstable evolution. To address this limitation, we introduce a novel paradigm of co-evolutionary Capability Expansion and Experience Distillation. Guided by this paradigm, we propose the \\textbf{Mem$^{\\textbf{2}}$Evolve}, which integrates two core components: \\textbf{Experience Memory} and \\textbf{Asset Memory}. Specifically, Mem$^{2}$Evolve leverages accumulated experience to guide the dynamic creation of assets, thereby expanding the agent's capability space while simultaneously acquiring new experience to achieve co-evolution. Extensive experiments across 6 task categories and 8 benchmarks demonstrate that Mem$^{2}$Evolve achieves improvement of 18.53\\% over standard LLMs, 11.80\\% over agents evolving solely through experience, and 6.46\\% over those evolving solely through asset creation, establishing it as a substantially more effective and stable self-evolving agent framework. Code is available at: https://buaa-irip-llm.github.io/Mem2Evolve.",
+      "authors": [
+        "Zihao Cheng",
+        "Zeming Liu",
+        "Yingyu Shan",
+        "Xinyi Wang",
+        "Xiangrong Zhu",
+        "Yunpu Ma",
+        "Hongru Wang",
+        "Yuhang Guo",
+        "Wei Lin",
+        "Yunhong Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-13T02:44:54+00:00",
+      "link": "https://arxiv.org/pdf/2604.10923v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Self-evolving agents via co-evolutionary capability expansion",
+      "llm_evidence_cn": "通过协同进化能力扩展实现自我演进的智能体",
+      "llm_evidence": "通过协同进化能力扩展实现自我演进的智能体",
+      "canonical_evidence": "通过协同进化能力扩展实现自我演进的智能体",
+      "llm_tldr_en": "Introduces a paradigm for agents to self-evolve by expanding tools and distilling experiences.",
+      "llm_tldr_cn": "提出一种通过扩展工具集和蒸馏经验实现智能体自我演进的新范式。",
+      "llm_tldr": "提出一种通过扩展工具集和蒸馏经验实现智能体自我演进的新范式。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15972v1",
+      "title": "Weak-Link Optimization for Multi-Agent Reasoning and Collaboration",
+      "abstract": "LLM-driven multi-agent frameworks address complex reasoning tasks through multi-role collaboration. However, existing approaches often suffer from reasoning instability, where individual agent errors are amplified through collaboration, undermining overall performance. Current research mainly focuses on enhancing high-capability agents or suppressing unreliable outputs to improve framework effectiveness, while systematic identification and reinforcement of performance-limiting agents receive less attention. To address this gap, we propose WORC, a \\underline{w}eak-link \\underline{o}ptimization framework for multi-agent \\underline{r}easoning and \\underline{c}ollaboration, grounded in the weak-link principle. WORC follows a two-stage workflow. In the weak agent localization stage, task features are constructed, and a meta-learning-based weight predictor trained on optimal configurations identified by swarm intelligence algorithms (SIAs) enables zero-shot mapping from these features to agent performance weights, where the agent with the lowest predicted weight is identified as the weak agent. In the weak-link optimization stage, an uncertainty-driven allocation strategy assigns additional reasoning budgets to weak agents, with lower predicted weights leading to larger repeated-sampling quotas to compensate for reliability deficiencies. Experimental results show that WORC achieves an average accuracy of 82.2\\% on reasoning benchmarks while improving framework stability and cross-architecture generalization, suggesting that compensating for weak links, rather than reinforcing strengths alone, enhances the robustness of multi-agent systems.",
+      "authors": [
+        "Haoyu Bian",
+        "Chaoning Zhang",
+        "Jiaquan Zhang",
+        "Xingyao Li",
+        "Yuanfang Guo",
+        "Wei Dong",
+        "Yang Yang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-04-17T11:36:20+00:00",
+      "link": "https://arxiv.org/pdf/2604.15972v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent reasoning and collaboration framework",
+      "llm_evidence_cn": "多智能体推理与协作框架",
+      "llm_evidence": "多智能体推理与协作框架",
+      "canonical_evidence": "多智能体推理与协作框架",
+      "llm_tldr_en": "Proposes a framework to optimize multi-agent collaboration by identifying performance-limiting agents.",
+      "llm_tldr_cn": "提出一种通过识别性能瓶颈智能体来优化多智能体协作的框架。",
+      "llm_tldr": "提出一种通过识别性能瓶颈智能体来优化多智能体协作的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.11623v2",
+      "title": "Context Kubernetes: Declarative Orchestration of Enterprise Knowledge for Agentic AI Systems",
+      "abstract": "We introduce Context Kubernetes, an architecture for orchestrating enterprise knowledge in agentic AI systems, with a prototype implementation and eight experiments. The core observation is that delivering the right knowledge, to the right agent, with the right permissions, at the right freshness -- across an entire organization -- is structurally analogous to the container orchestration problem Kubernetes solved a decade ago. We formalize six core abstractions, a YAML-based declarative manifest for knowledge-architecture-as-code, a reconciliation loop, and a three-tier agent permission model where agent authority is always a strict subset of human authority. Three value experiments show: (1) without governance, agents serve phantom content from deleted sources and leak cross-domain data in 26.5% of queries; (2) without freshness monitoring, stale content is served silently -- with reconciliation, staleness is detected in under 1ms; (3) in five attack scenarios, flat permissions block 0/5 attacks, basic RBAC blocks 4/5, and the three-tier model blocks 5/5. Five correctness experiments confirm zero unauthorized deliveries, zero invariant violations, and architectural enforcement of out-of-band approval isolation that no surveyed enterprise platform provides. A survey of four major platforms (Microsoft, Salesforce, AWS, Google) documents that none architecturally isolates agent approval channels. We identify four properties that make context orchestration harder than container orchestration, and argue that these make the solution more valuable.",
+      "authors": [
+        "Charafeddine Mouzouni"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-04-13T15:35:55+00:00",
+      "link": "https://arxiv.org/pdf/2604.11623v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "orchestration of enterprise knowledge for agentic AI systems",
+      "llm_evidence_cn": "智能体AI系统的企业知识编排",
+      "llm_evidence": "智能体AI系统的企业知识编排",
+      "canonical_evidence": "智能体AI系统的企业知识编排",
+      "llm_tldr_en": "Introduces a declarative orchestration framework for managing knowledge and permissions in multi-agent systems.",
+      "llm_tldr_cn": "介绍了一种用于管理多智能体系统中知识和权限的声明式编排框架。",
+      "llm_tldr": "介绍了一种用于管理多智能体系统中知识和权限的声明式编排框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.13558v1",
+      "title": "AgentComm: Semantic Communication for Embodied Agents",
+      "abstract": "The increasing deployment of agentic artificial intelligence (AI) systems has intensified the demand for efficient agent to agent communication, particularly over bandwidth limited wireless links. In embodied AI applications, agents must exchange task related information under strict latency and reliability constraints. Existing agent communication methods primarily focus on connectivity and protocol efficiency, but lack effective mechanisms to reduce physical layer transmission overhead while preserving task semantics.To address this challenge, this paper proposes a semantic agent communication framework that reduces communication overhead while maintaining task performance and shared understanding among agents. An LLM based semantic processor is first introduced to reorganize and condense agent generated messages by extracting task relevant semantic content. To cope with information loss introduced by aggressive message reduction, an importance-aware semantic transmission strategy is developed, which adaptively protects semantic components according to their task importance. Furthermore, a task specific knowledge base is incorporated as long term semantic memory to support recurring tasks and further reduce bandwidth consumption with minimal performance degradation. Experimental results and ablation studies demonstrate that the proposed framework achieves nearly 50% bandwidth reduction with negligible loss in task completion performance compared to conventional transmission schemes.",
+      "authors": [
+        "Peiwen Jiang",
+        "Yushuo Feng",
+        "Jiajia Guo",
+        "Chao-Kai Wen",
+        "Shi Jin"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-04-15T07:06:08+00:00",
+      "link": "https://arxiv.org/pdf/2604.13558v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "semantic communication framework for embodied multi-agent systems",
+      "llm_evidence_cn": "具身多智能体系统的语义通信框架",
+      "llm_evidence": "具身多智能体系统的语义通信框架",
+      "canonical_evidence": "具身多智能体系统的语义通信框架",
+      "llm_tldr_en": "Introduces an LLM-based semantic communication framework to improve efficiency in multi-agent coordination.",
+      "llm_tldr_cn": "引入了一种基于LLM的语义通信框架，以提高多智能体协作的效率。",
+      "llm_tldr": "引入了一种基于LLM的语义通信框架，以提高多智能体协作的效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15373v1",
+      "title": "InfoChess: A Game of Adversarial Inference and a Laboratory for Quantifiable Information Control",
+      "abstract": "We propose InfoChess, a symmetric adversarial game that elevates competitive information acquisition to the primary objective. There is no piece capture, removing material incentives that would otherwise confound the role of information. Instead, pieces are used to alter visibility. Players are scored on their probabilistic inference of the opponent's king location over the duration of the game. To explore the space of strategies for playing InfoChess, we introduce a hierarchy of heuristic agents defined by increasing levels of opponent modeling, and train a reinforcement learning agent that outperforms these baselines. Leveraging the discrete structure of the game, we analyze gameplay through natural information-theoretic characterizations that include belief entropy, oracle cross entropy, and predictive log score under the action-induced observation channel. These measures disentangle epistemic uncertainty, calibration mismatch, and uncertainty induced by adversarial movement. The design of InfoChess renders it a testbed for studying multi-agent inference under partial observability. We release code for the environment and agents, and a public interface to encourage further study.",
+      "authors": [
+        "Kieran A. Murphy"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.IT",
+        "cs.LG"
+      ],
+      "published": "2026-04-15T16:07:42+00:00",
+      "link": "https://arxiv.org/pdf/2604.15373v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "adversarial inference and heuristic agents in a game environment",
+      "llm_evidence_cn": "游戏环境中的对抗性推理与启发式智能体",
+      "llm_evidence": "游戏环境中的对抗性推理与启发式智能体",
+      "canonical_evidence": "游戏环境中的对抗性推理与启发式智能体",
+      "llm_tldr_en": "Uses a game environment to study adversarial inference and strategy modeling among multiple agents.",
+      "llm_tldr_cn": "利用游戏环境研究多个智能体之间的对抗性推理和策略建模。",
+      "llm_tldr": "利用游戏环境研究多个智能体之间的对抗性推理和策略建模。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15505v1",
+      "title": "PolicyBank: Evolving Policy Understanding for LLM Agents",
+      "abstract": "LLM agents operating under organizational policies must comply with authorization constraints typically specified in natural language. In practice, such specifications inevitably contain ambiguities and logical or semantic gaps that cause the agent's behavior to systematically diverge from the true requirements. We ask: by letting an agent evolve its policy understanding through interaction and corrective feedback from pre-deployment testing, can it autonomously refine its interpretation to close specification gaps? We propose PolicyBank, a memory mechanism that maintains structured, tool-level policy insights and iteratively refines them -- unlike existing memory mechanisms that treat the policy as immutable ground truth, reinforcing \"compliant but wrong\" behaviors. We also contribute a systematic testbed by extending a popular tool-calling benchmark with controlled policy gaps that isolate alignment failures from execution failures. While existing memory mechanisms achieve near-zero success on policy-gap scenarios, PolicyBank closes up to 82% of the gap toward a human oracle.",
+      "authors": [
+        "Jihye Choi",
+        "Jinsung Yoon",
+        "Long T. Le",
+        "Somesh Jha",
+        "Tomas Pfister"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-16T20:29:30+00:00",
+      "link": "https://arxiv.org/pdf/2604.15505v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evolving policy understanding for LLM agents",
+      "llm_evidence_cn": "大模型智能体的策略理解演化",
+      "llm_evidence": "大模型智能体的策略理解演化",
+      "canonical_evidence": "大模型智能体的策略理解演化",
+      "llm_tldr_en": "Proposes a memory mechanism for LLM agents to refine their understanding of organizational policies.",
+      "llm_tldr_cn": "提出了一种大模型智能体记忆机制，用于完善其对组织策略的理解。",
+      "llm_tldr": "提出了一种大模型智能体记忆机制，用于完善其对组织策略的理解。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15710v1",
+      "title": "VoxMind: An End-to-End Agentic Spoken Dialogue System",
+      "abstract": "Recent end-to-end spoken dialogue models enable natural interaction. However, as user demands become increasingly complex, models that rely solely on conversational abilities often struggle to cope. Incorporating agentic capabilities is therefore essential: by enabling tool use, these models can extend their knowledge boundaries and better solve real-world tasks. Yet, existing research has largely concentrated on core perception and generation, with comparatively limited exploration of such tool-augmented extensions. To bridge this gap, we present VoxMind, an integrated framework designed to equip end-to-end spoken dialogue models with comprehensive agentic abilities. Leveraging our curated 470-hour AgentChat dataset, we incorporate a \"Think-before-Speak\" mechanism, enabling the model to internalize structured reasoning as a critical prerequisite for planning and response generation. Furthermore, to mitigate latency bottlenecks caused by large-scale tool integration, we propose a Multi-Agent Dynamic Tool Management architecture. By asynchronously delegating retrieval tasks to an auxiliary agent aligned with the main model's reasoning trajectory, this system effectively decouples inference latency from toolset size. Experimental results confirm that VoxMind achieves significant improvements in agent performance: compared with strong baselines, the task completion rate increases from 34.88% to 74.57%, outperforming Gemini-2.5-Pro on spoken agent tasks while preserving general conversational quality. The source code and associated data are publicly available at https://github.com/MM-Speech/VoxMind.",
+      "authors": [
+        "Tianle Liang",
+        "Yifu Chen",
+        "Shengpeng Ji",
+        "Yijun Chen",
+        "Zhiyang Jia",
+        "Jingyu Lu",
+        "Fan Zhuo",
+        "Xueyi Pu",
+        "Yangzhuo Li",
+        "Zhou Zhao"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD"
+      ],
+      "published": "2026-04-17T05:32:06+00:00",
+      "link": "https://arxiv.org/pdf/2604.15710v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agentic spoken dialogue system with tool-augmented extensions",
+      "llm_evidence_cn": "具有工具增强扩展功能的智能体口语对话系统",
+      "llm_evidence": "具有工具增强扩展功能的智能体口语对话系统",
+      "canonical_evidence": "具有工具增强扩展功能的智能体口语对话系统",
+      "llm_tldr_en": "Equips spoken dialogue models with agentic capabilities like tool use for real-world task solving.",
+      "llm_tldr_cn": "为口语对话模型配备了智能体能力（如工具使用），以解决现实世界的任务。",
+      "llm_tldr": "为口语对话模型配备了智能体能力（如工具使用），以解决现实世界的任务。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.15840v1",
+      "title": "CoEvolve: Training LLM Agents via Agent-Data Mutual Evolution",
+      "abstract": "Reinforcement learning for LLM agents is typically conducted on a static data distribution, which fails to adapt to the agent's evolving behavior and leads to poor coverage of complex environment interactions. To address these challenges, we propose CoEvolve, an agent-data mutual evolution framework that enables LLM agents to improve through closed-loop, interaction-driven training. Specifically, CoEvolve extracts feedback signals such as forgetting and uncertainty from rollout trajectories to identify failure-prone interaction patterns, and utilizes them to guide LLM-based task synthesis. The synthesized tasks are validated through environment interaction and utilized to update the data distribution, enabling joint adaptation of the agent and its data. Extensive experiments on AppWorld and BFCL across Qwen2.5-7B, Qwen3-4B, and Qwen3-30B-A3B demonstrate consistent and significant improvements over strong base models, yielding absolute gains of 19.43%, 15.58%, and 18.14%, respectively.",
+      "authors": [
+        "Shidong Yang",
+        "Ziyu Ma",
+        "Tongwen Huang",
+        "Yiming Hu",
+        "Yong Wang",
+        "Xiangxiang Chu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-17T08:41:26+00:00",
+      "link": "https://arxiv.org/pdf/2604.15840v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "interaction-driven training for LLM agents",
+      "llm_evidence_cn": "大模型智能体的交互驱动训练",
+      "llm_evidence": "大模型智能体的交互驱动训练",
+      "canonical_evidence": "大模型智能体的交互驱动训练",
+      "llm_tldr_en": "Proposes a framework for mutual evolution of agents and data through environment interaction.",
+      "llm_tldr_cn": "提出一个通过环境交互实现智能体与数据共同进化的框架。",
+      "llm_tldr": "提出一个通过环境交互实现智能体与数据共同进化的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
