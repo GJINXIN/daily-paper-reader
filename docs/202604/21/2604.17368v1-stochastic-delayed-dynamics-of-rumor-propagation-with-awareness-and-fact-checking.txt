@@ -1,0 +1,980 @@
+Title: Stochastic Delayed Dynamics of Rumor Propagation with Awareness and Fact-Checking
+
+URL Source: https://arxiv.org/pdf/2604.17368v1
+
+Published Time: Tue, 21 Apr 2026 01:26:49 GMT
+
+Number of Pages: 9
+
+Markdown Content:
+# Stochastic Delayed Dynamics of Rumor Propagation with Awareness and Fact-Checking 
+
+1st Lamia Alyami 
+
+Department of Mathematics, College of Sciences and Arts, 
+
+Najran University, P.O. Box 1988, Najran 11001, Saudi Arabia. Email: lmlasloom@nu.edu.sa 
+
+2nd Anis Hamadouche 
+
+The School of Engineering & Physical Sciences Heriot-Watt University 
+
+Edinburgh EH14 4AS, UK anis.hamadouche@hw.ac.uk 
+
+3rd Amir Hussain 
+
+SDAIA-KFUPM Joint Research Centre for Artificial Intelligence King Fahd University of Petroleum and Minerals 
+
+Dhahran, Saudi Arabia amir.hussain@kfupm.edu.sa 
+
+Abstract —This paper presents a stochastic delayed differential model for rumor propagation during infodemic that incorpo-rates human behavioral response, public skepticism and fact-checking mechanisms. A discrete time delay is introduced to model natural lags in information processing and institutional response. Additionally, we adopt additive stochastic perturbations to model random fluctuations in social interaction and exposure. We present a rigorous stability analysis of the proposed rumor transmission model and derive convergence guarantees under reproduction number conditions. We also validate the model by numerical simulations and analyze the outbreak severity and quantify uncertainty under variable information processing delays. The results highlight the importance of timely awareness and fact-checking interventions for mitigating misinformation spread during pandemics 
+
+Index Terms —infodemic, pandemic COVID-19, misinforma-tion, stochastic delay differential equations, fact-checking, aware-ness intervention. 
+
+I. I NTRODUCTION 
+
+Infodemic is defined as an overwhelming surplus of infor-mation—both online and offline—that includes inaccurate or deceptive content. This phenomenon significantly complicates medical emergency responses by obscuring reliable facts. Con-sequently, people may seek out dangerous, unproven remedies or reject life-saving interventions like vaccines. Ultimately, infodemic can damage public confidence in science and health-care, creating severe risks to global health [1]–[5]. During the COVID-19 pandemic, a ”perfect storm” of infodemics emerged. This situation arose when an unprece-dented volume of data intersected with significant information deficits. Consequently, unsubstantiated claims regarding the virus’s origins and various conspiracies about vaccination efforts and state mandates propagated quickly through social media and digital platforms. The widespread distribution of 
+
+Published in Proc. IEEE WiDS PSU 2026. DOI 10.1109/WiD-SPSU69342.2026.00042. 
+
+false information regarding the virus and its associated dangers prompted many individuals to adopt behaviors that jeopardized both personal and community safety. Furthermore, there is growing concern that this ”infodemic” of misinformation is spilling over, potentially undermining public health efforts for other infectious diseases like measles and the flu [6]. It is therefore crucial to manage infodemics by fostering critical thinking and promoting accurate information Infodemiology, which analyzes electronic health informa-tion, is gaining momentum as a crucial area of research. Investing in Infodemic Management (IM) offers dual benefits: it provides immediate protection for public health while si-multaneously building a robust, evidence-based foundation to inform future, action-oriented strategies, tools, and protocols for managing information crises [7]. In the absence of robust, transparent information management, health authorities risk losing public confidence, as unchecked rumors fuel danger-ous behaviors. Mis/disinformation can prolong and intensify the impact of crises, leading to severe human suffering and economic devastation [1]. Misinformation online is defined by its rapid, viral, and far-reaching nature, often outpacing the spread of accurate infor-mation. Several key drivers contribute to this phenomenon, including human behaviors like confirmation bias, high emo-tional engagement, and a preference for novelty. Additionally, platform algorithms designed for engagement, alongside the use of social bots, amplify the dissemination of false con-tent [8]. The dynamics of misinformation propagation in social net-works resemble epidemiological models, where ’infection’ represents exposure to and sharing of false information. This analogy has led to various mathematical models attempting to capture and predict the spread of misinformation, drawing parallels with disease transmission models [9]–[14]. Under-standing these interactions is critical for designing successful 
+
+> arXiv:2604.17368v1 [eess.SY] 19 Apr 2026
+
+misinformation prevention techniques. These measures include increasing digital literacy, upgrading platform algorithms to detect and prevent the dissemination of misleading informa-tion, and conducting targeted interventions to disrupt the cycle of misinformation transmission. Even though several mathematical epidemic models have evolved, most still need to explain the human nature of selection, skepticism and social influence. The current models also fail to account for the reality that people may respond with significant delay as a function of information processing. Moreover, they also fail to quantify the conditions for equi-librium under stochastic rumor spread dynamics. Considering this, the following contributions were made to this work.  
+
+> •
+
+We propose an extended SEIR-type rumor model incorpo-rating skeptical and fact-checked compartments to capture behavioral resistance and verification effects.  
+
+> •
+
+A discrete time delay is introduced to represent delayed information processing and institutional response.  
+
+> •
+
+Stochastic perturbations are incorporated to model ran-dom fluctuations in rumor exposure and social interaction.  
+
+> •
+
+Equilibrium and local stability analyses are developed, leading to a threshold condition based on the basic reproduction number.  
+
+> •
+
+Monte Carlo simulations and an ablation study are per-formed to investigate the combined effects of delay and reproduction number on rumor outbreak severity. The remainder of this paper is organized as follows. Sec-tion II presents the proposed stochastic delay model. Sec-tion III provides equilibrium and stability analysis. Section IV presents numerical experiments and an ablation study. Finally, Section V concludes the paper and discusses future research directions. II. P ROPOSED PROCESS MODEL 
+
+Motivated by misinformation spread delayed dynamics (de-lays in institutional responses, heterogeneous individual re-actions) and uncertainty in social interactions we propose a new model that incorporates information delay, behavioral response and public awareness mechanisms. The proposed stochastic delay differential equation model (SDDE) extends classical epidemic-inspired frameworks under the following assumptions:  
+
+> •
+
+The study assumes a demographically and geographically closed population, where no individuals enter or leave the system.  
+
+> •
+
+Assuming homogeneous social structure, the model adopts a mass-action principle, where the transmission rate is directly proportional to the density of contacts.  
+
+> •
+
+The transition from hearing a rumor to spreading it is not instantaneous; individuals first enter an ”exposed” phase, where they pause to verify the information and think through its implications.  
+
+> •
+
+Some individuals who spread rumors eventually lose interest and stop, while others become skeptical and adopt a stance of passive resistance.  
+
+> •
+
+Those who doubt a rumor might eventually confirm its in-accuracy via reliable sources, shifting into a fact-checked category of people who actively oppose misinformation.  
+
+> •
+
+Because public awareness campaigns and response mea-sures are not instantaneous, a discrete time lag ( τ > 0)is used to model this significant delay in effect.  
+
+> •
+
+Real social networks are characterized by unavoidable, unpredictable fluctuations in user behavior and interac-tion, which are represented via Brownian motion-based stochastic perturbations. Accordingly, the total population is divided into six mu-tually exclusive compartments: S(t) denotes the susceptible individuals who have not yet encountered the rumor, E(t)
+
+represents the exposed individuals who have encountered the rumor but are not yet spreading it, I(t) corresponds to the active spreaders who disseminate the rumor, R(t) describes the removed individuals who no longer propagate the rumor, Ig (t)
+
+denotes the skeptical individuals who refrain from spreading the rumor, and F (t) represents the fact-checked individuals who have verified the information and actively reject the rumor. The total population satisfies the conservation law 
+
+S(t)+ E(t)+ I(t)+ R(t)+ Ig (t)+ F (t) = N, t ≥ 0. (1) 
+
+A. Stochastic Delay Differential Equation Model 
+
+To capture both response delay and uncertainty in rumor diffusion, we formulate the following stochastic delay differ-ential system: 
+
+dS (t) = 
+
+h
+
+− βS (t)I(t − τ )
+
+i
+
+dt + σS S(t) dW S (t),dE (t) = 
+
+h
+
+βS (t)I(t − τ ) − σE (t)
+
+i
+
+dt + σE E(t) dW E (t),dI (t) = 
+
+h
+
+σE (t) − (γ + ρ)I(t)
+
+i
+
+dt + σI I(t) dW I (t),dR (t) = 
+
+h
+
+γI (t)
+
+i
+
+dt + σRR(t) dW R(t),dI g (t) = 
+
+h
+
+ρI (t) − θI g (t)
+
+i
+
+dt + σIg Ig (t) dW Ig (t),dF (t) = 
+
+h
+
+θI g (t)
+
+i
+
+dt + σF F (t) dW F (t),
+
+(2) where τ > 0 denotes the discrete information delay, and 
+
+{WS (t), W E (t), W I (t), W R(t), W Ig (t), W F (t)} are indepen-dent standard Wiener processes defined on a complete proba-bility space (Ω , F, P).The model parameters are defined as follows: β > 0 denotes the rumor transmission rate, σ > 0 is the activation rate at which exposed individuals become active spreaders, γ > 0
+
+represents the rate at which spreaders lose interest and stop disseminating the rumor, ρ > 0 is the rate at which spreaders become skeptical and move into the ignorant class, and θ > 0
+
+denotes the verification or fact-checking rate. The constant 
+
+τ > 0 represents the behavioral and institutional response delay. Finally, the nonnegative parameters σS , σ E , σ I , σ R, σ Ig ,and σF represent the stochastic noise intensities associated with each compartment, capturing random fluctuations in social interactions and rumor exposure. The stochastic perturbation terms model uncertainty aris-ing from unpredictable online activity, irregular exposure to misinformation, and random behavioral changes in individuals during crisis situations. 
+
+B. Initial Conditions and Delay History 
+
+To ensure well-defined dynamics, the model requires initial history functions over the delay interval [−τ, 0] . Let 
+
+(S(ξ), E (ξ), I (ξ), R (ξ), I g (ξ), F (ξ)) = (ϕ1(ξ), ϕ 2(ξ), ϕ 3(ξ), ϕ 4(ξ), ϕ 5(ξ), ϕ 6(ξ)) , ξ ∈ [−τ, 0] , (3) where ϕi(ξ) ≥ 0 are continuous functions satisfying 
+
+ϕ1(ξ) + ϕ2(ξ) + ϕ3(ξ) + ϕ4(ξ) + ϕ5(ξ) + ϕ6(ξ) = N. (4) 
+
+C. Well-Posedness and Positivity of Solutions 
+
+Let (Ω , F, {F t}t≥0, P) be a complete filtered prob-ability space satisfying the usual conditions, and let 
+
+{WS (t), W E (t), W I (t), W R(t), W Ig (t), W F (t)}t≥0 be inde-pendent one-dimensional standard Brownian motions adapted to {F t}t≥0. Consider the stochastic delay differential sys-tem (2) with initial history 
+
+X(ξ) = Φ( ξ), ξ ∈ [−τ, 0] ,
+
+where X(t) = (S(t), E (t), I (t), R (t), I g (t), F (t)) ⊤ and 
+
+Φ( ξ) = ( ϕ1(ξ), ϕ 2(ξ), ϕ 3(ξ), ϕ 4(ξ), ϕ 5(ξ), ϕ 6(ξ)) ⊤ is an F0-measurable continuous function satisfying ϕi(ξ) ≥ 0 for all 
+
+ξ ∈ [−τ, 0] .The drift and diffusion coefficients of system (2) are locally Lipschitz continuous in (X(t), X (t − τ )) and satisfy a linear growth condition. Hence, by standard existence and unique-ness results for stochastic delay differential equations, there exists a unique maximal {F t}-adapted continuous solution 
+
+X(t) defined on [−τ, T e), where Te denotes the explosion time (see Appendix A). Furthermore, using a standard localization argument to-gether with Itˆ o’s formula and the linear growth bound, one can show that Te = ∞ almost surely (see Appendix B). Therefore, system (2) admits a unique global strong solution for all t ≥ 0.Finally, the nonnegative orthant R6+ is positively invariant. In particular, since each diffusion term is of multiplicative type (i.e., proportional to the corresponding state variable), the boundary of R6+ is absorbing. Hence, for any admissible nonnegative initial history Φ, the solution satisfies 
+
+S(t), E (t), I (t), R (t), I g (t), F (t) ≥ 0, ∀t ≥ 0, a.s .
+
+Consequently, all state variables remain biologically and so-cially meaningful as population densities throughout the evo-lution of the system. 
+
+D. Model Interpretation 
+
+System (2) generalizes classical rumor propagation models by incorporating three key features: (i) discrete time delay in rumor influence, representing realistic hesitation and delayed institutional response; (ii) behavioral transitions into skeptical and fact-checking states, capturing voluntary resistance to misinformation; and (iii) stochastic perturbations, representing random fluctuations in exposure, user engagement, and social interaction intensity. This stochastic delay-aware framework provides a mathematically rigorous foundation for the equi-librium, stability, and optimal control analyses developed in subsequent sections. III. E QUILIBRIUM ANALYSIS 
+
+In this section, we investigate the equilibrium structure of the proposed rumor propagation model. Since equilibrium points are defined as constant solutions of the drift system, and since the delay does not affect constant solutions, the equilibria of system (2) coincide with those of the associated deterministic delay model (2). Therefore, we analyze the equilibria of the deterministic system. 
+
+A. Equilibrium Points 
+
+An equilibrium point 
+
+E∗ = ( S∗, E ∗, I ∗, R ∗, I ∗ 
+
+> g
+
+, F ∗)
+
+is defined as a constant solution of system (2), i.e., a point satisfying 
+
+dS dt = dE dt = dI dt = dR dt = dI g
+
+dt = dF dt = 0 .
+
+Since at equilibrium we have I(t − τ ) = I(t) = I∗, the delay term vanishes and the equilibrium conditions are obtained by setting the right-hand sides of (2) equal to zero: 
+
+0 = −βS ∗I∗,
+
+0 = βS ∗I∗ − σE ∗,
+
+0 = σE ∗ − (γ + ρ)I∗,
+
+0 = γI ∗,
+
+0 = ρI ∗ − θI ∗ 
+
+> g
+
+,
+
+0 = θI ∗ 
+
+> g
+
+.
+
+(5) From the fourth equation in (5), since γ > 0, it follows immediately that 
+
+I∗ = 0 . (6) Substituting I∗ = 0 into the third equation yields E∗ = 0 , and the fifth and sixth equations imply I∗ 
+
+> g
+
+= 0 . Therefore, every equilibrium point satisfies 
+
+E∗ = I∗ = I∗ 
+
+> g
+
+= 0 . (7) The remaining state variables satisfy only the population conservation law 
+
+S∗ + R∗ + F ∗ = N, S∗, R ∗, F ∗ ≥ 0. (8) Hence, the system admits a continuum of rumor-free equi-libria of the form 
+
+E∗(S∗, R ∗, F ∗) = ( S∗, 0, 0, R ∗, 0, F ∗),S∗ + R∗ + F ∗ = N. (9) B. Rumor-Free Equilibrium 
+
+The most relevant equilibrium is the rumor-free equilibrium 
+
+(RFE), which corresponds to a population where no rumor has been transmitted and all individuals remain susceptible. This equilibrium is given by 
+
+E0 = ( N, 0, 0, 0, 0, 0) . (10) This point represents the initial state of the population prior to rumor introduction. The stability of E0 determines whether the rumor can invade the population and generate a significant outbreak. 
+
+C. Absence of Endemic Equilibrium 
+
+This model differs from classical ones because it lacks a persistent endemic state. Due to absorbing states R(t) and 
+
+F (t) and a lack of new susceptible individuals, the rumor propagation will always die out as the number of spreaders drops to zero. Consequently, the longevity of a rumor is defined not by a stable, long-term state, but by temporary surges in activity and its ultimate, cumulative reach. Specifically, the long-term behavior is determined by the asymptotic distribution of individuals across the S, R, and F classes. 
+
+D. Final-Size Equilibrium Set 
+
+From (9), it follows that the asymptotic behavior of the system converges to a limiting equilibrium of the form 
+
+(S∞, 0, 0, R ∞, 0, F ∞),
+
+where S∞ + R∞ + F∞ = N . The values (S∞, R ∞, F ∞)
+
+depend on the initial history and model parameters. This limiting equilibrium represents the final size of the rumor outbreak and quantifies the proportion of the population that remains susceptible, becomes removed, or transitions into the fact-checked class. 
+
+E. Stochastic Stability of the Rumor-Free Equilibrium 
+
+In this subsection, we study the stochastic stability of the rumor-free equilibrium of the stochastic delay system (2). Let 
+
+E0 = ( N, 0, 0, 0, 0, 0) 
+
+denote the rumor-free equilibrium of the deterministic drift system. 
+
+1) Linearized Stochastic Delay System: Let s(t) = S(t) −
+
+N and consider small perturbations around E0. By neglecting higher-order nonlinear terms, the stochastic delay system (2) can be approximated locally by the linear SDDE subsystem in (E, I ):
+
+dE (t) = 
+
+
+
+βN I (t − τ ) − σE (t)
+
+
+
+dt + σE E(t) dW E (t),dI (t) = 
+
+
+
+σE (t) − (γ + ρ)I(t)
+
+
+
+dt + σI I(t) dW I (t).
+
+(11) The remaining compartments (R, I g , F ) are driven by I(t) and therefore do not affect the local stability of E0.
+
+2) Mean-Square Stability Definition: The equilibrium E0 is said to be mean-square stable if for any initial history Φ ∈
+
+C([ −τ, 0] , R2),
+
+lim  
+
+> t→∞
+
+E
+
+h
+
+E(t)2 + I(t)2i
+
+= 0 .
+
+3) Mean-Square Stability Theorem: 
+
+Theorem 1. Consider the linearized stochastic delay subsys-tem (11) . If 
+
+βN γ + ρ < 1 − σ2
+
+> I
+
+2( γ + ρ) , (12) 
+
+then the rumor-free equilibrium E0 is exponentially stable in the mean-square sense. In particular, 
+
+lim  
+
+> t→∞
+
+E
+
+h
+
+E(t)2 + I(t)2i
+
+= 0 , ∀τ ≥ 0.
+
+Proof. Define the Lyapunov function 
+
+V (t) = E(t)2 + cI (t)2,
+
+where c > 0 is a constant to be chosen. Applying Itˆ o’s formula yields 
+
+d(E2) = 2 E dE + ( dE )2
+
+= 2 E
+
+
+
+βN I τ − σE 
+
+
+
+dt + 2 σE E2 dW E + σ2 
+
+> E
+
+E2dt, 
+
+(13) where Iτ = I(t − τ ). Similarly, 
+
+d(I2) = 2 I dI + ( dI )2
+
+= 2 I
+
+
+
+σE − (γ + ρ)I
+
+
+
+dt + 2 σI I2 dW I + σ2 
+
+> I
+
+I2dt. 
+
+(14) Multiplying (14) by c and adding to (13), we obtain 
+
+dV (t) = 
+
+h
+
+2βN EI τ − 2σE 2 + σ2 
+
+> E
+
+E2
+
++ 2 cσEI − 2c(γ + ρ)I2 + cσ 2 
+
+> I
+
+I2i
+
+dt + dM (t),
+
+(15) where M (t) is a local martingale term. Using Young’s inequality, for any ε1, ε 2 > 0,
+
+2βN EI τ ≤ ε1E2 + β2N 2
+
+ε1
+
+I2 
+
+> τ
+
+, (16) 
+
+2cσEI ≤ cε 2E2 + cσ 2
+
+ε2
+
+I2. (17) Substituting these bounds into (15) gives 
+
+dV (t) ≤
+
+h
+
+− (2 σ − σ2 
+
+> E
+
+− ε1 − cε 2)E2
+
+−
+
+
+
+2c(γ + ρ) − cσ 2 
+
+> I
+
+− cσ 2
+
+ε2
+
+
+
+I2 + β2N 2
+
+ε1
+
+I2
+
+> τ
+
+i
+
+dt + dM (t).
+
+(18) Choosing c > 0 and ε2 such that 
+
+2c(γ + ρ) − cσ 2 
+
+> I
+
+− cσ 2
+
+ε2
+
+> 0,and then selecting ε1 > 0 sufficiently small, we obtain constants κ1, κ 2 > 0 such that 
+
+E[dV (t)] ≤ − κ1E[E(t)2]dt −κ2E[I(t)2]dt +κ3E[I(t−τ )2]dt, 
+
+(19) for some κ3 > 0.Since the coefficients are constant and the system is lin-ear, the delay term can be treated using a Razumikhin-type approach. In particular, let V (t) be the quadratic Lyapunov function introduced above and assume that there exists a constant q > 1 such that the Razumikhin condition holds: 
+
+V (t − τ ) ≤ q V (t), ∀t ≥ 0. (20) Condition (20) restricts the influence of the delayed state by requiring that the Lyapunov functional evaluated at the delayed time does not dominate its current value. Such an assumption is standard in Razumikhin theory for delay differential systems and is used to ensure that the delay feedback remains bounded relative to the instantaneous state. Using the definition of V (t), there exists a constant c0 > 0
+
+such that 
+
+I(t)2 ≤ c0V (t), I(t − τ )2 ≤ c0V (t − τ ). (21) Hence, by (20) we obtain 
+
+I(t − τ )2 ≤ c0qV (t). (22) Substituting (22) into (19) yields 
+
+E[dV (t)] ≤ − κ1E[E(t)2]dt −κ2E[I(t)2]dt +κ3c0q E[V (t)] dt. 
+
+(23) Furthermore, since V (t) is positive definite, there exist constants m1, m 2 > 0 such that 
+
+m1
+
+ E(t)2 + I(t)2 ≤ V (t) ≤ m2
+
+ E(t)2 + I(t)2. (24) Using (24), inequality (23) can be rewritten as 
+
+ddt E[V (t)] ≤ − 
+
+
+
+δ − κ3c0q
+
+
+
+E[V (t)] , (25) where δ > 0 is a constant depending on κ1, κ 2 and the equivalence bounds in (24). Therefore, if the parameters satisfy the condition 
+
+κ3c0q < δ, (26) then (25) implies exponential decay of the mean-square Lya-punov function: 
+
+E[V (t)] ≤ E[V (0)] exp( −(δ − κ3c0q)t) , t ≥ 0. (27) Consequently, 
+
+lim  
+
+> t→∞
+
+E[E(t)2] = lim  
+
+> t→∞
+
+E[I(t)2] = 0 ,
+
+which establishes mean-square stability of the rumor-free equilibrium. The Razumikhin argument shows that the destabilizing contribution of the delayed term I(t − τ ) can be controlled provided its weighted influence remains dominated by the instantaneous dissipation terms. In particular, condition (26)    
+
+> Fig. 1. Mean spreader population I(t)(100-run Monte Carlo simulation) with 95% confidence intervals, showing a sharp outbreak peak and subsequent decay. Stochastic perturbations drive increased variability around the peak.
+
+implies that the delay does not destroy stability when the removal rates (γ + ρ) and the exposure transition rate σ
+
+dominate the effective delayed transmission intensity. 
+
+Remark 1. Condition (12) provides a sufficient stability crite-rion showing that stochastic perturbations reduce the effective invasion capacity of the rumor. In particular, increasing noise intensity σI raises the stability margin and can suppress rumor outbreaks even when the deterministic threshold is close to unity. 
+
+IV. E XPERIMENTAL RESULTS AND DISCUSSION 
+
+In this section, we present numerical experiments to validate the theoretical analysis and to illustrate the impact of stochastic perturbations and time delay on rumor propagation. Numerical approximations used stored data for the delayed term, and any negative results caused by stochasticity were projected onto the non-negative domain. To assess uncer-tainty, we run 100 Monte Carlo simulations to calculate mean trajectories and 95% pointwise confidence intervals. Model validation is based on the peak spreader proportion I(t), final outbreak size R(T ), F (T ), and the confidence bands, which represent stochastic variability. Figure 1 depicts the temporal dynamics of the spreader class derived from 100 Monte Carlo simulations. The average trajectory is represented by a solid curve, while the shaded region highlights the 95% confidence interval. Let E(t) and S(t) denote the proportions of individuals in the exposed and active spreader states at time t. Rumor growth is driven by the transition 
+
+E β
+
+−→ S, 
+
+which can be modeled as 
+
+dS (t)
+
+dt = βE (t) − γS (t), (28) where β > 0 is the activation rate and γ > 0 is the stifling rate. Fig. 2. The average trajectory of all compartments shows the spreader popu-lation I(t) rising to an outbreak peak before declining. Meanwhile, both the removed and fact-checked populations demonstrate continuous accumulation over time. 
+
+The spreader population typically exhibits a unimodal tra-jectory with a dominant peak 
+
+t∗ = arg max  
+
+> t≥0
+
+S(t),
+
+after which 
+
+lim  
+
+> t→∞
+
+S(t) = 0 .
+
+This asymptotic behavior indicates convergence to the rumor-free equilibrium 
+
+E0 = {(E, S ) : S = 0 },
+
+which is stable when the effective reproduction number R0 <
+
+1, implying the absence of a persistent rumor-endemic state. When stochastic fluctuations are considered, the spreader dynamics can be written as 
+
+dS (t) = [ βE (t) − γS (t)] dt + σS (t)dW (t), (29) where σ > 0 denotes the noise intensity and W (t) is a Wiener process. The variance of S(t) increases near t∗, producing a wider confidence band around the peak, which indicates that random contact fluctuations have the strongest influence during the rapid rumor growth phase. Fig. 2 shows the mean trajectories of all compartments 
+
+S(t), E (t), I (t), R (t), I g (t), and F (t) over the simulation horizon. The plots demonstrate that the susceptible population 
+
+S(t) decreases monotonically as individuals become exposed through delayed contact with spreader history. The exposed population E(t) follows a similar outbreak pattern as I(t)
+
+but with an earlier peak, reflecting the latency stage of the rumor dynamics. The removed class R(t) increases steadily and eventually captures a large proportion of the population, representing individuals who have lost interest or stopped spreading the rumor. The skeptical class Ig (t) rises during the outbreak phase and later decreases due to the transition into the fact-checking compartment. Finally, the fact-checked class 
+
+F (t) grows monotonically, showing the cumulative impact of verification processes in reducing rumor influence. Table I summarizes the ablation study on the combined effects of information delay τ and basic reproduction number 
+
+R0 on rumor dynamics. Two key performance indicators are presented: the mean maximum value of the spreader popula-tion, max I(t), and the final mean size of the epidemic, mea-sured by R(T ) + F (T ), along with their respective standard deviations calculated from Monte Carlo simulations. First, for a fixed time delay τ , increasing R0 leads to a marked and monotonic rise in both the peak and final outbreak size. When R0 < 1, the proportion of people spreading the rumor at the peak remains close to its initial value, and the final outbreak size is small, indicating that the rumor is not spreading significantly. When R0 exceeds 1, an abrupt transition is observed: the peak of I(t) increases rapidly, and the final epidemic size reaches values exceeding 70%–80% of the population for R0 = 2 .0. This behavior is consistent with the theoretical threshold role of R0, confirming that higher transmission intensity leads to more severe and widespread rumor outbreaks. Secondly, for a given R0, increasing the delay τ generally amplifies the spread of rumors. While peak spread values are only slightly affected for R0 < 1, the effect of the delay becomes significant for R0 > 1. In this case, longer delays lead to greater variability and, often, slightly larger epidemic peaks and final sizes. This indicates that the delay in information processing and response allows the rumor to circulate longer before corrective mechanisms kick in, thus increasing the magnitude and uncertainty of the epidemic. Finally, the reported standard deviations highlight the in-creasing influence of stochastic effects as R0 and τ increase. In particular, for large values of R0 and significant delays, the variability in the final magnitude of the outbreak size becomes substantial, demonstrating that random fluctuations in social interactions can significantly alter the course of the infodemic, under identical parameter settings. Overall, these results corroborate the analytical findings and underscore the crucial importance of reducing R0 and minimizing information dissemination delays to limit the spread of rumors. V. C ONCLUSION AND FUTURE WORK 
+
+This paper presents a stochastic differential equation model with a delay for rumor propagation, incorporating behavioral delay, skepticism, and fact-checking. Equilibrium analysis shows that the system admits a continuum of rumor-free equilibria, and no positive endemic equilibrium. Local stability results, establish that the rumor-free equilibrium is asymptoti-cally stable for R0 < 1 and unstable for R0 > 1. Monte Carlo simulations validate the theoretical results and confirm that a higher R0 increases both the peak of the outbreak, and the final size of the outbreak, while an increase in the delay τ
+
+amplifies the severity of the infodemic outbreak as well as the associated uncertainty. Future work may include extending the model to het-erogeneous network structures, estimating parameters using TABLE I ABLATION STUDY OF DELAY τ AND BASIC REPRODUCTION NUMBER R0 .REPORTED VALUES ARE MONTE CARLO MEANS WITH STANDARD DEVIATIONS (S TD ).                                                                                                                                                                 
+
+> τR0βPeak I(t)(Mean ±Std) Final Size R(T) + F(T)(Mean ±Std) 00.5 0.075 0.00527 ±0.00006 0.0194 ±0.0020
+> 00.8 0.120 0.00544 ±0.00007 0.0465 ±0.0085
+> 01.0 0.150 0.00693 ±0.00350 0.1233 ±0.0536
+> 01.2 0.180 0.01618 ±0.00784 0.2988 ±0.1191
+> 01.5 0.225 0.04420 ±0.01301 0.5726 ±0.1119
+> 02.0 0.300 0.09704 ±0.01714 0.8105 ±0.1062
+> 50.5 0.075 0.00529 ±0.00008 0.0234 ±0.0023
+> 50.8 0.120 0.00541 ±0.00009 0.0526 ±0.0095
+> 51.0 0.150 0.00620 ±0.00175 0.1233 ±0.0290
+> 51.2 0.180 0.01331 ±0.00540 0.2641 ±0.0844
+> 51.5 0.225 0.03174 ±0.01058 0.5230 ±0.1247
+> 52.0 0.300 0.06572 ±0.01270 0.7445 ±0.1110
+> 10 0.5 0.075 0.00529 ±0.00006 0.0262 ±0.0032
+> 10 0.8 0.120 0.00540 ±0.00007 0.0595 ±0.0129
+> 10 1.0 0.150 0.00583 ±0.00066 0.1224 ±0.0273
+> 10 1.2 0.180 0.01130 ±0.00440 0.2337 ±0.0592
+> 10 1.5 0.225 0.02575 ±0.00873 0.4709 ±0.1295
+> 10 2.0 0.300 0.05448 ±0.01315 0.7429 ±0.1261
+
+real social media datasets, and investigating fractional-order, distributed-delay, or state-dependent delay extensions to better capture long-memory effects in misinformation dynamics. APPENDIX 
+
+A. Local Existence and Uniqueness 
+
+Let 
+
+X(t) =  S(t), E (t), I (t), R (t), I g (t), F (t)⊤ ∈ R6
+
+and define the delayed state 
+
+Xτ (t) = X(t − τ ).
+
+System (2) can be written in vector form as 
+
+dX (t) = b X(t), X τ (t) dt + Σ  X(t) dW (t), (30) where W (t) ∈ R6 is a standard Brownian motion and the drift vector b : R6 × R6 → R6 is given by 
+
+b(x, y ) = 
+
+
+
+−βx 1y3
+
+βx 1y3 − σx 2
+
+σx 2 − (γ + ρ)x3
+
+γx 3
+
+ρx 3 − θx 5
+
+θx 5
+
+
+
+, (31) with x = ( x1, . . . , x 6)⊤ and y = ( y1, . . . , y 6)⊤. The diffusion matrix Σ : R6 → R6×6 is diagonal: 
+
+Σ( x) = diag  σS x1, σ E x2, σ I x3, σ Rx4, σ Ig x5, σ F x6
+
+.
+
+(32) 
+
+a) Local Lipschitz continuity.: Fix R > 0 and consider 
+
+x, ¯x, y, ¯y ∈ R6 satisfying 
+
+∥x∥ ≤ R, ∥¯x∥ ≤ R, ∥y∥ ≤ R, ∥¯y∥ ≤ R. 
+
+Then, using the inequality |ab − ¯a¯b| ≤ | a − ¯a|| b| + |¯a|| b − ¯b|,we obtain 
+
+|x1y3 − ¯x1 ¯y3| ≤ | x1 − ¯x1|| y3| + |¯x1|| y3 − ¯y3|≤ R|x1 − ¯x1| + R|y3 − ¯y3|.
+
+Hence, for the first drift component, 
+
+|b1(x, y )−b1(¯ x, ¯y)| = β|x1y3−¯x1 ¯y3| ≤ βR  |x1−¯x1|+|y3−¯y3|.
+
+Similarly, for the second component, 
+
+|b2(x, y ) − b2(¯ x, ¯y)| = βx 1y3 − σx 2 − β ¯x1 ¯y3 + σ¯x2
+
+≤ β|x1y3 − ¯x1 ¯y3| + σ|x2 − ¯x2|≤ βR (|x1 − ¯x1| + |y3 − ¯y3|) + σ|x2 − ¯x2|.
+
+The remaining components are linear and satisfy analogous estimates. Therefore, there exists a constant LR > 0 such that 
+
+∥b(x, y ) − b(¯ x, ¯y)∥ ≤ LR
+
+ ∥x − ¯x∥ + ∥y − ¯y∥,
+
+∀∥ x∥, ∥¯x∥, ∥y∥, ∥¯y∥ ≤ R. (33) For the diffusion coefficient, since Σ is diagonal, 
+
+∥Σ( x) − Σ(¯ x)∥2 =
+
+> 6
+
+X
+
+> i=1
+
+σ2 
+
+> i
+
+(xi − ¯xi)2 ≤ C∥x − ¯x∥2,
+
+where C = max {σ2 
+
+> S
+
+, σ 2 
+
+> E
+
+, σ 2 
+
+> I
+
+, σ 2
+
+> R
+
+, σ 2 
+
+> Ig
+
+, σ 2 
+
+> F
+
+}. Thus, 
+
+∥Σ( x) − Σ(¯ x)∥ ≤ √C ∥x − ¯x∥, (34) which shows that Σ is globally Lipschitz and hence locally Lipschitz. 
+
+b) Linear growth condition.: Using Young’s inequality 
+
+2ab ≤ a2 + b2, we estimate 
+
+|x1y3| ≤ 12 (x21 + y23 ) ≤ 12 (∥x∥2 + ∥y∥2).
+
+Therefore, 
+
+∥b(x, y )∥2 ≤ C1
+
+ 1 + ∥x∥2 + ∥y∥2,
+
+for some constant C1 > 0 depending only on the parameters. Similarly, 
+
+∥Σ( x)∥2 =
+
+> 6
+
+X
+
+> i=1
+
+σ2 
+
+> i
+
+x2 
+
+> i
+
+≤ C2∥x∥2 ≤ C2
+
+ 1 + ∥x∥2 + ∥y∥2,
+
+where C2 = max {σ2 
+
+> S
+
+, σ 2 
+
+> E
+
+, σ 2 
+
+> I
+
+, σ 2
+
+> R
+
+, σ 2 
+
+> Ig
+
+, σ 2 
+
+> F
+
+}.Hence, there exists K > 0 such that 
+
+∥b(x, y )∥2 +∥Σ( x)∥2 ≤ K 1+ ∥x∥2 +∥y∥2, ∀x, y ∈ R6.
+
+(35) 
+
+c) Existence and uniqueness.: From (33), (34), and (35), the coefficients of system (30) satisfy local Lipschitz continuity and the linear growth condition. Therefore, by standard existence and uniqueness results for stochastic delay differential equations, there exists a unique maximal {F t}-adapted continuous strong solution X(t) defined on [−τ, T e),where Te denotes the explosion time. ■
+
+B. Global Existence (Non-Explosion) 
+
+Let 
+
+X(t) =  S(t), E (t), I (t), R (t), I g (t), F (t)⊤
+
+denote the solution of system (2). Since the drift and diffu-sion coefficients are locally Lipschitz continuous, there exists a unique maximal local strong solution X(t) defined on 
+
+[−τ, T e), where Te denotes the explosion time. We now show that Te = ∞ almost surely. a) Step 1: Stopping times.: For each n ∈ N, define the stopping time 
+
+τn = inf 
+
+n
+
+t ≥ 0 : ∥X(t)∥ ≥ n
+
+o
+
+, (36) with the convention inf ∅ = ∞. Clearly, {τn}n≥1 is an increasing sequence and 
+
+τn ↑ Te as n → ∞ , a.s. 
+
+b) Step 2: Lyapunov function.: Consider the quadratic Lyapunov function 
+
+V (X(t)) = ∥X(t)∥2
+
+= S(t)2 + E(t)2 + I(t)2 + R(t)2 + Ig (t)2 + F (t)2.
+
+(37) Applying Itˆ o’s formula to V (X(t ∧ τn)) yields 
+
+dV (X(t)) = LV (X(t), X (t − τ )) dt + dM (t), (38) where M (t) is a local martingale and L is the infinitesimal generator of the SDDE. 
+
+c) Step 3: Generator estimate.: Let Iτ = I(t − τ ). Using (2), we obtain 
+
+LV = 2 S(−βSI τ ) + 2 E(βSI τ − σE )+ 2 I(σE − (γ + ρ)I) + 2 R(γI )+ 2 Ig (ρI − θI g ) + 2 F (θI g )+ σ2 
+
+> S
+
+S2 + σ2 
+
+> E
+
+E2 + σ2 
+
+> I
+
+I2 + σ2
+
+> R
+
+R2
+
++ σ2 
+
+> Ig
+
+I2 
+
+> g
+
++ σ2 
+
+> F
+
+F 2. (39) Using Young’s inequality 2ab ≤ a2 + b2, we estimate the cross terms as 
+
+2βSEI τ ≤ β(S2 + E2I2 
+
+> τ
+
+) ≤ β(S2 + E2 + I2 
+
+> τ
+
+),
+
+2σIE ≤ σ(I2 + E2), 2γRI ≤ γ(R2 + I2),
+
+2ρI g I ≤ ρ(I2 
+
+> g
+
++ I2), 2θF I g ≤ θ(F 2 + I2 
+
+> g
+
+).
+
+Hence, there exists a constant C > 0 such that 
+
+LV (X(t), X (t−τ )) ≤ C
+
+
+
+1+ ∥X(t)∥2 +∥X(t−τ )∥2
+
+. (40) 
+
+d) Step 4: Razumikhin-type estimate for the delay term.: 
+
+To handle the delayed contribution ∥X(t − τ )∥2, we employ a Razumikhin-type argument. Assume that there exists aconstant q > 1 such that the Razumikhin condition holds: 
+
+V (X(t − τ )) ≤ q V (X(t)) , ∀t ≥ 0. (41) Condition (41) is standard in the stability theory of stochastic delay systems and ensures that the delayed state remains bounded relative to the current state. Using (41) in (40), we obtain 
+
+LV (X(t), X (t − τ )) ≤ C
+
+
+
+1 + (1 + q)V (X(t)) 
+
+
+
+. (42) 
+
+e) Step 5: Moment bound.: Integrating (38) from 0 to 
+
+t ∧ τn yields 
+
+V (X(t ∧ τn)) = V (X(0)) + 
+
+Z t∧τn
+
+> 0
+
+LV (X(s), X (s − τ )) ds 
+
++ M (t ∧ τn).
+
+(43) Taking expectation and using the martingale property 
+
+E[M (t ∧ τn)] = 0 , together with (42), we obtain 
+
+EV (X(t ∧ τn))  ≤ E[V (X(0))] + Ct 
+
++ C(1 + q)
+
+Z t
+
+> 0
+
+EV (X(s ∧ τn)) ds. 
+
+(44) By Gr¨ onwall’s inequality, it follows that 
+
+EV (X(t∧τn))  ≤
+
+
+
+E[V (X(0))]+ Ct 
+
+
+
+exp  C(1+ q)t, t ≥ 0,
+
+(45) which provides a uniform moment bound independent of n.
+
+f) Step 6: Non-explosion.: Assume by contradiction that 
+
+P(Te < ∞) > 0. Then there exist T > 0 and ε > 0 such that 
+
+P(Te ≤ T ) ≥ ε. 
+
+Since τn ↑ Te, there exists n0 such that for all n ≥ n0,
+
+P(τn ≤ T ) ≥ ε
+
+2 .
+
+On the event {τn ≤ T } we have ∥X(τn)∥ ≥ n, hence 
+
+V (X(τn)) ≥ n2. Therefore, 
+
+EV (X(T ∧ τn))  ≥ E
+
+h
+
+V (X(τn)) 1{τn≤T }
+
+i
+
+≥ n2P(τn ≤ T ) ≥ ε
+
+2 n2. (46) Letting n → ∞ implies that E[V (X(T ∧τn))] → ∞ , which contradicts the uniform bound (45). Hence, 
+
+P(Te = ∞) = 1 .
+
+Therefore, system (2) admits a unique global strong solution 
+
+X(t) defined for all t ≥ 0 almost surely. ■
+
+REFERENCES [1] W. H. Organization et al. , “Infodemic management: protecting people from harmful health information in emergencies,” in Infodemic manage-ment: protecting people from harmful health information in emergencies ,2024. [2] V. Tangcharoensathien, N. Calleja, T. Nguyen, T. Purnat, M. D’Agostino, S. Garcia-Saiso, M. Landry, A. Rashidian, C. Hamilton, A. AbdAllah       
+
+> et al. , “Framework for managing the covid-19 infodemic: methods and results of an online, crowdsourced who technical consultation,” Journal of medical Internet research , vol. 22, no. 6, p. e19659, 2020. [3] N. Tomes and M. S. Parry, What are the historical roots of the COVID-19 infodemic? Lessons from the past .World Health Organization. Regional Office for Europe, 2022. [4] M. A. Gisondi, R. Barber, J. S. Faust, A. Raja, M. C. Strehlow, L. M. Westafer, and M. Gottlieb, “A deadly infodemic: social media and the power of covid-19 misinformation,” p. e35552, 2022. [5] I. J. B. Do Nascimento, A. B. Pizarro, J. M. Almeida, N. Azzopardi-Muscat, M. A. Gonc ¸alves, M. Bj¨ orklund, and D. Novillo-Ortiz, “In-fodemics and health misinformation: a systematic review of reviews,”
+> Bulletin of the World Health Organization , vol. 100, no. 9, p. 544, 2022.
+
+[6] M. M. F. Caceres, J. P. Sosa, J. A. Lawrence, C. Sestacovschi, A. Tidd-Johnson, M. H. U. Rasool, V. K. Gadamidi, S. Ozair, K. Pandav, C. Cuevas-Lou et al. , “The impact of misinformation on the covid-19 pandemic,” AIMS public health , vol. 9, no. 2, p. 262, 2022. [7] A. Ishizumi, J. Kolis, N. Abad, D. Prybylski, K. A. Brookmeyer, C. Voegeli, C. Wardle, and H. Chiou, “Beyond misinformation: devel-oping a public health prevention framework for managing information ecosystems,” The Lancet Public Health , vol. 9, no. 6, pp. e397–e406, 2024. [8] S. Govindankutty and S. P. Gopalan, “Epidemic modeling for mis-information spread in digital networks through a social intelligence approach,” Scientific Reports , vol. 14, no. 1, p. 19100, 2024. [9] D. J. Daley and D. G. Kendall, “Epidemics and rumours,” Nature , vol. 204, no. 4963, pp. 1118–1118, 1964. [10] ——, “Stochastic rumours,” Journal of the Institute of Mathematics and Its Applications , vol. 1, no. 1, pp. 42–55, 1965. [11] H. Sun, Y. Sheng, and Q. Cui, “An uncertain sir rumor spreading model,” 
+
+Advances in Difference Equations , vol. 2021, no. 1, p. 286, 2021. [12] Z. Li, Q. Zhang, X. Du, Y. Ma, and S. Wang, “Social media rumor refutation effectiveness: Evaluation, modelling and enhancement,” In-formation Processing & Management , vol. 58, no. 1, p. 102420, 2021. [13] Y. Zhao, J. Da, and J. Yan, “Detecting health misinformation in online health communities: Incorporating behavioral features into machine learning based approaches,” Information Processing & Management ,vol. 58, no. 1, p. 102390, 2021. [14] K. Czerniak, R. Pillai, A. Parmar, K. Ramnath, J. Krocker, and S. My-neni, “A scoping review of digital health interventions for combating covid-19 misinformation and disinformation,” Journal of the American Medical Informatics Association , vol. 30, no. 4, pp. 752–760, 2023.

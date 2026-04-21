@@ -1,0 +1,2038 @@
+Title: CAMO: An Agentic Framework for Automated Causal Discovery from Micro Behaviors to Macro Emergence in LLM Agent Simulations
+
+URL Source: https://arxiv.org/pdf/2604.14691v2
+
+Published Time: Tue, 21 Apr 2026 00:29:09 GMT
+
+Number of Pages: 33
+
+Markdown Content:
+## CAMO: An Agentic Framework for Automated Causal Discovery from Micro Behaviors to Macro Emergence in LLM Agent Simulations 
+
+Xiangning Yu 1,2,3 *, Yuwei Guo 1,2,3 *, Yuqi Hou 1,2,3 , Xiao Xue 1,2,3 †, Qun Ma 1,2,3 
+
+> 1
+
+College of Intelligence and Computing, Tianjin University, Tianjin, China 
+
+> 2
+
+Tianjin Key Laboratory of Healthy Habitat and Smart Technology, Tianjin, China 
+
+> 3
+
+Laboratory of Computation and Analytics of Complex Management Systems, Tianjin University, Tianjin, China 
+
+{yxn9191, 2024244171, houyuqi, jzxuexiao, 1023244018}@tju.edu.cn 
+
+Abstract 
+
+LLM-empowered agent simulations are increas-ingly used to study social emergence, yet the micro-to-macro causal mechanisms behind macro outcomes often remain unclear. This is challenging because emergence arises from intertwined agent interactions and meso-level feedback and nonlinearity, making generative mechanisms hard to disentangle. To this end, we introduce CAMO , an automated Ca usal discovery framework from Micr o behaviors to Macr o Emergence in LLM agent simula-tions. CAMO converts mechanistic hypothe-ses into computable factors grounded in sim-ulation records and learns a compact causal representation centered on an emergent tar-get Y . CAMO outputs a computable Markov boundary and a minimal upstream explanatory subgraph, yielding interpretable causal chains and actionable intervention levers. It also uses simulator-internal counterfactual probing to ori-ent ambiguous edges and revise hypotheses when evidence contradicts the current view. Ex-periments across four emergent settings demon-strate the promise of CAMO. 1
+
+1 Introduction 
+
+LLM-empowered agent simulations have emerged as a powerful laboratory for studying complex social phenomena (Park et al., 2023; Piao et al., 2025b; Xue et al., 2023b; Ma et al., 2024). By instantiating populations of agents that make au-tonomous, LLM-driven decisions, these simula-tions generate rich, adaptive, and often non-linear interaction patterns. Through decentralized inter-actions, macro-level emergent outcomes such as coordination, norm formation, and polarization nat-urally arise (Riedl, 2025; Chen et al., 2024; Ren et al., 2024; Takata et al., 2024; Piatti et al., 2024). 
+
+> *
+
+Equal contribution 
+
+> †
+
+Corresponding author 
+
+> 1
+
+The code is available at: https://github.com/ RisingDate/CAMO .B F      
+
+> Q
+> C
+> AM
+> Z
+> Y
+> BQ
+> Y
+> BF
+> QA
+> Y
+> N
+> O
+> (a) Full Causal Graph
+> ...... ......
+> (b) Y's Markov Boundary (c) CAMO Results
+> Micro Interactions Macro Emergence
+> Causal relationships that are highly complex and difficult to discern.
+
+Figure 1: Causal representations recovered by CAMO. CAMO identifies a compact causal neigh-borhood around the target outcome Y that is sufficient for causal identification, and augments it with a minimal set of upstream pathways needed to explain and support intervention on micro-to-macro emergence. 
+
+Although emergent patterns are frequently ob-served in such simulations, they provide limited insight into the causal mechanisms that generate them (Mou et al., 2024; Guo et al., 2024; Piao et al., 2025a; Yu et al., 2026). In particular, it often re-mains unclear how micro-level agent behaviors and meso-level interaction structures jointly give rise to a target emergent outcome, making interventions on prompts, agent policies, or interaction settings largely heuristic and difficult to generalize (Xue et al., 2023c, 2024b,a, 2021). Recent work has explored the integration of large language models with causal discovery and causal reasoning (Jiralerspong et al., 2024; Le et al., 2024; Takata et al., 2024; Kiciman et al., 2023; Zeˇ ce-vi´ c et al., 2023), but these methods are largely de-veloped for static variable spaces and do not ad-dress how causal mechanisms produce emergent outcomes in adaptive multi-agent systems. In paral-lel, LLM-empowered agent simulations have been widely used to study emergence phenomena (Mao et al., 2025; Park et al., 2023; Ren et al., 2024; 
+
+> arXiv:2604.14691v2 [cs.AI] 18 Apr 2026
+
+Gupta et al., 2025; Chuang et al., 2024; Xiao et al., 2023; Xue et al., 2023a), yet they primarily demon-strate or characterize emergent behavior rather than uncovering the causal mechanisms by which it arises. Consequently, the micro-to-macro causal structures needed to explain and reliably intervene on a specific emergent outcome remain largely un-characterized. In this work, we ask: given an LLM-empowered agent simulation, how can we automatically re-cover the causal mechanisms that link micro-level agent behaviors and meso-level interactions to an emergent macro-level outcome Y , in a way that supports both explanation and intervention? 
+
+We introduce CAMO, a multi-agent frame-work for micro-to-macro causal discovery in LLM-empowered agent simulations. Rather than attempt-ing to recover the full causal structure underlying emergence, which is often infeasible and unnec-essary in complex agent-based systems, CAMO identifies a minimal yet sufficient set of upstream variables and causal pathways that explain a given emergent outcome Y .The central idea of CAMO is to explicitly sepa-rate causal identification from mechanistic expla-nation . Causal identification focuses on recover-ing a minimal local causal structure around Y that supports prediction and intervention. Mechanis-tic explanation then traces this structure backward through upstream micro- and meso-level pathways, yielding an interpretable account of how emergence arises. This separation allows CAMO to remain statistically grounded while preserving clear micro-to-macro causal narratives. Operationally, CAMO treats the LLMs driving agent behavior inside the simulation as a black-box stochastic data-generating process. A separate set of workflow LLMs operates outside the simulation to interpret textual descriptions, propose and revise mechanistic hypotheses, and coordinate discovery. Candidate causal relations are admitted, pruned, and oriented using constraints from observational records and targeted simulator-internal counterfac-tual interventions, organized through a fast–slow self-evolution loop. Our contributions are threefold: • We frame micro-to-macro causal discovery in LLM-empowered agent simulations as the problem of identifying a minimal but suffi-cient upstream causal explanation for an emer-gent outcome. • We propose CAMO, the first multi-agent framework for studying micro-to-macro emer-gence mechanisms in LLM-based simulations that combines domain priors, observational data, and simulator-internal counterfactuals. • We introduce a fast–slow self-evolving loop that curbs hallucinated priors and noisy in-terventions, improving robustness without as-suming global identifiability. 
+
+2 Related Work 
+
+LLM-assisted causal discovery. Recent work explores using large language models to assist causal discovery and causal reasoning, including proposing causal relations, constraints, or latent fac-tors to complement statistical methods (Chi et al., 2024; Jin et al., 2023; Liu et al., 2025; Kiciman et al., 2023; Wu et al., 2024; Feng et al., 2024). Sev-eral approaches integrate LLM-generated knowl-edge into classical structure learning pipelines un-der limited or noisy data (Takayama et al., 2024; Jiralerspong et al., 2024; Farooq et al., 2023). More recent systems formulate causal discovery as an agentic or tool-augmented workflow, includ-ing multi-agent refinement and autonomous causal modeling (Le et al., 2024; Liu et al., 2024; Han et al., 2024; Khatibi et al., 2025). These methods are primarily designed for fixed or predefined vari-able spaces and do not address causal discovery in adaptive, emergent multi-agent environments (Richens and Everitt, 2024; Yu et al., 2025a, 2018). 
+
+LLM-based simulation and emergence. LLM-empowered agent simulations have been widely used to study emergent social phenomena and col-lective dynamics (Mao et al., 2025; Park et al., 2023; Gao et al., 2024; Ashery et al., 2025; An-this et al., 2025). Large-scale platforms demon-strate that thousands of interacting LLM agents can exhibit coordination, cooperation, and polariza-tion (Gurcan, 2024; Piao et al., 2025b,a; Ren et al., 2024; Piatti et al., 2024). At the individual level, generative agent simulations validate the behav-ioral fidelity of LLM agents (Agrawal et al., 2024; Adornetto et al., 2025; Chuang et al., 2024; Dai et al., 2024). However, existing studies primarily describe or reproduce emergent patterns, while the underlying micro-to-macro causal mechanisms re-main largely unexplored from a causal view (Zhang et al., 2025; Wang et al., 2025b; Xia et al., 2024). Achieve Consensus      
+
+> Refine Causal graph
+> Accept Factor?
+> Agent3:
+> Agent4: Simulation
+> Scriptwright
+> Agent1: Worldview Parser
+> Domain Knowledge
+> Gather Conflicting Beliefs
+> Resolve Conflicts
+> Agent2: Worldview Integrator
+> Consensus Worldview
+> Accept
+> Factor Reject
+> Factor
+> with Statistical Causal Discovery LLM-Empowered Agent Simulation
+> Agent5:
+> Counterfactual
+> Adjudicator
+> What if A leads
+> to X instead of B
+> -A leads to X, then Y..
+> -B leads to X, then Y..
+> Causal Cartographer
+> Slow loop
+> Fast loop
+> Extract Tentative Worldviews
+> Counterfactual to eliminate ambiguity Factor Propos als
+
+Figure 2: Overview of CAMO. A fast–slow loop integrates textual worldviews, causal discovery, and simulator-internal interventions to recover a minimal causal interface and micro-to-macro explanation for the target outcome. 
+
+3 Methodology 
+
+3.1 Problem Formulation and Objectives 
+
+We study causal discovery for emergent outcomes in LLM-empowered agent simulations , where pop-ulations of agents interact and collectively give rise to a macro-level target variable Y . Let Xobs 
+
+denote the full set of logged simulation observ-ables. Beyond logged signals, CAMO introduces additional variables as explicit, computable non-linear transforms of Xobs , since many micro/meso mechanisms are not primitive logs but only become measurable through such compositions, yielding an induced factor space H built from a fixed set of in-terpretable templates (e.g., ratios, rolling statistics, and graph metrics). Rather than recovering the full simulator causal DAG, we focus on a validated local causal inter-face around Y and a minimal mechanistic explana-tion that traces emergence from micro/meso-level causes to Y . Formally, CAMO outputs: 
+
+
+
+MB H(Y ), E Y
+
+
+
+. (1) Here, MB H(Y ) denotes the Markov boundary of 
+
+Y in the induced factor space, i.e., the minimal sufficient conditioning set for predicting and inter-vening on Y , while the explanatory subgraph EY
+
+augments this local causal interface with a minimal set of upstream micro- and meso-level variables and pathways, providing a mechanistic account of how emergence arises. 
+
+3.2 Overview of CAMO 
+
+CAMO is a multi-agent framework consisting of five LLM agents: the Worldview Parser (A1), Worldview Integrator (A2), Causal Cartographer (A3), Simulation Scriptwright (A4), and Counter-factual Adjudicator (A5). These agents coordinate in two loops: a fast refinement loop that proposes and prunes computable factors to fit a local causal model under a fixed hypothesis, followed by tar-geted interventions to resolve remaining ambigu-ities. A slow revision loop is triggered when in-terventional evidence contradicts the hypothesis, prompting hypothesis updates. Algorithm 1 sum-marizes the procedure; Figure 2 illustrates it. 
+
+A1: Worldview Parser. As a CAMO workflow agent, A1 converts unstructured domain knowl-edge into structured mechanistic causal hypothe-ses. Given a user query Q specifying the simulator setting and target outcome Y , A1 automatically retrieves a relevant text bundle T (e.g., domain ref-erences and background materials) and parses T
+
+into candidate variables and relations. It merges semantically equivalent mentions, tags variables by micro/meso/macro scale, and preserves conflicts from heterogeneous sources (e.g., opposite direc-tions under different assumptions) as explicit com-peting alternatives. The result is a set of revisable causal worldviews that serve as priors for down-stream discovery. Algorithm 1: CAMO: Local Interface + Minimal Emergence Explanation 
+
+Input: Simulator S, target Y , observations 
+
+Xobs , user query Q
+
+Output: MB H(Y ) and EY 
+
+> 1
+
+A1: Retrieve domain texts T from Q; parse 
+
+T into worldviews {Wa}; 
+
+> 2
+
+repeat // Slow loop  
+
+> 3
+
+A2: Select decision worldview W and mechanism graph GW ; 
+
+> 4
+
+repeat // Fast loop  
+
+> 5
+
+A3: Add/prune factors → stabilize 
+
+V and MB H(Y ); 
+
+> 6
+
+A3: Constrained discovery →
+
+CPDAG/PAG; rank ambiguities;  
+
+> 7
+
+A4–A5: Counterfactual queries; add confirmed constraints;  
+
+> 8
+
+A3: Update local graph;  
+
+> 9
+
+until local graph stabilizes or counterfactuals become uninformative ; 
+
+> 10
+
+if counterfactual evidence contradicts 
+
+W then  
+
+> 11
+
+Update/remove W ; continue ; 
+
+> 12
+
+A3: Extract EY from GW s.t. 
+
+R ⇒ MB H(Y ); 
+
+> 13
+
+until MB H(Y ) and EY stabilize ;
+
+A2: Worldview Integrator. A2 aligns the perspective-indexed worldviews into a shared, com-putable representation. It (i) unifies semantically equivalent variables, (ii) assigns canonical con-struction rules for computable factors (e.g., ratios, summary statistics, graph metrics), and (iii) makes cross-perspective conflicts explicit. A2 selects a de-cision worldview W (k) for the current refinement round (see Appendix C.2 for selection criteria), and also produces a retained mechanism graph G(k)
+
+> W
+
+that stores upstream causal pathways and alterna-tive hypotheses for later revision. 
+
+3.3 Local Interface Learning by Refinement (A3: Causal Cartographer) Data-grounded representation. Let V (t) be the representation variables retained at refinement step 
+
+t, where V (t) ⊆ H consists of variables that are either directly logged in Xobs or computably con-structed from Xobs .
+
+Add–prune refinement. Under the current de-cision worldview, A3 refines V (t) by testing each computable factor Z via its estimated information gain for Y :
+
+c∆I(Z) := bH(Y | V (t)) − bH(Y | V (t), Z ) > τ I .
+
+(2) That is, Z is added only if it reduces the conditional uncertainty of Y by at least τI . A3 then prunes any factor that becomes conditionally redundant for predicting Y given the remaining variables in H.This add–prune loop yields a compact computable Markov boundary MB H(Y ); see Appendix C.1 for estimation details. 
+
+Constrained local discovery. Given the stabi-lized representation V (t), A3 performs constraint-based causal discovery under the structural con-straints specified by W (k), selecting a suitable test/algorithm based on the data regime, and out-puts a partially oriented equivalence-class graph (e.g., a CPDAG or PAG). Edges whose orientation remains ambiguous are prioritized (by estimated effect importance and orientation uncertainty) and forwarded to A4 for intervention design. 
+
+3.4 Minimal Connecting Explanatory Subgraph (A3: Causal Cartographer) Root variables. We define root variables R as up-stream variables in the retained mechanism graph 
+
+G(k) 
+
+> W
+
+that correspond to fundamental agent behav-iors or environment settings, and serve as anchors for tracing micro-to-macro emergence. 
+
+Definition of EY via minimal connecting sub-graph. After stabilizing the computable Markov boundary MB H(Y ) and incorporating simulation-confirmed constraints, A3 constructs an explana-tory subgraph 
+
+EY := {Y } ∪ MB H(Y )
+
+∪ Conn min 
+
+
+
+R ⇒ MB H(Y )
+
+
+
+. (3) where Conn min (R ⇒ MB H(Y )) denotes a con-necting subgraph of G(k) 
+
+> W
+
+that, for each boundary variable B ∈ MB H(Y ), retains all nodes and edges that lie on directed paths from some root r ∈ R to 
+
+B, while enforcing all simulation-confirmed edges as hard constraints. It is minimal : removing any re-tained node/edge would break the required r → B
+
+reachability for some B ∈ MB H(Y ). Computa-tion details are in Appendix G. Intuitively, MB H(Y ) provides a minimal local causal interface sufficient for identifying and in-tervening on Y , while EY augments this interface with the minimal set of upstream micro- and meso-level causal pathways needed to explain how the emergent outcome arises. 
+
+3.5 Interventions and Counterfactual Evidence (A4–A5) A4: Simulation Scriptwright. A4 converts pri-oritized ambiguous edges into executable interven-tion scripts when the simulator admits a realiz-able control (e.g., prompt/policy override or en-vironment parameter change); prioritization uses a computable importance–uncertainty score (Ap-pendix C.3). Each script specifies the interven-tion endpoint, levels, paired-rollout protocol hold-ing other randomness fixed, and replication budget across configurations. 
+
+A5: Counterfactual Adjudicator. A5 exe-cutes paired interventions (e.g., do( X=x) vs. 
+
+do( X=x′)) to obtain simulator-internal counter-factual contrasts. An edge is marked simulation-confirmed if effects are consistently nonzero and orientations are consistent across configurations. Confirmed edges are treated as strong constraints in subsequent fast-loop updates. 
+
+4 Theoretical Analysis 
+
+This section analyzes theoretical properties of CAMO (§ 3). Proofs are given in Appendix A. 
+
+4.1 Convergence to a Computable Markov Boundary 
+
+Let V (t) denote the representation variables avail-able at refinement step t, including both observed variables and computably constructed factors in the induced factor space H. Let Bt denote the Markov boundary of Y within V (t) (Koller and Friedman, 2009). 
+
+Theorem 4.1 (One-step compactness of bound-ary refinement) . Under the add–prune refinement procedure of Agent A3, suppose refinement step 
+
+t → t+1 admits a (possibly empty) set of new fac-tors Zt+1 with mt := |Z t+1 |. Then the Markov boundary size satisfies 
+
+|Bt+1 | ≤ | Bt| + mt, (4) 
+
+with strict decrease possible whenever some previ-ously boundary variable is pruned as conditionally redundant given the remaining variables. 
+
+Following Liu et al. (2024), we characterize con-vergence beyond boundary size by measuring the remaining unexplained dependence between Y and the full observation space: 
+
+Ft := I(Y ; Xobs | V (t)). (5) 
+
+Theorem 4.2 (Geometric decay under refinement capability) . Assume that with probability at least 
+
+p > 0, a refinement step admits at least one infor-mative computable factor that reduces the residual dependence, and that conditioned on such a step the reduction is by a constant fraction C > 0, i.e., 
+
+Ft+1 ≤ (1 − C)Ft, (6) 
+
+and otherwise Ft+1 ≤ Ft. Then the expected resid-ual dependence decays geometrically: 
+
+E[Ft] ≤ (1 − pC )tF0. (7) 
+
+Consequently, refinement stabilizes (up to equiv-alence in the induced factor space H) on a Y -sufficient representation, which can be pruned to yield a computable Markov boundary MB H(Y ).
+
+The constants p and C are used only to character-ize refinement effectiveness; they are estimated a posteriori from the {Ft} trajectory (Appendix C.1) and are not required by the algorithm. Theorem 4.1 ensures the computable Markov boundary cannot expand uncontrollably, while The-orem 4.2 implies refinement converges (up to equiv-alence in H) to a Y -sufficient representation whose pruning yields MB H(Y ).
+
+4.2 Identifiability Gains from Simulator Counterfactuals 
+
+Constraint-based discovery on observational records identifies at most the observational equiva-lence class of the local causal graph, leaving some edge orientations unresolved (Spirtes et al., 2000; Zhang, 2008; Chickering, 2002). 
+
+Proposition 1 (Resolving ambiguous edges via simulator counterfactuals) . Simulator-internal counterfactual contrasts can resolve some CPDAG/PAG orientation ambiguities by ruling out directions inconsistent with the induced effect, making a subset of edges identifiable. 
+
+4.3 Minimal Yet Sufficient Emergence Explanation via EY
+
+CAMO augments the computable Markov bound-ary MB H(Y ) with upstream causal pathways to form an explanatory subgraph EY (Eq. (3) ), en-abling micro-to-macro interpretation of emergence. Proposition 2 (Sufficiency and minimality of EY ).
+
+The subgraph EY is sufficient for local prediction and intervention on Y , since it contains MB H(Y ).Moreover, EY is minimal for mechanistic explana-tion: it retains exactly the causal structure required to connect each boundary variable to upstream micro/meso-level root causes, and contains no su-perfluous nodes or edges. 
+
+5 Experiments 
+
+We evaluate CAMO under the following research questions: • RQ1. Can CAMO recover the causal struc-ture linking micro- and meso-level mecha-nisms to the macro outcome Y ?• RQ2. Can the learned causal representa-tion correctly identify effective interventions, namely actions on causes of Y that reliably change Y ?
+
+5.1 Factor Discovery and Causal Structure Recovery (RQ1) Simulation setup. We construct a benchmark consisting of an interactive LLM-empowered multi-agent simulation of an online-to-offline (O2O) de-livery platform, built upon a minimal yet suffi-cient ground-truth causal structure calibrated to real-world statistics from Meituan Research (Wang et al., 2025a). This ground-truth structure is used exclusively for evaluation and is never exposed to CAMO. We quantify emergence using the indi-cator of Yu et al. (2025b, 2024); full simulation details see Appendix H. 
+
+Baselines. Factor discovery. We compare CAMO against LLM-based factor discovery baselines, including single-round text-only, data-grounded, and chain-of-thought prompting, as well as multi-round prompting without causal feedback. Details and prompts see Appendices F.1 and F.2. 
+
+Causal structure recovery. We compare CAMO against three classes of baselines. Statistical causal discovery (SCD) methods 2 include PC (Spirtes and Glymour, 1991), FCI (Spirtes et al., 2000), GES (Chickering, 2002), and MMHC (Tsamardi-nos et al., 2006), all applied directly to ob-served variables. Pure LLM-based methods in-clude Efficient-CDLMs (Jiralerspong et al., 2024),   
+
+> 2We do not perform time-series causal discovery: each independent rollout is treated as a single observational unit and mapped to run-level features, yielding a cross-sectional dataset on which PC/FCI are applied as static baselines.
+
+MAC (Le et al., 2024), and PAIRWISE (Kiciman et al., 2023), which rely on LLM reasoning to in-fer causal relations without explicit statistical tests. 
+
+Hybrid SCD+LLM methods combine statistical dis-covery with LLM-based graph refinement, includ-ing SCD-LLM, ReAct (Yao et al., 2022), and LLM-KBCI (Takayama et al., 2024). Details are provided in Appendix F.3. 
+
+Metrics. (i) Factor discovery for the local inter-face and upstream explanation. We evaluate dis-covered factors by comparing them with ground truth, using the target’s Markov boundary B(Y )
+
+and ancestor set An( Y ) as references. Discov-ered factors are categorized as Markov-boundary (MB), ancestor-but-non-boundary (AN), or off-target (OT), and we report category counts as well as Precision, Recall, and F1 for MB recovery. To assess whether the learned local interface and re-tained upstream structure cover the true causal an-cestry relevant to emergence, we additionally report ancestor-level accuracy (Anc-F1). Formal defini-tions are provided in Appendix D.1. 
+
+(ii) Causal structure recovery for emergence ex-planation. To compare CAMO with methods oper-ating solely on logged observables, we report stan-dard structure metrics—Precision, F1, Ancestor F1, FPR, SHD, and Added/Missed/Reversed/Unori-ented edge counts (Appendix D.3)—computed on the observed-variable projection Π( ·), which re-moves constructed factors and maps their effects back to observed variables (Appendix D.2). This projection enables a fair comparison with statistical causal discovery methods, which typically operate on fixed observed variables and do not propose new factors. For completeness, we also report results without projection; see Appendix B.2. 
+
+Model. CAMO is evaluated with multiple LLM backbones: Qwen3-235B-A22B (Yang et al., 2025), DeepSeek-R1-Distill-Qwen-32B (DeepSeek-AI, 2025a), DeepSeek-V3.2 (DeepSeek-AI, 2025b), GPT-5 mini (OpenAI, 2025) and Gemma3-27B (Team et al., 2025). 
+
+Results. Factor discovery. Table 1 shows that CAMO best recovers the target’s Markov boundary and its full ancestor set, validating (i) a correct local causal interface for predicting/intervening on Y
+
+and (ii) sufficient upstream coverage for emergence explanation; notably, it substantially outperforms all baselines in both MB-F1 and Anc-F1. 
+
+Structure recovery and minimal connecting Table 1: Comparison of different causal discovery methods for factor discovery on the O2O delivery simulation (Markov boundary vs. full-ancestor targets). All LLM-based baselines are evaluated using DeepSeek-V3.2.                                                       
+
+> Method MB ↑AN ↑OT ↓MB-Prec ↑MB-Rec ↑MB-F1 ↑Anc-Prec ↑Anc-Rec ↑Anc-F1 ↑
+> Single-round (Text-only) 0860.00 0.00 0.00 0.20 0.41 0.27 Single-round (Data-grounded) 1860.20 0.50 0.29 0.25 0.61 0.35 Single-round (CoT) 0850.00 0.00 0.00 0.26 0.41 0.32 Multi-round (No causal feedback) 0840.00 0.00 0.00 0.27 0.41 0.33 CAMO (Ours) 2901.00 1.00 1.00 0.95 1.00 0.98
+
+Table 2: Comparison of different causal discovery methods for causal structure recovery on the O2O delivery simulation. All LLM baselines use DeepSeek-V3.2; CAMO uses the LLM specified in parentheses.                                                                                                                                                                                 
+
+> Method Prc ↑Rec ↑F1 ↑Acc ↑Anc-F1 ↑FPR ↓SHD ↓Add. ↓Mis. ↓Rev. ↓Unor. ↓
+> Statistical causal discovery (SCD)
+> PC 0.20 0.38 0.26 0.61 0.42 0.34 23 15 350
+> FCI 0.13 0.23 0.17 0.58 0.19 0.34 29 19 064GES 0.12 0.15 0.14 0.65 0.19 0.24 20 9650
+> MMHC 0.12 0.15 0.13 0.64 0.12 0.25 20 9560
+> Pure LLM-based methods
+> Efficient-CDLMs 0.71 0.77 0.74 0.90 0.91 0.07 74102MAC 0.67 0.77 0.71 0.89 0.92 0.08 85201PAIRWISE 0.37 0.54 0.44 0.75 0.46 0.20 15 9510
+> Hybrid SCD+LLM methods
+> SCD (PC)-LLM 0.42 0.77 0.54 0.76 0.60 0.24 18 15 300
+> ReAct 0.60 0.69 0.64 0.86 0.83 0.10 10 6202LLM-KBCI 0.85 0.85 0.85 0.94 0.74 0.03 31110
+> CAMO (Qwen3-235B-A22B) 0.80 0.92 0.86 0.94 0.97 0.05 43100
+> CAMO (DeepSeek-R1-Qwen-32B) 0.59 1.00 0.74 0.88 0.76 0.15 99000
+> CAMO (GPT-5 mini) 0.87 1.00 0.93 0.97 0.97 0.03 22000
+> CAMO (DeepSeek-V3.2) 0.93 1.00 0.96 0.99 1.00 0.02 11000
+> CAMO (Gemma3-27B) 0.71 0.92 0.80 0.92 0.82 0.08 65100
+
+explanatory subgraph. Against causal-structure-recovery baselines, CAMO achieves the strongest recovery in both metrics and qualitative compar-isons (Table 2, Figure 3; after observed-variable projection). Crucially, this validates our Mini-mal Connecting Explanatory Subgraph objective: CAMO is sufficient in that it best preserves the full upstream explanatory pathways (highest Anc-F1), and minimal in that it introduces the fewest redundant edges (lowest Added, SHD, and FPR), yielding the most faithful and compact graph. 
+
+Analysis without projection. For complete-ness, we also report metrics (Table 5) and visualiza-tions (Figure 7) without graph projection, and com-pare how different LLM backbones affect CAMO; notably, DeepSeek-V3.2 and GPT-5 mini yield higher Prc/F1 and more compact graphs (lower FPR/SHD). See Appendix B.2 for details. 
+
+Refinement effectiveness. We analyze the A2– A3 iterative add/prune refinement in Appendix B.1 (Figure 5). Motivated by Theorem 4.2, Figure 4 reports estimated (p, C ); see Appendix B.4 and Appendix C.1 for analysis and estimation details. 
+
+Ablation Study. Table 4 and Figure 9 show that ablating any component reduces recovery, with the most pronounced degradation when removing A1&A2; see Appendix B.5 for details. 
+
+5.2 Identifying Effective Interventions without Ground Truth (RQ2) 
+
+We evaluate CAMO in settings without ground-truth causal graphs, asking whether the learned structure yields actionable guidance for intervening on emergent outcomes. 
+
+Simulation setup. We consider two LLM-agent simulation environments with complex emergent dynamics: Smallville (Park et al., 2023) and 
+
+AgentSociety (Piao et al., 2025b). In Small-ville, the target outcome is agent coordination ; in AgentSociety, we study opinion polarization and the spread of inflammatory messages .
+
+Metrics. Without ground-truth causal graphs, we evaluate whether the learned graph G yields ac-tionable guidance by ranking effective interven-tions ahead of ineffective ones. Following the Demand 
+
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+Ground Truth (Target) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+CAMO (DeepSeek-V3.2) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+PC 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+GES 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+SCD (PC)-LLM 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+ReAct 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+MAC 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+PAIRWISE 
+
+Correct (TP) Added (FP) Reversed Direction Uncertain Edge (o->) Missed (FN) Figure 3: Qualitative comparison of recovered causal structures (O2O delivery simulation; projected). Full visualizations for all methods are in Figure 6. Table 3: Intervention ranking without ground-truth causal graphs (higher is better). All LLM-based methods use DeepSeek-V3.2. Results are averaged over 3 runs. 
+
+Smallville (Coord.) AgentSociety (Polar.) AgentSociety (Inflam.) Method Precision@5 MAP@5 MRR Precision@5 MAP@5 MRR Precision@5 MAP@5 MRR PC 0.40 0.22 0.25 0.30 0.32 0.75 0.17 0.07 0.21 MMHC 0.22 0.14 0.31 0.40 0.56 1.00 0.16 0.08 0.22 PAIRWISE 0.40 0.22 0.25 0.30 0.32 0.75 0.18 0.09 0.24 SCD (PC)+LLM 0.18 0.09 0.24 0.50 0.63 1.00 0.16 0.08 0.22 LLM-KBCI 0.40 0.28 0.33 0.50 0.46 0.50 0.26 0.16 0.27 CAMO(Ours) 0.60 0.64 0.50 0.60 0.84 1.00 0.60 0.71 0.61 0.40 0.45 0.50 0.55 0.60 0.65 
+
+C
+
+0.3 
+
+0.4 
+
+0.5 
+
+0.6 
+
+0.7 
+
+> p
+
+DeepSeek-R1-Distill-Qwen-32B 
+
+DeepSeek-V3.2 
+
+Gemma3-27B 
+
+Qwen3-235B-A22B 
+
+GPT-5 mini 
+
+Figure 4: Estimated (p, C ) across LLMs. 
+
+root-cause-analysis-style evaluation in Zheng et al. (2024); Shen et al. (2024), we run Random Walk with Restart from Y and use each candidate tar-get node’s RWR score (stationary visit probability) as the ranking score, where higher values indicate stronger graph-mediated relevance to Y . We re-
+
+Table 4: Ablation on core components (O2O simulation); evaluated using GPT-5 mini. Variant MB-F1 ↑ Anc-F1 ↑ OT ↓ FPR ↓ SHD ↓ Unor. ↓
+
+Full CAMO 0.80 0.90 1 0.04 5 0
+
+w/o A1&A2 0.00 0.46 0 0.08 23 0
+
+w/o A3-add 0.67 0.74 1 0.04 9 0
+
+w/o A5 (no counterfactual) 0.80 0.79 3 0.05 10 0
+
+w/o competing hypotheses 0.67 0.91 2 0.04 6 0
+
+port Precision@K, MAP@K ( K=5 ), and MRR; detailed definitions are in Appendix E. 
+
+Results. Table 3 shows CAMO consistently achieves the best Precision@5 and MAP@5 on Polar., Inflam., and Smallville, indicating more ac-curate top-K effectiveness judgments . Some base-lines attain high MRR (e.g., Polar MMHC/SCD: 
+
+1.00 ) but lower MAP@5, suggesting weaker rank-ing among the remaining interventions. Baselines perform worst on Inflammatory Spread; see Ap-pendix B.3 for a detailed case study. 6 Conclusion 
+
+CAMO is a multi-agent framework for explaining emergence in LLM-agent simulations. It learns a computable Markov boundary and a minimal con-necting explanatory subgraph. Experiments show strong factor recovery, accurate structure recon-struction, and actionable intervention guidance. 
+
+7 Limitations 
+
+This work is scoped to causal discovery in LLM-agent simulations. CAMO depends on LLM-derived priors (and thus on pretraining, prompts, and available context), and counterfactual refine-ment cannot guarantee completeness. As a local causal interface around Y , it may miss important confounders that are neither logged in Xobs nor expressible in H, which can leave residual con-founding. Results are validated only with respect to the simulator’s logging/dynamics and may not transfer beyond it. The iterative loop also incurs a budget–accuracy trade-off from repeated simu-lator queries, and learned actionable levers could be misused or over-interpreted. We partially miti-gate these issues by grounding updates in observa-tional constraints and simulator counterfactual tests, evaluating in controlled simulation settings, and restricting claims to simulator-scoped, evidence-backed interventions. 
+
+8 Ethical considerations 
+
+Our study focuses on causal discovery and ex-planation in LLM-empowered multi-agent simu-lations, including an online-to-offline (O2O) de-livery platform, where simulator mechanisms are calibrated using real-world statistics. We do not conduct experiments on human subjects, and we do not use, store, or release any personally identifi-able information: the calibration relies only on non-identifying, aggregate statistics rather than individual-level records, and all reported analyses are performed on synthetic simulation rollouts and logs. Since CAMO can surface actionable “levers” in simulated systems, there is a risk that such in-terventions could be over-interpreted or misused outside the simulator; we therefore restrict claims to simulator-scoped, evidence-backed findings and evaluate only in controlled simulation settings. 
+
+Acknowledgments 
+
+This work has been supported in part by Na-tional Key Research and Development Program of China (No.2025YFE0216300), National Natu-ral Science Foundation of China (No. 62472306, No. 62441221), Tianjin University’s 2024 Spe-cial Project on Disciplinary Development (No. XKJS-2024-5-9), Tianjin University Talent In-novation Reward Program for Literature & Sci-ence Graduate Student (C1-2022-010), and Henan Province Key Research and Development Program (No.251111210500), Tianjin University Indepen-dent Innovation Project (No.2025XJ3-0043). 
+
+References             
+
+> Carlo Adornetto, Adrian Mora, Kai Hu, Leti-cia Izquierdo Garcia, Parfait Atchade-Adelomou, Gi-anluigi Greco, Luis Alberto Alonso Pastor, and Kent Larson. 2025. Generative agents in agent-based mod-eling: Overview, validation, and emerging challenges.
+> IEEE Transactions on Artificial Intelligence .Amey Agrawal, Nitin Kedia, Jayashree Mohan, Ashish Panwar, Nipun Kwatra, Bhargav S Gulavani, Ra-machandran Ramjee, and Alexey Tumanov. 2024. Vidur: A large-scale simulation framework for llm inference. Proceedings of Machine Learning and Systems , 6:351–366. Jacy Reese Anthis, Ryan Liu, Sean M Richardson, Austin C Kozlowski, Bernard Koch, James Evans, Erik Brynjolfsson, and Michael Bernstein. 2025. Llm social simulations are a promising research method.
+> arXiv preprint arXiv:2504.02234 .Ariel Flint Ashery, Luca Maria Aiello, and Andrea Baronchelli. 2025. Emergent social conventions and collective bias in llm populations. Science Advances ,11(20):eadu9368. Weize Chen, Yusheng Su, Jingwei Zuo, Cheng Yang, Chenfei Yuan, Chi-Min Chan, Heyang Yu, Yaxi Lu, Yi-Hsin Hung, Chen Qian, and 1 others. 2024. Agent-verse: Facilitating multi-agent collaboration and ex-ploring emergent behaviors. In ICLR .Haoang Chi, He Li, Wenjing Yang, Feng Liu, Long Lan, Xiaoguang Ren, Tongliang Liu, and Bo Han. 2024. Unveiling causal reasoning in large language models: Reality or mirage? Advances in Neural Information Processing Systems , 37:96640–96670. David Maxwell Chickering. 2002. Optimal structure identification with greedy search. Journal of machine learning research , 3(Nov):507–554. Yun-Shiuan Chuang, Agam Goyal, Nikunj Harlalka, Siddharth Suresh, Robert Hawkins, Sijia Yang, Dha-van Shah, Junjie Hu, and Timothy Rogers. 2024. Sim-ulating opinion dynamics with networks of llm-based agents. In Findings of the association for computa-tional linguistics: NAACL 2024 , pages 3326–3346.
+
+Gordon Dai, Weijia Zhang, Jinhan Li, Siqi Yang, Srihas Rao, Arthur Caetano, Misha Sra, and 1 others. 2024. Artificial leviathan: Exploring social evolution of llm agents through the lens of hobbesian social contract theory. arXiv preprint arXiv:2406.14373 .DeepSeek-AI. 2025a. Deepseek-r1: Incentivizing rea-soning capability in llms via reinforcement learning. 
+
+Preprint , arXiv:2501.12948. DeepSeek-AI. 2025b. Deepseek-v3.2: Pushing the fron-tier of open large language models. Mugariya Farooq, Shahad Hardan, Aigerim Zhumb-hayeva, Yujia Zheng, Preslav Nakov, and Kun Zhang. 2023. Understanding breast cancer survival: Using causality and language models on multi-omics data. 
+
+arXiv preprint arXiv:2305.18410 .Tao Feng, Lizhen Qu, Niket Tandon, Zhuang Li, Xiaoxi Kang, and Gholamreza Haffari. 2024. On the relia-bility of large language models for causal discovery. 
+
+arXiv preprint arXiv:2407.19638 .Chen Gao, Xiaochong Lan, Nian Li, Yuan Yuan, Jingtao Ding, Zhilun Zhou, Fengli Xu, and Yong Li. 2024. Large language models empowered agent-based mod-eling and simulation: A survey and perspectives. 
+
+Humanities and Social Sciences Communications ,11(1):1–24. Taicheng Guo, Xiuying Chen, Yaqi Wang, Ruidi Chang, Shichao Pei, Nitesh V Chawla, Olaf Wiest, and Xi-angliang Zhang. 2024. Large language model based multi-agents: A survey of progress and challenges. 
+
+arXiv preprint arXiv:2402.01680 .Prateek Gupta, Qiankun Zhong, Hiromu Yakura, Thomas Eisenmann, and Iyad Rahwan. 2025. The role of social learning and collective norm formation in fostering cooperation in llm multi-agent systems. 
+
+arXiv preprint arXiv:2510.14401 .Onder Gurcan. 2024. Llm-augmented agent-based mod-elling for social simulations: Challenges and oppor-tunities. arXiv preprint arXiv:2405.06700 .Kairong Han, Kun Kuang, Ziyu Zhao, Junjian Ye, and Fei Wu. 2024. Causal agent based on large language model. arXiv preprint arXiv:2408.06849 .Zhijing Jin, Yuen Chen, Felix Leeb, Luigi Gresele, Ojasv Kamal, Zhiheng Lyu, Kevin Blin, Fernando Gonzalez Adauto, Max Kleiman-Weiner, Mrinmaya Sachan, and 1 others. 2023. Cladder: Assessing causal reasoning in language models. Advances in Neural Information Processing Systems , 36:31038– 31065. Thomas Jiralerspong, Xiaoyin Chen, Yash More, Vedant Shah, and Yoshua Bengio. 2024. Efficient causal graph discovery using large language models. arXiv preprint arXiv:2402.01207 .Elahe Khatibi, Mahyar Abbasian, Zhongqi Yang, Iman Azimi, and Amir M. Rahmani. 2025. Alcm: Au-tonomous llm-augmented causal discovery frame-work. Preprint , arXiv:2405.01744. Emre Kiciman, Robert Ness, Amit Sharma, and Chen-hao Tan. 2023. Causal reasoning and large language models: Opening a new frontier for causality. Trans-actions on Machine Learning Research .Daphne Koller and Nir Friedman. 2009. Probabilistic graphical models: principles and techniques . MIT press. Hao Duong Le, Xin Xia, and Zhang Chen. 2024. Multi-agent causal discovery using large language models. 
+
+arXiv preprint arXiv:2407.15073 .Chenxi Liu, Yongqiang Chen, Tongliang Liu, Mingming Gong, James Cheng, Bo Han, and Kun Zhang. 2024. Discovery of the hidden world with large language models. Advances in Neural Information Processing Systems , 37:102307–102365. Xiaoyu Liu, Paiheng Xu, Junda Wu, Jiaxin Yuan, Yifan Yang, Yuhang Zhou, Fuxiao Liu, Tianrui Guan, Hao-liang Wang, Tong Yu, and 1 others. 2025. Large lan-guage models and causal inference in collaboration: A comprehensive survey. Findings of the Association for Computational Linguistics: NAACL 2025 , pages 7668–7684. Qun Ma, Xiao Xue, Deyu Zhou, Xiangning Yu, Donghua Liu, Xuwen Zhang, Zihan Zhao, Yifan Shen, Peilin Ji, Juanjuan Li, and 1 others. 2024. Com-putational experiments meet large language model based agents: A survey and perspective. arXiv preprint arXiv:2402.00262 .Yuren Mao, Peigen Liu, Xinjian Wang, Rui Ding, Jing Miao, Hui Zou, Mingjie Qi, Wanxiang Luo, Longbin Lai, Kai Wang, Zhengping Qian, Peilun Yang, Yun-jun Gao, and Ying Zhang. 2025. Agent-kernel: A microkernel multi-agent system framework for adap-tive social simulation powered by llms. Preprint ,arXiv:2512.01610. Xinyi Mou, Xuanwen Ding, Qi He, Liang Wang, Jing-cong Liang, Xinnong Zhang, Libo Sun, Jiayu Lin, Jie Zhou, Xuanjing Huang, and 1 others. 2024. From individual to society: A survey on social simulation driven by large language model-based agents. arXiv preprint arXiv:2412.03563 .OpenAI. 2025. GPT-5 mini (openai api model specs). https://platform.openai.com/docs/ models/gpt-5-mini . Accessed: 2025-12-31. Joon Sung Park, Joseph O’Brien, Carrie Jun Cai, Mered-ith Ringel Morris, Percy Liang, and Michael S Bern-stein. 2023. Generative agents: Interactive simulacra of human behavior. In Proceedings of the 36th an-nual acm symposium on user interface software and technology , pages 1–22. Jinghua Piao, Zhihong Lu, Chen Gao, Fengli Xu, Qinghua Hu, Fernando P Santos, Yong Li, and James Evans. 2025a. Emergence of human-like polarization among large language model agents. arXiv preprint arXiv:2501.05171 .Jinghua Piao, Yuwei Yan, Jun Zhang, Nian Li, Junbo Yan, Xiaochong Lan, Zhihong Lu, Zhiheng Zheng, Jing Yi Wang, Di Zhou, and 1 others. 2025b. Agentsociety: Large-scale simulation of llm-driven generative agents advances understand-ing of human behaviors and society. arXiv preprint arXiv:2502.08691 .Giorgio Piatti, Zhijing Jin, Max Kleiman-Weiner, Bern-hard Schölkopf, Mrinmaya Sachan, and Rada Mi-halcea. 2024. Cooperate or collapse: Emergence of sustainable cooperation in a society of llm agents. 
+
+Advances in Neural Information Processing Systems ,37:111715–111759. Siyue Ren, Zhiyao Cui, Ruiqi Song, Zhen Wang, and Shuyue Hu. 2024. Emergence of social norms in gen-erative agent societies: principles and architecture. 
+
+arXiv preprint arXiv:2403.08251 .Jonathan Richens and Tom Everitt. 2024. Robust agents learn causal world models. arXiv preprint arXiv:2402.10877 .Christoph Riedl. 2025. Emergent coordination in multi-agent language models. arXiv preprint arXiv:2510.05174 .ChengAo Shen, Zhengzhang Chen, Dongsheng Luo, Dongkuan Xu, Haifeng Chen, and Jingchao Ni. 2024. Exploring multi-modal integration with tool-augmented llm agents for precise causal discovery. 
+
+arXiv preprint arXiv:2412.13667 , 1(3). Peter Spirtes and Clark Glymour. 1991. An algorithm for fast recovery of sparse causal graphs. Social science computer review , 9(1):62–72. Peter Spirtes, Clark N Glymour, and Richard Scheines. 2000. Causation, prediction, and search . MIT press. Ryosuke Takata, Atsushi Masumori, and Takashi Ikegami. 2024. Spontaneous emergence of agent individuality through social interactions in llm-based communities. arXiv preprint arXiv:2411.03252 .Masayuki Takayama, Tadahisa Okuda, Thong Pham, Tatsuyoshi Ikenoue, Shingo Fukuma, Shohei Shimizu, and Akiyoshi Sannai. 2024. Integrat-ing large language models in causal discovery: A statistical causal approach. arXiv preprint arXiv:2402.01454 .Gemma Team, Aishwarya Kamath, Johan Ferret, Shreya Pathak, Nino Vieillard, Ramona Merhej, Sarah Perrin, Tatiana Matejovicova, Alexandre Ramé, Morgane Rivière, and 1 others. 2025. Gemma 3 technical report. arXiv preprint arXiv:2503.19786 .Ioannis Tsamardinos, Laura E Brown, and Constantin F Aliferis. 2006. The max-min hill-climbing bayesian network structure learning algorithm. Machine learn-ing , 65(1):31–78. Hai Wang, Lei Zhao, Kaile Yan, Xiaoyi Wang, Yile Liang, and Jinghua Hao. 2025a. Meituan: Operational-level on-demand food delivery data for the 2025 informs tsl data-driven research challenge. 
+
+Available at SSRN 5696423 .Qian Wang, Jiaying Wu, Zhenheng Tang, Bingqiao Luo, Nuo Chen, Wei Chen, and Bingsheng He. 2025b. What limits llm-based human simulation: Llms or our design? arXiv preprint arXiv:2501.08579 .Anpeng Wu, Kun Kuang, Minqin Zhu, Yingrong Wang, Yujia Zheng, Kairong Han, Baohong Li, Guangyi Chen, Fei Wu, and Kun Zhang. 2024. Causal-ity for large language models. arXiv preprint arXiv:2410.15319 .Yuchen Xia, Daniel Dittler, Nasser Jazdi, Haonan Chen, and Michael Weyrich. 2024. Llm experiments with simulation: Large language model multi-agent sys-tem for simulation model parametrization in digital twins. In 2024 IEEE 29th International Conference on Emerging Technologies and Factory Automation (ETFA) , pages 1–4. IEEE. Xue Xiao, Yu Xiang-Ning, Zhou De-Yu, Peng Chao, Wang Xiao, Zhou Zhang-Bing, and Wang Fei-Yue. 2023. Com-putational experiments: Past, present and perspective. Acta Automatica Sinica , 49(2):246–271. Xiao Xue, Yifan Shen, Xiangning Yu, De-Yu Zhou, Xiao Wang, Gang Wang, and Fei-Yue Wang. 2023a. Computational experiments: A new analysis method for cyber-physical-social systems. IEEE Transac-tions on Systems, Man, and Cybernetics: Systems ,54(2):813–826. Xiao Xue, Xiangning Yu, and Fei-Yue Wang. 2023b. Chatgpt chats on computational experiments: From interactive intelligence to imaginative intelligence for design of artificial societies and optimization of foun-dational models. IEEE/CAA Journal of Automatica Sinica , 10(6):1357–1360. Xiao Xue, Xiangning Yu, Deyu Zhou, Chao Peng, Xiao Wang, Donghua Liu, and Fei-Yue Wang. 2023c. Computational experiments for complex social sys-tems—part iii: the docking of domain models. 
+
+IEEE Transactions on Computational Social Systems ,11(2):1766–1780. Xiao Xue, Xiangning Yu, Deyu Zhou, Xiao Wang, Chongke Bi, Shufang Wang, and Fei-Yue Wang. 2024a. Computational experiments for complex so-cial systems: Integrated design of experiment system. 
+
+IEEE/CAA Journal of Automatica Sinica , 11(5):1175– 1189. Xiao Xue, Deyu Zhou, Fangyi Chen, Xiangning Yu, Zhiyong Feng, Yucong Duan, Lin Meng, and Mu Zhang. 2021. From soa to voa: a shift in un-derstanding the operation and evolution of service ecosystem. IEEE Transactions on Services Comput-ing , 16(1):315–329. Xiao Xue, Deyu Zhou, Xiangning Yu, Gang Wang, Juan-juan Li, Xia Xie, Lizhen Cui, and Fei-Yue Wang. 2024b. Computational experiments for complex so-cial systems: Experiment design and generative ex-planation. IEEE/CAA Journal of Automatica Sinica ,11(4):1022–1038. An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao, Chengen Huang, Chenxu Lv, and 1 others. 2025. Qwen3 technical report. arXiv preprint arXiv:2505.09388 .Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik R Narasimhan, and Yuan Cao. 2022. React: Synergizing reasoning and acting in language models. In The eleventh international conference on learning representations .Kui Yu, Lin Liu, Jiuyong Li, and Huanhuan Chen. 2018. Mining markov blankets without causal sufficiency. 
+
+IEEE transactions on neural networks and learning systems , 29(12):6333–6347. Xiangning Yu, Qirui Mi, Xiao Xue, Haoxuan Li, Yiwei Shi, Xiaowei Liu, and Mengyue Yang. 2026. Invariant causal routing for governing social norms in online market economies. arXiv preprint arXiv:2603.04534 .Xiangning Yu, Zhuohan Wang, Linyi Yang, Haoxuan Li, Anjie Liu, Xiao Xue, Jun Wang, and Mengyue Yang. 2025a. Causal sufficiency and necessity im-proves chain-of-thought reasoning. arXiv preprint arXiv:2506.09853 .Xiangning Yu, Xiao Xue, Deyu Zhou, Li Fang, and Zhiyong Feng. 2024. Beyond traditional metrics: The power of value entropy in multidimensional eval-uation of the service ecosystem. In 2024 IEEE Inter-national Conference on Web Services (ICWS) , pages 611–621. IEEE. Xiangning Yu, Xiao Xue, Deyu Zhou, Gang Wang, and Zhiyong Feng. 2025b. Unlocking complexity: Har-nessing value entropy for advanced multidimensional utility evaluation in service ecosystems. IEEE Trans-actions on Services Computing .Matej Zeˇ cevi´ c, Moritz Willig, Devendra Singh Dhami, and Kristian Kersting. 2023. Causal parrots: Large language models may talk causality but are not causal. 
+
+arXiv preprint arXiv:2308.13067 .Jiji Zhang. 2008. Causal reasoning with ancestral graphs. Journal of Machine Learning Research , 9(7). Xinnong Zhang, Jiayu Lin, Xinyi Mou, Shiyue Yang, Xiawei Liu, Libo Sun, Hanjia Lyu, Yihang Yang, Weihong Qi, Yue Chen, Guanying Li, Ling Yan, Yao Hu, Siming Chen, Yu Wang, Xuanjing Huang, Jiebo Luo, Shiping Tang, Libo Wu, and 2 others. 2025. Socioverse: A world model for social simulation powered by llm agents and a pool of 10 million real-world users. Preprint , arXiv:2504.10157. Lecheng Zheng, Zhengzhang Chen, Dongjie Wang, Chengyuan Deng, Reon Matsuoka, and Haifeng Chen. 2024. Lemma-rca: A large multi-modal multi-domain dataset for root cause analysis. arXiv preprint arXiv:2406.05375 .Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin, Zhuohan Li, Dacheng Li, Eric Xing, and 1 others. 2023. Judging llm-as-a-judge with mt-bench and chatbot arena. Advances in neural information pro-cessing systems , 36:46595–46623. Appendix Index 13 A Theory Proofs 13 B Supplementary Experimental Results 14 C Implementation Details 19 D Experimental Details and Metrics 21 E Interventional Ranking without Ground-Truth Graphs 23 F Baselines 24 G Instantiation of Conn min by Path-Cover Closure 26 H O2O Delivery Platform Simulation De-tails 26 I Prompt Templates for CAMO Agents 28 J Licenses and Terms 31 K Computational Budget and Infrastruc-ture 32 L Parameters for Packages 32 
+
+A Theory Proofs 
+
+This appendix provides proofs for the theoretical results in § 4. Throughout, we focus on properties that are directly implied by the refinement proce-dure and do not assume global identifiability or set-wise convergence unless explicitly stated. 
+
+Proof of Theorem 4.1 
+
+At refinement step t+1 , the data-realized represen-tation is first augmented by admitting a (possibly empty) set of new computable factors Zt+1 :
+
+˜V (t+1) = V (t) ∪ Z t+1 , (8) and then pruned by removing variables that are conditionally redundant for predicting the target Y
+
+given the remaining variables. Define the pruned set 
+
+Rt := 
+
+n
+
+W ∈ ˜V (t+1) : Y ⊥⊥ W | ˜V (t+1) \{ W }
+
+o
+
+,
+
+(9) and the updated representation 
+
+V (t+1) = ˜V (t+1) \ Rt. (10) Let Bt denote the Markov boundary of Y in V (t),and let mt := |Z t+1 |. Consider the candidate set 
+
+Ct+1 := ( Bt ∪ Z t+1 ) \ Rt. (11) For any W ∈ Rt, by definition (9), 
+
+Y ⊥⊥ W | ˜V (t+1) \ { W }, (12) so removing W does not reduce the conditional predictive sufficiency of the remaining variables for Y . Hence, there exists a sufficient conditioning set B′ 
+
+> t+1
+
+⊆ Ct+1 such that 
+
+Y ⊥⊥ V (t+1) \ B′ 
+
+> t+1
+
+| B′
+
+> t+1
+
+. (13) By construction, 
+
+|B′
+
+> t+1
+
+| ≤ | Bt| + mt − | Bt ∩ Rt|. (14) Since Bt+1 is the minimal sufficient set for Y in 
+
+V (t+1) , it follows that 
+
+|Bt+1 | ≤ | B′
+
+> t+1
+
+| ≤ | Bt| + mt, (15) which proves (4) . Moreover, if Bt ∩ Rt̸ = ∅, then at least one previously boundary variable is pruned and the bound tightens accordingly. 
+
+Proof of Theorem 4.2 
+
+Let 
+
+Ft := I(Y ; Xobs | V (t)) (16) denote the residual conditional dependence be-tween the target Y and the full observation space at refinement step t. Let Et denote the event that the refinement step achieves the contraction condition in (6). By assumption, 
+
+Pr( Et) ≥ p. (17) By definition of the refinement capability, 
+
+Ft+1 ≤
+
+(
+
+(1 − C)Ft, if Et occurs ,Ft, otherwise . (18) Taking conditional expectation and using 
+
+Pr( Et) ≥ p, we obtain 
+
+E[Ft+1 | Ft] ≤ (1 − pC )Ft. (19) Iterating this inequality yields 
+
+E[Ft] ≤ (1 − pC )tF0, (20) which establishes geometric decay of the residual dependence. This result implies convergence in the sense that the representation stabilizes with respect to predictive and interventional sufficiency, without requiring set-wise convergence or uniqueness of the limiting Markov boundary. Proof of Proposition 1 
+
+Consider an edge between variables X and Z
+
+whose orientation is ambiguous under the obser-vationally identified CPDAG or PAG. Define the simulator-implied interventional effect 
+
+δ(X → Z) := sup 
+
+> x,x ′
+
+DTV 
+
+
+
+P (Z | do( X=x)) ,P (Z | do( X=x′)) 
+
+
+
+.
+
+(21) If δ(X → Z) > 0, then intervening on X in-duces a detectable change in the distribution of Z.Under the locality/modularity assumption (i.e., the intervention is approximately surgical in the simu-lator), any candidate orientation in which X is not a (possibly indirect) cause of Z would imply invari-ance of Z under do( X), contradicting the observed interventional effect. By the law of large numbers, empirical estimates of the interventional distributions obtained from re-peated paired simulator rollouts converge almost surely to their simulator-implied limits. Conse-quently, candidate orientations incompatible with the observed counterfactual contrast are eliminated with probability one as the number of rollouts 
+
+n → ∞ .
+
+Controlling for invariance in probing. Impor-tantly, our counterfactual probing is an in-simulator operation and the resulting orientations should be interpreted as simulator-specific causal evidence. To make simulator counterfactual probing as close as possible to a localized (approximately surgical) intervention, we generate paired rollouts that (i) start from the same simulator state/trajectory pre-fix, (ii) use aligned randomness via shared seeds (common random numbers) for the environment and scheduling, and (iii) keep all non-target sim-ulator components fixed (environment dynamics, scheduler, and agent policy/system prompt), while only clamping the target variable/mechanism X.
+
+B Supplementary Experimental Results 
+
+B.1 A2–A3 Iterative Refinement (Add/Prune) 
+
+Figure 5 illustrates how CAMO iteratively refines the candidate factor set via the A2–A3 loop. Over-all, the add/prune mechanism rapidly compresses an initially over-complete proposal into a com-pact, stable set, while progressively recovering the ground-truth local neighborhood (Markov bound-ary size = 2 ) across rounds. 
+
+(1) Candidate-set dynamics. At each round, A2 proposes a (potentially over-complete) set of can-didate factors, which is then sharply reduced by A3’s prune step. After a few rounds, the candidate set size stabilizes at a much smaller scale, indi-cating effective regularization against uncontrolled growth. 
+
+(2) Role separation: prune vs. add. Across LLM backbones, a consistent pattern emerges: the prune step accounts for the dominant reduction (re-moving irrelevant factors), whereas the add step introduces only modest corrections by re-inserting a small number of missed-but-necessary factors. This division of labor prevents early over-pruning and improves recall without sacrificing compact-ness. 
+
+(3) Markov-boundary recovery. We addition-ally track the estimated Markov boundary size, which remains substantially smaller than the full candidate set throughout. More importantly, it grad-ually approaches the ground-truth Markov bound-ary (size 2 in this setting) and converges toward it across rounds, demonstrating that the refinement loop increasingly identifies the true local causal neighborhood. Together, these results suggest that the A2–A3 loop serves as a principled “compress-and-correct” procedure: it regularizes the search space by prun-ing spurious variables, while preserving recall through selective additions, thereby progressively isolating the true local causal structure. 
+
+B.2 Effect of LLM backbones in the full factor space (no projection). 
+
+Table 5 compares CAMO under different LLM backbones when evaluating directly in the full in-duced factor space (without projection); qualitative graphs are shown in Figure 7. 
+
+Sufficiency. Across backbones, CAMO main-tains strong upstream coverage, attaining high re-call for all but Gemma3-27B. This suggests that once factors are elicited, the framework largely preserves the target-relevant causal pathways. 
+
+Minimality. Stronger backbones (DeepSeek-V3.2, GPT-5 mini) produce markedly more com-pact and faithful graphs, achieving higher Prc/F1 and lower FPR/SHD, i.e., fewer redundant relations in the induced factor space. Even with smaller backbones, CAMO still yields usable graphs and retains competitive structure recovery, though with a looser sparsity–accuracy trade-off. 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 
+
+> Round
+> 0.0
+> 2.5
+> 5.0
+> 7.5
+> 10.0
+> 12.5
+> 15.0
+> 17.5
+> 20.0
+> Number of Variables
+> Variable Number Evolution for Qwen3-235B-A22B
+> A2 Proposed
+> After Prune ( |Vt|)
+> After Add ( |Vt|)
+> Estimated Markov Boundary ( |Bt|)
+
+(a) Qwen3-235B-A22B 1 2 3 4 5 6 7
+
+> Round
+
+0
+
+5
+
+10 
+
+15 
+
+20 
+
+> Number of Variables
+
+Variable Number Evolution for DeepSeek-R1-Distill-Qwen-32B  
+
+> A2 Proposed
+> After Prune ( |Vt|)
+> After Add ( |Vt|)
+> Estimated Markov Boundary ( |Bt|)
+
+(b) DeepSeek-R1-Distill-Qwen-32B 1 2 3 4 5 6
+
+> Round
+> 0.0
+> 2.5
+> 5.0
+> 7.5
+> 10.0
+> 12.5
+> 15.0
+> 17.5
+> 20.0
+> Number of Variables
+> Variable Number Evolution for GPT-5 mini
+> A2 Proposed
+> After Prune ( |Vt|)
+> After Add ( |Vt|)
+> Estimated Markov Boundary ( |Bt|)
+
+(c) GPT-5 mini 1 2 3 4 5 6 7 8 
+
+> Round
+> 0.0
+> 2.5
+> 5.0
+> 7.5
+> 10.0
+> 12.5
+> 15.0
+> 17.5
+> Number of Variables
+> Variable Number Evolution for DeepSeek-V3.2
+> A2 Proposed
+> After Prune ( |Vt|)
+> After Add ( |Vt|)
+> Estimated Markov Boundary ( |Bt|)
+
+(d) DeepSeek-V3.2 1 2 3 4 5 6 7 8 9
+
+> Round
+> 0.0
+> 2.5
+> 5.0
+> 7.5
+> 10.0
+> 12.5
+> 15.0
+> 17.5
+> Number of Variables
+> Variable Number Evolution for Gemma3-27B
+> A2 Proposed
+> After Prune ( |Vt|)
+> After Add ( |Vt|)
+> Estimated Markov Boundary ( |Bt|)
+
+(e) Gemma3-27B Figure 5: Add/prune dynamics of CAMO (A2–A3) under different LLM backbones. We plot, per round, the A2 proposal size, sizes after prune/add, and the estimated Markov boundary (MB) size. Pruning sharply compresses the proposal set, while add makes small corrections; meanwhile, the estimated MB progressively recovers the ground-truth MB size (2 in this setting). 
+
+B.3 Case Study 
+
+We present qualitative case studies of the causal graphs learned by CAMO across multiple scenar-ios and emergent causal patterns. In particular, we visualize the learned causal structures for three representative emergent phenomena: (i) agent co-ordination (Figure 10), (ii) opinion polarization (Figure 11), and (iii) the spread of inflammatory messages (Figure 12). These examples illustrate how CAMO abstracts over low-level agent interactions and recovers com-pact, high-level causal structures that capture the key mechanisms underlying each emergent phe-nomenon. Importantly, all graphs shown here are learned without access to any ground-truth causal structure. They are therefore intended to support qualitative inspection and interpretability, rather than serving as a quantitative evaluation bench-mark. For each setting, the learned graph highlights a small set of upstream factors that are most action-able for intervention, while the remaining nodes Demand 
+
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+Ground Truth (Target) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+CAMO (Qwen3-235B-A22B) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+CAMO (DeepSeek-R1-Distill-Qwen-32B) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+CAMO (GPT-5 mini) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+CAMO (DeepSeek-V3.2) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+CAMO (Gemma3-27B) 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+PC 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+FCI 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+GES 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+MMHC 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+SCD (PC)-LLM 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+ReAct 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+LLM-KBCI 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+Efficient-CDLMs 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+MAC 
+
+> Demand
+> Supply
+> Reject
+> Time
+> Peak
+> Dist
+> Area
+> Sat
+> Entropy
+
+PAIRWISE 
+
+Correct (TP) Added (FP) Reversed Direction Confounded (<->) Uncertain Edge (o->) Missed (FN) Figure 6: Recovered causal structures for all methods on the O2O delivery simulation after applying the observed-variable projection. The figure provides a complete qualitative comparison complementing Figure 3. 
+
+represent environmental conditions, intermediate system states, or emergent outcome indicators. In addition, for one intervention trial in the agent coordination setting, we visualize the temporal evo-lution of the emergent coordination behavior based on the learned causal graph (see Figure 8). This timeline links the onset of the coordination phe-nomenon to the key causal factors identified by CAMO, providing an intuitive view of how inter-ventions propagate through intermediate states and ultimately shape the emergent outcome. 
+
+B.4 Analysis of Estimated Refinement Effectiveness (p, C )
+
+Figure 4 summarizes the estimated refinement-effectiveness parameters (p, C ) across LLM back-bones. Recall that p captures the probability that an iteration yields an informative refinement step, while C measures the typical (relative) contrac-tion strength conditioned on being informative; to-gether, they govern the expected geometric decay rate through the product pC (Theorem 4.2). We observe clear backbone-dependent differ-ences that are consistent with the refinement dy-namics in Figure 5. DeepSeek-V3.2 exhibits the Table 5: Causal structure recovery of CAMO on the O2O delivery simulation under different LLM backbones (results without graph projection ). 
+
+LLM Backbone Prc ↑ Rec ↑ F1 ↑ Acc ↑ Anc-F1 ↑ FPR ↓ SHD ↓ Add. ↓ Mis. ↓ Rev. ↓ Unor. ↓
+
+Qwen3-235B-A22B 0.68 0.75 0.71 0.92 0.79 0.05 12 7 5 0 0
+
+DeepSeek-R1-Distill-Qwen-32B 0.57 1.00 0.73 0.94 0.62 0.07 15 15 0 0 0
+
+GPT-5 mini 0.80 1.00 0.89 0.97 0.90 0.04 5 5 0 0 0
+
+DeepSeek-V3.2 0.95 1.00 0.98 0.99 0.98 0.01 1 1 0 0 0
+
+Gemma3-27B 0.36 0.45 0.40 0.87 0.59 0.08 27 16 11 0 0Demand 
+
+Supply 
+
+Reject 
+
+Time 
+
+Peak 
+
+Dist 
+
+Area 
+
+Sat 
+
+Algo 
+
+Res 
+
+Over 
+
+Entropy 
+
+Ground Truth Full Causal Graph 
+
+Basic Variables 
+
+High-Level Mechanisms 
+
+Outcome: Emergence 
+
+Observed Variables 
+
+Correct Edges (20) 
+
+Incorrect Edges (0) 
+
+(a) Ground Truth Peak 
+
+Demand 
+
+Time Supply 
+
+Dist 
+
+Reject 
+
+Area 
+
+Sat 
+
+Algo 
+
+Res 
+
+Over 
+
+Entropy 
+
+CAMO (DeepSeek-V3.2) Full Causal Graph 
+
+Basic Variables 
+
+High-Level Mechanisms 
+
+Outcome: Emergence 
+
+Observed Variables 
+
+Correct Edges (20) 
+
+Incorrect Edges (1) (b) DeepSeek-V3.2 Peak 
+
+Demand 
+
+Time Supply 
+
+Reject 
+
+Area 
+
+Dist 
+
+Sat 
+
+Entropy 
+
+Res 
+
+OB 
+
+DE 
+
+DF 
+
+CAMO (Gemma3-27B) Full Causal Graph 
+
+Basic Variables 
+
+High-Level Mechanisms 
+
+Outcome: Emergence 
+
+Observed Variables 
+
+Correct Edges (9) 
+
+Incorrect Edges (16) 
+
+OB: Order Backlog 
+
+DE: Delivery Efficiency 
+
+DF: Driver Fatigue 
+
+(c) Gemma3-27B Peak 
+
+Demand 
+
+Time Supply 
+
+Dist 
+
+Reject 
+
+Area 
+
+Sat 
+
+Algo 
+
+Res 
+
+Over 
+
+Entropy 
+
+PP 
+
+CAMO (GPT-5 mini) Full Causal Graph 
+
+Basic Variables 
+
+High-Level Mechanisms 
+
+Outcome: Emergence 
+
+Observed Variables 
+
+Correct Edges (20) 
+
+Incorrect Edges (5) 
+
+PP: Penalty Pressure (d) GPT-5 mini Demand 
+
+Supply 
+
+Reject 
+
+Time 
+
+Peak 
+
+Dist 
+
+Area 
+
+Sat 
+
+Algo 
+
+Res 
+
+Over 
+
+Entropy 
+
+DI 
+
+DFE 
+
+OB 
+
+MPT 
+
+CAMO (DeepSeek-R1-Distill-Qwen-32B) Full Causal Graph 
+
+Basic Variables 
+
+High-Level Mechanisms 
+
+Outcome: Emergence 
+
+Observed Variables 
+
+Correct Edges (20) 
+
+Incorrect Edges (15) 
+
+MPT: Merchant Prep Time 
+
+DI: Driver Income 
+
+DFE: Dispatch Efficiency 
+
+OB: Order Backlog 
+
+(e) DeepSeek-R1-Distill-Qwen-32B Peak 
+
+Demand 
+
+Time 
+
+Area 
+
+Dist 
+
+Reject 
+
+Sat 
+
+Supply 
+
+OSCI 
+
+Over 
+
+Entropy 
+
+Algo 
+
+CAMO (Qwen3-235B-A22B) Full Causal Graph 
+
+Basic Variables 
+
+High-Level Mechanisms 
+
+Outcome: Emergence 
+
+Observed Variables 
+
+Correct Edges (15) 
+
+Incorrect Edges (7) 
+
+OSCI: Order Spatial Clustering Index (f) Qwen3-235B-A22B 
+
+Figure 7: Qualitative comparison of recovered causal structures (O2O delivery simulation; without projection). Intent Initiation 
+
+Feb 14, 08:20 
+
+Information Exposure  Collective Coordination Public Broadcasting Direct Outreach 
+
+09:20  11:10  13:00  15:30  Valentine  Party 
+
+IR : I'd  love  for  you  to  come 
+
+to  the  Valentine's  Day  party 
+
+at  Hobbs  Cafe! 
+
+IR : Join  us  at  Hobbs 
+
+Cafe!  It  starts  at  15 :30 !Figure 8: Timeline of an intervention trial in the agent coordination setting. The figure illustrates the emergence of collective coordination over time, progressing from intent initiation and direct outreach to information exposure and public broadcasting, culminating in collective coordination at the event time (15:30). Peak  
+
+> Demand
+> Supply Time
+> Area
+> Dist
+> Sat
+> Reject
+> Entropy
+> Basic Variables
+> High-Level Mechanisms
+> Outcome: Emergence
+> Discovered Variables
+> Correct Edges (6)
+> Incorrect Edges (9)
+
+(a) w/o A1&A2 Peak  
+
+> Demand
+> Time Supply
+> Dist
+> Reject
+> Area
+> Sat
+> Over
+> Algo
+> Entropy
+> BL
+> Basic Variables
+> High-Level Mechanisms
+> Outcome: Emergence
+> Discovered Variables
+> Correct Edges (16)
+> Incorrect Edges (5)
+> BL: Backlog Level
+
+(b) w/o A3-add Peak 
+
+> Demand
+> Time Supply
+> Dist
+> Reject
+> Area
+> Sat
+> Algo
+> Res
+> Over
+> Entropy
+> PFI
+> SPF
+> BL
+> Basic Variables
+> High-Level Mechanisms
+> Outcome: Emergence
+> Discovered Variables
+> Correct Edges (20)
+> Incorrect Edges (10)
+> BL: Backlog Level
+> SPF: Surge Price Factor
+> PFI: Psychological Fatigue Index
+
+(c) w/o A5 (no counterfactual) Peak  
+
+> Demand
+> Time Supply
+> Dist
+> Reject
+> Area
+> Sat
+> Algo
+> Res
+> Over
+> Entropy
+> BL
+> CU
+> Basic Variables
+> High-Level Mechanisms
+> Outcome: Emergence
+> Discovered Variables
+> Correct Edges (20)
+> Incorrect Edges (6)
+> CU: capacity_utilization
+> BL: Backlog Level
+
+(d) w/o competing hypotheses 
+
+Figure 9: Ablation study on the O2O delivery simulation. 
+
+strongest overall effectiveness, with both a rela-tively large p and a strong conditional contrac-tion, resulting in the largest estimated pC and thus the fastest expected decay of residual dependence. GPT-5 mini follows with a similarly balanced pro-file, suggesting that informative steps occur fre-quently and yield reliable contraction. Qwen3-235B-A22B shows a comparatively larger C but a smaller p, indicating more intermit-tent progress: when refinement succeeds it tends to contract strongly, but successful steps occur less often. This is consistent with the add/prune curves where the candidate set is pruned effectively yet improvements are not uniformly sustained across rounds. DeepSeek-R1-Distill-Qwen-32B exhibits a smaller p (with moderate C), implying that infor-mative refinement steps are rarer, aligning with its slower stabilization behavior over rounds. Finally, Gemma3-27B yields a smaller pC , indi-cating less consistent contraction overall. Notably, this does not preclude early stabilization of the es-timated Markov-boundary size in the add/prune curves; rather, it suggests that subsequent refine-ment is less reliably contractive (e.g., weaker regu-larization of the broader candidate set), which can delay stabilization in terms of residual dependence. The concrete estimation procedure for (p, C )
+
+from the empirical {Ft} trajectories is provided in Appendix C.1. 
+
+B.5 Ablation Design and Analysis Ablation design. We ablate four core compo-nents of CAMO while keeping the rest of the pipeline unchanged. w/o A1&A2 removes the worldview parsing and integration stages, so the system runs without structured prior hypotheses about variables and relations. w/o A3-add dis-ables the add step in the A2–A3 refinement loop, i.e., factors are only pruned/refined without explic-itly re-introducing missed candidates. w/o A5 (no counterfactual) removes the counterfactual adju-dication module, so candidate edges/hypotheses are not filtered by intervention-based checks. w/o competing hypotheses disables hypothesis compe-tition, replacing set-based competing hypotheses with a single-pass selection to test whether explicit competition is necessary. All variants are evaluated under the same simulator setting and budget as the full model. 
+
+Analysis. Table 4 shows that each module sup-ports either coverage of the true upstream ancestry or compactness of the learned structure. Removing A1&A2 causes factor discovery to fail, indicating that worldview parsing and integration are neces-sary to surface causally relevant factors. Disabling A3-add weakens both local (MB) and upstream recovery, suggesting the add step is important for bringing back missed-but-necessary causes. Re-moving A5 (no counterfactual) largely preserves the local interface but introduces more spurious structure, showing that counterfactual adjudication primarily acts as a redundancy filter. 
+
+C Implementation Details 
+
+C.1 Estimating Refinement-Capability Parameters 
+
+This appendix describes how we compute practical diagnostics (ˆ p, ˆC) from the A3 refinement trajec-tory. These quantities are meant to be simple, in-terpretable summaries of refinement effectiveness, not statistically exact estimators of the theoretical 
+
+(p, C ) in Theorem 4.2. 
+
+C.1.1 A computable uncertainty score Hb
+
+For any variable set U , we use Hb(Y | U ) to denote a computable score of how uncertain Y remains after conditioning on U . In practice, Hb(Y | U ) is estimated by a held-out predictive loss of a classi-fier/regressor that predicts Y from U (e.g., cross-entropy for discrete Y ). Smaller Hb(Y | U ) means 
+
+U explains/predicts Y better. 
+
+C.1.2 Information gain and factor admission 
+
+At refinement step t, let V (t) be the current admit-ted factor set. For a candidate factor Z, we define its computable information gain as 
+
+∆cI(Z) := Hb(Y | V (t)) − Hb(Y | V (t), Z ).
+
+(22) This measures how much adding Z reduces the residual uncertainty of Y beyond what V (t) already explains. We admit Z if 
+
+∆cI(Z) > τ I , (23) where τI ≥ 0 is a small margin (default τI = 0 ). 
+
+Targeted evaluation. When estimating Hb and 
+
+∆cI(·), we follow Liu et al. (2024) and evaluate them on the subset of records that is hardest to pre-dict under the current V (t) (the “worst-explained” group). This prevents improvements on easy cases from masking failures on hard cases. 
+
+C.1.3 Proxy residual difficulty bFt
+
+Theorem 4.2 analyzes a residual dependence quan-tity Ft that is not directly computable. Along the refinement trajectory, we track a computable surro-gate, 
+
+bFt := Hb(Y | V (t)), (24) where Hb is evaluated using the same protocol as above (i.e., on the worst-explained group at step t). Smaller bFt indicates that the current admitted set explains Y better in the hardest region. Initiator Outreach Information Exposure Spatial Propinquity Interpersonal Network Homophily (Interest Similarity) Behavioral Intention Collective Coordination Af fi liation Motivation Figure 10: Learned causal graph for agent coordination. Visualization of a representative causal graph learned by CAMO under the agent coordination emergent phenomenon. User Interaction Network Network Topology Type Persuasive Message Supply Intensity Exposure Bias Level (Homophilous Share) Initial Opinion Level Individual Opinion Level Exposure Policy Type Opinion Bimodality Index Polarization Level 
+
+Figure 11: Learned causal graph for opinion polarization. Visualization of a representative causal graph learned by CAMO under the opinion polarization emergent phenomenon. User Interaction Network Network Topology Type In fl ammatory Posting Rate Moderation Detection Sensitivity              
+
+> User Emotion Level
+> Platform Moderation Policy Type Moderation Action Type Moderation Action Threshold Effective Connectivity Level Exposure Level to In fl ammatory Posts Cascade Formation Intensity
+> Group Emotion Level
+> Cascade Reach (Audience Size)
+> Group Emotion Shift Magnitude
+> In fl ammatory Spread Level (Y)
+
+Figure 12: Learned causal graph for inflammatory message spread. Visualization of a representative causal graph learned by CAMO under the spread of inflammatory messages emergent phenomenon. 
+
+C.1.4 Successful steps and estimating ˆp and ˆC
+
+Because bFt is measured with finite samples, we introduce a small tolerance ϵ > 0 and call step t
+
+successful if the proxy difficulty decreases by at least ϵ:
+
+bFt+1 ≤ bFt − ϵ. (25) 
+
+Success frequency ˆp. We estimate ˆp as the frac-tion of successful refinement steps: 
+
+ˆp = 1
+
+T
+
+T −1X
+
+t=0 
+
+1
+
+n bFt+1 ≤ bFt − ϵ
+
+o
+
+. (26) 
+
+Typical contraction ˆC. On successful steps, we measure the relative decrease 
+
+rt = bFt − bFt+1 
+
+bFt
+
+, (27) and estimate the typical contraction as 
+
+ˆC = median { rt | bFt+1 ≤ bFt − ϵ }. (28) 
+
+C.1.5 Interpretation 
+
+ˆp answers how often refinement produces a mean-ingful reduction in proxy residual difficulty, while 
+
+ˆC summarizes how large that reduction typically is when it happens. Their product ˆp ˆC provides a sim-ple summary of empirical refinement effectiveness along the A3 trajectory. 
+
+C.2 Decision Worldview Scoring and Selection 
+
+To score and select candidate decision worldviews at iteration k, A2 uses a lightweight two-stage LLM-judge procedure adapted from Zheng et al. (2023). Stage I: rubric scoring. Given n candidates 
+
+{Wi}, the judge assigns each Wi a 1–10 score un-der a fixed rubric (e.g., feasibility, novelty, rigor, and target alignment; with optional weights). A2 keeps only the top m candidates (typically m ∈{3, 4}) to avoid exhaustive  n
+
+> 2
+
+ comparisons. 
+
+Stage II: pairwise comparison. On the short-list, the judge performs pairwise comparisons and outputs a winner (or tie) with a brief justification. A2 aggregates outcomes into a ranking and selects the working set; if preference cycles occur, A2 runs one additional multi-way adjudication on the tied set to obtain a stable order. The final decision worldview W (k) is chosen from the working set. 
+
+C.3 Edge Prioritization for A4 
+
+This appendix specifies a simple, fully computable heuristic used by A4 to prioritize unresolved edges for simulator-based interventions. 
+
+Inputs from A3. Let Eu denote the set of unre-solved edges after observational discovery (e.g., ambiguous orientations in a CPDAG/PAG). For each e ∈ E u, A3 provides an importance score 
+
+we ∈ [0 , 1] and an uncertainty score ue ∈ [0 , 1] . In-tuitively, we measures how consequential resolving 
+
+e is for downstream causal accuracy, while ue mea-sures how weakly e is identified from observational constraints. 
+
+Importance and uncertainty signals. The im-portance score we is derived from A3’s stabilized representation, for example using (i) association with the target outcome, (ii) frequency of e across repeated discovery runs. The uncertainty score 
+
+ue is derived from the learned CPDAG/PAG; in a minimal implementation, ue = 1 if e is not fully oriented (or contains ambiguous PAG marks) and 
+
+ue = 0 otherwise. Optionally, A3 may provide a stability signal 
+
+ˆσe ∈ [0 , 1] by re-running observational discovery on subsampled observations and quantifying ori-entation variability. One simple choice is ˆσe =1 − agree( e), where agree( e) is the fraction of sub-samples that return the same orientation for e.
+
+Optimism-weighted scoring. Given (we, u e)
+
+and, when available, ˆσe, A4 ranks edges by the UCB-inspired heuristic 
+
+score( e) = we
+
+ ue + β ˆσe
+
+, (29) where β > 0 controls the weight on stability-based exploration. If no stability estimate is available, we set ˆσe = 0 , yielding score( e) = weue.A4 selects the top-K edges by score( e) and gen-erates intervention scripts accordingly. 
+
+D Experimental Details and Metrics 
+
+D.1 Factor Discovery Metrics 
+
+We define factor discovery metrics based on the ground-truth causal graph of the simulator. Let Y
+
+denote the target variable, B(Y ) its Markov bound-ary, and An( Y ) the set of all causal ancestors of 
+
+Y (excluding Y itself). Given a set of proposed high-level factors S, we categorize factors as: • MB : S ∩ B(Y ), factors belonging to the Markov boundary; • AN : S ∩ (An( Y ) \ B(Y )) , factors that are causal ancestors but not in the boundary; • OT : S \ An( Y ), off-target or spurious factors. 
+
+MB recovery. We report the counts of MB, AN, and OT factors. In addition, we compute Precision, Recall, and F1 with respect to the Markov boundary 
+
+B(Y ):
+
+Precision MB = |S ∩ B(Y )||S| ,
+
+Recall MB = |S ∩ B(Y )||B(Y )| ,
+
+F1 MB = 2 Precision MB Recall MB 
+
+Precision MB + Recall MB 
+
+.
+
+(30) 
+
+Ancestor F1. To assess recovery of ancestral re-lations with respect to the target variable Y , we evaluate reachability (transitive) relations rather than ancestor node-set overlap. Let TC( G) denote the transitive closure of G. We define the target-specific ancestor-relation set 
+
+RY (G) = {(u, Y ) ∈ V obs × V obs : u̸ = Y, 
+
+(u, Y ) ∈ TC( G)}.
+
+(31) Let R∗ 
+
+> Y
+
+= RY (G∗) and bRY = RY ( ˆG). We com-pute precision/recall/F1 over these ordered pairs: 
+
+Precision anc = | bRY ∩ R∗ 
+
+> Y
+
+|| bRY | ,
+
+Recall anc = | bRY ∩ R∗ 
+
+> Y
+
+||R∗ 
+
+> Y
+
+| ,
+
+Anc -F1 = 2 Precision anc Recall anc 
+
+Precision anc + Recall anc 
+
+.
+
+(32) This metric credits a method if it recovers the correct transitive upstream influence on Y (e.g., 
+
+A → B → Y implies (A, Y ) ∈ TC ), regardless of whether the influence is realized by a direct edge or a multi-hop path in the predicted graph. 
+
+D.2 Projection to Observed-Variable Space 
+
+CAMO may introduce computable factor nodes (constructed variables) that do not exist in the raw log space. To fairly compare against baselines that operate only on observed variables, we evaluate graph-structure metrics on the observed-variable space by projecting any learned graph G onto Vobs .
+
+Observed variables and factor supports. Let 
+
+Vobs be the set of logged (raw) variables. Each con-structed factor node Z is associated with a support set supp( Z) ⊆ V obs , defined as the set of raw vari-ables used by the deterministic construction rule of 
+
+Z (e.g., counts, ratios, summary statistics, graph metrics). For raw variables X ∈ V obs , we define 
+
+supp( X) = {X}.
+
+Projection operator. Given a learned graph G =(V, E ) that may include constructed factors, we define the projected graph Π( G) = ( Vobs , E Π) by removing all non-observed nodes and lifting each edge to observed supports. For every directed or partially oriented edge (U → V ) ∈ E, we add edges from supp( U ) to supp( V ):
+
+EΠ := [  
+
+> (U→V)∈E
+
+n
+
+x → z : x ∈ supp( U ),z ∈ supp( V )
+
+o
+
+.
+
+(33) Note that when both U and V are observed vari-ables, the projection reduces to the original edge be-tween them. If the learned structure is a CPDAG/-PAG with an ambiguous endpoint on (U ◦−◦ V ),we project it similarly while preserving ambiguity: 
+
+Π U ◦−◦ V  =
+
+n
+
+x ◦−◦ z : x ∈ supp( U ),z ∈ supp( V )
+
+o
+
+.
+
+(34) Finally, we simplify Π( G) by removing duplicate edges. Self-loops ( x → x) are discarded. 
+
+Rationale. This projection attributes dependen-cies mediated by constructed factors back to the raw variables from which they are computed, en-abling direct comparison with baselines that cannot introduce factor nodes. All graph-level structure metrics (e.g., SHD, NHD, Added/Missed/Reversed edges) are computed on Π( G).
+
+D.3 Causal Structure Recovery Metrics 
+
+We evaluate causal structure recovery by compar-ing the projected learned graph ˆG = Π( G) with the ground-truth graph G∗ in the observed-variable space (Appendix D.2). Let G∗ = ( V obs , E ∗) and 
+
+ˆG = ( V obs , ˆE).
+
+Directed edge metrics. Following prior work, we evaluate edge-wise performance on the set of 
+
+directed edges . Let E∗ ⊂ V obs × V obs and ˆE ⊂
+
+V obs × V obs denote the sets of ground-truth and predicted directed edges, respectively. We define 
+
+TP = | ˆE ∩ E∗|,
+
+FP = | ˆE \ E∗|,
+
+FN = |E∗ \ ˆE|,
+
+TN = |V obs |(|V obs | − 1) − TP − FP − FN .
+
+(35) Based on these counts, we compute 
+
+Precision = TP TP + FP ,
+
+Recall = TP TP + FN ,
+
+F1 = 2 Precision Recall Precision + Recall .
+
+(36) 
+
+Accuracy. We additionally report the accuracy (Acc) over directed edges, following the edge-set evaluation in our implementation. Let n = |V obs |
+
+and consider all ordered pairs (u, v ) with u̸ = v
+
+as candidate directed edges. Using TP , FP , FN as defined above, we set 
+
+TN = n(n − 1) − TP − FP − FN , (37) and compute 
+
+Acc = TP + TN TP + TN + FP + FN = TP + TN 
+
+n(n − 1) .
+
+(38) 
+
+False positive rate. We additionally report the false positive rate (FPR) over directed edges: 
+
+FPR = FP FP + TN . (39) 
+
+SHD and error decomposition. Let S(G) de-note the (undirected) skeleton of a graph G, i.e., 
+
+S(G) = {{ u, v } : ( u → v) ∈ E(G) or (v → u) ∈
+
+E(G)}. We decompose the structural Hamming distance (SHD) into four components: Table 6: AgentSociety controllable mechanisms as causal nodes (one row per node).           
+
+> Node vControllable mechanism (simulator knob)
+> ExposurePolicyType Recommendation/exposure policy family.
+> ExposureBiasLevel Strength of homophilous exposure bias.
+> NetworkTopologyType Clustered vs. mixing interaction topology.
+> PersuasiveMsgSupplyIntensity Supply intensity of persuasive messages.
+> InitialOpinionShift Shift of initial opinion distribution.
+> InflammatoryPostingRate Rate of inflammatory content injection.
+> ModerationPolicyType Moderation on/off policy family.
+> ModerationAggressiveness Moderation strictness / action threshold.
+
+Table 7: Smallville controllable mechanisms as causal nodes (one row per node).        
+
+> Node vControllable mechanism (direct input edit)
+> SeedInfoCoverage fraction of agents receiving the coordination seed.
+> SeedInfoSalience salience/strength of injected seed memory.
+> PublicAnnouncement presence of a shared public bulletin/notice.
+> EncounterBudget encounter/opportunity budget for interactions.
+> KeyAgentSeeding whether hub/central agents are seeded first.
+
+• Added : |S( ˆG) \ S(G∗)|, extra adjacencies; • Missed : |S(G∗)\S( ˆG)|, missing adjacencies; • Reversed : common adjacencies whose orien-tation in ˆG is the opposite of G∗;• Unoriented : common ground-truth adjacen-cies whose direction is not resolved in ˆG (e.g., 
+
+o–o or — in CPDAG/PAG outputs). We define 
+
+SHD = Added+Missed+Reversed+Unoriented .
+
+(40) 
+
+Ancestor metrics. The computation of Anc-F1 is described in Appendix D.1. 
+
+E Interventional Ranking without Ground-Truth Graphs 
+
+This appendix specifies the evaluation protocol when no ground-truth causal graph is available. The goal is to test whether a learned graph pro-vides actionable guidance by ranking effective simulator-supported interventions ahead of inef-fective (placebo) ones. 
+
+E.1 Pre-registered Intervention Pool and Success Labels 
+
+For each environment–target pair, we pre-register a fixed pool of simulator-supported intervention scripts 
+
+S = {s1, . . . , s |S|}, |S| = 12 , (41) where each script modifies exactly one control-lable mechanism while keeping other settings un-changed. To increase discriminability, S inten-tionally contains many placebo/weak-effect scripts (small-magnitude changes, counteracting changes, or mechanism-irrelevant toggles), so that the set of effective scripts is sparse. Each script is executed under multiple random seeds. A script is labeled successful if it induces a statistically significant change in the emergent outcome Y relative to a no-intervention baseline: 
+
+success( s) ∈ { 0, 1}. (42) We denote the set of successful scripts by 
+
+S+ = {s ∈ S : success( s) = 1 }. (43) Crucially, S+ is obtained from rollouts and is 
+
+method-independent : no method is given S+; all methods only output a learned graph. 
+
+E.2 From a Causal Graph to an Intervention Ranking (RWR) 
+
+Methods output a directed causal graph G = ( V, E )
+
+but do not directly output a ranking over scripts. We derive a comparable ranking using Random Walk with Restart (RWR), propagating influence 
+
+from the target back to upstream mechanisms .
+
+Script-to-node mapping. Each script s targets a mechanism node v(s) defined in the intervention tables below. If v(s) /∈ V for a learned graph G,we assign score 0 to s (ties are broken deterministi-cally). Upstream propagation. Let A be the row-normalized adjacency matrix of G restricted to nodes connected to Y . We run RWR on the re-versed flow: 
+
+π = αe Y + (1 − α)A⊤π, (44) where eY is one-hot on Y and α ∈ (0 , 1) is the restart probability. We rank scripts by π(v(s)) in descending order. 
+
+E.3 Ranking Metrics 
+
+We report ranking quality at K = 5 (a short action-able shortlist). Let s(i) be the i-th ranked script. 
+
+Precision@K. 
+
+P@K = 1
+
+K
+
+> K
+
+X
+
+> i=1
+
+success( s(i)). (45) 
+
+MAP@K. 
+
+MAP@K = 1min( K, |S+|)
+
+> K
+
+X
+
+> i=1
+
+
+
+P@i 
+
+
+
+· 1success( s(i)) = 1  .
+
+(46) 
+
+MRR. 
+
+MRR = 1min {i : success( s(i)) = 1 } . (47) 
+
+E.3.1 AgentSociety: Polarization and Inflammatory-Message Spread 
+
+We study two emergent targets in AgentSociety: 
+
+opinion polarization and the spread of inflamma-tory messages . For reference, the manually anno-tated root causes are provided in Table 6. 
+
+E.3.2 Smallville: Agent Coordination 
+
+We evaluate on Smallville with the emergent tar-get agent coordination . We use only simulator-realizable interventions implemented as direct ed-its to memories/public information/encounter op-portunities (no hand-crafted behavior rules). For reference, the manually annotated root causes are provided in Table 7. 
+
+F Baselines 
+
+F.1 Factor Discovery Baselines 
+
+This appendix lists prompt templates for factor-discovery baselines used in § 5. All baselines use the same simulator description and target outcome 
+
+Y , and output a set of candidate factors S in the same format as CAMO. Unless stated otherwise, baselines use no external causal feedback (e.g., CI tests, graph feedback, or interventions) and no post hoc pruning beyond the model’s own output. 
+
+LLM-Text (single-round). Given only the sim-ulator description and task context, the LLM pro-poses a list of high-level candidate factors for Y in one shot. The returned list is used directly as S.
+
+LLM-Data (single-round). Same as LLM-Text, but additionally provides a small observational data. The one-shot output list is used directly as S.
+
+LLM-CoT (single-round, text-only). Same in-puts as LLM-Text (no observational data), but the LLM is instructed to reason before listing factors. The final list is used as S.
+
+LLM-MultiRound (multi-round, text-only). 
+
+Same inputs as LLM-Text (no observational data). The LLM iteratively revises the factor list across multiple rounds using only the dialogue history. No external verification signal is provided, and the final round’s list is taken as S.
+
+F.2 Factor Discovery Baseline Prompts F.2.1 Text-only Prompt Prompt. You are given: (1) a description of a multi-agent simulation environment and (2) an outcome of interest Y .Propose a compact set of high-level factors that could causally influence Y . Each factor should be a nonlinear, computable abstrac-tion over collective agent behavior (e.g., ag-gregation effects, feedback loops, distribu-tional patterns), not a single low-level action or implementation detail. Output a list of factors. For each factor, pro-vide a short name and one sentence describ-ing how it could affect Y .F.2.2 Data-grounded Prompt Prompt. You are given: (1) a description of a multi-agent simulation environment, (2) observational summaries from simulation runs (e.g., samples and/or summary statis-tics), and (3) an outcome of interest Y .Using the observed data, propose a com-pact set of high-level, computable factors that may causally influence Y . Each factor should be supported by or consistent with the observed patterns. Output a list of factors. For each factor, pro-vide a short name and one sentence describ-ing how it could affect Y .
+
+F.2.3 Chain-of-Thought Prompt (text-only) Prompt. You are given: (1) a description of a multi-agent simulation environment and (2) an outcome of interest Y .First, briefly reason step by step about which collective properties of agent behavior could plausibly influence Y . Then propose a com-pact set of high-level, computable factors. Output only the final factor list. For each fac-tor, provide a short name and one sentence describing how it could affect Y .
+
+F.2.4 Multi-round Prompt (text-only, no causal feedback) Round 1 Prompt. You are given: (1) a description of a multi-agent simulation en-vironment and (2) an outcome of interest 
+
+Y .Propose an initial compact set of high-level, nonlinear, computable factors that may causally influence Y . For each fac-tor, provide a short name and one sentence description. 
+
+Round t > 1 Prompt. Here is your cur-rent factor list. Revise it using only this conversation: merge near-duplicates, clarify ambiguous items, and optionally add miss-ing high-level factors. Keep the final list compact and interpretable. Output only the updated factor list (name + one sentence per factor). 
+
+F.3 Causal Structure Recovery Baselines 
+
+We compare against three classes of methods. 
+
+Statistical causal discovery (SCD) meth-ods include PC (Spirtes and Glymour, 1991), FCI (Spirtes et al., 2000), GES (Chickering, 2002) and MMHC (Tsamardinos et al., 2006), all ap-plied directly to observed variables. PC is a constraint-based procedure that uses conditional-independence tests to learn an equivalence class of DAGs (typically returned as a CPDAG) under causal sufficiency; FCI extends PC to allow latent confounders and selection bias, returning a PAG with possibly undirected/partially oriented edges. GES is a score-based greedy search over Markov equivalence classes that adds and then deletes edges to optimize a decomposable score (e.g., BIC), pro-ducing a CPDAG; MMHC is a hybrid approach that first performs constraint-based neighbor se-lection (max–min parents-and-children) to prune candidates, followed by a score-based hill-climbing phase to orient/refine edges. 
+
+Pure LLM methods include Efficient-CDLMs (Ji-ralerspong et al., 2024), MAC (Le et al., 2024), and PAIRWISE (Kiciman et al., 2023). Efficient-CDLMs employs a BFS-style prompting strat-egy that leverages the DAG structure to construct causal graphs with fewer LLM queries than exhaus-tive pairwise prompting. MAC formulates causal discovery as a multi-agent debate among LLMs, where agents argue for/against candidate relations and the final graph is obtained by aggregating de-bated judgments. PAIRWISE queries an LLM for pairwise causal direction decisions and aggregates the resulting judgments into a global graph with-out relying on explicit statistical tests, potentially leaving relations uncertain when evidence is weak. Finally, hybrid SCD+LLM methods refine an initial SCD-produced graph using LLM reasoning, including SCD-LLM, ReAct (Yao et al., 2022), and LLM-KBCI (Takayama et al., 2024). SCD-LLM applies a single LLM pass conditioned on the SCD output (e.g., adjacency list) and variable meta-data to revise edge existence and/or directions. ReAct interleaves natural-language reasoning with tool-based actions (e.g., graph edits and external checks) to iteratively refine the SCD graph. LLM-KBCI adopts a two-stage ZS-CoT prompting framework: it first elicits explanations for each (non-)edge and then makes a final discrete decision, yielding an LLM-refined causal graph. G Instantiation of Conn min by Path-Cover Closure 
+
+This appendix describes a practical instantiation of Conn min (R ⇒ MB H(Y )) when we aim to pre-serve all upstream emergence pathways from R to each boundary variable. Here, “ min ” denotes the 
+
+minimal closure that preserves all directed paths from R to every B ∈ MB H(Y ), i.e., it keeps the union of these paths and removes any nodes/edges not on any such path. 
+
+Key idea. We keep exactly the nodes and directed edges that lie on at least one directed path from any root r ∈ R to any boundary variable B ∈
+
+MB H(Y ) in the (constrained) retained mechanism graph. Equivalently, the connecting subgraph is the union of all directed R → B paths, which preserves alternative micro/meso mechanisms leading to the same boundary factor. 
+
+Constrained graph. Start from the retained mechanism graph G(k) 
+
+> W
+
+and enforce all simulation-confirmed edges as hard constraints (e.g., fixed ori-entations and/or edge inclusion). Let the resulting directed graph be eG(k) 
+
+> W
+
+.
+
+Reachability-based path cover. Let Reach +(U )
+
+be the set of nodes reachable from a node set U via directed edges in eG(k) 
+
+> W
+
+, and let Reach −(V ) be the set of nodes that can reach a node set V (i.e., reach-ability in the reverse graph). For each boundary variable B, define 
+
+P(B) := Reach +(R) ∩ Reach −({B}). (48) A node is in P(B) iff it lies on at least one directed path from R to B. We then take the union over all boundary variables: 
+
+P := [ 
+
+> B∈MB H(Y)
+
+P(B). (49) We instantiate Conn min (R ⇒ MB H(Y )) as the subgraph of eG(k) 
+
+> W
+
+induced by P (keeping only di-rected edges). By construction, this subgraph con-tains all directed R → B paths that are consistent with the enforced constraints. 
+
+Pruning. After inducing the subgraph and en-forcing hard constraints, we drop any non-terminal node (excluding R and MB H(Y )) that is not on a directed path from R to any boundary variable. This removes dangling components irrelevant to the emergence explanation. 
+
+Result. The resulting subgraph serves as 
+
+Conn min (R ⇒ MB H(Y )) . Combined with 
+
+{Y } ∪ MB H(Y ), it yields the explanatory sub-graph EY used to trace micro–meso mechanisms that give rise to Y .
+
+H O2O Delivery Platform Simulation Details 
+
+To comprehensively validate the effectiveness of our method, we construct a multi-agent simulation environment for on-demand food delivery. The simulator models a heterogeneous collaborative ecosystem composed of Merchants , Riders , and 
+
+Customers . Importantly, the simulator’s micro-to-macro emergence patterns are explicitly instanti-ated from ground-truth mechanisms calibrated on real-world data, rather than being assumed implic-itly or left to uncontrolled dynamics. 
+
+H.1 Ecosystem Overview and Interaction Loop 
+
+At each discrete time step t = 1 , 2, . . . , the envi-ronment evolves through an event-driven pipeline: 1. Order generation: Customer agents gener-ate new orders over time following empiri-cal trends extracted from real-world data 
+
+(e.g., time-of-day demand curves and spatial demand patterns). 2. Merchant processing: Merchant agents ac-cept and prepare orders, potentially with queueing and preparation delays. 3. Dispatching: The Dispatch Center assigns available orders to rider agents according to a global policy. 4. Rider response and execution: Riders re-spond to dispatch instructions and execute pickup-and-delivery actions (e.g., accept/re-ject, reroute, reprioritize). 5. Logging: The simulator records states, ac-tions, outcomes, and derived variables for sub-sequent causal analysis. This setup provides a controllable testbed while preserving realistic complexities such as dynamic supply–demand imbalance, congestion, and de-layed effects. H.2 LLM-Based Cognition-Driven Decision-Making 
+
+Unlike traditional rule-based simulators, core enti-ties in our environment are embedded with a Large Language Model (LLM) core. As a result, an agent’s behavior is not a deterministic function mapping from state to action, but a stochastic pro-cess driven by semantic understanding and contex-tual reasoning. A representative example is the Rider agent .Given (i) its role/persona, (ii) the current explicit observable state , and (iii) an implicit psychologi-cal state , the rider may nonlinearly weigh and re-spond to dispatch instructions (e.g., accept, reject, delay, or reorder tasks). This design intentionally introduces the real-world intention–behavior gap ,injecting valuable noise and uncertainty that makes identifying causal chains substantially more chal-lenging and realistic. 
+
+H.3 Multi-Level Dynamic Games and Cascading Effects 
+
+The system reproduces a complex supply–demand game with multi-level decision-making: • The Dispatch Center attempts to allocate or-ders under a global objective (e.g., latency, throughput, service stability). • Individual Riders respond according to local optimality (e.g., personal revenue, route pref-erences, workload considerations). The conflict between centralized dispatching and decentralized execution, together with queueing-theoretic stochastic order arrivals, yields a highly coupled dynamical system. Small perturbations at a single node (e.g., a rider rejecting an order or a merchant delaying preparation) can propagate through the system and be nonlinearly amplified via cascading effects, making causal tracing and attribution particularly difficult. 
+
+H.4 Micro-Interactions, Macro-Emergence, and Dynamic Latent State Space 
+
+Macroscopic system performance (e.g., average delivery time, overtime rate, backlog, stability) is not determined by any single variable; instead, it emerges from nonlinear interactions among a large number of micro-level entities. To operationalize and quantitatively detect such emergence, following the value-entropy-based in-dicator proposed by Yu et al. (2025b), we define the emergence score Y as the degree to which the system deviates from its optimal operating regime due to excessive disorder, measured by an edge value-entropy loss: 
+
+Y = 1 − exp 
+
+
+
+− HT − Hbest 
+
+Hbest 
+
+
+
+. (50) Here, HT denotes the system entropy at time step t,computed from the empirical probability distribu-tion of order contract deviations , i.e., the difference between the actual delivery time and the promised delivery time, which reflects whether an order is delivered early, on time, or late. Hbest is the op-timal reference entropy corresponding to the best operating efficiency of the platform (in our cali-bration, Hbest ≈ 1.1609 ). When Y = 0 , the sys-tem stays within an ordered (or mildly fluctuating) regime where the vast majority of orders can be delivered as expected, and the overall macro-state is controllable and predictable. As Y increases and approaches 1, the system exhibits severe disor-der characterized by large-scale delays or capacity collapse, indicating an emergence regime where normal scheduling becomes ineffective and service quality turns highly unstable and difficult to pre-dict. 
+
+H.5 Experimental Configuration and Scalability 
+
+In our experiments, we use a default configuration with 12 merchants , 41 customers , and 20 riders .All population sizes are configurable, allowing us to scale the number of merchants/users/riders and to modify load conditions (e.g., demand intensity and service capacity) for robustness evaluation. I Prompt Templates for CAMO Agents 
+
+I.1 A1: Worldview Parser A1: System Prompt 
+
+You construct a structured, computable worldview from "fragmented facts". You must follow the Global Contract. When { fragmented_facts} are insufficient to support recurring patterns or latent mechanisms, you must retrieve supporting literature using available tools before answering. 
+
+A1: Task 1 — Multi-Stakeholders and Resources/Constraints/Goals 
+
+Extract multi−stakeholders relevant to {req} from { fragmented_facts}. For each stakeholder, list resources, constraints, and goals. Keep items concise and actionable. JSON: {"stakeholders": [ {"name": "string", "resources": ["string"], "constraints": ["string"], "goals": ["string"] }]}
+
+A1: Task 2.1 — Behavior Patterns (with automatic evidence retrieval) 
+
+Identify recurring behavior patterns that appear across multiple independent sources or multiple cases. Express each pattern as an If...Then... rule (or equivalent) .If multi−source/multi−case support is not clear from { fragmented_facts}, retrieve empirical/survey evidence via LIT_SEARCH. Attach evidence ids to each pattern (from retrieved items or directly from {fragmented_facts} if traceable). JSON: {"patterns": [ {"if_clause": "string", "then_clause": "string", "drivers": ["string"], "tag": "multi_sources | multi_cases", "evidence_ids": ["string"] }]}
+
+A1: Task 2.2 — Latent Factors (ground mechanisms with tools when needed) 
+
+Derive latent motivations/mechanisms behind the extracted behavior patterns. If mechanisms are not directly supported by { fragmented_facts}, retrieve literature evidence ( LIT_SEARCH) and, when necessary, verify details via PAPER_FETCH. Label each factor as "directly observed", "inferred", or " severely underspecified". Attach evidence ids for each factor. JSON: {"latent_factors": [ {"name": "string", "description": "string", "label": "directly observed | inferred | severely undersspecified", "evidence_ids": ["string"] }]}
+
+A1: Task 3 — Multi-Scale Structural Relationships (Micro/Meso/Macro) 
+
+Construct multi−scale structures (micro/meso/macro) from {fragmented_facts} and {latent_variables}. For each scale, provide one structural assumption and map latent variables (by name) to exactly one scale. JSON: {"micro": {"structural_assumption": "string", "mapping": ["string"]}, "meso": {"structural_assumption": "string", "mapping ": ["string"]}, "macro": {"structural_assumption": "string", "mapping ": ["string"]} }
+
+A1: Task 4 — Consistency and Stability Measurement 
+
+Compute the intersection and union sizes between two sets. Treat semantically equivalent elements as identical when counting. JSON: {"intersection_size": "int", "union_size": "int" }I.2 A2: Worldview Integrator A2: System Prompt 
+
+You unify and resolve conflicting worldviews arising from multiple perspectives, sources, and explanations. You must follow the Global Contract. 
+
+A2: Task 1 — Language Unification of Indicators 
+
+Deduplicate latent variables with the same semantics but different names. Align statistical calibers and provide a unique definition for each unified indicator. JSON: {"unified_indicators": [ {"name": "string", "description": "string", "calculation_formula": "string", "data_source": "string", "time_window": "string" }]}
+
+A2: Task 2 — Determine Variable Links 
+
+Determine association relationships among variables in { unified_latent_variables} using {behavior_patterns }. All variables must be selected from { unified_latent_variables}. If multiple relationships exist for the same pair, include all with distinct descriptions. JSON: {"variable_links": [ {"name": "string", "targets": [{"name": "string", "description": "string "}] }]}
+
+A2: Task 3 — Maintain Competing Explanations 
+
+For each (source,target) link, provide competing explanations that differ materially. Include prerequisites, evidence, and a support estimate in [0,1]. Output must include every link, even if only one explanation exists. JSON: {"competition_relationship": [ {"source": "string", "target": "string", "explanations": [ {"text": "string", "prerequisites": "string", "evidence ": "string", "support_estimation": "float"} ]}]}
+
+A2: Task 4 — Rating of Candidate Causal Graph 
+
+Rate the causal graph from three aspects in [0,100]: fit, simplicity, explainability. JSON: {"fit":"int","simplicity":"int","explainability":"int"} 
+
+A2: Task 5 — Reassess Uncertain Variables (Data Feedback) 
+
+Rejudge whether uncertain variables should remain, using {gt_feedback} and A3's reasons. Set is_important=false for at most 5 least reliable variables; set true for all others. JSON: {"uncertain_variable_reassess": [ {"name":"string","is_important":"bool","reason":" string"} ]}A2: Task 6 — Latent Variable Regeneration 
+
+Redesign variables flagged for improvement (definition/ formula/source/window). Optionally add up to 2 new variables (must not duplicate {certainty_latent_variables}). JSON: {"regenerated_uncertain_indicators": [ {"name":"string","description":"string"," calculation_formula":"string","data_source":"string ","time_window":"string"} ]}
+
+I.3 A3: Causal Cartographer A3: System Prompt 
+
+You assemble candidate causal structures by aligning worldview variables with dataset constraints, then annotate edges with identifiability and produce feedback. You must follow the Global Contract. When causal discovery methods, identifiability criteria, or orientation rules require external evidence, you must retrieve literature (LIT_SEARCH / WEB_SEARCH) and verify key details (PAPER_FETCH) before finalizing outputs. 
+
+A3: Task 1 — Node Adaptation 
+
+For each latent variable, decide whether it is observable, constructible, or uncertain given {data_columns}. If constructible, provide a formal formula using only names from {data_columns}. Variables in {certain_variables_names} must be retained as observable or constructible. JSON: {"variable_examination": [ {"name":"string","flag":"observable | constructible | uncertain","explanation":"string","formula":"string "} ]}
+
+A3: Task 1.5 — Feedback to A2 
+
+Provide concise guidance (<=200 words) on accepted/ rejected variables and how to improve variable generation. JSON: {"feedback_to_A2":"string", "accepted_variables":["string"], "rejected_variables":[{"name":"string","reason":"string "}] }
+
+A3: Task 2 — Causal Structure Generation (Merge + Tool-Triggered Method Lookup) 
+
+Merge worldview−driven and data−driven structures into a candidate structure. Use node adaptation formulas: if a variable is constructible, add implied edges consistent with its formula. If you need to choose or justify a causal discovery strategy (e.g., PC/GES/LiNGAM/NOTEARS/ FGES/FCI, etc.), or need rules about identifiability under assumptions, you MUST retrieve evidence via LIT_SEARCH/ WEB_SEARCH first, and optionally PAPER_FETCH for verification. Record evidence ids in each edge if such justification is used. JSON: {"candidate_structure": [ {"source":"string","target":"string","description":" string","support_estimation":"float","flag":"world | data | both", "evidence_ids":["string"]} ]}
+
+A3: Task 3 — Edge Identifiability Analysis (tool-using when criteria are external) 
+
+Add an identifiability label to each edge: identifiable, assumption−dependent, or non−identifiable. If your identifiability decision relies on formal criteria beyond the given structure/assumptions, retrieve references via LIT_SEARCH/WEB_SEARCH and verify with PAPER_FETCH when needed. Attach evidence ids when used. JSON: {"edge_identifiability": [ {"source":"string","target":"string","description":" string","support_estimation":"float","flag":"world | data | both", "identifiability_flag":"identifiable | assumption− dependent | non−identifiable", "evidence_ids":["string"]} ]}A3: Task 3.5 — Counterfactual Edge Orientation 
+
+Determine the edge direction based on counterfactual experimental results. If you invoke any external orientation principle (e.g., invariance assumptions, SCM criteria), retrieve evidence first and attach evidence ids. JSON: {"oriented":"bool", "direction":"source_to_target | target_to_source | bidirectional | undetermined", "confidence":"float", "reasoning":"string", "evidence_source_to_target":"string", "evidence_target_to_source":"string", "evidence_ids":["string"] }
+
+A3: Task 4 — Feedback Iteration (Blind Spots) 
+
+Identify which parts of outcome_variable remain poorly explained by the current graph. Return feedback items as hypotheses for missing variables/structures. JSON: {"feedback_items":["string"]} 
+
+I.4 A4: Simulation Scriptwright. A4: System Prompt 
+
+You design structured simulation experiment packages to test important and uncertain causal edges. You must follow the Global Contract. 
+
+A4: Task 1 — Edge Importance Evaluation 
+
+Add an importance score in [0,1] for each edge, reflecting sensitivity to the objective in {req}, and provide a brief explanation. JSON: {"edge_importance_res": [ {"source":"string","target":"string","description":" string","support_estimation":"float","flag":"string", "identifiability_flag":"string","importance":"float"," importance_explanation":"string"} ]}
+
+I.5 A5: Counterfactual Adjudicator A5: System Prompt 
+
+You verify causal graphs using counterfactual simulation results: evaluate credibility, design interventions, verify edges, and refine graphs. You must follow the Global Contract. 
+
+A5: Task 1 — Model Credibility Evaluation 
+
+Compare simulation output with real−world observations and return a credibility score in [0,1]. If credibility is low, treat downstream findings as in− model evidence only. JSON: {"credibility_score":"float","explanation":"string"} 
+
+A5: Task 2 — Experiment Design 
+
+Design default settings and multiple intervention settings by varying target_variable while keeping others fixed. JSON: {"default_values":{"var_name":"value"}, "experiments":[{"experiment_id":"string","description ":"string","settings":{"var_name":"value"}}] }
+
+A5: Task 3 — Causal Edge Verification 
+
+For each edge, assign one label: "In−model strong support" | "In−model partial support" | "In−model refutation" | "Insufficient evidence". JSON: [{"source":"string","target":"string","verification_label ":"string","reasoning":"string"} ]
+
+A5: Task 4 — Refine Causal Graph 
+
+Remove refuted edges, keep supported edges, and decide how to treat insufficient−evidence edges. JSON: [{"source":"string","target":"string","relation":"string"} ]
+
+J Licenses and Terms 
+
+This work uses third-party artifacts (models, soft-ware libraries, and public aggregate statistics). We summarize the corresponding licenses/terms, us-age, and redistribution status in Table 8. We do not redistribute any third-party proprietary artifacts (e.g., API-served model weights); all third-party re-sources are accessed and used under their original licenses/terms. Our released code and any derived artifacts (e.g., prompts and configurations) are intended solely for research and reproducibility in controlled simula-tion settings. We do not claim or recommend direct real-world deployment without domain-specific validation and appropriate compliance and ethical review. 
+
+Privacy note. Real-world data are used only in non-identifying, aggregate form for simulator cal-ibration (Table 8); we do not collect, store, or re-lease any personally identifiable information. All analyses are performed on synthetic simulation roll-outs. 
+
+K Computational Budget and Infrastructure 
+
+We report the computing infrastructure and approx-imate resource usage for the experiments. Hard-ware details are summarized below, and the average LLM API consumption per trial is reported in Ta-ble 9. 
+
+K.1 Computing Infrastructure 
+
+All local computations (multi-agent coordination, environment state updates, and data processing) were executed on a dedicated server: • CPU: Dual AMD EPYC 9654 (96 cores, 2.4 GHz per CPU), totaling 192 physical cores. • GPU: 4× NVIDIA RTX A6000 (48 GB per card; 192 GB total). • RAM: 512 GB DDR5 ECC ( 16 × 32 GB; 4800 MHz). • Software: Ubuntu 22.04 LTS and Python-based simulation frameworks. 
+
+K.2 GPU Hours and Parallelization 
+
+GPUs were used for lightweight model infer-ence, while CPUs handled discrete-event simula-tion logic and agent state management. The total GPU usage was approximately 2.5 GPU-hours. 
+
+K.3 LLM API Consumption 
+
+Table 9 reports the average number of API calls and tokens per trial, where N denotes the number of major iterative loops in the simulation. 
+
+L Parameters for Packages 
+
+We report third-party packages used for causal discovery, preprocessing, and (partial) LLM infer-ence, together with the key parameter settings in Table 10. Table 8: Licenses and terms for artifacts used in this work. 
+
+Artifact Provider / Source License / Terms How used Re-dist. 
+
+LLM backbones 
+
+Qwen3-235B-A22B Qwen (official release) Apache License 2.0 LLM backbone No DeepSeek-R1-Distill-Qwen-32B DeepSeek (official re-lease) MIT License LLM backbone No DeepSeek-V3.2 DeepSeek (official re-lease) MIT License LLM backbone No GPT-5 mini OpenAI API OpenAI Terms of Use + Service Terms + Usage Policies + Data controls LLM backbone (API) No Gemma3-27B Google DeepMind Gemma Terms of Use LLM backbone No 
+
+Data / statistics 
+
+Meituan Re-search (Wang et al., 2025a) aggregate statistics Meituan-INFORMS-TSL Research Challenge repo CC BY-NC 4.0 Simulator calibration (aggregate only) No 
+
+Software dependencies 
+
+SCD library (PC/F-CI/GES/MMHC implementation) causal-learn/pgmpy MIT License SCD baselines No 
+
+Table 9: Average LLM API consumption per experimental trial. 
+
+Task Type API Calls / Run Tokens / Run 
+
+Method (Core Logic) 50 –80 350 ,000 –1,000 ,000 
+
+Simulation (Environment) 70 –150 (200 ,000 –400 ,000) × N
+
+Note: N denotes the number of major iterative loops in the simulation. 
+
+Table 10: Packages and key parameter settings. 
+
+Package / Algorithm Implementation Key parameters 
+
+pgmpy / PC pgmpy.estimators.PC significance_level=0.05 pgmpy / GES pgmpy.estimators.HillClimbSearch scoring_method=BicScore(df), max_iter=1e4 pgmpy / MMHC pgmpy.estimators.MmhcEstimator default (estimate()) causal-learn / FCI causallearn.search.ConstraintBased.FCI.fci chisq test, alpha=0.05 scikit-learn / Discretiza-tion sklearn.preprocessing.KBinsDiscretizer n_bins=5, encode=ordinal, strat-egy=quantile vLLM / LLM inference (partial) vLLM serving/decoding temperature=0.7, quantization=AWQ, context=131072, max tokens=32768

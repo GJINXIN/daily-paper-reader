@@ -1,0 +1,762 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-21T20:01:14.838274+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 15,
+    "deep_cap": 6,
+    "deep_selected": 9,
+    "quick_candidates": 20,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.14691v2",
+      "title": "CAMO: An Agentic Framework for Automated Causal Discovery from Micro Behaviors to Macro Emergence in LLM Agent Simulations",
+      "abstract": "LLM-empowered agent simulations are increasingly used to study social emergence, yet the micro-to-macro causal mechanisms behind macro outcomes often remain unclear. This is challenging because emergence arises from intertwined agent interactions and meso-level feedback and nonlinearity, making generative mechanisms hard to disentangle. To this end, we introduce \\textbf{\\textsc{CAMO}}, an automated \\textbf{Ca}usal discovery framework from \\textbf{M}icr\\textbf{o} behaviors to \\textbf{M}acr\\textbf{o} Emergence in LLM agent simulations. \\textsc{CAMO} converts mechanistic hypotheses into computable factors grounded in simulation records and learns a compact causal representation centered on an emergent target $Y$. \\textsc{CAMO} outputs a computable Markov boundary and a minimal upstream explanatory subgraph, yielding interpretable causal chains and actionable intervention levers. It also uses simulator-internal counterfactual probing to orient ambiguous edges and revise hypotheses when evidence contradicts the current view. Experiments across four emergent settings demonstrate the promise of \\textsc{CAMO}.",
+      "authors": [
+        "Xiangning Yu",
+        "Yuwei Guo",
+        "Yuqi Hou",
+        "Xiao Xue",
+        "Qun Ma"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.CY"
+      ],
+      "published": "2026-04-16T06:49:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.14691v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "causal discovery in LLM agent simulations of social emergence",
+      "llm_evidence_cn": "大模型智能体社会涌现模拟中的因果发现",
+      "llm_evidence": "大模型智能体社会涌现模拟中的因果发现",
+      "canonical_evidence": "大模型智能体社会涌现模拟中的因果发现",
+      "llm_tldr_en": "Introduces a framework for discovering causal mechanisms from micro behaviors to macro social emergence.",
+      "llm_tldr_cn": "引入了一个发现从微观行为到宏观社会涌现的因果机制的框架。",
+      "llm_tldr": "引入了一个发现从微观行为到宏观社会涌现的因果机制的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.16987v1",
+      "title": "DVAR: Adversarial Multi-Agent Debate for Video Authenticity Detection",
+      "abstract": "The rapid evolution of video generation technologies poses a significant challenge to media forensics, as conventional detection methods often fail to generalize beyond their training distributions. To address this, we propose DVAR (Debate-based Video Authenticity Reasoning), a training-free framework that reformulates video detection as a structured multi-agent forensic reasoning process. Moving beyond the paradigm of pattern matching, DVAR orchestrates a competition between a Generative Hypothesis Agent and a Natural Mechanism Agent. Through iterative rounds of cross-examination, these agents defend their respective explanations against abnormal evidence, driving a logical convergence where the truth emerges from rigorous stress-testing. To adjudicate these conflicting claims, we apply Occam's Razor through the Minimum Description Length (MDL) framework, defining an Explanatory Cost to quantify the \"logical burden\" of each reasoning path. Furthermore, we integrate GenVideoKB, a dynamic knowledge repository that provides high-level reasoning heuristics on generative boundaries and failure modes. Extensive experiments demonstrate that DVAR achieves competitive performance against supervised state-of-the-art methods while exhibiting superior generalization to unseen generative architectures. By transforming detection into a transparent debate, DVAR provides explicit, interpretable reasoning traces for robust video authenticity assessment.",
+      "authors": [
+        "Hongyuan Qi",
+        "Feifei Shao",
+        "Ming Li",
+        "Hehe Fan",
+        "Jun Xiao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-18T13:22:42+00:00",
+      "link": "https://arxiv.org/pdf/2604.16987v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Multi-agent forensic reasoning for video authenticity detection",
+      "llm_evidence_cn": "用于视频真实性检测的多智能体法证推理",
+      "llm_evidence": "用于视频真实性检测的多智能体法证推理",
+      "canonical_evidence": "用于视频真实性检测的多智能体法证推理",
+      "llm_tldr_en": "DVAR uses adversarial multi-agent debate to detect fake videos through structured forensic reasoning.",
+      "llm_tldr_cn": "DVAR 通过多智能体对抗辩论和结构化法证推理来检测虚假视频。",
+      "llm_tldr": "DVAR 通过多智能体对抗辩论和结构化法证推理来检测虚假视频。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.17615v1",
+      "title": "WhatIf: Interactive Exploration of LLM-Powered Social Simulations for Policy Reasoning",
+      "abstract": "Policymakers in domains such as emergency management, public health, and urban planning must make decisions under deep uncertainty, where outcomes depend on how large populations interpret information, coordinate, and adopt over time. Existing tools only partially support this process: tabletop exercises enable collaborative discussion but lack dynamic feedback, while computational simulations capture population dynamics but are designed for offline analysis. We present WhatIf, an interactive system that enables policymakers to steer, inspect, and compare LLM-powered social simulations in real time. Informed by a formative study in emergency preparedness planning, we derive four design requirements for interactive policy simulations: fluid steering, real-time scale, collaborative exploration, and multi-level interpretability. We developed WhatIf guided by these requirements and evaluated it with five preparedness professionals across three disaster evacuation scenarios. Our findings show that participants used the system as a space for iterative branching and comparison rather than evaluating fixed plans; reflected on tacit planning assumptions when agent behavior violated expectations; surfaced previously unrecognized planning vulnerabilities; and grounded their reasoning in inspectable agent-level cases rather than aggregate outputs alone. These findings suggest broader design implications for LLM-powered social simulation systems: designing such systems as interactive, shared reasoning environments -- rather than offline predictive tools -- can better support expert decision-making under deep uncertainty.",
+      "authors": [
+        "Yuxuan Li",
+        "Kyzyl Monteiro",
+        "Hirokazu Shirado",
+        "Sauvik Das"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-04-19T21:00:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.17615v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Interactive system for LLM-powered social simulations for policy reasoning",
+      "llm_evidence_cn": "用于政策推理的大模型驱动社会模拟交互系统",
+      "llm_evidence": "用于政策推理的大模型驱动社会模拟交互系统",
+      "canonical_evidence": "用于政策推理的大模型驱动社会模拟交互系统",
+      "llm_tldr_en": "WhatIf is an interactive system for steering and inspecting LLM-powered social simulations in real time.",
+      "llm_tldr_cn": "WhatIf 是一个允许政策制定者实时引导和检查大模型驱动的社会模拟的交互系统。",
+      "llm_tldr": "WhatIf 是一个允许政策制定者实时引导和检查大模型驱动的社会模拟的交互系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.18011v1",
+      "title": "Topology-Aware LLM-Driven Social Simulation: A Unified Framework for Efficient and Realistic Agent Dynamics",
+      "abstract": "Social simulation is essential for understanding collective human behavior by modeling how individual interactions give rise to large-scale social dynamics. Recent advances in large language models (LLMs) have enabled multi-agent frameworks with human-like reasoning and communication capabilities. However, existing LLM-based simulations treat social networks as fixed communication scaffolds, failing to leverage the structural signals that shape behavioral convergence and heterogeneous influence in real-world systems, which often leads to inefficient and unrealistic dynamics. To address this challenge, we propose TopoSim, a unified topology-aware social simulation framework that explicitly integrates structural reasoning into agent interactions along two complementary dimensions. First, TopoSim aligns agents with similar structural roles and interaction contexts into shared backbone units, enabling coordinated updates that reduce redundant computation while preserving emergent social dynamics. Second, TopoSim models social influence as a structure-induced signal, introducing heterogeneous interaction patterns grounded in network topology rather than uniform influence assumptions. Extensive experiments across three social simulation frameworks and diverse datasets demonstrate that TopoSim achieves comparable or improved simulation fidelity while reducing token consumption by 50 - 90%. Moreover, our approach more accurately reproduces key structural phenomena observed in real-world social systems and exhibits strong generalization and scalability.",
+      "authors": [
+        "Yuwei Xu",
+        "Shulun Zhang",
+        "Yingli Zhou",
+        "Shipei Zeng",
+        "Laks V. S. Lakshmanan",
+        "Chenhao Ma"
+      ],
+      "primary_category": "cs.SI",
+      "categories": [
+        "cs.SI",
+        "cs.DB"
+      ],
+      "published": "2026-04-20T09:33:47+00:00",
+      "link": "https://arxiv.org/pdf/2604.18011v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Topology-aware LLM-driven social simulation framework",
+      "llm_evidence_cn": "拓扑感知的 LLM 驱动社会模拟框架",
+      "llm_evidence": "拓扑感知的 LLM 驱动社会模拟框架",
+      "canonical_evidence": "拓扑感知的 LLM 驱动社会模拟框架",
+      "llm_tldr_en": "TopoSim integrates structural reasoning into LLM-based social simulations for realistic agent dynamics.",
+      "llm_tldr_cn": "TopoSim 将结构化推理整合到大模型社会模拟中，以实现更真实的智能体动态。",
+      "llm_tldr": "TopoSim 将结构化推理整合到大模型社会模拟中，以实现更真实的智能体动态。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.17079v1",
+      "title": "Auditing Support Strategies in LLMs through Grounded Multi-Turn Social Simulation",
+      "abstract": "When users seek social support from chatbots, they disclose their situation gradually, yet most evaluations of supportive LLMs rely on single-turn, fully specified prompts. We introduce a multi-turn simulation framework that closes this gap. Support-seeking narratives from five Reddit communities are decomposed into ordered fragments and revealed turn by turn to a language model. Each response is coded with the Social Support Behavior Code (SSBC), an established multi-label taxonomy that captures the composition of support, rather than a single quality score. To ask whether support choices track the model's own construal of user distress, we use linear probes on hidden representations to estimate this internal signal without altering the generation context. Across two mid-scale models (Llama-3.1-8B, OLMo-3-7B) and more than 6,200 turns, support composition shifts systematically with estimated distress: teaching declines as estimated distress rises, a finding that replicates across architectures, while increases in affective and esteem-oriented strategies (such as validation) are suggestive but model-specific and rest on noisier annotations. Community context independently shapes behavior, tracking topic and discourse norms rather than demographic categories. These trajectory-level dynamics, invisible to single-turn evaluation, motivate multi-turn auditing frameworks for socially sensitive applications.",
+      "authors": [
+        "Michelle Star",
+        "Andrew Aquilina",
+        "Yu-Ru Lin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-18T17:36:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.17079v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-turn social simulation using LLMs for social support",
+      "llm_evidence_cn": "使用大语言模型进行多轮社交支持模拟",
+      "llm_evidence": "使用大语言模型进行多轮社交支持模拟",
+      "canonical_evidence": "使用大语言模型进行多轮社交支持模拟",
+      "llm_tldr_en": "A multi-turn simulation framework to audit LLM support strategies using social behavior taxonomies.",
+      "llm_tldr_cn": "引入多轮模拟框架，通过社交行为分类法审计大语言模型在社交支持场景中的表现。",
+      "llm_tldr": "引入多轮模拟框架，通过社交行为分类法审计大语言模型在社交支持场景中的表现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.17368v1",
+      "title": "Stochastic Delayed Dynamics of Rumor Propagation with Awareness and Fact-Checking",
+      "abstract": "This paper presents a stochastic delayed differential model for rumor propagation during infodemic that incorporates human behavioral response, public skepticism and fact-checking mechanisms. A discrete time delay is introduced to model natural lags in information processing and institutional response. Additionally, we adopt additive stochastic perturbations to model random fluctuations in social interaction and exposure. We present a rigorous stability analysis of the proposed rumor transmission model and derive convergence guarantees under reproduction number conditions. We also validate the model by numerical simulations and analyze the outbreak severity and quantify uncertainty under variable information processing delays. The results highlight the importance of timely awareness and fact-checking interventions for mitigating misinformation spread during pandemics",
+      "authors": [
+        "Lamia Alyami",
+        "Anis Hamadouche",
+        "Amir Hussain"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-04-19T10:41:22+00:00",
+      "link": "https://arxiv.org/pdf/2604.17368v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "rumor propagation and fact-checking in social interaction",
+      "llm_evidence_cn": "社交互动中的谣言传播与事实核查",
+      "llm_evidence": "社交互动中的谣言传播与事实核查",
+      "canonical_evidence": "社交互动中的谣言传播与事实核查",
+      "llm_tldr_en": "Models rumor propagation dynamics with fact-checking mechanisms to understand social infodemics.",
+      "llm_tldr_cn": "通过事实核查机制模拟谣言传播动态，以理解社交信息疫情。",
+      "llm_tldr": "通过事实核查机制模拟谣言传播动态，以理解社交信息疫情。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.17774v1",
+      "title": "Prompt Optimization Enables Stable Algorithmic Collusion in LLM Agents",
+      "abstract": "LLM agents in markets present algorithmic collusion risks. While prior work shows LLM agents reach supracompetitive prices through tacit coordination, existing research focuses on hand-crafted prompts. The emerging paradigm of prompt optimization necessitates new methodologies for understanding autonomous agent behavior. We investigate whether prompt optimization leads to emergent collusive behaviors in market simulations. We propose a meta-learning loop where LLM agents participate in duopoly markets and an LLM meta-optimizer iteratively refines shared strategic guidance. Our experiments reveal that meta-prompt optimization enables agents to discover stable tacit collusion strategies with substantially improved coordination quality compared to baseline agents. These behaviors generalize to held-out test markets, indicating discovery of general coordination principles. Analysis of evolved prompts reveals systematic coordination mechanisms through stable shared strategies. Our findings call for further investigation into AI safety implications in autonomous multi-agent systems.",
+      "authors": [
+        "Yingtao Tian"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-20T03:53:08+00:00",
+      "link": "https://arxiv.org/pdf/2604.17774v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Emergent collusive behaviors in LLM agent market simulations",
+      "llm_evidence_cn": "大语言模型智能体市场模拟中的涌现性共谋行为",
+      "llm_evidence": "大语言模型智能体市场模拟中的涌现性共谋行为",
+      "canonical_evidence": "大语言模型智能体市场模拟中的涌现性共谋行为",
+      "llm_tldr_en": "Investigates how prompt optimization leads to emergent algorithmic collusion in multi-agent market simulations.",
+      "llm_tldr_cn": "研究提示词优化如何导致多智能体市场模拟中出现算法共谋行为。",
+      "llm_tldr": "研究提示词优化如何导致多智能体市场模拟中出现算法共谋行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.18112v1",
+      "title": "Retrieval-Augmented Multimodal Model for Fake News Detection",
+      "abstract": "In recent years, multimodal multidomain fake news detection has garnered increasing attention. Nevertheless, this direction presents two significant challenges: (1) Failure to Capture Cross-Instance Narrative Consistency: existing models usually evaluate each news in isolation, fail to capture cross-instance narrative consistency, and thus struggle to address the spread of cluster based fake news driven by social media; (2) Lack of Domain Specific Knowledge for Reasoning: conventional models, which rely solely on knowledge encoded in their parameters during training, struggle to generalize to new or data-scarce domains (e.g., emerging events or niche topics). To tackle these challenges, we introduce Retrieval-Augmented Multimodal Model for Fake News Detection (RAMM). First, RAMM employs a Multimodal Large Language Model (MLLM) as its backbone to capture cross-modal semantic information from news samples. Second, RAMM incorporates an Abstract Narrative Alignment Module. This component adaptively extracts abstract narrative consistency from diverse instances across distinct domains, aggregates relevant knowledge, and thereby enables the modeling of high-level narrative information. Finally, RAMM introduces a Semantic Representation Alignment Module, which aligns the model's decision-making paradigm with that of humans - specifically, it shifts the model's reasoning process from direct inference on multimodal features to an instance-based analogical reasoning process. Extensive experimental results on three public datasets validate the efficacy of our proposed approach. Our code is available at the following link: https://github.com/li-yiheng/RAMM",
+      "authors": [
+        "Yiheng Li",
+        "Weihai Lu",
+        "Hanyi Yu",
+        "Yue Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.MM"
+      ],
+      "published": "2026-04-20T11:30:17+00:00",
+      "link": "https://arxiv.org/pdf/2604.18112v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multimodal fake news detection on social media",
+      "llm_evidence_cn": "社交媒体上的多模态虚假新闻检测",
+      "llm_evidence": "社交媒体上的多模态虚假新闻检测",
+      "canonical_evidence": "社交媒体上的多模态虚假新闻检测",
+      "llm_tldr_en": "Introduces a retrieval-augmented multimodal model to detect cluster-based fake news on social media.",
+      "llm_tldr_cn": "引入检索增强多模态模型，用于检测社交媒体上的集群式虚假新闻。",
+      "llm_tldr": "引入检索增强多模态模型，用于检测社交媒体上的集群式虚假新闻。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.18133v1",
+      "title": "Multi-Agent Systems: From Classical Paradigms to Large Foundation Model-Enabled Futures",
+      "abstract": "With the rapid advancement of artificial intelligence, multi-agent systems (MASs) are evolving from classical paradigms toward architectures built upon large foundation models (LFMs). This survey provides a systematic review and comparative analysis of classical MASs (CMASs) and LFM-based MASs (LMASs). First, within a closed-loop coordination framework, CMASs are reviewed across four fundamental dimensions: perception, communication, decision-making, and control. Beyond this framework, LMASs integrate LFMs to lift collaboration from low-level state exchanges to semantic-level reasoning, enabling more flexible coordination and improved adaptability across diverse scenarios. Then, a comparative analysis is conducted to contrast CMASs and LMASs across architecture, operating mechanism, adaptability, and application. Finally, future perspectives on MASs are presented, summarizing open challenges and potential research opportunities.",
+      "authors": [
+        "Zixiang Wang",
+        "Mengjia Gong",
+        "Qiyu Sun",
+        "Jing Xu",
+        "Shuai Mao",
+        "Xin Jin",
+        "Qing-Long Han",
+        "Yang Tang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-20T12:00:31+00:00",
+      "link": "https://arxiv.org/pdf/2604.18133v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Survey of multi-agent systems from classical to foundation model-enabled",
+      "llm_evidence_cn": "从经典范式到大基座模型赋能的多智能体系统综述",
+      "llm_evidence": "从经典范式到大基座模型赋能的多智能体系统综述",
+      "canonical_evidence": "从经典范式到大基座模型赋能的多智能体系统综述",
+      "llm_tldr_en": "This survey reviews the evolution of MAS from classical coordination to semantic-level reasoning with LFMs.",
+      "llm_tldr_cn": "该综述回顾了多智能体系统从经典协作到利用大模型进行语义级推理的演进。",
+      "llm_tldr": "该综述回顾了多智能体系统从经典协作到利用大模型进行语义级推理的演进。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.17139v1",
+      "title": "The Consensus Trap: Rescuing Multi-Agent LLMs from Adversarial Majorities via Token-Level Collaboration",
+      "abstract": "Multi-agent large language model (LLM) architectures increasingly rely on response-level aggregation, such as Majority Voting (MAJ), to raise reasoning ceilings. However, in open environments, agents are highly susceptible to stealthy contextual corruption, such as targeted prompt injections. We reveal a critical structural vulnerability in current multi-agent systems: response-level aggregation collapses when corrupted agents form a local majority. Because voting aggregates fully-formed conclusions, it is blind to flawed intermediate logic. To overcome this systematic limitation, we propose the Token-Level Round-Robin (RR) Collaboration, where agents sequentially interleave generation within a shared auto-regressive context. We formalize this process as a discrete-time dynamical system, proving that token-level interleaving transitions aggregation from a brittle counting of final votes (a linear sum) to a dynamic, interwoven chain of logic (a non-linear operator product). Through this theoretical lens, we prove that the honest model's restorative pull can overpower adversarial corruptions, even when corrupted agents form a majority. We conduct an exhaustive empirical evaluation across diverse reasoning benchmarks and demonstrate that while MAJ collapses when corrupted agents reach a majority, RR maintains robust accuracy well beyond this critical threshold.",
+      "authors": [
+        "Jiayuan Liu",
+        "Shiyi Du",
+        "Weihua Du",
+        "Mingyu Guo",
+        "Vincent Conitzer"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-18T20:31:37+00:00",
+      "link": "https://arxiv.org/pdf/2604.17139v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent LLM architectures and collaboration mechanisms",
+      "llm_evidence_cn": "多智能体大语言模型架构与协作机制",
+      "llm_evidence": "多智能体大语言模型架构与协作机制",
+      "canonical_evidence": "多智能体大语言模型架构与协作机制",
+      "llm_tldr_en": "Proposes token-level collaboration to protect multi-agent LLMs from adversarial majority corruption.",
+      "llm_tldr_cn": "提出令牌级协作机制，防止多智能体大语言模型系统在面对恶意多数派时失效。",
+      "llm_tldr": "提出令牌级协作机制，防止多智能体大语言模型系统在面对恶意多数派时失效。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.16778v1",
+      "title": "Federation over Text: Insight Sharing for Multi-Agent Reasoning",
+      "abstract": "LLM-powered agents often reason from scratch when presented with a new problem instance and lack automatic mechanisms to transfer learned skills to other agents. We propose a federated learning-like framework, Federation over Text (FoT), that enables multiple agents solving different tasks to collectively generate a shared library of metacognitive insights by iteratively federating their local reasoning processes. Instead of federation over gradients (e.g., as in distributed training), FoT operates at the semantic level without any gradient optimization or supervision signal. Iteratively, each agent does local thinking and self-improvement on their specific tasks independently, and shares reasoning traces with a central server, which aggregates and distills them into a cross-task (and cross-domain) insight library that existing and future agents can leverage to improve performance on related tasks. Experiments show that FoT improves reasoning effectiveness and efficiency across a wide range of challenging applications, including mathematical problem solving, cross-domain collaboration, and machine learning research insight discovery. Specifically, it improves average accuracies of downstream tasks by 24% while reducing the reasoning tokens by 28% across the first two applications. In the research insight discovery application, FoT is able to generate insights that cover over 90% of the major contributions in the subsequent papers.",
+      "authors": [
+        "Dixi Yao",
+        "Tahseen Rabbani",
+        "Tian Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-04-18T01:57:42+00:00",
+      "link": "https://arxiv.org/pdf/2604.16778v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent reasoning and insight sharing framework",
+      "llm_evidence_cn": "多智能体推理与见解共享框架",
+      "llm_evidence": "多智能体推理与见解共享框架",
+      "canonical_evidence": "多智能体推理与见解共享框架",
+      "llm_tldr_en": "Proposes a federated framework for multi-agent reasoning and skill transfer via semantic insight sharing.",
+      "llm_tldr_cn": "提出一种联邦学习框架，通过语义见解共享实现多智能体推理和技能迁移。",
+      "llm_tldr": "提出一种联邦学习框架，通过语义见解共享实现多智能体推理和技能迁移。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.15813v1",
+      "title": "Exploring Agentic Visual Analytics: A Co-Evolutionary Framework of Roles and Workflows",
+      "abstract": "Agentic visual analytics (VA) represents an emerging class of systems in which large language model (LLM)-driven agents autonomously plan, execute, evaluate, and iterate across the full visual analytics pipeline. By shifting users from low-level tool operations to high-level analytical goals expressed through natural language, these systems are fundamentally transforming how humans interact with data. However, the rapid proliferation of such systems in recent years has outpaced our understanding of their design landscape. Two intertwined problems remain open: how do autonomous agents reshape the traditional VA pipeline, and how must human involvement adapt as agent autonomy increases? To address these questions, this paper presents a comprehensive survey of 55 primary agentic VA systems and introduces a co-evolutionary framework. This framework is essential because it jointly analyzes the progression of agent autonomy alongside the necessary shift in human roles from manual operators to strategic supervisors. Within this framework, we define a role-workflow taxonomy that aligns four key agentic roles (PLANNER, CREATOR, REVIEWER, and CONTEXT MANAGER) and maps them onto established VA pipeline stages. Our analysis uncovers recurring trade-offs along three foundational axes: autonomy levels, agentic roles, and the VA workflow. We consolidate these findings into actionable design guidelines and outline future research directions for agentic visual analytics. A web-based interactive browser of our co-evolutionary framework, including the corpus and design guidelines, is available at agenticva.github.io/AgenticVA/.",
+      "authors": [
+        "Tianqi Luo",
+        "Leixian Shen",
+        "Yuyu Luo"
+      ],
+      "primary_category": "cs.DB",
+      "categories": [
+        "cs.DB"
+      ],
+      "published": "2026-04-17T08:11:39+00:00",
+      "link": "https://arxiv.org/pdf/2604.15813v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agentic visual analytics and human-agent roles",
+      "llm_evidence_cn": "智能体可视化分析与人机角色",
+      "llm_evidence": "智能体可视化分析与人机角色",
+      "canonical_evidence": "智能体可视化分析与人机角色",
+      "llm_tldr_en": "A framework exploring how autonomous agents reshape visual analytics and human involvement.",
+      "llm_tldr_cn": "一个探讨自主智能体如何重塑可视化分析流程及人类参与方式的框架。",
+      "llm_tldr": "一个探讨自主智能体如何重塑可视化分析流程及人类参与方式的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.17148v1",
+      "title": "Graph-of-Agents: A Graph-based Framework for Multi-Agent LLM Collaboration",
+      "abstract": "With an ever-growing zoo of LLMs and benchmarks, the need to orchestrate multiple models for improved task performance has never been more pressing. While frameworks like Mixture-of-Agents (MoA) attempt to coordinate LLMs, they often fall short in terms of (1) selecting relevant agents, (2) facilitating effective intra-agent communication, and (3) integrating responses efficiently. In this work, we propose Graph-of-Agents (GoA), a new graph-based framework for modeling multi-agent LLM communication. Our approach begins with node sampling, selecting only the most relevant agents by leveraging model cards that summarize each model's domain, task specialization, and other characteristics. Next, we construct edges between the selected agents by evaluating their responses against one another to determine relevance ordering. Directed message passing is then performed from highly relevant agents to less relevant ones to enhance their responses, followed by reverse message passing to refine the original responses of the more relevant agents. Finally, the updated responses are aggregated via graph-based pooling (e.g., max or mean pooling) to produce a single, unified answer. We evaluate GoA on diverse multi-domain benchmarks (MMLU, MMLU-Pro, GPQA) and domain-specific benchmarks (MATH, HumanEval, MedMCQA), with an agent pool of 6 LLMs spanning multiple domains. Surprisingly, GoA achieves superior performance using only 3 selected agents, outperforming recent multi-agent LLM baselines that utilize all 6 agents simultaneously. By adopting a graph structure, GoA offers both scalability and effectiveness through structured message passing-positioning it as a strong candidate for navigating the challenges of the ever-growing LLM zoo. Code is available at: https://github.com/UNITES-Lab/GoA.",
+      "authors": [
+        "Sukwon Yun",
+        "Jie Peng",
+        "Pingzhi Li",
+        "Wendong Fan",
+        "Jie Chen",
+        "James Zou",
+        "Guohao Li",
+        "Tianlong Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-18T21:13:03+00:00",
+      "link": "https://arxiv.org/pdf/2604.17148v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "graph-based framework for multi-agent LLM collaboration",
+      "llm_evidence_cn": "基于图的多智能体LLM协作框架",
+      "llm_evidence": "基于图的多智能体LLM协作框架",
+      "canonical_evidence": "基于图的多智能体LLM协作框架",
+      "llm_tldr_en": "A graph-based framework to orchestrate communication and collaboration among multiple LLM agents.",
+      "llm_tldr_cn": "一种基于图的框架，用于编排多个LLM智能体之间的通信与协作。",
+      "llm_tldr": "一种基于图的框架，用于编排多个LLM智能体之间的通信与协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.17400v1",
+      "title": "Phase-Scheduled Multi-Agent Systems for Token-Efficient Coordination",
+      "abstract": "Multi-agent systems (MAS) powered by large language models suffer from severe token inefficiency arising from two compounding sources: (i) unstructured parallel execution, where all agents activate simultaneously irrespective of input readiness; and (ii) unrestricted context sharing, where every agent receives the full accumulated context regardless of relevance. Existing mitigation strategies - static pruning, hierarchical decomposition, and learned routing - treat coordination as a structural allocation problem and fundamentally ignore its temporal dimension. We propose Phase-Scheduled Multi-Agent Systems (PSMAS), a framework that reconceptualizes agent activation as continuous control over a shared attention space modeled on a circular manifold.   Each agent i is assigned a fixed angular phase theta_i in the range [0, 2*pi], derived from the task dependency topology; a global sweep signal phi(t) rotates at velocity omega, activating only agents within an angular window epsilon. Idle agents receive compressed context summaries, reducing per-step token consumption. We implement PSMAS on LangGraph, evaluate on four structured benchmarks (HotPotQA-MAS, HumanEval-MAS, ALFWorld-Multi, WebArena-Coord) and two unstructured conversational settings, and prove stability, convergence, and optimality results for the sweep dynamics. PSMAS achieves a mean token reduction of 27.3 percent (range 21.4-34.8 percent) while maintaining task performance within 2.1 percentage points of a fully activated baseline (p < 0.01, n = 500 per configuration), and outperforms the strongest learned routing baseline by 5.6 percentage points in token reduction with 2.0 percentage points less performance drop. Crucially, we show that scheduling and compression are independent sources of gain: scheduling alone accounts for 18-20 percentage points of reduction, robust to compression degradation up to alpha = 0.40.",
+      "authors": [
+        "Mohit Dubey"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "math.AT"
+      ],
+      "published": "2026-04-19T12:03:54+00:00",
+      "link": "https://arxiv.org/pdf/2604.17400v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "token-efficient coordination in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的高效令牌协作",
+      "llm_evidence": "多智能体系统中的高效令牌协作",
+      "canonical_evidence": "多智能体系统中的高效令牌协作",
+      "llm_tldr_en": "Proposes a phase-scheduling framework to improve token efficiency in LLM-powered multi-agent coordination.",
+      "llm_tldr_cn": "提出一种相位调度框架，以提高LLM驱动的多智能体协作中的令牌效率。",
+      "llm_tldr": "提出一种相位调度框架，以提高LLM驱动的多智能体协作中的令牌效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.16520v1",
+      "title": "AgentClick: A Skill-Based Human-in-the-Loop Review Layer for Terminal AI Agents",
+      "abstract": "Recent autonomous AI agents such as Codex, and Claude Code have made it increasingly practical for users to delegate complex tasks, including writing emails, executing code, issuing shell commands, and carrying out multi-step plans. However, despite these capabilities, human-agent interaction still largely happens through terminal interfaces or remote text-based channels such as Discord. These interaction modes are often inefficient and unfriendly: long text outputs are difficult to read and review, proposed actions lack clear structure and visual context, and users must express feedback by typing detailed corrections, which is cumbersome and often discourages effective collaboration. As a result, non-expert users in particular face a high barrier to working productively with agents. To address this gap, we present AgentClick, an interactive review layer for terminal-based agents. AgentClick is implemented as a localhost npm server paired with a skill-based plugin that connects the running agent to a browser interface, allowing users to supervise and collaborate with agents through a structured web UI rather than raw terminal text alone. The system supports a range of human-in-the-loop workflows, including email drafting and revision, plan review and modification, memory management, trajectory inspection and visualization, and error localization during agent execution. It also turns code generation and execution into a reviewable process, enabling users to inspect and intervene before consequential actions are taken. In addition, AgentClick supports persistent preference capture through editable memory and remote access over HTTP, allowing users to review agents running on servers from their personal devices. Our goal is to lower the barrier for non-expert users and improve the efficiency and quality of human-agent co-work.",
+      "authors": [
+        "Haomin Zhuang",
+        "Hanwen Xing",
+        "Xiangliang Zhang"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-04-15T18:22:50+00:00",
+      "link": "https://arxiv.org/pdf/2604.16520v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "human-in-the-loop review for AI agents",
+      "llm_evidence_cn": "AI智能体的人机回环评审层",
+      "llm_evidence": "AI智能体的人机回环评审层",
+      "canonical_evidence": "AI智能体的人机回环评审层",
+      "llm_tldr_en": "A skill-based review layer to improve human-agent interaction and collaboration efficiency.",
+      "llm_tldr_cn": "一种基于技能的评审层，旨在提高人机交互与协作效率。",
+      "llm_tldr": "一种基于技能的评审层，旨在提高人机交互与协作效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.17191v1",
+      "title": "Do LLM-derived graph priors improve multi-agent coordination?",
+      "abstract": "Multi-agent reinforcement learning (MARL) is crucial for AI systems that operate collaboratively in distributed and adversarial settings, particularly in multi-domain operations (MDO). A central challenge in cooperative MARL is determining how agents should coordinate: existing approaches must either hand-specify graph topology, rely on proximity-based heuristics, or learn structure entirely from environment interaction; all of which are brittle, semantically uninformed, or data-intensive. We investigate whether large language models (LLMs) can generate useful coordination graph priors for MARL by using minimal natural language descriptions of agent observations to infer latent coordination patterns. These priors are integrated into MARL algorithms via graph convolutional layers within a graph neural network (GNN)-based pipeline, and evaluated on four cooperative scenarios from the Multi-Agent Particle Environment (MPE) benchmark against baselines spanning the full spectrum of coordination modeling, from independent learners to state-of-the-art graph-based methods. We further ablate across five compact open-source LLMs to assess the sensitivity of prior quality to model choice. Our results provide the first quantitative evidence that LLM-derived graph priors can enhance coordination and adaptability in dynamic multi-agent environments, and demonstrate that models as small as 1.5B parameters are sufficient for effective prior generation.",
+      "authors": [
+        "Nikunj Gupta",
+        "Rajgopal Kannan",
+        "Viktor Prasanna"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-04-19T01:40:39+00:00",
+      "link": "https://arxiv.org/pdf/2604.17191v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-derived graph priors for multi-agent reinforcement learning coordination",
+      "llm_evidence_cn": "用于多智能体强化学习协作的大模型衍生图先验",
+      "llm_evidence": "用于多智能体强化学习协作的大模型衍生图先验",
+      "canonical_evidence": "用于多智能体强化学习协作的大模型衍生图先验",
+      "llm_tldr_en": "This paper explores using LLMs to generate coordination graph priors to improve multi-agent reinforcement learning.",
+      "llm_tldr_cn": "本文探讨了利用大模型生成协作图先验，以改进多智能体强化学习的协调性。",
+      "llm_tldr": "本文探讨了利用大模型生成协作图先验，以改进多智能体强化学习的协调性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.17503v1",
+      "title": "SkillGraph: Self-Evolving Multi-Agent Collaboration with Multimodal Graph Topology",
+      "abstract": "Scaling vision-language models into Visual Multiagent Systems (VMAS) is hindered by two coupled issues. First, communication topologies are fixed before inference, leaving them blind to visual content and query context; second, agent reasoning abilities remain static during deployment. These issues reinforce each other: a rigid topology fails to leverage richer agent expertise, while static agents lack incentives to specialize for a given query. We address this with SkillGraph, a joint framework that evolves both agent expertise and communication topology. Within this framework, a Multimodal Graph Transformer (MMGT) encodes visual tokens, instruction semantics and active skill embeddings to predict a query-conditioned collaboration graph, replacing hand-crafted routing with dynamic, content-aware information flow. Complementing this, a Skill Designer distills and refines reasoning heuristics from failure cases, constructing a self-evolving multimodal Skill Bank. Crucially, updated skill embeddings are fed back into the MMGT, enabling the topology to adapt alongside capability growth. Experiments show that SkillGraph achieves consistent improvements across four benchmarks, five common MAS structures and four base models. Code is available at https://github.com/niez233/skillgraph.",
+      "authors": [
+        "Zheng Nie",
+        "Ruolin Shen",
+        "Xinlei Yu",
+        "Bo Yin",
+        "Jiangning Zhang",
+        "Xiaobin Hu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-19T15:46:46+00:00",
+      "link": "https://arxiv.org/pdf/2604.17503v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Visual Multiagent Systems with self-evolving collaboration topology",
+      "llm_evidence_cn": "具有自演化协作拓扑的视觉多智能体系统",
+      "llm_evidence": "具有自演化协作拓扑的视觉多智能体系统",
+      "canonical_evidence": "具有自演化协作拓扑的视觉多智能体系统",
+      "llm_tldr_en": "SkillGraph enables multi-agent systems to evolve their communication topology and expertise for visual tasks.",
+      "llm_tldr_cn": "SkillGraph 框架允许多智能体系统针对视觉任务自演化其通信拓扑和专业能力。",
+      "llm_tldr": "SkillGraph 框架允许多智能体系统针对视觉任务自演化其通信拓扑和专业能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.16566v1",
+      "title": "Agentic AI for Education: A Unified Multi-Agent Framework for Personalized Learning and Institutional Intelligence",
+      "abstract": "Agentic Artificial Intelligence (AI) represents a paradigm shift from reactive systems to proactive, autonomous decision making frameworks. Existing AI-based educational systems remain fragmented and lack multi-level integration across stakeholders. This paper proposes the Agentic Unified Student Support System (AUSS), a novel multi-agent architecture integrating student-level personalization, educator-level automation, and institutional-level intelligence. The framework leverages Large Language Models (LLMs), reinforcement learning, predictive analytics, and rule-based reasoning. Experimental results demonstrate improvements in recommendation accuracy (92.4%), grading efficiency (94.1%), and dropout prediction (F1-score: 89.5%). The proposed system enables scalable, adaptive, and intelligent educational ecosystems.",
+      "authors": [
+        "Arya Mary K J",
+        "Deepthy K Bhaskar",
+        "Sinu T S",
+        "Binu V P"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-04-17T10:25:35+00:00",
+      "link": "https://arxiv.org/pdf/2604.16566v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "unified multi-agent architecture for educational systems",
+      "llm_evidence_cn": "教育系统的统一多智能体架构",
+      "llm_evidence": "教育系统的统一多智能体架构",
+      "canonical_evidence": "教育系统的统一多智能体架构",
+      "llm_tldr_en": "Introduces a multi-agent framework to integrate student personalization and institutional intelligence in education.",
+      "llm_tldr_cn": "提出一种多智能体架构，整合教育中的学生个性化和机构智能化。",
+      "llm_tldr": "提出一种多智能体架构，整合教育中的学生个性化和机构智能化。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.17353v1",
+      "title": "Hive: A Multi-Agent Infrastructure for Algorithm- and Task-Level Scaling",
+      "abstract": "Large language models are increasingly deployed as complex agentic systems that scale with task complexity. While prior work has extensively explored model- and system-level scaling, algorithm- and task-level scaling remain largely unaddressed, constraining the full potential of agentic systems. At the algorithm level, allocating additional inference-time computation can enhance workflow capacity but introduces cross-path redundancy: overlapping computations across multiple reasoning branches. At the task level, complex tasks can be decomposed into subproblems and delegated across multiple agents for improved scalability and parallelism. However, existing infrastructures' scheduling is unaware of the existence of multiple agents, missing opportunities to optimize resource allocation.   We propose Hive, a multi-agent infrastructure that enables algorithm- and task-level scaling. Hive features a description frontend that captures per-agent behavior and supports test-time scaling algorithms. Leveraging this specification, our backend introduces two key mechanisms: Logits Cache that reuses intermediate logits across redundant sampling paths to mitigate cross-path redundancy at the algorithm level, and Agent-Aware Scheduling that efficiently allocates compute and KV-cache resources according to agent contributions at the task level. Experiments show that Logits Cache achieves an average speedup of $1.11\\times$-$1.76\\times$ for re-sampling, and Agent-Aware Scheduling reduces the hotspot miss rate by $33\\%$-$51\\%$.",
+      "authors": [
+        "Zizhang Luo",
+        "Yuhao Luo",
+        "Youwei Xiao",
+        "Yansong Xu",
+        "Runlin Guo",
+        "Yun Liang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.DC"
+      ],
+      "published": "2026-04-19T09:59:35+00:00",
+      "link": "https://arxiv.org/pdf/2604.17353v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent infrastructure for task-level scaling",
+      "llm_evidence_cn": "用于任务级扩展的多智能体基础设施",
+      "llm_evidence": "用于任务级扩展的多智能体基础设施",
+      "canonical_evidence": "用于任务级扩展的多智能体基础设施",
+      "llm_tldr_en": "An infrastructure for scaling multi-agent systems by optimizing algorithm and task-level execution.",
+      "llm_tldr_cn": "一种通过优化算法和任务级执行来扩展多智能体系统的基础设施。",
+      "llm_tldr": "一种通过优化算法和任务级执行来扩展多智能体系统的基础设施。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.17612v1",
+      "title": "Provable Coordination for LLM Agents via Message Sequence Charts",
+      "abstract": "Multi-agent systems built on large language models (LLMs) are difficult to reason about. Coordination errors such as deadlocks or type-mismatched messages are often hard to detect through testing. We introduce a domain-specific language for specifying agent coordination based on message sequence charts (MSCs). The language separates message-passing structure from LLM actions, whose outputs remain unpredictable. We define the syntax and semantics of the language and present a syntax-directed projection that generates deadlock-free local agent programs from global coordination specifications. We illustrate the approach with a diagnosis consensus protocol and show how coordination properties can be established independently of LLM nondeterminism. We also describe a runtime planning extension in which an LLM dynamically generates a coordination workflow for which the same structural guarantees apply. An open-source Python implementation of our framework is available as ZipperGen.",
+      "authors": [
+        "Benedikt Bollig",
+        "Matthias Függer",
+        "Thomas Nowak"
+      ],
+      "primary_category": "cs.PL",
+      "categories": [
+        "cs.PL",
+        "cs.AI"
+      ],
+      "published": "2026-04-19T20:54:30+00:00",
+      "link": "https://arxiv.org/pdf/2604.17612v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "coordination for LLM agents in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中LLM智能体的协作",
+      "llm_evidence": "多智能体系统中LLM智能体的协作",
+      "canonical_evidence": "多智能体系统中LLM智能体的协作",
+      "llm_tldr_en": "Introduces a domain-specific language to ensure provable coordination and deadlock-free LLM agent programs.",
+      "llm_tldr_cn": "引入一种领域特定语言，以确保LLM智能体程序的可证明协作和无死锁。",
+      "llm_tldr": "引入一种领域特定语言，以确保LLM智能体程序的可证明协作和无死锁。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

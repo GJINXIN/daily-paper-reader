@@ -1,6 +1,91 @@
 {
-  "generated_at": "2026-04-20T20:36:55.446151+00:00",
-  "updated_date": "20260420",
+  "generated_at": "2026-04-21T20:01:14.839754+00:00",
+  "updated_date": "20260421",
   "carryover_days": 9,
-  "items": []
+  "items": [
+    {
+      "id": "2604.18356v1",
+      "title": "ComPASS: Towards Personalized Agentic Social Support via Tool-Augmented Companionship",
+      "abstract": "Developing compassionate interactive systems requires agents to not only understand user emotions but also provide diverse, substantive support. While recent works explore empathetic dialogue generation, they remain limited in response form and content, struggling to satisfy diverse needs across users and contexts. To address this, we explore empowering agents with external tools to execute diverse actions. Grounded in the psychological concept of \"social support\", this paradigm delivers substantive, human-like companionship. Specifically, we first design a dozen user-centric tools simulating various multimedia applications, which can cover different types of social support behaviors in human-agent interaction scenarios. We then construct ComPASS-Bench, the first personalized social support benchmark for LLM-based agents, via multi-step automated synthesis and manual refinement. Based on ComPASS-Bench, we further synthesize tool use records to fine-tune the Qwen3-8B model, yielding a task-specific ComPASS-Qwen. Comprehensive evaluations across two settings reveal that while the evaluated LLMs can generate valid tool-calling requests with high success rates, significant gaps remain in final response quality. Moreover, tool-augmented responses achieve better overall performance than directly producing conversational empathy. Notably, our trained ComPASS-Qwen demonstrates substantial improvements over its base model, achieving comparable performance to several large-scale models. Our code and data are available at https://github.com/hzp3517/ComPASS.",
+      "authors": [
+        "Zhaopei Huang",
+        "Yanfeng Jia",
+        "Jiayi Zhao",
+        "Xinjie Zhang",
+        "Wenxuan Wang",
+        "Qin Jin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-20T14:49:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.18356v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "personalized agentic social support and companionship",
+      "llm_evidence_cn": "个性化智能体社会支持与陪伴",
+      "llm_evidence": "个性化智能体社会支持与陪伴",
+      "canonical_evidence": "个性化智能体社会支持与陪伴",
+      "llm_tldr_en": "A tool-augmented agent framework providing diverse social support and human-like companionship.",
+      "llm_tldr_cn": "一种增强工具的智能体框架，提供多样化的社会支持和类人陪伴。",
+      "llm_tldr": "一种增强工具的智能体框架，提供多样化的社会支持和类人陪伴。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2604.18356v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2604.18005v1",
+      "title": "Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation",
+      "abstract": "Multi-agent systems (MAS) are increasingly used for open-ended idea generation, driven by the expectation that collective interaction will broaden the exploration diversity. However, when and why such collaboration truly expands the solution space remains unclear. We present a systematic empirical study of diversity in MAS-based ideation across three bottom-up levels: model intelligence, agent cognition, and system dynamics. At the model level, we identify a compute efficiency paradox, where stronger, highly aligned models yield diminishing marginal diversity despite higher per-sample quality. At the cognition level, authority-driven dynamics suppress semantic diversity compared to junior-dominated groups. At the system level, group-size scaling yields diminishing returns and dense communication topologies accelerate premature convergence. We characterize these outcomes as collective failures emerging from structural coupling, a process where interaction inadvertently contracts agent exploration and triggers diversity collapse. Our analysis shows that this collapse arises primarily from the interaction structure rather than inherent model insufficiency, highlighting the importance of preserving independence and disagreement when designing MAS for creative tasks. Our code is available at https://github.com/Xtra-Computing/MAS_Diversity.",
+      "authors": [
+        "Nuo Chen",
+        "Yicheng Tong",
+        "Yuzhe Yang",
+        "Yufei He",
+        "Xueyi Zhang",
+        "Zou Qingyun",
+        "Qian Wang",
+        "Bingsheng He"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-20T09:27:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.18005v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "system dynamics and collective failure in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的系统动力学与集体失效",
+      "llm_evidence": "多智能体系统中的系统动力学与集体失效",
+      "canonical_evidence": "多智能体系统中的系统动力学与集体失效",
+      "llm_tldr_en": "Analyzes how multi-agent LLM systems can suffer from diversity collapse during collective idea generation.",
+      "llm_tldr_cn": "分析了多智能体LLM系统在集体创意生成过程中可能出现的多样性坍塌现象。",
+      "llm_tldr": "分析了多智能体LLM系统在集体创意生成过程中可能出现的多样性坍塌现象。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "carryover_cache",
+      "paper_id": "2604.18005v1",
+      "carry_days": 1
+    }
+  ]
 }
