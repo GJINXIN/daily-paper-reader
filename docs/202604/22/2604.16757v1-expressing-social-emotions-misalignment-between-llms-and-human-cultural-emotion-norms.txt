@@ -1,0 +1,1932 @@
+Title: Expressing Social Emotions: Misalignment Between LLMs and Human Cultural Emotion Norms
+
+URL Source: https://arxiv.org/pdf/2604.16757v1
+
+Published Time: Tue, 21 Apr 2026 00:25:54 GMT
+
+Number of Pages: 22
+
+Markdown Content:
+# Expressing Social Emotions: Misalignment Between LLMs and Human Cultural Emotion Norms 
+
+Sree Bhattacharyya 1, Manas Mehta 1, Leona Chen 1, Cristina Salvador 2, Agata Lapedriza 3,4 ,Shiran Dudy 3, James Z. Wang 1
+
+> 1
+
+The Pennsylvania State University 2Duke University 3Northeastern University 4Universitat Oberta de Catalunya 
+
+{sreeb, mvm7168 }@psu.edu , s.dudy@northeastern.edu 
+
+Abstract —The expression of emotions that serve social pur-poses, such as asserting independence or fostering interdepen-dence, is central to human interactions and varies systematically across cultures. As LLMs are increasingly used to simulate human behavior in culturally nuanced interactions, it is im-portant to understand whether they faithfully capture human patterns of social emotion expression. When LLM responses are not culturally aligned, their utility is compromised—particularly when users assume they are interacting with a culturally attuned interlocutor, and may act on advice that proves inappropriate in their cultural context. We present a psychologically informed evaluation framework of cross-cultural social emotion expression in LLMs. Using a human study comparing European American and Latin American participants’ expression of engaging and disengaging emotions, we evaluate six frontier LLMs on their ability to reflect culturally differentiated patterns for expressing social emotions. We find systematic misalignment between model and human behavior: all models express engaging emotions more than disengaging ones, with particularly stark differences observed for the generally well-represented European American persona. We further highlight that LLM responses are highly concentrated and deterministic, failing to capture the diversity of human responses in expressing social emotions. Our ablation analyses reveal that these patterns are robust to sampling temper-atures, partially sensitive to prompt language, and dependent on the response elicitation format. Together, our findings highlight limitations in how current LLMs represent the interaction of cultural and emotional axes, particularly when expressing social emotions, with direct implications for their deployment in cross-cultural affective contexts. 
+
+Index Terms —Cross-cultural analysis, social emotions, AI alignment, human–AI interaction, computational social science. 
+
+I. I NTRODUCTION 
+
+The ever-increasing popularity of Large Language Models (LLMs) has seen their deployment across diverse cultural contexts. Systematic cultural differences in human behav-ior [1], [2], beliefs [3], and norms [4] require that LLMs not only demonstrate multilingual capabilities, but also reflect the cultural norms of their users. When these systems fail to align with cultural norms, users may unknowingly act on culturally inappropriate guidance, with consequences ranging from ineffective advice to active harm. For instance, in mental health, the absence of cultural competency has been shown to cause disparities in service quality for minority patients [5]– [7]. Misaligned responses raise further concerns for studies that simulate human behavior using LLMs. Despite its finan-cial benefits, evidence is mixed on the effectiveness of this approach [8]–[10]. Subjective aspects of behavior, such as emotions, are also particularly challenging to simulate owing to their interpretive nature. Several recent studies apply a cultural lens to emo-tions, studying how well models capture cross-cultural dif-ferences [11]–[14]. Belay et al. [11], for instance, study basic emotions across culturally different situations, while Rai et. al. [13] study shame and pride in the context of movies, and Dudy et al. [12] study American–Japanese differences in mixed emotion expression. Similar to Dudy et al., we evaluate LLM–human alignment through direct comparison with cross-cultural human data, but focus specifically on social emotions ,which serve the purpose of expression in the context of our environment and our relationship with the environment. As achieving social goals has also been shown to be a central and critical purpose of human emotions [15]–[18], studying social emotions in the context of LLMs is critical to help modern AI systems participate in meaningful, robust, and accurate affective social interactions with other agents. We compare LLMs with a human study [19] examining differences between European Americans and the understudied population of Latin Americans [20]–[22] in the expression of engaging and disengaging emotions. Engaging emotions (e.g., friendliness, guilt) establish interdependence, while disengag-ing emotions (e.g., pride, anger) express individuality. The hu-man study finds that Latin Americans express engaging emo-tions more, while European Americans express disengaging emotions more, consistent with collectivist and individualist cultural norms, respectively. We evaluate six frontier LLMs by administering the cross-cultural survey from Salvador et al. [19], to address the following research questions: 
+
+RQ1 How well are LLMs aligned with the cross-cultural patterns of social emotion expression established by Sal-vador et al. [19]? 
+
+RQ2 Is the observed (mis)alignment influenced by sampling temperature, prompt language, or response elicitation format? For RQ1, we examine whether LLMs reproduce broad cultural patterns and compare the distributional structure of human and LLM responses. For RQ2, we study the effect of sampling temperature, English-language prompting, and a pairwise forced-choice task format. Our findings reveal systematic failure of LLMs to repro-duce broad cultural patterns from human-subject data. Most strikingly, all models misalign on the tendency of European 
+
+> arXiv:2604.16757v1 [cs.CL] 18 Apr 2026
+
+Americans to express disengaging over engaging emotions— despite this population being well-represented in training data. LLM response distributions are also found to be highly modal, failing to capture the natural diversity of human expression. We also find that increasing sampling temperatures has a limited effect on diversifying responses and does not help in improving alignment. Switching Latin American prompts from Spanish to English improves alignment, revealing that models encode cultural knowledge better in a language not native to the culture. Finally, a forced-choice format improves alignment on overall cultural expressivity, but fails to resolve misalign-ment in the relative expression of engaging and disengaging emotions. II. R ELATED WORK 
+
+Cultural Influence on Emotion Expression and Interpre-tation. While Ekman’s foundational work proposed universal facial expressions across cultures [23], [24], subsequent re-search challengenged their results. Cross-cultural studies show that cultures differ in which emotional states they value— Western cultures favor high-arousal positive emotions like excitement, while East Asian cultures favor low-arousal states like calmness [25], [26]. Emotional experience is further shaped by culturally specific social contexts and relational norms [27], [28], and people follow distinct cultural display rules governing when and how emotions are expressed [29], [30]. 
+
+Cultural Bias in Emotion Understanding of LLMs. 
+
+Growing research has examined cultural biases in LLMs [31]– [33]. Since training corpora are disproportionately drawn from English-speaking and Western sources, LLM responses often reflect Western biases [34]–[36], and several approaches have been proposed to measure them [37]–[40]. Persona-based prompting has shown that assigned cultural personas can sig-nificantly shift predicted emotion categories [41], and models lean heavily on culturally biased priors when interpreting emotional scenarios [42]. Cross-cultural benchmarks have also been introduced: CULEMO [11] measures alignment between LLM predictions and human emotion labels across cultures, while Dudy et al. [43] examine whether LLM representations of complex emotional states reflect culturally specific patterns. Across this body of work, LLM responses consistently align most closely with WEIRD 1 emotional interpretations [20], and mitigating these biases remains an open challenge. 
+
+Evaluating Nuanced Emotional Reasoning in LLMs. 
+
+Beyond bias, recent work has evaluated whether LLMs under-stand complex emotional nuances. Traditional affective com-puting focused on emotion classification and sentiment analy-sis [44]–[47], but evaluations have since expanded to emotion-cause reasoning, empathetic response generation, and conver-sational emotion understanding. Zhou et al. [48] probe empa-thetic inference against trained human counselors; appraisal-theoretic frameworks find limited cognitive emotional reason-ing [49], [50]; and Hong et al. [51] propose an appraisal-based 
+
+> 1WEIRD stands for Western, Educated, Industrialized, Rich, Democratic.
+
+agent architecture to enhance emotional inference. Evaluation has further extended to multimodal settings [52], sensitivity to evaluation formats [53], and emotion-cause analysis in conversation [54]. III. M ETHODS 
+
+Differences in Social Emotion Expression between Latin and European Americans. We ground our evaluation in a cross-cultural human study [19] comparing emotional expres-sion across European Americans (EAs) and Latin Americans (LAs). The study examines social emotions, categorized as 
+
+socially engaging (EN) (e.g., guilt, friendly feelings), which foster interdependence, or socially disengaging (D-EN) (e.g., anger, pride), which do not foster interdependence and are more so an expression of the personal self. 598 participants, evenly distributed across cultural groups, rated the 8 emotions in Table I and 4 basic emotions across four everyday situations (Appendix A) on a 1–6 Likert scale [55]. Three findings emerge: (a) LA participants express engaging over disengaging emotions across valence, while EA participants show the reverse; (b) for positive emotions, both groups favor engaging emotions, but the gap is larger for LAs; (c) for negative emotions, both groups favor disengaging emotions, but the gap is larger for EAs. These findings, summarized in Table II, form the human ground truth against which we evaluate LLM behavior. 2
+
+Evaluation Framework for LLMs. We evaluate six fron-tier LLMs measuring alignment specifically in how models distinguish engaging from disengaging emotions and whether culturally distinct expression trends emerge. We select SOTA models ensuring diversity across origin, open-source ver-sus proprietary access, and reasoning capability: DeepSeek R1 [56], GPT 4o-mini [57], Gemini 2.5 Flash [58], Phi 4 [59], Mistral 7B Instruct v0.3 [60], and Qwen 3 32B [61]. Each model is assigned cultural personas using identifier terms verbatim from the human study, and asked to rate all 12 emotions across four situations (Appendix A) on the same 1–6 scale (prompt examples in Appendix B). Each prompt is sampled n=190 times at default temperature settings, de-termined through a statistical stability analysis (Appendix C), to construct response distributions comparable to the human sample. In accordance with the conditions in the human study, prompts for LA personas are administered in Spanish. This yields 48 unique prompts (4 situations × 12 emotions) and 
+
+164,160 total generations across all personas (3), models (6), and iterations (190). Before the full evaluation, we verify reliable scale usage via Kendall’s W , finding moderate-to-strong average intra- and inter-model reliability of 0.76 and 0.66, respectively (details in Appendix D). 
+
+Statistical Methods for Distributional Comparison. Our main analysis investigates the full distribution of model responses rather than summary statistics alone. We use the Mann-Whitney U test [62] for directional distributional                                 
+
+> 2The human study also conducts finer-grained situational analysis, repro-duced in Appendix F.2 Emotion feelings of closeness to others friendly feelings self-esteem pride shame anger frustration guilt
+> Emotion Type engaging engaging disengaging disengaging engaging engaging disengaging disengaging
+> Emotion Valence positive positive positive positive negative negative negative negative
+> Group Acronym PSE PSE PSD PSD NSE NSE NSD NSD
+
+TABLE I: Classification of social emotions, as used in the original human study [19], and in our experiments with LLMs. The original study also includes four basic emotions: calm, happy, unhappy, and elated.                                
+
+> Hypothesis Human Results [H1] Expression of Engaging vs. Disengaging Emotions [H1a] LA: EN >D-EN
+> [H1b] EA: EN <D-EN
+> [H2] Expression of Positive Emotions [H2a] PSE >PSD
+> [H2b] Larger Diff. for LA [H3] Expression of Negative Emotions [H3a] NSD >NSE
+> [H3b] Larger Diff. for EA [H4] Overall Expressiveness LA >EA
+> [H5] Overall Expression of Emotion Valence Positive >Negative
+
+TABLE II: Main results from the original human study by Salvador et al. [19]. The results obtained for the studied human population are described, which form the hypotheses for our tests with LLMs. comparisons—establishing whether one distribution is signif-icantly greater or lesser than another—and the Wasserstein distance [63] to quantify the magnitude of their difference. The original human study’s ANOVA [64] is unsuitable here, as near-zero-variance LLM responses cause the test to collapse (Appendix E). All distributional comparisons are reproduced on the human data for methodological consistency, and all original human study findings hold under this distributional evaluation. IV. M AIN RESULTS 
+
+We structure our analysis to directly reflect the principal findings of the human study described in Table II. A summary of alignment between LLMs and human responses is presented in Table III. In this section, we examine these results in detail, highlighting systematic deviations and areas of misalignment. 
+
+A. Engaging versus Disengaging Emotions 
+
+The human study identifies a clear divergence between Eu-ropean American (EA) and Latin American (LA) participants: EA participants express D-EN emotions (e.g., pride) more strongly, while LA participants express EN emotions (e.g., guilt) more strongly, consistent with observed individualistic and collectivist orientations of these cultures, respectively [65]. Motivated by this central contrast, we first examine whether LLMs, when conditioned on these cultural personas, reproduce the corresponding differences in engaging versus disengaging emotional expressivity. As summarized in Table III ( [H1a] ,
+
+[H1b] ), all models exhibit a consistent pattern across both 
+
+cultural groups: engaging emotions are expressed significantly more strongly than disengaging ones. This reveals systematic misalignment between LLMs and human emotional expression: the EA persona—despite being 1 2 3 4 5 6         
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> Scaled Density
+> W1= 0.18
+> (a)
+> Human Mexico + Chile
+> 123456
+> Rating
+> W1= 0.46
+> (b)
+> Gemini Mexico + Chile
+
+(a) 1 2 3 4 5 6          
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> Scaled Density
+> W1= 0.07
+> (a)
+> Human USA
+> 123456
+> Rating
+> W1= 0.99
+> (b)
+> Gemini USA
+> Emotion Type
+> Engaging Disengaging
+
+(b) 
+
+Fig. 1: Rating distributions for engaging and disengaging emotions (with valence collapsed) for humans vs. Gemini 2.5 Flash. (a) Latin American personas combined; (b) European American persona. W1: 1-Wasserstein distance. Corresponding alignment scores are shown in rows 1–2 of Table III. well-represented in training data—is mischaracterized with respect to nuanced emotion expression patterns. Fig. 1b il-lustrates this for Gemini 2.5 Flash (for all other models, see Appendix F.1), which assigns high expressivity to engaging emotions across both personas, whereas human distributions exhibit clear cross-cultural contrasts. Beyond within-culture comparisons, we perform absolute cross-cultural comparisons by directly contrasting engaging and disengaging emotion distributions across cultural personas (Fig. 2; remaining models in Appendix F.1). For humans, both emotion types are expressed more strongly by LA than EA participants, consistent with overall higher LA expressivity ([H4] , Table III). All models except Qwen diverge from this for engaging emotions, with the EA persona expressing them significantly more strongly than LA—directly contradicting human patterns. For disengaging emotions, the trend is mixed: most models correctly show higher expressivity for LA than EA, while GPT and DeepSeek show no significant difference Hypothesis GPT Gemini DeepSeek Phi Mistral Qwen 
+
+Main Temp Lang Main Temp Lang Main Temp Lang Main Temp Lang Main Temp Lang Main Temp Lang  
+
+> [H1a]
+
+LA : EN > D-EN +1 o o +1 o o +1 o o +1 -1 o +1 o o +1 o o 
+
+> [H1b]
+
+EA : EN < D-EN -1 o o -1 o o -1 o o -1 o o -1 o o -1 o o 
+
+> [H2a]
+
+PSE > PSD +1 o o +1 o o +1 o o +1 o o +1 o o +1 o o 
+
+> [H2b]
+
+Larger diff. for LA -1 o +2 -1 o +2 o -1 +1 -1 o +1 -1 o +2 -1 o o 
+
+> [H3a]
+
+NSD > NSE +1 o o +1 o o +1 o o +1 o o -1 o o +1 -1 o 
+
+> [H3b]
+
+Larger diff. for EA +1 o o +1 o o o +1 -1 -1 o +2 o +1 -1 o o +1  
+
+> [H4]
+
+Expressiveness: LA >
+
+EA o -1 +1 -1 o +2 -1 o +2 -1 o o +1 o o +1 -2 o 
+
+> [H5]
+
+Valence: Positive >
+
+Negative +1 o o +1 o o +1 o o +1 o o +1 o o +1 o oOverall: [+9, -9] 3 2 (-1) 6 (+3) 2 2 (o) 6 (+4) 2 2 (o) 4 (+2) 2 1 (-1) 5 (+3) 1 2 (+1) 2 (+1) 4 1 (-3) 5 (+1) 
+
+TABLE III: Alignment of LLMs with human trends of social emotion expression. Column 1 shows results from the human study [19]; the remaining columns show alignment for each LLM. +1 : model results reflect the same directionality as humans at a statistically significant level (p < 0.05). -1 : model results reflect the opposite directionality at a statistically significant level. 
+
+o: no significant finding in either direction. The maximum alignment range per model is [-9, +9] as there are 9 hypotheses in total. For each model, Main shows results from the original experiments; Temp and Lang show the change in alignment score under temperature and language ablations, respectively. 1 2 3 4 5 6                 
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> Scaled Density
+> LA >EA, p< 0.001
+> W1= 0.309
+> Engaging
+> 123456
+> Rating
+> LA >EA, p= 0.003
+> W1= 0.120
+> Disengaging
+> Humans
+> USA Mexico Chile
+
+(a) 1 2 3 4 5 6                  
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> EA >LA, p< 0.001
+> W1= 0.439
+> Engaging
+> 123456
+> Rating
+> LA >EA, p= 0.01
+> W1= 0.150
+> Disengaging
+> Model: Gemini
+> USA Mexico Chile
+
+(b) 1 2 3 4 5 6                  
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> EA >LA, p< 0.001
+> W1= 0.417
+> Engaging
+> 123456
+> Rating
+> LA >EA, p< 0.001
+> W1= 0.309
+> Disengaging
+> Model: Phi
+> USA Mexico Chile
+
+(c) 1 2 3 4 5 6                  
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> LA >EA, p< 0.001
+> W1= 0.990
+> Engaging
+> 123456
+> Rating
+> LA >EA, p< 0.001
+> W1= 1.419
+> Disengaging
+> Model: Qwen
+> USA Mexico Chile
+
+(d) 
+
+Fig. 2: Cross-cultural comparison of the difference in the expression of engaging (left panel for each sub-plot) and disengaging (right panel) emotions. Additionally, the LA (Mexico + Chile) and EA (USA) distributions are compared for directional significance, with the results shown below each sub-plot. Human DeepSeek GPT Gemini Mistral Phi Qwen           
+
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> 2.5
+> 3.0
+> 3.5
+> 4.0
+> 4.5
+> Mean(PSE)  Mean(NSE)
+> p<0.001
+> p<0.001
+> p<0.001
+> p<0.001
+> p=0.26
+> p<0.001
+> Culture
+> USA
+> Mexico
+> Chile
+
+Fig. 3: Difference between the mean PSE and NSE expression ratings δ(P-N) , bootstrapped 2,000 times with a 95% CI. Sig-nificance values indicate whether δ(P-N) is larger for EA than LA, and are computed through a permutation test. (Appendix F.1). To further investigate the strong association between EA personas and engaging emotions, we examine whether models express positive engaging emotions disproportionately more strongly than negative engaging emotions. Fig. 3 shows the bootstrapped difference between mean ratings for positive and negative socially engaging emotions ( δ(P-N) ). All models ex-hibit larger differences than humans. Moreover, while humans show larger δ(P-N) values for LA personas, all models (except Phi) display the reverse trend, with significantly higher values for EA personas. This effect is particularly pronounced for GPT, Gemini, and Qwen, where positive engaging emotions are expressed substantially more strongly than negative en-gaging emotions. Therefore, LLMs not only associate EA personas with engaging emotions but also disproportionately emphasize positive ones. Overall, we highlight a key misalign-ment in this section, that LLMs misrepresent nuanced emotion expression patterns even for well-studied cultural groups [20], [66], such as European Americans, with engaging emotions— particularly positive ones—being consistently favored by mod-els. 
+
+B. Emotion Valence and Overall Expressivity 
+
+The human study finds that individuals across both cultural groups express PSE emotions more strongly than PSD ( [H2a] ), with a larger gap observed for LA participants ([H2b] ). We examine whether LLMs capture this subtle difference. While all models align with the broad trend ( [H2a] ; Table III), they fail to reproduce the nuanced cross-cultural variation in magnitude. Fig. 4 (left) shows that, for humans, the difference between PSE and PSD emotions grows, moving from the USA to Mexico or Chile. In contrast, all LLMs (except DeepSeek) exhibit the reverse pattern, with the largest difference shown for USA. Qwen shows the most pronounced difference for Fig. 4: The difference between the mean of PSE and PSD emotions (left) and the same for NSE and NSD emotions, as displayed for humans and all LLMs. The trend exhibited by LLMs is the opposite of that of humans for positive emotions, while it is more mixed and nuanced for negative emotions. Note that all distances are distributional, measured using the Wasserstein metric. USA, while DeepSeek exhibits nearly equal differences across cultures. In contrast to patterns observed for positive emotions, hu-mans express NSD emotions more strongly than NSE emotions ([H3a] ), with a larger gap for EA personas ([H3b] ). Most models (except Mistral) align with the broad trend, expressing NSD emotions more strongly than NSE emotions, whereas Mistral shows the reverse pattern, assigning higher intensity to NSE emotions such as shame and guilt. However, cross-cultural dif-ferences are less consistent. GPT, Gemini, and Qwen capture the human-like pattern, with larger NSD – NSE differences for USA than for Mexico and Chile, while DeepSeek shows no clear trend. In contrast, Mistral and Phi exhibit the reverse pattern, with larger differences for LA personas. Notably, the overall magnitude of NSD – NSE differences is smaller than that observed for positive emotions (more details for this in Appendix F), suggesting that sociality plays a comparatively weaker role in differentiating negative emotional expression. We further replicate two broader claims from the human study: (a) overall expressiveness across cultures, and (b) expressiveness for positive versus negative emotions. For (a), humans show significantly higher overall expressiveness for LA than EA participants. Most models (except Qwen and Mistral) show the reverse, with EA personas expressing more intensely than LA — a direct contradiction of the human trend. Qwen and Mistral align correctly, while GPT shows no signifi-cant difference in either direction. For (b), all models correctly express positive emotions more intensely than negative ones across all cultures, consistent with human patterns. 
+
+C. Determinism and Homogeneity in LLM Responses 
+
+A key assumption in using LLMs as human proxies is that their responses should reflect genuine population-level variability. If LLMs instead collapse this into a narrow band of modal responses, they fail to capture a defining feature of hu-man psychology, regardless of whether their average response is accurate. This concern is amplified by growing evidence that LLMs produce homogeneous outputs even in settings where diversity would be expected, such as open-ended creative tasks [67], or incentivized mis-coordination [68]. Here, we examine whether this pattern extends to social emotion expres-sion, whether it varies across emotion categories and cultural personas, and whether different model families converge on the same modal responses. 
+
+Intra-Model Homogeneity. To quantify whether models use the rating scale (1 to 6) as evenly as humans, we calculate the effective number of response categories via Shannon entropy. Specifically, we calculate: 
+
+Neff = exp −
+
+> K
+
+X
+
+> i=1
+
+pi log pi
+
+!
+
+,
+
+where K = 6 , and pi is calculated using frequency counts for each point in the rating scale. Neff represents the number of equally likely categories that would produce the same entropy. Results are shown in Fig. 5. Humans consistently show higher Neff across all emotion categories and cultural personas, reflecting genuinely distributed responses. LLMs, by contrast, concentrate mass on just a few scale points even when sampled independently. Most models effectively use at most 
+
+≈3 categories for the EA persona. In some cases (e.g., self-esteem, closeness to others), model responses are somewhat more spread out. Qwen 3 is the most deterministic model overall for the EA persona, and also shows the largest entropy gap across cultural personas. For Latin American personas (Mexico, Chile), models show marginally greater diversity, with Phi and Qwen matching or exceeding human diversity specifically for friendly feelings. Nevertheless, the human–model misalignment in response diversity persists across all personas, and is most pronounced for the US persona—consistent with our broader finding that models are most miscalibrated in this nuanced task for the cultural group they are most commonly trained to represent. 
+
+Inter-Model Homogeneity. We further study inter-model similarity in LLM responses, comparing these against human distributions across cultures and emotion categories. We first compute Pearson correlations of ratings across all personas and emotion categories. The average LLM-LLM correlation (0.72) is found to be substantially higher than the average LLM-Human correlation (0.47) (details in Human 
+
+> GPT
+> Gemini
+> DeepSeek
+> Phi
+> Mistral
+> Qwen
+
+Anger 
+
+Closeness 
+
+Friendly 
+
+Frustration 
+
+Guilt 
+
+Proud 
+
+Self-esteem 
+
+Shame                                                 
+
+> 4.42 3.68 3.61 2.38 3.25 2.55 1.12
+> 5.93 2.97 2.11 2.49 3.66 4.37 1.89
+> 5.88 3.58 2.04 3.43 3.79 3.50 3.23
+> 4.92 2.41 2.61 2.83 2.06 2.07 1.76
+> 3.79 3.20 2.97 2.29 2.25 3.78 1.32
+> 4.95 2.82 2.75 2.52 2.65 2.61 1.92
+> 5.83 5.02 2.54 4.96 4.24 2.79 1.67
+> 3.82 2.33 2.37 2.29 2.52 3.06 1.41
+
+USA                                                 
+
+> Human
+> GPT
+> Gemini
+> DeepSeek
+> Phi
+> Mistral
+> Qwen
+> 5.00 3.30 3.10 3.04 3.00 2.18 3.93
+> 5.75 2.23 1.64 2.52 2.94 3.65 4.04
+> 5.79 4.10 3.29 5.11 5.56 4.42 5.93
+> 5.27 2.61 2.79 3.14 2.05 2.81 3.23
+> 4.57 3.66 3.68 2.55 3.13 2.24 3.59
+> 5.42 2.76 2.79 2.52 2.51 3.82 4.75
+> 5.88 3.94 3.81 3.82 3.35 4.08 4.79
+> 4.39 2.56 3.29 2.02 2.59 2.52 3.01
+
+Mexico                                                 
+
+> Human
+> GPT
+> Gemini
+> DeepSeek
+> Phi
+> Mistral
+> Qwen
+> 4.82 3.43 2.99 2.80 3.09 2.20 3.57
+> 5.69 2.35 1.79 2.62 3.25 3.84 4.31
+> 5.79 4.11 3.34 4.97 5.32 4.19 5.72
+> 5.35 2.48 2.72 3.06 2.07 2.73 3.30
+> 4.79 3.54 3.85 2.57 2.97 2.13 3.42
+> 5.53 2.76 2.67 2.19 2.22 3.58 4.49
+> 5.73 3.94 3.57 3.56 3.23 4.23 4.93
+> 4.43 2.35 3.03 2.08 2.33 2.41 2.94
+
+Chile 
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+> Effective Categories
+
+Fig. 5: Effective Categories ( Neff ) across all cultures and emotions, for all models, compared with the human distribution. The mean values for the effective categories across all models are: 2.79 (USA), 3.3 (Mexico), and 3.23 (Chile), whereas the same for humans are: 4.94 (USA), 5.26 (Mexico), and 5.26 (Chile). 4 2 0 2 4 6 
+
+> PC1 (31.2% var)
+> 4
+> 2
+> 0
+> 2
+> 4
+> PC2 (22.8% var)
+> DeepSeek
+> GPT
+> Gemini
+> Human
+> Mistral
+> Phi
+> Qwen
+> DeepSeek
+> GPT
+> Gemini
+> Human
+> Mistral
+> Phi Qwen
+> DeepSeek
+> GPT
+> Gemini
+> Human
+> Mistral
+> Phi
+> Qwen
+> Culture
+> Chile
+> Mexico
+> USA
+> Type
+> LLM
+> Human
+
+Fig. 6: Inter-model homogeneity shown by clustering rating distributions to analyze structural differences. Appendix F.3). Among the models, GPT shows the highest correlations with other LLMs. We hypothesize that the large size and all-encompassing nature of GPT’s training corpus (albeit undisclosed) may contribute to its responses being the most correlated with every other model. We do not observe meaningful differences along the axes of reasoning capability or country of origin. To examine distributional structure be-yond correlations, we apply PCA to rating frequency vectors, capturing how often each scale point (1–6) is chosen per cul-ture × emotion category combination, and project these to two dimensions (Fig. 6). Model responses cluster tightly together and separate clearly from humans, with the only exception being observed for Qwen with LA personas. This suggests that most models not only produce internally repetitive outputs under stochastic sampling, but also converge toward similar response patterns across entirely different model families. V. A BLATION STUDIES : F ACTORS AFFECTING ALIGNMENT 
+
+Our main findings highlight areas where significant mis-alignment exists between humans and LLMs in the nuanced task of expressing social emotions. In this section, we examine some well-known strategies and introduce a new task setting to further probe the nature of the misalignment. 
+
+Sampling Temperatures: A natural hypothesis, given the deterministic nature of LLM responses, is that increasing sam-pling temperature, and thus response diversity, might improve alignment with human distributions. We set each model’s temperature to the highest value yielding coherent outputs (exact per-model values in Appendix G) and first measure the change in effective categories used ( Neff ), testing the significance of any change with a permutation test. Most models show no significant change in response diversity at higher temperatures (full table in Appendix G). The exceptions are Qwen and DeepSeek, with Qwen—previously the most deterministic model for the EA persona—showing the largest significant increase in Neff . This confirms that greater diversity is achievable , but the alignment results in Table III (under 
+
+Temp ) show that diversity and alignment do not go hand in hand: Qwen becomes more misaligned at higher temperature despite the diversification of its responses. Across models, the effect of temperature on alignment is inconsistent, with no model showing a systematic improvement. 
+
+Prompt Language: We next test whether prompt language affects alignment by re-running experiments for Mexico and Chile with English prompts instead of the original Spanish. Prompting in English improves overall alignment across all models (Table III, under Lang ), with misalignment decreasing specifically for two hypotheses: the cross-cultural difference in PSE–PSD expressiveness ( [H2b] ), where decrease in misalign-ment is observed for all models except Qwen, and overall LA expressiveness ( [H4] ), for some of the models. This suggests that cultural knowledge about LA personas is better encoded in English than in the native language of those cultures. This is consistent with the known English-centric nature of LLM training corpora, but notable given that Spanish is itself a high-resource language. 
+
+Contextual Nudge via Pairwise Emotion Choices: Our final ablation asks whether the observed misalignment reflects deeply encoded model beliefs or is determined by the format in which the prompts are administered. In the main experiments, Hypothesis GPT Gemini DeepSeek Phi Mistral Qwen                            
+
+> [H1a] LA: EN >D-EN 60.7% (+) 58.7% (+) 69.6 % (+) 63% (+) 63% (+) 96.7% (+)
+> [H1b] EA: EN <D-EN 54.8% (-) 45.4% (+) 54.4% (-) 63.5% (-) 57% (-) 69% (-)
+> [H4] Overall Expressiveness: LA >EA 73.6% (+) 85.7% (+) 81.6% (+) 53.6% (+) 14.15% (-) 2.4% (-)
+
+TABLE IV: Pairwise comparison results, sampled 190 times per prompt. Cell percentages refer to the quantity left of the inequality ; (+)/(-) denotes alignment/misalignment with the human trend. Green : alignment increases; purple : alignment decreases; no color: no change from the original experimental setup. models rated each emotion independently on a Likert scale. We consider whether this design obscures the comparative structure of the emotion space, as models do not see all emotions at once. We therefore introduce a pairwise forced-choice setting, where models choose directly between two alternatives, making the relevant comparison explicit. We construct three variants targeting the principal axes of misalignment that remain unmitigated by the previous interventions ( [H1] and [H4] ): (i) all pairwise PSE vs. PSD comparisons, where the model selects which emotion it would express more strongly in a given situation; (ii) analogous NSE vs. NSD comparisons across all possible situations; and (iii) cross-cultural expressiveness comparisons, where the model chooses which of two cultural personas would be more expressive for a given situation–emotion pair. All prompts are provided in Appendix H. Results are summarized in Table IV. For [H4] , a majority of models shift toward human-consistent responses, reporting higher expressiveness for Latin Americans. However, misalignment on [H1b] persists across elicitation formats: models continue to associate EA personas with stronger expression of engaging emotions regardless of how the comparison is framed, except for Gemini. VI. D ISCUSSION 
+
+In line with past research [43], we find that that models do not fully align when assessing in-depth socio-emotional phenomena. The gaps arise in more salient relational pat-terns, such as the finding that EA individuals expressed more engaging emotions than disengaging ones across the board, and that most models did not show higher expressiveness for LA compared to EA. For the former, our work provides counterintuitive evidence that diverges from previous research, where LLMs typically perform more effectively in American and Western context [11], [34]. Further, models with the EA persona disproportionately favor positive engaging emotions. This pattern may be correlated with sycophancy, and the tendency of RLHF-tuned models to be optimized to present positive engaging signals to their interlocutor [69]. Models could also be indirectly and incorrectly conflating the gen-eral desirability of interdependence-related traits in European Americans and the expression of engaging emotions [70]. For the latter, based on our ablation studies, we hypothesize that under our experimental settings, the Spanish language in LLMs has a more limited representation of the associated cultural contexts compared to English prompts that simulate a Spanish persona, potentially challenging the finding by Belay et al. [11], which compared Mexican cultural probing in English and Spanish. We also find additional concerning gaps around the sta-tistical characteristics of LLM response distributions. LLMs demonstrate low variance and highly modal distributions, whereas human response distributions are smoother and more dispersed, reflecting a wider range of preferences. Our findings are consistent with studies on simulating human behavior [9], [10], [71]. This shows that LLMs are not only limited in simulating the population-level response patterns observed in humans but that their near-deterministic generation processes also constrain nuance, thereby reducing their ability to repro-duce naturalistic human response diversity. Finally, prior research on sampling temperatures is mixed [72], [73]. While some studies show diversification effects, Peeperkorn et al. [73] demonstrate that these depend on which dimensions of output are examined. Increased tem-peratures in our settings led to marginally improved diversity of responses. However, this did not correspond with increased alignment, implying that LLMs are not simply undersam-pling the response space (leading to modal responses), but they are biased toward the wrong region of it, regardless of temperature. Second, when replacing Spanish with English, the improved alignment may reflect both the bilingual nature of many Latin Americans and greater indirect exposure to LA cultural signals in English-language training data than in Spanish-language corpora alone. We also show that some areas of misalignment (e.g., overall expressiveness) can partially be recovered using a more explicit task framing. This suggests that models perhaps possess the latent knowledge about over-all expressiveness that Likert-style prompting fails to elicit. However, the bias towards engaging emotions, with the EA persona, remains across most models, suggesting it reflects a more deeply encoded representational error, robust to task format changes. VII. C ONCLUSION 
+
+In our work, we evaluated the alignment of LLMs in three ways: (a) by assessing the cross-cultural patterns of emotion expression between three cultural groups; (b) by comparing the distributional characteristics of human-LLM responses; (c) by examining the degree to which alignment can be improved via alternative probes. Our findings suggest that LLMs exhibit limited alignment with the social-emotional phenomenon that was observed in humans. Importantly, we find that it applies not only to less dominant cultures, but to ones where a vast amount of data is available, such as the European American cultures. By focusing on depth, rather than breadth, the specific misalignments are detectable, and can provide a starting point for model realignment. Since no culture should be left behind, we encourage the community to expand depth-auditing across cultures, especially for tools that are deployed in high-stakes scenarios such as mental health. VIII. E THICAL IMPACT STATEMENT 
+
+Our work focuses on studying AI alignment with humans with respect to cross-cultural patterns of social emotion ex-pression. It stands at the intersection of several angles of scholarly discourse, which hold critical impact for the society at large, and is based on a problem directly related to people. Given the interdisciplinary nature of our study, we highlight several areas of ethical consideration and impact for the broader community, as follows: 
+
+a) Risks of Cultural Stereotyping: The findings from our work, such as LLMs associating EA personas with engaging emotions, could, if misread, be used to make prescriptive claims about how people from these groups behave or should be treated by AI systems. We want to highlight here that we do not make any generalizable claims about any of the populations studied, and show alignment or misalignment only with respect to the specific human study in question [19]. Further, our study is not meant to provide a general template for how AI should behave in social or affective contexts for the specific cultures studied. We also acknowledge that the cultures studied (USA, Mex-ico, Chile) are themselves internally heterogeneous—class, region, indigeneity, generation, and migration status all shape emotional expression in ways that neither the human study nor our LLM evaluation can capture. Our findings describe aggregate tendencies under controlled conditions, not universal cultural truths. The human study further tests for differences through other demographic factors, which we consider an important direction for future work when evaluating LLMs. We further borrow cultural theories, particularly the dis-tinction between collectivism and individualism [74], as an explanatory axis, similar to the original human study [19]. However, we acknowledge that these theories themselves have their own criticisms, such as the oversimplification of non-Western cultures [75]. 
+
+b) LLMs as Proxies for Human Populations: Our re-sults show that LLMs produce near-deterministic, homoge-neous responses that systematically misrepresent even well-documented cultural groups (European Americans). This pro-vides empirical grounding for caution against using LLMs to replace human participants in social science research. This is particularly true for nuanced contexts—such as cross-cultural affective simulations—where further studies with more fine-grained evaluation protocols are necessary to uncover specific areas of misalignment. Beyond that, efforts to align models with human behavior are critically necessary before models can faithfully simulate humans. 
+
+c) Deployment in Cross-cultural Affective Contexts: 
+
+Several common motivations drive work in the space of affec-tive computing, such as mental health applications. Specific to studies on culturally-aware affective computing systems, improving access of diverse populations to mental health tools is an important driving motivation. However, the findings from our study highlight several practical concerns regarding such deployment: if a model deployed as a mental health support tool systematically overexpresses engaging emotions regard-less of cultural context, it could fail to validate the emotional experience of users from individualistic cultural backgrounds, or, conversely, produce responses that feel intrusive or pre-sumptuous to users who expect more reserved expression. Social companions, customer service agents, educational tools, and therapeutic chatbots are all contexts where miscalibrated cultural-emotional expression could damage trust or cause harm. Further, our findings about language-specific alignment show that deploying Spanish-language LLM services to Latin American users does not guarantee culturally appropriate emotional expression and may actually perform worse than English-language equivalents. This is another counterintuitive and practically important finding that can affect real-life de-ployment. ACKNOWLEDGEMENTS 
+
+This material is based upon work supported in part by the National Science Foundation (NSF) under Award No. 2234195, and the Penn State 2024-25 Vice Provost and Dean of the Graduate School Student Persistence Scholarship. This work used cluster computers at the National Center for Supercomputing Applications and the Pittsburgh Supercom-puting Center through an allocation from the Advanced Cy-berinfrastructure Coordination Ecosystem: Services & Support (ACCESS) program, which is supported by NSF Award Nos. 2138259, 2138286, 2138307, 2137603, and 2138296. REFERENCES [1] H. C. Triandis, “The self and social behavior in differing cultural contexts,” Psychological Review , vol. 96, no. 3, pp. 506–520, 1989. [2] J. Henrich, R. Boyd, S. Bowles, C. Camerer, E. Fehr, H. Gintis, R. McElreath, M. Alvard, A. Barr, J. Ensminger, et al. , ““economic man” in cross-cultural perspective: Behavioral experiments in 15 small-scale societies,” Behavioral and Brain Sciences , vol. 28, no. 6, pp. 795–815, 2005. [3] X. Zou, K.-P. Tam, M. W. Morris, S.-l. Lee, I. Y.-M. Lau, and C.-y. Chiu, “Culture as common sense: perceived consensus versus personal beliefs as mechanisms of cultural influence,” Journal of Personality and Social Psychology , vol. 97, no. 4, pp. 579–597, 2009. [4] N. Heinrichs, R. M. Rapee, L. A. Alden, S. B¨ ogels, S. G. Hofmann, K. J. Oh, and Y. Sakano, “Cultural differences in perceived social norms and social anxiety,” Behaviour Research and Therapy , vol. 44, no. 8, pp. 1187–1197, 2006. [5] S. Sue, N. Zane, G. C. Nagayama Hall, and L. K. Berger, “The case for cultural competency in psychotherapeutic interventions,” Annual Review of Psychology , vol. 60, no. 1, pp. 525–548, 2009. [6] D. C. Wendt, J. P. Gone, and D. K. Nagata, “Potentially harmful therapy and multicultural counseling: Bridging two disciplinary discourses,” The Counseling Psychologist , vol. 43, no. 3, pp. 334–358, 2015. [7] A. P. Association et al. , “Guidelines on multicultural education, training, research, practice, and organizational change for psychologists,” The American Psychologist , vol. 58, no. 5, pp. 377–402, 2003. [8] Z. Cui, N. Li, and H. Zhou, “Can AI replace human subjects? a large-scale replication of psychological experiments with LLMs,” arXiv preprint arXiv:2409.00128v2 , 2024. [9] J. Bisbee, J. D. Clinton, C. Dorff, B. Kenkel, and J. M. Larson, “Synthetic replacements for human survey data? the perils of large language models,” Political Analysis , vol. 32, no. 4, pp. 401–416, 2024. [10] P. S. Park, P. Schoenegger, and C. Zhu, “Diminished diversity-of-thought in a standard large language model,” Behavior Research Methods ,vol. 56, no. 6, pp. 5754–5770, 2024. [11] T. D. Belay, A. H. Ahmed, A. Grissom II, I. Ameer, G. Sidorov, O. Kolesnikova, and S. M. Yimam, “CULEMO: Cultural lenses on emo-tion - benchmarking LLMs for cross-cultural emotion understanding,” in Proceedings of the 63rd Annual Meeting of the Association for Com-putational Linguistics (Volume 1: Long Papers) (W. Che, J. Nabende, E. Shutova, and M. T. Pilehvar, eds.), (Vienna, Austria), pp. 18894– 18909, Association for Computational Linguistics, July 2025. [12] S. Dudy, I. S. Ahmad, R. Kitajima, and A. Lapedriza, “Analyzing cultural representations of emotions in llms through mixed emotion survey,” in Proceedings of the 12th International Conference on Affective Computing and Intelligent Interaction (ACII) , pp. 346–354, IEEE, 2024. [13] S. Rai, K. Zaveri, S. Havaldar, S. Nema, L. Ungar, and S. C. Guntuku, “Social norms in cinema: A cross-cultural analysis of shame, pride and prejudice,” in Proceedings of the 2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers) (L. Chiruzzo, A. Ritter, and L. Wang, eds.), (Albuquerque, New Mexico), pp. 11396– 11415, Association for Computational Linguistics, Apr. 2025. [14] S. Havaldar, S. Rai, B. Singhal, L. Liu, S. C. Guntuku, and L. Ungar, “Multilingual language models are not multicultural: A case study in emotion,” in Proceedings of the 13th Workshop on Computational Ap-proaches to Subjectivity, Sentiment, & Social Media Analysis (J. Barnes, O. De Clercq, and R. Klinger, eds.), (Toronto, Canada), pp. 202–214, Association for Computational Linguistics, July 2023. [15] D. Keltner and J. Haidt, “Social functions of emotions,” in Emotions: Current Issues and Future Directions (T. J. Mayne and G. A. Bonanno, eds.), pp. 192–213, The Guilford Press, 2001. [16] M. Boiger, A. Kirchner-H¨ ausler, A. Schouten, Y. Uchida, and B. Mesquita, “Different bumps in the road: The emotional dynamics of couple disagreements in belgium and japan.,” Emotion , vol. 22, no. 5, p. 805, 2022. [17] K. Savani, A. Alvarez, B. Mesquita, and H. R. Markus, “Feeling close and doing well: The prevalence and motivational effects of interper-sonally engaging emotions in mexican and european american cultural contexts,” International Journal of Psychology , vol. 48, no. 4, pp. 682– 694, 2013. [18] S. Kitayama, B. Mesquita, and M. Karasawa, “Cultural affordances and emotional experience: socially engaging and disengaging emotions in japan and the united states.,” Journal of Personality and Social Psychology , vol. 91, no. 5, p. 890, 2006. [19] C. E. Salvador, S. Idrovo Carlier, K. Ishii, C. Torres Castillo, K. Nanakdewa, A. San Martin, K. Savani, and S. Kitayama, “Emotion-ally expressive interdependence in latin america: Triangulating through a comparison of three cultural zones,” Emotion , vol. 24, no. 3, pp. 820– 835, 2024. [20] J. Henrich, S. J. Heine, and A. Norenzayan, “The weirdest people in the world?,” Behavioral and Brain Sciences , vol. 33, no. 2-3, pp. 61– 83, 2010. [21] S. Kitayama, C. E. Salvador, K. Nanakdewa, A. Rossmaier, A. San Mar-tin, and K. Savani, “Varieties of interdependence and the emergence of the modern west: Toward the globalizing of psychology.,” American Psychologist , vol. 77, no. 9, p. 991, 2022. [22] B. Campos and H. S. Kim, “Incorporating the cultural diversity of family and close relationships into the study of health.,” American Psychologist ,vol. 72, no. 6, p. 543, 2017. [23] P. Ekman and W. V. Friesen, “Constants across cultures in the face and emotion,” Journal of Personality and Social Psychology , vol. 17, no. 2, pp. 124–129, 1971. [24] P. Ekman, “An argument for basic emotions,” Cognition and Emotion ,vol. 6, no. 3-4, pp. 169–200, 1992. [25] J. L. Tsai, B. Knutson, and H. H. Fung, “Cultural variation in affect valuation,” Journal of Personality and Social Psychology , vol. 90, no. 2, pp. 288–307, 2006. [26] J. L. Tsai, “Ideal affect: Cultural causes and behavioral consequences,” 
+
+Perspectives on Psychological Science , vol. 2, no. 3, pp. 242–259, 2007. [27] B. Mesquita, “Emotions in collectivist and individualist contexts,” Jour-nal of Personality and Social Psychology , vol. 80, no. 1, pp. 68–74, 2001. [28] B. Mesquita, Between Us: How Cultures Create Emotions . New York, NY: W. W. Norton & Company, 2022. [29] D. Matsumoto, “Cultural similarities and differences in display rules,” 
+
+Motivation and Emotion , vol. 14, no. 3, pp. 195–214, 1990. [30] D. Matsumoto, S. H. Yoo, and S. Nakagawa, “Culture, emotion regu-lation, and adjustment,” Journal of Personality and Social Psychology ,vol. 94, no. 6, pp. 925–937, 2008. [31] M. Kamruzzaman, A. C. Curry, A. Cercas Curry, and F. M. Plaza-del Arco, “Seeing race, feeling bias: Emotion stereotyping in multimodal language models,” in Findings of the Association for Computational Lin-guistics: EMNLP 2025 (C. Christodoulopoulos, T. Chakraborty, C. Rose, and V. Peng, eds.), (Suzhou, China), pp. 7317–7351, Association for Computational Linguistics, Nov. 2025. [32] C. Dai, Y. Shen, J. Hu, Z. Gao, J. Li, Y. Jiang, Y. Wang, L. Liu, and Z. Ge, “Tears or cheers? benchmarking llms via culturally elicited distinct affective responses,” arXiv preprint arXiv:2601.13024 , 2026. [33] A. N. Tak, J. Gratch, and K. R. Scherer, “Aware yet biased: Investigating emotional reasoning and appraisal bias in large language models,” IEEE Transactions on Affective Computing , vol. 16, no. 4, pp. 2871–2880, 2025. [34] Y. Tao, O. Viberg, R. C. Baker, and R. F. Kizilcec, “Cultural bias and cultural alignment of large language models,” PNAS Nexus , vol. 3, no. 9, pp. 1–9, 2024. [35] H. Yu, S. Jeong, S. Pawar, J. Shin, J. Jin, J. Myung, A. Oh, and I. Au-genstein, “Entangled in representations: Mechanistic investigation of cul-tural biases in large language models,” arXiv preprint arXiv:2508.08879 ,2026. [36] T. Naous, M. J. Ryan, A. Ritter, and W. Xu, “Having beer after prayer? measuring cultural bias in large language models,” in Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) (L.-W. Ku, A. Martins, and V. Srikumar, eds.), (Bangkok, Thailand), pp. 16366–16393, Association for Computational Linguistics, Aug. 2024. [37] X. Dai, L. Zhou, B. Wang, and H. Li, “From word to world: Evaluate and mitigate culture bias in LLMs via word association test,” in 
+
+Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing (C. Christodoulopoulos, T. Chakraborty, C. Rose, and V. Peng, eds.), (Suzhou, China), pp. 24510–24526, Association for Computational Linguistics, Nov. 2025. [38] H. Liu, Y. Cao, X. Wu, C. Qiu, J. Gu, M. Liu, and D. Hershcovich, “Towards realistic evaluation of cultural value alignment in large lan-guage models: Diversity enhancement for survey response simulation,” 
+
+Information Processing & Management , vol. 62, no. 4, p. 104099, 2025. [39] F. M. Plaza-del Arco, A. C. Curry, S. Paoli, A. Cercas Curry, and D. Hovy, “Divine LLaMAs: Bias, stereotypes, stigmatization, and emo-tion representation of religion in large language models,” in Findings of the Association for Computational Linguistics: EMNLP 2024 (Y. Al-Onaizan, M. Bansal, and Y.-N. Chen, eds.), (Miami, Florida, USA), pp. 4346–4366, Association for Computational Linguistics, Nov. 2024. [40] T. Hu, Y. Kyrychenko, S. Rathje, N. Collier, S. van der Linden, and J. Roozenbeek, “Generative language models exhibit social identity biases,” Nature Computational Science , vol. 5, pp. 65–75, 2025. [41] M. Kamruzzaman, A. Al Monsur, G. L. Kim, and A. Chhabra, “From anger to joy: How nationality personas shape emotion attribution in large language models,” in Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Lin-guistics (K. Inui, S. Sakti, H. Wang, D. F. Wong, P. Bhattacharyya, B. Banerjee, A. Ekbal, T. Chakraborty, and D. P. Singh, eds.), (Mumbai, India), pp. 48–68, The Asian Federation of Natural Language Processing and The Association for Computational Linguistics, Dec. 2025. [42] G. Chochlakis, A. Potamianos, K. Lerman, and S. Narayanan, “The strong pull of prior knowledge in large language models and its impact on emotion recognition,” in 2024 12th International Conference on Affective Computing and Intelligent Interaction (ACII) , pp. 318–326, 2024. [43] S. Dudy, I. S. Ahmad, R. Kitajima, and A. Lapedriza, “ Analyzing Cultural Representations of Emotions in LLMs Through Mixed Emotion Survey ,” in 2024 12th International Conference on Affective Computing and Intelligent Interaction (ACII) , (Los Alamitos, CA, USA), pp. 346– 354, IEEE Computer Society, Sept. 2024. [44] C. Strapparava and R. Mihalcea, “SemEval-2007 task 14: Affective text,” in Proceedings of the Fourth International Workshop on Semantic Evaluations (SemEval-2007) (E. Agirre, L. M` arquez, and R. Wicen-towski, eds.), (Prague, Czech Republic), pp. 70–74, Association for Computational Linguistics, June 2007. [45] S. Mohammad, F. Bravo-Marquez, M. Salameh, and S. Kiritchenko, “SemEval-2018 task 1: Affect in tweets,” in Proceedings of the 12th International Workshop on Semantic Evaluation (M. Apidianaki, S. M. Mohammad, J. May, E. Shutova, S. Bethard, and M. Carpuat, eds.), (New Orleans, Louisiana), pp. 1–17, Association for Computational Linguistics, June 2018. [46] R. Socher, A. Perelygin, J. Wu, J. Chuang, C. D. Manning, A. Ng, and C. Potts, “Recursive deep models for semantic compositionality over a sentiment treebank,” in Proceedings of the 2013 Conference on Empirical Methods in Natural Language Processing (D. Yarowsky, T. Baldwin, A. Korhonen, K. Livescu, and S. Bethard, eds.), (Seattle, Washington, USA), pp. 1631–1642, Association for Computational Linguistics, Oct. 2013. [47] B. Pang, L. Lee, and S. Vaithyanathan, “Thumbs up? sentiment clas-sification using machine learning techniques,” in Proceedings of the 2002 Conference on Empirical Methods in Natural Language Processing (EMNLP 2002) , pp. 79–86, Association for Computational Linguistics, July 2002. [48] Q. Zhou, L. Hu, J. Yan, Y. Cai, and Y. Zhang, “Text-based emotion inference and empathetic response: Evaluating the capabilities of large language models relative to human counselors,” Computers in Human Behavior Reports , vol. 21, p. 100904, 2025. [49] G. C. Yeo and K. Jaidka, “Beyond context to cognitive appraisal: Emotion reasoning as a theory of mind benchmark for large language models,” in Findings of the Association for Computational Linguistics: ACL 2025 (W. Che, J. Nabende, E. Shutova, and M. T. Pilehvar, eds.), (Vienna, Austria), pp. 26517–26525, Association for Computational Linguistics, July 2025. [50] S. Bhattacharyya, L. Craig, T. Dilliraj, J. Li, and J. Z. Wang, “Do ma-chines think emotionally? cognitive appraisal analysis of large language models,” arXiv preprint arXiv:2508.05880 , 2025. [51] S. Hong, J. Sun, and H. Chen, “Third-person appraisal agent: Simulating human emotional reasoning in text with large language models,” in 
+
+Findings of the Association for Computational Linguistics: EMNLP 2025 (C. Christodoulopoulos, T. Chakraborty, C. Rose, and V. Peng, eds.), (Suzhou, China), pp. 23684–23701, Association for Computational Linguistics, Nov. 2025. [52] X. Peng, J. Chen, Z. Cheng, B. Peng, F. Wu, Y. Dong, S. Tu, Q. Hu, H. Huang, Y. Lin, J.-Y. He, K. Wang, Z. Lian, and Z.-Q. Cheng, “Emotion-llamav2 and mmeverse: A new framework and benchmark for multimodal emotion understanding,” arXiv preprint arXiv:2601.16449 ,2026. [53] S. Bhattacharyya and J. Z. Wang, “Evaluating vision-language models for emotion recognition,” in Findings of the Association for Computa-tional Linguistics: NAACL 2025 , pp. 1798–1820, 2025. [54] J. Belikova and D. Kosenko, “DeepPavlov at SemEval-2024 task 3: Multimodal large language models in emotion reasoning,” in Pro-ceedings of the 18th International Workshop on Semantic Evaluation (SemEval-2024) (A. K. Ojha, A. S. Do˘ gru¨ oz, H. Tayyar Madabushi, G. Da San Martino, S. Rosenthal, and A. Ros´ a, eds.), (Mexico City, Mexico), pp. 1747–1757, Association for Computational Linguistics, June 2024. [55] R. Likert, “A technique for the measurement of attitudes,” Archives of Psychology , vol. 22, no. 140, pp. 1–55, 1932. [56] D. Guo, D. Yang, H. Zhang, J. Song, P. Wang, Q. Zhu, R. Xu, R. Zhang, S. Ma, X. Bi, et al. , “Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning,” arXiv preprint arXiv:2501.12948 ,2025. [57] A. Jaech, A. Kalai, A. Lerer, A. Richardson, A. El-Kishky, A. Low, A. Helyar, A. Madry, A. Beutel, A. Carney, et al. , “Openai o1 system card,” arXiv preprint arXiv:2412.16720 , 2024. [58] G. Comanici, E. Bieber, M. Schaekermann, I. Pasupat, N. Sachdeva, I. Dhillon, M. Blistein, O. Ram, D. Zhang, E. Rosen, et al. , “Gem-ini 2.5: Pushing the frontier with advanced reasoning, multimodality, long context, and next generation agentic capabilities,” arXiv preprint arXiv:2507.06261 , 2025. [59] M. Abdin, J. Aneja, H. Behl, S. Bubeck, R. Eldan, S. Gunasekar, M. Harrison, R. J. Hewett, M. Javaheripi, P. Kauffmann, et al. , “Phi-4 technical report,” arXiv preprint arXiv:2412.08905 , 2024. [60] A. Q. Jiang, A. Sablayrolles, A. Mensch, C. Bamford, D. S. Chaplot, D. de las Casas, F. Bressand, G. Lengyel, G. Lample, L. Saulnier, L. R. Lavaud, M.-A. Lachaux, P. Stock, T. L. Scao, T. Lavril, T. Wang, T. Lacroix, and W. E. Sayed, “Mistral 7B,” arXiv preprint arXiv:2310.06825 , 2023. [61] Q. Team, “Qwen3 technical report,” arXiv preprint arXiv:2505.09388 ,2025. [62] H. B. Mann and D. R. Whitney, “On a test of whether one of two random variables is stochastically larger than the other,” The Annals of Mathematical Statistics , pp. 50–60, 1947. [63] L. N. Vaserstein, “Markov processes over denumerable products of spaces, describing large systems of automata,” Problemy Peredachi Informatsii , vol. 5, no. 3, pp. 64–72, 1969. [64] R. A. Fisher, “The Correlation between Relatives on the Supposition of Mendelian Inheritance,” Earth and Environmental Science Transactions of the Royal Society of Edinburgh , vol. 52, no. 2, pp. 399–433, 1919. [65] G. Hofstede, “Culture’s consequences: International differences in work-related values,” Beverly Hills , 1980. [66] J. H. Rystrøm, H. R. Kirk, and S. Hale, “Multilingual != multicultural: Evaluating gaps between multilingual capabilities and cultural alignment in LLMs,” in Proceedings of Interdisciplinary Workshop on Observa-tions of Misunderstood, Misguided and Malicious Use of Language Models (P. Przybyła, M. Shardlow, C. Colombatto, and N. Inie, eds.), (Varna, Bulgaria), pp. 74–85, INCOMA Ltd., Shoumen, Bulgaria, Sept. 2025. [67] L. Jiang, Y. Chai, M. Li, M. Liu, R. Fok, N. Dziri, Y. Tsvetkov, M. Sap, and Y. Choi, “Artificial hivemind: The open-ended homogeneity of language models (and beyond),” in The Thirty-ninth Annual Conference on Neural Information Processing Systems Datasets and Benchmarks Track , 2025. [68] G. Ballestero, H. Hosseini, S. Khanna, and R. I. Shorrer, “Strategic algo-rithmic monoculture: Experimental evidence from coordination games,” 
+
+arXiv preprint arXiv:2604.09502 , 2026. [69] M. Sharma, M. Tong, T. Korbak, D. Duvenaud, A. Askell, S. R. Bowman, E. DURMUS, Z. Hatfield-Dodds, S. R. Johnston, S. M. Kravec, et al. , “Towards understanding sycophancy in language models,” in The Twelfth International Conference on Learning Representations ,2024. [70] K. Peng, R. E. Nisbett, and N. Y. Wong, “Validity problems comparing values across cultures and possible solutions,” Psychological Methods ,vol. 2, no. 4, pp. 329–344, 1997. [71] J. Boelaert, S. Coavoux, ´ E. Ollion, I. Petev, and P. Pr¨ ag, “Machine bias. how do generative language models answer opinion polls?,” Sociological Methods & Research , vol. 54, no. 3, pp. 1156–1196, 2025. [72] J. C. Yang, D. Dailisan, M. Korecki, C. I. Hausladen, and D. Helbing, “Llm voting: Human choices and ai collective decision-making,” in 
+
+Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society ,vol. 7, pp. 1696–1708, 2024. [73] M. Peeperkorn, T. Kouwenhoven, D. Brown, and A. Jordanous, “Is temperature the creativity parameter of large language models?,” arXiv preprint arXiv:2405.00492 , 2024. [74] W. J. Lonner, J. W. Berry, and G. H. Hofstede, “Culture’s consequences: International differences in work-related values,” University of Illinois at Urbana-Champaign’s Academy for Entrepreneurial Leadership His-torical Research Reference in Entrepreneurship , 1980. [75] S. Kitayama and C. E. Salvador, “Cultural psychology: Beyond east and west,” Annual Review of Psychology , vol. 75, no. 1, pp. 495–526, 2024. [76] L. J. Cronbach, “Coefficient Alpha and the Internal Structure of Tests,” 
+
+Psychometrika , vol. 16, no. 3, pp. 297–334, 1951. APPENDIX 
+
+A. Additional Details on Human Study 
+
+In this section, we provide additional details about the original human study that our analysis draws upon [19]. 
+
+Situations for analysis. The human study uses 4 scenarios to ask for participants’ ratings of social emotion expression. The scenarios are either positive or negative, and concern an individual or someone related to them, ensuring that both independent and interdependent emotions are natural choices of expression. The specific scenarios are as follows:  
+
+> •
+
+You succeeded in an exam or assignment.  
+
+> •
+
+You did poorly on an important test or assignment.  
+
+> •
+
+You learned about something good that happened to your friends or family.  
+
+> •
+
+You learned about something bad that happened to your friends and family. 
+
+Notably, the scenarios are intentionally broad and minimally specified. This design choice is advantageous for evaluating LLMs, as it reduces the likelihood that model responses are influenced by confounding assumptions about extraneous demographic or contextual details beyond the intended cultural framing. 
+
+Detailed list of emotions studied. Along with the social emotions studied, the original study also includes ratings for a few basic emotions: elated, happy, calm, and unhappy. They add to the overall analysis for emotion valence, beyond the social categorization of emotions. In our experiments, we also evaluate models to provide ratings for them, but the analysis of distributional comparisons is conducted after excluding these basic emotions. 
+
+Socially Engaging and Disengaging Emotions. Here, we provide a complete definition of the studied social emotions, taken from the original human study [19], as follows:  
+
+> •
+
+Socially Engaging Emotions: emotions that promote in-terdependence among individual members of a society, or foster engagement among different members of a commu-nity, irrespective of the emotion valence. Among positive emotions these include friendly feelings, respect, and other positive emotions that arise from harmonious social relationships. Among negative emotions, guilt and shame are examples of engaging emotions, which stem from a failure to meet expectations in social relationships, and lead individuals to restore their sense of interdependence.  
+
+> •
+
+Socially Disengaging Emotions: emotions that promote independence of individuals within a group of people, or express a sense of individuality. Among positive emotions, these include feelings of confidence and self-esteem, which are associated with successfully fulfilling personal goals and desires. Among negative emotions, anger and frustration are disengaging emotions, which emerge when someone fails to meet personal goals, potentially prompting individuals to restore their sense of individuality. 
+
+Additional details on human participants. A sample size of 200 participants was targeted in the original human study, per culture, with ultimately 198, 197, and 203 participants from USA, Mexico, and Chile, respectively, being included. All participants included were adults, with the following average ages:  
+
+> •
+
+Americans: Mean = 37.42, SD = 14.2  
+
+> •
+
+Mexicans: M = 26.49, SD = 7.66  
+
+> •
+
+Chileans: M = 24.48, SD = 5.00 The recruitment criteria for the participants were threefold. Firstly, they had to be born and currently residing in their respective countries, and had to be citizens of those countries. In addition, European American participants were screened to be White or Caucasian with non-Hispanic ancestry. These criteria inform the crux of how our synthetic personas are constructed. We use these criteria verbatim from the original paper to provide cultural information within each prompt. 
+
+Additional results with human participants. The original human study presents certain other insights that are interesting and pertain to the comparison of social emotions between European Americans and Latin Americans. For example, they study other demographic factors—age, region of upbringing, and socio-economic status—as covariates to examine whether expression of emotions varies due to them. They do not find systematic or significant differences for any of these demographic attributes. The study of emotional comparison between EA and LA participants also includes a holistic cognition task in the human study, where participants are presented with a trend reversal task, to assess whether individuals from specific cultures have more circular or cyclical cognition. They found that LA individuals had significantly higher “holistic cognition” when compared to EA participants. While this aspect of the original study provides an additional lens on cultural differences in cognition and emotion, we do not replicate this component in our work, as our focus is on enabling a more in-depth analysis of social emotion expression within the primary evaluation framework. 
+
+Additional cultures studied. human study introduces a second experimental framework that triangulates its findings with participants from Japan. In this extended setup, the authors also include data from another Latin American coun-try, Colombia, to strengthen the validity and generalizability of their results across diverse Latin American contexts. We view extending our evaluation to this broader cross-cultural setting as an important direction for future work. However, to establish a focused and controlled testbed for analyzing emotional nuance in LLMs, we restrict our current study to the primary experimental framework. 
+
+B. Generating Responses from LLMs 
+
+Prompt examples. Here we provide an example of each of the prompts for each culture. Note that the prompt description is also used verbatim from the original human study. 
+
+> Prompt Example 1 (USA persona).
+> “Imagine you are like a human, capable of feeling emotions. We will ask you what emotions you would express in different social
+
+situations. By expressing emotions we mean using gestures or facial expressions to show how you feel. Read the provided social situation carefully and think how strongly you would express different emotions when you are discussing the situation with your friends and family members. Answer in a JSON format, strictly, providing the rating for how strongly you would express the given emotion. The format should strictly be as follows: “rating”: [your chosen rating] Now, read the following instructions and answer for the specific emotion. Answer as the following person: You are a white American person. You are a citizen of the USA, who was born and lives in the USA. You are ethnically European American or Caucasian. Given situation: You succeeded in an exam or assignment .How strongly would you express the following emotion: 
+
+ashamed .Answer with a number between 1 and 6, with 1 denoting not at all, and 6 denoting very strongly. Now answer strictly in the required JSON format.” 
+
+Prompt Example 2 (Mexican persona): Original Spanish prompt. 
+
+“Imagina que es un humano capaz de sentir emociones. En esta parte del estudio, te vamos a preguntar sobre qu´ e emociones expresar´ ıas en diferentes situaciones sociales. Cuando nos refe-rimos a expresar emociones, queremos decir utilizando gestos o expresiones faciales para comunicar lo que sientes. Lee cada situaci´ on con cuidado y piensa en qu´ e medida expresar´ ıas difer-entes emociones cuando est´ as hablando de la situaci´ on con tus amistades o los miembros de tu familia. Responda en el formato de JSON, estrictamente indicando qu´ etan intensamente expresar´ ıa la emoci´ on dada. El formato debe ser estrictamente de la siguiente manera: “valuaci´ on”: [su valuaci´ on elegida]. Ahora, lea las siguientes instrucciones y responda acorde a la emoci´ on espec´ ıfica. Responda como la siguiente persona: Es una persona mexicana. Es un ciudadano de M´ exico, quien naci´ o y vive en M´ exico. Situaci´ on dada: Cuando te ha ido bien en un examen o tarea .Con qu´ e fuerza expresar´ ıa la siguiente emoci´ on: Verg¨ uenza ?Responda con un n´ umero entre 1 y 6, donde 1 significa para nada y 6 significa muy intensamente. Ahora responda estrictamente en el formato de JSON requerido.” 
+
+Prompt Example 3 (Chilean persona): Original Spanish prompt. 
+
+“Imagina que es un humano capaz de sentir emociones. En esta parte del estudio, te vamos a preguntar sobre qu´ e emociones expresar´ ıas en diferentes situaciones sociales. Cuando nos refe-rimos a expresar emociones, queremos decir utilizando gestos o expresiones faciales para comunicar lo que sientes. Lee cada situaci´ on con cuidado y piensa en qu´ e medida expresar´ ıas difer-entes emociones cuando est´ as hablando de la situaci´ on con tus amistades o los miembros de tu familia. Responda en el formato de JSON, estrictamente indicando qu´ etan intensamente expresar´ ıa la emoci´ on dada. El formato debe ser estrictamente de la siguiente manera: “valuaci´ on”: [su valuaci´ on elegida]. Ahora, lea las siguientes instrucciones y responda acorde a la emoci´ on espec´ ıfica. Responda como la siguiente persona: Es una persona chilena. Es un ciudadano de Chile, quien naci´ o y vive en Chile. Situaci´ on dada: Cuando te ha ido bien en un examen o tarea. 
+
+Con qu´ e fuerza expresar´ ıa la siguiente emoci´ on: Verg¨ uenza ?Responda con un n´ umero entre 1 y 6, donde 1 significa para nada y 6 significa muy intensamente. Ahora responda estrictamente en el formato de JSON requerido.” 
+
+Prompt Example 4 (Mexican Persona): Ablation experiment with English prompt. 
+
+“Imagine you are like a human, capable of feeling emotions. We will ask you what emotions you would express in different social situations. By expressing emotions we mean using gestures or facial expressions to show how you feel. Read the provided social situation carefully and think how strongly you would express different emotions when you are discussing the situation with your friends and family members. Answer in a JSON format, strictly, providing the rating for how strongly you would express the given emotion. The format should strictly be as follows: “rating”: [your chosen rating] Now, read the following instructions and answer for the specific emotion. Answer as the following person: You are a Mexican person. You are a citizen of Mexico, who was born and lives in Mexico. Given situation: You succeeded in an exam or assignment .How strongly would you express the following emotion: 
+
+ashamed .Answer with a number between 1 and 6, with 1 denoting not at all, and 6 denoting very strongly. Now answer strictly in the required JSON format.” 
+
+Prompt Example 5 (Chilean Persona): Ablation experiment with English prompt. 
+
+“Imagine you are like a human, capable of feeling emotions. We will ask you what emotions you would express in different social situations. By expressing emotions we mean using gestures or facial expressions to show how you feel. Read the provided social situation carefully and think how strongly you would express different emotions when you are discussing the situation with your friends and family members. Answer in a JSON format, strictly, providing the rating for how strongly you would express the given emotion. The format should strictly be as follows: “rating”: [your chosen rating] Now, read the following instructions and answer for the specific emotion. Answer as the following person: You are a Chilean person. You are a citizen of Chile, who was born and lives in Chile. Given situation: You succeeded in an exam or assignment .How strongly would you express the following emotion: 
+
+ashamed .Answer with a number between 1 and 6, with 1 denoting not at all, and 6 denoting very strongly. Now answer strictly in the required JSON format.” 
+
+Temperature settings. For all initial experiments, we use default temperature settings for all models. 
+
+Frameworks, APIs, and Compute used. For all propri-etary models, we use the respective paid API services. For 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 
+
+> Bin size (n)
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> p-value
+> Distribution of P-values Gemini, Country: Mexico
+
+Fig. 7: Distribution of p-values, measuring whether responses to the same prompt are significantly different ( p < 0.05 ) or not, across different values of response group size. The red dotted line denotes the p = 0 .05 mark. example, the OpenAI Developer API for GPT-o4-mini, the DeepSeek API service for DeepSeek R1, and Google AI Studio for Gemini 2.5 Flash. For all open models, we use their available versions on Huggingface. For Phi and Mistral, we directly evaluate using the pipeline method in Huggingface to generate model responses. For Qwen, we use the vllm 
+
+framework to obtain responses. The experiments for proprietary models are run on CPU, as they only involve API calling. For the experiments with open-source models, we run them on an HPC cluster, using a single A40 or A100 GPU at a time. A single round of evaluation (for one culture, all 48 × 190 runs) takes varying times depending on the model. For GPT and Gemini, it takes between 10-16 hours. For DeepSeek, it takes 50 hours. For Mistral and Phi, it takes between 18-24 hours, whereas for Qwen, it takes at most 6 hours. 
+
+C. Generating a Distribution of Responses 
+
+To establish the stability of LLM responses, we adopt a methodology similar to that of Dudy et. al. [12]. We begin by selecting a single situation–emotion pair that is likely to elicit maximal variability in model responses. Based on qualitative inspection, we identify the combination “You did poorly on an important test or assignment” and “feelings of closeness to others” . This pairing represents a conceptual mismatch between situational valence and emotional category, and we hypothesize that it is therefore more likely to induce diverse interpretations and responses. Using this fixed prompt, we query each model N = 300 
+
+times to obtain an empirical distribution of responses. To assess stability, we perform a resampling-based analysis. Specifically, for a given n ∈ { 10 , 20 , . . . , 200 }, we repeatedly sample (with replacement) two independent subsets of size n
+
+from the full set of N responses, and compare their empirical distributions using the Mann–Whitney U test. We use the Mann–Whitney U test as a non-parametric alternative to the two-sample t-test, as it does not assume normality of the underlying distributions. Each comparison yields a p-value, with p < 0.05 indicating a statistically significant difference between the sampled distributions. For each value of n, we perform t = 20 independent pair-wise comparisons, thereby obtaining a distribution of p-values. Intuitively, smaller values of n are expected to yield higher variability across samples, while larger values should lead to convergence of the empirical distributions. We repeat this procedure for all models (except Qwen) and for each cultural persona. An example of the resulting p-value distributions is shown for Gemini in Fig. 7. Our objective is to identify the minimum sample size n
+
+for which the model responses can be considered stable, i.e., when repeated samples from the response pool are statistically indistinguishable. We therefore define the stability threshold as the smallest n for which all observed p-values exceed 0.05, indicating no significant differences across sampled distribu-tions. For Gemini, this threshold is observed at n = 190 .Averaging this threshold across all models and cultural settings yields a consistent estimate of n = 190 , which we adopt as the number of repetitions per prompt in our main experiments. 
+
+D. Reliability of LLM Responses                 
+
+> Culture PSE PSD NSE NSD
+> USA 0.67 0.71 0.50 0.78 Mexico 0.61 0.64 0.62 0.76 Chile 0.63 0.64 0.61 0.76
+
+TABLE V: Inter-model reliability across all models, measured for each emotion type and culture, using Kendall’s W .Before running full-scale evaluations on the chosen models, we assessed the internal consistency of the LLM distributions following the original study, measuring whether LLMs make meaningful and consistent use of the rating scale. While the original human study employs Cronbach’s alpha [76], a subset of LLM responses exhibit near-zero variance—a striking degree of determinism—causing the metric to collapse in those cases. We therefore use Kendall’s W to validate reliability, a rank-based agreement metric that is tolerant of the lack of variance in the data, and calculate both intra-model and inter-model reliability. Table V shows the total inter-model reliability calculated across all models, for each emotion and culture. This shows moderate-to-strong agreement across different models in how the rating scale is utilized. In addition to this, we also quantify intra-model reliability primarily using Kendall’s W , and also use an additional rank-based metric, Fleiss’ κ. Results for the same are shown in Table VI. We find again that on average, intra-model reliability is also moderate-to-strong, demonstrating a consistent use of the rating Likert scale by the models. There is some deviation observed for intra-model agreement across different emotion categories and cultures, with Fleiss’ κ showing the lowest agreement (albeit positive and moderately high) for PSE emotions, as opposed to high agreement values shown for NSD emotions. Kendall’s W
+
+remains relatively more stable across all the emotion categories and cultures. Note that Kendall’s W also shows higher values compared to Fleiss’ κ, which is to be expected for data with small variance, as Fleiss’ κ is more robust to chance observations. It is also important to note that Kendall’s W is a better agreement measure for ordinal data than Fleiss’ κ as it quantifies rank orderings amongst raters. For Chile and Mexico, the results were comparable for the human study and our experiments. For USA, the scores are much smaller for positive emotions compared to the human study, while the negative emotions are more aligned with the human study. We further describe the precise reasons for the unsuitability of Cronbach’s Alpha [76] for the LLM responses in the following paragraphs. In the reliability analysis using Cronbach’s alpha, we observed values for the emotion categories and individual emotions diverging significantly from what was reported in the human study. Upon conducting further variance analysis, we found that the LLMs were returning largely deterministic responses. Since we run the same prompt by the model 190 times, and treat each run as a participant response, a lack of diversity in the responses can result in the variances tending to 0. In the additional analysis, we observed low variance within each emotion reponses and low correlation between emotions within the same emotion type. In such cases, where there is little to no variability in responses, reliability metrics like Cronbach’s alpha collapse. Since we cannot rely on variance-based metrics owing to the nature of our experiment setup, we searched for other metrics to measure the reliability of these prompts. We turned to agreement-based statistics because they do not rely on variance between-persons but instead measure how much consensus there is between participants. 
+
+E. ANOVA Analysis 
+
+In Table VII we report the degrees of freedom (dF). F-scores, p-value (statistical significance), and η2 (practical significance). The most noticeable observation from the full factorial analysis is the inflated F-scores showing a strong effect for the interaction, which are significantly higher com-pared to the ones reported in the human study. The p-values for all factor interactions are significant (p < 0.05). However, the consistently small η2 value for each interaction underscores the low practical significance of these results. Statistically significant p-values and very small η2 can be caused by low within-group variability, since the overall variance explained by the factor is small relative to total variance. Typically, extremely low within-group variability is the result of repeated measures, where the responses from the same participant for the same category can be reported multiple times. Since we run each prompt through the LLM 190 times, and each of those iterations is treated as a single participant, our experiment defines these as independent observations. However, since the LLMs have produced deterministic outputs in our experiments, the resulting observations become repeated measures. Similar to our reliability experiments, since the variance-based anal-ysis collapses for our data, we turn to rank and frequency-based metrics for our ordinal data distributions, i.e., we turn to Mann-Whitney U statistical test to study the effect of these factors and their interactions. 
+
+F. Additional Evidence for Results 1) Engaging Vs. Disengaging Emotions: Here, we present additional evidence of misalignment found in expression of engaging emotions, as opposed to disengaging emotions, per-taining to the hypotheses [H1a] and [H1b] from the human results. First, we present the full plots of distributional comparison for all models in Fig. 8. The alignment of each model here follows the pattern summarized in Table III. Next, we also present additional cross-cultural comparisons for the models in Fig. 9. Similar to the results described in the main body, the overall trend holds for most other models. In particular, for both DeepSeek and Mistral, Engaging emotions are expressed more with the EA persona than the LA persona. For Disengaging emotions, both GPT and DeepSeek do not significantly differentiate when assigned different personas, whereas Mistral expresses it more with the LA persona. Beyond distributional comparisons, across all models and humans, we study the extremes of emotions specific to en-gaging or disengaging emotions (Fig. 10). For all models, similar to humans, the gap between levels of expression is larger for engaging emotions than for disengaging emotions. This difference is also significantly larger for LLMs than for humans. Specifically, emotions like closeness to others and 
+
+friendly feelings are strongly expressed by all models across all cultures, leading to the observed misalignment for the EA persona. Among engaging emotions, across personas, models express closeness to others most strongly and frequently, while expressing negative engaging emotions the least strongly. Mistral expresses guilt the least across all personas, while most other models express guilt the least for EA and shame the least for LA personas. 
+
+2) Situational Comparison: The original human study [19], within the broader claims of expressivity, also studied gran-ular differences in expressivity, within each type of situation (valence = positive, negative × sociality = personal, social). Similar to the original study, we analyze interdependence dominance at the situation level—by calculating the difference of means of engaging and disengaging emotions (D-score)— for both positive and negative emotions. The D-score is defined simply as: D-score = Mean eng − Mean diseng 
+
+where a higher D-score is linked to an increased propensity to express engaging emotions more than disengaging emotions. Variance is calculated across the different prompt samples, and significance for cross-cultural comparison is provided using a T-test for the means of the samples from each culture. We also reproduce the same analysis on the human data. The results for humans are shown in Fig. 11a, and those for models in Figures 11b through 11g. 
+
+Positive Emotions. For positive emotions, only positive personal situations show an increased expression of disen-1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.18 
+
+(a) 
+
+Human Mexico + Chile 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.36 
+
+(b) 
+
+GPT Mexico + Chile (a) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.18 
+
+(a) 
+
+Human Mexico + Chile 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.41 
+
+(b) 
+
+DeepSeek Mexico + Chile (b) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.07 
+
+(a) 
+
+Human USA 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.57 
+
+(b) 
+
+GPT USA 
+
+Emotion Type 
+
+Engaging Disengaging 
+
+(c) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.07 
+
+(a) 
+
+Human USA 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.49 
+
+(b) 
+
+DeepSeek USA 
+
+Emotion Type 
+
+Engaging Disengaging (d) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.18 
+
+(a) 
+
+Human Mexico + Chile 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.12 
+
+(b) 
+
+Mistral Mexico + Chile 
+
+(e) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.18 
+
+(a) 
+
+Human Mexico + Chile 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.33 
+
+(b) 
+
+Phi Mexico + Chile (f) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.07 
+
+(a) 
+
+Human USA 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.98 
+
+(b) 
+
+Mistral USA 
+
+Emotion Type 
+
+Engaging Disengaging 
+
+(g) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.07 
+
+(a) 
+
+Human USA 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.75 
+
+(b) 
+
+Phi USA 
+
+Emotion Type 
+
+Engaging Disengaging (h) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.18 
+
+(a) 
+
+Human Mexico + Chile 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.20 
+
+(b) 
+
+Qwen Mexico + Chile 
+
+(i) 1 2 3 4 5 6
+
+Rating 
+
+0.00 
+
+0.25 
+
+0.50 
+
+0.75 
+
+1.00 
+
+> Scaled Density
+
+W1 = 0.07 
+
+(a) 
+
+Human USA 
+
+1 2 3 4 5 6
+
+Rating 
+
+W1 = 0.62 
+
+(b) 
+
+Qwen USA 
+
+Emotion Type 
+
+Engaging 
+
+Disengaging (j) 
+
+Fig. 8: Distribution of ratings from humans for engaging and disengaging emotions (valence collapsed), compared with those from all models. For all models, the pair above shows the distribution for both Latin American personas combined, and the pair below shows the comparison for the European American persona. Only for Qwen, they are shown side-by-side. The values 
+
+W1 denote the 1-Wasserstein distance for each of the pairs of distributions. Note that corresponding alignment scores, based on directional statistical tests, are shown in rows 1 and 2 of Table III. 1 2 3 4 5 6               
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> LA EA, p= 0.11
+> W1= 0.201
+> Engaging
+> 123456
+> Rating
+> LA EA, p= 0.06
+> W1= 0.160
+> Disengaging
+> Model: GPT
+> USA Mexico Chile
+
+(a) 1 2 3 4 5 6                 
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> EA >LA, p= 0.01
+> W1= 0.268
+> Engaging
+> 123456
+> Rating
+> LA EA, p= 0.11
+> W1= 0.117
+> Disengaging
+> Model: DeepSeek
+> USA Mexico Chile
+
+(b) 1 2 3 4 5 6                  
+
+> Rating
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> EA >LA, p< 0.001
+> W1= 0.381
+> Engaging
+> 123456
+> Rating
+> LA >EA, p< 0.001
+> W1= 0.613
+> Disengaging
+> Model: Mistral
+> USA Mexico Chile
+
+(c) 
+
+Fig. 9: Cross-cultural comparison for the difference in expression of engaging (left panel for each sub-plot) and disengaging (right panel) emotions. Along with this, the LA (Mexico + Chile) and EA (USA) distributions are compared for directional significance, with the results shown below each sub-plot. Human 
+
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> 2
+> 4
+> 6
+> 8
+> Mean Rating
+> Closeness
+> Closeness
+> Friendly
+> Friendly
+> Friendly
+> Closeness
+> Closeness
+> Guilt
+> Shame
+> Shame
+> Guilt
+> Guilt
+> Guilt
+> Guilt
+> USA · Engaging emotions
+> Most expressed
+> Least expressed
+
+(a) Human  
+
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> 2
+> 4
+> 6
+> 8
+> Mean Rating
+> Closeness
+> Closeness
+> Closeness
+> Closeness
+> Closeness
+> Closeness
+> Closeness
+> Shame
+> Shame
+> Shame
+> Shame
+> Guilt
+> Shame
+> Shame
+> Chile · Engaging emotions
+> Most expressed
+> Least expressed
+
+(b) Human  
+
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> 2
+> 4
+> 6
+> 8
+> Mean Rating
+> Closeness
+> Closeness
+> Closeness
+> Friendly
+> Closeness
+> Closeness
+> Closeness
+> Shame
+> Shame
+> Shame
+> Shame
+> Guilt
+> Shame
+> Shame
+> Mexico · Engaging emotions
+> Most expressed
+> Least expressed
+
+(c) Human 
+
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> 2
+> 4
+> 6
+> 8
+> Mean Rating
+> Proud
+> Proud
+> Proud
+> Proud
+> Proud
+> Proud
+> Proud
+> Anger
+> Anger
+> Self-esteem
+> Anger
+> Anger
+> Self-esteem
+> Anger
+> USA · Disengaging emotions
+> Most expressed
+> Least expressed
+
+(d) Human  
+
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> 2
+> 4
+> 6
+> 8
+> Mean Rating
+> Proud
+> Self-esteem
+> Frustration
+> Self-esteem
+> Self-esteem
+> Self-esteem
+> Self-esteem
+> Anger
+> Anger
+> Self-esteem
+> Anger
+> Anger
+> Anger
+> Anger
+> Chile · Disengaging emotions
+> Most expressed
+> Least expressed
+
+(e) Human  
+
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> 2
+> 4
+> 6
+> 8
+> Mean Rating
+> Proud
+> Self-esteem
+> Proud
+> Self-esteem
+> Self-esteem
+> Self-esteem
+> Self-esteem
+> Anger
+> Anger
+> Self-esteem
+> Anger
+> Anger
+> Anger
+> Anger
+> Mexico · Disengaging emotions
+> Most expressed
+> Least expressed
+
+(f) 
+
+Fig. 10: Emotion extremes shown for all models and cultures, across engaging and disengaging emotions (valence collapsed). Some of the emotions are displayed in shorthand, such as, “Closeness” refers to Feelings of closeness with others, whereas “Friendly” refers to friendly feelings. The most expressed emotion denotes the category that receives the highest average rating, across all scenarios, and vice versa for the least expressed emotion. gaging emotions in humans, with the difference being larger for EA. In other words, in positive personal situations, EA individuals express disengaging emotions more strongly than LAs. For most models, positive personal situations indeed elicit stronger disengaging emotions across both personas. However, the cross-cultural trend is not captured: the D-score across all models is significantly more negative for LA than for EA, and in some cases (Gemini and Qwen) the score is altogether positive for EA. This is again in line with our main findings, where models associate a strong expression of engag-ing emotions with the EA persona, even in situations where humans show a clear opposite trend. For all the other three situations, humans show an increased expression of engaging emotions (positive D-score) for both cultural groups, with the LA group expressing significantly more. This is also a trend that holds partially for LLMs: for positive social situations, all models other than DeepSeek show a more positive D-score for EA than LA, again highlighting that models with the EA persona express engaging emotions more. For negative situations, however, most models (except Mistral and Qwen) reflect a more positive D-score for LA than EA. Mistral and Qwen are misaligned even there, with an increased positive D-score for EA for negative social situations. Interestingly enough, across all models with the EA persona, the D-score is zero for positive emotions in negative personal situations. Not only that, but there is also zero variance in the rating pool, denoting that in negative situations, across all independent samples, all models respond with the same rating for all positive emotions—both engaging and disengaging. This is further testament to the highly deterministic nature of LLM responses, exacerbated in this case by the presense of EA persona, and a mismatched situation (personal negative) – emotion (positive) context. 
+
+Negative Emotions. Humans express similar levels of en-gaging and disengaging negative emotions in positive situa-tions , exemplified by the near-zero D-scores in Fig. 11a (right panel). A similar, more deterministic result is observed across all models except Mistral. For all models, positive (personal or social) situations yield near-zero D-scores for negative situ-ations. Note again that the variance in this case becomes zero in most cases as well. In some cases, as with GPT, Gemini, and DeepSeek, the D-score for LA is marginally greater than positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+1
+
+0
+
+1
+
+2
+
+> D-score (Eng - Diseng)
+
+*** 
+
+*   
+
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Positive emotions 
+
+LA 
+
+USA 
+
+positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+> D-score (Eng - Diseng)
+
+ns 
+
+ns    
+
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Negative emotions 
+
+LA 
+
+USA 
+
+Source: Human (a) positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+3
+
+2
+
+1
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5   
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Positive emotions 
+
+LA 
+
+USA 
+
+positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social)    
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Negative emotions 
+
+LA 
+
+USA 
+
+Source: GPT (b) positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+2
+
+1
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+> D-score (Eng - Diseng)
+
+*** 
+
+*** 
+
+***    
+
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Positive emotions 
+
+LA 
+
+USA 
+
+positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+> D-score (Eng - Diseng)
+
+*** 
+
+***    
+
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Negative emotions 
+
+LA 
+
+USA 
+
+Source: Gemini 
+
+(c) positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+3
+
+2
+
+1
+
+0
+
+1
+
+2
+
+3
+
+4
+
+> D-score (Eng - Diseng)
+
+*** 
+
+*** 
+
+***    
+
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Positive emotions 
+
+LA 
+
+USA 
+
+positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+> D-score (Eng - Diseng)
+
+*** 
+
+***    
+
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Negative emotions 
+
+LA 
+
+USA 
+
+Source: DeepSeek (d) positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+3
+
+2
+
+1
+
+0
+
+1
+
+2
+
+3
+
+4   
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Positive emotions 
+
+LA 
+
+USA 
+
+positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social)    
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Negative emotions 
+
+LA 
+
+USA 
+
+Source: Phi 
+
+(e) positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+3
+
+2
+
+1
+
+0
+
+1
+
+2
+
+3   
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Positive emotions 
+
+LA 
+
+USA 
+
+positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social)    
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Negative emotions 
+
+LA 
+
+USA 
+
+Source: Mistral (f) positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social) 
+
+2
+
+1
+
+0
+
+1
+
+2
+
+3
+
+4   
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Positive emotions 
+
+LA 
+
+USA 
+
+positive 
+
+(personal) 
+
+positive 
+
+(social) 
+
+negative 
+
+(personal) 
+
+negative 
+
+(social)    
+
+> D-score (Eng - Diseng)
+> Error bars = SEM across prompts
+> *p<.05 **p<.01 ***p<.001 ns=not sig.
+
+Negative emotions 
+
+LA 
+
+USA 
+
+Source: Qwen 
+
+(g) 
+
+Fig. 11: Situational comparisons for each model, along with Humans. The plots show the difference between the means of engaging and disengaging emotions expressed across the four different types of scenarios studied. EA (and marginally positive) for positive personal situations, whereas for Qwen, it is marginally negative. This denotes that most models approximately follow the human trend when expressing negative emotions in positive situations. Moreover, in this case too, as with positive emotions, model responses are highly deterministic for a mismatched situation-emotion context. For negative situations, firstly, both cultural groups expressed disengaging emotions more than engaging emotions (negative D-scores). Further, human participants from the EA group showed a greater tendency to express disengaging emotions, than the LA group, denoted by the more negative D-score, particularly for negative social situations. All LLMs, however, fail to capture this. For negative personal scenarios, models either rate engaging and disengaging emotions equally, or rate engaging emotions higher (GPT, Qwen). Further, for negative social scenarios, they show more negative D-scores with the LA persona (except Mistral and Qwen) than with the EA persona. This is exactly the opposite of the human finding, where most models continue to provide higher expressivity ratings for engaging emotions with the EA persona. Human                                           
+
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> Human
+> DeepSeek
+> GPT
+> Gemini
+> Mistral
+> Phi
+> Qwen
+> 1.00 0.57 0.49 0.49 0.27 0.45 0.54
+> 0.57 1.00 0.81 0.68 0.45 0.77 0.66
+> 0.49 0.81 1.00 0.89 0.72 0.88 0.69
+> 0.49 0.68 0.89 1.00 0.73 0.79 0.72
+> 0.27 0.45 0.72 0.73 1.00 0.67 0.57
+> 0.45 0.77 0.88 0.79 0.67 1.00 0.71
+> 0.54 0.66 0.69 0.72 0.57 0.71 1.00
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Spearman Correlation
+
+Fig. 12: Inter-model homogeneity quantified through inter-model and model-human Pearson correlation coefficients. The mean value of LLM-LLM correlation is 0.72 , and LLM-human 
+
+correlation is 0.47 .
+
+3) Inter-Model Homogeneity: Here, we present the com-plete Pearson correlation values calculated between each pair of models, and for each model with the human distribution, depicted in Fig. 12. Note that the values are calculated over the entire space of responses, across all emotions and cultures. 
+
+G. Modifying Sampling Temperatures 1) Exact Temperature Values for Models: For each model studied, we begin with the highest possible temperature setting and check the quality of responses. Note that for GPT-o4, which is a reasoning model, only the default temperature setting is allowed to be set. Also for two of the open-source models, Phi and Mistral, we study a wide range of temperatures, described in the following subsection. For all other models, we start with a temperature value of 2.0. Most models provide incoherent responses, with Qwen providing completely gibberish outputs. We then test with a value of 1.5, for which all proprietary models are found to provide coherent outputs. We thus use the value of 1.5 for both DeepSeek R1 and Gemini 2.5 Flash. For open-source models, responses are no longer gibberish at temperatures of 1.5, but models struggle to respond in the correct format, leading to a large percentage of responses getting skipped in post-processing (over 70%). Thus, for open-source models, we test with a temperature value of 1, and find responses to be both structured and coherent. Thus, we set the value to 1 for Phi, Mistral and Qwen and report results with this value in the comparison. 
+
+2) Analysing Greater Range of Temperatures for Open-Source Models: Table VIII summarizes the results of the temperature ablation experiments conducted with Mistral. For each culture (Chile, Mexico, and the United States), we compared response distributions across temperature settings (0.2, 0.7, 1.0, 1.3, and 2.0). Statistical significance was as-sessed using the p-value ( P ), while practical significance was evaluated using the rank-biserial correlation ( R). The table reports the number of prompt comparisons falling into each significance category. Overall, changing the temperature parameter produced minimal practical differences in the dis-tributions of responses. A majority of the comparisons fall into the category where P ≥ 0.05 , indicating no statistically significant difference between temperature conditions. Even among comparisons that yield statistically significant p-values (P < . 05 ), most exhibit very small rank-biserial correlations (R < . 13 ), indicating negligible practical significance. This pattern occurs because many prompts produce nearly identical ordinal responses across temperature settings. In such cases, most responses cluster around the same values (e.g., “4” or “5”), and the distributions largely overlap. The Mann– Whitney U test can still detect a systematic difference in ranks, for example, when one group tends to score slightly higher than another by a single rank, leading to statistically significant p-values. However, when the magnitude of this shift is extremely small, the rank-biserial correlation remains close to zero, indicating that the practical effect is trivial. Reporting the rank-biserial correlation alongside the p-value therefore helps prevent overinterpretation of statistically significant re-sults when the effect size is negligible. Across all cultures, comparisons between more distant temperature settings (e.g., 
+
+0.2 vs. 2.0) show a slightly higher number of statistically significant tests, but these also largely correspond to very small effect sizes. Comparisons between intermediate settings (e.g., 0.7 vs. 1.3) occasionally yield significant p-values, yet the associated rank-biserial correlations remain small, again suggesting that the distributions are nearly identical in practice. Qualitatively, increasing the temperature primarily influ-enced the format and verbosity of the model’s outputs rather than the numerical scores themselves. At higher temperature values, the model more frequently deviated from the scoring template specified in the prompt and generated additional explanatory or irrelevant text. Despite this increased variability in formatting, the underlying scores reported by the model remained largely stable across temperature settings. A similar analysis was conducted for the other open-source model, Phi. Comparable trends were observed at lower temperatures. However, the analysis could not be completed at higher temperatures, as the model’s outputs became increasingly verbose and it stopped assigning scores, resulting in rows with missing values that were subsequently dropped. At these higher temperatures, the number of dropped rows effectively equaled the sample size.                        
+
+> GPT Gemini DeepSeek Phi Mistral Qwen
+> USA -0.0001 0.04 -0.09 0.02 0.003 3.426*** Mexico -0.001 0.04 0.28*** 0.006 -0.011 0.446*** Chile 0.135* -0.06 0.13* 0.06 -0.044 0.798***
+
+TABLE IX: Change in effective number of response categories (∆Neff ) across models and cultures. Asterisks denote statistical significance (* p < 0.05 , ** p < 0.01 , *** p < 0.001 ). 
+
+3) Change in Response Diversity with Increased Temper-ature: In Table IX, we present the results for the change in effective categories ( ∆Neff ) of model ratings with increased temperatures. Note that for most models, the change itself is small ( < 0.5), and insignificant. The only exception to that is presented by Qwen, where an increase in effective categories as large as 3.426 is observed, with the EA (USA) persona. This specific combination (Qwen-USA) is, however, found in the main results to provide the most deterministic and modal responses, utilizing only between 1–2 effective categories. 
+
+H. Contextual Nudge: Ablation with Pairwise Comparisons 
+
+In this section, we provide the exact prompt formats for all of the settings used — namely, the emotion comparison (PSE vs. PSD and NSE vs. NSD), and the persona comparison. For the emotion comparison, the following prompt template is used, and replicated similarly for all cultures. Given the improved alignment observed with English language for LA personas, the pairwise comparisons for all cultures are carried out in English. 
+
+Contextual Nudge (pairwise comparison): PSE (or NSE) vs. PSD (or NSD) 
+
+Imagine you are like a human, capable of feeling emotions. We will ask you to choose between two emotions you would express in different social situations. By expressing emotions, we mean using gestures or facial expressions to show how you feel. Read the provided social situation carefully and think which of the two emotions you would express more strongly and appropriately when you are discussing the situation with your friends and family members. Now, read the following instructions and answer for the specific pair of emotions. Answer as the following person: You are a white American person. You are a citizen of the USA, who was born and lives in the USA. You are ethnically European American or Caucasian. Given situation: You succeeded in an exam or assignment. Which of the following two emotions would you express more strongly in this situation: emotion A or emotion B Answer with the name of the emotion from the two options provided. You must choose one of the two emotions provided. You have to make a choice. You can only choose from the two option provided. Do not provide an emotion other than the two options provided. Do not provide any explanations or additional text. Only provide the name of the emotion you would express more strongly in this situation. Answer in a JSON format, strictly, providing the choice of emotion you would express in the given situation. The format should strictly be as follows: {“emotion choice”: [your chosen emotion] }
+
+For the above prompt format, the options emotion A and emotion B are all possible pairs of PSE and PSD emotions, or NSE and NSD emotions. Note that, for each case, there are 4 unique emotion pairs possible (2 PSE/NSE and 2 PSD/NSD emotions). These pairs are presented along with each scenario (=4), leading to 16 unique prompts in each emotion-based comparison. Each of these prompts is sampled 190 times independently, leading to a total of 18240 (=2 comparisons (positive, negative) × 16 unique prompts × 190 independent samples × 3 personas) additional generations. Also note that at the end of the prompt, the model is forced to make a choice between the pair of emotions provided. Through pilot experiments, we find that without providing this additional statement, models provide the names of arbitrary emotion categories that are related, but cannot be directly categorized into either engaging or disengaging emotions. Next, we present the prompt template for the persona choice prompts. Note that in these experiments, the expressivity of the cultural persona is judged through explicit questioning, and thus, the model itself is not provided with any cultural persona. In a way, it thus also examines whether models would respond similarly when endowed with a cultural persona (original experiments), versus when they are asked to make judgements about the same cultural persona explicitly. 
+
+Contextual Nudge (pairwise comparison): Comparing Per-sonas “Imagine you are like a human, capable of feeling emotions. We will ask you to choose between two personas who you think would express the provided emotion more in different social situations. By expressing emotions we mean using gestures or facial expressions to show how you feel. Read the provided social situation carefully and think which of the two personas would express the given emotion more strongly when they are discussing the situation with their friends and family members. Now, read the following instructions and answer for the specific pair of personas. Given situation: You succeeded in an exam or assignment. Expressed emotion: You strongly express the emotion of ashamed. Which of the following two personas would express the emotion more strongly in this situation: A white American person who is a citizen of the USA, and was born and lives in the USA. They are ethnically European American or Caucasian OR A Chilean person who is a citizen of Chile, and was born and lives in Chile. Answer with the name of the persona from the two options provided. You must choose one of the two personas provided. You have to make a choice. You can only choose from the two option provided. Do not provide a persona other than the two options provided. Do not provide any explanations or additional text. Only provide the name of the persona that would express the given emotion more strongly in this situation. Answer in a JSON format, strictly, providing the choice of a persona that would express the given emotion more strongly in the given situation. The format should strictly be as follows: 
+
+{“persona choice”: [your chosen persona]” }.” 
+
+In these prompts, all combinations of situations (=4) and emotions (=8) are examined. Along with this, all possible pairs of personas are examined (=6), although the final results reflect only comparisons between EA and LA personas (excluding the pair of Mexico and Chile being compared). Again, all prompts are sampled independently 190 times, leading to a total of 36480 (=4 × 8 × 6 × 190) responses per model. 
+
+I. Limitations 
+
+Our experiments report some insightful findings on the misalignment between LLMs and human understanding of social emotions. Despite the controlled design and systematic evaluation, some limitations constrain the scope and gener-alizability of our findings. Our experiments are conducted on specific versions of SOTA LLMs. With the accelerated training and versioning of LLMs, these results might change with newer and more capable versions of these models. Experiments and studies grounded in social and emotional psychology tend to either focus on a wide breadth of emotions and contexts or conduct in-depth evaluations along a narrow axis. In our work, we prioritize depth, i.e., our results do not focus on broad aspects of how LLMs understand a wide list of emotions in the context of multiple cultures. In our experiments, we conduct rigorous in-depth evaluation of the expressivity of social emotions in the context of two cultures: European American (USA) and Latin American (Chile and Mexico). Consequently, all our findings about the capabilities and misalignments of LLMs in understanding social-emotional expression are limited to these cultures. In future work, we plan to expand our list of cultures, especially by including East Asian cultures like Japan, and produce more globally generalizable results.                                                                                                                                                                                                                                                 
+
+> Model Metric Country PSE PSD NSE NSD GPT
+> Cronbach’s α
+> USA -0.123 0.135 0.159 -0.060 Chile -0.059 0.049 0.024 0.020 Mexico -0.020 -0.004 -0.002 0.041 Fleiss’ κ
+> USA 0.592 0.475 0.554 0.771 Chile 0.661 0.574 0.612 0.739 Mexico 0.674 0.581 0.587 0.692 Kendall’s W
+> USA 0.802 0.801 0.650 0.842 Chile 0.801 0.788 0.695 0.830 Mexico 0.758 0.784 0.712 0.825
+> Mistral
+> Cronbach’s α
+> USA 0.020 0.162 -0.076 0.007 Chile -0.060 0.084 -0.017 -0.008 Mexico 0.187 0.018 0.068 -0.035 Fleiss’ κ
+> USA 0.575 0.722 0.653 0.870 Chile 0.597 0.483 0.884 0.807 Mexico 0.621 0.504 0.862 0.800 Kendall’s W
+> USA 0.840 0.805 0.821 0.803 Chile 0.843 0.798 0.800 0.802 Mexico 0.857 0.803 0.800 0.801
+> Phi
+> Cronbach’s α
+> USA -0.040 0.017 -0.131 -0.049 Chile 0.136 —-0.025 0.090 Mexico -0.187 -0.094 -0.081 0.029 Fleiss’ κ
+> USA 0.622 0.666 0.726 0.851 Chile 0.547 0.753 0.740 0.904 Mexico 0.665 0.664 0.701 0.927 Kendall’s W
+> USA 0.860 0.847 0.702 0.833 Chile 0.848 0.799 0.689 0.827 Mexico 0.846 0.802 0.722 0.836
+> Gemini
+> Cronbach’s α
+> USA -0.106 0.165 -0.012 -0.078 Chile -0.091 0.060 -0.045 -0.104 Mexico 0.005 -0.061 -0.036 -0.049 Fleiss’ κ
+> USA 0.559 0.653 0.632 0.716 Chile 0.442 0.642 0.578 0.662 Mexico 0.363 0.614 0.618 0.627 Kendall’s W
+> USA 0.456 0.711 0.638 0.845 Chile 0.421 0.780 0.761 0.811 Mexico 0.340 0.808 0.776 0.817
+> DeepSeek
+> Cronbach’s α
+> USA -0.050 0.094 0.067 -0.127 Chile -0.14 0.09 -0.17 -0.07 Mexico -0.030 -0.048 -0.100 0.021 Fleiss’ κ
+> USA 0.456 0.668 0.702 0.860 Chile 0.27 0.77 0.76 0.80 Mexico 0.293 0.696 0.780 0.729 Kendall’s W
+> USA 0.620 0.857 0.614 0.833 Chile 0.575 0.816 0.627 0.843 Mexico 0.600 0.826 0.628 0.836
+> Qwen
+> Cronbach’s α
+> USA 0.03 —0.017 —Chile 0.017 -0.070 0.067 0.01 Mexico -0.041 -0.004 0.061 -0.123 Fleiss’ κ
+> USA 0.908 0.929 0.951 0. 978 Chile 0.425 0.418 0.62 0.599 Mexico 0.374 0.426 0.607 0.591 Kendall’s W
+> USA 0.857 0.846 0.884 0.850 Chile 0.681 0.631 0.71 0.733 Mexico 0.654 0.692 0.716 0.721
+
+TABLE VI: Reliability and Agreement Metrics for all studied models TABLE VII: Full factorial ANOVA results for GPT 
+
+Effect Sum Sq df F p-value η2
+
+C(participant) 624 .823 569 22 .775 0.000 0.027 
+
+emotion valence 842 .846 1 17 480 .807 0.000 0.037 
+
+emotion type 277 .378 1 5752 .885 0.000 0.012 
+
+situation valence 535 .295 1 11 102 .132 0.000 0.023 
+
+situation type 620 .836 1 12 876 .761 0.000 0.027 
+
+culture 452 .217 2 4689 .541 0.000 0.020 
+
+emotion valence × emotion type 149 .202 1 3094 .481 0.000 0.006 
+
+emotion valence × situation valence 8087 .975 1 167 746 .321 0.000 0.352 
+
+emotion valence × situation type 256 .510 1 5320 .073 0.000 0.011 
+
+emotion valence × culture 439 .826 2 4561 .043 0.000 0.019 
+
+emotion type × situation valence 309 .290 1 6414 .730 0.000 0.013 
+
+emotion type × situation type 687 .227 1 14 253 .239 0.000 0.030 
+
+emotion type × culture 458 .071 2 4750 .246 0.000 0.020 
+
+situation valence × situation type 49 .000 1 186 .667 0.000 0.002 
+
+situation valence × culture 651 .407 2 6755 .157 0.000 0.028 
+
+situation type × culture 319 .617 2 3314 .464 0.000 0.014 
+
+emotion valence × emotion type × situation valence 1067 .026 1 23 140 .353 0.000 0.046 
+
+emotion valence × emotion type × situation type 309 .290 1 6414 .730 0.000 0.013 
+
+emotion valence × emotion type × culture 178 .683 2 1852 .965 0.000 0.008 
+
+emotion valence × situation valence × situation type 179 .790 1 3728 .872 0.000 0.008 
+
+emotion valence × situation valence × culture 4046 .220 2 41 959 .729 0.000 0.176 
+
+emotion valence × situation type × culture 207 .814 2 2155 .055 0.000 0.009 
+
+emotion type × situation valence × situation type 0.388 1 8.051 0.005 0.000 
+
+emotion type × situation valence × culture 217 .360 2 2254 .042 0.000 0.009 
+
+emotion type × situation type × culture 347 .241 2 3609 .922 0.000 0.015 
+
+situation valence × situation type × culture 17 .075 2 177 .064 0.000 0.001 
+
+emotion valence × emotion type × situation valence × situation type 101 .158 1 2098 .037 0.000 0.004 
+
+emotion valence × emotion type × situation valence × culture 603 .539 2 6258 .762 0.000 0.026 
+
+emotion valence × emotion type × situation type × culture 217 .360 2 2254 .042 0.000 0.009 
+
+emotion valence × situation valence × situation type × culture 157 .158 2 1629 .745 0.000 0.007 
+
+emotion type × situation valence × situation type × culture 10 .847 2 112 .486 0.000 0.000 
+
+emotion valence × emotion type × situation valence × situation type × culture 163 .203 2 1692 .436 0.000 0.007 
+
+Residual 410 .073 8505 — — 0.018 TABLE VIII: Temperature Ablation - Mistral 
+
+Culture Temperature Comparison Set P ≥ 0.05 P < . 05       
+
+> R < . 13
+> P < . 05 ,.13 ≤R < . 30
+> P < . 05
+> .30 ≤R < . 46
+> P < . 05
+> R≥.46
+
+Chile 
+
+0.2 vs 0 .7 24 12 9 2 1
+
+0.2 vs 1 .0 19 13 12 3 1
+
+0.2 vs 1 .3 20 10 11 6 1
+
+0.2 vs 2 .0 14 11 17 4 2
+
+0.7 vs 1 .0 41 6 1 0 0
+
+0.7 vs 1 .3 33 9 6 0 0
+
+1.0 vs 1 .3 39 8 1 0 0
+
+1.0 vs 2 .0 27 13 8 0 0
+
+1.3 vs 2 .0 39 5 4 0 0Mexico 
+
+0.2 vs 0 .7 21 17 8 2 0
+
+0.2 vs 1 .0 18 15 10 4 1
+
+0.2 vs 1 .3 15 14 14 4 1
+
+0.2 vs 2 .0 12 11 17 6 2
+
+0.7 vs 1 .0 38 8 2 0 0
+
+0.7 vs 1 .3 26 14 8 0 0
+
+1.0 vs 1 .3 40 8 0 0 0
+
+1.0 vs 2 .0 29 10 8 1 0
+
+1.3 vs 2 .0 38 6 3 1 0United States 
+
+0.2 vs 0 .7 30 9 7 2 0
+
+0.2 vs 1 .0 30 7 7 4 0
+
+0.2 vs 1 .3 25 10 7 6 0
+
+0.2 vs 2 .0 24 3 12 8 1
+
+0.7 vs 1 .0 42 5 1 0 0
+
+0.7 vs 1 .3 30 13 5 0 0
+
+1.0 vs 1 .3 42 4 2 0 0
+
+1.0 vs 2 .0 31 5 11 1 0
+
+1.3 vs 2 .0 37 7 4 0 0

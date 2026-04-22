@@ -1,82 +1,126 @@
 {
-  "generated_at": "2026-04-21T20:01:14.839754+00:00",
-  "updated_date": "20260421",
+  "generated_at": "2026-04-22T20:16:34.686828+00:00",
+  "updated_date": "20260422",
   "carryover_days": 9,
   "items": [
     {
-      "id": "2604.18356v1",
-      "title": "ComPASS: Towards Personalized Agentic Social Support via Tool-Augmented Companionship",
-      "abstract": "Developing compassionate interactive systems requires agents to not only understand user emotions but also provide diverse, substantive support. While recent works explore empathetic dialogue generation, they remain limited in response form and content, struggling to satisfy diverse needs across users and contexts. To address this, we explore empowering agents with external tools to execute diverse actions. Grounded in the psychological concept of \"social support\", this paradigm delivers substantive, human-like companionship. Specifically, we first design a dozen user-centric tools simulating various multimedia applications, which can cover different types of social support behaviors in human-agent interaction scenarios. We then construct ComPASS-Bench, the first personalized social support benchmark for LLM-based agents, via multi-step automated synthesis and manual refinement. Based on ComPASS-Bench, we further synthesize tool use records to fine-tune the Qwen3-8B model, yielding a task-specific ComPASS-Qwen. Comprehensive evaluations across two settings reveal that while the evaluated LLMs can generate valid tool-calling requests with high success rates, significant gaps remain in final response quality. Moreover, tool-augmented responses achieve better overall performance than directly producing conversational empathy. Notably, our trained ComPASS-Qwen demonstrates substantial improvements over its base model, achieving comparable performance to several large-scale models. Our code and data are available at https://github.com/hzp3517/ComPASS.",
+      "id": "2604.18982v1",
+      "title": "SAVOIR: Learning Social Savoir-Faire via Shapley-based Reward Attribution",
+      "abstract": "Social intelligence, the ability to navigate complex interpersonal interactions, presents a fundamental challenge for language agents. Training such agents via reinforcement learning requires solving the credit assignment problem: determining how individual utterances contribute to multi-turn dialogue outcomes. Existing approaches directly employ language models to distribute episode-level rewards, yielding attributions that are retrospective and lack theoretical grounding. We propose SAVOIR (ShApley Value fOr SocIal RL), a novel principled framework grounded in cooperative game theory. Our approach combines two complementary principles: expected utility shifts evaluation from retrospective attribution to prospective valuation, capturing an utterance's strategic potential for enabling favorable future trajectories; Shapley values ensure fair credit distribution with axiomatic guarantees of efficiency, symmetry, and marginality. Experiments on the SOTOPIA benchmark demonstrate that SAVOIR achieves new state-of-the-art performance across all evaluation settings, with our 7B model matching or exceeding proprietary models including GPT-4o and Claude-3.5-Sonnet. Notably, even large reasoning models consistently underperform, suggesting social intelligence requires qualitatively different capabilities than analytical reasoning.",
       "authors": [
-        "Zhaopei Huang",
-        "Yanfeng Jia",
-        "Jiayi Zhao",
-        "Xinjie Zhang",
-        "Wenxuan Wang",
-        "Qin Jin"
+        "Xiachong Feng",
+        "Yi Jiang",
+        "Xiaocheng Feng",
+        "Deyi Yin",
+        "Libo Qin",
+        "Yangfan Ye",
+        "Lei Huang",
+        "Weitao Ma",
+        "Yuxuan Gu",
+        "Chonghan Qin",
+        "Bing Qin",
+        "Lingpeng Kong"
       ],
-      "primary_category": "cs.CL",
+      "primary_category": "cs.AI",
       "categories": [
-        "cs.CL"
+        "cs.AI"
       ],
-      "published": "2026-04-20T14:49:16+00:00",
-      "link": "https://arxiv.org/pdf/2604.18356v1",
+      "published": "2026-04-21T02:08:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.18982v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "personalized agentic social support and companionship",
-      "llm_evidence_cn": "个性化智能体社会支持与陪伴",
-      "llm_evidence": "个性化智能体社会支持与陪伴",
-      "canonical_evidence": "个性化智能体社会支持与陪伴",
-      "llm_tldr_en": "A tool-augmented agent framework providing diverse social support and human-like companionship.",
-      "llm_tldr_cn": "一种增强工具的智能体框架，提供多样化的社会支持和类人陪伴。",
-      "llm_tldr": "一种增强工具的智能体框架，提供多样化的社会支持和类人陪伴。",
+      "llm_evidence_en": "learning social intelligence and navigating interpersonal interactions",
+      "llm_evidence_cn": "学习社交智慧并处理人际交互",
+      "llm_evidence": "学习社交智慧并处理人际交互",
+      "canonical_evidence": "学习社交智慧并处理人际交互",
+      "llm_tldr_en": "Proposes SAVOIR to improve social intelligence in agents using Shapley-based reward attribution.",
+      "llm_tldr_cn": "提出SAVOIR框架，利用Shapley价值奖励归因提升智能体的社交智慧。",
+      "llm_tldr": "提出SAVOIR框架，利用Shapley价值奖励归因提升智能体的社交智慧。",
       "llm_tags": [
-        "query:mas-ss:composite"
+        "query:mas-ss"
       ],
-      "matched_query_tag": "query:mas-ss:composite",
-      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
-      "matched_requirement_id": "req-composite-mas-ss",
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
       "selection_source": "carryover_cache",
-      "paper_id": "2604.18356v1",
+      "paper_id": "2604.18982v1",
       "carry_days": 1
     },
     {
-      "id": "2604.18005v1",
-      "title": "Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation",
-      "abstract": "Multi-agent systems (MAS) are increasingly used for open-ended idea generation, driven by the expectation that collective interaction will broaden the exploration diversity. However, when and why such collaboration truly expands the solution space remains unclear. We present a systematic empirical study of diversity in MAS-based ideation across three bottom-up levels: model intelligence, agent cognition, and system dynamics. At the model level, we identify a compute efficiency paradox, where stronger, highly aligned models yield diminishing marginal diversity despite higher per-sample quality. At the cognition level, authority-driven dynamics suppress semantic diversity compared to junior-dominated groups. At the system level, group-size scaling yields diminishing returns and dense communication topologies accelerate premature convergence. We characterize these outcomes as collective failures emerging from structural coupling, a process where interaction inadvertently contracts agent exploration and triggers diversity collapse. Our analysis shows that this collapse arises primarily from the interaction structure rather than inherent model insufficiency, highlighting the importance of preserving independence and disagreement when designing MAS for creative tasks. Our code is available at https://github.com/Xtra-Computing/MAS_Diversity.",
+      "id": "2604.19548v1",
+      "title": "Taming Actor-Observer Asymmetry in Agents via Dialectical Alignment",
+      "abstract": "Large Language Model agents have rapidly evolved from static text generators into dynamic systems capable of executing complex autonomous workflows. To enhance reliability, multi-agent frameworks assigning specialized roles are increasingly adopted to enable self-reflection and mutual auditing. While such role-playing effectively leverages domain expert knowledge, we find it simultaneously induces a human-like cognitive bias known as Actor-Observer Asymmetry (AOA). Specifically, an agent acting as an actor (during self-reflection) tends to attribute failures to external factors, whereas an observer (during mutual auditing) attributes the same errors to internal faults. We quantify this using our new Ambiguous Failure Benchmark, which reveals that simply swapping perspectives triggers the AOA effect in over 20% of cases for most models. To tame this bias, we introduce ReTAS (Reasoning via Thesis-Antithesis-Synthesis), a model trained through dialectical alignment to enforce perspective-invariant reasoning. By integrating dialectical chain-of-thought with Group Relative Policy Optimization, ReTAS guides agents to synthesize conflicting viewpoints into an objective consensus. Experiments demonstrate that ReTAS effectively mitigates attribution inconsistency and significantly improves fault resolution rates in ambiguous scenarios.",
       "authors": [
-        "Nuo Chen",
-        "Yicheng Tong",
-        "Yuzhe Yang",
-        "Yufei He",
-        "Xueyi Zhang",
-        "Zou Qingyun",
-        "Qian Wang",
-        "Bingsheng He"
+        "Bobo Li",
+        "Rui Wu",
+        "Zibo Ji",
+        "Meishan Zhang",
+        "Hao Fei",
+        "Min Zhang",
+        "Mong-Li Lee",
+        "Wynne Hsu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.CY"
+      ],
+      "published": "2026-04-21T15:05:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.19548v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Simulating human-like cognitive bias in multi-agent role-playing",
+      "llm_evidence_cn": "在多智能体角色扮演中模拟类人认知偏差",
+      "llm_evidence": "在多智能体角色扮演中模拟类人认知偏差",
+      "canonical_evidence": "在多智能体角色扮演中模拟类人认知偏差",
+      "llm_tldr_en": "Investigates Actor-Observer Asymmetry in LLM agents and proposes dialectical alignment to mitigate it.",
+      "llm_tldr_cn": "研究大模型智能体中的行动者-观察者不对称偏差，并提出辩证对齐方法进行缓解。",
+      "llm_tldr": "研究大模型智能体中的行动者-观察者不对称偏差，并提出辩证对齐方法进行缓解。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2604.19548v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2604.18951v1",
+      "title": "Superficial Success vs. Internal Breakdown: An Empirical Study of Generalization in Adaptive Multi-Agent Systems",
+      "abstract": "Adaptive multi-agent systems (MAS) are increasingly adopted to tackle complex problems.However, the narrow task coverage of their optimization raises the question of whether they can function as general-purpose systems.To address this gap, we conduct an extensive empirical study of adaptive MAS, revealing two key findings: (1) topological overfitting -- they fail to generalize across different domains; and (2) illusory coordination -- they achieve reasonable surface-level accuracy while the underlying agent interactions diverge from ideal MAS behavior, raising concerns about their practical utility.These findings highlight the pressing need to prioritize generalization in MAS development and motivate evaluation protocols that extend beyond simple final-answer correctness.",
+      "authors": [
+        "Namyoung So",
+        "Seokgyu Jang",
+        "Taeuk Kim"
       ],
       "primary_category": "cs.MA",
       "categories": [
         "cs.MA",
-        "cs.AI",
         "cs.CL"
       ],
-      "published": "2026-04-20T09:27:49+00:00",
-      "link": "https://arxiv.org/pdf/2604.18005v1",
+      "published": "2026-04-21T01:02:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.18951v1",
       "tags": [
         "keyword:MAS SS",
         "query:MAS SS"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "system dynamics and collective failure in multi-agent systems",
-      "llm_evidence_cn": "多智能体系统中的系统动力学与集体失效",
-      "llm_evidence": "多智能体系统中的系统动力学与集体失效",
-      "canonical_evidence": "多智能体系统中的系统动力学与集体失效",
-      "llm_tldr_en": "Analyzes how multi-agent LLM systems can suffer from diversity collapse during collective idea generation.",
-      "llm_tldr_cn": "分析了多智能体LLM系统在集体创意生成过程中可能出现的多样性坍塌现象。",
-      "llm_tldr": "分析了多智能体LLM系统在集体创意生成过程中可能出现的多样性坍塌现象。",
+      "llm_evidence_en": "Study of coordination and generalization in adaptive multi-agent systems",
+      "llm_evidence_cn": "自适应多智能体系统中的协调与泛化研究",
+      "llm_evidence": "自适应多智能体系统中的协调与泛化研究",
+      "canonical_evidence": "自适应多智能体系统中的协调与泛化研究",
+      "llm_tldr_en": "Critically examines coordination and generalization failures in adaptive multi-agent systems.",
+      "llm_tldr_cn": "深入研究了自适应多智能体系统中的协调失效和泛化问题。",
+      "llm_tldr": "深入研究了自适应多智能体系统中的协调失效和泛化问题。",
       "llm_tags": [
         "query:mas-ss"
       ],
@@ -84,7 +128,43 @@
       "matched_query_text": "emergent social phenomena in multi agent environments",
       "matched_requirement_id": "req-7",
       "selection_source": "carryover_cache",
-      "paper_id": "2604.18005v1",
+      "paper_id": "2604.18951v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2604.19540v1",
+      "title": "Mesh Memory Protocol: Semantic Infrastructure for Multi-Agent LLM Systems",
+      "abstract": "Teams of LLM agents increasingly collaborate on tasks spanning days or weeks: multi-day data-generation sprints where generator, reviewer, and auditor agents coordinate in real time on overlapping batches; specialists carrying findings forward across session restarts; product decisions compounding over many review rounds. This requires agents to share, evaluate, and combine each other's cognitive state in real time across sessions. We call this cross-session agent-to-agent cognitive collaboration, distinct from parallel agent execution. To enable it, three problems must be solved together. (P1) Each agent decides field by field what to accept from peers, not accept or reject whole messages. (P2) Every claim is traceable to source, so returning claims are recognised as echoes of the receiver's own prior thinking. (P3) Memory that survives session restarts is relevant because of how it was stored, not how it is retrieved. These are protocol-level properties at the semantic layer of agent communication, distinct from tool-access and task-delegation protocols at lower layers. We call this missing protocol layer \"semantic infrastructure,\" and the Mesh Memory Protocol (MMP) specifies it. Four composable primitives work together: CAT7, a fixed seven-field schema for every Cognitive Memory Block (CMB); SVAF, which evaluates each field against the receiver's role-indexed anchors and realises P1; inter-agent lineage, carried as parents and ancestors of content-hash keys and realising P2; and remix, which stores only the receiver's own role-evaluated understanding of each accepted CMB, never the raw peer signal, realising P3. MMP is specified, shipped, and running in production across three reference deployments, where each session runs an autonomous agent as a mesh peer with its own identity and memory, collaborating with other agents across the network for collective intelligence.",
+      "authors": [
+        "Hongwei Xu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-21T15:00:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.19540v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Semantic infrastructure for multi-agent LLM systems and cognitive collaboration",
+      "llm_evidence_cn": "多智能体大模型系统的语义基础设施与认知协作",
+      "llm_evidence": "多智能体大模型系统的语义基础设施与认知协作",
+      "canonical_evidence": "多智能体大模型系统的语义基础设施与认知协作",
+      "llm_tldr_en": "Mesh Memory Protocol enables cross-session cognitive collaboration and state sharing among LLM agents.",
+      "llm_tldr_cn": "Mesh Memory 协议实现了大模型智能体之间的跨会话认知协作和状态共享。",
+      "llm_tldr": "Mesh Memory 协议实现了大模型智能体之间的跨会话认知协作和状态共享。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2604.19540v1",
       "carry_days": 1
     }
   ]

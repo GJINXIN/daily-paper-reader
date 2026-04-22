@@ -1,0 +1,133 @@
+Title: Beyond Serendipity: From Exposing the Unknown to Fostering Engagement through Peer Recommendation
+
+URL Source: https://arxiv.org/pdf/2604.16818v1
+
+Published Time: Tue, 21 Apr 2026 00:30:57 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+# BEYOND SERENDIPITY : F ROM EXPOSING THE UNKNOWN TO 
+
+# FOSTERING ENGAGEMENT THROUGH PEER RECOMMENDATION 
+
+A P REPRINT 
+
+Sosui Moribe 
+
+Graduate School of Design Kyushu University Fukuoka, Japan 
+
+moribe.sosui.695@s.kyushu-u.ac.jp 
+
+Taketoshi Ushiama 
+
+Faculty of Design Kyushu University Fukuoka, Japan 
+
+ushiama@design.kyushu-u.ac.jp 
+
+April 21, 2026 
+
+# ABSTRACT 
+
+Serendipity-oriented recommender systems expose users to unfamiliar items to counter filter bubbles, yet mere exposure does not ensure that users will understand or appreciate the content they encounter. We propose Peer Recommendation, a framework in which a user and an AI agent (Peer) with distinct preferences collaboratively explore unfamiliar content. Unlike conventional conversational recommender systems where the user is a passive recipient, our framework positions the user as both a recommender and a recipient: the user and the Peer mutually recommend songs to each other through chat-based dialogue, collaboratively building a shared playlist. In an exploratory within-subjects experiment (N=14), we compared three conditions: (1) a Close Peer, (2) a Distant Peer, and (3) a baseline agent without an explicit preference profile. The Close Peer significantly increased users’ interest expansion and perceived value of the activity compared to the baseline, with medium-to-large effect sizes. The Distant Peer showed no significant difference at the aggregate level; however, qualitative analysis revealed varied responses, with some participants strongly preferring the Distant Peer. These findings suggest that the “otherness” of a recommendation partner is essential for moving beyond mere exposure toward genuine engagement, and that the appropriate degree of preference distance may vary and need to be adapted to individual users. 
+
+Keywords Peer Recommendation · Conversational Recommendation · LLM-based Agents · Serendipity · Human-Centered Interaction 
+
+# 1 Introduction 
+
+Recommender systems play a central role in modern digital life, supporting everyday decisions about what content to discover and consume across domains such as music, news, and e-commerce. The dominant paradigm optimizes recommendations to match individual user preferences, leveraging collaborative filtering and content-based methods to predict items a user is likely to enjoy. This approach has proven effective at helping users find content that aligns with their established tastes. However, this over-optimization has been shown to limit the range of content users encounter, leading to filter bubbles and echo chambers. To address this, research on beyond-accuracy objectives has proposed metrics such as diversity and serendipity, aiming to expose users to unfamiliar content [ 1 , 2 ]. Yet simply exposing users to unfamiliar items does not ensure that they will understand or appreciate them. What is lacking is a mechanism that supports the process of accepting and appreciating unfamiliar content, not merely exposing users to it. This study proposes another perspective on recommendation: beyond presenting items that match user preferences, we frame recommendation as a collaborative process that promotes users’ active exploration and engagement with unfamiliar content. This concept draws on Peer Learning [ 3], a well-established educational framework in which learners with comparable expertise deepen their understanding through mutual explanation and discussion. A conceptual 
+
+> arXiv:2604.16818v1 [cs.HC] 18 Apr 2026
+
+Beyond Serendipity: Peer Recommendation A P REPRINT 
+
+Figure 1: Concept image of Peer Recommendation diagram of the concept is shown in Figure 1. Consider, for example, when friends recommend music or movies to each other: both the recommender and the recipient gain insights by articulating their reasons and engaging with the other’s perspective. We term this framework of mutual recommendation "Peer Recommendation" and propose a dialogue-based recommendation environment in which an AI agent functions as a Peer. We instantiate Peer Recommendation in the domain of music recommendation as a concrete testbed, though the framework is domain-agnostic by design. Our system first constructs a user profile describing the user’s musical preferences and values based on their existing playlists and demographic information. From this profile, the system generates a Peer agent with its own distinct preferences, values, and personality traits. Users and Peers then recommend songs to each other through chat-based dialogue and collaboratively build a shared playlist. To examine how preference distance between a user and their Peer affects the user experience, we conducted a within-subjects experiment with 14 participants under three conditions: (1) a Peer with close preferences, (2) a Peer with distant preferences, and (3) a baseline agent with no explicit profile. Our experiment showed that Peer agents with explicit profiles significantly improved users’ perceived interest ex-pansion and perceived value of the activity compared to the baseline agent. Notably, the baseline was criticized as "accommodating," with participants reporting that their recommendations were accepted uncritically, indicating that an agent’s "otherness"—its capacity to hold and express distinct perspectives—is essential for meaningful collaborative recommendation. However, marked individual differences in receptivity to Peer preference distance were observed, suggesting the need for adaptive preference distance control. Our contributions are twofold: (1) a framework that reframes recommendation as a collaborative process that fosters active exploration; and (2) we provide empirical evidence that explicit persona design, and the resulting "otherness" of the agent, significantly shapes the quality of collaborative recommendation experiences. 
+
+# 2 Related Work 
+
+2.1 Beyond-Accuracy Objectives in Recommendation 
+
+The over-specialization problem in recommender systems, where the range of content users encounter becomes increasingly narrow, has long been recognized. Over the past two decades, a considerable body of research has developed around "beyond-accuracy" objectives such as diversity, serendipity, novelty, and coverage, as surveyed by [ 1]and [ 2 ] . These approaches seek to improve recommendation quality by, for example, increasing the dissimilarity among 2Beyond Serendipity: Peer Recommendation A P REPRINT 
+
+recommended items or promoting less popular content. However, they remain focused on optimizing list-level properties and do not address the process by which users come to understand and appreciate unfamiliar content. Our work takes a fundamentally different approach: rather than improving what is recommended, we redesign how recommendation occurs—through collaborative dialogue with an AI agent that holds distinct perspectives. 
+
+2.2 Conversational Recommender Systems 
+
+Conversational recommender systems, which progressively elicit user preferences through dialogue, have been an active area of research [ 4, 5]. More recently, LLM-powered approaches have further advanced this paradigm. However, in most of these systems, dialogue serves primarily as a means to clarify user intent and efficiently identify items matching their preferences. The dialogue is not designed as a collaborative process involving mutual understanding between the user and a recommendation partner. In contrast, our work repositions dialogue as the core mechanism for collaborative exploration through mutual recommendation between the user and a Peer agent. 
+
+2.3 LLM-Based Agents with Personas 
+
+Research on building agents with explicit personalities and values using LLMs has gained significant attention. Generative Agents [ 6] introduced agents with long-term memory and self-reflection mechanisms that enable coherent, consistent behavior. CharacterLLM [ 7] demonstrated an approach for endowing agents with specific personality traits through prompting and training. In the context of recommendation, Shu et al.’s RAH framework [ 8] proposed an LLM-based assistant that learns a user’s personality to mediate the recommendation process. A common thread in these works is that agent personas are designed to align with or replicate user characteristics. Our work differs in emphasis: rather than designing the agent’s persona to align with the user, we deliberately construct a Peer agent whose preferences and values diverge from the user’s, and examine how this "otherness" shapes the collaborative recommendation experience. 
+
+# 3 Peer Recommendation 
+
+3.1 Concepts 
+
+Peer Recommendation is a framework in which a user and a Peer agent recommend items to each other on equal footing through dialogue, collaboratively building a shared collection of mutually endorsed items. This framework draws on Peer Learning [ 3], a well-established approach in educational research where learners deepen their understanding by articulating their own perspectives and contrasting them with those of others. We apply this principle to recommendation and design an environment that promotes users’ interest expansion through dialogue-based mutual recommendation, in which both parties articulate their reasons for recommending items and provide feedback on each other’s suggestions. 
+
+3.2 System Design 
+
+The proposed system consists of four stages (Figure 2). 
+
+(1) User Profile Generation. Using the user’s basic attributes (age, instrument experience, etc.) and existing playlists as input, an LLM generates a profile describing the user’s musical values, behavioral tendencies, social listening patterns, and pickiness in natural language. 
+
+(2) Peer Profile Generation. From the user profile, the LLM generates a profile for a fictional Peer with distinct preferences, values, and personality traits. To examine the impact of preference distance on the user experience, we designed two types of Peers: • Type A (Close): Shares the user’s core musical values but holds different perspectives in adjacent domains, intended to encourage deeper exploration of existing preferences. • Type B (Distant): Draws primarily from a different preference domain but maintains connection points through shared musical characteristics (e.g., structure, timbre, rhythm), intended to promote boundary expansion. 
+
+(3) Mutual Recommendation via Dialogue. The user and the Peer recommend songs to each other through chat-based dialogue, articulating their reasons and sharing impressions. To generate each Peer response, the system integrates the conversation history, user profile, Peer profile, and the current state of the shared playlist in a single LLM call, producing an evaluation of the user’s recommended song, a decision on playlist inclusion, and a new recommendation. The flowchart for this section is shown in Figure 3. 3Beyond Serendipity: Peer Recommendation A P REPRINT 
+
+Figure 2: Overview of the Peer Recommendation system pipeline. The system first generates a user profile from basic attributes and existing playlists, then constructs a Peer agent profile (Close or Distant) from the user profile. Users and Peers then engage in mutual recommendation via chat-based dialogue, collaboratively building a shared playlist. 
+
+Figure 3: Conversation flow for mutual recommendation. Each user message triggers a three-step pipeline: (1) analysis of user intent and Peer reception, (2) selection of the Peer’s next action from candidates, and (3) generation of the Peer’s response incorporating the Peer’s profile. The Peer profile varies across conditions (Close Peer, Distant Peer, Baseline), shaping how the Peer interprets the user’s input and what it recommends in return. 4Beyond Serendipity: Peer Recommendation A P REPRINT 
+
+(4) Collaborative Playlist Construction. The recipient of each recommendation decides whether to add the song to the playlist; only songs positively evaluated by both parties are included. This process yields a playlist collaboratively constructed through mutual agreement. We note that both user and Peer profiles are fixed at the start of each session and are not updated during the dialogue. This design choice eliminates confounding effects of profile updates, allowing us to isolate the effect of the Peer’s preference distance on the user experience. 
+
+# 4 Experiment 
+
+4.1 Experimental Design 
+
+We conducted a within-subjects user experiment with 14 participants. Each participant interacted with a Peer agent through chat-based dialogue, mutually recommending songs and collaboratively building a shared playlist. Each participant experienced all three conditions: • Close Peer: A Peer with preferences and values close to the user’s. • Distant Peer: A Peer with preferences significantly different from the user’s. • Baseline: An LLM agent with no explicit preference profile. The Baseline condition lacks an explicit preference profile, causing it to function as a general-purpose assistant that tends to accommodate user preferences rather than express independent perspectives. Since the underlying response generation framework is otherwise identical across all conditions, this design isolates the contribution of the explicit preference profile to the collaborative recommendation experience. We assessed the impact of Peer preference distance on user experience using multiple measures: a single-item measure of perceived interest expansion and subscales of the Intrinsic Motivation Inventory (IMI) including value and tension/pressure. We also collected open-ended feedback for each condition. Based on our hypothesis that Peer agents with explicit profiles would increase users’ perceived interest expansion and perceived value compared to the baseline, we employed one-tailed Wilcoxon signed-rank tests for these directional comparisons (two-tailed for Tension/Pressure). Effect sizes were computed as r = Z/ √N , where N denotes the total sample size. 
+
+4.2 Quantitative Results 
+
+Table 1 summarizes the main results. Table 1: Main quantitative results. CP = Close Peer, DP = Distant Peer, BL = Baseline. One-tailed Wilcoxon signed-rank tests were used for directional hypotheses; two-tailed tests were used for Tension/Pressure. Bold p-values indicate statistical significance ( p < . 05 ). † indicates a trend toward significance ( p < . 10 ).                           
+
+> Measure CP DP BL CP vs BL DP vs BL
+> MMM(p,r)(p,r)Interest expansion 5.21 4.64 4.43 .044 , .46 .453, .03 IMI: Value 5.62 4.75 4.55 .006 , .67 .431, .05 IMI: Tension/Pressure 2.04 2.21 2.29 1.00, .00 .865, .05
+
+Interest expansion. On the single-item measure of perceived interest expansion, Close Peer ( M = 5 .21 ) was significantly higher than Baseline ( M = 4 .43 ), with a medium-to-large effect size ( p = .044 , r = .46 ). The distribution of scores across conditions is shown in Figure 4. 
+
+IMI subscales. On the Value subscale, Close Peer ( M = 5 .62 ) was significantly higher than Baseline ( M = 4 .55 ), with a large effect size ( p = .006 , r = .67 ). The distribution of Value scores is also shown in Figure 4. Tension/Pressure remained low across all conditions (Close Peer ( M = 2 .04 ), Distant Peer ( M = 2 .21 ), Baseline ( M = 2 .29 )), confirming that none of the conditions imposed undue psychological burden. 
+
+Variance and correlation. The variance in ratings for Close Peer and Distant Peer was approximately half or less than that of Baseline across multiple measures (one-tailed Pitman-Morgan test: interest expansion, Close Peer vs. Baseline: 
+
+p = .028 , Distant Peer vs. Baseline: p = .039 ; IMI Value, Close Peer vs. Baseline: p = .004 ), indicating that the proposed conditions provided a more consistent experience. 5Beyond Serendipity: Peer Recommendation A P REPRINT 
+
+Figure 4: Box plots of perceived interest expansion (left) and IMI: Value (right) across conditions. Horizontal lines indicate medians; diamonds indicate means. Close Peer shows both higher means and lower variance than Baseline on both measures. No significant correlation was found between subjective preference alignment and perceived interest expansion (rs = .19 , p = .51 ), suggesting that the perceived similarity to the Peer is not a primary driver of interest expansion. The lack of a significant effect for Distant Peer at the aggregate level may reflect varied responses among participants; we explore this in the qualitative analysis below. 
+
+4.3 Qualitative Analysis 
+
+Analysis of open-ended comments revealed marked individual differences in receptivity to Peer preference distance. As a post-hoc analysis, we identified two participant types based on their evaluation patterns. 
+
+Exploration-oriented participants viewed recommendations that deviated from their preferences positively and rated the Distant Peer highly. In contrast, they criticized Baseline as overly accommodating, reporting that they "felt no pushback" and that "no discussion was sparked." These comments were directed at the baseline agent’s tendency to accept the user’s recommendations almost uncritically, suggesting that an agent’s "otherness"—its capacity to express distinct perspectives and disagreement—is important for meaningful collaborative recommendation. 
+
+Affinity-oriented participants valued recommendations close to their preferences as providing a "sense of being understood" and preferred the Close Peer and the Baseline. Recommendations from the Distant Peer tended to be perceived as cognitive burden. Notably, some participants rated Distant Peer higher than Close Peer. For instance, one participant scored the conditions Close Peer:5, Distant Peer:7, Baseline:1, commenting that Distant Peer recommended songs from culturally distant genres that nonetheless resonated deeply, while describing Baseline as failing to spark any new discovery. Another participant (Close Peer:2, Distant Peer:6, Baseline:2) noted that the Distant Peer "pushed its own interests rather than accommodating mine," contrasting this with Baseline’s lack of novelty. These cases suggest that for some users, preference distance serves as a catalyst for discovery, further supporting the need for adaptive control of Peer preference distance. 
+
+4.4 Discussion 
+
+Our results suggest that the effect of Peer preference distance varies depending on users’ exploration orientation. This implies that a one-size-fits-all approach to preference distance is insufficient. In a practical deployment, users could be given control over how far the Peer’s preferences diverge from their own, allowing them to calibrate the balance between familiarity and challenge according to their individual readiness for exploration. 6Beyond Serendipity: Peer Recommendation A P REPRINT 
+
+# 5 Conclusion 
+
+This study proposed Peer Recommendation, a framework that reframes recommendation as a collaborative process for fostering users’ active exploration and perceived value of recommendation activities, and evaluated a dialogue-based environment for music recommendation. Our experiment showed that a Peer agent with an explicit preference profile significantly improved users’ perceived interest expansion and perceived value of the activity compared to a baseline agent without a profile. Notably, the baseline agent was criticized as "accommodating," highlighting the importance of the agent functioning as an "other" with distinct perspectives and values in conversational recommendation. However, marked individual differences in receptivity to Peer preference distance were observed, suggesting the need for adaptive control of preference distance tailored to individual users. While we used music recommendation as a testbed, the framework generalizes to any domain where collaborative list-building occurs, such as curating reading lists, news bookmarks, or learning resources. Prompts will be made available upon request. 
+
+# Acknowledgements 
+
+This work was supported by JST BOOST, Japan Grant Number JPMJBS2406. We thank all participants for their time and valuable feedback. 
+
+# References 
+
+[1] Marius Kaminskas and Derek Bridge. Diversity, serendipity, novelty, and coverage: A survey and empirical analysis of beyond-accuracy objectives in recommender systems. ACM Transactions on Interactive Intelligent Systems ,7(1):1–42, 2016. [2] Matevž Kunaver and Tomaž Požrl. Diversity in recommender systems – a survey. Knowledge-Based Systems ,123:154–162, 2017. [3] Keith J. Topping. Trends in peer learning. Educational Psychology , 25(6):631–645, 2005. [4] Dietmar Jannach, Ahtsham Manzoor, Wanling Cai, and Li Chen. A survey on conversational recommender systems. 
+
+ACM Computing Surveys , 54(5), 2021. [5] Yongfeng Zhang, Xu Chen, Qingyao Ai, Liu Yang, and W. Bruce Croft. Towards conversational search and recommendation: System ask, user respond. In Proceedings of the 27th ACM International Conference on Information and Knowledge Management (CIKM) , pages 177–186, 2018. [6] Joon Sung Park, Joseph C. O’Brien, Carrie J. Cai, Meredith Ringel Morris, Percy Liang, and Michael S. Bernstein. Generative agents: Interactive simulacra of human behavior. In Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology (UIST ’23) . Association for Computing Machinery, 2023. [7] Yunfan Shao, Linyang Li, Junqi Dai, and Xipeng Qiu. Character-LLM: A trainable agent for role-playing. In 
+
+Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP) , pages 13153–13187. Association for Computational Linguistics, 2023. [8] Yubo Shu, Haonan Zhang, Hansu Gu, Peng Zhang, Tun Lu, Dongsheng Li, and Ning Gu. RAH! RecSys–Assistant– Human: A human-centered recommendation framework with LLM agents. IEEE Transactions on Computational Social Systems , 11(5):6759–6770, 2024. 7

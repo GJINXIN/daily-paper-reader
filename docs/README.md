@@ -6,81 +6,76 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-21
-- 运行时间：2026-04-21 20:04:18 UTC
+- 最新运行日期：2026-04-22
+- 运行时间：2026-04-22 20:18:29 UTC
 - 运行状态：成功
-- 本次总论文数：20
-- 精读区：9
+- 本次总论文数：18
+- 精读区：7
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 20 篇论文深挖多智能体协同，重点聚焦自动化因果发现与视频真伪对抗检测。
-CAM
-- 详情：[/202604/21/README](/202604/21/README)
+今日精选 18 篇前沿论文，深度剖析大模型在社会情感对齐与复杂供应链模拟中的表现。
+重点揭示了 LLM 与人类文化情感准则间的失配现状，并展示了其在模拟多级供应链行为偏差方面的巨大潜力。
+建议关注 AI 如何从单一工具向具备社会支持能力与协作韧性的“数字伙伴”转型。
+- 详情：[/202604/22/README](/202604/22/README)
 
 ### 精读区论文标签
-1. [CAMO: An Agentic Framework for Automated Causal Discovery from Micro Behaviors to Macro Emergence in LLM Agent Simulations](/202604/21/2604.14691v2-camo-an-agentic-framework-for-automated-causal-discovery-from-micro-behaviors-to-macro-emergence-in-llm-agent-simulations)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：大模型智能体社会涌现模拟中的因果发现
-2. [DVAR: Adversarial Multi-Agent Debate for Video Authenticity Detection](/202604/21/2604.16987v1-dvar-adversarial-multi-agent-debate-for-video-authenticity-detection)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：用于视频真实性检测的多智能体法证推理
-3. [WhatIf: Interactive Exploration of LLM-Powered Social Simulations for Policy Reasoning](/202604/21/2604.17615v1-whatif-interactive-exploration-of-llm-powered-social-simulations-for-policy-reasoning)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：用于政策推理的大模型驱动社会模拟交互系统
-4. [Topology-Aware LLM-Driven Social Simulation: A Unified Framework for Efficient and Realistic Agent Dynamics](/202604/21/2604.18011v1-topology-aware-llm-driven-social-simulation-a-unified-framework-for-efficient-and-realistic-agent-dynamics)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：拓扑感知的 LLM 驱动社会模拟框架
-5. [Auditing Support Strategies in LLMs through Grounded Multi-Turn Social Simulation](/202604/21/2604.17079v1-auditing-support-strategies-in-llms-through-grounded-multi-turn-social-simulation)  
+1. [Expressing Social Emotions: Misalignment Between LLMs and Human Cultural Emotion Norms](/202604/22/2604.16757v1-expressing-social-emotions-misalignment-between-llms-and-human-cultural-emotion-norms)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：使用大语言模型进行多轮社交支持模拟
-6. [Stochastic Delayed Dynamics of Rumor Propagation with Awareness and Fact-Checking](/202604/21/2604.17368v1-stochastic-delayed-dynamics-of-rumor-propagation-with-awareness-and-fact-checking)  
+   evidence：大语言模型模拟人类行为与社会情感表达
+2. [Dynamics of Cognitive Heterogeneity: Investigating Behavioral Biases in Multi-Stage Supply Chains with LLM-Based Simulation](/202604/22/2604.17220v1-dynamics-of-cognitive-heterogeneity-investigating-behavioral-biases-in-multi-stage-supply-chains-with-llm-based-simulation)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：社交互动中的谣言传播与事实核查
-7. [Prompt Optimization Enables Stable Algorithmic Collusion in LLM Agents](/202604/21/2604.17774v1-prompt-optimization-enables-stable-algorithmic-collusion-in-llm-agents)  
+   evidence：基于大语言模型的多阶段供应链动态模拟
+3. [Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation](/202604/22/2604.18005v1-diversity-collapse-in-multi-agent-llm-systems-structural-coupling-and-collective-failure-in-open-ended-idea-generation)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：大语言模型智能体市场模拟中的涌现性共谋行为
-8. [Retrieval-Augmented Multimodal Model for Fake News Detection](/202604/21/2604.18112v1-retrieval-augmented-multimodal-model-for-fake-news-detection)  
+   evidence：多智能体系统中多样性崩溃与系统动力学的研究
+4. [Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation](/202604/22/2604.18005v2-diversity-collapse-in-multi-agent-llm-systems-structural-coupling-and-collective-failure-in-open-ended-idea-generation)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：社交媒体上的多模态虚假新闻检测
-9. [Multi-Agent Systems: From Classical Paradigms to Large Foundation Model-Enabled Futures](/202604/21/2604.18133v1-multi-agent-systems-from-classical-paradigms-to-large-foundation-model-enabled-futures)  
+   evidence：多智能体系统中的多样性崩溃与集体失败
+5. [Opinion polarization from compression-based decision making where agents optimize local complexity and global simplicity](/202604/22/2604.18755v1-opinion-polarization-from-compression-based-decision-making-where-agents-optimize-local-complexity-and-global-simplicity)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：从经典范式到大基座模型赋能的多智能体系统综述
+   evidence：社会极化与涌现现象的基于智能体模型
+6. [Explicit Trait Inference for Multi-Agent Coordination](/202604/22/2604.19278v1-explicit-trait-inference-for-multi-agent-coordination)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：基于大语言模型的多智能体系统协作与特质推理
+7. [Revac: A Social Deduction Reasoning Agent](/202604/22/2604.19523v1-revac-a-social-deduction-reasoning-agent)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：在演绎游戏中模拟社会行为
 
 ### 速读区论文标签
-1. [The Consensus Trap: Rescuing Multi-Agent LLMs from Adversarial Majorities via Token-Level Collaboration](/202604/21/2604.17139v1-the-consensus-trap-rescuing-multi-agent-llms-from-adversarial-majorities-via-token-level-collaboration)  
+1. [Imperfectly Cooperative Human-AI Interactions: Comparing the Impacts of Human and AI Attributes in Simulated and User Studies](/202604/22/2604.15607v1-imperfectly-cooperative-human-ai-interactions-comparing-the-impacts-of-human-and-ai-attributes-in-simulated-and-user-studies)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体大语言模型架构与协作机制
-2. [Graph-of-Agents: A Graph-based Framework for Multi-Agent LLM Collaboration](/202604/21/2604.17148v1-graph-of-agents-a-graph-based-framework-for-multi-agent-llm-collaboration)  
+   evidence：模拟的人机交互及人格特质影响
+2. [ConventionPlay: Capability-Limited Training for Robust Ad-Hoc Collaboration](/202604/22/2604.18123v1-conventionplay-capability-limited-training-for-robust-ad-hoc-collaboration)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：基于图的多智能体LLM协作框架
-3. [Do LLM-derived graph priors improve multi-agent coordination?](/202604/21/2604.17191v1-do-llm-derived-graph-priors-improve-multi-agent-coordination)  
+   evidence：多智能体团队中的即时协作与惯例遵循
+3. [ComPASS: Towards Personalized Agentic Social Support via Tool-Augmented Companionship](/202604/22/2604.18356v1-compass-towards-personalized-agentic-social-support-via-tool-augmented-companionship)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于多智能体强化学习协作的大模型衍生图先验
-4. [Hive: A Multi-Agent Infrastructure for Algorithm- and Task-Level Scaling](/202604/21/2604.17353v1-hive-a-multi-agent-infrastructure-for-algorithm--and-task-level-scaling)  
+   evidence：在人机交互场景中模拟社会支持行为
+4. [MultiWorld: Scalable Multi-Agent Multi-View Video World Models](/202604/22/2604.18564v1-multiworld-scalable-multi-agent-multi-view-video-world-models)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于任务级扩展的多智能体基础设施
-5. [Federation over Text: Insight Sharing for Multi-Agent Reasoning](/202604/21/2604.16778v1-federation-over-text-insight-sharing-for-multi-agent-reasoning)  
+   evidence：用于模拟复杂交互的多智能体视频世界模型
+5. [BOIL: Learning Environment Personalized Information](/202604/22/2604.17137v1-boil-learning-environment-personalized-information)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体推理与见解共享框架
-6. [Phase-Scheduled Multi-Agent Systems for Token-Efficient Coordination](/202604/21/2604.17400v1-phase-scheduled-multi-agent-systems-for-token-efficient-coordination)  
+   evidence：多智能体系统在复杂环境中的导航
+6. [Towards Self-Improving Error Diagnosis in Multi-Agent Systems](/202604/22/2604.17658v1-towards-self-improving-error-diagnosis-in-multi-agent-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统中的高效令牌协作
-7. [SkillGraph: Self-Evolving Multi-Agent Collaboration with Multimodal Graph Topology](/202604/21/2604.17503v1-skillgraph-self-evolving-multi-agent-collaboration-with-multimodal-graph-topology)  
+   evidence：基于大语言模型的多智能体系统错误诊断
+7. [Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence](/202604/22/2604.18292v1-agent-world-scaling-real-world-environment-synthesis-for-evolving-general-agent-intelligence)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：具有自演化协作拓扑的视觉多智能体系统
-8. [Provable Coordination for LLM Agents via Message Sequence Charts](/202604/21/2604.17612v1-provable-coordination-for-llm-agents-via-message-sequence-charts)  
+   evidence：扩展真实世界环境合成以促进智能体进化
+8. [MASS-RAG: Multi-Agent Synthesis Retrieval-Augmented Generation](/202604/22/2604.18509v1-mass-rag-multi-agent-synthesis-retrieval-augmented-generation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统中LLM智能体的协作
-9. [Exploring Agentic Visual Analytics: A Co-Evolutionary Framework of Roles and Workflows](/202604/21/2604.15813v1-exploring-agentic-visual-analytics-a-co-evolutionary-framework-of-roles-and-workflows)  
+   evidence：用于检索增强生成的多智能体合成方法
+9. [APEX-MEM: Agentic Semi-Structured Memory with Temporal Reasoning for Long-Term Conversational AI](/202604/22/2604.14362v1-apex-mem-agentic-semi-structured-memory-with-temporal-reasoning-for-long-term-conversational-ai)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体可视化分析与人机角色
-10. [AgentClick: A Skill-Based Human-in-the-Loop Review Layer for Terminal AI Agents](/202604/21/2604.16520v1-agentclick-a-skill-based-human-in-the-loop-review-layer-for-terminal-ai-agents)  
+   evidence：用于长期对话记忆的多工具检索智能体
+10. [Beyond Serendipity: From Exposing the Unknown to Fostering Engagement through Peer Recommendation](/202604/22/2604.16818v1-beyond-serendipity-from-exposing-the-unknown-to-fostering-engagement-through-peer-recommendation)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：AI智能体的人机回环评审层
-11. [Agentic AI for Education: A Unified Multi-Agent Framework for Personalized Learning and Institutional Intelligence](/202604/21/2604.16566v1-agentic-ai-for-education-a-unified-multi-agent-framework-for-personalized-learning-and-institutional-intelligence)  
+   evidence：AI智能体通过对话与用户协作探索内容
+11. [MASS-RAG: Multi-Agent Synthesis Retrieval-Augmented Generation](/202604/22/2604.18509v2-mass-rag-multi-agent-synthesis-retrieval-augmented-generation)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：教育系统的统一多智能体架构
+   evidence：用于检索增强生成的多智能体合成
 
 
 <div class="dpr-home-promo-card">

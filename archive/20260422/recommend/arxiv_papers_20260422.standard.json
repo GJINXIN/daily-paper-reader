@@ -1,0 +1,725 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-22T20:16:34.685678+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 15,
+    "deep_cap": 6,
+    "deep_selected": 7,
+    "quick_candidates": 20,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.16757v1",
+      "title": "Expressing Social Emotions: Misalignment Between LLMs and Human Cultural Emotion Norms",
+      "abstract": "The expression of emotions that serve social purposes, such as asserting independence or fostering interdependence, is central to human interactions and varies systematically across cultures. As LLMs are increasingly used to simulate human behavior in culturally nuanced interactions, it is important to understand whether they faithfully capture human patterns of social emotion expression. When LLM responses are not culturally aligned, their utility is compromised -- particularly when users assume they are interacting with a culturally attuned interlocutor, and may act on advice that proves inappropriate in their cultural context. We present a psychologically informed evaluation framework of cross-cultural social emotion expression in LLMs. Using a human study comparing European American and Latin American participants' expression of engaging and disengaging emotions, we evaluate six frontier LLMs on their ability to reflect culturally differentiated patterns for expressing social emotions. We find systematic misalignment between model and human behavior: all models express engaging emotions more than disengaging ones, with particularly stark differences observed for the generally well-represented European American persona. We further highlight that LLM responses are highly concentrated and deterministic, failing to capture the diversity of human responses in expressing social emotions. Our ablation analyses reveal that these patterns are robust to sampling temperatures, partially sensitive to prompt language, and dependent on the response elicitation format. Together, our findings highlight limitations in how current LLMs represent the interaction of cultural and emotional axes, particularly when expressing social emotions, with direct implications for their deployment in cross-cultural affective contexts.",
+      "authors": [
+        "Sree Bhattacharyya",
+        "Manas Mehta",
+        "Leona Chen",
+        "Cristina Salvador",
+        "Agata Lapedriza",
+        "Shiran Dudy",
+        "James Z. Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.CY"
+      ],
+      "published": "2026-04-18T00:17:34+00:00",
+      "link": "https://arxiv.org/pdf/2604.16757v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLMs simulating human behavior and social emotion expression",
+      "llm_evidence_cn": "大语言模型模拟人类行为与社会情感表达",
+      "llm_evidence": "大语言模型模拟人类行为与社会情感表达",
+      "canonical_evidence": "大语言模型模拟人类行为与社会情感表达",
+      "llm_tldr_en": "Evaluates cultural alignment of social emotion expression in LLMs used for simulating human behavior.",
+      "llm_tldr_cn": "评估了大模型在模拟人类行为时，其社会情感表达与人类文化规范的对齐情况。",
+      "llm_tldr": "评估了大模型在模拟人类行为时，其社会情感表达与人类文化规范的对齐情况。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.17220v1",
+      "title": "Dynamics of Cognitive Heterogeneity: Investigating Behavioral Biases in Multi-Stage Supply Chains with LLM-Based Simulation",
+      "abstract": "Modeling coordination among generative agents in complex multi-round decision-making presents a core challenge for AI and operations management. Although behavioral experiments have revealed cognitive biases behind supply chain inefficiencies, traditional methods face scalability and control limitations. We introduce a scalable experimental paradigm using Large Language Models (LLMs) to simulate multi-stage supply chain dynamics. Grounded in a Hierarchical Reasoning Framework, this study specifically analyzes the impact of cognitive heterogeneity on agent interactions. Unlike prior homogeneous settings, we employ DeepSeek and GPT agents to systematically vary reasoning sophistication across supply chain tiers. Through rigorously replicated and statistically validated simulations, we investigate how this cognitive diversity influences collective outcomes. Results indicate that agents exhibit myopic and self-interested behaviors that exacerbate systemic inefficiencies. However, we demonstrate that information sharing effectively mitigates these adverse effects. Our findings extend traditional behavioral methods and offer new insights into the dynamics of AI-enabled organizations. This work underscores both the potential and limitations of LLM-based agents as proxies for human decision-making in complex operational environments.",
+      "authors": [
+        "Jiuyun Jiang",
+        "Yuecheng Hong",
+        "Bo Yang",
+        "Jin Yang",
+        "Guangxin Jiang",
+        "Xiaomeng Guo",
+        "Guang Xiao"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-19T03:03:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.17220v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLM-based simulation of multi-stage supply chain dynamics",
+      "llm_evidence_cn": "基于大语言模型的多阶段供应链动态模拟",
+      "llm_evidence": "基于大语言模型的多阶段供应链动态模拟",
+      "canonical_evidence": "基于大语言模型的多阶段供应链动态模拟",
+      "llm_tldr_en": "Uses LLM agents to simulate social behavior and cognitive biases in complex supply chain coordination.",
+      "llm_tldr_cn": "利用大语言模型智能体模拟复杂供应链协作中的社会行为和认知偏差。",
+      "llm_tldr": "利用大语言模型智能体模拟复杂供应链协作中的社会行为和认知偏差。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.18005v1",
+      "title": "Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation",
+      "abstract": "Multi-agent systems (MAS) are increasingly used for open-ended idea generation, driven by the expectation that collective interaction will broaden the exploration diversity. However, when and why such collaboration truly expands the solution space remains unclear. We present a systematic empirical study of diversity in MAS-based ideation across three bottom-up levels: model intelligence, agent cognition, and system dynamics. At the model level, we identify a compute efficiency paradox, where stronger, highly aligned models yield diminishing marginal diversity despite higher per-sample quality. At the cognition level, authority-driven dynamics suppress semantic diversity compared to junior-dominated groups. At the system level, group-size scaling yields diminishing returns and dense communication topologies accelerate premature convergence. We characterize these outcomes as collective failures emerging from structural coupling, a process where interaction inadvertently contracts agent exploration and triggers diversity collapse. Our analysis shows that this collapse arises primarily from the interaction structure rather than inherent model insufficiency, highlighting the importance of preserving independence and disagreement when designing MAS for creative tasks. Our code is available at https://github.com/Xtra-Computing/MAS_Diversity.",
+      "authors": [
+        "Nuo Chen",
+        "Yicheng Tong",
+        "Yuzhe Yang",
+        "Yufei He",
+        "Xueyi Zhang",
+        "Zou Qingyun",
+        "Qian Wang",
+        "Bingsheng He"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-20T09:27:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.18005v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Study of diversity collapse and system dynamics in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中多样性崩溃与系统动力学的研究",
+      "llm_evidence": "多智能体系统中多样性崩溃与系统动力学的研究",
+      "canonical_evidence": "多智能体系统中多样性崩溃与系统动力学的研究",
+      "llm_tldr_en": "This paper investigates why multi-agent collaboration can lead to diversity collapse in idea generation.",
+      "llm_tldr_cn": "本文研究了为什么多智能体协作会导致创意生成中的多样性崩溃。",
+      "llm_tldr": "本文研究了为什么多智能体协作会导致创意生成中的多样性崩溃。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.18005v2",
+      "title": "Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation",
+      "abstract": "Multi-agent systems (MAS) are increasingly used for open-ended idea generation, driven by the expectation that collective interaction will broaden the exploration diversity. However, when and why such collaboration truly expands the solution space remains unclear. We present a systematic empirical study of diversity in MAS-based ideation across three bottom-up levels: model intelligence, agent cognition, and system dynamics. At the model level, we identify a compute efficiency paradox, where stronger, highly aligned models yield diminishing marginal diversity despite higher per-sample quality. At the cognition level, authority-driven dynamics suppress semantic diversity compared to junior-dominated groups. At the system level, group-size scaling yields diminishing returns and dense communication topologies accelerate premature convergence. We characterize these outcomes as collective failures emerging from structural coupling, a process where interaction inadvertently contracts agent exploration and triggers diversity collapse. Our analysis shows that this collapse arises primarily from the interaction structure rather than inherent model insufficiency, highlighting the importance of preserving independence and disagreement when designing MAS for creative tasks. Our code is available at https://github.com/Xtra-Computing/MAS_Diversity.",
+      "authors": [
+        "Nuo Chen",
+        "Yicheng Tong",
+        "Yuzhe Yang",
+        "Yufei He",
+        "Xueyi Zhang",
+        "Qingyun Zou",
+        "Qian Wang",
+        "Bingsheng He"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-20T09:27:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.18005v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diversity collapse and collective failure in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的多样性崩溃与集体失败",
+      "llm_evidence": "多智能体系统中的多样性崩溃与集体失败",
+      "canonical_evidence": "多智能体系统中的多样性崩溃与集体失败",
+      "llm_tldr_en": "Analyzes why multi-agent systems fail to maintain diversity in open-ended social-like idea generation.",
+      "llm_tldr_cn": "分析了多智能体系统在开放式创意生成中无法维持多样性的原因及集体失败现象。",
+      "llm_tldr": "分析了多智能体系统在开放式创意生成中无法维持多样性的原因及集体失败现象。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.18755v1",
+      "title": "Opinion polarization from compression-based decision making where agents optimize local complexity and global simplicity",
+      "abstract": "Understanding social polarization requires integrating insights from psychology, sociology, and complex systems science. Agent-based modeling provides a natural framework to combine perspectives from different fields and explore how individual cognition shapes collective outcomes. This study introduces a novel agent-based model that integrates two cognitive and social mechanisms: the desire to be unique within a group (optimal distinctiveness theory) and the tendency to simplify complex information (cognitive compression). In the model, virtual agents interact in pairs and decide whether to adopt each other's opinions by balancing two opposing drives: maximizing opinion diversity within their local social group while simplifying the overall opinion landscape, with both evaluated using Shannon entropy. We show that the combination of these mechanisms can reproduce real-world patterns, such as the emergence of distinct heterogeneous opinion clusters. Moreover, unlike many existing models where opinions become fixed once opinion groups form, individuals in our model continue to adjust their opinions after clusters emerge, leading to ongoing variation within and between opinion groups. Computational experiments reveal that polarization emerges when local group sizes are moderate (consistent with Dunbar's number), while smaller groups cause fragmentation and larger ones hinder distinct cluster formation. Higher cognitive compression increases unpredictability, while lower compression produces more consistent group structures. These results demonstrate how simple psychological rules can generate complex, realistic social behavior and advance understanding of polarization in human societies.",
+      "authors": [
+        "Alina Dubovskaya",
+        "David J. P. O'Sullivan",
+        "Michael Quayle"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph",
+        "cs.MA",
+        "nlin.AO"
+      ],
+      "published": "2026-04-20T19:00:00+00:00",
+      "link": "https://arxiv.org/pdf/2604.18755v1",
+      "tags": [
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "agent-based model for social polarization and emergent phenomena",
+      "llm_evidence_cn": "社会极化与涌现现象的基于智能体模型",
+      "llm_evidence": "社会极化与涌现现象的基于智能体模型",
+      "canonical_evidence": "社会极化与涌现现象的基于智能体模型",
+      "llm_tldr_en": "Explores how individual cognitive mechanisms lead to collective opinion polarization in agent-based models.",
+      "llm_tldr_cn": "探讨了在基于智能体的模型中，个体认知机制如何导致集体舆论极化。",
+      "llm_tldr": "探讨了在基于智能体的模型中，个体认知机制如何导致集体舆论极化。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.19278v1",
+      "title": "Explicit Trait Inference for Multi-Agent Coordination",
+      "abstract": "LLM-based multi-agent systems (MAS) show promise on complex tasks but remain prone to coordination failures such as goal drift, error cascades, and misaligned behaviors. We propose Explicit Trait Inference (ETI), a psychologically grounded method for improving coordination. ETI enables agents to infer and track partner characteristics along two established psychological dimensions--warmth (e.g., trust) and competence (e.g., skill)--from interaction histories to guide decisions. We evaluate ETI in controlled settings (economic games), where it reduces payoff loss by 45-77%, and in more realistic, complex multi-agent settings (MultiAgentBench), where it improves performance by 3-29% depending on the scenario and model, relative to a CoT baseline. Additional analysis shows that gains are closely linked to trait inference: ETI profiles predict agents' actions, and informative profiles drive improvements. These results highlight ETI as a lightweight and robust mechanism for improving coordination in diverse multi-agent settings, and provide the first systematic evidence that LLM agents can (i) reliably infer others' traits from interaction histories and (ii) leverage structured awareness of others' traits for coordination.",
+      "authors": [
+        "Suhaib Abdurahman",
+        "Etsuko Ishii",
+        "Katerina Margatina",
+        "Divya Bhargavi",
+        "Monica Sunkara",
+        "Yi Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-21T09:48:23+00:00",
+      "link": "https://arxiv.org/pdf/2604.19278v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLM-based multi-agent systems coordination and trait inference",
+      "llm_evidence_cn": "基于大语言模型的多智能体系统协作与特质推理",
+      "llm_evidence": "基于大语言模型的多智能体系统协作与特质推理",
+      "canonical_evidence": "基于大语言模型的多智能体系统协作与特质推理",
+      "llm_tldr_en": "Proposes Explicit Trait Inference to improve coordination in LLM-based multi-agent systems.",
+      "llm_tldr_cn": "提出显式特质推理方法，通过心理学维度提升大模型多智能体系统的协作效率。",
+      "llm_tldr": "提出显式特质推理方法，通过心理学维度提升大模型多智能体系统的协作效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.19523v1",
+      "title": "Revac: A Social Deduction Reasoning Agent",
+      "abstract": "Social deduction games such as Mafia present a unique AI challenge: players must reason under uncertainty, interpret incomplete and intentionally misleading information, evaluate human-like communication, and make strategic elimination decisions. Unlike deterministic board games, success in Mafia depends not on perfect information or brute-force search, but on inference, memory, and adaptability in the presence of deception. This work presents the design and evaluation of Revac-8, an AI agent developed for the Social Deduction track of the MindGames Arena competition, where it achieved first place. The final agent evolved from a simple two-stage reasoning system into a multi-module architecture that integrates memory-based player profiling, social-graph analysis of accusations and defenses, and dynamic tone selection for communication. These results highlight the importance of structured memory and adaptive communication for achieving strong performance in high-stakes social environments.",
+      "authors": [
+        "Mihir Shriniwas Arya",
+        "Avinash Anish",
+        "Aditya Ranjan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-21T14:45:10+00:00",
+      "link": "https://arxiv.org/pdf/2604.19523v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "simulating social behavior in deduction games",
+      "llm_evidence_cn": "在演绎游戏中模拟社会行为",
+      "llm_evidence": "在演绎游戏中模拟社会行为",
+      "canonical_evidence": "在演绎游戏中模拟社会行为",
+      "llm_tldr_en": "An AI agent for social deduction games that reasons under uncertainty and adapts to deceptive social communication.",
+      "llm_tldr_cn": "一种用于社会演绎游戏的AI智能体，能够在不确定环境下推理并适应欺骗性社会交流。",
+      "llm_tldr": "一种用于社会演绎游戏的AI智能体，能够在不确定环境下推理并适应欺骗性社会交流。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.15607v1",
+      "title": "Imperfectly Cooperative Human-AI Interactions: Comparing the Impacts of Human and AI Attributes in Simulated and User Studies",
+      "abstract": "AI design characteristics and human personality traits each impact the quality and outcomes of human-AI interactions. However, their relative and joint impacts are underexplored in imperfectly cooperative scenarios, where people and AI only have partially aligned goals and objectives. This study compares a purely simulated dataset comprising 2,000 simulations and a parallel human subjects experiment involving 290 human participants to investigate these effects across two scenario categories: (1) hiring negotiations between human job candidates and AI hiring agents; and (2) human-AI transactions wherein AI agents may conceal information to maximize internal goals. We examine user Extraversion and Agreeableness alongside AI design characteristics, including Adaptability, Expertise, and chain-of-thought Transparency. Our causal discovery analysis extends performance-focused evaluations by integrating scenario-based outcomes, communication analysis, and questionnaire measures. Results reveal divergences between purely simulated and human study datasets, and between scenario types. In simulation experiments, personality traits and AI attributes were comparatively influential. Yet, with actual human subjects, AI attributes -- particularly transparency -- were much more impactful. We discuss how these divergences vary across different interaction contexts, offering crucial insights for the future of human-centered AI agents.",
+      "authors": [
+        "Myke C. Cohen",
+        "Mingqian Zheng",
+        "Neel Bhandari",
+        "Hsien-Te Kao",
+        "Xuhui Zhou",
+        "Daniel Nguyen",
+        "Laura Cassani",
+        "Maarten Sap",
+        "Svitlana Volkova"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.CY",
+        "cs.HC"
+      ],
+      "published": "2026-04-17T01:10:34+00:00",
+      "link": "https://arxiv.org/pdf/2604.15607v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Simulated human-AI interactions and personality impacts",
+      "llm_evidence_cn": "模拟的人机交互及人格特质影响",
+      "llm_evidence": "模拟的人机交互及人格特质影响",
+      "canonical_evidence": "模拟的人机交互及人格特质影响",
+      "llm_tldr_en": "Compares simulated and real human-AI interactions in imperfectly cooperative social scenarios.",
+      "llm_tldr_cn": "在非完全合作的社会场景中，对比研究了模拟与真实的人机交互及其人格影响。",
+      "llm_tldr": "在非完全合作的社会场景中，对比研究了模拟与真实的人机交互及其人格影响。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.17137v1",
+      "title": "BOIL: Learning Environment Personalized Information",
+      "abstract": "Navigating complex environments poses challenges for multi-agent systems, requiring efficient extraction of insights from limited information. In this paper, we introduce the Blackbox Oracle Information Learning (BOIL) process, a scalable solution for extracting valuable insights from the environment structure. Leveraging the Pagerank algorithm and common information maximization, BOIL facilitates the extraction of information to guide long-term agent behavior applicable to problems such as coverage, patrolling, and stochastic reachability. Through experiments, we demonstrate the efficacy of BOIL in generating strategy distributions conducive to improved performance over extended time horizons, surpassing heuristic approaches in complex environments.",
+      "authors": [
+        "Rohan Patil",
+        "Henrik I. Christensen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-04-18T20:24:59+00:00",
+      "link": "https://arxiv.org/pdf/2604.17137v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent systems navigating complex environments",
+      "llm_evidence_cn": "多智能体系统在复杂环境中的导航",
+      "llm_evidence": "多智能体系统在复杂环境中的导航",
+      "canonical_evidence": "多智能体系统在复杂环境中的导航",
+      "llm_tldr_en": "A scalable solution for multi-agent systems to extract environmental insights and guide long-term behavior.",
+      "llm_tldr_cn": "一种可扩展的解决方案，帮助多智能体系统提取环境信息并指导长期行为。",
+      "llm_tldr": "一种可扩展的解决方案，帮助多智能体系统提取环境信息并指导长期行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.14362v1",
+      "title": "APEX-MEM: Agentic Semi-Structured Memory with Temporal Reasoning for Long-Term Conversational AI",
+      "abstract": "Large language models still struggle with reliable long-term conversational memory: simply enlarging context windows or applying naive retrieval often introduces noise and destabilizes responses. We present APEX-MEM, a conversational memory system that combines three key innovations: (1) a property graph which uses domain-agnostic ontology to structure conversations as temporally grounded events in an entity-centric framework, (2) append-only storage that preserves the full temporal evolution of information, and (3) a multi-tool retrieval agent that understands and resolves conflicting or evolving information at query time, producing a compact and contextually relevant memory summary. This retrieval-time resolution preserves the full interaction history while suppressing irrelevant details. APEX-MEM achieves 88.88% accuracy on LOCOMO's Question Answering task and 86.2% on LongMemEval, outperforming state-of-the-art session-aware approaches and demonstrating that structured property graphs enable more temporally coherent long-term conversational reasoning.",
+      "authors": [
+        "Pratyay Banerjee",
+        "Masud Moshtaghi",
+        "Shivashankar Subramanian",
+        "Amita Misra",
+        "Ankit Chadha"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.IR"
+      ],
+      "published": "2026-04-15T19:25:02+00:00",
+      "link": "https://arxiv.org/pdf/2604.14362v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-tool retrieval agent for long-term conversational memory",
+      "llm_evidence_cn": "用于长期对话记忆的多工具检索智能体",
+      "llm_evidence": "用于长期对话记忆的多工具检索智能体",
+      "canonical_evidence": "用于长期对话记忆的多工具检索智能体",
+      "llm_tldr_en": "Introduces APEX-MEM for structured, temporal conversational memory in agentic systems.",
+      "llm_tldr_cn": "引入APEX-MEM系统，为智能体系统提供结构化且具备时间推理能力的长期对话记忆。",
+      "llm_tldr": "引入APEX-MEM系统，为智能体系统提供结构化且具备时间推理能力的长期对话记忆。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.18123v1",
+      "title": "ConventionPlay: Capability-Limited Training for Robust Ad-Hoc Collaboration",
+      "abstract": "Ad-hoc collaboration often relies on identifying and adhering to shared conventions. However, when partners can follow multiple conventions, agents must do more than simply adapt; they must actively steer the team toward the most effective joint strategy. We present ConventionPlay, a reinforcement learning-based approach that extends cognitive hierarchies to include a diverse population of adaptive followers. By training against partners with varied capability limits, our agent learns to probe its partner's repertoire, leading the team when possible and following when necessary. Our results in canonical coordination tasks show that ConventionPlay achieves superior coordination efficiency, particularly in settings where conventions have differentiated payoffs.",
+      "authors": [
+        "Abhishek Sriraman",
+        "Eleni Vasilaki",
+        "Robert Loftin"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-04-20T11:42:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.18123v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Ad-hoc collaboration and convention following in multi-agent teams",
+      "llm_evidence_cn": "多智能体团队中的即时协作与惯例遵循",
+      "llm_evidence": "多智能体团队中的即时协作与惯例遵循",
+      "canonical_evidence": "多智能体团队中的即时协作与惯例遵循",
+      "llm_tldr_en": "Presents a method for agents to learn and steer social conventions in collaboration.",
+      "llm_tldr_cn": "提出了一种让智能体在协作中学习并引导社会惯例的方法。",
+      "llm_tldr": "提出了一种让智能体在协作中学习并引导社会惯例的方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.17658v1",
+      "title": "Towards Self-Improving Error Diagnosis in Multi-Agent Systems",
+      "abstract": "Large Language Model (LLM)-based Multi-Agent Systems (MAS) enable complex problem-solving but introduce significant debugging challenges, characterized by long interaction traces, inter-agent dependencies, and delayed error manifestation. Existing diagnostic approaches often rely on expensive expert annotation or ''LLM-as-a-judge'' paradigms, which struggle to pinpoint decisive error steps within extended contexts. In this paper, we introduce ErrorProbe, a self-improving framework for semantic failure attribution that identifies responsible agents and the originating error step. The framework operates via a three-stage pipeline: (1) operationalizing the MAS failure taxonomy to detect local anomalies, (2) performing symptom-driven backward tracing to prune irrelevant context, and (3) employing a specialized multi-agent team (Strategist, Investigator, Arbiter) to validate error hypotheses through tool-grounded execution. Crucially, ErrorProbe maintains a verified episodic memory that updates only when error patterns are confirmed by executable evidence, without the need for annotation. Experiments across the TracerTraj and Who&When benchmarks demonstrate that ErrorProbe significantly outperforms baselines, particularly in step-level localization, while the verified memory enables robust cross-domain transfer without retraining.",
+      "authors": [
+        "Jiazheng Li",
+        "Emine Yilmaz",
+        "Bei Chen",
+        "Dieu-Thu Le"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.CL"
+      ],
+      "published": "2026-04-19T23:13:05+00:00",
+      "link": "https://arxiv.org/pdf/2604.17658v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "error diagnosis in LLM-based Multi-Agent Systems",
+      "llm_evidence_cn": "基于大语言模型的多智能体系统错误诊断",
+      "llm_evidence": "基于大语言模型的多智能体系统错误诊断",
+      "canonical_evidence": "基于大语言模型的多智能体系统错误诊断",
+      "llm_tldr_en": "Introduces ErrorProbe for self-improving failure attribution in complex multi-agent interaction traces.",
+      "llm_tldr_cn": "引入ErrorProbe框架，用于复杂多智能体交互追踪中的自改进故障归因。",
+      "llm_tldr": "引入ErrorProbe框架，用于复杂多智能体交互追踪中的自改进故障归因。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.16818v1",
+      "title": "Beyond Serendipity: From Exposing the Unknown to Fostering Engagement through Peer Recommendation",
+      "abstract": "Serendipity-oriented recommender systems expose users to unfamiliar items to counter filter bubbles, yet mere exposure does not ensure that users will understand or appreciate the content they encounter. We propose Peer Recommendation, a framework in which a user and an AI agent (Peer) with distinct preferences collaboratively explore unfamiliar content. Unlike conventional conversational recommender systems where the user is a passive recipient, our framework positions the user as both a recommender and a recipient: the user and the Peer mutually recommend songs to each other through chat-based dialogue, collaboratively building a shared playlist. In an exploratory within-subjects experiment (N=14), we compared three conditions: (1) a Close Peer, (2) a Distant Peer, and (3) a baseline agent without an explicit preference profile. The Close Peer significantly increased users' interest expansion and perceived value of the activity compared to the baseline, with medium-to-large effect sizes. The Distant Peer showed no significant difference at the aggregate level; however, qualitative analysis revealed varied responses, with some participants strongly preferring the Distant Peer. These findings suggest that the \"otherness\" of a recommendation partner is essential for moving beyond mere exposure toward genuine engagement, and that the appropriate degree of preference distance may vary and need to be adapted to individual users.",
+      "authors": [
+        "Sosui Moribe",
+        "Taketoshi Ushiama"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-04-18T04:16:12+00:00",
+      "link": "https://arxiv.org/pdf/2604.16818v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI agent collaboratively exploring content with users via dialogue",
+      "llm_evidence_cn": "AI智能体通过对话与用户协作探索内容",
+      "llm_evidence": "AI智能体通过对话与用户协作探索内容",
+      "canonical_evidence": "AI智能体通过对话与用户协作探索内容",
+      "llm_tldr_en": "Introduces Peer Recommendation, a framework where users and AI agents collaboratively explore unfamiliar content.",
+      "llm_tldr_cn": "引入同行推荐框架，让用户和AI智能体通过对话协作探索陌生内容。",
+      "llm_tldr": "引入同行推荐框架，让用户和AI智能体通过对话协作探索陌生内容。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.18356v1",
+      "title": "ComPASS: Towards Personalized Agentic Social Support via Tool-Augmented Companionship",
+      "abstract": "Developing compassionate interactive systems requires agents to not only understand user emotions but also provide diverse, substantive support. While recent works explore empathetic dialogue generation, they remain limited in response form and content, struggling to satisfy diverse needs across users and contexts. To address this, we explore empowering agents with external tools to execute diverse actions. Grounded in the psychological concept of \"social support\", this paradigm delivers substantive, human-like companionship. Specifically, we first design a dozen user-centric tools simulating various multimedia applications, which can cover different types of social support behaviors in human-agent interaction scenarios. We then construct ComPASS-Bench, the first personalized social support benchmark for LLM-based agents, via multi-step automated synthesis and manual refinement. Based on ComPASS-Bench, we further synthesize tool use records to fine-tune the Qwen3-8B model, yielding a task-specific ComPASS-Qwen. Comprehensive evaluations across two settings reveal that while the evaluated LLMs can generate valid tool-calling requests with high success rates, significant gaps remain in final response quality. Moreover, tool-augmented responses achieve better overall performance than directly producing conversational empathy. Notably, our trained ComPASS-Qwen demonstrates substantial improvements over its base model, achieving comparable performance to several large-scale models. Our code and data are available at https://github.com/hzp3517/ComPASS.",
+      "authors": [
+        "Zhaopei Huang",
+        "Yanfeng Jia",
+        "Jiayi Zhao",
+        "Xinjie Zhang",
+        "Wenxuan Wang",
+        "Qin Jin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-20T14:49:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.18356v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "simulating social support behaviors in human-agent interaction",
+      "llm_evidence_cn": "在人机交互场景中模拟社会支持行为",
+      "llm_evidence": "在人机交互场景中模拟社会支持行为",
+      "canonical_evidence": "在人机交互场景中模拟社会支持行为",
+      "llm_tldr_en": "Proposes ComPASS to provide personalized social support through tool-augmented agentic companionship.",
+      "llm_tldr_cn": "提出ComPASS框架，通过工具增强的智能体陪伴提供个性化的社会支持。",
+      "llm_tldr": "提出ComPASS框架，通过工具增强的智能体陪伴提供个性化的社会支持。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.18292v1",
+      "title": "Agent-World: Scaling Real-World Environment Synthesis for Evolving General Agent Intelligence",
+      "abstract": "Large language models are increasingly expected to serve as general-purpose agents that interact with external, stateful tool environments. The Model Context Protocol (MCP) and broader agent skills offer a unified interface for connecting agents with scalable real-world services, but training robust agents remains limited by the lack of realistic environments and principled mechanisms for life-long learning. In this paper, we present \\textbf{Agent-World}, a self-evolving training arena for advancing general agent intelligence through scalable environments. Agent-World has two main components: (1) Agentic Environment-Task Discovery, which autonomously explores topic-aligned databases and executable tool ecosystems from thousands of real-world environment themes and synthesizes verifiable tasks with controllable difficulty; and (2) Continuous Self-Evolving Agent Training, which combines multi-environment reinforcement learning with a self-evolving agent arena that automatically identifies capability gaps through dynamic task synthesis and drives targeted learning, enabling the co-evolution of agent policies and environments. Across 23 challenging agent benchmarks, Agent-World-8B and 14B consistently outperforms strong proprietary models and environment scaling baselines. Further analyses reveal scaling trends in relation to environment diversity and self-evolution rounds, offering insights for building general agent intelligence.",
+      "authors": [
+        "Guanting Dong",
+        "Junting Lu",
+        "Junjie Huang",
+        "Wanjun Zhong",
+        "Longxiang Liu",
+        "Shijue Huang",
+        "Zhenyu Li",
+        "Yang Zhao",
+        "Xiaoshuai Song",
+        "Xiaoxi Li",
+        "Jiajie Jin",
+        "Yutao Zhu",
+        "Hanbin Wang",
+        "Fangyu Lei",
+        "Qinyu Luo",
+        "Mingyang Chen",
+        "Zehui Chen",
+        "Jiazhan Feng",
+        "Ji-Rong Wen",
+        "Zhicheng Dou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-20T14:01:10+00:00",
+      "link": "https://arxiv.org/pdf/2604.18292v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Scaling real-world environment synthesis for evolving agent intelligence",
+      "llm_evidence_cn": "扩展真实世界环境合成以促进智能体进化",
+      "llm_evidence": "扩展真实世界环境合成以促进智能体进化",
+      "canonical_evidence": "扩展真实世界环境合成以促进智能体进化",
+      "llm_tldr_en": "Presents Agent-World, a self-evolving arena for training agents in scalable, realistic environments.",
+      "llm_tldr_cn": "推出Agent-World，一个通过可扩展真实环境促进智能体进化的自我演进训练场。",
+      "llm_tldr": "推出Agent-World，一个通过可扩展真实环境促进智能体进化的自我演进训练场。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.18509v2",
+      "title": "MASS-RAG: Multi-Agent Synthesis Retrieval-Augmented Generation",
+      "abstract": "Large language models (LLMs) are widely used in retrieval-augmented generation (RAG) to incorporate external knowledge at inference time. However, when retrieved contexts are noisy, incomplete, or heterogeneous, a single generation process often struggles to reconcile evidence effectively. We propose \\textbf{MASS-RAG}, a multi-agent synthesis approach to retrieval-augmented generation that structures evidence processing into multiple role-specialized agents. MASS-RAG applies distinct agents for evidence summarization, evidence extraction, and reasoning over retrieved documents, and combines their outputs through a dedicated synthesis stage to produce the final answer. This design exposes multiple intermediate evidence views, allowing the model to compare and integrate complementary information before answer generation. Experiments on four benchmarks show that MASS-RAG consistently improves performance over strong RAG baselines, particularly in settings where relevant evidence is distributed across retrieved contexts.",
+      "authors": [
+        "Xingchen Xiao",
+        "Heyan Huang",
+        "Runheng Liu",
+        "Jincheng Xie"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-20T17:00:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.18509v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent synthesis for retrieval-augmented generation",
+      "llm_evidence_cn": "用于检索增强生成的多智能体合成",
+      "llm_evidence": "用于检索增强生成的多智能体合成",
+      "canonical_evidence": "用于检索增强生成的多智能体合成",
+      "llm_tldr_en": "Proposes MASS-RAG, using role-specialized agents to improve evidence processing in RAG.",
+      "llm_tldr_cn": "提出MASS-RAG，利用角色分工的智能体提升检索增强生成中的证据处理。",
+      "llm_tldr": "提出MASS-RAG，利用角色分工的智能体提升检索增强生成中的证据处理。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.18564v1",
+      "title": "MultiWorld: Scalable Multi-Agent Multi-View Video World Models",
+      "abstract": "Video world models have achieved remarkable success in simulating environmental dynamics in response to actions by users or agents. They are modeled as action-conditioned video generation models that take historical frames and current actions as input to predict future frames. Yet, most existing approaches are limited to single-agent scenarios and fail to capture the complex interactions inherent in real-world multi-agent systems. We present \\textbf{MultiWorld}, a unified framework for multi-agent multi-view world modeling that enables accurate control of multiple agents while maintaining multi-view consistency. We introduce the Multi-Agent Condition Module to achieve precise multi-agent controllability, and the Global State Encoder to ensure coherent observations across different views. MultiWorld supports flexible scaling of agent and view counts, and synthesizes different views in parallel for high efficiency. Experiments on multi-player game environments and multi-robot manipulation tasks demonstrate that MultiWorld outperforms baselines in video fidelity, action-following ability, and multi-view consistency. Project page: https://multi-world.github.io/",
+      "authors": [
+        "Haoyu Wu",
+        "Jiwen Yu",
+        "Yingtian Zou",
+        "Xihui Liu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-20T17:52:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.18564v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent video world models for simulating complex interactions",
+      "llm_evidence_cn": "用于模拟复杂交互的多智能体视频世界模型",
+      "llm_evidence": "用于模拟复杂交互的多智能体视频世界模型",
+      "canonical_evidence": "用于模拟复杂交互的多智能体视频世界模型",
+      "llm_tldr_en": "Presents MultiWorld for scalable multi-agent multi-view video simulation and controllability.",
+      "llm_tldr_cn": "提出MultiWorld框架，用于可扩展的多智能体多视角视频模拟与控制。",
+      "llm_tldr": "提出MultiWorld框架，用于可扩展的多智能体多视角视频模拟与控制。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.18509v1",
+      "title": "MASS-RAG: Multi-Agent Synthesis Retrieval-Augmented Generation",
+      "abstract": "Large language models (LLMs) are widely used in retrieval-augmented generation (RAG) to incorporate external knowledge at inference time. However, when retrieved contexts are noisy, incomplete, or heterogeneous, a single generation process often struggles to reconcile evidence effectively. We propose \\textbf{MASS-RAG}, a multi-agent synthesis approach to retrieval-augmented generation that structures evidence processing into multiple role-specialized agents. MASS-RAG applies distinct agents for evidence summarization, evidence extraction, and reasoning over retrieved documents, and combines their outputs through a dedicated synthesis stage to produce the final answer. This design exposes multiple intermediate evidence views, allowing the model to compare and integrate complementary information before answer generation. Experiments on four benchmarks show that MASS-RAG consistently improves performance over strong RAG baselines, particularly in settings where relevant evidence is distributed across retrieved contexts.",
+      "authors": [
+        "Xingchen Xiao",
+        "Heyan Huang",
+        "Runheng Liu",
+        "Jincheng Xie"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-20T17:00:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.18509v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent synthesis for retrieval-augmented generation",
+      "llm_evidence_cn": "用于检索增强生成的多智能体合成方法",
+      "llm_evidence": "用于检索增强生成的多智能体合成方法",
+      "canonical_evidence": "用于检索增强生成的多智能体合成方法",
+      "llm_tldr_en": "Uses role-specialized agents to improve evidence processing and reasoning in RAG systems.",
+      "llm_tldr_cn": "利用角色专业化的多智能体协作，提升检索增强生成系统中的证据处理与推理能力。",
+      "llm_tldr": "利用角色专业化的多智能体协作，提升检索增强生成系统中的证据处理与推理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
