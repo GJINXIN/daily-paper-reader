@@ -1,0 +1,844 @@
+Title: MOMENTA: Mixture-of-Experts Over Multimodal Embeddings with Neural Temporal Aggregation for Misinformation Detection
+
+URL Source: https://arxiv.org/pdf/2604.16172v1
+
+Published Time: Mon, 20 Apr 2026 01:13:17 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+# MOMENTA: Mixture-of-Experts Over Multimodal Embeddings with Neural Temporal Aggregation for Misinformation Detection 
+
+Yeganeh Abdollahinejad a,1 , Ahmad Mousavi b,1, ∗, Naeemul Hassan c, Kai Shu d, Nathalie Japkowicz e, Shahriar Khosravi f, Amir Karami g
+
+> aDepartment of Computer Science and Mathematics, Pennsylvania State University, Harrisburg, PA, USA
+> bDepartment of Mathematics and Statistics, American University, Washington, DC, USA
+> cPhilip Merrill College of Journalism and College of Information, University of Maryland, College Park, MD, USA
+> dDepartment of Computer Science, Emory University, Atlanta, GA, USA
+> eDepartment of Computer Science, American University, Washington, DC, USA
+> fDepartment of Philosophy, Georgetown University, Washington, DC, USA
+> gSchool of Data Science and Analytics, Kennesaw State University, Kennesaw, GA, USA
+
+Abstract 
+
+The widespread dissemination of multimodal content on social media has made misinformation detection increasingly challenging, as misleading narratives often arise not only from textual or visual content alone, but also from semantic inconsistencies between modalities and their evolution over time. Existing multimodal misinformation detection meth-ods typically model cross-modal interactions statically and often show limited robustness across heterogeneous datasets, domains, and narrative settings. To address these challenges, we propose MOMENTA, a unified framework for multi-modal misinformation detection that captures modality heterogeneity, cross-modal inconsistency, temporal dynamics, and cross-domain generalization within a single architecture. MOMENTA employs modality-specific mixture-of-experts modules to model diverse misinformation patterns, bidirectional co-attention to align textual and visual representa-tions in a shared semantic space, and a discrepancy-aware branch to explicitly capture semantic disagreement between modalities. To model narrative evolution, we introduce an attention-based temporal aggregation mechanism with drift and momentum encoding over overlapping time windows, enabling the framework to capture both short-term fluctua-tions and longer-term trends in misinformation propagation. In addition, domain-adversarial learning and a prototype memory bank improve domain invariance and stabilize representation learning across datasets. The model is trained using a multi-objective optimization strategy that jointly enforces classification performance, cross-modal alignment, contrastive learning, temporal consistency, and domain robustness. Experiments on four benchmark datasets, Faked-dit , MMCoVaR , Weibo , and XFacta , show that MOMENTA achieves strong and consistent performance across multiple evaluation metrics, including accuracy, F1-score, AUC, and MCC. These findings suggest that integrating expert special-ization, discrepancy-aware fusion, temporal reasoning, and domain-invariant representation learning provides an effective direction for real-world multimodal misinformation detection. 
+
+Keywords: Misinformation Detection, Multimodal Learning, Mixture-of-Experts, Cross-Modal Alignment, Temporal Modeling, Domain Adaptation 
+
+1. Introduction 
+
+The widespread adoption of social media has signifi-cantly increased the generation, transmission, and con-sumption of information. This has created a trade-off between knowledge aggregation and the spread of misin-formation [1]. These platforms facilitate the transmission of veridical information, but also accelerate the spread of false or misleading content [2]. The extensive spread of misinformation via these large-scale technologies leads to various moral, social, and epistemic harms, for exam-ple, by undermining trust in public institutions. In the   
+
+> ∗Corresponding author
+> Email address: mousavi@american.edu (Ahmad Mousavi)
+> 1These authors contributed equally to this work.
+
+health domain, exposure to misleading social media con-tent has been associated with reduced trust in healthcare institutions, lower confidence in professional medical guid-ance, and weaker adherence to recommended health be-haviors [3–5]. In social and political contexts, misinforma-tion has also contributed to distrust in media, government information, and political institutions, further amplifying its spread [6, 7]. As these examples suggest, addressing misinformation is far from a merely technical issue; it is a social, political, and public health priority. Misinformation detection becomes even more difficult when posts combine textual and visual content. In such cases, effective systems must not only understand each modality independently, but also reason over their seman-tic interactions [8–10]. Content that appears veridical in 
+
+> arXiv:2604.16172v1 [cs.MM] 17 Apr 2026
+
+isolation may become misleading when paired with unre-lated, repurposed, or manipulated visual content. Prior work has shown that misleadingness can emerge from the mismatch between a headline and its accompanying video, underscoring that deceptive intent often arises from cross-modal inconsistency rather than from either modal-ity alone [11]. Earlier approaches frequently processed posts independently or relied on shallow fusion strategies such as simple feature concatenation, limiting their ability to capture semantic disagreement and richer multimodal dependencies. Recent work has increasingly explored foundation-model-based architectures for multimodal misinformation detection. Large pretrained encoders such as XLM-RoBERTa and CLIP provide strong cross-lingual and cross-modal representations for heterogeneous social me-dia data [12–14]. At the same time, Mixture-of-Experts (MoE) architectures have emerged as an effective way to model the heterogeneity of misinformation by routing in-puts through specialized expert networks. Frameworks such as MIMoE-FND dynamically model unimodal agree-ment and cross-modal semantic alignment, while MisD-MoE uses modality-specific experts and adaptive feature selection to reduce redundancy and improve classification robustness [15, 16]. Despite these advances, most existing approaches still treat cross-modal relationships as largely static and do not explicitly model how misinformation nar-ratives evolve over time. Another major challenge is domain shift. Models trained on one platform or dataset often generalize poorly to new domains with different linguistic styles, visual dis-tributions, topic structures, or cultural contexts. Re-cent event-centric methods such as E-CaTCH have shown that temporal information, including semantic drift and narrative progression, can substantially improve misinfor-mation detection robustness [8]. However, jointly inte-grating temporal reasoning, cross-modal alignment, and domain-invariant representation learning remains an un-derexplored problem. In this work, we propose MOMENTA , a Mixture-of-Experts over Multimodal Embeddings with Neural Tem-poral Aggregation framework for multimodal misinforma-tion detection. MOMENTA employs modality-specific MoE layers with input-dependent gating to capture diverse misinformation patterns without introducing excessive ar-chitectural complexity. Bidirectional co-attention aligns textual and visual representations in a shared semantic space, while an auxiliary discrepancy branch explicitly models semantic inconsistencies between modalities. To represent narrative evolution, we aggregate posts through overlapping temporal windows and encode both drift and momentum. We further incorporate domain-adversarial learning [17] and a prototype memory bank to encour-age domain-invariant representations across datasets. The model is trained using a multi-objective optimization strat-egy that jointly supports classification, cross-modal align-ment, contrastive learning, temporal consistency, and do-main robustness. Through experiments on Fakeddit, MM-CoVaR, Weibo, and XFacta, we show that MOMENTA achieves strong and consistent performance across diverse multimodal misinformation benchmarks. Our main contributions are summarized as follows: 
+
+• We propose MOMENTA, a unified multimodal misinformation detection framework that combines modality-specific expert specialization, cross-modal alignment, discrepancy-aware fusion, temporal aggre-gation, and domain generalization within a single ar-chitecture. 
+
+• We introduce a temporal aggregation mechanism based on overlapping windows with drift and momen-tum encoding to model the evolution of misinforma-tion narratives over time. 
+
+• We incorporate domain-adversarial learning and a prototype memory bank to encourage domain-invariant representations and improve robustness across heterogeneous datasets. 
+
+• We evaluate MOMENTA on four benchmark datasets and show strong and consistent performance across multiple multimodal misinformation detection set-tings. 
+
+2. Related Work 
+
+2.1. Multimodal Misinformation Detection 
+
+The increasing sophistication of misinformation in on-line ecosystems has rendered unimodal detection ap-proaches insufficient. Early methods focused on either textual linguistic features or visual artifacts independently, failing to capture the complex interactions between modal-ities that adversaries exploit. As a result, recent research has shifted toward multimodal frameworks that jointly an-alyze textual and visual signals to improve detection ro-bustness and generalization [18–20]. Modern multimodal systems typically rely on large-scale pretrained models to encode heterogeneous inputs into semantically meaningful representations. Transformer-based language models such as XLM-RoBERTa [12] and vision-language models such as CLIP [13] have become foundational due to their strong cross-lingual and cross-modal generalization capabilities. These embeddings are subsequently projected into a shared latent space to facil-itate interaction across modalities. This projection step is critical, as it enables semantic alignment between hetero-geneous inputs rather than serving as a simple dimension-ality reduction process [20, 21]. Despite these advances, multimodal detection remains challenging due to the inherent semantic gap between modalities and the adversarial nature of misinformation, motivating the development of more sophisticated fusion and reasoning mechanisms [8, 22]. 22.2. Cross-Modal Interaction and Semantic Consistency 
+
+An important characteristic of many forms of multi-modal misinformation is the presence of semantic incon-sistencies between textual claims and accompanying visual content. At the same time, misinformation can also arise when text and image are mutually consistent but jointly misrepresent the underlying real-world context or event. Consequently, modeling cross-modal relationships has be-come a central focus in recent literature. Attention-based fusion mechanisms, particularly co-attention architectures, have demonstrated strong perfor-mance in capturing interdependencies between modalities. Models such as MCAN and related transformer-based ap-proaches enable bidirectional interaction, allowing textual features to attend to visual representations and vice versa. This mutual conditioning enhances both predictive per-formance and interpretability by identifying salient cross-modal alignments [18, 23]. Beyond alignment, recent work emphasizes explicitly modeling cross-modal inconsistency as a primary signal for misinformation detection. For example, methods in-corporating discrepancy features or consistency prediction objectives have shown improved performance in detect-ing out-of-context or manipulated content [9, 20]. Sim-ilarly, adversarial and contrastive frameworks encourage the model to distinguish between aligned and misaligned multimodal pairs, further strengthening representation learning [24]. However, many existing approaches treat alignment as a static property, failing to account for contextual variations and evolving narratives. This limitation motivates the in-tegration of auxiliary consistency modeling, as adopted in our framework. 
+
+2.3. Mixture-of-Experts for Heterogeneous Content 
+
+Misinformation manifests in diverse forms, including satire, fabricated narratives, and repurposed or misleading visual content. Traditional monolithic architectures often struggle to generalize across such heterogeneous patterns due to representation entanglement. Mixture-of-Experts (MoE) architectures provide an ef-fective solution by enabling dynamic routing of inputs through specialized expert networks. Each expert can learn to capture distinct characteristics of misinforma-tion, while gating mechanisms determine the contribution of each expert for a given input. Recent works such as MIMoE-FND [15] and MisD-MoE [16] demonstrate that MoE-based designs significantly improve performance and interpretability. More broadly, recent MoE research high-lights the value of sparse expert specialization for hetero-geneous input distributions. Notably, recent advancements extend MoE beyond modality-specific specialization to interaction-aware rout-ing, where expert selection is influenced by cross-modal relationships. While these approaches improve flexibil-ity, they often introduce additional architectural complex-ity [15]. In contrast, the MOMENTA framework adopts modality-specific MoE layers with input-dependent gat-ing, striking a balance between specialization and compu-tational efficiency. This design enables effective modeling of heterogeneous misinformation without incurring exces-sive complexity. 
+
+2.4. Temporal Modeling and Narrative Evolution 
+
+Most existing multimodal detection systems operate un-der an independent and identically distributed (i.i.d.) as-sumption, treating each post as an isolated instance. How-ever, misinformation is inherently dynamic, evolving as narratives propagate across time. Recent work has highlighted the importance of temporal modeling in capturing misinformation dynamics. Event-centric approaches such as E-CaTCH [8] cluster related posts and model their evolution using temporal atten-tion mechanisms. Similarly, recurrent and transformer-based models incorporate sequential dependencies to cap-ture narrative progression [8]. These approaches demonstrate that temporal signals, such as propagation patterns and content evolution, pro-vide valuable cues for distinguishing misinformation from factual content. However, many models rely on coarse temporal representations and fail to explicitly capture fine-grained narrative dynamics. The MOMENTA framework addresses this limitation by introducing explicit modeling of narrative drift and mo-mentum , enabling the system to capture both the direc-tion and intensity of content evolution. As detailed in the methodology, overlapping time windows combined with time-decayed attention allow the model to prioritize re-cent developments while preserving contextual continuity. This formulation aligns with epidemiological perspectives that treat misinformation as a spreading process [25–27]. 
+
+2.5. Domain Adaptation and Generalization 
+
+A critical challenge in misinformation detection is do-main shift, where models trained on one dataset fail to generalize to new domains or platforms. This issue arises due to variations in linguistic style, visual characteristics, and topic distribution. Domain-adversarial training has emerged as a widely adopted solution that encourages the learning of domain-invariant representations via gradient reversal layers [17]. Complementary approaches include self-supervised learn-ing and test-time adaptation, which enable models to adapt to unseen distributions without extensive retrain-ing. Prototype-based alignment methods further improve generalization by enforcing consistent class representations across domains. For example, memory bank mechanisms maintain class prototypes that guide embedding align-ment, reducing dataset-specific biases. 3The MOMENTA framework integrates both domain-adversarial learning and prototype-based alignment, com-bining their strengths to achieve robust cross-domain gen-eralization. This dual strategy is particularly important in real-world scenarios where misinformation continuously evolves across platforms. 
+
+2.6. Optimization Strategies and Multi-Objective Learning 
+
+Training multimodal misinformation detection systems requires balancing multiple objectives, including classifi-cation accuracy, cross-modal alignment, and temporal co-herence. Standard loss functions are often insufficient due to class imbalance and the need for representation-level supervision. Recent work incorporates focal loss to address imbal-ance [28], contrastive learning to align multimodal embed-dings [13], and auxiliary objectives to enforce semantic consistency. Regularization techniques such as R-Drop further improve robustness by encouraging consistency across stochastic forward passes [29]. Consistent with these trends, the MOMENTA frame-work employs a multi-objective loss that combines classifi-cation, alignment, temporal consistency, contrastive learn-ing, and domain adaptation objectives. This comprehen-sive formulation ensures that the model learns not only accurate predictions but also semantically meaningful and temporally coherent representations. 
+
+2.7. Research Gaps and Contributions 
+
+Despite significant progress, several limitations per-sist in existing multimodal misinformation detection ap-proaches. First, many models inadequately address the heterogeneity of misinformation, relying on shared repre-sentations that fail to capture diverse content patterns. Second, cross-modal interaction is often treated as static, neglecting the dynamic evolution of narratives over time. Third, domain generalization remains an open challenge, particularly in rapidly changing information environments. The MOMENTA framework addresses these gaps by in-tegrating modality-specific expert specialization, bidirec-tional cross-modal alignment with discrepancy-aware mod-eling, and temporal aggregation with drift and momentum encoding. Furthermore, incorporating domain-adversarial training and prototype-based alignment improves robust-ness across heterogeneous datasets in our evaluated bench-mark settings. Together, these contributions position MO-MENTA as a unified and scalable framework for next-generation multimodal misinformation detection. 
+
+3. Methodology 
+
+This section presents the MOMENTA framework for multimodal misinformation detection. The task is to clas-sify social media posts as genuine or misleading based on both textual content si and visual content ii.
+
+Overview of contributions.. The framework integrates the following components. (1) Mixture-of-Experts (MoE) per modality: modality-specific expert networks with input-dependent gating to capture heterogeneous types of misinformation, such as satire, out-of-context media, and fabrication [15, 16]. (2) Bidirectional co-attention: 
+
+shared query, key, and value projections to align text and image in a common semantic space before fusion [8, 23]. 
+
+(3) Semantic inconsistency detection head: an aux-iliary head that predicts text-image consistency and pro-vides an interpretable signal while improving cross-modal representations [9, 18]. (4) Temporal aggregation with drift and momentum encoding: overlapping time windows, time-decayed attention, and a momentum term to capture narrative evolution over time [8]. (5) Multi-objective loss: focal classification loss with la-bel smoothing and class weights, plus alignment, tem-poral consistency, contrastive, and auxiliary terms [28]. We further introduce (6) a cross-modal discrepancy branch that explicitly models where text and image dis-agree; (7) domain-adversarial training through a Gra-dient Reversal Layer to encourage domain-invariant repre-sentations when training on multiple datasets [17]; and 
+
+(8) an EMA prototype memory bank that maintains per-dataset, per-class prototypes and aligns embeddings to dataset-invariant global class centroids. Optionally, a 
+
+timestamp-aware Transformer over the temporal se-quence and a Transformer temporal consistency loss refine the temporal modeling. The following subsections detail each component and its mathematical formulation. Figure 1 illustrates the overall architecture of the MO-MENTA framework. The model processes multimodal in-puts through parallel text and image encoders, followed by intra-modal refinement and expert-based specialization. Cross-modal relationships are modeled through bidirec-tional co-attention and a discrepancy-aware fusion mecha-nism, allowing the model to capture both semantic align-ment and inconsistency signals. The representations are then aggregated over time using attention-based tempo-ral modeling with drift and momentum, capturing how misinformation narratives evolve. The final prediction is obtained through a multi-objective optimization frame-work that enforces classification performance, representa-tion alignment, temporal consistency, and domain invari-ance. 
+
+3.1. Input Encoding and Projection 
+
+The raw text and image of each post are first en-coded using pretrained models and then projected into a shared embedding space of dimension d. We adopt XLM-RoBERTa [12] for text and CLIP (ViT-L/14) [13] for im-ages, both of which transfer well to multilingual and mul-timodal settings. For text, we retain the full projected hidden sequence Si ∈ RL×d and use its first row as the sentence-level representation. For images, we use a sin-gle projected CLIP vector Ii ∈ Rd. LayerNorm is applied 4Figure 1: MOMENTA architecture: full pipeline and optimization strategy. The framework integrates pretrained encoders (XLM-RoBERTa and CLIP), intra-modal self-attention, and modality-specific Mixture-of-Experts (MoE). Bidirectional co-attention aligns text and image representations, followed by gated fusion and a discrepancy branch. Temporal aggregation captures narrative evolution using time-decayed attention, drift, and momentum. The model is trained using a multi-objective loss combining classification, alignment, contrastive learning, temporal consistency, domain-adversarial training, and prototype-based regularization. 
+
+after projection to stabilize optimization when the back-bones are fine-tuned with a relatively small learning rate. Formally, for post i,
+
+Si = LayerNorm (XLMR( si)W⊤
+
+> text
+
+) , (1) 
+
+Ti = Si, 0, (2) 
+
+Ii = LayerNorm( Wimg CLIP( ii)) , (3) where 
+
+Wtext ∈ Rd×dxlmr , (4) 
+
+Wimg ∈ Rd×dclip , (5) and thus Si ∈ RL×d, Ti ∈ Rd, and Ii ∈ Rd. The projected vectors Ti and Ii are later used in the discrepancy branch and in the contrastive term of the loss function [13]. 
+
+3.2. Intra-Modal Self-Attention 
+
+Before any cross-modal interaction, we refine the modality-specific representations using multi-head self-attention (MHSA). The aim is to capture internal struc-ture within each modality, namely contextual dependen-cies in the text and a refined transformed representation for the image. The text branch applies MHSA over the full projected token sequence and then takes the CLS row as the sentence-level representation. The image branch treats the single CLIP vector as a sequence of length one, denoted by I(1)  
+
+> i
+
+∈ R1×d, so that the learned query, key, and value projections still apply. Residual connections and LayerNorm are applied in both cases: ̂
+
+Si = LayerNorm( Si + MHSA( Si)) , (6) 
+
+˜Ti =̂ Si, 0, (7) 
+
+˜I(1)  
+
+> i
+
+= LayerNorm (I(1)  
+
+> i
+
++ MHSA( I(1)  
+
+> i
+
+)), (8) 
+
+˜Ii = ˜I(1)  
+
+> i
+
+[0] . (9) The resulting vectors ˜Ti and ˜Ii are passed to the mixture-of-experts stage. 
+
+3.3. Mixture-of-Experts (MoE) per Modality 
+
+A central component of MOMENTA is the use of 
+
+Mixture-of-Experts (MoE) layers applied separately to the text and image streams. Unlike a single shared encoder, MoE allows the model to route different inputs through different expert networks, which is well-suited to the het-erogeneity of misinformation, such as satire, out-of-context or repurposed media, and fully fabricated content [15, 16]. Each modality has K expert networks; a gating network 5assigns input-dependent weights so that each post is rep-resented as a weighted combination of the expert outputs. The gating weights are obtained by a linear transforma-tion of the modality representation followed by a softmax; the final representation is the weighted sum of the expert outputs. Formally, 
+
+αtext  
+
+> k
+
+= softmax 
+
+(
+
+Wtext gate ˜Ti
+
+)
+
+> k
+
+, (10) 
+
+αimg  
+
+> k
+
+= softmax 
+
+(
+
+Wimg gate ˜Ii
+
+)
+
+> k
+
+, (11) 
+
+Mtext  
+
+> i
+
+=
+
+> K
+
+∑
+
+> k=1
+
+αtext  
+
+> k
+
+Etext  
+
+> k
+
+( ˜Ti), (12) 
+
+Mimg  
+
+> i
+
+=
+
+> K
+
+∑
+
+> k=1
+
+αimg  
+
+> k
+
+Eimg  
+
+> k
+
+(˜Ii). (13) Each expert Ek is implemented as a two-layer feedforward network with a GELU activation and an internal expansion layer. The experts operate in parallel and are combined via the gating weights αk, so that the model can specialize dif-ferent experts to different types of content while retaining a compact set of parameters per modality. The resulting modality representations Mtext  
+
+> i
+
+and Mimg  
+
+> i
+
+are then fed to the bidirectional co-attention module. 
+
+3.4. Bidirectional Co-Attention 
+
+To achieve precise semantic alignment between text and image before fusion, we apply bidirectional co-attention :the text representation is updated by attending to the image, and the image representation by attending to the text [8, 23]. We use shared query, key, and value matrices 
+
+WQ, WK , WV ∈ Rd×d for both directions, which reduces parameters and encourages a unified notion of cross-modal relevance. Here, Mtext  
+
+> i
+
+and Mimg  
+
+> i
+
+are treated as 1 × d row vectors; thus, the softmax is taken over a single key, cor-responding to the singleton-key case of the same attention algebra. The updated vectors are then normalized with LayerNorm after a residual connection: 
+
+CT →I = softmax 
+
+( Mtext  
+
+> i
+
+WQ(Mimg  
+
+> i
+
+WK )⊤
+
+√d
+
+)
+
+Mimg  
+
+> i
+
+WV ,
+
+(14) 
+
+CI→T = softmax 
+
+( Mimg  
+
+> i
+
+WQ(Mtext  
+
+> i
+
+WK )⊤
+
+√d
+
+)
+
+Mtext  
+
+> i
+
+WV ,
+
+(15) 
+
+M′text  
+
+> i
+
+= LayerNorm (Mtext  
+
+> i
+
++ CT →I
+
+) , (16) 
+
+M′img  
+
+> i
+
+= LayerNorm (Mimg  
+
+> i
+
++ CI→T
+
+). (17) The co-attended representations M′text  
+
+> i
+
+and M′img  
+
+> i
+
+form the basis for fusion and for the auxiliary alignment and inconsistency signals described below. 
+
+3.5. Cross-Modal Fusion and Alignment 
+
+The two modalities are combined into a single post-level representation Pi using a gating mechanism. The gate is a function of the concatenated post-co-attention vectors and outputs a d-dimensional vector of weights; the final representation is the element-wise convex combination of 
+
+M′text  
+
+> i
+
+and M′img  
+
+> i
+
+. In parallel, we compute a scalar align-ment score Ai as the cosine similarity between the two modalities, which is used as a supervision signal to en-courage semantic consistency: 
+
+gi = σ
+
+(
+
+Wg [M′text  
+
+> i
+
+; M′img  
+
+> i
+
+]
+
+)
+
+∈ Rd, (18) 
+
+Pi = gi ⊙ M′text  
+
+> i
+
++ (1 − gi) ⊙ M′img  
+
+> i
+
+, (19) 
+
+Ai = ⟨M′text  
+
+> i
+
+, M′img  
+
+> i
+
+⟩∥M′text  
+
+> i
+
+∥ ∥ M′img  
+
+> i
+
+∥ . (20) 
+
+3.5.1. Cross-Modal Discrepancy Branch 
+
+In many misleading posts, the image and the text are de-liberately mismatched, for example through repurposed or out-of-context images [9]. To give the model direct access to this signal, we add a cross-modal discrepancy branch. From the projected text and image embeddings Ti and Ii
+
+from Section 3.1, we form a discrepancy feature by con-catenating the element-wise absolute difference and the element-wise product; this is passed through a linear layer and LayerNorm. The result is added to Pi as a gated resid-ual, where the gate is a single learnable scalar η initialized to zero, so that the contribution of the discrepancy branch grows during training only if it is useful: 
+
+dabs  
+
+> i
+
+= |Ti − Ii|, (21) 
+
+dprod  
+
+> i
+
+= Ti ⊙ Ii, (22) 
+
+di = LayerNorm 
+
+(
+
+Wdisc [dabs  
+
+> i
+
+; dprod  
+
+> i
+
+]
+
+)
+
+, (23) 
+
+Pi ← Pi + tanh( η) di. (24) 
+
+3.6. Semantic Inconsistency Head and Domain-Adversarial Training 
+
+We introduce a semantic inconsistency detection head 
+
+that explicitly predicts whether the text and the image are semantically consistent. This head is trained with dataset-specific binary labels ymatch  
+
+> i
+
+, which indicate consistency or inconsistency according to each dataset’s annotation scheme. The head takes the concatenation of M′text  
+
+> i
+
+and 
+
+M′img  
+
+> i
+
+as input and produces a scalar logit followed by a probability: 
+
+zi = [ M′text  
+
+> i
+
+; M′img  
+
+> i
+
+] ∈ R2d, (25) 
+
+amatch  
+
+> i
+
+= Wmatch zi + bmatch , (26) 
+
+pmatch  
+
+> i
+
+= σ(amatch  
+
+> i
+
+). (27) This auxiliary objective encourages the model to learn rep-resentations that reflect cross-modal consistency and im-proves both accuracy and interpretability [9, 18]. When training on multiple datasets, for example from different platforms or languages, the classifier can overfit to dataset-specific cues. To encourage domain-invariant representations, we apply domain-adversarial training [17]. 6The fused representation Pi is passed through a Gradient Reversal Layer (GRL) and then through a domain clas-sifier that predicts the source dataset. The classifier is trained to minimize the cross-entropy loss with the true domain label, while the reversal of gradients during back-propagation encourages the encoder to produce features on which the domain cannot be predicted. The strength of the reversal is controlled by a scalar αgrl that is ramped during training so that the encoder first fits the task before being pushed toward domain invariance. 
+
+3.7. Attention-Based Temporal Aggregation with Drift and Momentum 
+
+Misinformation narratives often evolve over time, such as through a thread of posts or a series of related items. To incorporate this temporal structure, we aggregate the post-level representations Pi within overlapping time win-dows and explicitly encode drift , meaning the change be-tween consecutive windows, and momentum , meaning the smoothed magnitude of drift. A minibatch consists of B
+
+posts, each with text, image, timestamp, and ground-truth post label yi ∈ { 0, 1}. The posts are sorted by timestamp and grouped into overlapping windows Ww. Windows do not have independent annotations; instead, each window inherits the label of its chronologically latest post. If ew
+
+denotes the index of the latest post in window Ww, then the window label is defined as 
+
+yw = yew . (28) Thus, the temporal head is trained to predict the verac-ity of the most recent post in its local temporal context, while the auxiliary alignment, discrepancy, match, and contrastive losses remain defined at the post level. This labeling strategy is a pragmatic approximation and may introduce some noise when earlier posts within a window differ in veracity from the most recent one, but it preserves a consistent target aligned with the prediction objective. For each window Ww, we compute a time-decayed at-tention over the posts in that window: more recent posts receive higher weight via an exponential decay in the time difference, and the attention distribution is combined with this decay to form a weighted sum of value projections. We then record the change in the aggregated represen-tation from the previous window, denoted by ∆w, and a momentum term Mw that smooths the magnitude of these changes. The per-window representation fed to the classi-fier is the concatenation of the aggregated vector, the drift, and the momentum scalar: 
+
+λj = exp 
+
+(
+
+− κ tmax − tj
+
+86400 
+
+)
+
+, (29) 
+
+Lw = ∑
+
+> j∈W w
+
+λj Attn( w, j )
+
+∑ 
+
+> j′∈W w
+
+λj′ Attn( w, j ′) (Pj WV ), (30) 
+
+∆w = Lw − Lw−1, (31) 
+
+Mw = βM w−1 + (1 − β)∥∆w∥2, (32) 
+
+¯Lw = [ Lw; ∆ w; Mw] ∈ R2d+1 . (33) Here Attn( w, j ) denotes the attention weight of window 
+
+w on the j-th post, with query given by the mean of the window features and keys/values from the window. A lin-ear layer maps ¯Lw to a per-window logit, which is used for training and, in the basic setup, for prediction [8]. 
+
+3.8. Final Prediction 
+
+The primary temporal prediction is obtained from the per-window representation ¯Lw. We apply a linear classifier to produce a scalar logit, which is passed through a sigmoid to obtain a probability: 
+
+pw = σ(w⊤ ¯Lw + b). (34) At inference time, the model produces one probability per window. When a post is associated with multiple over-lapping windows, we aggregate the window-level outputs into a post-level prediction. In our evaluation protocol, the post-level score is the mean of the window probabili-ties, while the post-level class is obtained by majority vote over the window-level binary decisions. 
+
+3.8.1. Timestamp-Aware Transformer 
+
+The temporal modeling can be refined by stacking the per-window vectors ¯Lw into a sequence and processing them with a Transformer encoder. Before the Trans-former, we project ¯Lw to dimension d and add a continu-ous timestamp-based positional encoding: the timestamps are normalized to the unit interval within the sequence, and a sinusoidal encoding at multiple learnable frequen-cies is applied and then projected to d. This encodes ac-tual elapsed time between windows rather than only the step index. The Transformer output is used to compute per-window logits that replace those from the linear head on ¯Lw, thereby allowing the model to use global context across the full sequence of windows. 
+
+3.9. Training Objective 
+
+The training objective is a weighted sum of several terms. We define each term below and then give the full objective. 
+
+3.9.1. Classification Loss 
+
+Misinformation datasets are often highly imbalanced. We therefore use a focal cross-entropy loss for the main classification task, which down-weights easy examples and focuses the gradient on hard ones [28]. We further apply label smoothing and per-class weights derived from the training set label distribution. Let ˜yw = yw(1 − ϵ) + ϵ/ 2
+
+denote the smoothed window label, and let pw be the prob-ability assigned to the positive class for window w. With class weights wyw , focal exponent γfoc , and binary cross-entropy (BCE), the classification loss is 
+
+LCE = ∑
+
+> w
+
+wyw (1 − pw)γfoc BCE( pw, ˜yw). (35) The targets for this main classification term are defined at the window level via the inherited window labels yw.73.9.2. Alignment and Temporal Consistency 
+
+We encourage high semantic alignment between the co-attended text and image by minimizing 1 − Ai over the batch. We also penalize large changes between consecutive temporal window representations so that the aggregated representation evolves smoothly over time: 
+
+Lalign = ∑
+
+> i
+
+(1 − Ai), (36) 
+
+LTC = 
+
+> W−1
+
+∑
+
+> w=1
+
+ρ w ∥Lw − Lw−1∥22. (37) 
+
+3.9.3. Auxiliary Heads and Contrastive Learning 
+
+The inconsistency head is trained with binary cross-entropy against the labels ymatch  
+
+> i
+
+. The contrastive term is a bidirectional InfoNCE-style loss on the projected text and image embeddings Ti and Ii. Each text embedding is pulled toward its paired image and pushed away from other images in the batch, and symmetrically for images: 
+
+Lmatch = − ∑
+
+> i
+
+[
+
+ymatch  
+
+> i
+
+log pmatch 
+
+> i
+
++ (1 − ymatch  
+
+> i
+
+) log(1 − pmatch  
+
+> i
+
+)
+
+]
+
+, (38) 
+
+LT →I 
+
+> contrast
+
+= − ∑
+
+> i
+
+log exp(sim( Ti, Ii)/τ )
+
+∑ 
+
+> j
+
+exp(sim( Ti, Ij )/τ ) , (39) 
+
+LI→T 
+
+> contrast
+
+= − ∑
+
+> i
+
+log exp(sim( Ii, Ti)/τ )
+
+∑ 
+
+> j
+
+exp(sim( Ii, Tj )/τ ) , (40) 
+
+Lcontrast = LT →I 
+
+> contrast
+
++ LI→T
+
+> contrast
+
+, (41) where 
+
+sim( u, v) = ⟨u, v⟩∥u∥ ∥ v∥ , (42) and τ is a temperature hyperparameter. 
+
+3.9.4. Regularisation and Domain Invariance 
+
+To reduce overfitting to a single forward pass, we use R-Drop [29]: we perform two forward passes with differ-ent dropout masks and minimize the symmetric KL diver-gence between the two output distributions. The domain-adversarial loss is the cross-entropy of the domain classifier after the GRL with the true dataset index: 
+
+Lrdrop = 12
+
+(
+
+KL( p1∥p2) + KL( p2∥p1)
+
+)
+
+, (43) 
+
+Ldomain = CE(domain _classifier(GRL( Pi)) , domain _id) ,
+
+(44) where p1 and p2 denote the prediction probabilities from the two dropout passes. 
+
+3.9.5. Prototype-Based Alignment 
+
+To encourage a shared semantic space across datasets, we use two prototype-based terms. The first is an in-batch prototype loss : for each class c ∈ { 0, 1}, we compute the mean embedding μc = mean {Pi : yi = c} with gradients detached, and minimize the mean cosine distance of each sample to its class centroid: 
+
+Lproto = 12
+
+∑
+
+> c∈{ 0,1}
+
+1
+
+|{ i : yi = c}| 
+
+∑
+
+> i:yi=c
+
+(1 − cos( Pi, μc)).
+
+(45) The second term relies on an exponential moving aver-age (EMA) prototype memory bank. We maintain a per-sistent prototype vector for each dataset-class pair. On ev-ery batch, for each dataset-class pair present in the batch, we compute the mean of the corresponding L2-normalized 
+
+Pi and update the prototype with an exponential mov-ing average with momentum m, without backpropagating through the update. Once at least two dataset-class cells have been initialized, we define global class prototypes gc
+
+as the L2-normalized mean of the bank prototypes for class 
+
+c over all initialized datasets: 
+
+proto[ d][ c] ← m proto[ d][ c] + (1 − m)̂ μd,c , (46) ̂
+
+μd,c = normalize(mean {Pi : ds i = d, y i = c}) ,
+
+(47) 
+
+gc = normalize (mean d s.t. init( d,c )proto[ d][ c]) .
+
+(48) The loss then attracts each Pi toward gyi and repels it from g1−yi up to a margin: 
+
+Lproto _mem = ∑
+
+> i
+
+ℓproto  
+
+> i
+
+, where (49) 
+
+ℓproto  
+
+> i
+
+= 1 − cos( Pi, gyi )+ max 
+
+(
+
+0, cos( Pi, g1−yi ) − margin 
+
+)
+
+. (50) The memory bank ensures that even datasets that ap-pear rarely in mini-batches retain stable class anchors in the shared space, and the global prototypes encour-age a dataset-invariant notion of “real” and “fake” across sources. 
+
+3.9.6. Transformer Temporal Consistency 
+
+When the timestamp-aware Transformer is used, we op-tionally add a smoothness regularizer on its hidden states 
+
+Hw, so that consecutive hidden states do not change abruptly when they are already directionally similar: 
+
+Ltc _seq = 1
+
+W − 1 
+
+> W−1
+
+∑
+
+> w=1
+
+∥Hw−Hw−1∥22·max (cos( Hw, Hw−1), 0).
+
+(51) 83.9.7. Total Objective 
+
+The full training loss is the weighted sum of all terms above, plus an L2 regularizer λreg ∥Θ∥22 on the parameters: 
+
+Ltotal = LCE + λalign Lalign + λTC LTC + λmatch Lmatch 
+
++ λcontrast Lcontrast + λreg ∥Θ∥22 + λrdrop Lrdrop 
+
++ λdomain Ldomain + λproto Lproto 
+
++ λproto _mem Lproto _mem + λtc _seq Ltc _seq .
+
+(52) Specific hyperparameter values used in our experiments are reported compactly here to keep the main method text readable: λalign = 0.05 , λTC = 0.01 , λmatch =0.1, λcontrast = 0.05 , λdomain = 0.03 , λproto = 0.05 ,
+
+λproto _mem = 0 .10 , λrdrop = 0 .5, temperature τ = 0 .2,temporal consistency decay ρ = 0 .9, focal exponent γfoc =2.5, label smoothing ϵ = 0 .05 , and the temporal module uses window length T = 8 , stride S = T / 2, temporal de-cay coefficient κ = 0 .5, momentum coefficient β = 0 .9,and EMA momentum m = 0 .99 . Together, these terms balance end-task performance with representation quality, temporal coherence, and cross-dataset alignment within a single unified model. 
+
+4. Results 
+
+4.1. Experimental Protocol 
+
+We evaluate MOMENTA on four benchmarks that are commonly used in multimodal misinformation research: Fakeddit, MMCoVaR, Weibo, and XFacta [22, 30–32]. Following standard practice in binary misinformation de-tection, we report Accuracy, Precision, Recall, F1, Macro-F1, AUC, and MCC [33–35]. We calibrate decision thresh-olds on each validation split before final test evaluation to avoid fixing an arbitrary global threshold across datasets with different score distributions [36, 37]. All numbers in this section are taken directly from the final result pack-age. 
+
+4.2. Main Quantitative Results 
+
+As shown in Table 1, MOMENTA performs strongly and consistently across all four datasets. The highest absolute performance is observed on Fakeddit and Weibo (AUC 0.982 and 0.981), while MMCoVaR and XFacta remain more challenging, as expected for smaller or more het-erogeneous cross-source settings [21, 22]. Even in these harder regimes, performance remains competitive (e.g., MMCoVaR F1 0.930, XFacta F1 0.905), suggesting that the model generalizes beyond a single data source. 
+
+4.3. SOTA Comparison 
+
+To assess the empirical competitiveness of MOMENTA, we compare it against representative state-of-the-art meth-ods on each benchmark using the corresponding reported test protocols. Because prior studies do not always re-port the same set of evaluation metrics across datasets, we present protocol-aware comparisons separately for Faked-dit, Weibo, MMCoVaR, and XFacta. The comparisons for Fakeddit and Weibo are reported in Tables 2 and 3, respectively, while the results for MMCoVaR and XFacta are shown in Tables 4 and 5. Across these benchmark-specific comparisons, MOMENTA performs strongly rela-tive to prior approaches under the corresponding evalua-tion settings.                                         
+
+> Table 2: SOTA comparison on Fakeddit (test split, protocol-aware).
+> Method Acc Prec Rec F1 AUC
+> WFT-BERT-SRNN [38] 0.9624 0.9520 0.9515 0.9588 –E-CaTCH [8] 0.9550 0.9570 0.9530 0.9550 0.9750
+> MOMENTA (ours) 0.9650 0.9600 0.9580 0.9590 0.9820
+> Table 3: SOTA comparison on Weibo (test split).
+> Method Acc F1-Fake F1-Real AUC
+> DCCF [39] 0.951 0.951 0.954 0.978 KEN [24] 0.935 0.935 0.934 0.967 MIMoE-FND [40] 0.928 0.928 0.928 0.972
+> MOMENTA (ours) 0.956 0.956 0.958 0.981
+> Table 4: SOTA comparison on MMCoVaR (test split).
+
+Method Acc F1 
+
+UC-CMAF [23] 0.931 0.909 DGExplain [18] 0.895 0.881 dEFEND [19] 0.856 0.838 
+
+MOMENTA (ours) 0.942 0.930 
+
+> Table 5: SOTA comparison on XFacta (test split).
+
+Method Acc Real Acc Fake Acc 
+
+XFacta (GPT-4o) [22] 0.888 0.872 0.904 LEMMA [20] 0.773 0.639 0.908 MMFakeBench* [21] 0.682 0.615 0.756 
+
+MOMENTA (ours) 0.905 0.890 0.920 
+
+As shown in Tables 2–5, MOMENTA performs strongly across all four benchmark settings. On Fakeddit (Ta-ble 2), it slightly improves over the strongest reported baselines across the reported metrics, including Accuracy, F1, and AUC. A similar pattern appears on Weibo (Ta-ble 3), where MOMENTA achieves the highest Accuracy, class-wise F1 scores, and AUC among the compared meth-ods. On MMCoVaR (Table 4), MOMENTA outperforms prior approaches in both Accuracy and F1, and on XFacta (Table 5) it attains the strongest reported performance in terms of overall Accuracy as well as class-specific accura-cies. Overall, under the corresponding comparison pro-tocols, MOMENTA attains the strongest reported results across all four benchmarks. In terms of absolute Accuracy 9Table 1: MOMENTA test-set performance across all datasets. 
+
+Dataset Acc Prec Rec F1 Macro-F1 Spec AUC MCC 
+
+Fakeddit 0.965 0.960 0.958 0.959 0.957 0.972 0.982 0.918 MMCoVaR 0.942 0.946 0.915 0.930 0.934 0.956 0.958 0.863 Weibo 0.956 0.957 0.955 0.956 0.957 0.959 0.981 0.906 XFacta 0.905 0.894 0.916 0.905 0.902 0.890 0.928 0.811 gain over the strongest prior baseline, the improvements are +0.26 points on Fakeddit, +0.50 on Weibo, +1.10 on MMCoVaR, and +1.70 on XFacta, with the largest mar-gins appearing in the more challenging cross-domain set-tings. 
+
+4.4. Diagnostic Analysis and Interpretation 
+
+> Figure 2: MOMENTA metric matrix across datasets (Accuracy, F1, Macro-F1, AUC, MCC).
+
+Figure 2 provides a compact global view: performance remains high across all core metrics rather than being driven by only one axis. In particular, the model sustains strong AUC and Macro-F1 at the same time, indicating that ranking quality and class-balanced performance im-prove together rather than trading off against each other. To further examine the behavior of the classifier at deci-sion time, we next analyze precision–recall–specificity bal-ance. This view is important because misinformation de-tection systems are often deployed in settings where both false alarms and missed detections carry real costs [34, 35].    
+
+> Figure 3: Operating-point balance across Precision, Recall, and Specificity.
+
+Figure 3 shows that the operating point remains bal-anced across datasets, which is important for practical moderation scenarios where both false positives and false negatives are costly [34, 35]. Beyond this static operating-point view, we also inspect the calibrated thresholds and the corresponding test loss values to assess whether performance gains are associated with stable confidence behavior.         
+
+> Figure 4: Calibrated thresholds and corresponding test loss by dataset.
+
+As shown in Figure 4, threshold calibration is stable across sources and does not rely on extreme dataset-specific cutoffs. We then move from scalar summaries to geometric per-formance profiles. This helps reveal whether any single metric dominates the apparent gains or whether improve-ments are structurally consistent across metrics. 10 Figure 5: Per-dataset radar profiles over Acc/F1/AUC/MCC/Macro-F1. 
+
+Figure 5 highlights the same trend from a geometric perspective: Fakeddit and Weibo are consistently strong, while MMCoVaR and XFacta remain more challenging but still robust. To complement these geometric profiles, we examine residual errors directly. This gives a clearer sense of where practical headroom remains and which benchmarks con-tinue to drive future optimization. 
+
+> Figure 6: Residual error profile (1-Acc, 1-F1, 1-AUC, 1-MCC).
+
+Figure 6 further confirms that residual errors are concen-trated in the hardest domains, matching the benchmark-level observations. Finally, we summarize how relative gains are distributed across datasets under a weighted analysis index. This is not used as a primary evaluation metric, but as a compact descriptive view of where comparative improvements are concentrated. 
+
+> Figure 7: Weighted improvement contribution by dataset (analysis index).
+
+Figure 7 shows that MOMENTA’s relative gains are dis-tributed across all four datasets rather than being con-centrated in a single benchmark. The largest contribu-tions come from the more challenging settings, especially MMCoVaR and XFacta, which aligns with the bench-mark comparisons showing larger absolute improvements in these harder cross-domain scenarios. 
+
+4.5. Discussion 
+
+Overall, the empirical evidence supports four conclu-sions. First, MOMENTA delivers consistently strong per-formance across heterogeneous datasets rather than over-fitting to a single benchmark profile. Second, the model surpasses the strongest prior baseline in all four head-to-head comparisons, with the largest absolute gains on MMCoVaR and XFacta, where cross-domain variation is typically more pronounced. Third, diagnostic analyses show that improvements are not confined to one metric family: discrimination (AUC), class-balanced effectiveness (Macro-F1/MCC), and operating-point behavior (preci-sion/recall/specificity under calibrated thresholds) remain coherent. Fourth, the residual-error and weighted-gain views indicate that the largest remaining headroom is con-centrated in the hardest domains, which is consistent with practical expectations in real-world misinformation set-tings. From a practical perspective, these results suggest that MOMENTA is suitable for deployment scenarios requiring robust behavior across multiple data sources and content regimes [36]. The combination of expert specialization, discrepancy-aware fusion, and temporal-aware learning ap-pears to provide both performance and stability benefits when evaluated under complementary views. At the same time, two limitations should be acknowl-edged. The weighted-gain plot is a secondary descriptive index and should not be interpreted as a substitute for primary benchmark metrics. In addition, while current results demonstrate strong cross-dataset robustness, fur-ther evaluation under explicit temporal drift and out-of-distribution stress tests would strengthen external-validity 11 claims [21, 22]. These directions provide a clear path for future extensions of the framework. 
+
+4.6. Code Availability 
+
+To support transparency and reproducibility, the offi-cial implementation of MOMENTA is available at https: //github.com/Yegi03/momenta , including training and evaluation scripts. 
+
+5. Conclusion 
+
+In this work, we presented MOMENTA, a unified frame-work for multimodal misinformation detection that com-bines modality-specific expert specialization, cross-modal interaction, and temporal reasoning within a single archi-tecture. By integrating Mixture-of-Experts (MoE) layers with bidirectional co-attention and an explicit discrepancy modeling branch, the framework captures both semantic alignment and inconsistency between textual and visual modalities, which are key signals in multimodal misinfor-mation detection [8, 9, 15, 16, 23]. To address the evolving nature of misinformation, we in-troduced a temporal aggregation mechanism that models narrative dynamics through drift and momentum encoding over overlapping time windows. This design enables the model to capture both short-term variations and longer-term trends in content evolution, which have been shown to be important for detecting coordinated or evolving mis-information campaigns [8, 25, 26]. In addition, domain-adversarial training and prototype-based alignment were incorporated to improve cross-domain generalization, al-lowing the model to maintain stable performance across heterogeneous datasets [17, 41]. Experimental results on Fakeddit, MMCoVaR, Weibo, and XFacta demonstrate that MOMENTA consistently outperforms existing methods across multiple evaluation metrics. The improvements are not limited to a sin-gle metric, but extend across AUC, F1, and MCC, in-dicating gains in both ranking quality and class-balanced performance [33, 34]. Diagnostic analyses further show that these improvements are stable across datasets and re-main robust after dataset-specific validation-based thresh-old calibration, suggesting that the model generalizes be-yond individual benchmark settings [36, 37]. Overall, the results indicate that combining hetero-geneous modeling, temporal reasoning, and domain-invariant representation learning provides a practical and effective direction for multimodal misinformation detec-tion in real-world settings [21, 22]. 
+
+6. Limitations and Future Directions 
+
+Despite its strong performance, the proposed framework has several limitations that point to meaningful directions for future work. First, the integration of multiple components, includ-ing Mixture-of-Experts layers, temporal aggregation, and domain-adversarial training, increases architectural com-plexity. While the integrated design is associated with im-proved overall performance, it also introduces additional computational overhead, which may limit scalability in large-scale or real-time deployment scenarios [42, 43]. Fu-ture work should explore more efficient model designs, such as sparsely activated expert layers, parameter shar-ing strategies, or model compression techniques, to re-duce resource requirements without sacrificing perfor-mance [42, 43]. Second, the temporal modeling strategy relies on pre-defined window sizes and fixed hyperparameters such as decay rates and momentum coefficients, and the current study does not include a dedicated sensitivity analysis for these settings. Although this formulation captures general patterns of narrative evolution, it may not fully adapt to irregular posting behavior or abrupt shifts in misinforma-tion dynamics. As a result, long-range dependencies and non-uniform temporal structures may not be fully repre-sented [8, 44]. Future work may address this limitation by incorporating adaptive or continuous-time representa-tions, as well as graph-based or sequence-level temporal models that can better capture complex evolution pat-terns [44, 45]. Third, although domain-adversarial training and proto-type alignment improve cross-domain generalization, the evaluation remains limited to a finite set of benchmark datasets. Moreover, not all multimodal misinformation is characterized by overt text-image inconsistency; some cases involve mutually consistent modalities that never-theless misrepresent external context, which may require stronger retrieval- or evidence-grounded reasoning. The model’s robustness under more extreme domain shifts, in-cluding unseen platforms, languages, or emerging misinfor-mation formats, remains an open question [21, 22, 41]. Fu-ture research could investigate test-time adaptation, con-tinual learning, or meta-learning approaches to enable the model to adapt to evolving distributions without requiring full retraining [46]. Finally, the current framework focuses on text and im-age modalities and does not incorporate additional signals such as user interactions, network structure, or propaga-tion dynamics. These factors have been shown to provide complementary information for misinformation detection, particularly in social media environments [45, 47]. Extend-ing the framework to include additional modalities, such as video, audio, and user-level metadata, as well as inte-grating propagation-based features, represents a promis-ing direction for improving performance in real-world set-tings [20–22]. In addition to these directions, improving interpretabil-ity remains an important challenge. While the discrep-ancy modeling component provides some insight into cross-modal inconsistencies, further work is needed to develop more transparent and human-interpretable explanations 12 that can support decision-making in high-stakes applica-tions [18, 19, 23]. 
+
+References 
+
+[1] Daron Acemoglu, Asuman Ozdaglar, and Ali Paran-dehGheibi. Spread of (mis)information in social net-works. Games and Economic Behavior , 70(2):194– 227, 2010. [2] Luciano Floridi. The Philosophy of Information . Ox-ford University Press, Oxford, 2011. [3] Jim P. Stimpson, Sungchul Park, Emily H. Adhikari, David B. Nelson, and Alexander N. Ortega. Perceived health misinformation on social media and public trust in health care. Medical Care , 63(9):686–693, 2025. [4] Anna Gaysynsky, Nicole Senft Everson, Kathryn He-ley, and Wen-Ying Sylvia Chou. Perceptions of health misinformation on social media: Cross-sectional sur-vey study. JMIR Infodemiology , 4:e51127, 2024. [5] Israel Júnior Borges do Nascimento, Ana Beatriz Pizarro, Jussara M. Almeida, Natasha Azzopardi-Muscat, Marcos André Gonçalves, Maria Björklund, and David Novillo-Ortiz. Infodemics and health mis-information: A systematic review of reviews. Bul-letin of the World Health Organization , 100(9):544– 561, 2022. [6] Stephan Lewandowsky, Ullrich K. H. Ecker, John Cook, Stephan Van Der Linden, Jon Roozenbeek, and Naomi Oreskes. Misinformation and the epistemic in-tegrity of democracy. Current Opinion in Psychology ,54:101711, 2023. [7] Jennifer Lackey. Echo chambers, fake news, and social epistemology. In S. Bernecker, A. K. Flowerree, and T. Grundmann, editors, The Epistemology of Fake News . Oxford University Press, New York, 2021. [8] Ahmad Mousavi, Yeganeh Abdollahinejad, Roberto Corizzo, Nathalie Japkowicz, and Zois Boukouvalas. E-catch: Event-centric cross-modal attention with temporal consistency and class-imbalance handling for misinformation detection, 2025. [9] Yizhou Zhang, Loc Trinh, Defu Cao, Zijun Cui, and Yan Liu. Detecting out-of-context multimodal misin-formation with interpretable neural-symbolic model, 2023. [10] Javad Rajabi, Sunday Okechukwu, Ahmad Mousavi, Roberto Corizzo, Charles C Cavalcante, and Zois Boukouvalas. Event-based multi-modal fusion for on-line misinformation detection in high-impact events. In 2024 IEEE International Conference on Big Data (BigData) , pages 3301–3308. IEEE, 2024. [11] Yoo Yeon Sung, Jordan Boyd-Graber, and Naeemul Hassan. Not all fake news is written: A dataset and analysis of misleading video headlines. In Houda Bouamor, Juan Pino, and Kalika Bali, editors, Pro-ceedings of the 2023 Conference on Empirical Methods in Natural Language Processing , pages 16241–16258, Singapore, December 2023. Association for Computa-tional Linguistics. [12] Alexis Conneau, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Fran-cisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. Unsupervised cross-lingual representation learning at scale. In Pro-ceedings of the 58th Annual Meeting of the Associa-tion for Computational Linguistics , pages 8440–8451. Association for Computational Linguistics, 2020. [13] Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sas-try, Amanda Askell, Pamela Mishkin, Jack Clark, Gretchen Krueger, and Ilya Sutskever. Learning transferable visual models from natural language su-pervision. In Proceedings of the 38th International Conference on Machine Learning , volume 139 of Pro-ceedings of Machine Learning Research , pages 8748– 8763. PMLR, 2021. [14] Litian Zhang, Xiaoming Zhang, Ziyi Zhou, Xi Zhang, Philip S. Yu, and Chaozhuo Li. Knowledge-aware multimodal pre-training for fake news detection. In-formation Fusion , 114:102715, 2025. [15] Yifan Liu, Yaokun Liu, Zelin Li, Ruichen Yao, Yang Zhang, and Dong Wang. Modality interactive mixture-of-experts for fake news detection. In Pro-ceedings of the ACM Web Conference 2025 . ACM, 2025. [16] Moyang Liu, Kaiying Yan, Yukun Liu, Ruibo Fu, Zhengqi Wen, Xuefei Liu, and Chenxing Li. Misd-moe: A multimodal misinformation detection frame-work with adaptive feature selection. In Proceedings of The 4th NeurIPS Efficient Natural Language and Speech Processing Workshop , volume 262 of Proceed-ings of Machine Learning Research , pages 114–122. PMLR, 2024. [17] Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo Larochelle, François Lavi-olette, Mario Marchand, and Victor Lempitsky. Domain-adversarial training of neural networks. Jour-nal of Machine Learning Research , 17(59):1–35, 2016. [18] Lanyu Shang, Ziyi Kou, Yang Zhang, and Dong Wang. A duo-generative approach to explainable mul-timodal covid-19 misinformation detection. In Pro-ceedings of the ACM Web Conference 2022 (WWW ’22) , pages 3623–3631. ACM, 2022. 13 [19] Kai Shu, Limeng Cui, Suhang Wang, Dongwon Lee, and Huan Liu. defend: Explainable fake news detec-tion. In Proceedings of the 25th ACM SIGKDD In-ternational Conference on Knowledge Discovery and Data Mining (KDD ’19) , pages 395–405. ACM, 2019. [20] Keyang Xuan, Li Yi, Fan Yang, Ruochen Wu, Yi R. Fung, and Heng Ji. Lemma: Towards lvlm-enhanced multimodal misinformation detection with external knowledge augmentation, 2024. [21] Xuannan Liu, Zekun Li, Peipei Li, Shuhan Xia, Xing Cui, Linzhi Huang, Huaibo Huang, Weihong Deng, and Zhaofeng He. Mmfakebench: A mixed-source multimodal misinformation detection benchmark for lvlms. arXiv preprint arXiv:2406.08772 , 2024. [22] Yuzhuo Xiao, Zeyu Han, Yuhan Wang, and Huaizu Jiang. Xfacta: Contemporary, real-world dataset and evaluation for multimodal misinformation detection with multimodal llms, 2025. [23] Zepu Yi, Chenxu Tang, and Songfeng Lu. User comment-guided cross-modal attention for inter-pretable multimodal fake news detection. Applied Sci-ences , 15(14):7904, 2025. [24] Peican Zhu, Yubo Jing, Le Cheng, Keke Tang, and Yangming Guo. Ken: Knowledge augmentation and emotion guidance network for multimodal fake news detection, 2025. [25] J. N. John, Sara E. Gorman, Heidi J. Larson, and Kathleen Hall Jamieson. Understanding interven-tions to address infodemics through epidemiologi-cal, socioecological, and environmental health models: Framework analysis. JMIR Infodemiology , 5:e67119, 2025. [26] K. Jain and K. Achuthan. Modeling the dynamics of misinformation spread: A multi-scenario analysis in-corporating user awareness and generative ai impact. 
+
+Frontiers in Computer Science , 7:1570085, 2025. [27] Alejandro Bernardin and Tomas Perez-Acle. Assess-ing the impact of misinformation during the spread of infectious diseases. Scientific Reports , 15:34740, 2025. [28] Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. In Proceedings of the IEEE International Conference on Computer Vision (ICCV) , pages 2980– 2988, 2017. [29] Xiaobo Liang, Lijun Wu, Juntao Li, Yue Wang, Qi Meng, Tao Qin, Wei Chen, Min Zhang, and Tie-Yan Liu. R-drop: Regularized dropout for neural net-works. In Advances in Neural Information Processing Systems , volume 34, pages 10890–10905, 2021. [30] Kai Nakamura, Sharon Levy, and William Yang Wang. r/fakeddit: A new multimodal benchmark dataset for fine-grained fake news detection. arXiv preprint arXiv:1911.03854 , 2019. [31] Mingxuan Chen, Xinqiao Chu, and K. P. Subbalak-shmi. Mmcovar: Multimodal covid-19 vaccine focused data repository for fake news detection and a baseline architecture for classification, 2021. [32] J. Lv, Y. Gao, L. Li, et al. Multi-modal fake news detection: A comprehensive survey on deep learning technology, advances, and challenges. Journal of King Saud University Computer and Information Sciences ,37:306, 2025. [33] Marina Sokolova and Guy Lapalme. A system-atic analysis of performance measures for classifica-tion tasks. Information Processing & Management ,45(4):427–437, 2009. [34] Davide Chicco and Giuseppe Jurman. The advantages of the matthews correlation coefficient (mcc) over f1 score and accuracy in binary classification evaluation. 
+
+BMC Genomics , 21(1):6, 2020. [35] Takaya Saito and Marc Rehmsmeier. The precision-recall plot is more informative than the roc plot when evaluating binary classifiers on imbalanced datasets. 
+
+PLOS ONE , 10(3):e0118432, 2015. [36] Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. On calibration of modern neural net-works. In Proceedings of the 34th International Con-ference on Machine Learning , volume 70 of Proceed-ings of Machine Learning Research , pages 1321–1330. PMLR, 2017. [37] Quan Zou, Shihe Xie, Zhen Lin, Meijuan Wu, and Yizhou Ju. Finding the best classification threshold in imbalanced classification. Big Data Research , 5:2– 8, 2016. [38] A. Kathigi, M. Pujar, A. M. S. Akshatha, R. Shilpa, and S. S. Shirabadagi. Fake news detection using weighted fine-tuned bert and sparse recurrent neural network. Journal of Computer Science , 21(12):2951– 2964, 2025. [39] Weilin Zhou, Zonghao Ying, Junjie Mu, Shengwei Tian, Quanchen Zou, Deyue Zhang, Dongdong Yang, and Xiangzheng Zhang. Disentangling fact from sen-timent: A dynamic conflict-consensus framework for multimodal fake news detection, 2025. [40] Yifan Liu, Yaokun Liu, Zelin Li, Ruichen Yao, Yang Zhang, and Dong Wang. Modality interactive mixture-of-experts for fake news detection, 2025. 14 [41] Jindong Wang, Cuiling Lan, Chang Liu, Yidong Ouyang, Tao Qin, Wang Lu, Yiqiang Chen, Wenjun Zeng, and Philip S. Yu. Generalizing to unseen do-mains: A survey on domain generalization. IEEE Transactions on Knowledge and Data Engineering ,35(8):8052–8072, 2023. [42] Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton, and Jeff Dean. Outrageously large neural networks: The sparsely-gated mixture-of-experts layer. arXiv preprint arXiv:1701.06538 , 2017. [43] William Fedus, Barret Zoph, and Noam Shazeer. Switch transformers: Scaling to trillion parameter models with simple and efficient sparsity. Journal of Machine Learning Research , 23(120):1–39, 2022. [44] Da Xu, Chuanwei Ruan, Evren Korpeoglu, Sushant Kumar, and Kannan Achan. Inductive representa-tion learning on temporal graphs. In International Conference on Learning Representations , 2020. [45] Federico Monti, Fabrizio Frasca, Davide Eynard, Da-mon Mannion, and Michael M. Bronstein. Fake news detection on social media using geometric deep learn-ing. In International Conference on Learning Repre-sentations , 2019. [46] Dequan Wang, Evan Shelhamer, Shaoteng Liu, Bruno Olshausen, and Trevor Darrell. Tent: Fully test-time adaptation by entropy minimization. In International Conference on Learning Representations , 2021. [47] Kai Shu, Amy Sliva, Suhang Wang, Jiliang Tang, and Huan Liu. Fake news detection on social media: Adata mining perspective. ACM SIGKDD Explorations Newsletter , 19(1):22–36, 2017. 15
