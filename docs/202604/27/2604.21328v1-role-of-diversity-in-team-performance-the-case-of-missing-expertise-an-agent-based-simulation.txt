@@ -1,0 +1,464 @@
+Title: Role of diversity in team performance: the case of missing expertise, an agent based simulation
+
+URL Source: https://arxiv.org/pdf/2604.21328v1
+
+Published Time: Fri, 24 Apr 2026 00:33:43 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+# ROLE OF DIVERSITY IN TEAM PERFORMANCE : THE CASE OF 
+
+# MISSING EXPERTISE , AN AGENT BASED SIMULATION 
+
+A P REPRINT 
+
+Tamás Kiss ∗
+
+Department of Computational Sciences Wigner Research Centre for Physics Hungarian Research Network 
+
+kiss.t@wigner.hu 
+
+ABSTRACT 
+
+Theory and empirical research on management teams’ influence on firm performance have witnessed continuous development, and by now incorporate numerous details. Classic, experiment-based studies examining social systems collect vast amount of data, but often times investigate only the first one or two modes of the distribution of measured variables, and experience difficulty in analyzing the effect of context. For example, in functional diversity research, management teams are described by measures incorporating complex distributions of capabilities of individual managers and teams of managers. To investigate the effect of hidden distributions, and the effect of functional diversity composition on team communication and performance, we developed an agent-based model, and conducted a series of simulation experiments. Modeling results show that depending on the context, such as communication scheme among interacting agents, or their functional composition, intrapersonal functional diversity (IFD), and dominant function diversity (DFD) might enhance or reduce performance and communication among agents. Furthermore, simulation results also suggest that a third measure is required alongside IFD and DFD capturing the aggregate expertise of the team to comprehensively account for empirical findings. 
+
+Keywords Functional Diversity · Agent-Based Simulations · Organizational Design · Management Teams ·
+
+Communication 
+
+1 Introduction 
+
+Corporate management teams influence firm performance through a number of ways, including for example strategic planning and decision-making [Hambrick and Mason, 1984], and via social psychological processes [Jehn et al., 1999, van Knippenberg et al., 2004]. The ability of a management team to bring good decisions, in turn, largely depends on the composition of the team, and interaction of its members with each other, and the company’s environment. All of these constructs – firm performance, team composition, and member interactions – have been defined and assayed empirically in a number of studies [Aboramadan, 2021]. Management theory highlights the importance of diversity in the definition of team composition [Williams and O’Reilly III, 1998, Cannella et al., 2008], and communication in member interactions [Smith et al., 1994, De Carolis et al., 2009]. To describe team composition, an experimentally well tractable measure, functional diversity in teams, has been proposed, and formulated for example as “the occupational backgrounds and functional areas of expertise of the team members” [Jackson, 1996]. Bunderson and Sutcliffe [2002] showed that functional diversity in teams can be conceptualized and measured in a number of different ways. Conscious definition and precise understanding of functional diversity measures are of great importance since empirical research on the role of functional diversity in influencing team effectiveness has shown a complex picture, and often resulted in contradictory findings [Homberg and Bui, 2013]. In particular, Bunderson and Sutcliffe [2002] compared the effect of intrapersonal functional diversity (IFD) and dominant function diversity 
+
+> ∗
+
+Webpage: https://tncs.wigner.hu/people/kiss/ 
+
+> arXiv:2604.21328v1 [cs.MA] 23 Apr 2026
+
+Role of Diversity in Team Performance A P REPRINT 
+
+(DFD) on information sharing within a team, and on near-term performance of a business unit. They showed that IFD is positively associated with information sharing, and information sharing mediates the positive relationship between IFD and performance. Moreover, they also showed that DFD is negatively associated with information sharing, and information sharing partially mediates the negative relationship between DFD and performance. Interestingly enough, a recent study by Zhou et al. [2023], using the same definition and empirical assessment of IFD and DFD found that both of these measures have positive effect on performance of a firm. Comparison of experimental findings shows, however, that it is very difficult to identify the effect of a certain independent variable, such as DFD, because the influence of moderator variables might be overwhelming. Furthermore, the domain in which experimental studies can measure certain variables might largely constrain observable effects. For example, while mean values of IFD and DFD were 0.28 and 0.66, respectively in the study by Bunderson and Sutcliffe, Zhou et al. reported the same values to be 0.58, and 0.59, respectively (IFD and DFD values range between 0 and 1). Indeed, Bunderson and Sutcliffe noted that “the seemingly low intrapersonal functional diversity scores for these business unit management teams [. . . ] suggests that, for the most part, managers in this sample had fairly narrow ranges of functional experience”. A number of researchers have previously developed models with the aim of reflecting some aspect of human behavior or teamwork [Hong and Page, 2004, Chang, 2012, Dehkordi et al., 2012, Vermillion and Malak, 2015, Fernandes et al., 2017]. For example, applying a formal approach, Hong and Page [2004] developed a mathematical theorem and by showing a trade-off between diversity and ability — in the limit of large number of problem solvers — they proved that a random group of diverse problem solvers outperform the group of best problem solvers. Chang [2012] used an agent-based model (ABM; Taylor [2014]) to show that two specific types of knowledge diversity dimensions, intrapersonal knowledge diversity, and shared knowledge diversity have different effects on team innovation: While intrapersonal knowledge diversity is positively related to team innovation, shared knowledge diversity is not related to it. Dehkordi et al. [2012] modeled the effect of stress and motivation on team performance, and studied the impact of project overload. They showed that work overload stifles innovation, while motivation on challenging goals might alleviate the negative aspects of project overload. Vermillion and Malak [2015] used agent-based modeling approaches to investigate the delegation of authority and use of incentives in design teams, and Fernandes et al. [2017] developed an ABM to support design teams of industrial organizations in understanding complex cause–effect relationships in early design projects. While a large body of literature exists to address specific questions or problems, a number of general-purpose simulators also exist to conduct agent-based modeling. For example, the Virtual Design Team (or VDT) model by Jin and Levitt [1996] explicitly models actors, activities and organizations, and its goal is to simulate and analyze how activity interdependencies raise coordination needs. Varying model parameters describing communication tools sheds light on their effect on team performance. Simulation tools, like TCM [Rojas-Villafane, 2010] and NetWatch [Tsvetovat and Carley, 2004] similarly represent individuals possessing human characteristics like motivation, personal traits, memory or learning ability, and can be used to predict team performance. The main purpose of systems like, for example, GRATE* [Jennings, 1995], STEAM [Tambe, 1997], CAST [Yen et al., 2001], and a recent model by Periši´ c et al. [2016] is to simulate teamwork behaviors in order to improve team effectiveness. For reviews on using ABMs of human systems, see for example the works by Bonabeau [2002] and Fan and Yen [2004]. In this study, an ABM was developed, and simulation experiments were conducted to study effects of empirically hard-to-control moderator variables and functions. We highlight the importance of viewing management processes as complex, emergent phenomena shaped by diversity [Nkomo et al., 2019], and note that some statistical methods used to analyze empirically collected data employ a number of projections, and hence might miss the fine details hidden in this data. For example, IFD [Walsh, 1988] and DFD [Hirschman, 1964] span a two-dimensional space in which dependent variables, like the amount of communication or team performance potentially form non-linear, exotic surfaces. While empirical studies typically account for the interaction effect in regression-type analyses, local deviations from the large-scale behavior might still be missed. Using ABMs and detailed data visualization could shed light to new, exciting phenomena. The specific goal of this work is to elucidate on the effect of DFD on team performance which, in some circumstances positively influence team performance, while in others has a negative effect on it. These efforts led to the suggestion that measurement of IFD and DFD alone does not fully capture diversity properties of even simple problem-solving systems, hence we propose to introduce a new diversity measure describing the aggregate knowledge base available to a management team as a whole. 2Role of Diversity in Team Performance A P REPRINT 
+
+2 System Modelling 
+
+2.1 Model components 
+
+An ABM was developed to simulate task processing and communication in a group of interacting agents representing managers of management teams. This computer model consists of tasks, agents and their interactions, and can be parameterized to simulate a number of scenarios. Each task k (Figure 1 A) is said to be composed of NFunctions components representing different functions, and each component j requires some amount of “work”, denoted by rkj , to be completed. In this representation, each task encompasses a complete production workflow that requires multiple skills or functions, like marketing, manufacturing, sales, distribution, etc. In particular, the rkj values are drawn from a uniform random distribution for each task, and their sum is normalized to a fixed value θ. This way, tasks are defined with different amount of work required to complete each of their component, but having the same total work requirement. A task is said to be completed when all of its components are completed. Tasks A
+
+1 2 3 4 5 6 7 ... F
+
+Functional areas ( j)Agents Skill ( pij  )Functional areas ( j)Component requirement ( r kj  )FF:ωF:
+
+# B
+
+# Teams Number of agents 0 1IFD*  
+
+> 4567123
+> NA8... F
+> Number of agents
+
+# Ca 
+
+# 0 1
+
+IFD* 123... 
+
+> NAS
+> ...
+> NAGFF
+> ... ...
+
+# 0 1IFD* 
+
+> Number of agents 1234...
+> NAF
+
+# IFDS 
+
+# Cb Cc 
+
+1 2 3 4 5 6 7 ... FF
+
+Figure 1: Representation of tasks ( A) and agents ( B) in the model. rkj denotes the amount of work needed to complete component j of task k and is drawn from a uniform random distribution. pij denotes strength of skill j of agent i. NF
+
+is the number of functional components, NT and NA are the number of tasks and agents, respectively. C: Approaches to generate groups of agents using different individual functional diversity score (IFDS; Equation 1) distributions. IFD values (Equation 2) of the groups shown in the above examples are all identical ( IFD ∗) even though teams are composed of agents with different IFDS distributions. Ca : The pure specialist—absolute generalist system with N SA
+
+specialists having IFDS = 0 , and N GA generalists having IFDS = 1 . Cb : a system of agents with IFDS distributed according to a Gaussian distribution around IFD ∗. In this case agents are described by pij skill distributions following a discrete half-normal distribution of standard deviation σi. Cc : A system with agents having identical IFDS values, all equaling IFD ∗.3Role of Diversity in Team Performance A P REPRINT 
+
+Agents are similarly generated: each agent is defined by NFunctions “skills”, and these skills are normalized to ω,representing agents who work the same amount, but have a different set of capabilities (Figure 1 B). For each agent 
+
+i, the pij strength value for skill j is randomly generated or specifically assigned, depending on parameter ν (Table 1), representing the mode of agent generation. Specifically, for simulations of a team of pure specialists and absolute generalists (Figure 1 Ca ), a randomly selected skill ( j∗ 
+
+> i
+
+) was set to have strength value pij ∗ 
+
+> i
+
+= ω, and all other skills had 
+
+0 strength for specialists, or all skill strength values were set to ωNFunctions for generalists. For simulations of other team types, pij skill strength values were drawn from a half-normal distribution with standard deviation set for each agent independently (Figure 1 Cb ), or identically (Figure 1 Cc ). Functional diversity of an agent’s skill set is described by the individual functional diversity score or IFDS [Walsh, 1988]. It is a normalized measure of how diverse an agent’s functional expertise is, and 0 represents a specialist with knowledge in only one functional area, while 1 represents a generalist with the same amount of knowledge across all functional areas. Specifically, for each agent i IFDS i is defined as 
+
+IFDS i =1 − NFunctions P
+
+> j=1
+
+p2
+
+> ij
+
+ρ (1) where j indexes functional areas, and ρ = 1 − 1 
+
+> NFunctions
+
+is a normalizing factor to scale IFDS into the [0 , 1] interval. Teams are composed of NAgents agents, and are characterized by the two functional diversity measures IFD, the average of individual IFDS values, and DFD as 
+
+IFD = 1
+
+NAgents 
+
+> NAgents
+
+X
+
+> i=1
+
+IFDS i (2) 
+
+DFD =1 − NFunctions P
+
+> j=1
+
+ argmax 
+
+> j
+> pij
+> NAgents
+
+2
+
+ρ (3) where argmax 
+
+> j
+
+pij specifies the strongest skill of agent i. It is important to note, however, that even though skill strength value distributions might largely differ across agents of different teams, their IFD, and DFD measures could still be identical (Figure 1 C). For example, as an extreme example, agents in Group Ca are either specialists or generalists with IFDS i equal to 0 or 1, respectively, yet, their IFD value might be the same as the IFD of the following groups, i.e. 
+
+IFD ∗. Indeed, the average of IFDS i of Group Cb might also yield the same IFD ∗, even though agents are described by different IFDS i values. Furthermore, Group Cc (not used in presented simulations) represents a case when all agents have identically parameterized pij distribution independent of the agent’s index i, resulting in the same IFDS 
+
+values, yielding an IFD ∗ equal to this IFDS . Hence, using only IFD and DFD to describe a managerial group hides the information about properties of individual actors, which might influence performance of the team as a whole. Generate agents Generate tasks Assign tasks to agents Pass around tasks Active agents work on tasks All tasks finished? or Time is up? Yes No Finish 
+
+Figure 2: Model Dynamics. The steps shown in the figure are iterated r times for given IFD and DFD to generate r
+
+instances of the system allowing the calculation of average communication and performance values. 4Role of Diversity in Team Performance A P REPRINT 
+
+2.2 System dynamics, and communication among agents 
+
+Dynamics of the system (Figure 2) is composed of the following steps: First, agents and tasks are generated by creating 
+
+pij agent skill vectors and rkj task component vectors, respectively. Second, tasks are assigned to agents randomly. In any time step, an agent might have zero or one task assigned to them. If there are fewer tasks than agents, some agents are idle, if there are more tasks than agents, some tasks are unassigned and do not progress towards completion. Third, agents might pass their task to another agent as detailed below. Fourth, agents work on the task assigned to them. Here, work is simulated by subtracting the skill vector of an agent from the component vector of the task assigned to the agent. For example, the work agent i performs on the jth component of task k is expressed as wijk = rkj − pij .An agent performs operations on all non-completed task components simultaneously. Once an rkj value reaches 0 the component is considered completed and does not decrease any further. If all components of a task are completed, the task itself is completed, removed from the simulation and the assigned agent becomes idle. If all tasks are completed, the simulation finishes. The simulation also finishes if a pre-defined number of simulation steps ( M ) are taken, since there are situations when agents are not able to solve all tasks due to an inadequate skill set or lack of communication. If there are unsolved tasks and available time to work on the tasks, the simulation continues with passing tasks again. Communication in this model is simulated by passing a task. Task passing represents the process of team members shifting the focus of the production workflow from one function to another, when a function is completed, or the processing agent cannot make progress anymore. The passing of a task is constrained by similarity of the agents. Specifically, the distance ( dmn ) between agents m and n is defined as the Euclidean distance between their skill vectors as 
+
+dmn =
+
+vuutNFunctions X
+
+> j=1
+
+(pmj − pnj )2. (4) Only agents closer to each other than a threshold ( dmn < τ ) are allowed to pass and receive tasks from each other. Such agents will be termed as collaborators. assign task to best solver, free original solver for each task identify best solving collaborators  
+
+> All tasks processed?
+> start at first task Return Yes
+
+go to next task  
+
+> No Return
+> stuck agent contacts stuck and empty collaborators identify best solver best solver is also stuck best solver is empty original stuck agent is best agents swap tasks task passed, original stuck agent becomes empty nothing happens go to next stuck agent start at first stuck agent All stuck agents processed? Yes No
+
+# AB
+
+Figure 3: Communication Schemes. Communication in this ABM is represented by task passing. A: In the first scheme, agents only look for a better solver among their collaborator if they cannot proceed with solving their task (agent is “stuck”). B: In the second scheme, agents repeatedly seek to identify their collaborator who solves their task in the shortest time. To evaluate the effect of different communication schemes, two task passing rules were implemented. In the first version (Figure 3 A), when an agent cannot proceed with solving their task (get “stuck”), evaluate how well any of their collaborators could proceed with their task, and pass the task to the one that is best in solving their task. In the second version (Figure 3 B), agents with a task decide once every simulation step whether to pass or keep their task, 5Role of Diversity in Team Performance A P REPRINT 
+
+such that in every step they evaluate the amount of possible work they or any of their collaborators can perform in the next simulation step, and pass their task to the best performing collaborator, or keep it if they are the best solver for the given task. 
+
+2.3 Model evaluation 
+
+To help better understand the interaction between IFD and DFD, and to study behavior of teams composed of pure specialists and absolute generalists, communication and team performance will be shown in three-dimensional plots with IFD and DFD represented on the horizontal axes, and performance, communication, or other dependent variables color-coded on the vertical axis. Performance will be quantified by calculating the ratio of completed task components to the total number of task components initially introduced in the system, resulting in a value between 0 and 1. The amount of communication among agents will be represented by communication density, the number of task passes in the simulation normalized by the number of steps the simulation took. 
+
+2.4 Summary of model parameters 
+
+Parameter Description Default value 
+
+NFunctions Number of functional domains accounted for in the simulations 9
+
+NAgents Number of agents modeled 10 
+
+NTasks Number of tasks modeled 7
+
+ω Agent normalization value, used to set total skill strength of an agent 10 
+
+Θ Task normalization value. This parameter sets the total amount of effort required to complete a task 10 
+
+τ Similarity threshold. When the skill strength vector of two agents are closer, in a Euclidean sense, then τ , agents are allowed to exchange tasks 80% 
+
+μ Switch setting whether strength values of an agent are mixed across skills or skill strengths are serially generated True 
+
+ν Specifies the method used to generate IFDS distribution of agents. Possible options are: same IFDS for all agents; IFDS distribution; only generalists and specialists (see Figure 1 C for details) IFDS distribution 
+
+δ Width of IFDS distribution. Runs from 1 to NAgents 
+
+> 2
+> NAgents
+> 2
+
+π Specifies task passing scheme. Options are: always pass, pass if stuck pass if stuck 
+
+r Number of simulation instances for a given IFD – DFD value 10 
+
+M Maximal number of time steps allowed 250 Table 1: List of parameters used in the model. 
+
+2.5 Model implementation and dissemination 
+
+For numerical simulations, IFD – DFD value pairs were systematically scanned by generating a group of agents with given IFD and DFD, and running the computer model r times to accumulate results for averaging. Simulation code was written in the Matlab© language, and run on a personal computer. The full model is available on COMSeS Net and can be downloaded at: https://www.comses.net/codebases/b5db6af8-ba44-4725-9bb3-09a6e6b02475/ releases/1.0.0/ 
+
+3 Results 
+
+3.1 Pure specialists and absolute generalists: Answering a rhetorical question 
+
+In their 2002 article, Bunderson and Sutcliffe outline potential avenues for future research of the effect of diversity on teams, and propose that different types of functional diversity measures might interact with one another. They draw attention to the findings of Jehn et al. [1999], who demonstrated that specific forms of team diversity and performance can be influenced by other forms of team diversity. This possibility of interaction prompts Bunderson and Sutcliffe to speculate on a hypothetical scenario of a management team consisting solely of specialists of the same function: "For example, the theory and results presented in this article raise an interesting paradox—what about a team composed entirely of specialists from the same function? On one hand, such a team should be able to easily share information (given a common functional background) but, on the other hand, increased information sharing may not translate into 6Role of Diversity in Team Performance A P REPRINT Performance Communication Density     
+
+> 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0IFD DFD 0Percent of Collaborators Number of Simulation Steps [log]
+
+# A BC D        
+
+> -1 1-0.5 0.8 010.5 0.6 0.8 10.6 0.4 0.4 0.2 0.2 0 0 IFD DFD 10.8 10 110.6 0.8 0.6 0.4 0.4 0.2 0.2 0 0 IFD DFD 10 2
+
+Figure 4: System behavior of teams of independently working specialists and generalists. A: Performance of teams as a function of IFD and DFD. B: Communication density of task passing among agents. C: The number of simulation steps required to solve all tasks (on a log scale). M = 250 time steps are the maximum allowed, even if there are unsolved tasks. D: The number of collaborators relative to the number of all agent pairs in the team. Note that all tasks are solved in this system only when generalists are present. Also note that system behavior is independent of DFD. better informed decisions because the information shared represents a single functional perspective" [Bunderson and Sutcliffe, 2002]. Communication Density 010.1 0.8 0.2 10.3 0.6 0.8 0.4 0.5 0.6 0.4 0.4 0.2 0.2 0 0 IFD DFD 
+
+# A BC D         
+
+> Performance 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD Number of Simulation Steps [log] 10.8 10 110.6 0.8 0.6 0.4 0.4 0.2 0.2 0 0 IFD DFD 10 2010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD Percent of Collaborators
+
+Figure 5: Simulation results of teams of communicating specialists and generalists. Figure panels are set up as in Figure 4. Allowing communication among specialists and generalists results in superior performance, independent of the amount of communication and the value of DFD. For simulations, the first communication scheme was used, τ = 80% 
+
+(see paragraph 2.2 for more details). ABMs are particularly well-suited for examining theoretical scenarios like this, and this subsection is dedicated to exploring such a simple system. Following the above suggestion, the system consists of a mixture of pure specialists and absolute generalists (Figure 1 Ca ). Pure specialists have only one skill (their IFDS is equal to 0), but they are very good in solving task components corresponding to their single skill. Absolute generalists, however, possess all possible 7Role of Diversity in Team Performance A P REPRINT 
+
+skills (their IFDS is equal to 1) but they are not very good in any of those skills. In the model, values of a generalist’s skill strength add up to be equal to the value of a specialist’s single skill strength, representing problem solvers of about the same amount of total training or tenure length. IFD of a group is the average of all agents’ IFDS, and DFD is calculated using the strongest skill of agents, which is a random skill for generalists. A BC D           
+
+> Communication Density Percent of Collaborators Number of Simulation Steps [log] Performance 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD 10.8 10.6 0.8 0.6 0.4 0.4 0.2 0.2 0 0 IFD DFD 10 2
+
+Figure 6: Simulation results of a system of generalists and specialists repeatedly seeking the best collaborator. Simulations using the second communication scheme, i.e. agents look for a more capable collaborator in every time step (c.f. Figure 5). Figure panels are set up as in Figure 4. This system can be in one of two possible states in terms of its performance, depending on the similarity threshold determining how similar agents must be to become collaborators and be capable of exchanging tasks. Figure 4 shows system behavior when the required similarity is too high to form hybrid collaborations, i.e. a specialist cannot communicate with a generalist, or specialists of different functions cannot communicate with each other, even though generalists can communicate with each other, similarly to specialists of the same function. When IFD and DFD are both 0, all team members are specialists of the same function, reflecting to the question of Bunderson and Sutcliffe [2002]. Figure 4 A shows that in this case the performance of the team is minimal. This is explained by the fact that agents are only able to solve the task component matching their single skill, all other components remain unsolved. Also, while all agents are identical, and as such are all collaborators (Figure 4 D), they do not exchange tasks (Figure 4 B), since communication does not bring new expertise into the team as predicted by Bunderson and Sutcliffe. Interestingly enough, performance does not increase with increasing DFD, i.e. introducing specialists of a different function, which clearly results from a lack of communication. In turn, this lack of communication is explained by the high similarity requirement disabling agents possessing different skills to communicate. An increasing IFD indicates the introduction of generalists in the team. When communication between specialists and generalists is not possible due to the high similarity threshold, agents still work individually, without communicating with each other. The increase of performance is due to generalists being able to solve all components of the task, and by increasing the ratio of generalists in the team, progressively more tasks are being solved by them. When teams are composed entirely of generalists (IFD = 1) all tasks are solved, and the time required for this drops dramatically (Figure 4 C). Notably, communication is absent even in teams composed entirely of generalists, which is explained by the fact, that each generalist alone is capable of solving any task, and hence does not require communication. It is also worth noting, that in this system DFD does not have an effect on performance, time of task processing, or communication. When a decreased similarity threshold allows for the formation of collaboration between specialists and generalists the team starts to perform well. Figure 5 shows team characteristics for the first communication scheme in which the passing of tasks occurs when an agent – in the current simulation, a specialist – gets stuck and passes their task to a generalist. For most IFD – DFD values all tasks are completely solved (Figure 5 A). However, performance is still poor when only specialists make up a team (i.e. IFD =0), since specialists of different functions are still too different to form collaborations, which blocks communication between specialists of different functions. Communication density is a non-monotonous function of IFD (Figure 5 B). In fact, communication density is highest when roughly half of the team is composed of specialists, and the other half is generalists. This is explained by a 8Role of Diversity in Team Performance A P REPRINT Percent of Collaborators Number of Simulation Steps [log] 
+
+# A BC D           
+
+> Performance 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD Communication Density 010.2 0.8 0.4 10.6 0.6 0.8 0.8 0.6 0.4 10.4 0.2 0.2 0 0 IFD DFD 10.8 10 110.6 0.8 0.6 0.4 0.4 0.2 0.2 0 0 IFD DFD 10 2
+
+Figure 7: Simulation of generalists and specialists without communication constraints between agents. The first communication scheme was used in simulations, i.e. agents only look for collaborators to communicate with when they cannot proceed with solving their task. Figure panels are set up as in Figure 4. continuously decreasing number of task passing as the number of generalists increases (data not shown), and an also decreasing amount of time need to complete all tasks (Figure 5 C). Interestingly enough, when agents repeatedly seek to find a more capable collaborator (i.e. using the second communication scheme), communication density plateaus due to a slowly decreasing number of task passing, and an initially rapidly dropping, then constant time needed to complete all tasks (Figure 6 ). When all agents are able to communicate with each other (Figure 7), most of the IFD – DFD landscape of performance remain the same as in the above cases, however, since specialists of different function can also form collaborations, when the team is composed of specialists only, an increase in DFD results in increased communication and, in turn, increased performance. 
+
+3.2 Does lack of communication degrade performance? 
+
+Most management teams, however, are not composed of pure specialists and absolute generalists. In a typical situation, each manager has some level of understanding of many functional areas. Consequently, their IFDS takes a real value between 0 and 1. Therefore, an ABM composed of agents with a distribution of skill strength values was used to simulate a team of more realistic problem solvers (Figure 1 Cb ). 
+
+Communication density Estimate SE t-statistics p-value Intercept 0.28 0.03 10.25 <0.001 IFD 0.96 0.03 34.49 <0.001 DFD -0.28 0.03 -9.01 <0.001 
+
+df = 375 adjusted R2 = 0 .77 F = 635 p < 0.001 
+
+Performance Estimate SE t-statistics p-value Intercept 40.59 1.60 25.37 <0.001 IFD 49.79 1.66 29.97 <0.001 DFD -12.62 1.85 -6.81 <0.001 
+
+df = 375 adjusted R2 = 0 .77 F = 472 p < 0.001 
+
+Table 2: Dependence of communication density and performance on IFD and DFD. Multivariate linear regression modeling results for a group of diverse agents repeatedly seeking the best collaborator. 9Role of Diversity in Team Performance A P REPRINT A
+
+> Communication Density
+
+# BC DE FG H100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 
+
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity
+
+Performance 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Communication Density Number of Simulation Steps 
+
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity
+> Performance 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 050 100 150 200 250 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+
+Percent of Collaborators 
+
+> Performance 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Individual Functional Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 100.1 0.2 0.3 0.4 0.5 0.6
+> Communication Density 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Individual Functional Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+Figure 8: Simulation results of a team of diverse agents. Skills of agents are distributed according to a Gaussian distribution. Agents use the second communication scheme, i.e. they check if a more proficient collaborator is available in every time step. Figure panels A—D are set up similarly to panels in Figure 4. E, F: Performance averaged over IFD, and DFD, respectively. G, H: Communication density averaged over IFD, and DFD, respectively. Red vertical lines indicate the range of DFD, IFD values, respectively, available to empirical study by Bunderson and Sutcliffe [2002]. Similar to the previous case of pure specialists and absolute generalists, IFD has significant influence on dependent measures. Using the second communication scheme, both the team’s performance (Figure 8 A), and the amount of communication density (Figure 8 B) increases significantly with increasing IFD (Table 2), similar to previous findings [Bunderson and Sutcliffe, 2002, Zhou et al., 2023]. 10 Role of Diversity in Team Performance A P REPRINT 
+
+Figure 9: Performance as a function of communication density. When agents repeatedly seek to find the best collaborator (second communication scheme, A), performance is significantly and strongly positively correlated with communication density ( r(376) = 0 .83 , p < 0.001 ). However, when agents only communicate when they cannot proceed with solving their task (first communication scheme, B), communication density significantly negatively correlates with performance (r(376) = −0.48 , p < 0.001 ). A major difference compared to previous simulation results, however, is that additionally to their IFD dependence, performance and communication density became DFD-dependent as well in a large range of IFD values. Specifically, both measures decrease significantly when DFD increases as empirically determined by Bunderson and Sutcliffe [2002] (Table 2). Figure 8 E & G highlight this trend by averaging performance and communication density for possible IFD values, and representing their dependence on DFD. Direct comparison of performance and communication density suggests that higher performance is related to more intensive communication, which is supported by correlation analysis showing strong and significant correlation (Figure 9 A). Changing communication style, and allowing agents to evaluate passing options only when they cannot proceed with solving their task, however, changes the communication density landscape (Figure 10). In particular, since it requires more time to complete tasks in this case relative to the previous case, communication density drops for high IFD values, resulting in a moderate and significantly negative correlation between performance and communication density (Table 3; Figure 9 B). 
+
+Communication density Estimate SE t-statistics p-value Intercept 0.74 0.04 19.22 < 0.001 IFD -0.74 0.04 -18.33 < 0.001 DFD -0.16 0.04 -3.56 < 0.001 
+
+df = 375 adjusted R2 = 0 .48 F = 175 p < 0.001 
+
+Performance Estimate SE t-statistics p-value Intercept 38.71 1.58 24.44 < 0.001 IFD 51.78 1.64 31.49 < 0.001 DFD -12.24 1.83 -6.67 < 0.001 
+
+df = 375 adjusted R2 = 0 .73 F = 518 p < 0.001 
+
+Table 3: Multivariate linear regression modeling results of agents seeking collaborator help when they cannot proceed with solving their task. 11 Role of Diversity in Team Performance A P REPRINT 
+
+3.3 Missing expertise is reflected in performance surface 
+
+Referring to contingency theory, Zhou et al. [2023] suggest that heterogeneous teams are better suited to solve unconventional and new problems than homogeneous ones. Hence, they reason that the management team of a newly founded small or medium enterprise (SME) with high level of DFD can more comprehensively understand and resolve complex issues in the current economic environment of China. They argue that compared to listed companies, new SMEs show higher uncertainty in terms of resources and rules. However, newly founded and just forming firms might face issues of missing expertise [Boeker and Wiltbank, 2005] hindering firm growth. Well-established functional diversity measures, like IFD and DFD are expected to discriminate fully competent management teams from those that lack certain key competencies, but this is not always the case. To simulate the effect of missing expertise, i.e. incomplete skill coverage, teams of agents were created in the proposed ABM using two different methods. In the first method (Figure 11 A), used in previous examples, during generation of agents, dominant functions were assigned to them such that the DFD value specified for the simulation for a given team was attained. Remaining skill values were assigned to agents randomly, independent of the skill’s index. In contrast, the skill strengths of all agents in the second method (Figure 11 B) decreased with increasing skill index, subject to the defined DFD value. These agents than possess a higher degree of similarity compared to those generated by the first method. Specifically, in this group, for low DFD every agent could perform skill #1 best, and their capabilities continuously decreased such that most of them were not competent in performing skill #9. With increasing DFD, the dominant skill of some agents was changed from skill #1 to skill #2, but skill strength distribution was not changed otherwise, it was still decreasing with increasing skill index. Using these two methods, teams of agents with identical IFD–DFD values could be created, yet their collaboration networks (Figure 11 C & D), and more importantly, their coverage of the whole knowledge base was fundamentally different. Simulations of teams of agents with missing expertise were conducted. Interestingly enough, Figure 12 A & E show that performance of these teams at low DFD values is low, but increases at high DFD. Compared to previous results (Figure 8 A & E), performance in teams of agents missing necessary expertise is low for low DFD values but surpasses the performance of more heterogeneous agents at high DFD. These simulation results resemble empirical findings by Zhou et al. [2023] in terms of exhibiting increasing performance both as a function of IFD, as well as of DFD (Table 4). 
+
+Communication density Estimate SE t-statistics p-value Intercept 0.17 0.02 8.44 <0.001 IFD 0.84 0.02 40.30 <0.001 DFD -0.01 0.02 -0.58 0.56 
+
+df = 375 adjusted R2 = 0 .81 F = 812 p < 0.001 
+
+Performance Estimate SE t-statistics p-value Intercept 18.62 1.58 11.75 <0.001 IFD 63.66 1.64 38.71 <0.001 DFD 3.36 1.84 1.83 0.06 
+
+df = 375 adjusted R2 = 0 .77 F = 472 p < 0.001 
+
+Table 4: Multivariate linear regression modeling results of a team of agents missing some necessary expertise. 
+
+3.4 Suggestion for a new measure of team diversity 
+
+The previous illustration shows that two teams of agents with identical IFD—DFD values might perform differently because their skills do not cover necessary functional requirements equally. Thus, I recommend the introduction of another measure, called Skill Diversity Index or SDI, to account for a context dependent description of functional diversity: 
+
+SDI =
+
+1 − NFunctions P
+
+> j=1
+
+s2
+
+> j
+
+!
+
+1 − 1
+
+> NFunctions
+
+(5) where sj indicates the amount of expertise all team members together have in performing function j, and NFunctions is the number of functions considered. Calculated analogously to IFD and DFD, SDI is a standardized metric with values spanning from 0 to 1. It assesses the distribution of skills across the entire team, with lower SDI values signifying a restricted range of function coverage, while SDI near 1 indicates that all functions are equally well-addressed. For 12 Role of Diversity in Team Performance A P REPRINT 
+
+example, Figure 13 shows an example of SDI difference for two sets of teams created by the two methods described in the previous section. Performance Communication Density Number of Simulation Steps to Complete Ratio of Collaborators 
+
+# A BC DE FG H  
+
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 050 100 150 200 250 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+> Performance 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Performance 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Individual Functional Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+> Communication Density Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 10.2 0.3 0.4 0.5 0.6
+> Communication Density 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+> Individual Functional Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+Figure 10: Simulation results of a team of agents seeking the best solver only when they cannot proceed with solving the task assigned to them. Simulation results might be compared with an analogous system represented in Figure 8. 
+
+4 Discussion 
+
+This study introduces an agent-based model comprising agents, representing problem solvers or management team members, and tasks, representing projects composed of various functions. By analyzing increasingly complex scenarios using this model, we uncover a potential explanation for the contradictory empirical findings of Bunderson and Sutcliffe [2002] and Zhou et al. [2023] regarding DFD and management team performance. Additionally, we propose a novel metric, the Skill Diversity Index, to measure the extent to which team members collectively possess the skill sets required for effective management. 13 Role of Diversity in Team Performance A P REPRINT 
+
+Specifically, we showed that generalists, i.e. team members with a broad range of functional experience, or a team composed of such generalists are more capable of solving a set of tasks than functional specialists. Based on analysis of the presented ABM, the reason for this is two-fold. On one hand, the broad functional experience of generalists allows them to find an aspect of the task at hand they are able to work on, and can more often proceed with solving it than specialists who are often blocked by not being able to find a task matching their skills. On the other hand, generalists are more similar to each other than specialists of different functions, and thus communicate easier with each other than dissimilar specialists. Indeed, while the possibility of a “double-edged sword” [Ma et al., 2021, Milliken and Martins, 1996] exists, most literature agree that a higher level of IFD corresponds to improved information sharing, and allows teams to be less susceptible to decision-making biases [Cannella et al., 2008, Smith et al., 2006]. However, considering a more thorough exploration of the role of knowledge depth and knowledge width [Mannucci and Yong, 2018], one might argue that higher IFD means that team members have spent less time performing individual functions, which makes it less likely that they have a deep understanding of the functions they have performed, resulting in superficial and unprofessional decision-making. In the model we accounted for this effect by normalizing skill vectors, which results in generalists being slower in solving specific functions than specialists. However – in the current simulations at least – communication advantages, and the broad knowledge base possessed by generalist outweigh their slowness in task processing. Computational modeling allows for testing hypothesis regarding a specific component of a large system while keeping other components constant, a difficult scenario in empirical hypothesis testing. For example, we implemented two procedures by which agents might exchange information: in the first method agents communicate only if they need help because they cannot proceed with solving their task, while in the second, they constantly check for a more capable collaborator and if they find one, pass their task to them for further processing. Comparing these two ways of communication without modifying other aspects of the model yields interesting results: depending on the communication scheme, increased amount of communication might not always increase performance. Using the second communication scheme, when agents repeatedly evaluate the possibility of passing their task, increasing IFD increases communication (Figure 8 B) by introducing agents possessing wider range of functional diversity. Since these agents are better in solving problems, performance increases, giving rise to a positive correlation between communication and performance (Figure 9 A). Contrary to this, in a team of agents using the first communication scheme – agents only communicate when they cannot further proceed with solving their task – the amount of communication decreases with increasing IFD (Figure 10), since agents with a broader range of functional diversity most likely can proceed with their task and hence do not require communication. Thus, in this case there is a negative correlation between communication and performance (Figure 9 B). Indeed, while information sharing is generally found to positively predict team performance [Mesmer-Magnus and DeChurch, 2009], some studies suggest that positive impact of information sharing is not always the case [Xiao et al., 2016]. Another goal of this study was to elaborate on the role DFD plays in influencing team performance. In terms of the effect of DFD on team performance, the literature is less unanimous than in the case of IFD. Evaluation of different effects of DFD has a long history with empirical research studying its connection with innovation [Bantel and Jackson, 1989] or consensus, and conflict [Knight et al., 1999]. Most importantly, studies show that the effect of DFD depends on multiple factors and could influence near-term and long-term performance differently [Hambrick et al., 1996, Murray, 1989]. In particular, homogeneous management teams interact more effectively, but heterogeneous teams better facilitate adaptation and mitigate “group thinking” [Cannella et al., 2008]. Conversely, high DFD means strong path dependence, which might increase conflict and makes communication difficult [O’Reilly III et al., 1989, Stewart, 2006, Williams and O’Reilly III, 1998]. Performance might have different types of dependence on DFD due to differences in moderator variables, such as location, company size, date and method of data collection, etc. Also, the way performance is measured might largely influence experimental outcome. Indeed, there are considerable differences between the studies by Bunderson and Sutcliffe [2002], and Zhou et al. [2023] in terms of both the moderator variables and the performance measurement methodology. For example, while Bunderson and Sutcliffe [2002] studied 44 business unit management teams in a Fortune 100 consumer products company in the United States, with top management teams (TMTs) of about 11 members in the early 2000s, Zhou et al. [2023] examined 762 small- and medium-sized Chinese enterprises 20 years later, that were founded less than eight years prior to their research, having TMTs of two to five members. Also, Bunderson and Sutcliffe measured performance via a single variable, the profitability of the business unit, while Zhou et al. followed a multidimensional approach and recorded ten items to calculate firm performance. Nevertheless, computational modeling can be used to fix many of the confounding factors and analyze the effect of a single variable independently. In the presented comparison all conditions were fixed, except for the coverage of necessary functions by the team’s overall skill set. Computer simulations showed that this difference resulted in an opposite DFD dependence of performance. In fact, a comparison of Figures 8 A and 12 A shows that for moderate IFD, and low DFD values, the performance is lower when skills are missing (Figure 12 A) compared to the case when all 14 Role of Diversity in Team Performance A P REPRINT Agent's IFDS 0.65 0.65 0.74 0.56 0.82 0.48 0.91 0.40 0.99 0.31 
+
+> DFD=0.79 | IFD=0.65 Mixed skill distribution
+
+Agent's ID 1 2 3 45678910 
+
+> Skill strength
+> DFD=0.79 | IFD=0.65
+> Skill #1 Skill #2 Skill #3 Skill #4 Skill #5 Skill #6 Skill #7 Skill #8 Skill #9
+> Sequential skill distribution
+
+# ABCD0123456789
+
+Agent's IFDS 0.65 0.65 0.74 0.56 0.82 0.48 0.91 0.40 0.99 0.31 
+
+Agent's ID 1 2 3 45678910 
+
+Agent's ID 1 2 3 45678910 
+
+> Agent's ID
+
+12345678910 
+
+Distance between agents 0246810 12 14 
+
+Agent's ID 1 2 3 45678910 
+
+> Agent's ID
+
+12345678910 
+
+> Skill strength
+
+0123456789
+
+Figure 11: Teams of agents exemplifying missing expertise. Two teams of agents with identical diversity measures (IF D = 0 .65 , DF D = 0 .79 ), but different coverage of necessary function set were generated to study performance and communication pattern differences. A: after skill strength values are generated, the type of skill is randomly assigned to agents. B: in this group of agents skill type is assigned to agents in a strictly increasing order. Note that in this group skills #5 and up are very weakly represented compared to the team shown in panel A. C, D: Distance between agents determining communication for the team shown in A and B, respectively. necessary functions are covered by the team’s skill set (Figure 8 A). As DFD increases, however, the tendency changes and teams with missing skills perform better, due to increased communication capability (c.f. Figures 8 B and 12 B). As previously mentioned, while projection type operations are valuable for reducing data dimensionality, their use carries inherent risks. This applies specifically to the maximum function used in defining DFD. Bunderson and Sutcliffe [2002] outline DFD’s link to a team’s ability to handle essential functions: “The extent to which the dominant functions of a team’s members are evenly distributed across all the relevant functions is viewed as an indication of the team’s breadth and balance of knowledge and expertise related to running all aspects of an organization” However, our computer simulations revealed that DFD values alone do not determine skill coverage. They solely indicate which function a team member dominates without considering their depth of knowledge in that area. To bridge this gap in characterizing performance-oriented problem-solving teams, we proposed a new metric – the Skill Diversity Index – to evaluate how comprehensively a team collectively covers the necessary functions for operating an organization in its entirety. 15 Role of Diversity in Team Performance A P REPRINT A BC DE FG H
+
+Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity Performance 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Communication Density 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Number of Simulation Steps 
+
+Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 050 100 150 200 250 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Individual Functional Diversity 100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 Percent of Collaborators 
+
+Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+> Performance
+
+100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 
+
+> Performance
+
+100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 
+
+Individual Functional Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+Dominant Function Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+> Communication Density
+
+00.1 0.2 0.3 0.4 0.5 0.6 0.7 
+
+> Communication Density
+
+100.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 
+
+Individual Functional Diversity 00.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+Figure 12: Simulation results for a team of agents that do not fully cover the range of required expertise. Performance in these teams increase with DFD (c.f. Figure 8). Contemporary technology facilitates the swift gathering and analysis of extensive empirical data. The array of computational tools and data-sharing platforms available allows researchers to circumvent unnecessary simplification of multivariate data and present it in a more comprehensive manner than ever before. This study aimed to emphasize the significance of nuanced aspects, such as the distribution of skills among members of management teams, which, despite being collected, frequently vanish during the data analysis process. Additionally, it underscored the value of leveraging agent-based modeling, and defined a new measure of functional diversity with its help. 16 Role of Diversity in Team Performance A P REPRINT Dominant Function Diversity Individual Functional Diversity 
+
+> Skill Diversity Index Difference
+
+00.05 0.1 0.15 000.9 0.9 10.1 0.1 0.2 0.2 0.3 0.3 0.4 0.4 0.5 0.5 0.6 0.6 0.7 0.7 0.8 0.8 
+
+Figure 13: Difference of skill coverage for teams of equal IFD and DFD. Skill diversity indices were calculated for teams composed of agents with randomly distributed, as well as sequentially distributed skill types, and their difference plotted as a function of IFD and DFD. 
+
+References 
+
+Donald C. Hambrick and Phyllis A. Mason. Upper Echelons: The Organization as a Reflection of Its Top Managers. 
+
+Academy of Management Review , 9(2):193–206, April 1984. ISSN 0363-7425. doi:10.5465/amr.1984.4277628. URL https://doi.org/10.5465/amr.1984.4277628 . Publisher: Academy of Management. Karen A. Jehn, Gregory B. Northcraft, and Margaret A. Neale. Why Differences Make a Difference: A Field Study of Diversity, Conflict and Performance in Workgroups. Administrative Science Quarterly , 44(4):741–763, December 1999. ISSN 0001-8392. doi:10.2307/2667054. URL https://journals.sagepub.com/doi/abs/10.2307/ 2667054 . Publisher: SAGE Publications Inc. Daan van Knippenberg, Carsten K. W. De Dreu, and Astrid C. Homan. Work Group Diversity and Group Performance: An Integrative Model and Research Agenda. Journal of Applied Psychology , 89(6):1008–1022, December 2004. ISSN 1939-1854, 0021-9010. doi:10.1037/0021-9010.89.6.1008. URL http://doi.apa.org/getdoi.cfm?doi= 10.1037/0021-9010.89.6.1008 .Mohammed Aboramadan. Top management teams characteristics and firms performance: literature review and avenues for future research. International Journal of Organizational Analysis , 29(3):603–628, May 2021. ISSN 1934-8835, 1934-8835. doi:10.1108/IJOA-02-2020-2046. URL https://www.emerald.com/insight/content/doi/10. 1108/IJOA-02-2020-2046/full/html .Katherine Y Williams and Charles A O’Reilly III. Demography and Diversity in Organizations: A Review of 40 Years of Research. Research in organizational behavior , 20:77–140, January 1998. Albert A. Cannella, Jong-Hun Park, and Ho-Uk Lee. Top Management Team Functional Background Diversity and Firm Performance: Examining the Roles of Team Member Colocation and Environmental Uncertainty. The Academy of Management Journal , 51(4):768–784, 2008. ISSN 00014273. URL http://www.jstor.org/stable/20159538 .Publisher: Academy of Management. Ken G. Smith, Ken A. Smith, Judy D. Olian, Henry P. Sims, Douglas P. O’Bannon, and Judith A. Scully. Top Management Team Demography and Process: The Role of Social Integration and Communication. Administrative Science Quarterly , 39(3):412, September 1994. ISSN 00018392. doi:10.2307/2393297. URL https://www.jstor. org/stable/2393297?origin=crossref .Donna Marie De Carolis, Barrie E. Litzky, and Kimberly A. Eddleston. Why Networks Enhance the Progress of New Venture Creation: The Influence of Social Capital and Cognition. Entrepreneurship Theory and Practice , 33(2): 17 Role of Diversity in Team Performance A P REPRINT 
+
+527–545, March 2009. ISSN 1042-2587. doi:10.1111/j.1540-6520.2009.00302.x. URL https://doi.org/10. 1111/j.1540-6520.2009.00302.x . Publisher: SAGE Publications Inc. Susan E Jackson. The Consequences of Diversity in Multidisciplinary Work Teams. In Handbook of work group psychology , page 25. John Wiley & Sons Ltd, UK, 1st edition, 1996. ISBN 0471957909. J Stuart Bunderson and Kathleen M Sutcliffe. Comparing alternative conceptualizations of functional diversity in management teams: Process and performance effects. Academy of Management Journal , 45(5):875–893, 2002. Fabian Homberg and Hong T. M. Bui. Top Management Team Diversity: A Systematic Review. Group & Organization Management , 38(4):455–479, August 2013. ISSN 1059-6011, 1552-3993. doi:10.1177/1059601113493925. URL 
+
+http://journals.sagepub.com/doi/10.1177/1059601113493925 .Lulu Zhou, Haiyan Huang, Xiaolin Chen, and Feng Tian. Functional diversity of top management teams and firm performance in SMEs: a social network perspective. Review of Managerial Science , 17:259–286, January 2023. ISSN 1863-6683, 1863-6691. doi:10.1007/s11846-022-00524-w. URL https://link.springer.com/10.1007/ s11846-022-00524-w .Lu Hong and Scott E. Page. Groups of diverse problem solvers can outperform groups of high-ability problem solvers. 
+
+Proceedings of the National Academy of Sciences , 101(46):16385–16389, November 2004. ISSN 0027-8424, 1091-6490. doi:10.1073/pnas.0403723101. URL https://pnas.org/doi/full/10.1073/pnas.0403723101 .Wan-Jing Chang. Differential effects of knowledge diversity on team innovation: An agent-based model-ing. In 2012 International Conference on Innovation Management and Technology Research , pages 179– 182, Malacca, Malaysia, May 2012. IEEE. ISBN 978-1-4673-0654-6 978-1-4673-0655-3 978-1-4673-0653-9. doi:10.1109/ICIMTR.2012.6236384. URL http://ieeexplore.ieee.org/document/6236384/ .Farnaz Motamediyan Dehkordi, Anthony Thompson, and Tobias Larsson. Impacts of project-overload on innovation inside organizations: agent-based modeling. International Journal of Social, Behavioral, Educational, Economic, Business and Industrial Engineering , 6(11):2808–2813, 2012. Sean D. Vermillion and Richard J. Malak. Using a Principal-Agent Model to Investigate Delegation in Systems Engineering. In Volume 1B: 35th Computers and Information in Engineering Conference , page V01BT02A046, Boston, Massachusetts, USA, August 2015. American Society of Mechanical Engineers. ISBN 978-0-7918-5705-2. doi:10.1115/DETC2015-47778. URL https://asmedigitalcollection.asme.org/IDETC-CIE/ proceedings/IDETC-CIE2015/57052/Boston,%20Massachusetts,%20USA/256959 .João Ventura Fernandes, Elsa Henriques, Arlindo Silva, and César Pimentel. Modelling the dynamics of complex early design processes: an agent-based approach. Design Science , 3:e19, 2017. ISSN 2053-4701. doi:10.1017/dsj.2017.17. URL https://www.cambridge.org/core/product/identifier/ S2053470117000178/type/journal_article .S. Taylor. Agent-based Modeling and Simulation . OR Essentials. Palgrave Macmillan UK, 2014. ISBN 978-1-137-45364-8. URL https://books.google.hu/books?id=UFlvBAAAQBAJ .Yan Jin and Raymond E. Levitt. The virtual design team: A computational model of project organizations. 
+
+Computational and Mathematical Organization Theory , 2(3):171–195, 1996. ISSN 1381-298X, 1572-9346. doi:10.1007/BF00127273. URL http://link.springer.com/10.1007/BF00127273 .Jose A Rojas-Villafane. An Agent-based Model of Team Coordination and Performance . Doctoral Dissertation, Florida International University, May 2010. URL https://digitalcommons.fiu.edu/etd/250 .Maksim Tsvetovat and Kathleen M Carley. Modeling Complex Socio-technical Systems using Multi-Agent Simulation Methods. Künstliche Intelligenz , 18(2):23–28, 2004. N.R. Jennings. Controlling cooperative problem solving in industrial multi-agent systems using joint intentions. 
+
+Artificial Intelligence , 75(2):195–240, June 1995. ISSN 00043702. doi:10.1016/0004-3702(94)00020-2. URL 
+
+https://linkinghub.elsevier.com/retrieve/pii/0004370294000202 .M. Tambe. Towards Flexible Teamwork. Journal of Artificial Intelligence Research , 7:83–124, September 1997. ISSN 1076-9757. doi:10.1613/jair.433. URL https://jair.org/index.php/jair/article/view/10193 .John Yen, Jianwen Yin, Thomas R Ioerger, Michael S Miller, Dianxiang Xu, and Richard A Volz. CAST: Collaborative agents for simulating teamwork. In International Joint Conference on Artificial Intelligence , volume 17, pages 1135–1144. Lawrence Erlbaum Associates LTD, 2001. ISBN 1045-0823. Issue: 1. Marija Majda Periši´ c, Tomislav Martinec, Mario Štorga, Tadej Kanduˇ c, et al. Agent-based simulation framework to support management of teams performing development activities. In DS 84: Proceedings of the DESIGN 2016 14th International Design Conference , volume Sociotechnical Issues In Design of Design , pages 1925–1936, Dubrovnik, Hrvatska, 2016. 18 Role of Diversity in Team Performance A P REPRINT 
+
+Eric Bonabeau. Agent-based modeling: Methods and techniques for simulating human systems. Proceed-ings of the National Academy of Sciences , 99(suppl_3):7280–7287, May 2002. ISSN 0027-8424, 1091-6490. doi:10.1073/pnas.082080899. URL https://pnas.org/doi/full/10.1073/pnas.082080899 .Xiaocong Fan and John Yen. Modeling and simulating human teamwork behaviors using intelligent agents. Physics of Life Reviews , 1(3):173–201, December 2004. ISSN 1571-0645. doi:10.1016/j.plrev.2004.10.001. URL http: //www.scopus.com/inward/record.url?scp=10844262719&partnerID=8YFLogxK .Stella M. Nkomo, Myrtle P. Bell, Laura Morgan Roberts, Aparna Joshi, and Sherry M. B. Thatcher. Diversity at a Critical Juncture: New Theories for a Complex Phenomenon. Academy of Management Review , 44(3):498–517, July 2019. ISSN 0363-7425, 1930-3807. doi:10.5465/amr.2019.0103. URL http://journals.aom.org/doi/10. 5465/amr.2019.0103 .J. P. Walsh. Selectivity and selective perception: An investigation of managers’ belief structure and information processing. Academy of Management Journal , 31(4):873–896, December 1988. ISSN 0001-4273, 1948-0989. doi:10.2307/256343. URL http://amj.aom.org/cgi/doi/10.2307/256343 .Albert O. Hirschman. The Paternity of an Index. The American Economic Review , 54(5):761, 1964. URL http: //www.jstor.org/stable/1818582 .Warren Boeker and Robert Wiltbank. New Venture Evolution and Managerial Capabilities. Organization Science , 16 (2):123–133, April 2005. ISSN 1047-7039, 1526-5455. doi:10.1287/orsc.1050.0115. URL https://pubsonline. informs.org/doi/10.1287/orsc.1050.0115 .Changlong Ma, Yuhui Ge, and Jingwei Wang. Top Management Team Intrapersonal Functional Diversity and Adaptive Firm Performance: The Moderating Roles of the CEO–TMT Power Gap and Severity of Threat. Frontiers in Psychology , 12:772739, December 2021. ISSN 1664-1078. doi:10.3389/fpsyg.2021.772739. URL https: //www.frontiersin.org/articles/10.3389/fpsyg.2021.772739/full .Frances J. Milliken and Luis L. Martins. Searching for Common Threads: Understanding the Multiple Effects of Diversity in Organizational Groups. The Academy of Management Review , 21(2):402–433, 1996. ISSN 03637425. doi:10.2307/258667. URL http://www.jstor.org/stable/258667 . Publisher: Academy of Management. Anne Smith, Susan M. Houghton, Jacqueline N. Hood, and Joel A. Ryman. Power relationships among top managers: Does top management team power distribution matter for organizational performance? Journal of Business Research ,59(5):622–629, May 2006. ISSN 01482963. doi:10.1016/j.jbusres.2005.10.012. URL https://linkinghub. elsevier.com/retrieve/pii/S0148296305001670 .Pier Vittorio Mannucci and Kevyn Yong. The Differential Impact of Knowledge Depth and Knowledge Breadth on Creativity over Individual Careers. Academy of Management Journal , 61(5):1741–1763, October 2018. ISSN 0001-4273, 1948-0989. doi:10.5465/amj.2016.0529. URL http://journals.aom.org/doi/10.5465/amj.2016. 0529 .Jessica R. Mesmer-Magnus and Leslie A. DeChurch. Information sharing and team performance: A meta-analysis. 
+
+Journal of Applied Psychology , 94(2):535–546, 2009. ISSN 1939-1854, 0021-9010. doi:10.1037/a0013773. URL 
+
+http://doi.apa.org/getdoi.cfm?doi=10.1037/a0013773 .Yazhen Xiao, Haisu Zhang, and Timothy M. Basadur. Does information sharing always improve team decision making? An examination of the hidden profile condition in new product development. Journal of Business Research , 69(2):587–595, February 2016. ISSN 01482963. doi:10.1016/j.jbusres.2015.05.014. URL https: //linkinghub.elsevier.com/retrieve/pii/S0148296315002258 .Karen A. Bantel and Susan E. Jackson. Top management and innovations in banking: Does the composition of the top team make a difference? Strategic Management Journal , 10(S1):107–124, 1989. ISSN 01432095, 10970266. doi:10.1002/smj.4250100709. URL https://onlinelibrary.wiley.com/doi/10.1002/smj.4250100709 .Don Knight, Craig L. Pearce, Ken G. Smith, Judy D. Olian, Henry P. Sims, Ken A. Smith, and Patrick Flood. Top management team diversity, group process, and strategic consensus. Strategic Management Journal , 20 (5):445–465, May 1999. ISSN 0143-2095, 1097-0266. doi:10.1002/(SICI)1097-0266(199905)20:5<445::AID-SMJ27>3.0.CO;2-V. URL https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-0266(199905) 20:5<445::AID-SMJ27>3.0.CO;2-V .Donald C. Hambrick, Theresa Seung Cho, and Ming-Jer Chen. The Influence of Top Management Team Heterogeneity on Firms’ Competitive Moves. Administrative Science Quarterly , 41(4):659, December 1996. ISSN 00018392. doi:10.2307/2393871. URL https://www.jstor.org/stable/2393871?origin=crossref .Alan I. Murray. Top Management Group Heterogeneity and Firm Performance. Strategic Management Journal , 10: 125–141, 1989. URL http://www.jstor.org/stable/2486586 .19 Role of Diversity in Team Performance A P REPRINT 
+
+Charles A. O’Reilly III, David F. Caldwell, and William P. Barnett. Work Group Demography, Social Integration, and Turnover. Administrative Science Quarterly , 34(1):21, March 1989. ISSN 00018392. doi:10.2307/2392984. URL 
+
+https://www.jstor.org/stable/2392984?origin=crossref .Greg L. Stewart. A Meta-Analytic Review of Relationships Between Team Design Features and Team Performance. 
+
+Journal of Management , 32(1):29–55, February 2006. ISSN 0149-2063, 1557-1211. doi:10.1177/0149206305277792. URL http://journals.sagepub.com/doi/10.1177/0149206305277792 .20

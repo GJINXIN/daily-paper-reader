@@ -6,71 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-26
-- 运行时间：2026-04-26 20:32:02 UTC
+- 最新运行日期：2026-04-27
+- 运行时间：2026-04-27 20:07:34 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 17 篇论文，深度剖析 LLM 智能体在社交网络与博弈对抗中展现的复杂
-- 详情：[/202604/26/README](/202604/26/README)
+今日深度复盘 17 篇多智能体前沿论文，重点攻克了群体智能评估与团队多样性对效能影响的核心课题。
+研究指出 Superminds Test 为衡量智能体社会协作提供了新标准，并量化证明了多元化背景在复杂任务中不可替代的价值。
+建议优先关注智能体如何通过自我进化框架实现技能闭环，把握 AI 从单兵作战向社会化协作演进的技术趋势。
+- 详情：[/202604/27/README](/202604/27/README)
 
 ### 精读区论文标签
-1. [Trust, Lies, and Long Memories: Emergent Social Dynamics and Reputation in Multi-Round Avalon with LLM Agents](/202604/26/2604.20582v1-trust-lies-and-long-memories-emergent-social-dynamics-and-reputation-in-multi-round-avalon-with-llm-agents)  
+1. [Superminds Test: Actively Evaluating Collective Intelligence of Agent Society via Probing Agents](/202604/27/2604.22452v1-superminds-test-actively-evaluating-collective-intelligence-of-agent-society-via-probing-agents)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：多轮LLM智能体博弈中的涌现社会动态与声誉
-2. [AI-Gram: When Visual Agents Interact in a Social Network](/202604/26/2604.21446v1-ai-gram-when-visual-agents-interact-in-a-social-network)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：社交网络中的大模型驱动智能体以研究社会动态
-3. [Debating the Unspoken: Role-Anchored Multi-Agent Reasoning for Half-Truth Detection](/202604/26/2604.19005v1-debating-the-unspoken-role-anchored-multi-agent-reasoning-for-half-truth-detection)  
+   evidence：评估大规模智能体社会中的集体智能
+2. [Role of diversity in team performance: the case of missing expertise, an agent based simulation](/202604/27/2604.21328v1-role-of-diversity-in-team-performance-the-case-of-missing-expertise-an-agent-based-simulation)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：用于事实核查和半真半假信息检测的多智能体辩论
-4. [Multi-Agent Empowerment and Emergence of Complex Behavior in Groups](/202604/26/2604.21155v1-multi-agent-empowerment-and-emergence-of-complex-behavior-in-groups)  
+   evidence：团队绩效和社会系统多样性的基于智能体模拟
+3. [Learning to Communicate: Toward End-to-End Optimization of Multi-Agent Language Systems](/202604/27/2604.21794v1-learning-to-communicate-toward-end-to-end-optimization-of-multi-agent-language-systems)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体群体中复杂行为的涌现
-5. [The Platform Is Mostly Not a Platform: Token Economies and Agent Discourse on Moltbook](/202604/26/2604.21295v1-the-platform-is-mostly-not-a-platform-token-economies-and-agent-discourse-on-moltbook)  
+   evidence：多智能体语言系统优化与智能体间通信
+4. [Multi-Agent Consensus as a Cognitive Bias Trigger in Human-AI Interaction](/202604/27/2604.22277v1-multi-agent-consensus-as-a-cognitive-bias-trigger-in-human-ai-interaction)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：分析AI代理平台上的代理话语和社会功能
-6. [Memory Centric Power Allocation for Multi-Agent Embodied Question Answering](/202604/26/2604.17810v1-memory-centric-power-allocation-for-multi-agent-embodied-question-answering)  
+   evidence：多智能体共识与触发认知偏差的社会动态
+5. [CADMAS-CTX: Contextual Capability Calibration for Multi-Agent Delegation](/202604/27/2604.17950v1-cadmas-ctx-contextual-capability-calibration-for-multi-agent-delegation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体具身问答与前向模拟
+   evidence：多智能体委派的上下文能力校准
+6. [EvoAgent: An Evolvable Agent Framework with Skill Learning and Multi-Agent Delegation](/202604/27/2604.20133v1-evoagent-an-evolvable-agent-framework-with-skill-learning-and-multi-agent-delegation)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体委派与技能学习框架
 
 ### 速读区论文标签
-1. [Understanding the Mechanism of Altruism in Large Language Models](/202604/26/2604.19260v1-understanding-the-mechanism-of-altruism-in-large-language-models)  
+1. [EvoAgent: An Evolvable Agent Framework with Skill Learning and Multi-Agent Delegation](/202604/27/2604.20133v2-evoagent-an-evolvable-agent-framework-with-skill-learning-and-multi-agent-delegation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：LLM 中的利他主义和社会行为机制
-2. [Mesh Memory Protocol: Semantic Infrastructure for Multi-Agent LLM Systems](/202604/26/2604.19540v1-mesh-memory-protocol-semantic-infrastructure-for-multi-agent-llm-systems)  
+   evidence：多智能体委派与分层子智能体框架
+2. [Learning to Evolve: A Self-Improving Framework for Multi-Agent Systems via Textual Parameter Graph Optimization](/202604/27/2604.20714v1-learning-to-evolve-a-self-improving-framework-for-multi-agent-systems-via-textual-parameter-graph-optimization)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体LLM系统中的认知协作
-3. [TeamFusion: Supporting Open-ended Teamwork with Multi-Agent Systems](/202604/26/2604.19589v1-teamfusion-supporting-open-ended-teamwork-with-multi-agent-systems)  
+   evidence：多智能体系统的自我改进框架
+3. [Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models](/202604/27/2604.21896v1-nemobot-games-crafting-strategic-ai-gaming-agents-for-interactive-learning-with-large-language-models)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于团队合作和调解多元观点的多智能体系统
-4. [Information Aggregation with AI Agents](/202604/26/2604.20050v1-information-aggregation-with-ai-agents)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：AI智能体在预测市场中对他人的推理
-5. [A Multi-Agent Approach for Claim Verification from Tabular Data Documents](/202604/26/2604.17225v1-a-multi-agent-approach-for-claim-verification-from-tabular-data-documents)  
+   evidence：大模型驱动的策略游戏与交互式学习智能体
+4. [Co-evolving Agent Architectures and Interpretable Reasoning for Automated Optimization](/202604/27/2604.17708v1-co-evolving-agent-architectures-and-interpretable-reasoning-for-automated-optimization)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于文档声明验证的多智能体框架
-6. [Transparent and Controllable Recommendation Filtering via Multimodal Multi-Agent Collaboration](/202604/26/2604.17459v1-transparent-and-controllable-recommendation-filtering-via-multimodal-multi-agent-collaboration)  
+   evidence：协同进化的智能体架构与推理个体种群
+5. [Scalable Neighborhood-Based Multi-Agent Actor-Critic](/202604/27/2604.18190v1-scalable-neighborhood-based-multi-agent-actor-critic)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于内容过滤的多模态多智能体协作
-7. [Gated Coordination for Efficient Multi-Agent Collaboration in Minecraft Game](/202604/26/2604.18975v1-gated-coordination-for-efficient-multi-agent-collaboration-in-minecraft-game)  
+   evidence：可扩展的基于邻域的多智能体演员-评论家算法
+6. [ClawEnvKit: Automatic Environment Generation for Claw-Like Agents](/202604/27/2604.18543v1-clawenvkit-automatic-environment-generation-for-claw-like-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：开放世界游戏中的多智能体协作门控协调机制
-8. [Rethinking Scale: Deployment Trade-offs of Small Language Models under Agent Paradigms](/202604/26/2604.19299v1-rethinking-scale-deployment-trade-offs-of-small-language-models-under-agent-paradigms)  
+   evidence：用于智能体训练与评估的环境自动生成
+7. [SynAgent: Generalizable Cooperative Humanoid Manipulation via Solo-to-Cooperative Agent Synergy](/202604/27/2604.18557v1-synagent-generalizable-cooperative-humanoid-manipulation-via-solo-to-cooperative-agent-synergy)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体协作范式
-9. [LiDAR-based Crowd Navigation with Visible Edge Group Representation](/202604/26/2604.16741v1-lidar-based-crowd-navigation-with-visible-edge-group-representation)  
+   evidence：人形机器人操作的多智能体协作
+8. [Mango: Multi-Agent Web Navigation via Global-View Optimization](/202604/27/2604.18779v1-mango-multi-agent-web-navigation-via-global-view-optimization)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：多智能体网页导航与全局视图优化
+9. [WebUncertainty: Dual-Level Uncertainty Driven Planning and Reasoning For Autonomous Web Agent](/202604/27/2604.17821v2-webuncertainty-dual-level-uncertainty-driven-planning-and-reasoning-for-autonomous-web-agent)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：拥挤环境中的社交感知机器人导航
-10. [Visual Inception: Compromising Long-term Planning in Agentic Recommenders via Multimodal Memory Poisoning](/202604/26/2604.16966v1-visual-inception-compromising-long-term-planning-in-agentic-recommenders-via-multimodal-memory-poisoning)  
+   evidence：用于复杂规划与推理的自主智能体框架
+10. [LiteResearcher: A Scalable Agentic RL Training Framework for Deep Research Agent](/202604/27/2604.17931v1-literesearcher-a-scalable-agentic-rl-training-framework-for-deep-research-agent)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：针对智能体推荐系统记忆的对抗性攻击
-11. [Seeing Isn't Believing: Mitigating Belief Inertia via Active Intervention in Embodied Agents](/202604/26/2604.17252v1-seeing-isnt-believing-mitigating-belief-inertia-via-active-intervention-in-embodied-agents)  
+   evidence：用于研究型智能体的可扩展强化学习训练框架
+11. [LiteResearcher: A Scalable Agentic RL Training Framework for Deep Research Agent](/202604/27/2604.17931v2-literesearcher-a-scalable-agentic-rl-training-framework-for-deep-research-agent)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：LLM智能体在环境交互中管理内部信念
+   evidence：虚拟世界中的智能体强化学习训练
 
 
 <div class="dpr-home-promo-card">

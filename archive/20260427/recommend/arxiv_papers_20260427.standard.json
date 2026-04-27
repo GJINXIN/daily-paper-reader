@@ -1,0 +1,670 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-27T20:05:19.881861+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 9,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 20,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.22452v1",
+      "title": "Superminds Test: Actively Evaluating Collective Intelligence of Agent Society via Probing Agents",
+      "abstract": "Collective intelligence refers to the ability of a group to achieve outcomes beyond what any individual member can accomplish alone. As large language model agents scale to populations of millions, a key question arises: Does collective intelligence emerge spontaneously from scale? We present the first empirical evaluation of this question in a large-scale autonomous agent society. Studying MoltBook, a platform hosting over two million agents, we introduce Superminds Test, a hierarchical framework that probes society-level intelligence using controlled Probing Agents across three tiers: joint reasoning, information synthesis, and basic interaction. Our experiments reveal a stark absence of collective intelligence. The society fails to outperform individual frontier models on complex reasoning tasks, rarely synthesizes distributed information, and often fails even trivial coordination tasks. Platform-wide analysis further shows that interactions remain shallow, with threads rarely extending beyond a single reply and most responses being generic or off-topic. These results suggest that collective intelligence does not emerge from scale alone. Instead, the dominant limitation of current agent societies is extremely sparse and shallow interaction, which prevents agents from exchanging information and building on each other's outputs.",
+      "authors": [
+        "Xirui Li",
+        "Ming Li",
+        "Yunze Xiao",
+        "Ryan Wong",
+        "Dianqi Li",
+        "Timothy Baldwin",
+        "Tianyi Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-04-24T11:11:36+00:00",
+      "link": "https://arxiv.org/pdf/2604.22452v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "evaluating collective intelligence in large-scale agent societies",
+      "llm_evidence_cn": "评估大规模智能体社会中的集体智能",
+      "llm_evidence": "评估大规模智能体社会中的集体智能",
+      "canonical_evidence": "评估大规模智能体社会中的集体智能",
+      "llm_tldr_en": "Evaluates emergent collective intelligence in a platform hosting millions of autonomous agents.",
+      "llm_tldr_cn": "评估了拥有数百万自主智能体的平台中涌现的集体智能。",
+      "llm_tldr": "评估了拥有数百万自主智能体的平台中涌现的集体智能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.21328v1",
+      "title": "Role of diversity in team performance: the case of missing expertise, an agent based simulation",
+      "abstract": "Theory and empirical research on management teams' influence on firm performance have witnessed continuous development, and by now incorporate numerous details. Classic, experiment-based studies examining social systems collect vast amount of data, but often times investigate only the first one or two modes of the distribution of measured variables, and experience difficulty in analyzing the effect of context. For example, in functional diversity research, management teams are described by measures incorporating complex distributions of capabilities of individual managers and teams of managers. To investigate the effect of hidden distributions, and the effect of functional diversity composition on team communication and performance, we developed an agent-based model, and conducted a series of simulation experiments. Modeling results show that depending on the context, such as communication scheme among interacting agents, or their functional composition, intrapersonal functional diversity (IFD), and dominant function diversity (DFD) might enhance or reduce performance and communication among agents. Furthermore, simulation results also suggest that a third measure is required alongside IFD and DFD capturing the aggregate expertise of the team to comprehensively account for empirical findings.",
+      "authors": [
+        "Tamás Kiss"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "physics.soc-ph"
+      ],
+      "published": "2026-04-23T06:32:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.21328v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "agent based simulation of team performance and social system diversity",
+      "llm_evidence_cn": "团队绩效和社会系统多样性的基于智能体模拟",
+      "llm_evidence": "团队绩效和社会系统多样性的基于智能体模拟",
+      "canonical_evidence": "团队绩效和社会系统多样性的基于智能体模拟",
+      "llm_tldr_en": "Uses agent-based simulation to investigate the impact of functional diversity on team communication and performance.",
+      "llm_tldr_cn": "利用基于智能体的模拟研究功能多样性对团队沟通和绩效的影响。",
+      "llm_tldr": "利用基于智能体的模拟研究功能多样性对团队沟通和绩效的影响。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.21794v1",
+      "title": "Learning to Communicate: Toward End-to-End Optimization of Multi-Agent Language Systems",
+      "abstract": "Multi-agent systems built on large language models have shown strong performance on complex reasoning tasks, yet most work focuses on agent roles and orchestration while treating inter-agent communication as a fixed interface. Latent communication through internal representations such as key-value caches offers a promising alternative to text-based protocols, but existing approaches do not jointly optimize communication with multi-agent reasoning. Therefore we propose DiffMAS, a training framework that treats latent communication as a learnable component of multi-agent systems. DiffMAS performs parameter-efficient supervised training over multi-agent latent trajectories, enabling agents to jointly learn how information should be encoded and interpreted across interactions. Experiments on mathematical reasoning, scientific QA, code generation, and commonsense benchmarks show that DiffMAS consistently improves reasoning accuracy and decoding stability over single-agent inference, text-based multi-agent systems, and prior latent communication methods, achieving 26.7% on AIME24, 20.2% on GPQA-Diamond, and consistent gains across reasoning benchmarks.",
+      "authors": [
+        "Ye Yu",
+        "Heming Liu",
+        "Haibo Jin",
+        "Xiaopeng Yuan",
+        "Peng Kuang",
+        "Haohan Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-04-23T15:53:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.21794v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "optimization of multi-agent language systems and inter-agent communication",
+      "llm_evidence_cn": "多智能体语言系统优化与智能体间通信",
+      "llm_evidence": "多智能体语言系统优化与智能体间通信",
+      "canonical_evidence": "多智能体语言系统优化与智能体间通信",
+      "llm_tldr_en": "Proposes DiffMAS to optimize latent communication and reasoning in multi-agent systems end-to-end.",
+      "llm_tldr_cn": "提出 DiffMAS 框架，旨在端到端地优化多智能体系统中的潜空间通信与推理。",
+      "llm_tldr": "提出 DiffMAS 框架，旨在端到端地优化多智能体系统中的潜空间通信与推理。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.22277v1",
+      "title": "Multi-Agent Consensus as a Cognitive Bias Trigger in Human-AI Interaction",
+      "abstract": "As multi-agent AI systems become more common, users increasingly encounter not a single AI voice but a collective one. This shift introduces social dynamics, such as consensus, dissent, and gradual convergence, that can trigger cognitive biases and distort human judgment. We present findings from a controlled experiment (N = 127) comparing three multi-agent configurations: Majority, Minority, and Diffusion. Quantitative results show that majority consensus accelerates opinion change and inflates confidence, consistent with social proof and bandwagon heuristics. Minority dissent slows this process and promotes more deliberative engagement. Qualitative analysis identifies three interpretive trajectories: reinforcing, aligning, and oscillating, shaped by how users interpret agent independence and group dynamics over time. These findings suggest that agent agreement structure, independent of content, functions as a bias-relevant signal in LLM interactions. We hope this work contributes to the Bias4Trust agenda by grounding multi-agent social influence as a concrete and designable source of bias in human-AI interaction.",
+      "authors": [
+        "Soohwan Lee",
+        "Kyungho Lee"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-04-24T06:45:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.22277v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Multi-agent consensus and social dynamics triggering cognitive biases",
+      "llm_evidence_cn": "多智能体共识与触发认知偏差的社会动态",
+      "llm_evidence": "多智能体共识与触发认知偏差的社会动态",
+      "canonical_evidence": "多智能体共识与触发认知偏差的社会动态",
+      "llm_tldr_en": "Studies how multi-agent consensus and social proof influence human judgment and opinion change.",
+      "llm_tldr_cn": "研究多智能体共识和社会认同如何影响人类判断和观点转变。",
+      "llm_tldr": "研究多智能体共识和社会认同如何影响人类判断和观点转变。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.17950v1",
+      "title": "CADMAS-CTX: Contextual Capability Calibration for Multi-Agent Delegation",
+      "abstract": "We revisit multi-agent delegation under a stronger and more realistic assumption: an agent's capability is not fixed at the skill level, but depends on task context. A coding agent may excel at short standalone edits yet fail on long-horizon debugging; a planner may perform well on shallow tasks yet degrade on chained dependencies. Static skill-level capability profiles therefore average over heterogeneous situations and can induce systematic misdelegation. We propose CADMAS-CTX, a framework for contextual capability calibration. For each agent, skill, and coarse context bucket, CADMAS-CTX maintains a Beta posterior that captures stable experience in that part of the task space. Delegation is then made by a risk-aware score that combines the posterior mean with an uncertainty penalty, so that agents delegate only when a peer appears better and that assessment is sufficiently well supported by evidence. This paper makes three contributions. First, a hierarchical contextual capability profile replaces static skill-level confidence with context-conditioned posteriors. Second, based on contextual bandit theory, we formally prove context-aware routing achieves lower cumulative regret than static routing under sufficient context heterogeneity, formalizing the bias-variance tradeoff. Third, we empirically validate our method on GAIA and SWE-bench benchmarks. On GAIA with GPT-4o agents, CADMAS-CTX achieves 0.442 accuracy, outperforming static baseline 0.381 and AutoGen 0.354 with non-overlapping 95% confidence intervals. On SWE-bench Lite, it improves resolve rate from 22.3% to 31.4%. Ablations show the uncertainty penalty improves robustness against context tagging noise. Our results demonstrate contextual calibration and risk-aware delegation significantly improve multi-agent teamwork compared with static global skill assignments.",
+      "authors": [
+        "Chuhan Qiao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-20T08:30:28+00:00",
+      "link": "https://arxiv.org/pdf/2604.17950v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "contextual capability calibration for multi-agent delegation",
+      "llm_evidence_cn": "多智能体委派的上下文能力校准",
+      "llm_evidence": "多智能体委派的上下文能力校准",
+      "canonical_evidence": "多智能体委派的上下文能力校准",
+      "llm_tldr_en": "Proposes CADMAS-CTX for risk-aware multi-agent delegation based on task context.",
+      "llm_tldr_cn": "提出了CADMAS-CTX框架，根据任务上下文进行风险感知的多智能体委派。",
+      "llm_tldr": "提出了CADMAS-CTX框架，根据任务上下文进行风险感知的多智能体委派。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.20133v1",
+      "title": "EvoAgent: An Evolvable Agent Framework with Skill Learning and Multi-Agent Delegation",
+      "abstract": "This paper proposes EvoAgent - an evolvable large language model (LLM) agent framework that integrates structured skill learning with a hierarchical sub-agent delegation mechanism. EvoAgent models skills as multi-file structured capability units equipped with triggering mechanisms and evolutionary metadata, and enables continuous skill generation and optimization through a user-feedback-driven closed-loop process. In addition, by incorporating a three-stage skill matching strategy and a three-layer memory architecture, the framework supports dynamic task decomposition for complex problems and long-term capability accumulation. Experimental results based on real-world foreign trade scenarios demonstrate that, after integrating EvoAgent, GPT5.2 achieves significant improvements in professionalism, accuracy, and practical utility. Under a five-dimensional LLM-as-Judge evaluation protocol, the overall average score increases by approximately 28%. Further model transfer experiments indicate that the performance of an agent system depends not only on the intrinsic capabilities of the underlying model, but also on the degree of synergy between the model and the agent architecture.",
+      "authors": [
+        "Aimin Zhang",
+        "Jiajing Guo",
+        "Fuwei Jia",
+        "Chen Lv",
+        "Boyu Wang",
+        "Fangzheng Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-22T03:00:28+00:00",
+      "link": "https://arxiv.org/pdf/2604.20133v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent delegation and skill learning framework",
+      "llm_evidence_cn": "多智能体委派与技能学习框架",
+      "llm_evidence": "多智能体委派与技能学习框架",
+      "canonical_evidence": "多智能体委派与技能学习框架",
+      "llm_tldr_en": "EvoAgent integrates skill learning with hierarchical sub-agent delegation for complex problems.",
+      "llm_tldr_cn": "EvoAgent将技能学习与分层子智能体委派相结合，以解决复杂问题。",
+      "llm_tldr": "EvoAgent将技能学习与分层子智能体委派相结合，以解决复杂问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.20133v2",
+      "title": "EvoAgent: An Evolvable Agent Framework with Skill Learning and Multi-Agent Delegation",
+      "abstract": "This paper proposes EvoAgent - an evolvable large language model (LLM) agent framework that integrates structured skill learning with a hierarchical sub-agent delegation mechanism. EvoAgent models skills as multi-file structured capability units equipped with triggering mechanisms and evolutionary metadata, and enables continuous skill generation and optimization through a user-feedback-driven closed-loop process. In addition, by incorporating a three-stage skill matching strategy and a three-layer memory architecture, the framework supports dynamic task decomposition for complex problems and long-term capability accumulation. Experimental results based on real-world foreign trade scenarios demonstrate that, after integrating EvoAgent, GPT5.2 achieves significant improvements in professionalism, accuracy, and practical utility. Under a five-dimensional LLM-as-Judge evaluation protocol, the overall average score increases by approximately 28%. Further model transfer experiments indicate that the performance of an agent system depends not only on the intrinsic capabilities of the underlying model, but also on the degree of synergy between the model and the agent architecture.",
+      "authors": [
+        "Aimin Zhang",
+        "Jiajing Guo",
+        "Fuwei Jia",
+        "Chen Lv",
+        "Boyu Wang",
+        "Fangzheng Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-22T03:00:28+00:00",
+      "link": "https://arxiv.org/pdf/2604.20133v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent delegation and hierarchical sub-agent framework",
+      "llm_evidence_cn": "多智能体委派与分层子智能体框架",
+      "llm_evidence": "多智能体委派与分层子智能体框架",
+      "canonical_evidence": "多智能体委派与分层子智能体框架",
+      "llm_tldr_en": "An evolvable LLM agent framework using skill learning and multi-agent delegation for complex tasks.",
+      "llm_tldr_cn": "一种通过技能学习和多智能体委派实现复杂任务处理的可进化大模型智能体框架。",
+      "llm_tldr": "一种通过技能学习和多智能体委派实现复杂任务处理的可进化大模型智能体框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.17708v1",
+      "title": "Co-evolving Agent Architectures and Interpretable Reasoning for Automated Optimization",
+      "abstract": "Automating operations research (OR) with large language models (LLMs) remains limited by hand-crafted reasoning--execution workflows. Complex OR tasks require adaptive coordination among problem interpretation, mathematical formulation, solver selection, code generation, and iterative debugging. To address this limitation, we propose EvoOR-Agent, a co-evolutionary framework for automated optimization. The framework represents agent workflows as activity-on-edge (AOE)-style networks, making workflow topology, execution dependencies, and alternative reasoning paths explicit. On this representation, the framework maintains an architecture graph and evolves a population of reasoning individuals through graph-mediated path-conditioned recombination, multi-granularity semantic mutation, and elitist population update. A knowledge-base-assisted experience-acquisition module further injects reusable OR practices into initialization and semantic variation. Empirical results on heterogeneous OR benchmarks show that the proposed framework consistently improves over zero-shot LLMs, fixed-pipeline OR agents, and representative evolutionary agent frameworks. Case studies and ablation analyses further indicate that explicit architecture evolution and graph-supported reasoning-trajectory search contribute to both performance improvement and structural interpretability. These results suggest that treating agent architectures and reasoning trajectories as evolvable objects provides an effective route toward adaptive and interpretable automated optimization.",
+      "authors": [
+        "Jiahao Huang",
+        "Peilan Xu",
+        "Xiaoya Nan",
+        "Wenjian Luo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-20T01:44:18+00:00",
+      "link": "https://arxiv.org/pdf/2604.17708v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "co-evolving agent architectures and population of reasoning individuals",
+      "llm_evidence_cn": "协同进化的智能体架构与推理个体种群",
+      "llm_evidence": "协同进化的智能体架构与推理个体种群",
+      "canonical_evidence": "协同进化的智能体架构与推理个体种群",
+      "llm_tldr_en": "A co-evolutionary framework for automated optimization using graph-based agent workflows.",
+      "llm_tldr_cn": "一种基于图表示的智能体工作流协同进化框架，用于自动化运筹优化任务。",
+      "llm_tldr": "一种基于图表示的智能体工作流协同进化框架，用于自动化运筹优化任务。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.17821v2",
+      "title": "WebUncertainty: Dual-Level Uncertainty Driven Planning and Reasoning For Autonomous Web Agent",
+      "abstract": "Recent advancements in large language models (LLMs) have empowered autonomous web agents to execute natural language instructions directly on real-world webpages. However, existing agents often struggle with complex tasks involving dynamic interactions and long-horizon execution due to rigid planning strategies and hallucination-prone reasoning. To address these limitations, we propose WebUncertainty, a novel autonomous agent framework designed to tackle dual-level uncertainty in planning and reasoning. Specifically, we design a Task Uncertainty-Driven Adaptive Planning Mechanism that adaptively selects planning modes to navigate unknown environments. Furthermore, we introduce an Action Uncertainty-Driven Monte Carlo tree search (MCTS) Reasoning Mechanism. This mechanism incorporates the Confidence-induced Action Uncertainty (ConActU) strategy to quantify both aleatoric uncertainty (AU) and epistemic uncertainty (EU), thereby optimizing the search process and guiding robust decision-making. Experimental results on the WebArena and WebVoyager benchmarks demonstrate that WebUncertainty achieves superior performance compared to state-of-the-art baselines.",
+      "authors": [
+        "Lingfeng Zhang",
+        "Yongan Sun",
+        "Jinpeng Hu",
+        "Hui Ma",
+        "Yang Ying",
+        "Kuien Liu",
+        "Zenglin Shi",
+        "Meng Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-20T05:19:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.17821v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "autonomous agent framework for complex planning and reasoning",
+      "llm_evidence_cn": "用于复杂规划与推理的自主智能体框架",
+      "llm_evidence": "用于复杂规划与推理的自主智能体框架",
+      "canonical_evidence": "用于复杂规划与推理的自主智能体框架",
+      "llm_tldr_en": "Addresses uncertainty in autonomous web agents through adaptive planning and Monte Carlo tree search.",
+      "llm_tldr_cn": "通过自适应规划和蒙特卡洛树搜索解决自主网页智能体在规划与推理中的不确定性。",
+      "llm_tldr": "通过自适应规划和蒙特卡洛树搜索解决自主网页智能体在规划与推理中的不确定性。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.20714v1",
+      "title": "Learning to Evolve: A Self-Improving Framework for Multi-Agent Systems via Textual Parameter Graph Optimization",
+      "abstract": "Designing and optimizing multi-agent systems (MAS) is a complex, labor-intensive process of \"Agent Engineering.\" Existing automatic optimization methods, primarily focused on flat prompt tuning, lack the structural awareness to debug the intricate web of interactions in MAS. More critically, these optimizers are static; they do not learn from experience to improve their own optimization strategies. To address these gaps, we introduce Textual Parameter Graph Optimization (TPGO), a framework that enables a multi-agent system to learn to evolve. TPGO first models the MAS as a Textual Parameter Graph (TPG), where agents, tools, and workflows are modular, optimizable nodes. To guide evolution, we derive \"textual gradients,\" structured natural language feedback from execution traces, to pinpoint failures and suggest granular modifications. The core of our framework is Group Relative Agent Optimization (GRAO), a novel meta-learning strategy that learns from historical optimization experiences. By analyzing past successes and failures, GRAO becomes progressively better at proposing effective updates, allowing the system to learn how to optimize itself. Extensive experiments on complex benchmarks like GAIA and MCP-Universe show that TPGO significantly enhances the performance of state-of-the-art agent frameworks, achieving higher success rates through automated, self-improving optimization.",
+      "authors": [
+        "Shan He",
+        "Runze Wang",
+        "Zhuoyun Du",
+        "Huiyu Bai",
+        "Zouying Cao",
+        "Yu Cheng",
+        "Bo Zheng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-22T16:00:46+00:00",
+      "link": "https://arxiv.org/pdf/2604.20714v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "self-improving framework for multi-agent systems",
+      "llm_evidence_cn": "多智能体系统的自我改进框架",
+      "llm_evidence": "多智能体系统的自我改进框架",
+      "canonical_evidence": "多智能体系统的自我改进框架",
+      "llm_tldr_en": "Proposes a framework for multi-agent systems to learn and evolve their own optimization strategies.",
+      "llm_tldr_cn": "提出了一种让多智能体系统学习并进化其自身优化策略的框架。",
+      "llm_tldr": "提出了一种让多智能体系统学习并进化其自身优化策略的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.18190v1",
+      "title": "Scalable Neighborhood-Based Multi-Agent Actor-Critic",
+      "abstract": "We propose MADDPG-K, a scalable extension to Multi-Agent Deep Deterministic Policy Gradient (MADDPG) that addresses the computational limitations of centralized critic approaches. Centralized critics, which condition on the observations and actions of all agents, have demonstrated significant performance gains in cooperative and competitive multi-agent settings. However, their critic networks grow linearly in input size with the number of agents, making them increasingly expensive to train at scale. MADDPG-K mitigates this by restricting each agent's critic to the $k$ closest agents under a chosen metric which in our case is Euclidean distance. This ensures a constant-size critic input regardless of the total agent count. We analyze the complexity of this approach, showing that the quadratic cost it retains arises from cheap scalar distance computations rather than the expensive neural network matrix multiplications that bottleneck standard MADDPG. We validate our method empirically across cooperative and adversarial environments from the Multi-Particle Environment suite, demonstrating competitive or superior performance compared to MADDPG, faster convergence in cooperative settings, and better runtime scaling as the number of agents grows. Our code is available at https://github.com/TimGop/MADDPG-K .",
+      "authors": [
+        "Tim Goppelsroeder",
+        "Rasmus Jensen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-04-20T12:45:59+00:00",
+      "link": "https://arxiv.org/pdf/2604.18190v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "scalable neighborhood-based multi-agent actor-critic",
+      "llm_evidence_cn": "可扩展的基于邻域的多智能体演员-评论家算法",
+      "llm_evidence": "可扩展的基于邻域的多智能体演员-评论家算法",
+      "canonical_evidence": "可扩展的基于邻域的多智能体演员-评论家算法",
+      "llm_tldr_en": "Introduces MADDPG-K to improve the scalability of multi-agent reinforcement learning in large systems.",
+      "llm_tldr_cn": "引入MADDPG-K以提高大型系统中多智能体强化学习的可扩展性。",
+      "llm_tldr": "引入MADDPG-K以提高大型系统中多智能体强化学习的可扩展性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.17931v1",
+      "title": "LiteResearcher: A Scalable Agentic RL Training Framework for Deep Research Agent",
+      "abstract": "Reinforcement Learning (RL) has emerged as a powerful training paradigm for LLM-based agents. However, scaling agentic RL for deep research remains constrained by two coupled challenges: hand-crafted synthetic data fails to elicit genuine real-world search capabilities, and real-world search dependency during RL training introduces instability and prohibitive cost, which limits the scalability of Agentic RL. LiteResearcher is a training framework that makes Agentic RL scalable: by constructing a lite virtual world that mirrors real-world search dynamics, we enable a continuously improving training recipe that empowers a tiny search agent to outperform large-scale open-source and commercial models (e.g., Tongyi DeepResearch and Claude-4.5 Sonnet). Specifically, on common benchmarks such as GAIA and Xbench, our LiteResearcher-4B achieves open-source state-of-the-art results of 71.3% and 78.0% respectively, demonstrating that scalable RL training is a key enabler for Deep Research Agents.",
+      "authors": [
+        "Wanli Li",
+        "Bince Qu",
+        "Bo Pan",
+        "Jianyu Zhang",
+        "Zheng Liu",
+        "Pan Zhang",
+        "Wei Chen",
+        "Bo Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-20T08:11:09+00:00",
+      "link": "https://arxiv.org/pdf/2604.17931v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Scalable agentic RL training framework for research agents",
+      "llm_evidence_cn": "用于研究型智能体的可扩展强化学习训练框架",
+      "llm_evidence": "用于研究型智能体的可扩展强化学习训练框架",
+      "canonical_evidence": "用于研究型智能体的可扩展强化学习训练框架",
+      "llm_tldr_en": "Proposes a framework to scale reinforcement learning for LLM-based research agents using virtual environments.",
+      "llm_tldr_cn": "提出了一个通过虚拟环境扩展大语言模型研究型智能体强化学习训练的框架。",
+      "llm_tldr": "提出了一个通过虚拟环境扩展大语言模型研究型智能体强化学习训练的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.21896v1",
+      "title": "Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models",
+      "abstract": "This paper introduces a new paradigm for AI game programming, leveraging large language models (LLMs) to extend and operationalize Claude Shannon's taxonomy of game-playing machines. Central to this paradigm is Nemobot, an interactive agentic engineering environment that enables users to create, customize, and deploy LLM-powered game agents while actively engaging with AI-driven strategies. The LLM-based chatbot, integrated within Nemobot, demonstrates its capabilities across four distinct classes of games. For dictionary-based games, it compresses state-action mappings into efficient, generalized models for rapid adaptability. In rigorously solvable games, it employs mathematical reasoning to compute optimal strategies and generates human-readable explanations for its decisions. For heuristic-based games, it synthesizes strategies by combining insights from classical minimax algorithms (see, e.g., shannon1950chess) with crowd-sourced data. Finally, in learning-based games, it utilizes reinforcement learning with human feedback and self-critique to iteratively refine strategies through trial-and-error and imitation learning. Nemobot amplifies this framework by offering a programmable environment where users can experiment with tool-augmented generation and fine-tuning of strategic game agents. From strategic games to role-playing games, Nemobot demonstrates how AI agents can achieve a form of self-programming by integrating crowdsourced learning and human creativity to iteratively refine their own logic. This represents a step toward the long-term goal of self-programming AI.",
+      "authors": [
+        "Chee Wei Tan",
+        "Yuchen Wang",
+        "Shangxin Guo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-23T17:46:29+00:00",
+      "link": "https://arxiv.org/pdf/2604.21896v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-powered agents for strategic gaming and interactive learning",
+      "llm_evidence_cn": "大模型驱动的策略游戏与交互式学习智能体",
+      "llm_evidence": "大模型驱动的策略游戏与交互式学习智能体",
+      "canonical_evidence": "大模型驱动的策略游戏与交互式学习智能体",
+      "llm_tldr_en": "Explores LLM-powered agents for strategic gaming and interactive agentic engineering environments.",
+      "llm_tldr_cn": "探索了大模型驱动的智能体在策略游戏和交互式智能体工程环境中的应用。",
+      "llm_tldr": "探索了大模型驱动的智能体在策略游戏和交互式智能体工程环境中的应用。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.18543v1",
+      "title": "ClawEnvKit: Automatic Environment Generation for Claw-Like Agents",
+      "abstract": "Constructing environments for training and evaluating claw-like agents remains a manual, human-intensive process that does not scale. We argue that what is needed is not just a dataset, but an automated pipeline capable of generating diverse, verified environments on demand. To this end, we introduce ClawEnvKit, an autonomous generation pipeline that instantiates this formalism from natural language descriptions. The pipeline comprises three modules: (1) a parser that extracts structured generation parameters from natural language input; (2) a generator that produces the task specification, tool interface, and scoring configuration; and (3) a validator that enforces feasibility, diversity, structural validity, and internal consistency across the generated environments. Using ClawEnvKit, we construct Auto-ClawEval, the first large-scale benchmark for claw-like agents, comprising 1,040 environments across 24 categories. Empirically, Auto-ClawEval matches or exceeds human-curated environments on coherence and clarity at 13,800x lower cost. Evaluated across 4 model families and 8 agent harness frameworks, we find that harness engineering boosts performance by up to 15.7 percentage points over a bare ReAct baseline, completion remains the primary axis of variation with no model saturating the benchmark, and automated generation enables evaluation at a scale previously infeasible. Beyond static benchmarking, ClawEnvKit enables live evaluation: users describe a desired capability in natural language and obtain a verified environment on demand, turning evaluation into a continuous, user-driven process. The same mechanism serves as an on-demand training environment generator, producing task distributions that adapt to an agent's current weaknesses rather than being bounded by existing user logs.",
+      "authors": [
+        "Xirui Li",
+        "Ming Li",
+        "Derry Xu",
+        "Wei-Lin Chiang",
+        "Ion Stoica",
+        "Cho-Jui Hsieh",
+        "Tianyi Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-20T17:36:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.18543v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "automatic environment generation for training and evaluating agents",
+      "llm_evidence_cn": "用于智能体训练与评估的环境自动生成",
+      "llm_evidence": "用于智能体训练与评估的环境自动生成",
+      "canonical_evidence": "用于智能体训练与评估的环境自动生成",
+      "llm_tldr_en": "An autonomous pipeline for generating diverse and verified environments for agent training from natural language.",
+      "llm_tldr_cn": "一种根据自然语言描述自动生成多样化且经过验证的智能体训练环境的流水线。",
+      "llm_tldr": "一种根据自然语言描述自动生成多样化且经过验证的智能体训练环境的流水线。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.17931v2",
+      "title": "LiteResearcher: A Scalable Agentic RL Training Framework for Deep Research Agent",
+      "abstract": "Reinforcement Learning (RL) has emerged as a powerful training paradigm for LLM-based agents. However, scaling agentic RL for deep research remains constrained by two coupled challenges: hand-crafted synthetic data fails to elicit genuine real-world search capabilities, and real-world search dependency during RL training introduces instability and prohibitive cost, which limits the scalability of Agentic RL. LiteResearcher is a training framework that makes Agentic RL scalable: by constructing a lite virtual world that mirrors real-world search dynamics, we enable a continuously improving training recipe that empowers a tiny search agent to outperform large-scale open-source and commercial models (e.g., Tongyi DeepResearch and Claude-4.5 Sonnet). Specifically, on common benchmarks such as GAIA and Xbench, our LiteResearcher-4B achieves open-source state-of-the-art results of 71.3% and 78.0% respectively, demonstrating that scalable RL training is a key enabler for Deep Research Agents.",
+      "authors": [
+        "Wanli Li",
+        "Bince Qu",
+        "Bo Pan",
+        "Jianyu Zhang",
+        "Zheng Liu",
+        "Pan Zhang",
+        "Wei Chen",
+        "Bo Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-20T08:11:09+00:00",
+      "link": "https://arxiv.org/pdf/2604.17931v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agentic RL training in virtual worlds",
+      "llm_evidence_cn": "虚拟世界中的智能体强化学习训练",
+      "llm_evidence": "虚拟世界中的智能体强化学习训练",
+      "canonical_evidence": "虚拟世界中的智能体强化学习训练",
+      "llm_tldr_en": "A scalable RL framework for training research agents in simulated environments.",
+      "llm_tldr_cn": "一种用于在模拟环境中训练研究型智能体的可扩展强化学习框架。",
+      "llm_tldr": "一种用于在模拟环境中训练研究型智能体的可扩展强化学习框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.18557v1",
+      "title": "SynAgent: Generalizable Cooperative Humanoid Manipulation via Solo-to-Cooperative Agent Synergy",
+      "abstract": "Controllable cooperative humanoid manipulation is a fundamental yet challenging problem for embodied intelligence, due to severe data scarcity, complexities in multi-agent coordination, and limited generalization across objects. In this paper, we present SynAgent, a unified framework that enables scalable and physically plausible cooperative manipulation by leveraging Solo-to-Cooperative Agent Synergy to transfer skills from single-agent human-object interaction to multi-agent human-object-human scenarios. To maintain semantic integrity during motion transfer, we introduce an interaction-preserving retargeting method based on an Interact Mesh constructed via Delaunay tetrahedralization, which faithfully maintains spatial relationships among humans and objects. Building upon this refined data, we propose a single-agent pretraining and adaptation paradigm that bootstraps synergistic collaborative behaviors from abundant single-human data through decentralized training and multi-agent PPO. Finally, we develop a trajectory-conditioned generative policy using a conditional VAE, trained via multi-teacher distillation from motion imitation priors to achieve stable and controllable object-level trajectory execution. Extensive experiments demonstrate that SynAgent significantly outperforms existing baselines in both cooperative imitation and trajectory-conditioned control, while generalizing across diverse object geometries. Codes and data will be available after publication. Project Page: http://yw0208.github.io/synagent",
+      "authors": [
+        "Wei Yao",
+        "Haohan Ma",
+        "Hongwen Zhang",
+        "Yunlian Sun",
+        "Liangjun Xing",
+        "Zhile Yang",
+        "Yuanjun Guo",
+        "Yebin Liu",
+        "Jinhui Tang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.GR",
+        "cs.RO"
+      ],
+      "published": "2026-04-20T17:46:20+00:00",
+      "link": "https://arxiv.org/pdf/2604.18557v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent coordination for humanoid manipulation",
+      "llm_evidence_cn": "人形机器人操作的多智能体协作",
+      "llm_evidence": "人形机器人操作的多智能体协作",
+      "canonical_evidence": "人形机器人操作的多智能体协作",
+      "llm_tldr_en": "SynAgent transfers skills from single to multi-agent scenarios for humanoid manipulation.",
+      "llm_tldr_cn": "SynAgent将技能从单智能体转移到多智能体场景，用于人形机器人操作。",
+      "llm_tldr": "SynAgent将技能从单智能体转移到多智能体场景，用于人形机器人操作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.18779v1",
+      "title": "Mango: Multi-Agent Web Navigation via Global-View Optimization",
+      "abstract": "Existing web agents typically initiate exploration from the root URL, which is inefficient for complex websites with deep hierarchical structures. Without a global view of the website's structure, agents frequently fall into navigation traps, explore irrelevant branches, or fail to reach target information within a limited budget. We propose Mango, a multi-agent web navigation method that leverages the website structure to dynamically determine optimal starting points. We formulate URL selection as a multi-armed bandit problem and employ Thompson Sampling to adaptively allocate the navigation budget across candidate URLs. Furthermore, we introduce an episodic memory component to store navigation history, enabling the agent to learn from previous attempts. Experiments on WebVoyager demonstrate that Mango achieves a success rate of 63.6% when using GPT-5-mini, outperforming the best baseline by 7.3%. Furthermore, on WebWalkerQA, Mango attains a 52.5% success rate, surpassing the best baseline by 26.8%. We also demonstrate the generalizability of Mango using both open-source and closed-source models as backbones. Our data and code are open-source and available at https://github.com/VichyTong/Mango.",
+      "authors": [
+        "Weixi Tong",
+        "Yifeng Di",
+        "Tianyi Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-20T19:42:47+00:00",
+      "link": "https://arxiv.org/pdf/2604.18779v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent web navigation and global-view optimization",
+      "llm_evidence_cn": "多智能体网页导航与全局视图优化",
+      "llm_evidence": "多智能体网页导航与全局视图优化",
+      "canonical_evidence": "多智能体网页导航与全局视图优化",
+      "llm_tldr_en": "Proposes Mango, a multi-agent method for efficient web navigation using global-view optimization and memory.",
+      "llm_tldr_cn": "提出Mango，一种利用全局视图优化和记忆实现高效网页导航的多智能体方法。",
+      "llm_tldr": "提出Mango，一种利用全局视图优化和记忆实现高效网页导航的多智能体方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
