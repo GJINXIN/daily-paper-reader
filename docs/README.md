@@ -6,73 +6,74 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-27
-- 运行时间：2026-04-27 20:07:34 UTC
+- 最新运行日期：2026-04-28
+- 运行时间：2026-04-28 20:13:56 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度复盘 17 篇多智能体前沿论文，重点攻克了群体智能评估与团队多样性对效能影响的核心课题。
-研究指出 Superminds Test 为衡量智能体社会协作提供了新标准，并量化证明了多元化背景在复杂任务中不可替代的价值。
-建议优先关注智能体如何通过自我进化框架实现技能闭环，把握 AI 从单兵作战向社会化协作演进的技术趋势。
-- 详情：[/202604/27/README](/202604/27/README)
+- 今日共生成 17 篇推荐（精读 6 篇，速读 11 篇）
+- 精读：《Partial exploiters sustain cooperation: the hump-shaped strategy stably coexists with unconditional cooperators》（9.0/10）, 《The Chameleon's Limit: Investigating Persona Collapse and Homogenization in Large Language Models》（9.0/10）
+- 速读：《How Personal Characteristics Shape User Exploration of Diverse Movie Recommendations with a LLM-Based Multi-Agent System》（8.0/10）, 《Memory-Augmented LLM-based Multi-Agent System for Automated Feature Generation on Tabular Data》（7.0/10）, 《Co-Evolving LLM Decision and Skill Bank Agents for Long-Horizon Tasks》（7.0/10）
+- 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
+- 详情：[/202604/28/README](/202604/28/README)
 
 ### 精读区论文标签
-1. [Superminds Test: Actively Evaluating Collective Intelligence of Agent Society via Probing Agents](/202604/27/2604.22452v1-superminds-test-actively-evaluating-collective-intelligence-of-agent-society-via-probing-agents)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：评估大规模智能体社会中的集体智能
-2. [Role of diversity in team performance: the case of missing expertise, an agent based simulation](/202604/27/2604.21328v1-role-of-diversity-in-team-performance-the-case-of-missing-expertise-an-agent-based-simulation)  
+1. [Partial exploiters sustain cooperation: the hump-shaped strategy stably coexists with unconditional cooperators](/202604/28/2604.23293v1-partial-exploiters-sustain-cooperation-the-hump-shaped-strategy-stably-coexists-with-unconditional-cooperators)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：团队绩效和社会系统多样性的基于智能体模拟
-3. [Learning to Communicate: Toward End-to-End Optimization of Multi-Agent Language Systems](/202604/27/2604.21794v1-learning-to-communicate-toward-end-to-end-optimization-of-multi-agent-language-systems)  
+   evidence：社会困境智能体模拟中出现的合作模式
+2. [The Chameleon's Limit: Investigating Persona Collapse and Homogenization in Large Language Models](/202604/28/2604.24698v1-the-chameleons-limit-investigating-persona-collapse-and-homogenization-in-large-language-models)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体语言系统优化与智能体间通信
-4. [Multi-Agent Consensus as a Cognitive Bias Trigger in Human-AI Interaction](/202604/27/2604.22277v1-multi-agent-consensus-as-a-cognitive-bias-trigger-in-human-ai-interaction)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体共识与触发认知偏差的社会动态
-5. [CADMAS-CTX: Contextual Capability Calibration for Multi-Agent Delegation](/202604/27/2604.17950v1-cadmas-ctx-contextual-capability-calibration-for-multi-agent-delegation)  
+   evidence：大语言模型中的多智能体模拟与人格坍缩
+3. [Cooperative Profiles Predict Multi-Agent LLM Team Performance in AI for Science Workflows](/202604/28/2604.20658v1-cooperative-profiles-predict-multi-agent-llm-team-performance-in-ai-for-science-workflows)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体委派的上下文能力校准
-6. [EvoAgent: An Evolvable Agent Framework with Skill Learning and Multi-Agent Delegation](/202604/27/2604.20133v1-evoagent-an-evolvable-agent-framework-with-skill-learning-and-multi-agent-delegation)  
+   evidence：多智能体LLM团队表现与协作
+4. [Modeling Epidemic Spread with Strategic Vaccination and Socialization: a Mean Field Game Analysis](/202604/28/2604.22946v1-modeling-epidemic-spread-with-strategic-vaccination-and-socialization-a-mean-field-game-analysis)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体委派与技能学习框架
+   evidence：流行病传播与社交水平建模
+5. [Breaking the Secret: Economic Interventions for Combating Collusion in Embodied Multi-Agent Systems](/202604/28/2604.23511v1-breaking-the-secret-economic-interventions-for-combating-collusion-in-embodied-multi-agent-systems)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体系统中的共谋与协调行为
+6. [DLM: Unified Decision Language Models for Offline Multi-Agent Sequential Decision Making](/202604/28/2604.23557v1-dlm-unified-decision-language-models-for-offline-multi-agent-sequential-decision-making)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：基于LLM的多智能体决策
 
 ### 速读区论文标签
-1. [EvoAgent: An Evolvable Agent Framework with Skill Learning and Multi-Agent Delegation](/202604/27/2604.20133v2-evoagent-an-evolvable-agent-framework-with-skill-learning-and-multi-agent-delegation)  
+1. [How Personal Characteristics Shape User Exploration of Diverse Movie Recommendations with a LLM-Based Multi-Agent System](/202604/28/2604.24405v1-how-personal-characteristics-shape-user-exploration-of-diverse-movie-recommendations-with-a-llm-based-multi-agent-system)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体委派与分层子智能体框架
-2. [Learning to Evolve: A Self-Improving Framework for Multi-Agent Systems via Textual Parameter Graph Optimization](/202604/27/2604.20714v1-learning-to-evolve-a-self-improving-framework-for-multi-agent-systems-via-textual-parameter-graph-optimization)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统的自我改进框架
-3. [Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models](/202604/27/2604.21896v1-nemobot-games-crafting-strategic-ai-gaming-agents-for-interactive-learning-with-large-language-models)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：大模型驱动的策略游戏与交互式学习智能体
-4. [Co-evolving Agent Architectures and Interpretable Reasoning for Automated Optimization](/202604/27/2604.17708v1-co-evolving-agent-architectures-and-interpretable-reasoning-for-automated-optimization)  
+   evidence：基于大语言模型的多智能体系统用于用户探索
+2. [Memory-Augmented LLM-based Multi-Agent System for Automated Feature Generation on Tabular Data](/202604/28/2604.20261v1-memory-augmented-llm-based-multi-agent-system-for-automated-feature-generation-on-tabular-data)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：协同进化的智能体架构与推理个体种群
-5. [Scalable Neighborhood-Based Multi-Agent Actor-Critic](/202604/27/2604.18190v1-scalable-neighborhood-based-multi-agent-actor-critic)  
+   evidence：基于记忆增强的大模型多智能体系统
+3. [Co-Evolving LLM Decision and Skill Bank Agents for Long-Horizon Tasks](/202604/28/2604.20987v1-co-evolving-llm-decision-and-skill-bank-agents-for-long-horizon-tasks)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：可扩展的基于邻域的多智能体演员-评论家算法
-6. [ClawEnvKit: Automatic Environment Generation for Claw-Like Agents](/202604/27/2604.18543v1-clawenvkit-automatic-environment-generation-for-claw-like-agents)  
+   evidence：为长程任务协同进化大模型决策与技能库智能体
+4. [Efficient Agent Evaluation via Diversity-Guided User Simulation](/202604/28/2604.21480v1-efficient-agent-evaluation-via-diversity-guided-user-simulation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于智能体训练与评估的环境自动生成
-7. [SynAgent: Generalizable Cooperative Humanoid Manipulation via Solo-to-Cooperative Agent Synergy](/202604/27/2604.18557v1-synagent-generalizable-cooperative-humanoid-manipulation-via-solo-to-cooperative-agent-synergy)  
+   evidence：用于评估大模型智能体的用户模拟
+5. [From Skills to Talent: Organising Heterogeneous Agents as a Real-World Company](/202604/28/2604.22446v1-from-skills-to-talent-organising-heterogeneous-agents-as-a-real-world-company)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：人形机器人操作的多智能体协作
-8. [Mango: Multi-Agent Web Navigation via Global-View Optimization](/202604/27/2604.18779v1-mango-multi-agent-web-navigation-via-global-view-optimization)  
+   evidence：组织异构智能体
+6. [Seeing the Whole Elephant: A Benchmark for Failure Attribution in LLM-based Multi-Agent Systems](/202604/28/2604.22708v1-seeing-the-whole-elephant-a-benchmark-for-failure-attribution-in-llm-based-multi-agent-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体网页导航与全局视图优化
-9. [WebUncertainty: Dual-Level Uncertainty Driven Planning and Reasoning For Autonomous Web Agent](/202604/27/2604.17821v2-webuncertainty-dual-level-uncertainty-driven-planning-and-reasoning-for-autonomous-web-agent)  
+   evidence：大模型多智能体系统中的故障归因
+7. [Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond](/202604/28/2604.22748v1-agentic-world-modeling-foundations-capabilities-laws-and-beyond)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：智能体世界建模与环境动力学模拟
+8. [Beyond Single-Agent Alignment: Preventing Context-Fragmented Violations in Multi-Agent Systems](/202604/28/2604.22879v1-beyond-single-agent-alignment-preventing-context-fragmented-violations-in-multi-agent-systems)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：多智能体系统中的安全风险
+9. [Architectural Design Decisions in AI Agent Harnesses](/202604/28/2604.18071v1-architectural-design-decisions-in-ai-agent-harnesses)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于复杂规划与推理的自主智能体框架
-10. [LiteResearcher: A Scalable Agentic RL Training Framework for Deep Research Agent](/202604/27/2604.17931v1-literesearcher-a-scalable-agentic-rl-training-framework-for-deep-research-agent)  
+   evidence：AI智能体系统的架构设计
+10. [EmbodiedLGR: Integrating Lightweight Graph Representation and Retrieval for Semantic-Spatial Memory in Robotic Agents](/202604/28/2604.18271v1-embodiedlgr-integrating-lightweight-graph-representation-and-retrieval-for-semantic-spatial-memory-in-robotic-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于研究型智能体的可扩展强化学习训练框架
-11. [LiteResearcher: A Scalable Agentic RL Training Framework for Deep Research Agent](/202604/27/2604.17931v2-literesearcher-a-scalable-agentic-rl-training-framework-for-deep-research-agent)  
+   evidence：具有语义空间记忆的机器人智能体
+11. [DR-MMSearchAgent: Deepening Reasoning in Multimodal Search Agents](/202604/28/2604.19264v1-dr-mmsearchagent-deepening-reasoning-in-multimodal-search-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：虚拟世界中的智能体强化学习训练
+   evidence：使用智能体推理和工具调用的多模态搜索智能体
 
 
 <div class="dpr-home-promo-card">
