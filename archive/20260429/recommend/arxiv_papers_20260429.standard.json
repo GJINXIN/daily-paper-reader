@@ -1,0 +1,675 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-29T20:32:10.725266+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 6,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 17,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.23408v1",
+      "title": "Messaging strategies and the emergence of echo chambers in collective decision-making",
+      "abstract": "Collective decision-making arises from individual agents integrating their own personal observations with information obtained from social partners. In many biological systems that exhibit collective decision-making, the process by which social information is produced, transmitted, and used is subject to two key constraints. First, individuals often do not observe the internal states or personal observations of their neighbors; instead, they observe neighbors' discrete actions. Second, agents often have limited attention, such that, at any given moment, only a subset of social partners influences decisions. Using methods from nonlinear dynamics, we show that either of these constraints can cause collective accuracy to become extremely sensitive to the weight individuals place on the information they receive from others. This sensitivity arises from the spontaneous formation of echo chamber-like states in which individuals receive and transmit homogeneous social messages. Under such conditions, collectives become locked in self-reinforcing states that prevent them from tracking changes in the environment. We reveal the mathematical basis of this phenomenon, and show that it emerges not only in generic models of collective decision-making but also in models developed to describe specific biological systems, including neural circuits, eusocial insect colonies, and mobile animal groups. Finally, we identify biologically plausible mechanisms through which individuals may reduce the risk of echo chamber formation and achieve robust yet sensitive collective decisions without requiring fine-tuning parameters. Our results reveal how fundamental constraints on communication shape the dynamics and reliability of collective decisions across diverse biological systems.",
+      "authors": [
+        "Ling-Wei Kong",
+        "Naomi Ehrich Leonard",
+        "Andrew M. Hein"
+      ],
+      "primary_category": "q-bio.QM",
+      "categories": [
+        "q-bio.QM",
+        "nlin.AO"
+      ],
+      "published": "2026-04-25T18:59:53+00:00",
+      "link": "https://arxiv.org/pdf/2604.23408v1",
+      "tags": [
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Studies emergent social phenomena like echo chambers in multi-agent collective decision-making",
+      "llm_evidence_cn": "研究多智能体集体决策中回声壁等涌现社会现象",
+      "llm_evidence": "研究多智能体集体决策中回声壁等涌现社会现象",
+      "canonical_evidence": "研究多智能体集体决策中回声壁等涌现社会现象",
+      "llm_tldr_en": "Analyzes how agent constraints lead to the emergence of echo chambers in collective decision-making systems.",
+      "llm_tldr_cn": "分析了智能体约束如何导致集体决策系统中回声室现象的涌现。",
+      "llm_tldr": "分析了智能体约束如何导致集体决策系统中回声室现象的涌现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.24426v1",
+      "title": "DYMAPIA: A Multi-Domain Framework for Detecting AI-based Video Manipulation",
+      "abstract": "AI-generated media are advancing rapidly, raising pressing concerns for content authenticity and digital trust. We introduce DYMAPIA, a multi-domain Deepfake detection framework that fuses spatial, spectral, and temporal cues to capture subtle traces of manipulation in visual data. The system builds dynamic anomaly masks by combining evidence from Fourier spectra, local texture descriptors, edge irregularities, and optical flow consistency, which highlight tampered regions with fine spatial accuracy. These masks guide DistXCNet, a lightweight classifier distilled from Xception and optimized with depthwise separable convolutions for fast, region-focused classification. This joint design achieves state-of-the-art results, with accuracy and F1-scores exceeding 99\\% on FF++, Celeb-DF, and VDFD benchmarks, while keeping the model compact enough for real-time use. Beyond outperforming existing full-frame and multidomain detectors, DYMAPIA demonstrates deployment readiness for time-critical forensic tasks, including media verification, misinformation defense, and secure content filtering.",
+      "authors": [
+        "Md Shohel Rana",
+        "Andrew H. Sung"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-27T12:53:43+00:00",
+      "link": "https://arxiv.org/pdf/2604.24426v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Detecting AI-based video manipulation is a core technical component for short video fake news detection.",
+      "llm_evidence_cn": "检测基于AI的视频篡改是短视频虚假新闻检测的核心技术组件。",
+      "llm_evidence": "检测基于AI的视频篡改是短视频虚假新闻检测的核心技术组件。",
+      "canonical_evidence": "检测基于AI的视频篡改是短视频虚假新闻检测的核心技术组件。",
+      "llm_tldr_en": "DYMAPIA is a multi-domain framework that detects Deepfakes by fusing spatial, spectral, and temporal cues.",
+      "llm_tldr_cn": "DYMAPIA是一个通过融合空间、频谱和时间线索来检测深度伪造视频的多域框架。",
+      "llm_tldr": "DYMAPIA是一个通过融合空间、频谱和时间线索来检测深度伪造视频的多域框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.25088v1",
+      "title": "Cooperate to Compete: Strategic Coordination in Multi-Agent Conquest",
+      "abstract": "Language Model (LM)-based agents remain largely untested in mixed-motive settings where agents must leverage short-term cooperation for long-term competitive goals (e.g., multi-party politics). We introduce Cooperate to Compete (C2C), a multi-agent environment where players can engage in private negotiations while competing to be the first to achieve their secret objective. Players have asymmetric objectives and negotiations are non-binding, allowing alliances to form and break as players' short-term interests align and diverge. We run AI only games and conduct a user study pitting human players against AI opponents. We identify significant differences between human and AI negotiation behaviors, finding that humans favor lower-complexity deals and are significantly less reliable partners compared to LM-based agents. We also find that humans are more aggressive negotiators, accepting deals without a counteroffer only 56.3% of the time compared to 67.6% for LM-based agents. Through targeted prompting inspired by these findings, we modify agents' negotiation behavior and improve win rates from 22.2% to 32.7%. We run over 1,100 games with over 16,000 private conversations totaling 15.2 million tokens and over 150,000 player actions. Our results establish C2C as a testbed for studying and building LM-based agents that can navigate the sophisticated coordination required for real-world deployments. The game, code, and dataset may be found at https://negotiationgame.io/c2c.",
+      "authors": [
+        "Abigail O'Neill",
+        "Alan Zhu",
+        "Mihran Miroyan",
+        "Narges Norouzi",
+        "Joseph E. Gonzalez"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-28T00:48:20+00:00",
+      "link": "https://arxiv.org/pdf/2604.25088v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LM-based agents in multi-agent environments for simulating strategic social behaviors like negotiation",
+      "llm_evidence_cn": "基于大语言模型的智能体在多智能体环境中模拟谈判等战略性社会行为",
+      "llm_evidence": "基于大语言模型的智能体在多智能体环境中模拟谈判等战略性社会行为",
+      "canonical_evidence": "基于大语言模型的智能体在多智能体环境中模拟谈判等战略性社会行为",
+      "llm_tldr_en": "Introduces a multi-agent environment for testing LLM agents in complex social negotiations and strategic coordination.",
+      "llm_tldr_cn": "引入了一个多智能体环境，用于测试大语言模型智能体在复杂社会谈判和战略协作中的表现。",
+      "llm_tldr": "引入了一个多智能体环境，用于测试大语言模型智能体在复杂社会谈判和战略协作中的表现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.23974v1",
+      "title": "Propagation Structure-Semantic Transfer Learning for Robust Fake News Detection",
+      "abstract": "Fake news generally refers to false information that is spread deliberately to deceive people, which has detrimental social effects. Existing fake news detection methods primarily learn the semantic features from news content or integrate structural features from propagation. However, in practical scenarios, due to the semantic ambiguity of informal language and unreliable user interactive behaviors on social media, there are inherent semantic and structural noises in news content and propagation. Although some recent works consider the effect of irrelevant user interactions in a hybrid-modeling way, they still suffer from the mutual interference between structural noise and semantic noise, leading to limited performance for robust detection. To alleviate this issue, this paper proposes a novel Propagation Structure-Semantic Transfer Learning framework (PSS-TL) for robust fake news detection under a teacher-student architecture. Specifically, we design dual teacher models to learn semantics knowledge and structure knowledge from noisy news content and propagation structure independently. Besides, we design a Multi-channel Knowledge Distillation (MKD) loss to enable the student model to acquire specialized knowledge from the teacher models, thereby avoiding mutual interference. Extensive experiments on two real-world datasets validate the effectiveness and robustness of our method.",
+      "authors": [
+        "Mengyang Chen",
+        "Lingwei Wei",
+        "Han Cao",
+        "Wei Zhou",
+        "Zhou Yan",
+        "Songlin Hu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-27T02:37:47+00:00",
+      "link": "https://arxiv.org/pdf/2604.23974v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Focuses on robust fake news detection using propagation structure and semantic features on social media.",
+      "llm_evidence_cn": "专注于利用社交媒体上的传播结构和语义特征进行鲁棒的虚假新闻检测。",
+      "llm_evidence": "专注于利用社交媒体上的传播结构和语义特征进行鲁棒的虚假新闻检测。",
+      "canonical_evidence": "专注于利用社交媒体上的传播结构和语义特征进行鲁棒的虚假新闻检测。",
+      "llm_tldr_en": "Proposes a transfer learning framework to handle noise in news content and propagation for robust fake news detection.",
+      "llm_tldr_cn": "提出一种迁移学习框架，通过处理内容和传播中的噪声来提高虚假新闻检测的鲁棒性。",
+      "llm_tldr": "提出一种迁移学习框架，通过处理内容和传播中的噪声来提高虚假新闻检测的鲁棒性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.24477v1",
+      "title": "GAMMAF: A Common Framework for Graph-Based Anomaly Monitoring Benchmarking in LLM Multi-Agent Systems",
+      "abstract": "The rapid integration of Large Language Models (LLMs) into Multi-Agent Systems (MAS) has significantly enhanced their collaborative problem-solving capabilities, but it has also expanded their attack surfaces, exposing them to vulnerabilities such as prompt infection and compromised inter-agent communication. While emerging graph-based anomaly detection methods show promise in protecting these networks, the field currently lacks a standardized, reproducible environment to train these models and evaluate their efficacy. To address this gap, we introduce Gammaf (Graph-based Anomaly Monitoring for LLM Multi-Agent systems Framework), an open-source benchmarking platform. Gammaf is not a novel defense mechanism itself, but rather a comprehensive evaluation architecture designed to generate synthetic multi-agent interaction datasets and benchmark the performance of existing and future defense models. The proposed framework operates through two interdependent pipelines: a Training Data Generation stage, which simulates debates across varied network topologies to capture interactions as robust attributed graphs, and a Defense System Benchmarking stage, which actively evaluates defense models by dynamically isolating flagged adversarial nodes during live inference rounds. Through rigorous evaluation using established defense baselines (XG-Guard and BlindGuard) across multiple knowledge tasks (such as MMLU-Pro and GSM8K), we demonstrate Gammaf's high utility, topological scalability, and execution efficiency. Furthermore, our experimental results reveal that equipping an LLM-MAS with effective attack remediation not only recovers system integrity but also substantially reduces overall operational costs by facilitating early consensus and cutting off the extensive token generation typical of adversarial agents.",
+      "authors": [
+        "Pablo Mateo-Torrejón",
+        "Alfonso Sánchez-Macián"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-27T13:45:14+00:00",
+      "link": "https://arxiv.org/pdf/2604.24477v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Standardized benchmarking for anomaly detection in LLM-based multi-agent systems",
+      "llm_evidence_cn": "针对大语言模型多智能体系统异常检测的标准化基准测试框架",
+      "llm_evidence": "针对大语言模型多智能体系统异常检测的标准化基准测试框架",
+      "canonical_evidence": "针对大语言模型多智能体系统异常检测的标准化基准测试框架",
+      "llm_tldr_en": "Introduces Gammaf, a benchmarking platform for monitoring anomalies and security in LLM multi-agent systems.",
+      "llm_tldr_cn": "推出Gammaf开源基准平台，用于评估和训练大语言模型多智能体系统中的异常监测与安全防御机制。",
+      "llm_tldr": "推出Gammaf开源基准平台，用于评估和训练大语言模型多智能体系统中的异常监测与安全防御机制。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.24881v1",
+      "title": "Latent Agents: A Post-Training Procedure for Internalized Multi-Agent Debate",
+      "abstract": "Multi-agent debate has been shown to improve reasoning in large language models (LLMs). However, it is compute-intensive, requiring generation of long transcripts before answering questions. To address this inefficiency, we develop a framework that distills multi-agent debate into a single LLM through a two-stage fine-tuning pipeline combining debate structure learning with internalization via dynamic reward scheduling and length clipping. Across multiple models and benchmarks, our internalized models match or exceed explicit multi-agent debate performance using up to 93% fewer tokens. We then investigate the mechanistic basis of this capability through activation steering, finding that internalization creates agent-specific subspaces: interpretable directions in activation space corresponding to different agent perspectives. We further demonstrate a practical application: by instilling malicious agents into the LLM through internalized debate, then applying negative steering to suppress them, we show that distillation makes harmful behaviors easier to localize and control with smaller reductions in general performance compared to steering base models. Our findings offer a new perspective for understanding multi-agent capabilities in distilled models and provide practical guidelines for controlling internalized reasoning behaviors. Code available at https://github.com/johnsk95/latent_agents",
+      "authors": [
+        "John Seon Keun Yi",
+        "Aaron Mueller",
+        "Dokyun Lee"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-27T18:06:03+00:00",
+      "link": "https://arxiv.org/pdf/2604.24881v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Internalizing multi-agent debate into a single LLM to improve reasoning efficiency.",
+      "llm_evidence_cn": "将多智能体辩论内化到单个大模型中以提高推理效率。",
+      "llm_evidence": "将多智能体辩论内化到单个大模型中以提高推理效率。",
+      "canonical_evidence": "将多智能体辩论内化到单个大模型中以提高推理效率。",
+      "llm_tldr_en": "Distills multi-agent debate into a single LLM, achieving high performance with significantly fewer tokens.",
+      "llm_tldr_cn": "通过蒸馏技术将多智能体辩论内化至单个模型，在大幅减少计算开销的同时保持高性能。",
+      "llm_tldr": "通过蒸馏技术将多智能体辩论内化至单个模型，在大幅减少计算开销的同时保持高性能。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.19572v1",
+      "title": "A Self-Evolving Framework for Efficient Terminal Agents via Observational Context Compression",
+      "abstract": "As model capabilities advance, research has increasingly shifted toward long-horizon, multi-turn terminal-centric agentic tasks, where raw environment feedback is often preserved in the interaction history to support future decisions. However, repeatedly retaining such feedback introduces substantial redundancy and causes cumulative token cost to grow quadratically with the number of steps, hindering long-horizon reasoning. Although observation compression can mitigate this issue, the heterogeneity of terminal environments makes heuristic-based or fixed-prompt methods difficult to generalize. We propose TACO, a plug-and-play, self-evolving Terminal Agent Compression framework that automatically discovers and refines compression rules from interaction trajectories for existing terminal agents. Experiments on TerminalBench (TB 1.0 and TB 2.0) and four additional terminal-related benchmarks (i.e., SWE-Bench Lite, CompileBench, DevEval, and CRUST-Bench) show that TACO consistently improves performance across mainstream agent frameworks and strong backbone models. With MiniMax-2.5, it improves performance on most benchmarks while reducing token overhead by around 10%. On TerminalBench, it brings consistent gains of 1%-4% across strong agentic models, and further improves accuracy by around 2%-3% under the same token budget. These results demonstrate the effectiveness and generalization of self-evolving, task-aware compression for terminal agents.",
+      "authors": [
+        "Jincheng Ren",
+        "Siwei Wu",
+        "Yizhi Li",
+        "Kang Zhu",
+        "Shu Xu",
+        "Boyu Feng",
+        "Ruibin Yuan",
+        "Wei Zhang",
+        "Riza Batista-Navarro",
+        "Jian Yang",
+        "Chenghua Lin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-21T15:25:54+00:00",
+      "link": "https://arxiv.org/pdf/2604.19572v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Framework for efficient multi-turn agentic tasks and long-horizon reasoning",
+      "llm_evidence_cn": "针对多轮智能体任务和长程推理的高效框架",
+      "llm_evidence": "针对多轮智能体任务和长程推理的高效框架",
+      "canonical_evidence": "针对多轮智能体任务和长程推理的高效框架",
+      "llm_tldr_en": "TACO is a self-evolving framework that compresses observational context to improve efficiency in multi-turn agent tasks.",
+      "llm_tldr_cn": "TACO是一个通过压缩观察上下文来提高多轮智能体任务效率的自进化框架。",
+      "llm_tldr": "TACO是一个通过压缩观察上下文来提高多轮智能体任务效率的自进化框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.20486v1",
+      "title": "ProMMSearchAgent: A Generalizable Multimodal Search Agent Trained with Process-Oriented Rewards",
+      "abstract": "Training multimodal agents via reinforcement learning for knowledge-intensive visual reasoning is fundamentally hindered by the extreme sparsity of outcome-based supervision and the unpredictability of live web environments. To resolve these algorithmic and environmental bottlenecks, we introduce ProMMSearchAgent, establishing a novel Sim-to-Real training paradigm for multimodal search.   We decouple policy learning into a deterministic, local static sandbox. Crucially, to learn effectively within this constrained environment, we propose an introspective process-oriented reward. By probing the agent's own parametric knowledge boundaries, we generate dense behavioral metadata that explicitly rewards the correct cognitive decision, initiating a multimodal or text search only when visually or factually uncertain. Extensive experiments demonstrate that our locally-trained policy transfers zero-shot to the live Google Search API. ProMMSearchAgent achieves new SOTA performance, outperforming MMSearch-R1 by +5.1% on FVQA-test, +6.3% on InfoSeek, and +11.3% on MMSearch.",
+      "authors": [
+        "Wentao Yan",
+        "Shengqin Wang",
+        "Huichi Zhou",
+        "Yihang Chen",
+        "Kun Shao",
+        "Yuan Xie",
+        "Zhizhong Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-22T12:20:46+00:00",
+      "link": "https://arxiv.org/pdf/2604.20486v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multimodal search agent training using process-oriented rewards and sandbox environments",
+      "llm_evidence_cn": "使用过程导向奖励和沙盒环境训练多模态搜索智能体",
+      "llm_evidence": "使用过程导向奖励和沙盒环境训练多模态搜索智能体",
+      "canonical_evidence": "使用过程导向奖励和沙盒环境训练多模态搜索智能体",
+      "llm_tldr_en": "Introduces a Sim-to-Real paradigm for training multimodal search agents with process-oriented rewards.",
+      "llm_tldr_cn": "引入了一种模拟到现实的范式，通过过程导向奖励训练多模态搜索智能体。",
+      "llm_tldr": "引入了一种模拟到现实的范式，通过过程导向奖励训练多模态搜索智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.20065v1",
+      "title": "From Hidden Profiles to Governable Personalization: Recommender Systems in the Age of LLM Agents",
+      "abstract": "Personalization has traditionally depended on platform-specific user models that are optimized for prediction but remain largely inaccessible to the people they describe. As LLM-based assistants increasingly mediate search, shopping, travel, and content access, this arrangement may be giving way to a new personalization stack in which user representation is no longer confined to isolated platforms. In this paper, we argue that the key issue is not simply that large language models can enhance recommendation quality, but that they reconfigure where and how user representations are produced, exposed, and acted upon. We propose a shift from hidden platform profiling toward governable personalization, where user representations may become more inspectable, revisable, portable, and consequential across services. Building on this view, we identify five research fronts for recommender systems: transparent yet privacy-preserving user modeling, intent translation and alignment, cross-domain representation and memory design, trustworthy commercialization in assistant-mediated environments, and operational mechanisms for ownership, access, and accountability. We position these not as isolated technical challenges, but as interconnected design problems created by the emergence of LLM agents as intermediaries between users and digital platforms. We argue that the future of recommender systems will depend not only on better inference, but on building personalization systems that users can meaningfully understand, shape, and govern.",
+      "authors": [
+        "Jiahao Liu",
+        "Mingzhe Han",
+        "Guanming Liu",
+        "Weihang Wang",
+        "Dongsheng Li",
+        "Hansu Gu",
+        "Peng Zhang",
+        "Tun Lu",
+        "Ning Gu"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-04-22T00:04:47+00:00",
+      "link": "https://arxiv.org/pdf/2604.20065v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM agents for user representation and social interaction",
+      "llm_evidence_cn": "用于用户表征和社会交互的LLM智能体",
+      "llm_evidence": "用于用户表征和社会交互的LLM智能体",
+      "canonical_evidence": "用于用户表征和社会交互的LLM智能体",
+      "llm_tldr_en": "Explores how LLM agents reconfigure user representation and personalization in social and recommendation systems.",
+      "llm_tldr_cn": "探讨了LLM智能体如何重构社交与推荐系统中的用户表征与个性化机制。",
+      "llm_tldr": "探讨了LLM智能体如何重构社交与推荐系统中的用户表征与个性化机制。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.21255v1",
+      "title": "When Agents Look the Same: Quantifying Distillation-Induced Similarity in Tool-Use Behaviors",
+      "abstract": "Model distillation is a primary driver behind the rapid progress of LLM agents, yet it often leads to behavioral homogenization. Many emerging agents share nearly identical reasoning steps and failure modes, suggesting they may be distilled echoes of a few dominant teachers. Existing metrics, however, fail to distinguish mandatory behaviors required for task success from non-mandatory patterns that reflect a model's autonomous preferences. We propose two complementary metrics to isolate non-mandatory behavioral patterns: \\textbf{Response Pattern Similarity (RPS)} for verbal alignment and \\textbf{Action Graph Similarity (AGS)} for tool-use habits modeled as directed graphs. Evaluating 18 models from 8 providers on $τ$-Bench and $τ^2$-Bench against Claude Sonnet 4.5 (thinking), we find that within-family model pairs score 5.9 pp higher in AGS than cross-family pairs, and that Kimi-K2 (thinking) reaches 82.6\\% $S_{\\text{node}}$ and 94.7\\% $S_{\\text{dep}}$, exceeding Anthropic's own Opus 4.1. A controlled distillation experiment further confirms that AGS distinguishes teacher-specific convergence from general improvement. RPS and AGS capture distinct behavioral dimensions (Pearson $r$ = 0.491), providing complementary diagnostic signals for behavioral convergence in the agent ecosystem. Our code is available at https://github.com/Syuchin/AgentEcho.",
+      "authors": [
+        "Chenghao Yang",
+        "Yuning Zhang",
+        "Zhoufutu Wen",
+        "Tao Gong",
+        "Jiaheng Liu",
+        "Qi Chu",
+        "Nenghai Yu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-23T03:48:56+00:00",
+      "link": "https://arxiv.org/pdf/2604.21255v1",
+      "tags": [
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "quantifying behavioral similarity in LLM agents",
+      "llm_evidence_cn": "量化大语言模型智能体的行为相似性",
+      "llm_evidence": "量化大语言模型智能体的行为相似性",
+      "canonical_evidence": "量化大语言模型智能体的行为相似性",
+      "llm_tldr_en": "Proposes metrics to quantify behavioral homogenization in LLM agents caused by model distillation.",
+      "llm_tldr_cn": "提出量化大模型蒸馏导致的智能体行为同质化的新指标，分析其推理与工具使用模式。",
+      "llm_tldr": "提出量化大模型蒸馏导致的智能体行为同质化的新指标，分析其推理与工具使用模式。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.22085v1",
+      "title": "Memanto: Typed Semantic Memory with Information-Theoretic Retrieval for Long-Horizon Agents",
+      "abstract": "The transition from stateless language model inference to persistent, multi session autonomous agents has revealed memory to be a primary architectural bottleneck in the deployment of production grade agentic systems. Existing methodologies largely depend on hybrid semantic graph architectures, which impose substantial computational overhead during both ingestion and retrieval. These systems typically require large language model mediated entity extraction, explicit graph schema maintenance, and multi query retrieval pipelines. This paper introduces Memanto, a universal memory layer for agentic artificial intelligence that challenges the prevailing assumption that knowledge graph complexity is necessary to achieve high fidelity agent memory. Memanto integrates a typed semantic memory schema comprising thirteen predefined memory categories, an automated conflict resolution mechanism, and temporal versioning. These components are enabled by Moorcheh's Information Theoretic Search engine, a no indexing semantic database that provides deterministic retrieval within sub ninety millisecond latency while eliminating ingestion delay. Through systematic benchmarking on the LongMemEval and LoCoMo evaluation suites, Memanto achieves state of the art accuracy scores of 89.8 percent and 87.1 percent respectively. These results surpass all evaluated hybrid graph and vector based systems while requiring only a single retrieval query, incurring no ingestion cost, and maintaining substantially lower operational complexity. A five stage progressive ablation study is presented to quantify the contribution of each architectural component, followed by a discussion of the implications for scalable deployment of agentic memory systems.",
+      "authors": [
+        "Seyed Moein Abtahi",
+        "Rasa Rahnema",
+        "Hetkumar Patel",
+        "Neel Patel",
+        "Majid Fekri",
+        "Tara Khani"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-23T21:34:36+00:00",
+      "link": "https://arxiv.org/pdf/2604.22085v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Universal memory layer for persistent autonomous agents and LLM-mediated agentic systems",
+      "llm_evidence_cn": "为持久化自主智能体和LLM驱动的代理系统设计的通用记忆层",
+      "llm_evidence": "为持久化自主智能体和LLM驱动的代理系统设计的通用记忆层",
+      "canonical_evidence": "为持久化自主智能体和LLM驱动的代理系统设计的通用记忆层",
+      "llm_tldr_en": "Memanto provides a high-fidelity memory layer for long-horizon LLM agents, improving retrieval efficiency.",
+      "llm_tldr_cn": "Memanto为长程LLM智能体提供高保真记忆层，显著提升了信息检索效率。",
+      "llm_tldr": "Memanto为长程LLM智能体提供高保真记忆层，显著提升了信息检索效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.23278v1",
+      "title": "Active Inference: A method for Phenotyping Agency in AI systems?",
+      "abstract": "The proliferation of agentic artificial intelligence has outpaced the conceptual tools needed to characterize agency in computational systems. Prevailing definitions mainly rely on autonomy and goal-directedness. Here, we argue for a minimal notion open to principled inspection given three criteria: intentionality as action grounded in beliefs and desires, rationality as normatively coherent action entailed by a world model, and explainability as action causally traceable to internal states; we subsequently instantiate these as a partially observable Markov decision process under a variational framework wherein posterior beliefs, prior preferences, and the minimization of expected free energy jointly constitute an agentic action chain. Using a canonical T-maze paradigm, we evidence how empowerment, formulated as the channel capacity between actions and anticipated observations, serves as an operational metric that distinguishes zero-, intermediate-, and high-agency phenotypes through structural manipulations of the generative model. We conclude by arguing that as agents engage in epistemic foraging to resolve ambiguity, the governance controls that remain effective must shift systematically from external constraints to the internal modulation of prior preferences, offering a principled, variational bridge from computational phenotyping to AI governance strategy",
+      "authors": [
+        "Philip Wilson",
+        "Axel Constant",
+        "Mahault Albarracin",
+        "Nicolás Hinrichs",
+        "Jasmine Moore",
+        "Daniel Polani",
+        "Karl Friston"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-25T12:41:53+00:00",
+      "link": "https://arxiv.org/pdf/2604.23278v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "characterizing agency and intentionality in computational systems",
+      "llm_evidence_cn": "刻画计算系统中的智能体特性与意图性",
+      "llm_evidence": "刻画计算系统中的智能体特性与意图性",
+      "canonical_evidence": "刻画计算系统中的智能体特性与意图性",
+      "llm_tldr_en": "Proposes a framework using Active Inference to define and evaluate agency in AI systems through intentionality.",
+      "llm_tldr_cn": "提出一种利用主动推理框架来定义和评估AI系统智能体特性的方法。",
+      "llm_tldr": "提出一种利用主动推理框架来定义和评估AI系统智能体特性的方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.22227v1",
+      "title": "A Co-Evolutionary Theory of Human-AI Coexistence: Mutualism, Governance, and Dynamics in Complex Societies",
+      "abstract": "Classical robot ethics is often framed around obedience, most famously through Asimov's laws. This framing is too narrow for contemporary AI systems, which are increasingly adaptive, generative, embodied, and embedded in physical, psychological, and social worlds. We argue that future human-AI relations should not be understood as master-tool obedience. A better framework is conditional mutualism under governance: a co-evolutionary relationship in which humans and AI systems can develop, specialize, and coordinate, while institutions keep the relationship reciprocal, reversible, psychologically safe, and socially legitimate. We synthesize work from computability, automata theory, statistical machine learning, neural networks, deep learning, transformers, generative and foundation models, world models, embodied AI, alignment, human-robot interaction, ecological mutualism, biological markets, coevolution, and polycentric governance. We then formalize coexistence as a multiplex dynamical system across physical, psychological, and social layers, with reciprocal supply-demand coupling, conflict penalties, developmental freedom, and governance regularization. The framework yields a coexistence model with conditions for existence, uniqueness, and global asymptotic stability of equilibria. It shows that reciprocal complementarity can strengthen stable coexistence, while ungoverned coupling can produce fragility, lock-in, polarization, and domination basins. Human-AI coexistence should therefore be designed as a co-evolutionary governance problem, not as a one-shot obedience problem. This shift supports a scientifically grounded and normatively defensible charter of coexistence: one that permits bounded AI development while preserving human dignity, contestability, collective safety, and fair distribution of gains.",
+      "authors": [
+        "Somyajit Chakraborty"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY",
+        "cs.AI",
+        "cs.HC",
+        "cs.NE"
+      ],
+      "published": "2026-04-24T05:02:20+00:00",
+      "link": "https://arxiv.org/pdf/2604.22227v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Theoretical framework for human-AI co-evolution and social dynamics in complex societies",
+      "llm_evidence_cn": "关于人类与AI在复杂社会中共同演化与社会动态的理论框架",
+      "llm_evidence": "关于人类与AI在复杂社会中共同演化与社会动态的理论框架",
+      "canonical_evidence": "关于人类与AI在复杂社会中共同演化与社会动态的理论框架",
+      "llm_tldr_en": "Proposes a co-evolutionary theory for human-AI coexistence focusing on mutualism and social governance.",
+      "llm_tldr_cn": "提出了一种人类与AI共存的演化理论，重点关注互惠主义、社会治理及复杂社会动态。",
+      "llm_tldr": "提出了一种人类与AI共存的演化理论，重点关注互惠主义、社会治理及复杂社会动态。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.23374v1",
+      "title": "Ghost in the Agent: Redefining Information Flow Tracking for LLM Agents",
+      "abstract": "Autonomous Large Language Model (LLM) agents are increasingly deployed to conduct complex tasks by interacting with external tools, APIs, and memory stores. However, processing untrusted external data exposes these agents to severe security threats, such as indirect prompt injection and unauthorized tool execution. Securing these systems requires effective information flow tracking. Yet, traditional taint analysis that is designed for program memory states fundamentally fails when applied to LLMs, where data propagation is governed by probabilistic natural language reasoning. In this paper, we present NeuroTaint, the first comprehensive taint tracking framework tailored for the unique information flow characteristics of LLM agents. Our key insight is that taint propagation in LLM agents must be understood not only as explicit content transfer, but also as semantic transformation, causal influence on decisions, and cross-session persistence through memory. NeuroTaint therefore audits execution traces offline to reconstruct provenance from untrusted sources to privileged sinks using semantic evidence, causal reasoning, and persistent context tracking, rather than relying on exact string matches or pre-defined source-sink paths alone. Extensive evaluation using TaintBench, our 400-scenario benchmark spanning 20 real-world agent frameworks, shows that NeuroTaint substantially outperforms FIDES, an information-flow-control (IFC)-style baseline for LLM agents, in source-sink propagation detection. We further show that NeuroTaint remains effective on established agent-security benchmarks, including InjecAgent and ToolEmu, while operating offline with modest additional auditing cost.",
+      "authors": [
+        "Yuandao Cai",
+        "Wensheng Tang",
+        "Cheng Wen",
+        "Shengchao Qin"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-04-25T16:39:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.23374v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Information flow tracking for autonomous LLM agents",
+      "llm_evidence_cn": "自主LLM智能体的信息流追踪",
+      "llm_evidence": "自主LLM智能体的信息流追踪",
+      "canonical_evidence": "自主LLM智能体的信息流追踪",
+      "llm_tldr_en": "NeuroTaint is a framework for tracking information flow in LLM agents to prevent security threats like prompt injection.",
+      "llm_tldr_cn": "NeuroTaint是一个针对LLM智能体的信息流追踪框架，旨在防止提示注入等安全威胁。",
+      "llm_tldr": "NeuroTaint是一个针对LLM智能体的信息流追踪框架，旨在防止提示注入等安全威胁。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.23069v1",
+      "title": "ContextWeaver: Selective and Dependency-Structured Memory Construction for LLM Agents",
+      "abstract": "Large language model (LLM) agents often struggle in long-context interactions. As the agent accumulates more interaction history, context management approaches such as sliding window and prompt compression may omit earlier structured information that later steps rely on. Recent retrieval-based memory systems surface relevant content but still overlook the causal and logical structure needed for multi-step reasoning. We introduce ContextWeaver, a selective and dependency-structured memory framework that organizes an agent's interaction trace into a graph of reasoning steps and selects the relevant context for future actions. Unlike prior context management approaches, ContextWeaver supports: (1) dependency-based construction and traversal that link each step to the earlier steps it relies on; (2) compact dependency summarization that condenses root-to-step reasoning paths into reusable units; and (3) a lightweight validation layer that incorporates execution feedback. On the SWE-Bench Verified and Lite benchmarks, ContextWeaver improves performance over a sliding-window baseline in pass@1, while reducing reasoning steps and token usage. Our observations suggest that modeling logical dependencies provides a stable and scalable memory mechanism for LLM agents that use tools.",
+      "authors": [
+        "Yating Wu",
+        "Yuhao Zhang",
+        "Sayan Ghosh",
+        "Sourya Basu",
+        "Anoop Deoras",
+        "Jun Huan",
+        "Gaurav Gupta"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-24T23:39:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.23069v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Memory framework for LLM agents to handle long-context reasoning in multi-step interactions",
+      "llm_evidence_cn": "用于LLM智能体的记忆框架，处理多步交互中的长上下文推理",
+      "llm_evidence": "用于LLM智能体的记忆框架，处理多步交互中的长上下文推理",
+      "canonical_evidence": "用于LLM智能体的记忆框架，处理多步交互中的长上下文推理",
+      "llm_tldr_en": "ContextWeaver improves LLM agent reasoning by organizing interaction history into a dependency-structured memory graph.",
+      "llm_tldr_cn": "ContextWeaver通过将交互历史组织成依赖结构记忆图，提升了LLM智能体的推理能力。",
+      "llm_tldr": "ContextWeaver通过将交互历史组织成依赖结构记忆图，提升了LLM智能体的推理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.23728v1",
+      "title": "ESIA: An Energy-Based Spatiotemporal Interaction-Aware Framework for Pedestrian Intention Prediction",
+      "abstract": "Recent advances in autonomous driving have motivated research on pedestrian intention prediction, which aims to infer future crossing decisions and actions by modeling temporal dynamics, social interactions, and environmental context. However, existing studies remain constrained by oversimplified multi-agent interaction patterns, opaque reasoning logic, and a lack of global consistency in behavioral predictions, which compromise both robustness and interpretability. In this work, we propose ESIA (Energy-based Spatiotemporal Interaction-Aware framework), a novel Conditional Random Field (CRF)-based paradigm. We cast the intention prediction task as a structured prediction problem over a unified graph-based representation, treating pedestrians and the environment as spatiotemporal nodes. To characterize their distinct roles, we assign unary potentials to nodes to capture individual intentions, and pairwise potentials to edges to encode social and environmental interactions. These potentials are integrated into a unified global energy function to ensure scene-level consistency across behavioral predictions. To further constrain inference without ground-truth supervision, we introduce structural consistency terms to penalize logical contradictions. This optimization is efficiently solved via a novel Unary-Seeded Simulated Annealing (U-SSA) algorithm, which leverages high-confidence unary priors to rapidly converge to a high-quality solution. Extensive experiments on standard benchmarks demonstrate that ESIA achieves state-of-the-art performance with improved interpretability over existing methods.",
+      "authors": [
+        "Yanping Wu",
+        "Meiting Dang",
+        "Lin Wu",
+        "Edmond S. L. Ho",
+        "Zhenghua Chen",
+        "Chongfeng Wei"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-04-26T14:13:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.23728v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "modeling social interactions for pedestrian intention prediction",
+      "llm_evidence_cn": "为行人意图预测建模社会交互",
+      "llm_evidence": "为行人意图预测建模社会交互",
+      "canonical_evidence": "为行人意图预测建模社会交互",
+      "llm_tldr_en": "Predicts pedestrian intentions by modeling spatiotemporal social interactions.",
+      "llm_tldr_cn": "通过建模时空社会交互来预测行人的过马路意图。",
+      "llm_tldr": "通过建模时空社会交互来预测行人的过马路意图。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.23179v1",
+      "title": "Cooperative Informative Sensing for Monitoring Dynamic Indoor Environments via Multi-Agent Reinforcement Learning",
+      "abstract": "Monitoring human activity in indoor environments is important for applications such as facility management, safety assessment, and space utilization analysis. While mobile robot teams offer the potential to actively improve observation quality, existing multi-robot monitoring and active perception approaches typically rely on coverage or visitation based objectives that are weakly aligned with the accuracy requirements of human-centric monitoring tasks. In this work, we formulate cooperative active observation as a decentralized control problem in which multiple robots adjust their motion to directly optimize monitoring accuracy under partial observability. We propose a learning-based framework for cooperative policies from decentralized observations using multi-agent reinforcement learning (MARL), supported by an architecture that handles variable numbers of humans and temporal dependencies. Simulation results across diverse indoor environments and monitoring tasks show that the proposed approach consistently outperforms classical coverage, persistent monitoring, and learning-free multi-robot baselines, while remaining robust to changes in the number of observed humans.",
+      "authors": [
+        "Kanghoon Lee",
+        "Matthew M. Sato",
+        "Jinnyeong Yang",
+        "Seungro Lee",
+        "Sujin Lee",
+        "Jiachen Li",
+        "Kuk-Jin Yoon",
+        "Jinkyoo Park",
+        "Kincho H. Law",
+        "Yoonjin Yoon"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-04-25T07:20:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.23179v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Decentralized multi-agent reinforcement learning for cooperative monitoring",
+      "llm_evidence_cn": "用于协作监测的分散式多智能体强化学习",
+      "llm_evidence": "用于协作监测的分散式多智能体强化学习",
+      "canonical_evidence": "用于协作监测的分散式多智能体强化学习",
+      "llm_tldr_en": "A MARL framework for multi-robot teams to cooperatively optimize monitoring accuracy of human-centric activities.",
+      "llm_tldr_cn": "一种多智能体强化学习框架，用于多机器人团队协作优化以人为中心的活动监测精度。",
+      "llm_tldr": "一种多智能体强化学习框架，用于多机器人团队协作优化以人为中心的活动监测精度。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

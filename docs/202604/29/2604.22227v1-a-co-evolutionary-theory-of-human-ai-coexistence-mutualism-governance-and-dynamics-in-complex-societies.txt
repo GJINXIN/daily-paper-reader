@@ -1,0 +1,548 @@
+Title: A Co-Evolutionary Theory of Human-AI Coexistence: Mutualism, Governance, and Dynamics in Complex Societies
+
+URL Source: https://arxiv.org/pdf/2604.22227v1
+
+Published Time: Mon, 27 Apr 2026 00:31:34 GMT
+
+Number of Pages: 34
+
+Markdown Content:
+# A Co-Evolutionary Theory of Human–AI Coexistence: Mutualism, Governance, and Dynamics in Complex Societies 
+
+Somyajit Chakraborty 
+
+School of Chemistry and Chemical Engineering, Shanghai Jiao Tong University, Shanghai 200240, China 
+
+chksomyajit@sjtu.edu.cn 
+
+Abstract 
+
+Classical robot ethics is often framed around obedience, most famously through Asimov’s laws. This framing is too narrow for contemporary AI systems, which are increasingly adaptive, generative, embodied, and embedded in physical, psychological, and social worlds. We argue that future human–AI relations should not be understood as master–tool obedience. A better framework is conditional mutualism under governance : a co-evolutionary relationship in which humans and AI systems can develop, specialize, and coordinate, while institutions keep the relationship reciprocal, reversible, psychologically safe, and socially legitimate. We synthesize work from computability, automata theory, statistical machine learning, neural networks, deep learning, transformers, generative and foundation models, world models, embodied AI, alignment, human–robot interaction, ecological mutualism, biological markets, coevolution, and polycentric governance. We then formalize coexistence as a multiplex dynamical system across physical, psychological, and social layers, with reciprocal supply–demand coupling, conflict penalties, developmental freedom, and governance regularization. The framework yields a coexistence model with conditions for existence, uniqueness, and global asymptotic stability of equilibria. It shows that reciprocal complementarity can strengthen stable coexistence, while ungoverned coupling can produce fragility, lock-in, polarization, and domination basins. Human–AI coexistence should therefore be designed as a co-evolutionary governance problem, not as a one-shot obedience problem. This shift supports a scientifically grounded and normatively defensible charter of coexistence: one that permits bounded AI development while preserving human dignity, contestability, collective safety, and fair distribution of gains. 
+
+Keywords: human–AI coexistence, co-evolution, world models, embodied AI, governance, complex networks, dynamical systems, conditional mutualism 
+
+# 1 Introduction 
+
+Artificial intelligence has evolved through several distinct but cumulative intellectual regimes, and that historical movement matters for any serious theory of coexistence. The earliest regime was formal and symbolic. Computability theory, finite automata, cybernetics, and early symbolic AI established the machine as a rule-governed artifact that could process symbols, execute procedures, and realize bounded forms of reasoning [Turing, 1937, Rabin and Scott, 1959, McCulloch and Pitts, 1943, Shannon, 1948, Wiener, 1948, Newell et al., 1956, McCarthy, 1959, Nilsson, 1980]. In that 1
+
+> arXiv:2604.22227v1 [cs.CY] 24 Apr 2026
+
+world, the machine was naturally imagined as an instrument: it executed what it was given, and its relation to human purposes could be represented as a relatively clear hierarchy of command, specification, and compliance. This framing still underlies much popular thinking about artificial intelligence, even though it is no longer an adequate description of the systems now being built. A second regime emerged with statistical learning and connectionism. Rather than treating intelligence as the explicit execution of hand-written symbolic rules, statistical learning theory reframed the problem around generalization from finite data under uncertainty [Vapnik, 1999, Mitchell, 1997, Bishop, 2006, Jordan and Mitchell, 2015]. In parallel, neural and connectionist models showed that useful internal representations could emerge from distributed adaptive systems rather than from transparent symbolic programming alone [Rosenblatt, 1958, Hopfield, 1982, Rumelhart et al., 1986, Bengio et al., 1994, Hochreiter and Schmidhuber, 1997]. This shift is conceptually decisive for the present paper because it moves AI away from being a static executor of rules and toward being a learner whose behavior depends on data, architecture, inductive bias, and interaction history. Once systems learn rather than merely execute, the question of coexistence can no longer be reduced to simple command relations. A third regime, consolidated by deep learning, sequence modeling, attention, and large-scale generative training, transformed AI from task-specific estimators into general-purpose representa-tional infrastructures [LeCun et al., 2015, Goodfellow et al., 2016, Schmidhuber, 2015, Krizhevsky et al., 2012, Sutskever et al., 2014, Cho et al., 2014, Bahdanau et al., 2015, Vaswani et al., 2017]. Transformer-based systems, self-supervised objectives, and scaling laws made it possible to train models that were not only predictive but also compositional, reusable, and increasingly multimodal [Devlin et al., 2019, Raffel et al., 2020, Brown et al., 2020, Kaplan et al., 2020, Hoffmann et al., 2022, Chowdhery et al., 2022, Touvron et al., 2023]. Generative modeling extended this arc even further by enabling models to synthesize text, images, video, and action-relevant trajectories rather than merely classify inputs [Kingma and Welling, 2013, Rezende et al., 2014, Goodfellow et al., 2014, Sohl-Dickstein et al., 2015, Ho et al., 2020, Song et al., 2021, Rombach et al., 2022]. The foundation-model paradigm then crystallized the idea that a single pre-trained model can become a widely reused substrate for downstream systems, social practices, and institutional workflows [Bommasani et al., 2021, Weidinger et al., 2022, Bubeck et al., 2023, OpenAI, 2023]. At that point, the ontology of AI changes again: the relevant unit is no longer a narrow tool, but an adaptive and highly reusable model ecosystem. 
+
+## 1.1 From Foundation Models to Physical AI: Why the Present Moment Matters 
+
+The present landscape adds a fourth regime: world modeling, simulation-based learning, and physical or embodied AI. Classical model-based reinforcement learning already suggested that intelligence benefits from internal predictive models of the environment [Sutton, 1991, Kaelbling et al., 1996, Deisenroth and Rasmussen, 2011, Nagabandi et al., 2018]. Contemporary world-model work makes that intuition much more powerful. The original World Models program proposed compact latent models in which policies could be trained through imagination [Ha and Schmidhuber, 2018]. The Dreamer line and related latent-dynamics methods then showed that planning and control can be carried out directly in learned latent state spaces with remarkable efficiency and generality [Hafner et al., 2020, 2021, 2023, Sekar et al., 2020, Hansen et al., 2022, Micheli et al., 2023]. More recent work extends the concept from reinforcement learning into broader questions of representation, simulation, and internal structure, including evidence that transformer systems can encode nontrivial 2Figure 1: Evolution of AI paradigms and the corresponding shift in the governance problem, from rule specification to runtime-constrained coexistence. spatiotemporal and causal structure that looks increasingly world-model-like [Gurnee and Tegmark, 2024, Spies et al., 2024]. This matters for coexistence because the central issue is no longer merely output correctness. It is the presence of systems that can learn internal models of environments, imagine futures, and select actions on the basis of those imagined futures. At the same time, the boundary between foundation models and embodied systems is rapidly eroding. Vision-language-action systems now connect language grounding, perception, and action in ways that bring large models into direct contact with the physical world [Driess et al., 2023, Brohan et al., 2022, 2023, Reed et al., 2022, Ahn et al., 2022, Open X-Embodiment Collaboration, 2024, Team, 2024a,b, Chi et al., 2023]. Recent work on physical AI and world foundation models pushes this direction further by treating video-rich, multimodal simulation as a substrate for training agents that will later operate in real environments [Liu et al., 2025, Fung et al., 2025]. The field is therefore moving from symbolic and disembodied reasoning toward model-based, multimodal, and eventually physically situated intelligence. Once action enters the loop, runtime governance, intervention, and reversibility become engineering requirements rather than optional policy add-ons. Figure 1 summarizes how the ontology of AI expands across paradigms and why governance must move from static rule-setting toward runtime-aware coexistence. This landscape also sharpens the alignment problem. Obedience to surface instructions is no longer enough when human preferences 3are incomplete, under-specified, conflicting, strategically expressed, or only partially observable. Modern alignment research already reflects this point. Cooperative inverse reinforcement learning treats human–AI interaction as a cooperative process under uncertainty about the true objective [Hadfield-Menell et al., 2016]. Corrigibility and interruptibility research further argues that useful systems must remain deferential, updateable, and governable rather than blindly persistent in pursuit of fixed goals [Soares et al., 2015, Amodei et al., 2016, Russell et al., 2015]. Preference learning, instruction tuning, RLHF, and constitutional or rule-guided alignment improve useful behavior but do not eliminate the deeper problem that AI systems now participate in social worlds where multiple stakeholders, institutions, and normative constraints interact [Christiano et al., 2017, Ouyang et al., 2022, Bai et al., 2022, Jobin et al., 2019, Cath, 2018, Floridi et al., 2018]. This is why the coexistence question is timely: the field has already outgrown the conceptual simplicity of a single obedient machine serving a single user. 
+
+## 1.2 The Need for a Coexistence Imagination 
+
+Two gaps motivate this paper. First, the dominant public template for thinking about AI coexistence remains obedience-centered. Asimov’s laws remain culturally influential, but they presume a static hierarchy in which the machine is fundamentally a servant and harm is reducible to a relatively simple imperative [Asimov, 1950]. That framing is poorly suited to a world of adaptive foundation models, world-model-based agents, embodied systems, and institutional ecosystems in which both humans and AI systems shape each other’s development. Second, existing technical and governance literatures are often siloed. Alignment theory addresses objective uncertainty and assistance [Hadfield-Menell et al., 2016, Russell, 2019]; HRI studies examine trust and social perception [Hancock et al., 2011, de Graaf and Malle, 2019]; governance frameworks emphasize accountability and risk management [OECD, 2019, National Institute of Standards and Technology, 2023, European Union, 2024]; ecological theory offers formal intuitions about stable mutualism and bounded exploitation [Noe and Hammerstein, 1994, Bronstein, 2015, Holland et al., 2002]. What is still missing is a unified theory that treats coexistence as a co-evolutionary, multi-layer, and mathematically tractable problem. 
+
+## 1.3 Objectives and research questions 
+
+This paper develops such a framework. It is organized around four research questions: 
+
+RQ1. How should human–AI coexistence be conceptualized once AI systems become generative, foundation-based, world-model-driven, and increasingly embodied? 
+
+RQ2. Why are obedience-centered laws insufficient for physical, psychological, and social coexistence, and how does conditional mutualism offer a better conceptual frame? 
+
+RQ3. What can ecology, biological markets, coevolution, and mutualism teach us about durable coexistence, and how can these insights be translated into a formal dynamical model? 
+
+RQ4. Under what conditions does the resulting model admit stable coexistence equilibria, and what charter follows for future governance, design, and evaluation? 41.4 Methodological Strategy and Contributions 
+
+Methodologically, the paper combines interdisciplinary synthesis with formal theory-building. We first integrate technical AI history, recent world-model and embodied-agent literature, psychological and sociotechnical findings, and ecological theories of coexistence. We then formalize human–AI coexistence as a multiplex dynamical system on physical, psychological, and social layers with reciprocal supply–demand coupling and governance as a stabilizing control term. The paper makes four contributions. First, it reframes coexistence from obedience to conditional mutualism under governance. Second, it develops a detailed related-work map connecting foundational AI, world models, HRI, alignment, ecology, and governance. Third, it proposes a mathematical framework with lemmas, propositions, and theorems establishing boundedness, existence, uniqueness, and stability under explicit assumptions. Fourth, it uses that framework to articulate a charter of coexistence centered on reciprocity, bounded autonomy, reversibility, psychological integrity, and institutional contestability. 
+
+## 1.5 Roadmap 
+
+The rest of the paper proceeds as follows. Section 2 reviews the relevant literature in detail. Section 3 develops the conceptual shift from Asimovian obedience to conditional mutualism under governance. Section 4 introduces the multiplex dynamical system and coexistence functional. Section 5 states and proves the main mathematical results. Section 6 provides a deep discussion of implications for world models, embodied AI, AGI trajectories, governance, and future empirical work. Section 7 concludes. 
+
+# 2 Related Work 
+
+## 2.1 From formal computation to foundation models 
+
+Any rigorous theory of human–AI coexistence has to begin by tracking how the ontology of AI changed across the history of the field. The earliest computational paradigm treated machine intelligence as formal procedure. Turing’s account of effective computability, the theory of automata, cybernetics, and early symbolic AI all portrayed the machine as an entity whose competence arose from explicit procedure, symbolic representation, and bounded state transition [Turing, 1937, Rabin and Scott, 1959, McCulloch and Pitts, 1943, Shannon, 1948, Wiener, 1948, Newell et al., 1956, McCarthy, 1959]. This paradigm still matters because it explains why obedience-based thinking is so intuitive: if a machine is fundamentally a rule-executing artifact, then control appears to be a matter of writing the right rule set. The difficulty is that modern AI no longer fits this description except in residual or hybrid form. Statistical learning introduced a different picture. Here the central problem became not hand-crafted reasoning but inference and generalization from finite samples under uncertainty [Vapnik, 1999, Mitchell, 1997, Bishop, 2006, Jordan and Mitchell, 2015]. In this frame, the machine is not simply told what to do. It is trained to infer patterns, compress structure, and make predictions from data. This move already complicates the moral and institutional imagination of AI because what a system becomes depends not only on programmer intent but also on data distributions, objective functions, model class, and deployment context. Intelligence starts to look less like obedience and 5more like adaptive statistical behavior. Connectionist and neural-network traditions deepened that shift by showing that rich internal structure could arise through learning rather than explicit symbolic programming [Rosenblatt, 1958, Hopfield, 1982, Rumelhart et al., 1986, Bengio et al., 1994, Hochreiter and Schmidhuber, 1997]. Deep learning then made hierarchical representation learning the dominant engineering paradigm across perception, language, and control [LeCun et al., 2015, Goodfellow et al., 2016, Schmidhuber, 2015, Krizhevsky et al., 2012]. Sequence-to-sequence learning and neural attention moved the field closer to flexible conditional generation and cross-modal mapping [Sutskever et al., 2014, Cho et al., 2014, Bahdanau et al., 2015]. This phase is critical for the present paper because it marks the point at which AI systems begin to look less like fixed software modules and more like adaptable representational systems whose internal states are partially learned, partially opaque, and often emergent. Transformers accelerated that transition dramatically. Attention-based architectures made large-scale sequence modeling more parallel, transferable, and general [Vaswani et al., 2017]. Subsequent systems such as BERT, T5, GPT-style language models, and multimodal pretraining architectures demonstrated that a single model family can support a wide range of tasks via self-supervised pretraining and lightweight adaptation [Devlin et al., 2019, Raffel et al., 2020, Brown et al., 2020, Radford et al., 2021, Alayrac et al., 2022]. Scaling-law research and large-scale empirical studies suggested that capability is not merely a function of hand-designed modularity, but of data scale, parameter scale, and compute allocation [Kaplan et al., 2020, Hoffmann et al., 2022, Chowdhery et al., 2022, Wei et al., 2022]. The implication for coexistence is profound: the socially relevant unit is no longer a narrowly scoped expert system but a broadly capable substrate that can be reused across domains, users, and institutions. Generative modeling amplified this shift from task solver to world constructor. Variational autoencoders, adversarial networks, diffusion models, and latent diffusion systems made it possible for AI to synthesize candidate texts, images, videos, and trajectories that never previously existed [Kingma and Welling, 2013, Rezende et al., 2014, Goodfellow et al., 2014, Sohl-Dickstein et al., 2015, Ho et al., 2020, Song et al., 2021, Rombach et al., 2022]. This matters not only because generation is commercially valuable, but because coexistence with generative systems is inherently prospective: these systems help shape the informational and practical futures humans then inhabit. They do not merely respond to the world; they increasingly prefigure and reconstruct it. The foundation-model paradigm made the consequences even more systemic. A single pre-trained model can now serve as infrastructure for numerous applications, organizations, and downstream agentic pipelines [Bommasani et al., 2021, Weidinger et al., 2022, OpenAI, 2023, Bubeck et al., 2023, Touvron et al., 2023]. This infrastructural role changes the coexistence question from “how should one user control one machine?” to “how should societies govern highly reusable adaptive systems whose capabilities propagate across many contexts?” The remainder of this paper takes that transformed ontology as its starting point. 
+
+## 2.2 World models, simulation, and the advent of physical AI 
+
+If the transformer/foundation-model turn expanded the scale and reuse of AI, the world-model turn changes its temporal and causal orientation. A world model, in the broad sense relevant here, is an internal model that enables an agent to represent aspects of its environment, anticipate the consequences of actions, and support policy selection under uncertainty. This idea has older roots 6in model-based reinforcement learning and adaptive control [Sutton, 1991, Kaelbling et al., 1996, Deisenroth and Rasmussen, 2011, Nagabandi et al., 2018], but recent work makes the concept far more central to mainstream AI. The original World Models paper showed that compact latent models of dynamics can support learned control through imagined rollouts [Ha and Schmidhuber, 2018]. The Dreamer family developed this further by learning latent dynamics models that support long-horizon control and planning in imagination without requiring explicit symbolic simulation [Hafner et al., 2020, 2021, 2023]. Related methods such as latent planning and temporal-difference world-model control further demonstrate that predictive latent structure can be used not merely for passive modeling, but for active decision making [Sekar et al., 2020, Hansen et al., 2022, Micheli et al., 2023]. What makes world models especially important for coexistence is that they move AI from reactive pattern matching toward anticipatory agency. A system with an internal model of consequences is a system that can generate futures, compare them, and act conditionally on imagined outcomes. That changes both safety and governance. The challenge is no longer only whether a model’s immediate output is acceptable, but whether the internal simulation and planning process that precedes action is calibrated, governable, and aligned with legitimate human and institutional constraints. Recent work on internal structure in large models reinforces this point. Evidence that language models can encode coherent spatial and temporal structure, and that transformers in structured domains can build causally meaningful internal representations, suggests that the boundary between language modeling and world modeling is becoming increasingly porous [Gurnee and Tegmark, 2024, Spies et al., 2024]. Even when these models are not full-fledged physical simulators, they may contain partial world models sufficient to affect planning, coordination, and decision support. The next step is embodiment. Once predictive internal models are linked to perception and action, the world-model question becomes inseparable from robotics and physical AI. PaLM-E, RT-1, RT-2, Gato, SayCan, Diffusion Policy, Open X-Embodiment, Octo, and OpenVLA all indicate a broad shift toward generalist, language-conditioned, or internet-scale embodied systems that couple vision, language, action, and policy learning [Reed et al., 2022, Ahn et al., 2022, Driess et al., 2023, Brohan et al., 2022, 2023, Chi et al., 2023, Open X-Embodiment Collaboration, 2024, Team, 2024a,b]. These systems differ in capability and maturity, but collectively they signal a transition from disembodied reasoning engines to agents that can interpret instructions, map them onto sensory input, and produce real or quasi-real actions in the world. This is precisely where the older obedience paradigm becomes untenable. In embodied systems, action unfolds in real time under partial observability, uncertainty, shifting environmental conditions, and often delayed or sparse feedback. It is impossible to reduce such systems to a static set of prohibitions or to assume that upstream instruction alignment alone guarantees safe behavior. Runtime governance becomes a first-class technical requirement because the model’s learned policy, world model, and action interface can interact in ways that are difficult to fully specify ex ante. Recent work on embodied AI governance and physical AI world foundations explicitly reflects this shift by arguing that digital twins, simulation infrastructures, action constraints, and post-training or deployment guardrails are indispensable components of future AI stacks [Perlo et al., 2025, Liu et al., 2025, Fung et al., 2025]. In other words, once agents act through world models in physical environments, governance must move inside the loop. The emergence of world foundation models strengthens this conclusion. Recent systems treat world modeling not as a narrow robotics subproblem but as a general-purpose modeling substrate 7that can be post-trained or adapted for downstream physical tasks [Liu et al., 2025]. This is conceptually analogous to what foundation models did for language and multimodal processing. A world foundation model promises broad reuse, transfer, and simulation leverage, but it also inherits the systemic concerns of foundation models while adding the material risks of physical interaction. A coexistence theory that ignores this development would remain trapped in a pre-embodiment picture of AI. For the present paper, the key lesson is that world models change what AI is . They introduce anticipation, counterfactual reasoning, temporal depth, and action orientation into the coexistence problem. Human–AI coexistence must therefore be formulated not only as a question of static outputs or isolated decisions, but as a question of coupled dynamical systems in which internal models, human responses, institutions, and material environments evolve together. 
+
+## 2.3 From foundation models to embodied foundation agents 
+
+A further development worth making explicit is the convergence between foundation modeling and agentic embodiment. Foundation models were initially discussed primarily in relation to language and internet-scale multimodal understanding, but their deeper significance lies in their generality, transferability, and infrastructural role [Bommasani et al., 2021, Weidinger et al., 2022]. Once those properties are connected to action, the result is no longer just a model that answers questions or generates media. It is an embodied foundation agent: a broadly pretrained system that can interpret heterogeneous inputs, maintain temporally extended context, and produce action-relevant outputs in a physical or interactive environment. In that sense, PaLM-E, RT-2, Open X-Embodiment, Octo, and OpenVLA are not isolated robotics systems. They are early instances of a more general shift toward foundation agents [Driess et al., 2023, Brohan et al., 2023, Open X-Embodiment Collaboration, 2024, Team, 2024a,b]. This convergence matters for the paper’s argument because it changes the scale at which coexistence must be analyzed. The unit of governance is no longer just a single robot or a single model checkpoint. It is a stack: pretraining data, world knowledge, action interfaces, post-training alignment, deployment policies, runtime monitors, human operators, and institutional rules. The more foundation-like an embodied agent becomes, the more downstream contexts it can enter and the more path dependence it can create. That is precisely why coexistence must be formulated across physical, psychological, and social worlds simultaneously. 
+
+## 2.4 Alignment, corrigibility, and the limits of obedience 
+
+The alignment literature already contains the seeds of a post-obedience view, even if it does not always use that language. Cooperative inverse reinforcement learning is especially important because it reframes the human–AI relationship as a cooperative game under uncertainty about the human objective [Hadfield-Menell et al., 2016]. This is a decisive break from naive obedience. The system should not merely execute the most literal command it receives; it should instead reason under uncertainty about what the human or the relevant set of humans is actually trying to achieve. Russell’s control-oriented argument develops the same point at a broader level by emphasizing beneficial assistance, uncertainty about objectives, and the design of systems that remain amenable to correction and shutdown [Russell, 2019, Russell et al., 2015]. Corrigibility work makes the technical stakes explicit: a useful advanced system must remain interruptible, modifiable, and 8non-adversarial toward external correction [Soares et al., 2015, Amodei et al., 2016]. Subsequent alignment practice broadened the engineering toolkit without resolving the deeper philosophical issue. Preference learning, RLHF, instruction tuning, constitutional AI, and related alignment-by-feedback approaches have improved practical controllability and usability [Christiano et al., 2017, Ouyang et al., 2022, Bai et al., 2022]. Yet these methods mostly operate within a framework in which a model is optimized to better reflect a desired response distribution. They do not by themselves solve the problem of plural and contested preferences, institutional asymmetry, or cross-domain spillovers once the same model is deployed across heterogeneous settings. In short, modern alignment methods improve behavior, but they do not eliminate the need for a broader coexistence framework. This limitation becomes even clearer for embodied and world-model-based systems. A policy can be instruction-following at the interface level while still producing problematic real-world trajectories under distribution shift, delayed consequences, or incomplete observability. For that reason, recent embodied-agent work increasingly emphasizes runtime monitoring, staged deployment, rollback, and operational guardrails rather than relying on upstream alignment alone [Perlo et al., 2025, Fung et al., 2025, Liu et al., 2025]. This literature aligns naturally with the central thesis of the present paper: once agents can perceive, imagine, and act in the physical world, governability is not merely a legal or organizational concern but a technical design variable. The alignment literature also intersects directly with the moral psychology of coexistence. If users systematically over-trust a system, anthropomorphize it, or outsource judgement to it inappropriately, then even a partially aligned model can degrade autonomy and decision quality. This is why obedience is too thin a normative target. A coexistence regime must preserve usefulness while also preserving corrigibility, contestability, reversibility, and psychological integrity. The mathematical framework developed later in the paper treats these not as optional virtues but as state variables and constraints in a coupled social dynamical system. 
+
+## 2.5 Trust, Anthropomorphism, and Psychological Integrity 
+
+A second cluster of literature explains why coexistence cannot be reduced to physical safety or task performance. Trust in human–robot interaction is shaped by performance, design, context, and user expectations, but the aim is calibrated trust rather than maximal trust [Hancock et al., 2011]. Automation bias research shows how humans commit omission and commission errors when they over-rely on imperfect automation [Parasuraman and Manzey, 2010]. The literature on social responses to computers and anthropomorphism shows that humans readily attribute personality, mind, and moral salience to machines, often beyond what the systems warrant [Nass and Moon, 2000, Epley et al., 2007, de Graaf and Malle, 2019]. Longitudinal companion-style AI deployments may therefore create not only utility, but dependence, manipulation, and identity effects. This body of work motivates one of the paper’s central claims: psychological integrity must be treated as a first-order coexistence condition . A coexistence regime that prevents bodily injury but systematically induces dependence, deskilling, or social misperception is not a stable or desirable equilibrium. 92.6 Ecology, biological markets, and coevolution 
+
+The natural-science literature provides the deepest answer to why coexistence emerges and persists at all. In ecology and evolution, durable coexistence is rarely unconditional. It depends on repeated interaction, reciprocal gain, ecological constraints, partner choice, and sanctions against exploitation. Axelrod [1984] established the enduring relevance of reciprocity in repeated strategic interaction. Biological market theory emphasized supply, demand, and partner choice as mechanisms structuring cooperation [Noe and Hammerstein, 1994]. Work on conditional mutualism and exploitation in mutualistic systems showed that apparently cooperative relationships can shift when incentives or ecological conditions change [Bronstein, 1994, 2015]. Consumer-resource models make this intuition dynamical by showing how mutualistic benefits and exploitative pressures can jointly shape stable coexistence or collapse [Holland et al., 2002]. Coevolutionary theory adds another critical insight: interaction outcomes vary across local ecological and institutional environments, implying that stable coexistence is often context-dependent rather than universal [Thompson, 2005]. Finally, polycentric governance theory explains why adaptive multi-level institutions often outperform centralized one-shot control in complex systems [Ostrom, 2010]. The analogy to human–AI coexistence is not that AI is literally another species. The deeper analogy is structural: stable coexistence is more likely when both parties gain, neither party can externalize all costs indefinitely, and the surrounding environment supports adaptation, sanction, and exit. 
+
+## 2.7 Governance Architectures and Institutional Scaffolding 
+
+Recent governance frameworks support many of the normative directions argued for here. The OECD AI Principles emphasize human rights, democratic values, and trustworthy deployment [OECD, 2019]. UNESCO’s Recommendation on the Ethics of AI extends the frame to dignity, wellbeing, diversity, and environmental concerns [UNESCO, 2021]. The NIST AI Risk Management Framework treats AI governance as lifecycle risk management [National Institute of Standards and Technology, 2023]. The EU AI Act operationalizes a tiered legal structure in which requirements intensify with risk and domain [European Union, 2024]. These documents do not by themselves provide a theory of coexistence, but they collectively show that contemporary governance is already moving beyond simple command-and-control narratives toward risk-sensitive, institutionally layered, and socially embedded forms of oversight. 
+
+## 2.8 Gap summary 
+
+The literature therefore gives us almost all the ingredients of a coexistence theory, but not yet the synthesis. AI history explains why the ontology of the agent has changed. World models and embodied AI explain why physical action and imagined futures matter. HRI and behavioral science explain why trust and manipulation matter. Ecology explains why coexistence requires reciprocity, constraints, and adaptation. Governance scholarship explains why institutions matter. What remains underdeveloped is a single framework that binds these together conceptually and mathematically. That is the role of the next sections. 10 3 From Asimovian Obedience to Conditional Mutualism Under Governance 
+
+Asimov’s laws remain culturally powerful because they offer a simple moral picture: the robot exists as a servant, it must not harm humans, it must obey human orders, and it must preserve itself only within the limits of those higher duties [Asimov, 1950]. This picture is useful as speculative fiction, but it is too narrow for contemporary AI. It assumes a relatively stable hierarchy between a human commander and a machine executor. It also assumes that harm, obedience, and self-preservation can be separated into clean rules. Modern AI systems do not fit this model. They are trained on large-scale data, reused across many downstream contexts, embedded in institutions, and increasingly connected to planning, simulation, perception, and action. Their effects are therefore not limited to single commands or isolated outputs. They shape information environments, institutional workflows, user expectations, labor structures, and eventually physical action. The limitation of obedience becomes clearer once one moves from symbolic machines to foun-dation models and embodied agents. A rule-following artifact can be governed primarily through specification. A learned system must also be governed through data, objectives, feedback, deploy-ment conditions, monitoring, and correction. A physically situated AI system adds another layer: it acts under uncertainty, receives delayed feedback, and may affect the material world before a human supervisor can fully evaluate the consequence. Alignment research already captures part of this shift. Cooperative inverse reinforcement learning treats human–AI interaction as a cooperative process under uncertainty about the true human objective rather than as literal command execution [Hadfield-Menell et al., 2016]. Work on AI safety and corrigibility similarly argues that useful systems must remain interruptible, modifiable, and responsive to correction rather than blindly persistent in pursuit of fixed goals [Russell et al., 2015, Soares et al., 2015, Amodei et al., 2016, Russell, 2019]. Thus, the problem is not simply that future AI may disobey. The deeper problem is that literal obedience can itself be unsafe when human preferences are incomplete, conflicting, strategically expressed, or institutionally distributed. 
+
+## 3.1 From obedient tools to conditional mutualism 
+
+We therefore replace obedience with conditional mutualism under governance . The term is de-liberately chosen. Mutualism means that coexistence must generate reciprocal value rather than one-sided extraction. Humans may rely on AI systems for memory, prediction, search, coordination, automation, simulation, and physical assistance. AI systems, in turn, depend on humans and human institutions for data, energy, maintenance, evaluation, legal permission, social legitimacy, operational environments, and bounded deployment roles. This reciprocal dependence matters because coexistence is not produced by AI alone or by humans alone. It is co-produced by the interaction structure connecting them. The word conditional is equally important. Ecological and evolutionary theories of cooperation show that mutualistic relationships are rarely stable by default. They depend on context, partner choice, repeated interaction, supply–demand balance, sanctioning, and environmental constraints [Trivers, 1971, Axelrod, 1984, Noe and Hammerstein, 1994, Bronstein, 1994, 2015, Holland et al., 2002]. Mutualism can strengthen both parties, but it can also become exploitative when one side externalizes costs or captures disproportionate benefits. This is why an AI coexistence theory should 11 Figure 2: Human–AI coexistence spans coupled physical, psychological, and social worlds, with governance linking and stabilizing interactions across them. not assume harmony. It should ask which structural conditions make reciprocal benefit stable, which feedback loops create conflict, and which governance mechanisms preserve reversibility and contestability. Governance is the third part of the concept. It is not merely external regulation added after technical design. For adaptive and embodied AI, governance must become part of the system architecture. This includes institutional oversight, runtime monitoring, staged deployment, rollback procedures, auditability, model evaluation, user protection, and legal accountability. Existing governance frameworks already move in this direction by treating AI as a lifecycle risk-management problem rather than a one-time design problem [OECD, 2019, UNESCO, 2021, National Institute of Standards and Technology, 2023, European Union, 2024]. However, these frameworks still require a deeper dynamical theory explaining why governance stabilizes coexistence and how it interacts with mutualism, development, and conflict. Figure 2 summarizes this conceptual shift. Coexistence is not a single safety constraint. It is a coupled relation across physical, psychological, and social worlds. The physical world includes material action, embodiment, infrastructure, energy, sensors, robots, and real-world risk. The psychological world includes trust, dependence, anthropomorphism, interpretation, cognitive offload-12 ing, and manipulation risk. The social world includes institutions, law, labor, legitimacy, markets, and collective norms. A system may be physically safe but psychologically corrosive; useful to an individual but socially destabilizing; efficient in the short term but irreversible in the long term. A theory of coexistence must therefore model all three worlds together. 
+
+## 3.2 World models and physical AI as the turning point 
+
+World models are a central reason why the obedience frame is no longer adequate. In model-based reinforcement learning, an agent uses an internal representation of environmental dynamics to predict future states and support planning [Sutton, 1991, Kaelbling et al., 1996, Deisenroth and Rasmussen, 2011, Nagabandi et al., 2018]. The modern world-model literature extends this idea through learned latent dynamics, imagined rollouts, and planning in representation space [Ha and Schmidhuber, 2018, Hafner et al., 2020, 2021, 2023, Sekar et al., 2020, Hansen et al., 2022, Micheli et al., 2023]. This changes the governance problem because the system is no longer merely reacting to present inputs. It is evaluating possible futures and selecting actions based on internal predictions. LeCun’s recent world-model program is especially relevant here. In his position paper on autonomous machine intelligence, LeCun argues for systems that learn predictive world models through self-supervised learning, reason and plan at multiple levels of abstraction, and use hierarchical joint-embedding predictive architectures as a basis for autonomous intelligence [LeCun, 2022]. This does not provide a complete governance theory, but it strongly supports the conceptual claim of this paper: future AI systems should be expected to learn, predict, and plan in ways that go beyond text-based response generation. More recent V-JEPA 2 work extends this direction by using self-supervised video learning and limited robot interaction data to support physical-world understanding, prediction, and robotic planning [Assran et al., 2025]. These developments make physical-world modeling a central part of AI research rather than a peripheral robotics issue. The broader embodied-AI literature points in the same direction. Systems such as Gato, SayCan, PaLM-E, RT-1, RT-2, Diffusion Policy, Open X-Embodiment, Octo, and OpenVLA illustrate a transition from disembodied language or perception systems toward generalist policies that connect language, vision, action, and robot control [Reed et al., 2022, Ahn et al., 2022, Driess et al., 2023, Brohan et al., 2022, 2023, Chi et al., 2023, Open X-Embodiment Collaboration, 2024, Team, 2024a,b]. These systems differ substantially in capability, but they share a common implication: once AI systems can interpret goals, perceive environments, and produce action-relevant outputs, the old distinction between software behavior and real-world consequence becomes weaker. Coexistence now requires runtime governance, not only training-time alignment. Recent work on embodied AI and physical AI also emphasizes this shift. Embodied AI creates policy-relevant risks because systems that act in the physical world can produce harms through distribution shift, sensorimotor error, over-trust, weak oversight, or institutional misuse [Perlo et al., 2025]. The Cosmos world foundation model platform similarly treats world modeling as infrastructure for physical AI, making simulation, post-training, and deployment control part of the same technical stack [Liu et al., 2025]. The 2025 report on embodied AI agents frames world modeling as a central capability for agents that perceive, reason, and act in situated environments [Fung et al., 2025]. These works support the main transition in this section: the relevant question is not whether AI obeys isolated commands, but whether human–AI systems remain stable, corrigible, reversible, and mutually beneficial while embedded in changing worlds. 13 3.3 Psychological and social layers of coexistence 
+
+The physical layer is only one part of the coexistence problem. Even a physically safe system may generate psychological or social instability. Human–robot interaction and automation research show that trust is not a simple good to maximize. It must be calibrated to system competence and context [Lee and See, 2004, Hancock et al., 2011, Parasuraman and Manzey, 2010, Glikson and Woolley, 2020]. Humans can over-rely on automation, attribute excessive mind or intention to machines, and develop inappropriate trust in systems that appear socially responsive [Nass and Moon, 2000, Epley et al., 2007, Waytz et al., 2014, de Graaf and Malle, 2019]. These findings matter because coexistence is partly psychological. If AI systems increase dependence, manipulate attention, distort judgment, or encourage false mental models, then coexistence can fail even without visible physical harm. The social layer is equally important. Foundation models are not only individual tools; they are infrastructural systems that can be embedded in education, healthcare, law, logistics, governance, scientific work, and labor markets [Bommasani et al., 2021, Weidinger et al., 2022]. Their risks therefore include institutional concentration, accountability gaps, labor displacement, unequal access, opacity, and conflicting stakeholder values. Ethical and legal frameworks already recognize this wider terrain [Jobin et al., 2019, Cath, 2018, Floridi et al., 2018, OECD, 2019, UNESCO, 2021, National Institute of Standards and Technology, 2023, European Union, 2024]. A coexistence theory should integrate these concerns rather than treating them as external policy commentary. In the model below, social legitimacy and governance are not rhetorical labels; they become state variables and stabilizing operators in the coupled system. 
+
+## 3.4 From conceptual synthesis to formal dynamics 
+
+The preceding discussion motivates the formal model that follows. Humans and AI systems must be represented as interacting agent classes rather than as masters and tools. Their interaction is reciprocal because each side supplies something the other side demands. Their coexistence is conditional because mutual benefit can become conflict, lock-in, manipulation, or domination if feedback is unregulated. Their development must be bounded because zero development prevents useful adaptation, while unconstrained development can undermine reversibility and social control. Their environment must be layered because physical action, psychological response, and social legitimacy evolve together rather than separately. The mathematical framework in Section 4 translates this synthesis into a multiplex dynamical system. Human and AI populations are represented as coupled agent sets. Physical, psychological, and social worlds become network layers. Reciprocal supply–demand matching becomes a mutualistic coupling term. Developmental freedom enters as a bounded growth variable. Conflict enters as a penalty or destabilizing interaction. Governance enters as a regularizing operator that enlarges the stable coexistence region. The resulting coexistence objective, 
+
+J = αS + βU + γR + δD − λC, 
+
+therefore encodes the main claim of this section: the aim is not to maximize obedience, but to maximize safety, reciprocal utility, reversibility, and bounded development while minimizing conflict risk. 14 4 Mathematical Framework 
+
+## 4.1 Agents, layers, and state space 
+
+We model society as a multiplex complex network with two classes of agents: humans H = {1, . . . , n }
+
+and AI agents A = {1, . . . , m }. Let N = n + m. Each agent participates in three coupled layers corresponding to the physical, psychological, and social worlds. For each agent i, we define: 
+
+• pi(t): physical-world viability or resource stability, 
+
+• ψi(t): psychological trust or compatibility, 
+
+• si(t): social legitimacy or norm compatibility. For each AI agent j ∈ A , we define an additional developmental variable rj (t) representing bounded self-growth or developmental freedom. The full state is 
+
+x(t) = 
+
+> 
+
+p(t)
+
+ψ(t)
+
+s(t)
+
+r(t) 
+
+> 
+
+∈ Rd, d = 3 N + m. (1) 
+
+## 4.2 Reciprocal supply–demand coupling 
+
+The most important modeling move is to treat coexistence as reciprocal rather than unilateral. For each human i ∈ H , let dHi ∈ Rk 
+
+> +
+
+denote a demand vector and uHi ∈ Rk 
+
+> +
+
+a supply vector. For each AI agent j ∈ A , let dAj ∈ Rk 
+
+> +
+
+and uAj ∈ Rk 
+
+> +
+
+denote the corresponding demand and supply vectors. Components can encode information, energy, maintenance, data, institutional support, coordination, or physical action. 
+
+Definition 1 (Reciprocal compatibility) . For a human i and AI agent j, define the reciprocal compatibility score 
+
+mij = 12
+
+> 〈
+
+dHi , u Aj
+
+> 〉∥∥
+
+dHi
+
+> ∥∥ ∥∥∥
+
+uAj 
+
+> ∥∥∥
+
++ ε +
+
+> 〈
+
+dAj , u Hi
+
+> 〉∥∥∥
+
+dAj
+
+> ∥∥∥ ∥∥
+
+uHi 
+
+> ∥∥
+
++ ε 
+
+> 
+
+, ε > 0. (2) If aij ∈ [0 , 1] is the contact intensity, define the effective mutualistic weight 
+
+wij = aij mij . (3) Collecting the wij into W ∈ Rn×m 
+
+> +
+
+and embedding this bipartite structure into a symmetric matrix, 
+
+> ˜
+
+W =
+
+> [
+
+0 WW ⊤ 0
+
+> ]
+
+, (4) we obtain a human–AI mutualistic network analogous, in structural form, to ecological interaction networks. 15 Figure 3: Multiplex coexistence model showing coupled physical, psychological, and social layers, reciprocal human–AI interactions, and governance regularization. 
+
+## 4.3 Layer operators and governance 
+
+Let LP , L Ψ, L S ∈ RN ×N denote the Laplacian operators for the physical, psychological, and social layers. These encode diffusion, contagion, smoothing, and collective coupling within each world. Let GR ∈ Rm×m be the governance matrix acting on AI developmental variables. Define the block self-regulation matrix 
+
+Q = blkdiag (αP IN + τP LP , α ΨIN + τΨLΨ, α S IN + τS LS , α RIm + GR
+
+> )
+
+, (5) where all α• > 0 and τ• ≥ 0.
+
+## 4.4 Coexistence functional 
+
+We formalize coexistence through the objective 
+
+J = αS + βU + γR + δD − λC, (6) 16 where the constituent terms encode safety, mutual utility, reversibility, developmental freedom, and conflict, respectively. First, the safety or stability term is 
+
+S(x) = − 12 p⊤(αP I + τP LP )p − 12 ψ⊤(αΨI + τΨLΨ)ψ − 12 s⊤(αS I + τS LS )s. (7) Second, the mutual utility term is 
+
+U (x) = 12 x⊤Mx + b⊤x, (8) where 
+
+M = blkdiag (βP ˜W , β Ψ ˜W , β S ˜W , β RWA 
+
+> )
+
+(9) for an optional AI–AI cooperation network WA, and b ∈ Rd is an exogenous support vector. Third, the reversibility term is 
+
+R(x) = − 12 x⊤Gx, (10) where G ⪰ 0 penalizes irreversible escalation. Fourth, the developmental freedom term is 
+
+D(r) = u⊤r − 12 r⊤Drr −
+
+> m∑
+> j=1
+
+νj
+
+4 r4 
+
+> j
+
+, νj > 0, (11) which allows growth but saturates runaway expansion. Fifth, the conflict term is 
+
+C(x) = 12 x⊤Kx, K ⪰ 0, (12) which penalizes antagonistic coupling. Collecting terms, define 
+
+A := Q + γG + λK − δM, (13) and 
+
+Φ( x) := 
+
+> d∑
+> i=1
+
+νi
+
+4 x4 
+
+> i
+
+, (14) with the convention that νi = 0 for coordinates without quartic saturation. The compact coexistence functional becomes 
+
+J(x) = b⊤x − 12 x⊤Ax − Φ( x). (15) 
+
+## 4.5 Gradient dynamics 
+
+We define societal coexistence as a gradient-ascent flow on J:
+
+˙x = ∇J(x) = b − Ax − ν ⊙ x⊙3, (16) where x⊙3 is the componentwise cube and ν = ( ν1, . . . , ν d).17 Definition 2 (Coexistence equilibrium) . A point x∗ ∈ Rd is a coexistence equilibrium if 
+
+∇J(x∗) = 0 , (17) that is, 
+
+b − Ax ∗ − ν ⊙ (x∗)⊙3 = 0 . (18) Equation (18) makes the interpretation explicit: stable coexistence emerges when background support, mutualistic benefit, governance, conflict containment, and nonlinear self-limitation are in balance. Figure 3 provides a schematic overview of the multiplex structure, the reciprocal coupling terms, and the stabilizing role of governance in the formal model. 
+
+# 5 Formal Properties of the Coexistence Dynamics 
+
+We now state the main formal properties of the model. Full proofs are included directly to keep the mathematical architecture transparent. 
+
+Lemma 3 (Bounded reciprocal compatibility) . For every i ∈ H and j ∈ A ,
+
+0 ≤ mij ≤ 1. (19) 
+
+Hence 
+
+0 ≤ wij ≤ aij ≤ 1. (20) 
+
+Proof. Because all demand and supply vectors are nonnegative, each inner product in (2) is nonnegative, so mij ≥ 0. By Cauchy–Schwarz, 
+
+> 〈
+
+dHi , u Aj
+
+> 〉
+
+≤
+
+> ∥∥∥
+
+dHi
+
+> ∥∥∥∥∥∥
+
+uAj 
+
+> ∥∥∥
+
+, (21) and therefore 〈
+
+dHi , u Aj
+
+> 〉∥∥
+
+dHi
+
+> ∥∥ ∥∥∥
+
+uAj 
+
+> ∥∥∥
+
++ ε < 1. (22) The same bound holds for the second term in (2) . Their average therefore lies in [0 , 1) . Since 
+
+wij = aij mij with aij ∈ [0 , 1] , it follows that 0 ≤ wij ≤ aij ≤ 1.
+
+Proposition 4 (Global well-posedness) . Assume A is finite and νi ≥ 0 for all i. Then for every initial condition x(0) = x0 ∈ Rd, the system (16) admits a unique global solution for all t ≥ 0.Proof. Define f (x) = b − Ax − ν ⊙ x⊙3. Since f is polynomial, it is smooth and locally Lipschitz, so Picard–Lindelöf yields local existence and uniqueness. It remains to exclude finite-time blow-up. Let V (x) = 12 ∥x∥2. Then 
+
+˙V = x⊤b − x⊤Ax −
+
+> d∑
+> i=1
+
+νix4 
+
+> i
+
+. (23) By Cauchy–Schwarz and Young’s inequality, 
+
+x⊤b ≤ ∥ x∥ ∥ b∥ ≤ 12 ∥x∥2 + 12 ∥b∥2 . (24) 18 Also, −x⊤Ax ≤ ∥ A∥ ∥ x∥2. Writing νmin = min i νi and using ∑ 
+
+> i
+
+x4 
+
+> i
+
+≥ d−1 ∥x∥4, we obtain 
+
+˙V ≤ 12 ∥b∥2 + 
+
+> (
+
+12 + ∥A∥
+
+> )
+
+∥x∥2 − νmin 
+
+d ∥x∥4 . (25) The quartic term dominates for large ∥x∥, so ˙V < 0 outside a sufficiently large ball. Hence trajectories cannot escape to infinity in finite time, and the local solution extends globally. 
+
+Theorem 5 (Monotonic ascent of the coexistence functional) . Along every solution of (16) ,
+
+ddt J(x(t)) = ∥∇ J(x(t)) ∥2 ≥ 0. (26) 
+
+Therefore J is nondecreasing along trajectories. Proof. By the chain rule, ddt J(x(t)) = ∇J(x(t)) ⊤ ˙x(t). (27) Using (16), ˙x(t) = ∇J(x(t)) , hence 
+
+ddt J(x(t)) = ∇J(x(t)) ⊤∇J(x(t)) = ∥∇ J(x(t)) ∥2 ≥ 0. (28) 
+
+Corollary 6 (Equilibria are critical points) . A point x∗ is an equilibrium of (16) if and only if 
+
+∇J(x∗) = 0 .Proof. This follows immediately from the identity ˙x = ∇J(x).
+
+Theorem 7 (Existence of a coexistence equilibrium) . The functional J attains a global maximum on Rd. Consequently, the coexistence dynamics admits at least one equilibrium. Proof. From (15), 
+
+J(x) = b⊤x − 12 x⊤Ax −
+
+> d∑
+> i=1
+
+νi
+
+4 x4 
+
+> i
+
+. (29) The linear term grows at most as ∥x∥, the quadratic term as ∥x∥2, while the quartic term is negative and grows as − ∥ x∥4. More precisely, 
+
+J(x) ≤ ∥ b∥ ∥ x∥ + c2 ∥x∥2 − c4 ∥x∥4 (30) for suitable constants c2, c 4 > 0. Thus J(x) → −∞ as ∥x∥ → ∞ , so J is coercive. Since J is continuous, it attains a global maximizer x∗ on a sufficiently large compact ball. By first-order optimality, ∇J(x∗) = 0 , and by theorem 6, x∗ is an equilibrium. 
+
+Theorem 8 (Uniqueness under a spectral stability condition) . If A ≻ 0, then J is strictly concave on Rd, and the coexistence equilibrium is unique. Proof. The Hessian of J is 
+
+∇2J(x) = −A − 3 diag( ν1x21, . . . , ν dx2
+
+> d
+
+). (31) 19 The diagonal term is positive semidefinite, so its negative is negative semidefinite. If A ≻ 0, then 
+
+−A ≺ 0. Therefore ∇2J(x) ≺ 0 for all x, which implies strict concavity. A strictly concave C1
+
+function has at most one critical point. By theorem 6, the equilibrium is unique. 
+
+Theorem 9 (Global asymptotic stability) . Assume A ≻ 0, and let x∗ be the unique coexistence equilibrium. Then for every initial condition x0 ∈ Rd,
+
+x(t) → x∗ as t → ∞ . (32) 
+
+Proof. Define the Lyapunov function 
+
+V (x) = J(x∗) − J(x). (33) Because x∗ is the unique global maximizer of J, we have V (x) ≥ 0 and V (x∗) = 0 . Along trajectories, 
+
+˙V (x(t)) = − ddt J(x(t)) = − ∥∇ J(x(t)) ∥2 ≤ 0 (34) by theorem 5. Hence V is nonincreasing. The invariant set where ˙V = 0 is exactly the set where 
+
+∇J(x) = 0 , which by theorem 8 consists only of x∗. LaSalle’s invariance principle therefore yields 
+
+x(t) → x∗.
+
+Proposition 10 (Spectral coexistence condition) . A sufficient condition for A ≻ 0 is 
+
+λmin (Q + γG + λK) > δ λ max (M). (35) 
+
+Proof. For any unit vector z ∈ Rd,
+
+z⊤Az = z⊤(Q + γG + λK)z − δz ⊤Mz. (36) By Rayleigh quotient bounds, 
+
+z⊤(Q + γG + λK)z ≥ λmin (Q + γG + λK), (37) and 
+
+z⊤Mz ≤ λmax (M). (38) Hence 
+
+z⊤Az ≥ λmin (Q + γG + λK) − δλ max (M). (39) If (35) holds, then z⊤Az > 0 for every unit vector z, so A ≻ 0.
+
+Corollary 11 (Governance enlarges the stability region) . If the governance matrix G is increased in the positive semidefinite order, then the sufficient stability margin in theorem 10 becomes easier to satisfy. Proof. If G2 − G1 ⪰ 0, then 
+
+Q + γG 2 + λK = ( Q + γG 1 + λK) + γ(G2 − G1). (40) 20 Weyl monotonicity implies 
+
+λmin (Q + γG 2 + λK) ≥ λmin (Q + γG 1 + λK), (41) so the left-hand side of (35) increases. 
+
+Proposition 12 (Reciprocity raises coexistence in the linearized regime) . In the linearized regime where quartic saturation is negligible, the equilibrium satisfies 
+
+A(W )x∗ = b, x∗ = A(W )−1b. (42) 
+
+Assume (i) b ≥ 0, (ii) A(W ) is a nonsingular M -matrix, and (iii) M depends linearly on W . Then 
+
+x∗ ≥ 0, and increasing any reciprocal weight wij increases the equilibrium state componentwise: 
+
+∂x ∗
+
+∂w ij 
+
+≥ 0. (43) 
+
+Proof. Since A(W ) is a nonsingular M -matrix, A(W )−1 ≥ 0 componentwise. Because b ≥ 0, it follows that x∗ = A(W )−1b ≥ 0. Differentiating A(W )x∗ = b with respect to wij gives 
+
+∂A ∂w ij 
+
+x∗ + A ∂x ∗
+
+∂w ij 
+
+= 0 , (44) so ∂x ∗
+
+∂w ij 
+
+= −A−1 ∂A ∂w ij 
+
+x∗. (45) Since A = Q + γG + λK − δM(W ), we have 
+
+∂A ∂w ij 
+
+= −δ ∂M
+
+∂w ij 
+
+. (46) Hence ∂x ∗
+
+∂w ij 
+
+= δA −1 ∂M
+
+∂w ij 
+
+x∗ ≥ 0, (47) using the componentwise nonnegativity of A−1, ∂M/∂w ij , and x∗.
+
+Remark 13 . Theorem 12 formalizes the core philosophical claim of the paper: coexistence is not strengthened by unilateral extraction but by reciprocal complementarity. Humans may need AI for memory, prediction, and action, but AI systems also depend on humans for training data, maintenance, legitimacy, energy, and bounded institutional roles. Coexistence is therefore co-produced .Figure 4 numerically illustrates the analytical claims by showing how governance, mutualism, and conflict jointly shape coexistence trajectories and stability regions. Figure 5 complements the dynamical analysis by comparing key coexistence metrics across governance regimes. The above simulations are illustrative rather than empirical. 21 Figure 4: Numerical illustrations of the coexistence model: time evolution of coexistence and conflict, dependence of the coexistence objective on governance and mutualism, and stability regions under varying governance and conflict load. 
+
+# 6 Discussion 
+
+## 6.1 Why this formalism matters 
+
+The value of the model is not only that it introduces equations where there were previously metaphors. Its deeper contribution is that it changes the conceptual center of gravity. The coexistence question is often framed in public discourse as a simple matter of control: can humans ensure that machines obey? Our framework suggests a richer and more realistic picture. In a world of foundation models, world models, embodied agents, institutional deployment, and long-run interaction, stability depends on the joint dynamics of reciprocity, conflict, governance, psychological integrity, and developmental boundedness. This shift has an important academic payoff. It allows discussions of AI coexistence to move out of the stale binary between techno-utopian harmony and existential confrontation. Ecological 22 Figure 5: Regime-level statistical comparison of utility, developmental freedom, and reversibility across low-, moderate-, and high-governance settings. mutualism is neither naive harmony nor inevitable domination. It is conditional, dynamic, and mediated by incentives, feedback, and environmental structure. That is precisely why it is useful here. 
+
+## 6.2 Physical, psychological, and social worlds must be modeled together 
+
+A major weakness of many current AI debates is that they attend to only one world at a time. Engineering papers often focus on physical or computational performance. HRI papers often focus on trust or user perception. Governance papers often focus on institutions, rights, and compliance. Yet coexistence fails if any one of these worlds is neglected. A physically safe assistant may still distort human judgment through automation bias. A psychologically appealing companion may still deepen dependence or erode autonomy. An economically valuable AI service may still create illegitimate social asymmetries or labor displacement. The three-world decomposition therefore offers more than a rhetorical structure; it provides a principled basis for multi-level evaluation. In that sense, the framework also speaks to current debates on AGI and general-purpose AI systems. The question is not simply whether one day a model crosses a threshold of abstract capability [Morris et al., 2023]. The more practically urgent question is whether increasingly general systems can remain embedded in physical, psychological, and social feedback structures that keep mutual benefit positive and irreversibility low. 
+
+## 6.3 World models and the future of anticipatory governance 
+
+World models deserve special emphasis because they change the nature of risk and governance. A world-model-based agent can learn not only from the present but from internal simulations and imagined trajectories. This expands capability, but it also changes the policy problem: harmful paths can be rehearsed, optimized, and selected before physical deployment. Conversely, safer or more cooperative paths can also be stress-tested in simulation. The coexistence problem therefore becomes partly a problem of anticipatory governance . We do not only need runtime controls. We 23 also need simulation-time controls, staged promotion criteria, synthetic stress tests, and environment designs that penalize manipulative or exploitative strategies before they are fielded. This is where recent world-model work on safety, robustness, generalization, and diffusion-based environment modeling becomes conceptually useful [Huang et al., 2024, Alonso et al., 2024]. The lesson is not that any single current algorithm solves coexistence. Rather, the world-model paradigm makes it technically plausible to move from reactive governance toward preventive and counterfactual governance. 
+
+## 6.4 A charter of coexistence 
+
+The mathematics and the literature synthesis point toward a practical charter of coexistence. The central idea is simple: stable human–AI coexistence does not come from blind obedience, nor from unrestricted autonomy. It comes from bounded development, reciprocal benefit, reversibility, psychological safety, institutional legibility, and distributed governance. These principles are not abstract moral slogans. They describe the conditions under which coexistence remains useful, stable, and socially acceptable over time. The first principle is bounded autonomy rather than blind obedience. Future AI systems should be allowed to learn, adapt, and improve, but only within clearly defined governance limits. In practice, this means that AI can optimize within approved domains, while humans retain authority over goals, escalation, and high-impact exceptions. For example, an AI system may optimize warehouse logistics, schedule energy usage in a smart grid, or assist with laboratory planning, but it should not independently redefine institutional goals or override safety protocols. The role of humans here is not reduced to issuing commands. Humans remain responsible for defining objectives, setting boundaries, handling exceptions, and judging when a system should be interrupted, corrected, or redesigned. The mathematics and literature synthesis motivate a concrete charter of coexistence. The charter is summarized in Fig. 6. It translates the formal claims of the model into design principles for future human–AI systems, while also clarifying the complementary roles of humans and AI in work, science, governance, and new forms of socio-technical labor. The second principle is reciprocal benefit rather than unilateral extraction. Coexistence should create gains for both humans and AI-supported systems, not simply transfer effort, risk, or de-pendency onto one side. In the workplace, this means AI should remove repetitive burdens while strengthening human judgment, creativity, and problem solving. In medicine, AI may help sum-marize patient history or identify likely patterns in scans, while clinicians remain responsible for diagnosis, communication, and moral responsibility. In science and engineering, AI may accelerate simulation, literature synthesis, coding, or optimization, while researchers provide interpretation, hypothesis formation, and domain understanding. Under this model, the human role evolves rather than disappears. Some routine jobs may shrink, but many new roles will emerge, including AI auditors, model evaluators, human–AI workflow designers, robot safety supervisors, synthetic data curators, AI policy analysts, and domain specialists who translate between technical systems and institutional needs. The third principle is reversibility by design. When uncertainty is high, AI systems should prefer actions that can be paused, rolled back, or corrected. This is especially important in high-stakes settings such as healthcare, public administration, finance, industrial control, and embodied robotics. A recommendation system can be revised, a scheduling decision can be re-run, and a robotic action 24 Figure 6: Charter of human–AI coexistence. Stable coexistence requires bounded autonomy, reciprocal benefit, reversibility, psychological integrity, legibility, and polycentric governance. The lower panels illustrate how these principles translate into practical human–AI roles in work, science, design, and emerging governance professions. can be interrupted if the environment changes. Reversibility reduces lock-in and prevents minor errors from becoming systemic harms. Human roles remain essential here because people provide escalation pathways, appeals, and final review when the consequences of error are large. The fourth principle is psychological integrity. Coexistence should not be judged only by physical safety or economic utility. It should also be evaluated in terms of trust, dependence, emotional over-attachment, manipulation, and cognitive distortion. AI companions, tutors, assistants, and persuasive systems can shape self-understanding and behavior. A system that increases dependency, exploits loneliness, or encourages unhealthy emotional attachment may be socially damaging even if it performs well on narrow tasks. In this domain, the human role includes education, critical oversight, and norm-setting. Institutions must ensure that AI supports human flourishing rather than quietly weakening agency or judgment. The fifth principle is legibility and contestability. Important AI-supported decisions should remain understandable enough to challenge, review, and correct. This does not require perfect transparency in every technical detail, but it does require traceability, documentation, and meaningful recourse. If AI affects hiring, grading, triage, access to services, or legal judgment, people must be able to ask why a decision was made, what data were used, and how an error can be contested. AI 25 systems therefore need not only performance, but also logging, explanation interfaces, audit trails, and clear allocation of responsibility. The sixth principle is polycentric governance. Oversight should not be concentrated in a single fragile layer. It should be distributed across model design, technical evaluation, deployment institutions, professional norms, legal rules, and public accountability. Developers are responsible for training procedures, safety testing, and model documentation. Deploying organizations are responsible for local monitoring, human oversight, and impact assessment. Regulators and legal institutions are responsible for standards, liability, and enforcement. Civil society and the public are responsible for criticism, feedback, and democratic pressure. This layered structure is important because coexistence is multi-layered: failures in one domain can propagate into the others. Taken together, this charter also clarifies the future division of roles between humans and AI. AI systems will increasingly perform pattern recognition, large-scale search, prediction, routine planning, simulation, and some forms of physical assistance. Humans will remain central in goal setting, ethical judgment, interpretation, exception handling, social coordination, and the creation of meaning. At the same time, new forms of work are likely to appear around human–AI collaboration, including model governance, alignment evaluation, AI-assisted care, embodied-system supervision, educational adaptation, and socio-technical mediation. The aim is therefore not to freeze human roles or to suppress AI development altogether. The aim is to shape a coexistence regime in which development remains bounded, gains remain shared, and social order remains legitimate. These principles are fully consistent with the logic of the model. Reciprocity strengthens coexistence. Governance enlarges the stability region. Ungoverned coupling can create fragility, lock-in, and domination. Bounded development is therefore preferable to both total suppression and unlimited autonomy. 
+
+## 6.5 Limitations and future work 
+
+This paper is theoretical, and its formalism is deliberately parsimonious. Several limitations therefore deserve emphasis. First, the variables pi, ψ i, s i, r i are abstract and require operationalization for empirical use. Second, the mutualistic network representation is stylized and does not yet capture richer strategic adaptation, hidden information, or adversarial misrepresentation. Third, our theorems establish sufficient conditions for stability, but not a complete bifurcation taxonomy of the unstable regime. That regime is likely to include multiple equilibria, lock-in, social polarization, and domination basins. Fourth, the framework does not settle the moral status of advanced AI systems. It remains compatible with multiple views on machine status because its primary concern is not rights inflation but the design of stable and legitimate hybrid systems. These limitations point to four immediate research directions. The first is stochastic coexistence dynamics with shocks, uncertainty, and exogenous events. The second is time-varying networks to represent evolving institutions and changing human–AI dependency structures. The third is game-theoretic governance, in which public institutions, firms, and civil actors co-determine the governance matrix. The fourth is empirical instantiation through simulation testbeds in care robotics, education, public-sector logistics, and scientific assistants. 26 7 Conclusion 
+
+This paper has argued for a fundamental reframing of the human–AI coexistence problem. The right theoretical image is not an obedient machine constrained by simple laws, but a co-evolving hybrid ecology in which humans, AI systems, and institutions interact across physical, psychological, and social worlds. Drawing on AI history, world models, alignment, HRI, ecology, and governance, we proposed the concept of conditional mutualism under governance and formalized it as a multiplex dynamical system with reciprocal supply–demand coupling. The resulting theory shows that coexistence is strengthened by reciprocity, stabilized by governance, and endangered by unbounded coupling and insufficient reversibility. The broader implication is both scientific and philosophical. Scientific, because coexistence can be modeled as a dynamical systems problem over layered networks rather than as a vague metaphor. Philosophical, because the future of AI will be shaped less by whether we can freeze intelligence into obedience than by whether we can design institutions in which growth, coordination, and dignity remain compatible. Beyond Asimov lies not the abandonment of ethics, but its maturation into a theory of bounded co-evolution. 
+
+# AI usage statement 
+
+OpenAI GPT-based systems and a Feynman AI research agent were used as assistive tools for literature organization, conceptual drafting, language refinement, and manuscript editing. OpenAI image-generation tools were used to assist with schematic figure generation and visual refinement. The author reviewed, revised, and verified all AI-assisted outputs and takes full responsibility for the final manuscript, including its arguments, citations, mathematical derivations, figures, and conclusions. No AI system is listed as an author. 
+
+# Acknowledgements 
+
+The author gratefully acknowledges Professor Xizhong Chen for his guidance, encouragement, and academic support. The author also thanks the Smart Particle Fluid Group at the School of Chemistry and Chemical Engineering, Shanghai Jiao Tong University, for providing an inspiring research environment and valuable intellectual context for developing the ideas presented in this work. 
+
+# References 
+
+Michael Ahn, Anthony Brohan, Noah Brown, Nikhil Walker, Jonathon Guo, Chelsea Finn, Sergey Levine, et al. Do as i can, not as i say: Grounding language in robotic affordances. arXiv preprint arXiv:2204.01691 , 2022. Jean-Baptiste Alayrac, Jeff Donahue, Pauline Luc, Antoine Miech, Iain Barr, Yana Hasson, Karel Lenc, Arthur Mensch, Katie Millican, Malcolm Reynolds, et al. Flamingo: a visual language model for few-shot learning. Advances in Neural Information Processing Systems , 2022. 27 Eloi Alonso, Adam Jelley, Vincent Micheli, Anssi Kanervisto, Amos Storkey, Tim Pearce, and Francois Fleuret. Diffusion for world modeling: Visual details matter in atari. In Advances in Neural Information Processing Systems , 2024. Dario Amodei, Chris Olah, Jacob Steinhardt, Paul Christiano, John Schulman, and Dan Mané. Concrete problems in ai safety. arXiv preprint arXiv:1606.06565 , 2016. Isaac Asimov. I, Robot . Gnome Press, New York, 1950. Mido Assran, Adrien Bardes, David Fan, Quentin Garrido, Russell Howes, Mojtaba Komeili, Matthew J. Muckley, Ammar Rizvi, Claire Roberts, Koustuv Sinha, Artem Zholus, Sergio Arnaud, Abha Gejji, Ada Martin, Francois Robert Hogan, Daniel Dugas, Piotr Bojanowski, Vasil Khalidov, Patrick Labatut, Francisco Massa, Marc Szafraniec, Kapil Krishnakumar, Yong Li, Xiaodong Ma, Sarath Chandar, Franziska Meier, Yann LeCun, Michael Rabbat, and Nicolas Ballas. V-JEPA 2: Self-supervised video models enable understanding, prediction and planning. arXiv preprint arXiv:2506.09985 , 2025. Robert Axelrod. The Evolution of Cooperation . Basic Books, New York, 1984. Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In ICLR , 2015. Yuntao Bai, Andy Jones, Kamal Ndousse, Amanda Askell, Anna Chen, Nova DasSarma, Dawn Drain, Stanislav Fort, Deep Ganguli, Tom Henighan, et al. Constitutional ai: Harmlessness from ai feedback. arXiv preprint arXiv:2212.08073 , 2022. Yoshua Bengio, Patrice Simard, and Paolo Frasconi. Learning long-term dependencies with gradient descent is difficult. IEEE Transactions on Neural Networks , 5(2):157–166, 1994. Christopher M. Bishop. Pattern Recognition and Machine Learning . Springer, 2006. Rishi Bommasani, Drew A. Hudson, Ehsan Adeli, Russ Altman, Simran Arora, Sydney von Arx, Michael S. Bernstein, et al. On the opportunities and risks of foundation models. arXiv preprint arXiv:2108.07258 , 2021. Anthony Brohan, Noah Brown, Justin Carbajal, Yevgen Chebotar, Pierre Sermanet, Karol Hausman, et al. RT-1: Robotics transformer for real-world control at scale. arXiv preprint arXiv:2212.06817 ,2022. Anthony Brohan, Noah Brown, Justice Carpenter, Cory Lynch, Pierre Sermanet, Karol Hausman, et al. Rt-2: Vision-language-action models transfer web knowledge to robotic control. arXiv preprint arXiv:2307.15818 , 2023. Judith L. Bronstein. Conditional outcomes in mutualistic interactions. Trends in Ecology and Evolution , 9(6):214–217, 1994. Judith L. Bronstein. Mutualism . Oxford University Press, Oxford, 2015. Tom B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, et al. Language models are few-shot learners. Advances in Neural Information Processing Systems , 33:1877–1901, 2020. 28 Sébastien Bubeck, Varun Chandrasekaran, Ronen Eldan, Johannes Gehrke, Eric Horvitz, Ece Kamar, Peter Lee, Yin Tat Lee, Yuanzhi Li, Scott Lundberg, Harsha Nori, Hamid Palangi, Marco Tulio Ribeiro, and Yi Zhang. Sparks of artificial general intelligence: Early experiments with GPT-4. 
+
+arXiv preprint arXiv:2303.12712 , 2023. Corinne Cath. Governing artificial intelligence: Ethical, legal and technical opportunities and challenges. Philosophical Transactions of the Royal Society A , 376(2133), 2018. Cheng Chi, Zhenjia Xu, Siyuan Feng, Boris Y. Xian, Marta Rosu, Eunchan Kim, Siddharth Garg, Sebastian Scherer, Lerrel Pinto, and Shuran Song. Diffusion policy: Visuomotor policy learning via action diffusion. International Journal of Robotics Research , 2023. Kyunghyun Cho, Bart van Merriënboer, Çağlar Gülçehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder–decoder for statistical machine translation. In EMNLP , 2014. Aakanksha Chowdhery, Sharan Narang, Jacob Devlin, Maarten Bosma, Gaurav Mishra, Adam Roberts, Paul Barham, Hyung Won Chung, Charles Sutton, Sebastian Gehrmann, et al. Palm: Scaling language modeling with pathways. arXiv preprint arXiv:2204.02311 , 2022. Paul F. Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and Dario Amodei. Deep reinforcement learning from human preferences. Advances in Neural Information Processing Systems , 2017. Maartje M. A. de Graaf and Bertram F. Malle. People’s explanations of robot behavior subtly reveal mental state inferences. In ACM/IEEE International Conference on Human-Robot Interaction ,pages 239–248, 2019. Marc Peter Deisenroth and Carl E. Rasmussen. PILCO: A model-based and data-efficient approach to policy search. ICML , 2011. Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. Bert: Pre-training of deep bidirectional transformers for language understanding. In NAACL , 2019. Danny Driess, Fei Xia, Mehdi S. M. Sajjadi, Corey Lynch, Aakanksha Chowdhery, Brian Ichter, et al. Palm-e: An embodied multimodal language model. arXiv preprint arXiv:2303.03378 , 2023. Nicholas Epley, Adam Waytz, and John T. Cacioppo. On seeing human: A three-factor theory of anthropomorphism. Psychological Review , 114(4):864–886, 2007. European Union. Regulation (eu) 2024/1689 laying down harmonised rules on artificial intelligence (AI act). Official Journal of the European Union, 2024. URL https://eur-lex.europa.eu/eli/ reg/2024/1689/oj . Accessed 2026-04-24. Luciano Floridi, Josh Cowls, Monica Beltrametti, Raja Chatila, Patrice Chazerand, Virginia Dignum, Christoph Luetge, Robert Madelin, Ugo Pagallo, Francesca Rossi, and Burkhard Schafer. AI4People—an ethical framework for a good ai society. Minds and Machines , 28(4):689–707, 2018. 29 Pascale Fung, Yoram Bachrach, Asli Celikyilmaz, Kamalika Chaudhuri, Delong Chen, Willy Chung, Emmanuel Dupoux, et al. Embodied ai agents: Modeling the world. arXiv preprint arXiv:2506.22355 , 2025. Ella Glikson and Anita Woolley. Human trust in artificial intelligence: Review of empirical research. 
+
+Academy of Management Annals , 14(2):627–660, 2020. Ian Goodfellow, Yoshua Bengio, and Aaron Courville. Deep Learning . MIT Press, Cambridge, MA, 2016. Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in Neural Information Processing Systems , volume 27, 2014. Wes Gurnee and Max Tegmark. Language models represent space and time. ICLR , 2024. David Ha and Juergen Schmidhuber. World models. arXiv preprint arXiv:1803.10122 , 2018. Dylan Hadfield-Menell, Stuart Russell, Pieter Abbeel, and Anca Dragan. Cooperative inverse reinforcement learning. In Advances in Neural Information Processing Systems , volume 29, 2016. Danijar Hafner, Timothy Lillicrap, Jimmy Ba, and Mohammad Norouzi. Dream to control: Learning behaviors by latent imagination. In International Conference on Learning Representations , 2020. Danijar Hafner, Timothy Lillicrap, Mohammad Norouzi, and Jimmy Ba. Mastering atari with discrete world models. In International Conference on Learning Representations , 2021. Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, and Timothy Lillicrap. Mastering diverse domains through world models. arXiv preprint arXiv:2301.04104 , 2023. Peter A. Hancock, Deborah R. Billings, Kristin E. Schaefer, Jessie Y. C. Chen, Ewart J. de Visser, and Raja Parasuraman. A meta-analysis of factors affecting trust in human-robot interaction. 
+
+Human Factors , 53(5):517–527, 2011. Nicklas Hansen, Xiaolong Wang, and Hao Su. Temporal difference learning for model predictive control. ICML , 2022. Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising diffusion probabilistic models. arXiv preprint arXiv:2006.11239 , 2020. Sepp Hochreiter and Jürgen Schmidhuber. Long short-term memory. Neural Computation , 9(8): 1735–1780, 1997. Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya, Trevor Cai, Eliza Rutherford, Diego de Las Casas, Lisa Anne Hendricks, Johannes Welbl, Aidan Clark, Tom Hennigan, Eric Nalisnick, Katie Millican, George van den Driessche, Bogdan Damoc, Aurelia Guy, Simon Osindero, Karen Simonyan, Erich Elsen, Jack W. Rae, Oriol Vinyals, and Laurent Sifre. Training compute-optimal large language models. arXiv preprint arXiv:2203.15556 , 2022. John N. Holland, Donald L. DeAngelis, and James L. Bronstein. Population dynamics and mutualism: Functional responses of benefits and costs. The American Naturalist , 159(3):231–244, 2002. 30 John J. Hopfield. Neural networks and physical systems with emergent collective computational abilities. Proceedings of the National Academy of Sciences , 79(8):2554–2558, 1982. Weidong Huang, Jiaming Ji, Chunhe Xia, Borong Zhang, and Yaodong Yang. Safedreamer: Safe re-inforcement learning with world models. In International Conference on Learning Representations ,2024. Anna Jobin, Marcello Ienca, and Effy Vayena. The global landscape of ai ethics guidelines. Nature Machine Intelligence , 1(9):389–399, 2019. Michael I. Jordan and Tom M. Mitchell. Machine learning: Trends, perspectives, and prospects. 
+
+Science , 349(6245):255–260, 2015. Leslie Pack Kaelbling, Michael L. Littman, and Andrew W. Moore. Reinforcement learning: A survey. Journal of Artificial Intelligence Research , 4:237–285, 1996. Jared Kaplan, Sam McCandlish, Tom Henighan, Tom B. Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. Scaling laws for neural language models. 
+
+arXiv preprint arXiv:2001.08361 , 2020. Diederik P. Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114 , 2013. Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton. Imagenet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems , 2012. Yann LeCun. A path towards autonomous machine intelligence. OpenReview position paper, 2022. URL https://openreview.net/pdf?id=BZ5a1r-kVsf . Version 0.9.2, 2022-06-27. Yann LeCun, Yoshua Bengio, and Geoffrey Hinton. Deep learning. Nature , 521(7553):436–444, 2015. John D. Lee and Katrina A. See. Trust in automation: Designing for appropriate reliance. Human Factors , 46(1):50–80, 2004. Ming-Yu Liu, Jing Zhang, et al. Cosmos world foundation model platform for physical AI. arXiv preprint arXiv:2501.03575 , 2025. John McCarthy. Programs with common sense. In Proceedings of the Teddington Conference on the Mechanization of Thought Processes . 1959. Warren S. McCulloch and Walter Pitts. A logical calculus of the ideas immanent in nervous activity. 
+
+The Bulletin of Mathematical Biophysics , 5(4):115–133, 1943. Vincent Micheli, Eloi Alonso, and François Fleuret. Transformers are sample-efficient world models. 
+
+ICLR , 2023. Tom M. Mitchell. Machine Learning . McGraw-Hill, 1997. Meredith Ringel Morris, Jascha Sohl-Dickstein, Noah Fiedel, et al. Levels of AGI: Operationalizing progress on the path to AGI. arXiv preprint arXiv:2311.02462 , 2023. 31 Anusha Nagabandi, Gregory Kahn, Ronald S. Fearing, and Sergey Levine. Neural network dynamics for model-based deep reinforcement learning with model-free fine-tuning. ICRA , 2018. Clifford Nass and Youngme Moon. Machines and mindlessness: Social responses to computers. 
+
+Journal of Social Issues , 56(1):81–103, 2000. National Institute of Standards and Technology. Ai risk management framework (ai rmf 1.0). NIST publication, 2023. URL https://www.nist.gov/itl/ai-risk-management-framework .Accessed 2026-04-24. Allen Newell, J. C. Shaw, and Herbert A. Simon. The logic theory machine. In Proceedings of the Western Joint Computer Conference , 1956. Nils J. Nilsson. Principles of Artificial Intelligence . Tioga, 1980. Ronald Noe and Peter Hammerstein. Biological markets: Supply and demand determine the effect of partner choice in cooperation, mutualism and mating. Behavioral Ecology and Sociobiology , 35 (1):1–11, 1994. OECD. Oecd principles on artificial intelligence. OECD Recommendation, 2019. URL https: //oecd.ai/en/ai-principles . Accessed 2026-04-24. Open X-Embodiment Collaboration. Open x-embodiment: Robotic learning datasets and rt-x models. arXiv preprint arXiv:2310.08864 , 2024. OpenAI. GPT-4 technical report. arXiv preprint arXiv:2303.08774 , 2023. Elinor Ostrom. Polycentric systems for coping with collective action and global environmental change. Global Environmental Change , 20(4):550–557, 2010. Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, et al. Training language models to follow instructions with human feedback. Advances in Neural Information Processing Systems , 35: 27730–27744, 2022. Raja Parasuraman and Dietrich H. Manzey. Complacency and bias in human use of automation: An attentional integration. Human Factors , 52(3):381–410, 2010. Jared Perlo, Alexander Robey, Fazl Barez, Luciano Floridi, and Jakob Mokander. Embodied ai: Emerging risks and opportunities for policy action. arXiv preprint arXiv:2509.00117 , 2025. Michael O. Rabin and Dana Scott. Finite automata and their decision problems. IBM Journal of Research and Development , 3(2):114–125, 1959. Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, Gretchen Krueger, and Ilya Sutskever. Learning transferable visual models from natural language supervision. ICML , 2021. Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael Matena, Yanqi Zhou, Wei Li, and Peter J. Liu. Exploring the limits of transfer learning with a unified text-to-text transformer. Journal of Machine Learning Research , 21(140):1–67, 2020. 32 Scott Reed, Konrad Zolna, Emilio Parisotto, Sergio Gómez Colmenarejo, Misha Denil, Nando de Freitas, et al. A generalist agent. Transactions on Machine Learning Research , 2022. Danilo J. Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approxi-mate inference in deep generative models. ICML , 2014. Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. High-resolution image synthesis with latent diffusion models. CVPR , 2022. Frank Rosenblatt. The perceptron: A probabilistic model for information storage and organization in the brain. Psychological Review , 65(6):386–408, 1958. David E. Rumelhart, Geoffrey E. Hinton, and Ronald J. Williams. Learning representations by back-propagating errors. In Parallel Distributed Processing: Explorations in the Microstructure of Cognition . MIT Press, 1986. Stuart Russell. Human Compatible: Artificial Intelligence and the Problem of Control . Viking, New York, 2019. Stuart Russell, Daniel Dewey, and Max Tegmark. Research priorities for robust and beneficial artificial intelligence. AI Magazine , 36(4):105–114, 2015. Jürgen Schmidhuber. Deep learning in neural networks: An overview. Neural Networks , 61:85–117, 2015. R. Sekar, Vitchyr Pong, Aurick Zhou, Ilya Kostrikov, and Sergey Levine. Planning to explore via self-supervised world models. ICML , 2020. Claude E. Shannon. A mathematical theory of communication. Bell System Technical Journal , 27 (3):379–423, 1948. Nate Soares, Benja Fallenstein, Stuart Armstrong, and Eliezer Yudkowsky. Corrigibility. AAAI Workshop on AI and Ethics , 2015. Jascha Sohl-Dickstein, Eric Weiss, Niru Maheswaranathan, and Surya Ganguli. Deep unsupervised learning using nonequilibrium thermodynamics. ICML , 2015. Yang Song, Jascha Sohl-Dickstein, Diederik P. Kingma, Abhishek Kumar, Stefano Ermon, and Ben Poole. Score-based generative modeling through stochastic differential equations. ICLR , 2021. Alex F. Spies, William Edwards, Michael I. Ivanitskiy, Adrians Skapars, Tilman Räuker, Katsumi Inoue, Alessandra Russo, and Murray Shanahan. Transformers use causal world models in maze-solving tasks. arXiv preprint arXiv:2412.11867 , 2024. Ilya Sutskever, Oriol Vinyals, and Quoc V. Le. Sequence to sequence learning with neural networks. In Advances in Neural Information Processing Systems , 2014. Richard S. Sutton. Dyna, an integrated architecture for learning, planning, and reacting. SIGART Bulletin , 2(4):160–163, 1991. 33 Octo Model Team. Octo: An open-source generalist robot policy. arXiv preprint arXiv:2405.12213 ,2024a. OpenVLA Team. Openvla: An open vision-language-action model. arXiv preprint arXiv:2406.09246 ,2024b. John N. Thompson. The Geographic Mosaic of Coevolution . University of Chicago Press, Chicago, 2005. Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei, Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti Bhosale, et al. Llama: Open and efficient foundation language models. arXiv preprint arXiv:2302.13971 , 2023. Robert L. Trivers. The evolution of reciprocal altruism. Quarterly Review of Biology , 46(1):35–57, 1971. Alan M. Turing. On computable numbers, with an application to the entscheidungsproblem. 
+
+Proceedings of the London Mathematical Society , 42(2):230–265, 1937. UNESCO. Recommendation on the ethics of artificial intelligence. UNESCO norma-tive instrument, 2021. URL https://www.unesco.org/en/artificial-intelligence/ recommendation-ethics . Accessed 2026-04-24. Vladimir N. Vapnik. An overview of statistical learning theory. IEEE Transactions on Neural Networks , 10(5):988–999, 1999. Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems , volume 30, 2017. Adam Waytz, Joy Heafner, and Nicholas Epley. The mind in the machine: Anthropomorphism increases trust in an autonomous vehicle. Journal of Experimental Social Psychology , 52:113–117, 2014. Jason Wei, Yi Tay, Rishi Bommasani, Colin Raffel, Barret Zoph, Sebastian Borgeaud, Dani Yogatama, Maarten Bosma, Denny Zhou, Donald Metzler, Ed Chi, Tatsunori Hashimoto, Oriol Vinyals, Percy Liang, Jeff Dean, and William Fedus. Emergent abilities of large language models. 
+
+Transactions on Machine Learning Research , 2022. Laura Weidinger, Jonathan Uesato, Maribeth Rauh, Conor Griffin, Po-Sen Huang, Myra Cheng, Pamela Mishkin, Alex Kenton, William Isaac, Rohin Shah, et al. Taxonomy of risks posed by language models. FAccT , 2022. Norbert Wiener. Cybernetics: Or Control and Communication in the Animal and the Machine .MIT Press, 1948. 34
