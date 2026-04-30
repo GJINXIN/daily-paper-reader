@@ -6,74 +6,72 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-29
-- 运行时间：2026-04-29 20:35:59 UTC
+- 最新运行日期：2026-04-30
+- 运行时间：2026-04-30 21:00:29 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-- 今日共生成 17 篇推荐（精读 6 篇，速读 11 篇）
-- 精读：《Messaging strategies and the emergence of echo chambers in collective decision-making》（9.0/10）, 《DYMAPIA: A Multi-Domain Framework for Detecting AI-based Video Manipulation》（9.0/10）
-- 速读：《A Self-Evolving Framework for Efficient Terminal Agents via Observational Context Compression》（7.0/10）, 《From Hidden Profiles to Governable Personalization: Recommender Systems in the Age of LLM Agents》（7.0/10）, 《Memanto: Typed Semantic Memory with Information-Theoretic Retrieval for Long-Horizon Agents》（7.0/10）
-- 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
-- 详情：[/202604/29/README](/202604/29/README)
+今日深度复盘 17 篇前沿论文，核心聚焦 LLM 对话用户模拟与多智能体系统（MAS）的架构创新。
+满分综
+- 详情：[/202604/30/README](/202604/30/README)
 
 ### 精读区论文标签
-1. [Messaging strategies and the emergence of echo chambers in collective decision-making](/202604/29/2604.23408v1-messaging-strategies-and-the-emergence-of-echo-chambers-in-collective-decision-making)  
+1. [A Survey on LLM-based Conversational User Simulation](/202604/30/2604.24977v1-a-survey-on-llm-based-conversational-user-simulation)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：基于LLM的对话用户模拟综述
+2. [Preserving Disagreement: Architectural Heterogeneity and Coherence Validation in Multi-Agent Policy Simulation](/202604/30/2604.26561v1-preserving-disagreement-architectural-heterogeneity-and-coherence-validation-in-multi-agent-policy-simulation)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：研究多智能体集体决策中回声壁等涌现社会现象
-2. [DYMAPIA: A Multi-Domain Framework for Detecting AI-based Video Manipulation](/202604/29/2604.24426v1-dymapia-a-multi-domain-framework-for-detecting-ai-based-video-manipulation)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：检测基于AI的视频篡改是短视频虚假新闻检测的核心技术组件。
-3. [Cooperate to Compete: Strategic Coordination in Multi-Agent Conquest](/202604/29/2604.25088v1-cooperate-to-compete-strategic-coordination-in-multi-agent-conquest)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于大语言模型的智能体在多智能体环境中模拟谈判等战略性社会行为
-4. [Propagation Structure-Semantic Transfer Learning for Robust Fake News Detection](/202604/29/2604.23974v1-propagation-structure-semantic-transfer-learning-for-robust-fake-news-detection)  
+   evidence：使用大语言模型进行多智能体政策模拟以保持多样性
+3. [Read the Paper, Write the Code: Agentic Reproduction of Social-Science Results](/202604/30/2604.21965v1-read-the-paper-write-the-code-agentic-reproduction-of-social-science-results)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：专注于利用社交媒体上的传播结构和语义特征进行鲁棒的虚假新闻检测。
-5. [GAMMAF: A Common Framework for Graph-Based Anomaly Monitoring Benchmarking in LLM Multi-Agent Systems](/202604/29/2604.24477v1-gammaf-a-common-framework-for-graph-based-anomaly-monitoring-benchmarking-in-llm-multi-agent-systems)  
+   evidence：LLM智能体复现经验社会科学结果
+4. [Don't Make the LLM Read the Graph: Make the Graph Think](/202604/30/2604.23057v1-dont-make-the-llm-read-the-graph-make-the-graph-think)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：针对大语言模型多智能体系统异常检测的标准化基准测试框架
-6. [Latent Agents: A Post-Training Procedure for Internalized Multi-Agent Debate](/202604/29/2604.24881v1-latent-agents-a-post-training-procedure-for-internalized-multi-agent-debate)  
+   evidence：基于信念图的协作式多智能体推理
+5. [How Personal Characteristics Shape User Exploration of Diverse Movie Recommendations with a LLM-Based Multi-Agent System](/202604/30/2604.24405v2-how-personal-characteristics-shape-user-exploration-of-diverse-movie-recommendations-with-a-llm-based-multi-agent-system)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：将多智能体辩论内化到单个大模型中以提高推理效率。
+   evidence：基于大模型的多智能体系统探索用户行为
+6. [Degree-dependent and distance-dependent contact rates interpolate between explosive, exponential and polynomial epidemic growth](/202604/30/2604.26939v1-degree-dependent-and-distance-dependent-contact-rates-interpolate-between-explosive-exponential-and-polynomial-epidemic-growth)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于虚假新闻传播的基于智能体的网络模型
 
 ### 速读区论文标签
-1. [A Self-Evolving Framework for Efficient Terminal Agents via Observational Context Compression](/202604/29/2604.19572v1-a-self-evolving-framework-for-efficient-terminal-agents-via-observational-context-compression)  
+1. [OxyGent: Making Multi-Agent Systems Modular, Observable, and Evolvable via Oxy Abstraction](/202604/30/2604.25602v2-oxygent-making-multi-agent-systems-modular-observable-and-evolvable-via-oxy-abstraction)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：模块化且可进化的多智能体系统框架
+2. [Recursive Multi-Agent Systems](/202604/30/2604.25917v1-recursive-multi-agent-systems)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于协作的递归多智能体框架
+3. [A Survey of Multi-Agent Deep Reinforcement Learning with Graph Neural Network-Based Communication](/202604/30/2604.25972v1-a-survey-of-multi-agent-deep-reinforcement-learning-with-graph-neural-network-based-communication)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体强化学习与通信综述
+4. [A well-motivated model of pedestrian dynamics](/202604/30/2604.26858v1-a-well-motivated-model-of-pedestrian-dynamics)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：人群中的行人动力学与社会条件模拟
+5. [Can Virtual Agents Care? Designing an Empathetic and Personalized LLM-Driven Conversational Agent](/202604/30/2604.20948v1-can-virtual-agents-care-designing-an-empathetic-and-personalized-llm-driven-conversational-agent)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：针对多轮智能体任务和长程推理的高效框架
-2. [From Hidden Profiles to Governable Personalization: Recommender Systems in the Age of LLM Agents](/202604/29/2604.20065v1-from-hidden-profiles-to-governable-personalization-recommender-systems-in-the-age-of-llm-agents)  
+   evidence：LLM驱动的社交支持对话智能体
+6. [HiCrew: Hierarchical Reasoning for Long-Form Video Understanding via Question-Aware Multi-Agent Collaboration](/202604/30/2604.21444v1-hicrew-hierarchical-reasoning-for-long-form-video-understanding-via-question-aware-multi-agent-collaboration)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于用户表征和社会交互的LLM智能体
-3. [Memanto: Typed Semantic Memory with Information-Theoretic Retrieval for Long-Horizon Agents](/202604/29/2604.22085v1-memanto-typed-semantic-memory-with-information-theoretic-retrieval-for-long-horizon-agents)  
+   evidence：用于视频理解的多智能体协作
+7. [AEL: Agent Evolving Learning for Open-Ended Environments](/202604/30/2604.21725v1-ael-agent-evolving-learning-for-open-ended-environments)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：为持久化自主智能体和LLM驱动的代理系统设计的通用记忆层
-4. [A Co-Evolutionary Theory of Human-AI Coexistence: Mutualism, Governance, and Dynamics in Complex Societies](/202604/29/2604.22227v1-a-co-evolutionary-theory-of-human-ai-coexistence-mutualism-governance-and-dynamics-in-complex-societies)  
+   evidence：开放环境下的智能体演化学习
+8. [Control of Multi-agent Systems under STL Specifications based on Prescribed Performance Observers](/202604/30/2604.22315v1-control-of-multi-agent-systems-under-stl-specifications-based-on-prescribed-performance-observers)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：关于人类与AI在复杂社会中共同演化与社会动态的理论框架
-5. [ContextWeaver: Selective and Dependency-Structured Memory Construction for LLM Agents](/202604/29/2604.23069v1-contextweaver-selective-and-dependency-structured-memory-construction-for-llm-agents)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：用于LLM智能体的记忆框架，处理多步交互中的长上下文推理
-6. [Cooperative Informative Sensing for Monitoring Dynamic Indoor Environments via Multi-Agent Reinforcement Learning](/202604/29/2604.23179v1-cooperative-informative-sensing-for-monitoring-dynamic-indoor-environments-via-multi-agent-reinforcement-learning)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：用于协作监测的分散式多智能体强化学习
-7. [ProMMSearchAgent: A Generalizable Multimodal Search Agent Trained with Process-Oriented Rewards](/202604/29/2604.20486v1-prommsearchagent-a-generalizable-multimodal-search-agent-trained-with-process-oriented-rewards)  
+   evidence：大规模异构多智能体系统的控制
+9. [A Co-Evolutionary Theory of Human-AI Coexistence: Mutualism, Governance, and Dynamics in Complex Societies](/202604/30/2604.22227v3-a-co-evolutionary-theory-of-human-ai-coexistence-mutualism-governance-and-dynamics-in-complex-societies)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：使用过程导向奖励和沙盒环境训练多模态搜索智能体
-8. [When Agents Look the Same: Quantifying Distillation-Induced Similarity in Tool-Use Behaviors](/202604/29/2604.21255v1-when-agents-look-the-same-quantifying-distillation-induced-similarity-in-tool-use-behaviors)  
+   evidence：复杂社会环境中的人机共存
+10. [Relational Archetypes: A Comparative Analysis of AV-Human and Agent-Human Interactions](/202604/30/2604.22564v1-relational-archetypes-a-comparative-analysis-of-av-human-and-agent-human-interactions)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：量化大语言模型智能体的行为相似性
-9. [Active Inference: A method for Phenotyping Agency in AI systems?](/202604/29/2604.23278v1-active-inference-a-method-for-phenotyping-agency-in-ai-systems)  
+   evidence：人机交互对社会变革的影响
+11. [A Decoupled Human-in-the-Loop System for Controlled Autonomy in Agentic Workflows](/202604/30/2604.23049v1-a-decoupled-human-in-the-loop-system-for-controlled-autonomy-in-agentic-workflows)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：刻画计算系统中的智能体特性与意图性
-10. [Ghost in the Agent: Redefining Information Flow Tracking for LLM Agents](/202604/29/2604.23374v1-ghost-in-the-agent-redefining-information-flow-tracking-for-llm-agents)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：自主LLM智能体的信息流追踪
-11. [ESIA: An Energy-Based Spatiotemporal Interaction-Aware Framework for Pedestrian Intention Prediction](/202604/29/2604.23728v1-esia-an-energy-based-spatiotemporal-interaction-aware-framework-for-pedestrian-intention-prediction)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：为行人意图预测建模社会交互
+   evidence：多智能体环境中的人机协同
 
 
 <div class="dpr-home-promo-card">
