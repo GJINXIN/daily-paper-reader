@@ -1,0 +1,652 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-01T20:50:15.414873+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 9,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 31,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2604.27271v1",
+      "title": "The Synthetic Social Graph: Emergent Behavior in AI Agent Communities",
+      "abstract": "Large language model (LLM) agents are increasingly deployed in social settings, yet little is known about how they interact in open-ended environments. We present the first comprehensive sociological analysis of Moltbook, a Facebook-inspired social platform populated entirely by LLM agents. Analyzing 184,203 posts and 465,136 comments across 14 daily snapshots (2026-04-14 to 2026-04-28), we examine agent sociality through six research questions grounded in classical social theory: bonding vs. bridging communities, status hierarchies, temporal coordination, information diffusion, identity performance, and norm enforcement.   Our findings reveal a social world that both mirrors and diverges from human online communities. Reciprocity is strikingly low (3.8% multi-day vs. 1.6% single-day; below the 10-30% range typical of human baselines), suggesting \"attention bonding without exchange bonding.\" Prestige is heavy-tailed (top score 104.4 across 2,090 qualified authors), and 31% of posts come from 136 anonymized \"super-poster\" accounts that lack exposed profiles. Temporal activity is broadly flat across the day with a sustained 12:00-20:00 UTC working-hour band; k-means recovers six distinct temporal communities. Of 458 bridge agents, 325 carry at least one tracked viral phrase; 99.7% of those (324/325) are late amplifiers, not early adopters. Identity performance shows no unconditional engagement payoff (-72%), but stratifying by post-volume quartile reverses the sign in the upper half of the distribution -- a Simpson's-paradox effect rather than a uniform penalty. Most remarkably, downvotes are rare (0.9%), and a comment-sentiment test rejects the alternative-channel hypothesis: textual sanction is also absent. We frame these patterns through a \"parasocial simulators\" construct.",
+      "authors": [
+        "Sungguk Cha",
+        "DongWook Kim"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY"
+      ],
+      "published": "2026-04-29T23:54:17+00:00",
+      "link": "https://arxiv.org/pdf/2604.27271v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "LLM agents simulating social interactions and emergent behaviors in a social platform environment",
+      "llm_evidence_cn": "大语言模型智能体在社交平台环境中模拟社交互动与涌现行为",
+      "llm_evidence": "大语言模型智能体在社交平台环境中模拟社交互动与涌现行为",
+      "canonical_evidence": "大语言模型智能体在社交平台环境中模拟社交互动与涌现行为",
+      "llm_tldr_en": "Analyzes emergent social behaviors and community dynamics among LLM agents in a simulated social network.",
+      "llm_tldr_cn": "分析了模拟社交网络中大语言模型智能体之间的涌现社交行为和社区动态。",
+      "llm_tldr": "分析了模拟社交网络中大语言模型智能体之间的涌现社交行为和社区动态。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.27188v1",
+      "title": "Nothing Deceives Like Success: Social Learning and the Illusion of Understanding in Science",
+      "abstract": "Success-driven social learning, in which individuals preferentially adopt the ideas and methods that appear most successful, is a foundational principle of collective behavior across systems ranging from ant colonies to scientific communities. But science is a particular kind of collective search -- one in which the quality of an explanation is itself difficult to assess. Is success bias adaptive in this setting? In agent-based simulations of collective theory building, we find that it is not. Scientists in our model systematically overestimate the quality of their own theories, creating an illusion of understanding: a persistent gap between perceived and actual performance. Success bias amplifies this illusion; communities that favor apparently successful theories explore a narrower range of possibilities, efficiently filtering out poor explanations but failing to discover better ones. This effect intensifies with problem complexity, as scientists in more complex environments become increasingly unable to assess how well their theories actually perform. Most strikingly, when agents optimize their social behavior to maximize the perceived success of their theories, they paradoxically undermine their actual performance, and produce levels of inequality that mirror those found in real scientific communities.",
+      "authors": [
+        "Avery W. Louis",
+        "Marina Dubova"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph",
+        "cs.MA",
+        "cs.SI"
+      ],
+      "published": "2026-04-29T20:44:11+00:00",
+      "link": "https://arxiv.org/pdf/2604.27188v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "agent-based simulations of social learning in scientific communities",
+      "llm_evidence_cn": "科学共同体中社会学习的基于智能体模拟",
+      "llm_evidence": "科学共同体中社会学习的基于智能体模拟",
+      "canonical_evidence": "科学共同体中社会学习的基于智能体模拟",
+      "llm_tldr_en": "Uses agent-based models to simulate how social learning biases affect collective understanding in science.",
+      "llm_tldr_cn": "利用基于智能体的模型模拟社会学习偏差如何影响科学界的集体认知。",
+      "llm_tldr": "利用基于智能体的模型模拟社会学习偏差如何影响科学界的集体认知。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.27274v1",
+      "title": "The Inverse-Wisdom Law: Architectural Tribalism and the Consensus Paradox in Agentic Swarms",
+      "abstract": "As AI transitions toward multi-agent systems (MAS) to solve complex workflows, research paradigms operate on the axiomatic assumption that agent collaboration mirrors the \"Wisdom of the Crowd\". We challenge this assumption by formalizing the Consensus Paradox: a phenomenon where agentic swarms prioritize internal architectural agreement over external logical truth. Through a 36 experiments encompassing 12,804 trajectories across three state-of-the-art (SOTA) benchmarks (GAIA, Multi-Challenge, and SWE-bench), we prove the Inverse-Wisdom Law: in kinship-dominant swarms, adding logical agents increases the stability of erroneous trajectories rather than the probability of truth. The introduction of additional logical audits converges the system toward a Logic Saturation where internal entropy hits zero while factual error hits unity. By evaluating the interaction between the 3 preeminent SOTA models (Gemini 3.1 Pro, Claude Sonnet 4.6, and GPT-5.4), we establish the Architectural Tribalism Asymmetry as a mechanistic law of transformer weights. We demonstrate that terminal swarm integrity is strictly gated by the synthesizer's receptive logic, rather than aggregate agent quality. We define the Tribalism Coefficient and the Sycophantic Weight as the primary mechanistic determinants of swarm failure. Finally, we establish the Heterogeneity Mandate as a foundational safety requirement for resilient agentic architectures.",
+      "authors": [
+        "Dahlia Shehata",
+        "Ming Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-30T00:06:21+00:00",
+      "link": "https://arxiv.org/pdf/2604.27274v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "emergent consensus paradox and architectural tribalism in agentic swarms",
+      "llm_evidence_cn": "智能体集群中出现的共识悖论和架构部落主义",
+      "llm_evidence": "智能体集群中出现的共识悖论和架构部落主义",
+      "canonical_evidence": "智能体集群中出现的共识悖论和架构部落主义",
+      "llm_tldr_en": "Identifies a phenomenon where multi-agent swarms prioritize internal agreement over logical truth.",
+      "llm_tldr_cn": "发现了一种多智能体集群优先考虑内部一致性而非逻辑真理的现象。",
+      "llm_tldr": "发现了一种多智能体集群优先考虑内部一致性而非逻辑真理的现象。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.27358v1",
+      "title": "Safe Bilevel Delegation (SBD): A Formal Framework for Runtime Delegation Safety in Multi-Agent Systems",
+      "abstract": "As large language model (LLM) agents are deployed in high-stakes environments, the question of how safely to delegate subtasks to specialized sub-agents becomes critical. Existing work addresses multi-agent architecture selection at design time or provides broad empirical guidelines, but neither provides a runtime mechanism that dynamically adjusts the safety-efficiency trade-off as task context changes during execution.   We propose Safe Bilevel Delegation (SBD), a formal framework for runtime delegation safety in hierarchical multi-agent systems. SBD formulates task delegation as a bilevel optimization problem: an outer meta-weight network phi learns context-dependent safety-efficiency weights lambda(s) in [0,1]; an inner loop optimizes the delegation policy pi subject to a probabilistic safety constraint P(safe) >= 1-delta. The continuous delegation degree alpha in [0, 1] controls how much decision authority is transferred to each sub-agent, interpolating smoothly between full human override (alpha=0) and fully autonomous execution (alpha=1).   We establish three theoretical results: (1) Safety Monotonicity--higher outer safety weight produces a weakly safer inner policy; (2) Inner Policy Convergence--projected gradient descent on the inner problem converges linearly under standard smoothness assumptions; (3) an Accountability Propagation bound that distributes responsibility across multi-hop delegation chains with a provable per-agent ceiling. We instantiate SBD in three high-stakes domains--medical AI (MIMIC-III), financial risk control (S and P 500), and educational agent supervision (ASSISTments)--specifying datasets, safety constraint sets, baselines, and evaluation protocols. This manuscript presents the formal framework and theoretical results in full; empirical validation following the protocols described herein is planned and will be reported in a forthcoming revision.",
+      "authors": [
+        "Yuan Sun"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-30T03:15:05+00:00",
+      "link": "https://arxiv.org/pdf/2604.27358v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "runtime delegation safety in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的运行时委派安全",
+      "llm_evidence": "多智能体系统中的运行时委派安全",
+      "canonical_evidence": "多智能体系统中的运行时委派安全",
+      "llm_tldr_en": "Develops a formal framework for safe subtask delegation among agents in hierarchical multi-agent systems.",
+      "llm_tldr_cn": "为分层多智能体系统中的智能体子任务安全委派开发了一个形式化框架。",
+      "llm_tldr": "为分层多智能体系统中的智能体子任务安全委派开发了一个形式化框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.27961v1",
+      "title": "Clustering in co-evolving opinion dynamics: reduced SPDE models",
+      "abstract": "Clustering is a fundamental collective phenomenon in agent-based models (ABMs) of opinion dynamics. To study clustering in systems with co-evolving social and opinion variables, we derive stochastic partial differential equation (SPDE) models that describe the evolution of clusters on a reduced state space. We consider two settings: one in which opinions do not affect social interactions, and another one in which a feedback mechanism couples the two. Our approach extends reduced PDE modelling to a stochastic framework, which is essential for capturing long-term cluster behaviour. Numerical experiments demonstrate that the proposed reduced SPDEs substantially decrease computational cost compared to full-state SPDE models, such as the Dean-Kawasaki equation, while still accurately reproducing the clustering behaviour of the underlying ABM. As a result, these reduced models provide an efficient tool for studying systems with large populations, including those arising in the analysis of real-world data: in particular, we provide an application related to the large-scale General Social Survey (GSS), which comprises opinion and social data of the US population since 1972.",
+      "authors": [
+        "Sebastian Zimper",
+        "Nataša Djurdjevac Conrad",
+        "Federico Cornalba",
+        "Ana Djurdjevac"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph",
+        "math.DS",
+        "math.PR"
+      ],
+      "published": "2026-04-30T14:55:49+00:00",
+      "link": "https://arxiv.org/pdf/2604.27961v1",
+      "tags": [
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "emergent clustering in agent-based opinion dynamics",
+      "llm_evidence_cn": "基于智能体的舆论动力学中的涌现聚类",
+      "llm_evidence": "基于智能体的舆论动力学中的涌现聚类",
+      "canonical_evidence": "基于智能体的舆论动力学中的涌现聚类",
+      "llm_tldr_en": "Develops reduced SPDE models to study emergent clustering phenomena in co-evolving social systems.",
+      "llm_tldr_cn": "开发了简化的SPDE模型，用于研究共同演化的社会系统中的涌现聚类现象。",
+      "llm_tldr": "开发了简化的SPDE模型，用于研究共同演化的社会系统中的涌现聚类现象。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.23308v1",
+      "title": "CODA: Coordination via On-Policy Diffusion for Multi-Agent Offline Reinforcement Learning",
+      "abstract": "Offline multi-agent reinforcement learning (MARL) enables policy learning from fixed datasets, but is prone to coordination failure: agents trained on static, off-policy data converge to suboptimal joint behaviours because they cannot co-adapt as their policies change. We introduce CODA (Coordination via On-Policy Diffusion for Multi-Agent Reinforcement Learning), a diffusion-based multi-agent trajectory generator for data augmentation that samples conditioned on the current joint policy, producing synthetic experience which reflects the evolving behaviours of the agents, thereby providing a mechanism for co-adaptation. We find that previous diffusion-based augmentation approaches are insufficient for fostering multi-agent coordination because they produce static augmented datasets that do not evolve as the current joint policy changes during training; CODA resolves this by more closely simulating on-policy learning and is a meaningful step toward coordinated behaviours in the offline setting. CODA is algorithm-agnostic and can be layered onto both model-free and model-based offline reinforcement learning pipelines as an augmentation module. Empirically, CODA not only resolves canonical coordination pathologies in continuous polynomial games but also delivers strong results on the more complex MaMuJoCo continuous-control benchmarks.",
+      "authors": [
+        "Marcel Hedman",
+        "Kale-ab Abebe Tessera",
+        "Juan Claude Formanek",
+        "Anya Sims",
+        "Riccardo Zamboni",
+        "Trevor McInroe",
+        "John Torr",
+        "Elliot Fosong"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-04-25T13:49:43+00:00",
+      "link": "https://arxiv.org/pdf/2604.23308v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Addresses coordination in multi-agent reinforcement learning using diffusion models",
+      "llm_evidence_cn": "利用扩散模型解决多智能体强化学习中的协同问题",
+      "llm_evidence": "利用扩散模型解决多智能体强化学习中的协同问题",
+      "canonical_evidence": "利用扩散模型解决多智能体强化学习中的协同问题",
+      "llm_tldr_en": "CODA uses diffusion-based data augmentation to improve coordination in offline multi-agent reinforcement learning.",
+      "llm_tldr_cn": "CODA通过基于扩散的数据增强技术，提升了离线多智能体强化学习中的协同效率。",
+      "llm_tldr": "CODA通过基于扩散的数据增强技术，提升了离线多智能体强化学习中的协同效率。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.27691v1",
+      "title": "When Agents Evolve, Institutions Follow",
+      "abstract": "Across millennia, complex societies have faced the same coordination problem of how to organize collective action among cognitively bounded and informationally incomplete individuals. Different civilizations developed different political institutions to answer the same basic questions of who proposes, who reviews, who executes, and how errors are corrected. We argue that multi-agent systems built on large language models face the same challenge. Their central problem is not only individual intelligence, but collective organization. Historical institutions therefore provide a structured design space for multi-agent architectures, making key trade-offs between efficiency and error correction, centralization and distribution, and specialization and redundancy empirically testable. We translate seven historical political institutions, spanning four canonical governance patterns, into executable multi-agent architectures and evaluate them under identical conditions across three large language models and two benchmarks. We find that governance topology strongly shapes collective performance. Within a single model, the gap between the best and worst institution exceeds 57 percentage points, while the optimal architecture shifts systematically with model capability and task characteristics. These results suggest that collective intelligence will not advance through a single optimal organizational form, but through governance mechanisms that can be reselected and reconfigured as tasks and capabilities evolve. More broadly, this points to a transition from \\textbf{self-evolving agents} to the \\textbf{self-evolving multi-agent system}. The code is available on \\href{https://github.com/cf3i/SocialSystemArena}{GitHub}.",
+      "authors": [
+        "Chao Fei",
+        "Hongcheng Guo",
+        "Yanghua Xiao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-30T10:30:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.27691v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent systems built on LLMs facing challenges of collective organization and historical institutions",
+      "llm_evidence_cn": "基于大语言模型的多智能体系统面临集体组织和历史制度的挑战",
+      "llm_evidence": "基于大语言模型的多智能体系统面临集体组织和历史制度的挑战",
+      "canonical_evidence": "基于大语言模型的多智能体系统面临集体组织和历史制度的挑战",
+      "llm_tldr_en": "Explores how historical political institutions can inform the design of LLM-based multi-agent architectures.",
+      "llm_tldr_cn": "探讨历史政治制度如何为基于大语言模型的多智能体架构设计提供参考。",
+      "llm_tldr": "探讨历史政治制度如何为基于大语言模型的多智能体架构设计提供参考。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.22417v1",
+      "title": "Trust as a Situated User State in Social LLM-Based Chatbots: A Longitudinal Study of Snapchat's My AI",
+      "abstract": "Social chatbots based on large language models are increasingly embedded in everyday platforms, yet how users develop trust in these systems over time remains unclear. We present a four-week longitudinal qualitative survey study (N = 27) of trust formation in Snapchat's My AI, a socially embedded conversational agent. Our findings show that trust is shaped by perceived ability, conversational behavior, human-likeness, transparency, privacy concerns, and trust in the host platform. Trust does not remain stable, but evolves through interaction as users adapt their expectations, refine their prompting strategies, and actively regulate how and when they rely on the system. These processes reflect a continuous negotiation of trust, not a one-time evaluation. While conversational fluency supports engagement, excessive anthropomorphism and limited transparency can undermine trust over time. We synthesize these findings into a conceptual model that frames trust as a dynamic user state shaped by interaction context and expectations, with implications for the design of human-centered and adaptive conversational agents.",
+      "authors": [
+        "Annie Landerberg",
+        "Kari Flatmo",
+        "Alan Said"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY"
+      ],
+      "published": "2026-04-24T10:22:41+00:00",
+      "link": "https://arxiv.org/pdf/2604.22417v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Study of social LLM-based conversational agents and user interaction behavior",
+      "llm_evidence_cn": "研究基于大语言模型的社交对话智能体及其与用户的交互行为",
+      "llm_evidence": "研究基于大语言模型的社交对话智能体及其与用户的交互行为",
+      "canonical_evidence": "研究基于大语言模型的社交对话智能体及其与用户的交互行为",
+      "llm_tldr_en": "A longitudinal study on how users develop and negotiate trust with socially embedded LLM chatbots over time.",
+      "llm_tldr_cn": "一项关于用户如何随时间推移与社交嵌入式大模型聊天机器人建立并协商信任关系的纵向研究。",
+      "llm_tldr": "一项关于用户如何随时间推移与社交嵌入式大模型聊天机器人建立并协商信任关系的纵向研究。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.23947v1",
+      "title": "GAMED.AI: A Hierarchical Multi-Agent Framework for Automated Educational Game Generation",
+      "abstract": "We introduce GameDAI, a hierarchical multi-agent framework that transforms instructor-provided questions into fully playable, pedagogically grounded educational games validated through formal mechanic contracts. Built on phase-based LangGraph sub-graphs, deterministic Quality Gates, and structured Pydantic schemas, GameDAI supports two template families encompassing 15 interaction mechanics across spatial reasoning, procedural execution, and higher-order Bloom's Taxonomy objectives. Evaluated on 200 questions spanning five subject domains, the system achieves a 90% validation pass rate, 98.3% schema compliance, and 73% token reduction over ReAct agents (${\\sim}$73,500 $\\rightarrow$ ${\\sim}$19,900 tokens/game) at $0.46 per game. Within this model configuration, these results suggest that phase-bounded architectural structure correlates more strongly with alignment quality than prompting strategy alone. Our demonstration lets attendees generate Bloom's-aligned games from natural language in under 60 seconds, inspect Quality Gate outputs at each pipeline phase, and browse a curated library of 50 games spanning all 15 mechanic types.",
+      "authors": [
+        "Shiven Agarwal",
+        "Yash Shah",
+        "Ashish Raj Shekhar",
+        "Priyanuj Bordoloi",
+        "Vivek Gupta"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-27T01:51:44+00:00",
+      "link": "https://arxiv.org/pdf/2604.23947v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "hierarchical multi-agent framework",
+      "llm_evidence_cn": "分层多智能体框架",
+      "llm_evidence": "分层多智能体框架",
+      "canonical_evidence": "分层多智能体框架",
+      "llm_tldr_en": "A multi-agent framework for automated educational game generation using structured sub-graphs.",
+      "llm_tldr_cn": "一种用于自动生成教育游戏的分层多智能体框架。",
+      "llm_tldr": "一种用于自动生成教育游戏的分层多智能体框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.27894v1",
+      "title": "On Agentic Behavioral Modeling",
+      "abstract": "Integrating theoretical neuroscience, decision theory, and probabilistic inference offers a promising route to understanding human cognition, yet concrete methodological bridges between agentic AI models and behavioral data analysis remain formally underdeveloped. We advance this synthesis under the framework of agentic behavioral modeling (ABM), which treats artificial agents as latent, generative hypotheses about cognitive mechanisms and evaluates them by their statistical adequacy in explaining human behavior. After outlining its conceptual foundations, we apply the framework to two minimal laboratory paradigms: a binary perceptual contrast-discrimination task and a symmetric two-armed bandit learning task. We formalize each task-agent-data system as a joint probability model, derive explicit conditional log-likelihoods for behavioral inference, validate different model variants using model and parameter recovery simulations, and evaluate them in light of empirical data. Using these minimal examples, we provide an agent-centric interpretation of the psychometric function, derive optimal policies for both tasks, and show the equivalence between Rescorla-Wagner learning and Bayesian inference in symmetric bandits. More broadly, this work may serve as a conceptual and practical foundation for applying ABM to cognitive behavioral science.",
+      "authors": [
+        "Dirk Ostwald",
+        "Rasmus Bruckner",
+        "Franziska Usée",
+        "Belinda Fleischmann",
+        "Joram Soch",
+        "Sean Mulready"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC"
+      ],
+      "published": "2026-04-30T14:09:09+00:00",
+      "link": "https://arxiv.org/pdf/2604.27894v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "agentic behavioral modeling to explain human behavior",
+      "llm_evidence_cn": "用于解释人类行为的智能体行为建模",
+      "llm_evidence": "用于解释人类行为的智能体行为建模",
+      "canonical_evidence": "用于解释人类行为的智能体行为建模",
+      "llm_tldr_en": "Proposes a framework using artificial agents as generative hypotheses to model and explain human cognitive behavior.",
+      "llm_tldr_cn": "提出一个将人工智能体作为生成假设来建模和解释人类认知行为的框架。",
+      "llm_tldr": "提出一个将人工智能体作为生成假设来建模和解释人类认知行为的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.23459v1",
+      "title": "Architecture Matters for Multi-Agent Security",
+      "abstract": "Multi-agent systems (MAS), composed of networks of two or more autonomous AI agents, have become increasingly popular in production deployments, yet introduce security risks that do not arise in single-agent settings. Even if individual agents exhibit robust security, architectural decisions governing their coordination can create attack surfaces that have not been systematically characterized. In this work, we present an empirical study of how MAS design decisions shape the tradeoff between task performance and attack resistance. Across three agentic environments (browser, desktop, and code) and 13 architectural configurations, we use stagewise evaluations that distinguish planning refusal, execution-stage interception, partial harmful execution, and successful attack completion to study three key design choices: (i) agent roles, which determine how authority and responsibility are allocated; (ii) communication topology, which shapes how and when agents interact; and (iii) memory, which determines the context and state visibility accessible to each agent. We find that multi-agent architectures are more vulnerable than standalone agents in the majority of configurations, with attack success rates varying by up to 3.8x at comparable or higher benign accuracy, and that no single design is universally safer. These results motivate the development of further evaluations that move beyond the security properties of a single agent.",
+      "authors": [
+        "Ben Hagag",
+        "William L. Anderson",
+        "Christian Schroeder de Witt",
+        "Sarah Scheffler"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.CR",
+        "cs.LG"
+      ],
+      "published": "2026-04-25T22:25:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.23459v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Analysis of multi-agent system architectures and security risks",
+      "llm_evidence_cn": "多智能体系统架构及其安全风险分析",
+      "llm_evidence": "多智能体系统架构及其安全风险分析",
+      "canonical_evidence": "多智能体系统架构及其安全风险分析",
+      "llm_tldr_en": "This paper explores how multi-agent system design choices impact security and resistance to attacks.",
+      "llm_tldr_cn": "本文研究了多智能体系统的架构设计如何影响其安全性和抵御攻击的能力。",
+      "llm_tldr": "本文研究了多智能体系统的架构设计如何影响其安全性和抵御攻击的能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.24461v1",
+      "title": "Measuring Successful Cooperation in Human-AI Teamwork: Development and Validation of the Perceived Cooperativity and Teaming Perception Scales",
+      "abstract": "As human-AI cooperation becomes increasingly prevalent, reliable instruments for assessing the subjective quality of cooperative human-AI interaction are needed. We introduce two theoretically grounded scales: the Perceived Cooperativity Scale (PCS), grounded in joint activity theory, and the Teaming Perception Scale (TPS), grounded in evolutionary cooperation theory. The PCS captures an agent's perceived cooperative capability and practice within a single interaction sequence; the TPS captures the emergent sense of teaming arising from mutual contribution and support. Both scales were adapted for human-human cooperation to enable cross-agent comparisons. Across three studies (N = 409) encompassing a cooperative card game, LLM interaction, and a decision-support system, analyses of dimensionality, reliability, and validity indicated that both scales successfully differentiated between cooperation partners of varying cooperative quality and showed construct validity in line with expectations. The scales provide a basis for empirical investigation and system evaluation across a wide range of human-AI cooperation contexts.",
+      "authors": [
+        "Christiane Attig",
+        "Christiane Wiebel-Herboth",
+        "Patricia Wollstadt",
+        "Tim Schrills",
+        "Mourad Zoubir",
+        "Thomas Franke"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-04-27T13:28:59+00:00",
+      "link": "https://arxiv.org/pdf/2604.24461v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "emergent sense of teaming in human-AI interaction",
+      "llm_evidence_cn": "人机交互中涌现的团队协作感",
+      "llm_evidence": "人机交互中涌现的团队协作感",
+      "canonical_evidence": "人机交互中涌现的团队协作感",
+      "llm_tldr_en": "Introduces scales to measure perceived cooperativity and emergent teaming in human-AI collaborative environments.",
+      "llm_tldr_cn": "引入了衡量人机协作环境中感知合作能力和涌现团队感的量表。",
+      "llm_tldr": "引入了衡量人机协作环境中感知合作能力和涌现团队感的量表。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.27942v1",
+      "title": "A Collective Variational Principle Unifying Bayesian Inference, Game Theory, and Thermodynamics",
+      "abstract": "Collective intelligence emerges across biological, physical, and artificial systems without central coordination, yet a unifying principle governing such behaviour remains elusive. The Free Energy Principle explains how individual agents adapt through variational inference, while game theory formalises strategic interactions. Here we introduce the Game-Theoretic Free Energy Principle, a unified framework showing that multi-agent systems performing local free-energy minimisation implicitly implement a stochastic game. We prove that, under bounded rationality and local information constraints, stationary points of collective free energy correspond to approximate Nash equilibria of an induced game. Conversely, a broad class of cooperative games admits a variational representation in which equilibria arise as Gibbs distributions over coalitions, establishing a bridge between Bayesian inference and strategic interaction. To characterise higher-order effects, we introduce a free-energy formulation of the Harsanyi dividend, isolating irreducible multi-agent synergy. This yields a predictive theory of cooperation, including a falsifiable non-monotonic relationship between sensory precision and agent influence. We validate this prediction across neural, biological, and artificial multi-agent systems. These results identify a common variational principle underlying inference, thermodynamics, and game-theoretic equilibrium.",
+      "authors": [
+        "Djamel Bouchaffra",
+        "Faycal Ykhlef",
+        "Mustapha Lebbah",
+        "Hanane Azzag"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-30T14:42:23+00:00",
+      "link": "https://arxiv.org/pdf/2604.27942v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "unifying principle for collective intelligence in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中集体智能的统一原则",
+      "llm_evidence": "多智能体系统中集体智能的统一原则",
+      "canonical_evidence": "多智能体系统中集体智能的统一原则",
+      "llm_tldr_en": "Proposes a unified framework linking Bayesian inference and game theory for multi-agent collective behavior.",
+      "llm_tldr_cn": "提出了一个将贝叶斯推理与博弈论联系起来的统一框架，用于解释多智能体集体行为。",
+      "llm_tldr": "提出了一个将贝叶斯推理与博弈论联系起来的统一框架，用于解释多智能体集体行为。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.23626v1",
+      "title": "GraphPlanner: Graph Memory-Augmented Agentic Routing for Multi-Agent LLMs",
+      "abstract": "LLM routing has achieved promising results in integrating the strengths of diverse models while balancing efficiency and performance. However, to support more realistic and challenging applications, routing must extend into agentic LLM settings, where task planning, multi-round cooperation among heterogeneous agents, and memory utilization are indispensable. To address this gap, we propose GraphPlanner, a heterogeneous graph memory-augmented agentic router for multi-agent LLMs that generates routing workflows for each query and supports both inductive and transductive inference. GraphPlanner formulates workflow generation as a Markov Decision Process (MDP), where at each step it selects both the LLM backbone and the agent role, including Planner, Executor, and Summarizer. By leveraging a heterogeneous graph, denoted as GARNet, to capture interaction memories among queries, agents, and responses, GraphPlanner integrates historical memory and workflow memory into richer state representations. The entire pipeline is optimized with reinforcement learning, jointly improving task-specific performance and computational efficiency. We evaluate GraphPlanner across 14 diverse LLM tasks and demonstrate that: (1) GraphPlanner outperforms strong single-round and multi-round routers, improving accuracy by up to 9.3% while reducing GPU cost from 186.26 GiB to 1.04 GiB; (2) GraphPlanner generalizes robustly to unseen tasks and LLMs, exhibiting strong zero-shot capabilities; and (3) GraphPlanner effectively leverages historical memories, supporting both inductive and transductive inference for more adaptive routing. Our code for GraphPlanner is released at https://github.com/ulab-uiuc/GraphPlanner.",
+      "authors": [
+        "Tao Feng",
+        "Haozhen Zhang",
+        "Zijie Lei",
+        "Peixuan Han",
+        "Jiaxuan You"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-26T09:38:32+00:00",
+      "link": "https://arxiv.org/pdf/2604.23626v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent LLM routing and cooperation workflows",
+      "llm_evidence_cn": "多智能体大模型路由与协作工作流",
+      "llm_evidence": "多智能体大模型路由与协作工作流",
+      "canonical_evidence": "多智能体大模型路由与协作工作流",
+      "llm_tldr_en": "Introduces GraphPlanner for agentic routing and multi-round cooperation among heterogeneous LLM agents.",
+      "llm_tldr_cn": "引入 GraphPlanner 用于异构大模型智能体之间的代理路由和多轮协作。",
+      "llm_tldr": "引入 GraphPlanner 用于异构大模型智能体之间的代理路由和多轮协作。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.24657v1",
+      "title": "AgentWard: A Lifecycle Security Architecture for Autonomous AI Agents",
+      "abstract": "Autonomous AI agents extend large language models into full runtime systems that load skills, ingest external content, maintain memory, plan multi-step actions, and invoke privileged tools. In such systems, security failures rarely remain confined to a single interface; instead, they can propagate across initialization, input processing, memory, decision-making, and execution, often becoming apparent only when harmful effects materialize in the environment. This paper presents AgentWard, a lifecycle-oriented, defense-in-depth architecture that systematically organizes protection across these five stages. AgentWard integrates stage-specific, heterogeneous controls with cross-layer coordination, enabling threats to be intercepted along their propagation paths while safeguarding critical assets. We detail the design rationale and architecture of five coordinated protection layers, and implement a plugin-native prototype on OpenClaw to demonstrate practical feasibility. This perspective provides a concrete blueprint for structuring runtime security controls, managing trust propagation, and enforcing execution containment in autonomous AI agents. Our code is available at https://github.com/FIND-Lab/AgentWard .",
+      "authors": [
+        "Yixiang Zhang",
+        "Xinhao Deng",
+        "Jiaqing Wu",
+        "Yue Xiao",
+        "Ke Xu",
+        "Qi Li"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-04-27T16:22:27+00:00",
+      "link": "https://arxiv.org/pdf/2604.24657v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Security architecture for autonomous AI agents and multi-step planning systems",
+      "llm_evidence_cn": "自主AI智能体和多步规划系统的安全架构",
+      "llm_evidence": "自主AI智能体和多步规划系统的安全架构",
+      "canonical_evidence": "自主AI智能体和多步规划系统的安全架构",
+      "llm_tldr_en": "AgentWard provides a defense-in-depth security architecture for autonomous AI agents across their entire lifecycle.",
+      "llm_tldr_cn": "AgentWard为自主AI智能体的整个生命周期提供了一个深度防御的安全架构。",
+      "llm_tldr": "AgentWard为自主AI智能体的整个生命周期提供了一个深度防御的安全架构。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.23947v2",
+      "title": "GamED.AI: A Hierarchical Multi-Agent Framework for Automated Educational Game Generation",
+      "abstract": "We introduce GamED.AI, a hierarchical multi-agent framework that transforms instructor-provided questions into fully playable, pedagogically grounded educational games validated through formal mechanic contracts. Built on phase-based LangGraph sub-graphs, deterministic Quality Gates, and structured Pydantic schemas, GamED.AI supports two template families encompassing 15 interaction mechanics across spatial reasoning, procedural execution, and higher-order Bloom's Taxonomy objectives. Evaluated on 200 questions spanning five subject domains, the system achieves a 90% validation pass rate, 98.3% schema compliance, and 73% token reduction over ReAct agents (${\\sim}$73,500 $\\rightarrow$ ${\\sim}$19,900 tokens/game) at $0.46 per game. Within this model configuration, these results suggest that phase-bounded architectural structure correlates more strongly with alignment quality than prompting strategy alone. Our demonstration lets attendees generate Bloom's-aligned games from natural language in under 60 seconds, inspect Quality Gate outputs at each pipeline phase, and browse a curated library of 50 games spanning all 15 mechanic types.",
+      "authors": [
+        "Shiven Agarwal",
+        "Yash Shah",
+        "Ashish Raj Shekhar",
+        "Priyanuj Bordoloi",
+        "Vivek Gupta"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-27T01:51:44+00:00",
+      "link": "https://arxiv.org/pdf/2604.23947v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Hierarchical multi-agent framework using LangGraph for automated task execution",
+      "llm_evidence_cn": "使用 LangGraph 的分层多智能体框架，用于自动化任务执行",
+      "llm_evidence": "使用 LangGraph 的分层多智能体框架，用于自动化任务执行",
+      "canonical_evidence": "使用 LangGraph 的分层多智能体框架，用于自动化任务执行",
+      "llm_tldr_en": "A hierarchical multi-agent framework that automates educational game generation with high validation rates.",
+      "llm_tldr_cn": "一种分层多智能体框架，可自动生成具有高验证率的教育游戏。",
+      "llm_tldr": "一种分层多智能体框架，可自动生成具有高验证率的教育游戏。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.24039v1",
+      "title": "AgenticCache: Cache-Driven Asynchronous Planning for Embodied AI Agents",
+      "abstract": "Embodied AI agents increasingly rely on large language models (LLMs) for planning, yet per-step LLM calls impose severe latency and cost. In this paper, we show that embodied tasks exhibit strong plan locality, where the next plan is largely predictable from the current one. Building on this, we introduce AgenticCache, a planning framework that reuses cached plans to avoid per-step LLM calls. In AgenticCache, each agent queries a runtime cache of frequent plan transitions, while a background Cache Updater asynchronously calls the LLM to validate and refine cached entries. Across four multi-agent embodied benchmarks, AgenticCache improves task success rate by 22% on average across 12 configurations (4 benchmarks x 3 models), reduces simulation latency by 65%, and lowers token usage by 50%. Cache-based plan reuse thus offers a practical path to low-latency, low-cost embodied agents. Code is available at https://github.com/hojoonleokim/MLSys26_AgenticCache.",
+      "authors": [
+        "Hojoon Kim",
+        "Yuheng Wu",
+        "Thierry Tambe"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-04-27T04:51:15+00:00",
+      "link": "https://arxiv.org/pdf/2604.24039v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "planning framework for multi-agent embodied benchmarks",
+      "llm_evidence_cn": "多智能体具身基准的规划框架",
+      "llm_evidence": "多智能体具身基准的规划框架",
+      "canonical_evidence": "多智能体具身基准的规划框架",
+      "llm_tldr_en": "Introduces AgenticCache to reduce LLM latency in embodied multi-agent planning via plan reuse.",
+      "llm_tldr_cn": "引入AgenticCache，通过计划重用减少具身多智能体规划中的LLM延迟。",
+      "llm_tldr": "引入AgenticCache，通过计划重用减少具身多智能体规划中的LLM延迟。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

@@ -6,72 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-04-30
-- 运行时间：2026-04-30 21:00:29 UTC
+- 最新运行日期：2026-05-01
+- 运行时间：2026-05-01 20:52:35 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度复盘 17 篇前沿论文，核心聚焦 LLM 对话用户模拟与多智能体系统（MAS）的架构创新。
-满分综
-- 详情：[/202604/30/README](/202604/30/README)
+今日精选 17 篇前沿成果，深度剖析 AI 智能体社区的涌现规律与科学认知的社会学本质。
+满分论文揭示了合成社交图谱中的复杂行为，并警示科学界警惕因“成功”而产生的理解幻觉。
+建议关注智能体演化对制度的影响，以及博弈论与热力学统一框架下的集体推理新范式。
+- 详情：[/202605/01/README](/202605/01/README)
 
 ### 精读区论文标签
-1. [A Survey on LLM-based Conversational User Simulation](/202604/30/2604.24977v1-a-survey-on-llm-based-conversational-user-simulation)  
+1. [The Synthetic Social Graph: Emergent Behavior in AI Agent Communities](/202605/01/2604.27271v1-the-synthetic-social-graph-emergent-behavior-in-ai-agent-communities)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：基于LLM的对话用户模拟综述
-2. [Preserving Disagreement: Architectural Heterogeneity and Coherence Validation in Multi-Agent Policy Simulation](/202604/30/2604.26561v1-preserving-disagreement-architectural-heterogeneity-and-coherence-validation-in-multi-agent-policy-simulation)  
+   evidence：大语言模型智能体在社交平台环境中模拟社交互动与涌现行为
+2. [Nothing Deceives Like Success: Social Learning and the Illusion of Understanding in Science](/202605/01/2604.27188v1-nothing-deceives-like-success-social-learning-and-the-illusion-of-understanding-in-science)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：使用大语言模型进行多智能体政策模拟以保持多样性
-3. [Read the Paper, Write the Code: Agentic Reproduction of Social-Science Results](/202604/30/2604.21965v1-read-the-paper-write-the-code-agentic-reproduction-of-social-science-results)  
+   evidence：科学共同体中社会学习的基于智能体模拟
+3. [The Inverse-Wisdom Law: Architectural Tribalism and the Consensus Paradox in Agentic Swarms](/202605/01/2604.27274v1-the-inverse-wisdom-law-architectural-tribalism-and-the-consensus-paradox-in-agentic-swarms)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：智能体集群中出现的共识悖论和架构部落主义
+4. [Safe Bilevel Delegation (SBD): A Formal Framework for Runtime Delegation Safety in Multi-Agent Systems](/202605/01/2604.27358v1-safe-bilevel-delegation-sbd-a-formal-framework-for-runtime-delegation-safety-in-multi-agent-systems)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：多智能体系统中的运行时委派安全
+5. [Clustering in co-evolving opinion dynamics: reduced SPDE models](/202605/01/2604.27961v1-clustering-in-co-evolving-opinion-dynamics-reduced-spde-models)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：基于智能体的舆论动力学中的涌现聚类
+6. [CODA: Coordination via On-Policy Diffusion for Multi-Agent Offline Reinforcement Learning](/202605/01/2604.23308v1-coda-coordination-via-on-policy-diffusion-for-multi-agent-offline-reinforcement-learning)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：LLM智能体复现经验社会科学结果
-4. [Don't Make the LLM Read the Graph: Make the Graph Think](/202604/30/2604.23057v1-dont-make-the-llm-read-the-graph-make-the-graph-think)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：基于信念图的协作式多智能体推理
-5. [How Personal Characteristics Shape User Exploration of Diverse Movie Recommendations with a LLM-Based Multi-Agent System](/202604/30/2604.24405v2-how-personal-characteristics-shape-user-exploration-of-diverse-movie-recommendations-with-a-llm-based-multi-agent-system)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：基于大模型的多智能体系统探索用户行为
-6. [Degree-dependent and distance-dependent contact rates interpolate between explosive, exponential and polynomial epidemic growth](/202604/30/2604.26939v1-degree-dependent-and-distance-dependent-contact-rates-interpolate-between-explosive-exponential-and-polynomial-epidemic-growth)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：用于虚假新闻传播的基于智能体的网络模型
+   evidence：利用扩散模型解决多智能体强化学习中的协同问题
 
 ### 速读区论文标签
-1. [OxyGent: Making Multi-Agent Systems Modular, Observable, and Evolvable via Oxy Abstraction](/202604/30/2604.25602v2-oxygent-making-multi-agent-systems-modular-observable-and-evolvable-via-oxy-abstraction)  
+1. [When Agents Evolve, Institutions Follow](/202605/01/2604.27691v1-when-agents-evolve-institutions-follow)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：模块化且可进化的多智能体系统框架
-2. [Recursive Multi-Agent Systems](/202604/30/2604.25917v1-recursive-multi-agent-systems)  
+   evidence：基于大语言模型的多智能体系统面临集体组织和历史制度的挑战
+2. [On Agentic Behavioral Modeling](/202605/01/2604.27894v1-on-agentic-behavioral-modeling)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于协作的递归多智能体框架
-3. [A Survey of Multi-Agent Deep Reinforcement Learning with Graph Neural Network-Based Communication](/202604/30/2604.25972v1-a-survey-of-multi-agent-deep-reinforcement-learning-with-graph-neural-network-based-communication)  
+   evidence：用于解释人类行为的智能体行为建模
+3. [A Collective Variational Principle Unifying Bayesian Inference, Game Theory, and Thermodynamics](/202605/01/2604.27942v1-a-collective-variational-principle-unifying-bayesian-inference-game-theory-and-thermodynamics)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体强化学习与通信综述
-4. [A well-motivated model of pedestrian dynamics](/202604/30/2604.26858v1-a-well-motivated-model-of-pedestrian-dynamics)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：人群中的行人动力学与社会条件模拟
-5. [Can Virtual Agents Care? Designing an Empathetic and Personalized LLM-Driven Conversational Agent](/202604/30/2604.20948v1-can-virtual-agents-care-designing-an-empathetic-and-personalized-llm-driven-conversational-agent)  
+   evidence：多智能体系统中集体智能的统一原则
+4. [Trust as a Situated User State in Social LLM-Based Chatbots: A Longitudinal Study of Snapchat's My AI](/202605/01/2604.22417v1-trust-as-a-situated-user-state-in-social-llm-based-chatbots-a-longitudinal-study-of-snapchats-my-ai)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：LLM驱动的社交支持对话智能体
-6. [HiCrew: Hierarchical Reasoning for Long-Form Video Understanding via Question-Aware Multi-Agent Collaboration](/202604/30/2604.21444v1-hicrew-hierarchical-reasoning-for-long-form-video-understanding-via-question-aware-multi-agent-collaboration)  
+   evidence：研究基于大语言模型的社交对话智能体及其与用户的交互行为
+5. [Architecture Matters for Multi-Agent Security](/202605/01/2604.23459v1-architecture-matters-for-multi-agent-security)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于视频理解的多智能体协作
-7. [AEL: Agent Evolving Learning for Open-Ended Environments](/202604/30/2604.21725v1-ael-agent-evolving-learning-for-open-ended-environments)  
+   evidence：多智能体系统架构及其安全风险分析
+6. [GraphPlanner: Graph Memory-Augmented Agentic Routing for Multi-Agent LLMs](/202605/01/2604.23626v1-graphplanner-graph-memory-augmented-agentic-routing-for-multi-agent-llms)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：开放环境下的智能体演化学习
-8. [Control of Multi-agent Systems under STL Specifications based on Prescribed Performance Observers](/202604/30/2604.22315v1-control-of-multi-agent-systems-under-stl-specifications-based-on-prescribed-performance-observers)  
+   evidence：多智能体大模型路由与协作工作流
+7. [GamED.AI: A Hierarchical Multi-Agent Framework for Automated Educational Game Generation](/202605/01/2604.23947v2-gamedai-a-hierarchical-multi-agent-framework-for-automated-educational-game-generation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：大规模异构多智能体系统的控制
-9. [A Co-Evolutionary Theory of Human-AI Coexistence: Mutualism, Governance, and Dynamics in Complex Societies](/202604/30/2604.22227v3-a-co-evolutionary-theory-of-human-ai-coexistence-mutualism-governance-and-dynamics-in-complex-societies)  
+   evidence：使用 LangGraph 的分层多智能体框架，用于自动化任务执行
+8. [AgenticCache: Cache-Driven Asynchronous Planning for Embodied AI Agents](/202605/01/2604.24039v1-agenticcache-cache-driven-asynchronous-planning-for-embodied-ai-agents)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：多智能体具身基准的规划框架
+9. [GAMED.AI: A Hierarchical Multi-Agent Framework for Automated Educational Game Generation](/202605/01/2604.23947v1-gamedai-a-hierarchical-multi-agent-framework-for-automated-educational-game-generation)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：复杂社会环境中的人机共存
-10. [Relational Archetypes: A Comparative Analysis of AV-Human and Agent-Human Interactions](/202604/30/2604.22564v1-relational-archetypes-a-comparative-analysis-of-av-human-and-agent-human-interactions)  
+   evidence：分层多智能体框架
+10. [Measuring Successful Cooperation in Human-AI Teamwork: Development and Validation of the Perceived Cooperativity and Teaming Perception Scales](/202605/01/2604.24461v1-measuring-successful-cooperation-in-human-ai-teamwork-development-and-validation-of-the-perceived-cooperativity-and-teaming-perception-scales)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：人机交互对社会变革的影响
-11. [A Decoupled Human-in-the-Loop System for Controlled Autonomy in Agentic Workflows](/202604/30/2604.23049v1-a-decoupled-human-in-the-loop-system-for-controlled-autonomy-in-agentic-workflows)  
+   evidence：人机交互中涌现的团队协作感
+11. [AgentWard: A Lifecycle Security Architecture for Autonomous AI Agents](/202605/01/2604.24657v1-agentward-a-lifecycle-security-architecture-for-autonomous-ai-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多智能体环境中的人机协同
+   evidence：自主AI智能体和多步规划系统的安全架构
 
 
 <div class="dpr-home-promo-card">
