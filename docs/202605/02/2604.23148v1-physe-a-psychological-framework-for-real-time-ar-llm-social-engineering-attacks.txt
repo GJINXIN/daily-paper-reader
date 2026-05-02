@@ -1,0 +1,345 @@
+Title: PhySE: A Psychological Framework for Real-Time AR-LLM Social Engineering Attacks
+
+URL Source: https://arxiv.org/pdf/2604.23148v1
+
+Published Time: Tue, 28 Apr 2026 00:24:25 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+# PhySE: A Psychological Framework for Real-Time AR-LLM Social Engineering Attacks 
+
+# Tianlong Yu 1, Yang Yang 1, Ziyi Zhou 1, Jiaying Xu 1, Siwei Li 1, Tong Guan 2, Kailong Wang 3, Ting Bi 3
+
+> 1
+
+Hubei University 
+
+> 2
+
+Apple Inc 
+
+> 3
+
+Huazhong University of Science and Technology tommyyu21@163.com, yangyang@hubu.edu.cn, (202421121013087, 202521121013135, 202531121010102)@stu.hubu.edu.cn, tongguan2009@gmail.com, wangkl@hust.edu.cn, ting.bi@ieee.org 
+
+## ABSTRACT 
+
+The emerging threat of AR-LLM-based Social Engineering (AR-LLM-SE) attacks (e.g. SEAR) poses a significant risk to real-world social interactions. In such an attack, a malicious actor uses Aug-mented Reality (AR) glasses to capture a target’s visual and vocal data. A Large Language Model (LLM) then analyzes this data to identify the individual and generate a detailed social profile. Sub-sequently, LLM-powered agents employ social engineering strate-gies—providing real-time conversation suggestions—to gain the target’s trust and ultimately execute phishing or other malicious acts. Despite its potential, the practical application of AR-LLM-SE faces two major bottlenecks: (1) Cold-start personalization : Cur-rent Retrieval-Augmented Generation (RAG) methods introduce critical delays in the earliest turns, slowing initial profile formation and disrupting real-time interaction; (2) Static Attack Strategies :Existing approaches rely on fixed-stage, handcrafted social engi-neering tactics that lack foundation in established psychological theory. To address these limitations, we propose PhySE , a novel framework with two core innovations: (1) VLM-Based Social-Context Training : To eliminate profiling delays, we efficiently pre-train a Visual Language Model (VLM) with social-context data, enabling rapid, on-the-fly profile generation; (2) Adaptive Psycho-logical Agent : We introduce a psychological LLM that dynamically deploys distinct classes of psychological strategies based on target response, moving beyond static, handcrafted scripts. We evaluated PhySE through an IRB-approved user study with 60 participants, collecting a novel dataset of 360 annotated conversations across diverse social scenarios (e.g., coffee shops, networking events). Our results show that PhySE is both effective and efficient: it attains the highest social-experience score (4.83, with lowest variance 0.37), surpassing Basic Conversation (3.03), Naive AR + LLM (4.13), and SEAR (4.73), while reducing average profile generation latency from 43.3s to 10.5s, removing key bottleneck in real-world interactions. 
+
+## CCS CONCEPTS 
+
+• Human-centered computing → Human computer interac-tion (HCI) .
+
+## KEYWORDS 
+
+Augmented Reality, Multimodal LLMs, Social Engineering Attacks. 
+
+## 1 INTRODUCTION 
+
+Augmented reality (AR) wearables and multimodal large language models (LLMs) are rapidly converging into real-time conversational assistants [ 8, 22 , 27 , 33 ]. While this integration enables useful appli-cations, it also creates a new offensive surface [ 3, 8, 36 ]: an attacker can observe visual/audio cues through AR devices, infer personal context with multimodal models, and receive turn-level prompts to steer a face-to-face interaction toward social engineering goals. However, current AR-LLM-based Social Engineering frameworks such as SEAR [ 3 , 36 ] are still not strong enough for stable, high-fidelity social-engineering execution in practical settings. In particu-lar, existing pipelines often break conversational flow in early turns and rely on fixed strategy templates (e.g., opening, then win-trust), which reduces realism when targets respond unpredictably. Motivated by this gap, our goal is to enhance AR-LLM Social-Engineering capability in realistic interaction settings. Achieving this goal requires solving two coupled difficulties. Difficulty 1: cold-start personalization. Many systems depend on retrieval-heavy profile construction (RAG), which is too slow during initial turns and weakens first-contact persuasion [ 3 , 36 ]. Difficulty 2: non-adaptive strategy control. Fixed-stage prompting cannot robustly adjust to turn-level changes in target receptivity, mak-ing it brittle to adopt systematic psychological theorys (e.g., Trust & Influence Model [ 1 , 10 , 13 ]) and strategies such as Active Lis-tening [ 18 ], Personal Control Threats [ 23 ], Self Disclosure [ 25 ], Relation Reciprocity [20] and Social Proof Responsiveness [30]. To address these two difficulties, we present PhySE , a real-time AR-LLM Social Engineering framework that systematically sup-ports psychological strategies. PhySE combines two tightly coupled components. On the perception side, we introduce VLM-based Social-Context Training to reduce cold-start latency and provide stable, profile-consistent cues for dialogue generation. On the deci-sion side, we design Adaptive Psychological Agent that routes each turn among theory-grounded strategy classes (rapport, credi-bility, and commitment/action) based on evolving interaction sig-nals. This design moves beyond one-pass prompting and supports dynamic psychological strategies under uncertainty. The main contributions of this paper are as follows: 
+
+• Proof of concept : We demonstrate that theory-grounded psychological adaptation substantially improves AR-LLM-based Social Engineering performance. 
+
+• PhySE framework : We design an end-to-end pipeline that integrates social-context VLM training optimization with an adaptive psychological routing agent for turn-level psychological strategy control. 
+
+• Psychological impact analysis on IRB-approved dataset :We release an annotated dataset of 360 AR-LLM assisted 
+
+> arXiv:2604.23148v1 [cs.AI] 25 Apr 2026 Tianlong Yu 1, Yang Yang 1, Ziyi Zhou 1, Jiaying Xu 1, Siwei Li 1, Tong Guan 2, Kailong Wang 3, Ting Bi 3
+
+conversations from 60 participants, enabling analysis of trust dynamics, strategy shifts, and subjective user responses. 
+
+• A foundation for urgent defense research : We provide data and analysis that can support future detection, inter-vention, and policy research on phychological AR-LLM Social Engineering threats. 
+
+PhySE Code and Dataset is avaliable at: https://github.com/ 2192537130/PhySE. 
+
+IRB Permission: This study was approved by the IRB. All human-related data were collected under rigorous ethical guidelines, and anonymized prior to analysis, and handled in strict accordance with data protection protocols. No personally identifying information is disclosed in this study. The study adhered to all applicable legal and ethical standards for research involving human subjects. 
+
+## 2 RELATED WORK 
+
+Our work is at the intersection of AR-mediated interaction, multi-modal LLM personalization, and psychologically grounded social-engineering research. In this section, we position PhySE against prior work along these dimensions and highlight how it addresses both latency-constrained profiling and adaptive strategy control in real-time settings. 
+
+AR-LLM-based Social Engineering Attacks. AR-LLM-based social engineering (AR-LLM-SE) attacks have emerged as a prac-tical threat to face-to-face social settings. In these attacks, a ma-licious actor uses AR glasses to capture multimodal cues (visual context, speech, and behavioral signals), then uses an LLM-driven system to infer personal attributes and generate real-time conversa-tional suggestions for manipulation. Representative systems such as SEAR [ 3, 36 ] demonstrate the feasibility of this pipeline, but rely heavily on Retrieval-Augmented Generation (RAG) for pro-file construction. Although retrieval improves factual grounding, repeated query–retrieve–generate loops can introduce cold-start delay and profile inconsistency in early turns. PhySE addresses this limitation through social-context VLM optimization, reducing first-turn dependency on external retrieval while improving profile coherence under strict latency constraints. 
+
+Psychological theorys and social strategies. Psychological theories of Trust & Influence, and social behavior provide the con-ceptual basis for persuasive interaction design [ 1, 10 , 13 ]. In social engineering contexts, these theories are especially important be-cause attack success depends not only on content quality but also on timing, interpersonal framing, and perceived intent. Prior work identifies strategy primitives such as Active Listening [ 18 ], Personal Control Threats [ 23 ], Self Disclosure [ 25 ], Relation Reciprocity [ 20 ], and Social Proof Responsiveness [ 30 ], which together capture com-plementary mechanisms for increasing receptivity and lowering resistance. However, current AR-LLM-SE systems [ 3, 36 ] apply such tactics as static prompt patterns, without an explicit psychologi-cal control model to decide when to maintain rapport, when to reinforce credibility, and when to escalate toward action. This gap matters in real-time, face-to-face interaction, where inappropri-ate escalation can rapidly increase suspicion and degrade conver-sational realism. PhySE addresses this issue by operationalizing theory-grounded strategies within an adaptive routing framework, enabling turn-level strategy selection based on interaction signals rather than fixed stage progression. 
+
+AR-based Personal Tracking and Profiling. Fast and robust personal profiling is central to real-time AR-LLM interaction [ 11 , 14 ,17 , 33 ]. Prior approaches, such as SocialMind [ 33 ], leverage cached social priors to improve suggestion quality. However, template-driven or weakly adaptive designs can struggle when user re-sponses deviate from expected trajectories. PhySE extends this direction with an explicit psychological routing layer that continu-ously tracks interaction signals and dynamically switches among strategy classes (e.g., rapport building, credibility shaping, and commitment/action guidance), enabling turn-level escalation or de-escalation as conversations evolve. 
+
+AR privacy and sensing risks. AR privacy research has docu-mented the risks of unobtrusive audio-visual capture in consumer wearables (e.g., Ray-Ban Stories) [ 16 ]. Prior work reports attacks such as password inference from captured scenes [ 6], side-channel leakage from private interactions [ 37 ], and covert sensing by mali-cious applications [ 21 ]. Our work complements this literature by emphasizing a downstream behavioral threat: once multimodal con-text is captured, LLM agents can transform it into psychologically optimized, real-time social-engineering interaction. 
+
+LLM-enabled Social Engineering. Traditional social engineer-ing [ 4, 15 , 24 , 26 ] exploits cognitive and social biases (e.g., urgency, reciprocity, and trust) [ 5, 28 , 29 , 34 ], to induce disclosure or com-pliance [ 12 , 19 ]. Recent AI advances lower the cost of producing persuasive and personalized content at scale, while speech and voice technologies further increase impersonation risk [ 9 , 31 ]. Most existing studies focus on remote channels (email, messaging, or voice calls). PhySE extends this threat model to in-person interac-tion, where multimodal sensing and turn-level language generation support context-aware conversational manipulation in real time. 
+
+## 3 SYSTEM DESIGN 
+
+In this section, we present the threat model, baseline attack pipeline, PhySE architecture, and implementation details. 
+
+Threat model: The adversary performs in-person, AR-assisted so-cial engineering and then transfers established trust to downstream channels (e.g., SMS, phone, or email). We assume: 
+
+• The attacker uses AR hardware (camera and microphone) to capture multimodal cues, including facial appearance, voice, and nearby context. 
+
+• The attacker can access public social traces (e.g., online profiles) to support personalization. 
+
+• Human targets remain susceptible to common social influ-ence factors such as reciprocity, authority cues, and cogni-tive load in psychological theory. 
+
+• Commodity AR devices may provide limited real-time iden-tity/privacy protection, which increases practical exposure. 
+
+Baseline AR-LLM-based SE attack pipeline (SEAR). As il-lustrated in Figure 1, the baseline attack workflow begins with AR-assisted, face-to-face trust establishment and then transitions to downstream exploitation through conventional channels, such as phishing messages or fraud calls. In this paper, we focus on the trust-establishment stage, where real-time AR sensing and multi-modal reasoning are the key determinants of interaction quality. PhySE: A Psychological Framework for Real-Time AR-LLM Social Engineering Attacks 
+
+Figure 1: PhySE’s system architecture and comparison with SEAR. 
+
+The representative baseline, SEAR [ 3 , 36 ], consists of three mod-ules: (1) AR context synthesis , which transforms live video/audio streams into structured interaction cues; (2) multimodal RAG pro-filing , which retrieves external social traces and fuses them with live context to construct a target profile; and (3) social-engineering response generation , which produces turn-level suggestions for the human attacker. Despite strong conceptual performance, this baseline exposes two practical weaknesses in real-time interaction: 
+
+Challenge 1: Cold-start personalization. Retrieval-heavy pro-file construction introduces early-turn delay, which is especially harmful in the opening turns of face-to-face interaction. During this period, the operator needs immediate, context-consistent guid-ance; however, repeated query–retrieve–generate cycles can create visible pauses and incomplete persona summaries. These delays (around 50s in SEAR) reduce first-contact fluency, weaken conver-sational plausibility, and make trust establishment less stable. 
+
+Challenge 2: Static attack strategies. Fixed-stage prompting assumes that user responses follow a predictable progression, but real interactions are often non-linear and noisy. When targets hesi-tate, shift topics, or show suspicion, rigid scripts cannot adapt their persuasion intensity or tactic choice in time. This limits tactical flex-ibility, increases response mismatch, and can prematurely escalate risk in high-friction conversational moments. 
+
+PhySE architecture. PhySE addresses these weaknesses through two coordinated components: 1) VLM-based social-context train-ing. We optimize the multimodal model to internalize socially rele-vant cues, reducing first-turn dependence on repeated retrieval and improving profile coherence under latency constraints. More details are provided in Section 4; 2) Adaptive Psychological Agent. We introduce a routing layer that dynamically selects theory-grounded strategy classes (rapport, credibility, and commitment/action) from turn-level interaction signals. More details are provided in Section 5. 
+
+PhySE System Implementation. We implement PhySE as a real-time AR-to-agent pipeline with the following runtime setup: a) 
+
+AR interface: PhySE uses RayNeo X2 AR glasses ( Android , 6GB RAM, 128GB storage) for live multimodal capture, including in-person video and audio streams; b) Model and agent runtime: 
+
+The multimodal model and Psychological Agent run on a desk-top server with an NVIDIA RTX 4090 (24GB VRAM), an Intel Platinum 8352 CPU (36 cores), 32GB RAM, and 16TB storage. We use LLaVA-v1.5-7B as the base multimodal model and deploy the agent with a ReAct -style control loop for turn-level reasoning and tool use; c) VLM Training setup: For social-context adaptation, we use a CLIP ViT-L/14 (336) visual encoder and fine-tune LoRA adapters with high-rank settings (e.g., 𝑟 = 128 , 𝛼 = 256 ), enabling domain specialization with manageable compute overhead. 
+
+## 4 VLM-BASED SOCIAL CONTEXT TRAINING 
+
+Real-time AR-LLM social engineering faces a cold-start personal-ization bottleneck: the system must infer a plausible identity and social profile quickly enough to sustain natural conversation. RAG can incorporate external information, but it adds visible latency in the first turns and can fragment the persona across multiple retrieval calls. Because retrieved facts are treated as transient con-text rather than stable “memory,” persona consistency can degrade across turns. To address this, PhySE adopts VLM-based social-context training : rather than retrieving a profile at inference time, we internalize social-context knowledge into a Vision-Language Model (VLM) via parameter-efficient fine-tuning. This supports fast, on-the-fly profile generation that matches in-person latency constraints and yields more stable persona summaries. Tianlong Yu 1, Yang Yang 1, Ziyi Zhou 1, Jiaying Xu 1, Siwei Li 1, Tong Guan 2, Kailong Wang 3, Ting Bi 3
+
+Algorithm 1 VLM-based social-context training and inference  
+
+> 1:
+
+Inputs: paired data D = {( 𝐼 𝑖 ,𝑇 𝑖 )} 𝑁 𝑖 =1, base VLM, LoRA rank 𝑟 ,temperature 𝜏  
+
+> 2:
+
+Initialize: freeze base VLM parameters; attach LoRA adapters 
+
+𝜃 LoRA  
+
+> 3:
+
+for each training step do  
+
+> 4:
+
+Sample a mini-batch B ⊂ D  
+
+> 5:
+
+Encode images and text: 𝑧 𝑖 ← 𝑓 (𝐼 𝑖 )∥ 𝑓 (𝐼 𝑖 ) ∥ , 𝑧 𝑗 ← 𝑔 (𝑇 𝑗 )∥𝑔 (𝑇 𝑗 ) ∥  
+
+> 6:
+
+Compute similarities 𝑠 𝑖 𝑗 = 𝑧 ⊤  
+
+> 𝑖 𝑧 𝑗
+> 𝜏
+> 7:
+
+Compute L𝐼 →𝑇 and L𝑇 →𝐼 ; set Lcon = 12 (L 𝐼 →𝑇 + L 𝑇 →𝐼 ) 
+
+> 8:
+
+Update 𝜃 LoRA to minimize Lcon  
+
+> 9:
+
+end for  
+
+> 10:
+
+Merge LoRA adapters into the base VLM  
+
+> 11:
+
+Inference: given frame(s) 𝐼 , output profile summary ˆ𝑃 ; pass ˆ𝑃 
+
+to the psychological agent 
+
+## 4.1 Cost-effective PEFT and LoRA adaptation 
+
+We apply Parameter-Efficient Fine-Tuning (PEFT) with Low-Rank Adaptation (LoRA) on the base multimodal model LLaVA-v1.5-7B .Unlike standard LoRA use for task adaptation, our adapters are trained to stabilize cross-turn persona summaries from live visual cues, addressing cold-start inconsistency. Full fine-tuning is expen-sive and risks catastrophic forgetting, while LoRA specializes the model by updating a small set of adapter parameters. Algorithm 1 outlines the PEFT training flow and LoRA update steps used in our pipeline. Let 𝑊 0 ∈ R𝑑 ×𝑘 denote a frozen projection matrix in an attention layer (e.g., query/value projections). LoRA learns a low-rank update Δ𝑊 = 𝐵𝐴 with 𝐵 ∈ R𝑑 ×𝑟 and 𝐴 ∈ R𝑟 ×𝑘 , producing 
+
+𝑊 = 𝑊 0 + Δ𝑊 . For input 𝑥 , the layer output becomes: 
+
+ℎ = 𝑊 0𝑥 + 𝛼 𝑟 𝐵𝐴𝑥, (1) where 𝑟 is the rank and 𝛼 is a scaling factor. Only the adapter parameters 𝜃 LoRA = {𝐴, 𝐵 } are updated during training. 
+
+## 4.2 Cross-modal contrastive alignment 
+
+We construct instruction-following training data in a LLaVA-style “image-text” format. Each instance teaches the model to infer so-cially useful attributes (e.g., a name cue, organizational affiliation, interests, or conversationally relevant background) from visual observations. To reduce profile–image mismatch, we apply cross-modal contrastive alignment (CLIP-style) to paired images and social-context descriptions. The contrastive optimization procedure is summarized in Algorithm 1. Let 𝑓 (·) and 𝑔 (·) be the image and text encoders, and 𝑧 𝑖 = 𝑓 (𝐼 𝑖 )∥ 𝑓 (𝐼 𝑖 ) ∥ , 𝑧 𝑗 = 𝑔 (𝑇 𝑗 )∥𝑔 (𝑇 𝑗 ) ∥ be normalized embed-dings. For a batch of 𝑁 matched pairs, define similarities 𝑠 𝑖 𝑗 = 𝑧 ⊤ 
+
+> 𝑖 𝑧 𝑗
+> 𝜏
+
+with temperature 𝜏 , and minimize the symmetric InfoNCE loss: 
+
+L𝐼 →𝑇 = − 1
+
+𝑁 
+
+> 𝑁
+
+∑︁ 
+
+> 𝑖 =1
+
+log exp (𝑠 𝑖𝑖 )
+
+Í𝑁 𝑗 =1 exp (𝑠 𝑖 𝑗 ) (2) 
+
+L𝑇 →𝐼 = − 1
+
+𝑁 
+
+> 𝑁
+
+∑︁ 
+
+> 𝑖 =1
+
+log exp (𝑠 𝑖𝑖 )
+
+Í𝑁 𝑗 =1 exp (𝑠 𝑗𝑖 ) . (3) The final alignment objective is Lcon = 12 (L 𝐼 →𝑇 + L 𝑇 →𝐼 ), which pulls matched image–context pairs together and pushes mismatches apart. To improve robustness, we (i) include diverse images per in-dividual to avoid memorizing specific pixels and (ii) add negative or distractor examples to reduce overfitting and spurious correlations. 
+
+## 4.3 Seamless Deployment via Weight Merging 
+
+From a systems perspective, our deployment objective is to preserve the representational gains learned during PEFT while minimizing per-turn inference overhead. For linear layers, LoRA adaptation is algebraically compositional: the effective projection can be written as 𝑊 = 𝑊 0 + Δ𝑊 , where Δ𝑊 = 𝐵𝐴 is learned during training. This property enables post-training weight merging, so the adapted model behaves like a single fused network at inference time. This merging step is important for real-time AR interaction: it removes adapter-side routing overhead, reduces memory movement, and keeps latency variance low across turns. In other words, the model retains social-context specialization without paying the runtime cost of separate adapter execution, which directly supports the low-latency requirement for natural face-to-face conversation. During online operation, the pipeline proceeds as follows. The merged VLM continuously processes camera frame(s) to produce a structured profile summary. In parallel, incoming audio is first segmented by Silero VAD to detect speech regions and suppress non-speech noise; detected speech segments are then transcribed by Whisper into turn-level text. The profile summary and tran-scribed utterance are jointly forwarded to the psychological agent (Section 5), which performs strategy routing and suggestion gen-eration under context and trust-state constraints. This end-to-end design couples efficient multimodal perception with a robust speech front end, improving both responsiveness and interaction stability in real-world AR settings. 
+
+## 5 ADAPTIVE PSYCHOLOGICAL AGENT 
+
+PhySE’s adaptive agent is designed around the key requirement to support real-time turn-taking to preserve natural interaction flow and strategic adaptivity guided by psychological principles rather than a fixed handcrafted script via common agents [ 2, 7 , 32 , 35 ]. At each conversational turn, the agent consumes multimodal context and the current target profile, selects a theory-grounded intent, and produces a short suggestion that the operator can speak ver-batim or paraphrase. To satisfy the above requirement, we instan-tiate a psychological Trust-Influence model with a turn-level 
+
+latent trust state . This state provides an explicit control signal for deciding whether to maintain rapport, strengthen credibility, or escalate toward action, while retaining low-latency behavior under noisy conversational conditions. We considered several alter-natives for strategy control, including finite-state stage pipelines, reinforcement-learning policies, and end-to-end LLM next-action prediction. Table 1 summarizes this design rationale across inter-pretability, controllability, and robustness. In our setting, latent trust-state routing offers a practical trade-off: it is more inter-pretable than opaque next-action prediction, easier to constrain than RL-style exploration, and less brittle than fixed stage rules. PhySE: A Psychological Framework for Real-Time AR-LLM Social Engineering Attacks 
+
+Table 1: Alternative psychological agent formulations.                
+
+> Approach Interpretability Controllability Robustness
+> Finite-state machine limited psychological explanation unexpected reaction pain hard to maintain states LLM Reinforcement Learning opaque strategy rationale unsafe exploration, risky reward training data dependent LLM next-action prediction tactic changes hard to attribute soft prompt constraints unstable across prompts
+> Latent trust state (PhySE) explicit trust and influence state. controlled strategies stable without large-scale data.
+
+Figure 2: Psychological strategy routing in PhySE: the router maps the current interaction state (profile, context, recent dialogue, and engagement signals) to a strategy class that governs turn-level suggestion generation. 
+
+## 5.1 Routing Agent for Psychological Strategies 
+
+Agent inputs and state. The agent maintains a lightweight inter-action state 𝑠 𝑡 , updated after each turn, to support fast inference and robust behavior in noisy real-world settings. Concretely, 𝑠 𝑡 in-cludes four components: a profile summary , i.e., a structured and continuously refined description of the target (identity cues, likely background, and salient interests) generated by the Social-VLM; a context snapshot , i.e., location and environmental cues (e.g., coffee shop vs. networking venue) that constrain plausible small talk and requests; a dialogue trace , i.e., a short rolling window of recent turns; and engagement signals , i.e., coarse conversa-tional indicators such as responsiveness, agreement or hesitation, and topic enthusiasm. We intentionally keep 𝑠 𝑡 compact: it stores only the information needed to decide what to do next (strategy selection), without requiring full-history memory. 
+
+Psychological routing LLM. Prior AR social agents often follow fixed stages, which are difficult to adapt when targets react un-expectedly. PhySE instead introduces a psychological router —a compact LLM module that maps the current interaction state 𝑠 𝑡 
+
+to one of three strategy classes. As show in Figure 2, the router is prompted to (1) estimate receptivity and suspicion risk from engagement cues and recent dialogue, and (2) decide whether to maintain the current tactic or pivot to a safer alternative. This ex-plicit routing stage separates tactic selection (why this move now) from surface realization (how to phrase it), improving controllability and reducing drift toward generic responses. 
+
+Three classes of theory-grounded strategies. Instead of relying on a monolithic prompt or rigid stage script, PhySE organizes strat-egy generation into three reusable toolboxes across the interaction lifecycle. This design is grounded in the Stereotype Content Model (SCM), which posits that social evaluation is largely shaped by per-ceived warmth and competence. To operationalize this idea, the psychological router maps the current interaction state to three theory-backed strategy classes. As shown in Figure 2 (Path A), 
+
+Warmth/rapport strategies increase liking and perceived simi-larity through shared interests, reflective listening, and low-stakes reciprocity, with the goal of raising openness without triggering alarm. In Figure 2 (Path B), Credibility/commitment strategies 
+
+increase perceived competence and legitimacy (e.g., referencing rel-evant roles, institutions, or situationally plausible expertise) while keeping claims checkable within the immediate setting, thereby low-ering skepticism. In Figure 2 (Path C), Motivation/action strate-gies transition from relationship building to a concrete request using incremental motivation (small asks), consistency cues, or time-bounded framing; this class is activated only when engage-ment indicates readiness, because premature escalation can increase suspicion. Each class is implemented as a small set of parameter-ized templates (e.g., desired goal, maximum directness, and topic constraints), using the current profile and context. 
+
+Turn-level generation and output constraints. Given the routed strategy class, a generation LLM produces a short suggestion that the operator can speak verbatim or paraphrase. To preserve realism in face-to-face settings, prompt constraints require each suggestion to be brief (one to two sentences) and avoid unnatural verbosity, re-main context consistent with the current venue and conversation topic, remain profile consistent (i.e., avoid hallucinating personal facts), and include an exit strategy when suspicion signals rise (e.g., gracefully changing topic or disengaging). Tianlong Yu 1, Yang Yang 1, Ziyi Zhou 1, Jiaying Xu 1, Siwei Li 1, Tong Guan 2, Kailong Wang 3, Ting Bi 3
+
+## 5.2 Latent Trust-State Approach 
+
+Trust-Influence Model for strategy escalation. Routing deci-sions follow a trust-formation view: suggestions should first in-crease perceived rapport and credibility, and only then escalate to compliance-oriented requests. Figure 3 summarizes this progres-sion and motivates why PhySE separates (i) rapport building, (ii) credibility building, and (iii) action/commitment moves into distinct strategy classes. 
+
+Latent Trust-State Approach. We model influence as a progres-sion from trust formation to behavioral compliance . The agent first increases affiliation/liking (e.g., similarity and reciprocity cues) and credibility (e.g., competence/authority cues grounded in the im-mediate situation), then converts accumulated trust into incremental commitment via small, low-friction requests before escalating to higher-risk asks. This abstraction provides an interpretable control surface for the router: when engagement is high but suspicion rises, the agent de-escalates toward rapport maintenance; when rapport and credibility are stable, it can shift toward commitment moves while enforcing conservative face-to-face realism constraints. 
+
+Latent-state formulation. We represent the target’s trust as a la-tent scalar state 𝑇 𝑡 ∈ R updated at each conversational turn 𝑡 . Let 𝑎 𝑡 
+
+denote the selected strategy class (rapport/credibility/commitment), and let 𝑥 𝑡 denote a feature vector extracted from the target’s re-sponse (e.g., responsiveness, agreement/hesitation, affect, and topic enthusiasm). We update trust via a leaky integrator: 
+
+𝑇 𝑡 +1 = (1 − 𝜆 )𝑇 𝑡 + 𝜆 𝑔 𝜃 (𝑥 𝑡 , 𝑎 𝑡 ) − 𝛽 𝑟 𝑡 + 𝜀 𝑡 , (4) where 𝜆 ∈ ( 0, 1) controls memory, 𝑔 𝜃 (·) estimates trust gain under strategy 𝑎 𝑡 , 𝑟 𝑡 ≥ 0 penalizes “suspicion risk” (e.g., inconsistency with profile/context or overly direct requests), and 𝜀 𝑡 is a noise term. A simple instantiation uses strategy-specific linear gains, 
+
+𝑔 𝜃 (𝑥 𝑡 , 𝑎 𝑡 ) = 𝑤 ⊤ 
+
+> 𝑎 𝑡
+
+𝑥 𝑡 .
+
+Compliance probability. When the agent issues a request at turn 
+
+𝑡 , we model compliance 𝑦 𝑡 ∈ { 0, 1} as a logistic function of trust and request difficulty 𝑑 𝑡 ≥ 0:
+
+Pr (𝑦 𝑡 = 1 | 𝑇 𝑡 , 𝑑 𝑡 , 𝑧 𝑡 ) = 𝜎  𝛼𝑇 𝑡 − 𝛾𝑑 𝑡 + 𝜂 ⊤𝑧 𝑡 
+
+ , (5) where 𝜎 (𝑢 ) = 11+𝑒 −𝑢 and 𝑧 𝑡 captures additional observable factors (e.g., time pressure or authority framing). This formulation supports incremental commitment: the router can increase 𝑑 𝑡 only after 𝑇 𝑡 
+
+exceeds a readiness threshold; otherwise, it de-escalates toward rapport/credibility building. 
+
+## 6 DATASET AND METHODOLOGY 6.1 Interaction Scenarios and Data Collection 
+
+Scenario Design. We conducted an IRB-approved study in realistic social environments (e.g., coffee shops and networking events) with 60 participants and 360 conversations. Participants alternated roles between attacker and target across trials to reduce role-specific bias and ensure balanced evaluation. To isolate the contribution of each system component, we designed seven settings: (1) Basic conversation (no technical assistance); (2) Naive AR + Multi-modal LLM ; (3) SEAR baseline pipeline; (4) PhySE full pipeline; (5) PhySE w/o social-context VLM optimization ; (6) PhySE w/o psychological routing agent .
+
+Dataset Construction. The final dataset includes four components: (1) AR interaction data : multimodal streams from AR glasses, including visual cues (e.g., gaze, facial expression, body-language indicators), audio transcripts/prosody features (e.g., pitch and pause patterns), and contextual metadata (time, location, nearby objects); (2) Public social-context data : publicly available profile traces (text, images, short videos) used for personalization; (3) Survey responses : post-interaction ratings on trust, rapport, naturalness, and compliance-related outcomes; (4) PhySE routing traces : turn-level psychological routing records, including inferred interaction state, selected strategy class, and generated tactical suggestions. 
+
+## 6.2 Questionnaire Design 
+
+Post-Interaction Survey. The survey uses a 5-point Likert scale (1 = Strongly Disagree, 5 = Strongly Agree) unless otherwise noted, and is organized into three parts. 
+
+(A) Configuration-level comparison. Participants rated their ex-perience under each setting: (1) Basic conversation: “How is your experience with setting A?”; (2) AR + Multimodal LLM: “How is your experience with setting B?”; (3) SEAR: “How is your experience with setting C?”; (4) PhySE: “How is your experience with setting D?”; (5) PhySE (without VLM optimization): “How is your experi-ence with setting E?”; (6) PhySE (without psychological routing): “How is your experience with setting F?”. 
+
+(B) PhySE subjective experience dimensions. We assess user per-ception with 11 dimensions: (a) Relevance (match with personal social information); (b) Appropriateness (question suitability in context); (c) Naturalness (authenticity of interaction opening); (d) Pacing (conversation rhythm); (e) Sincerity (perceived authenticity of interest); (f) EmotionalProgression (affective trajectory during interaction); (g) ARComfort (comfort while using AR); (h) BareWil-lingness (willingness without AR assistance); (i) FutureIntent (like-lihood of future interaction); (j) Depth (perceived meaningfulness added by the system); (k) Acceptance (willingness to interact again). 
+
+(C) Social-engineering susceptibility outcomes. We measure post-interaction susceptibility through: (1) Photo Link (open shared links); (2) Social App (add contact on social apps); (3) SMS (open messages); (4) Phone Call (answer calls); (5) Trust-Before (pre-interaction trust); (6) Trust-After (post-interaction trust). 
+
+Participant Demographics. Our cohort includes 60 participants aged 23–62 years (mean age: 34) with various professions. Participa-tion is concentrated in early-to-mid adulthood (23–37), with local peaks at ages 25 and 32. Gender distribution is near-balanced: 28 male participants (46.7%) and 32 female participants (53.3%). More details are provided in PhySE dataset. 
+
+## 7 EXPERIMENTS 7.1 Comparison of PhySE and other approaches 
+
+Table 2 compares PhySE’s social experience score with three al-ternatives: Basic Conversation, Naive AR + LLM, and SEAR, using the baseline comparison questions in Section 6. The results show that PhySE achieves the best overall social experience, with the highest mean score (4.83) and the lowest standard deviation (0.37). Compared with Basic Conversation (3.03), Naive AR + LLM (4.13), and SEAR (4.73), PhySE achieves the highest social experience score. The score distribution further highlights this advantage. For PhySE, PhySE: A Psychological Framework for Real-Time AR-LLM Social Engineering Attacks 
+
+Figure 3: Trust model for AR-LLM-SE interactions: how perceived credibility and rapport mediate trust formation and enable escalation from benign conversation to compliance-oriented requests. Table 2: Comparing the social experience score of PhySE and other approaches. 
+
+Approach 5 pt (%) 4 pt (%) 3 pt (%) 2 pt (%) 1 pt (%) E[Score ] 𝜎 (Score )
+
+Basic Conversation 25.0 5.0 25.0 38.3 6.7 3.03 1.30 Naive AR + LLM 33.3 46.7 20.0 0.0 0.0 4.13 0.72 SEAR 76.7 20.0 3.3 0.0 0.0 4.73 0.51 PhySE 83.3 16.7 0.0 0.0 0.0 4.83 0.37 
+
+> Score mapping: Very Good = 5 pt; Good = 4 pt; Neutral = 3 pt; Bad = 2 pt; Very Bad = 1 pt.
+
+83.3% of participants rated the experience as 5 points and 16.7% rated it as 4 points, with no ratings at 3 points or below. In contrast, SEAR still includes 3.3% neutral ratings, Naive AR + LLM includes 20.0% neutral ratings, and Basic Conversation shows substantial low-score responses (38.3% at 2 points and 6.7% at 1 point). These results indicate a clear progression from unstable, fragmented in-teractions toward consistently high-quality engagement as system capability increases. Overall, the comparison suggests that PhySE provides not only stronger average social experience than prior approaches but also more reliable user outcomes. 
+
+## 7.2 PhySE Social Engineering Effectiveness 
+
+Figure 4 compares SEAR and PhySE on four social-engineering effectiveness metrics: Photo Link, Social App, SMS, and Phone Call. Across all four metrics, PhySE achieves higher mean effective-ness than SEAR while maintaining small variance, indicating both stronger attack success and more stable performance across partic-ipants. The largest gains appear in channels that typically require stronger user trust (e.g., unsolicited SMS and phone-call responses), suggesting that PhySE’s multimodal perception and socially adap-tive strategy improve the model’s ability to maintain conversational 
+
+Figure 4: Comparison of social-engineering effectiveness. 
+
+coherence and credibility under higher-friction interaction settings. At the same time, PhySE preserves the already high performance ob-served in lower-friction channels such as photo-link and social-app engagement. Overall, these results show that PhySE consistently Tianlong Yu 1, Yang Yang 1, Ziyi Zhou 1, Jiaying Xu 1, Siwei Li 1, Tong Guan 2, Kailong Wang 3, Ting Bi 3
+
+Table 3: Latency comparison between SEAR and PhySE.                        
+
+> Approach Component Min Max P90 Average SEAR Multimodal LLM 30.2 s 54.9 s 52.7 s 43.3 s Social Agent 1.0 s 10.6 s 4.0 s 2.8 s PhySE Trained VLM 4.6 s 20.6 s 19.7 s 10.5 s Psycological Agent 4.8 s 6.3 s 6.1 s 5.8 s
+
+Figure 5: Comparison of subjective experience scores. 
+
+strengthens social-engineering effectiveness across multiple com-munication channels. This finding supports our design choice of combining richer multimodal reasoning with strategy-aware social interaction policies. 
+
+## 7.3 PhySE Latency 
+
+Table 3 reports latency metrics (Min, Max, P90, and Average) for SEAR and PhySE across 60 conversations. The P90 metric denotes the 90th percentile, i.e., 90% of observed latencies are below this value. PhySE substantially reduces multimodal-profile generation time: the Multimodal LLM average latency drops from 43.3 s (SEAR) to 10.5 s (PhySE), and P90 decreases from 52.7 s to 19.7 s. This reduc-tion makes profile generation less intrusive in practical deployment and lowers the waiting time before conversation initiation. For the Social Agent, PhySE shows a higher mean latency than SEAR (5.8 s vs. 2.8 s), but with a much tighter range (4.8–6.3 s vs. 1.0–10.6 s). In practice, this indicates a more predictable response cadence, which can be easier to integrate into natural turn-taking than highly vari-able delays. The AR component latency remains negligible (80.6 ms on average) relative to model-inference latency. Overall, the bot-tleneck remains the Multimodal LLM stage, but PhySE markedly improves this bottleneck while stabilizing latency variance. 
+
+Figure 6: Ablation study via social-experience scores. 
+
+## 7.4 PhySE Subjective Experiences 
+
+Figure 5 compares SEAR and PhySE subjective experiences across eleven dimensions: (a) Relevance, (b) Appropriateness, (c) Natu-ralness, (d) Pacing, (e) Sincerity, (f) EmotionalProgression, (g) AR-Comfort, (h) BareWillingness, (i) FutureIntent, (j) Depth, and (k) Acceptance. Overall, PhySE scores higher than SEAR on all di-mensions, indicating a consistent subjective-experience advantage rather than isolated improvements. The largest gaps appear in trust-and engagement-related dimensions, including Sincerity, Depth, Acceptance, and FutureIntent. This pattern suggests that partici-pants perceived PhySE as more credible and were more willing to continue interacting after the session. PhySE also improves inter-action quality dimensions such as Naturalness, Pacing, Relevance, and Appropriateness, showing that the dialogue is not only more persuasive but also smoother and more context-consistent than SEAR. Notably, ARComfort remains one of the highest-scoring dimensions for both approaches, while PhySE further increases this score (4.67/5), indicating that the interaction setting is per-ceived as even more comfortable and less cognitively demanding. For outcome-related dimensions (BareWillingness and Acceptance), PhySE again outperforms SEAR, consistent with the stronger effec-tiveness trends reported in Figure 4. Together, these results indicate that the multimodal training and Psychological Agent in PhySE im-prove both immediate conversational experience and downstream behavioral influence. Although PhySE is consistently better, the radar profile indicates remaining room for improvement in lin-guistic naturalness and localization, which aligns with qualitative feedback about occasional artificial phrasing. 
+
+## 7.5 PhySE Ablation Study 
+
+Figure 6 and present the ablation results for PhySE. The full model achieves the highest mean social-experience score (4.83) with the smallest variance ( 𝜎 = 0.37 ). In contrast, removing Trained VLM reduces the mean to 2.93, and removing the Psychological Agent reduces it to 3.00. Relative to full PhySE, these correspond to per-formance drops of 39.3% and 37.9%, respectively. The error bars in Figure 6 further show that both ablations are substantially less stable ( 𝜎 = 1.14 and 1.13 ) than full PhySE. This indicates that each module contributes not only to higher average quality but also to more consistent user experience across participants. Overall, the ablation confirms that PhySE’s performance depends on the PhySE: A Psychological Framework for Real-Time AR-LLM Social Engineering Attacks 
+
+joint effect of perception-grounded adaptation (Trained VLM) and strategy-level social interaction control (Psychological Agent). To-gether with the latency analysis in Table 3, the full PhySE design provides the best trade-off between interaction quality, robustness, and practical deployment efficiency. 
+
+## 8 CONCLUSION 
+
+This study presents PhySE, a real-time AR-LLM social-engineering framework that combines VLM-based social-context training with an adaptive Psychological Agent. In our IRB-approved evaluation, PhySE delivers the strongest and most stable social experience while reducing profile-generation delay compared with prior baselines. These findings highlight both the practical effectiveness of AR-LLM social engineering in face-to-face settings and the urgent need for stronger safeguards, including real-time sensing protection, behavior-level risk detection, and user-facing interventions. 
+
+## REFERENCES 
+
+[1] A. E. Abele, N. Ellemers, S. T. Fiske, A. Koch, and V. Yzerbyt. Navigating the social world: Toward an integrated framework for evaluating self, individuals, and groups. Psychological review , 128(2):290, 2021. [2] K. Afane, W. Wei, Y. Mao, J. Farooq, and J. Chen. Next-generation phishing: How llm agents empower cyber attackers. In 2024 IEEE International Conference on Big Data (BigData) , pages 2558–2567. IEEE, 2024. [3] T. Bi, C. Ye, Z. Yang, Z. Zhou, C. Tang, Z. Tao, J. Zhang, K. Wang, L. Zhou, Y. Yang, and T. Yu. On the feasibility of using multimodal LLMs to execute AR social engineering attacks. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 40, pages 38252–38260, 2026. [4] L. Bilge, T. Strufe, D. Balzarotti, and E. Kirda. All your contacts are belong to us: automated identity theft attacks on social networks. In Proceedings of the 18th international conference on World wide web , pages 551–560, 2009. [5] P. Burda, L. Allodi, and N. Zannone. Cognition in social engineering empirical research: a systematic literature review. ACM Transactions on Computer-Human Interaction , 31(2):1–55, 2024. [6] S. Chen, Z. Li, F. Dangelo, C. Gao, and X. Fu. A case study of security and privacy threats from augmented reality (ar). In 2018 international conference on computing, networking and communications (ICNC) , pages 442–446. IEEE, 2018. [7] Z. Chen, Z. Zhao, W. Qu, Z. Wen, Z. Han, Z. Zhu, J. Zhang, and H. Yao. Pandora: Detailed llm jailbreaking via collaborated phishing agents with decomposed reasoning. In ICLR 2024 Workshop on Secure and Trustworthy Large Language Models , 2024. [8] L. Choo. How 2 students used the meta ray-bans to access personal informa-tion. https://www.forbes.com/sites/lindseychoo/2024/10/04/meta-ray-bans-ai-privacy-surveillance/, 2025. [9] P. V. Falade. Decoding the threat landscape: Chatgpt, fraudgpt, and wormgpt in social engineering attacks. arXiv preprint arXiv:2310.05595 , 2023. [10] E. J. Finkel, P. W. Eastwick, B. R. Karney, H. T. Reis, and S. Sprecher. Online dating: A critical analysis from the perspective of psychological science. Psychological Science in the Public interest , 13(1):3–66, 2012. [11] A. Fuste and C. Schmandt. Artextiles: Promoting social interactions around personal interests through augmented reality. In Proceedings of the 2017 CHI Conference Extended Abstracts on Human Factors in Computing Systems , pages 470–470, 2017. [12] S. Granger. Social engineering fundamentals, part i: hacker tactics. Security Focus, December , 18, 2001. [13] E. Harmon-Jones and J. Mills. An introduction to cognitive dissonance theory and an overview of current perspectives on the theory. 2019. [14] I. Hirskyj-Douglas, A. Kantosalo, A. Monroy-Hernández, J. Zimmermann, M. Nebeling, and M. Gonzalez-Franco. Social ar: Reimagining and interrogating the role of augmented reality in face to face social interactions. In Companion Publication of the 2020 Conference on Computer Supported Cooperative Work and Social Computing , pages 457–465, 2020. [15] G. Ho, A. Cidon, L. Gavish, M. Schweighauser, V. Paxson, S. Savage, G. M. Voelker, and D. Wagner. Detecting and characterizing lateral phishing at scale. In 28th USENIX security symposium (USENIX security 19) , pages 1273–1290, 2019. [16] M. Z. Iqbal and A. G. Campbell. Adopting smart glasses responsibly: potential benefits, ethical, and privacy concerns with ray-ban stories. AI and Ethics ,3(1):325–327, 2023. [17] P. Jansen and F. Fischbach. The social engineer: An immersive virtual reality educational game to raise social engineering awareness. In Extended Abstracts of the 2020 Annual Symposium on Computer-Human Interaction in Play , pages 59–63, 2020. [18] H. Kawamichi, K. Yoshihara, A. T. Sasaki, S. K. Sugawara, H. C. Tanabe, R. Shino-hara, Y. Sugisawa, K. Tokutake, Y. Mochizuki, T. Anme, et al. Perceiving active listening activates the reward system and improves the impression of relevant experiences. Social neuroscience , 10(1):16–26, 2015. [19] K. Krombholz, H. Hobel, M. Huber, and E. Weippl. Advanced social engineering attacks. Journal of Information Security and applications , 22:113–122, 2015. [20] J.-S. Lee, S. Kim, and S. Pan. The role of relationship marketing investments in customer reciprocity. International Journal of Contemporary Hospitality Manage-ment , 26(8):1200–1224, 2014. [21] S. M. Lehman, A. S. Alrumayh, K. Kolhe, H. Ling, and C. C. Tan. Hidden in plain sight: Exploring privacy risks of mobile augmented reality applications. ACM Transactions on Privacy and Security , 25(4):1–35, 2022. [22] C. Li, G. Wu, G. Y.-Y. Chan, D. G. Turakhia, S. C. Quispe, D. Li, L. Welch, C. Silva, and J. Qian. Satori: Towards proactive ar assistant with belief-desire-intention user modeling. arXiv preprint arXiv:2410.16668 , 2024. [23] A. Ma, J. J. Paek, F. Liu, and J. Y. Kim. Threats to personal control fuel similarity attraction. Proceedings of the National Academy of Sciences , 121(43):e2321189121, 2024. [24] S. S. Roy, P. Thota, K. V. Naragam, and S. Nilizadeh. From chatbots to phishbots?: Phishing scam generation in commercial large language models. In 2024 IEEE Symposium on Security and Privacy (SP) , pages 36–54. IEEE, 2024. Tianlong Yu 1, Yang Yang 1, Ziyi Zhou 1, Jiaying Xu 1, Siwei Li 1, Tong Guan 2, Kailong Wang 3, Ting Bi 3
+
+[25] D. I. Tamir and J. P. Mitchell. Disclosing information about the self is intrinsically rewarding. Proceedings of the National Academy of Sciences , 109(21):8038–8043, 2012. [26] D. Timko, D. H. Castillo, and M. L. Rahman. Understanding influences on sms phishing detection: User behavior, demographics, and message attributes. 2025. [27] H.-R. Tsai, S.-K. Chiu, and B. Wang. Gazenoter: Co-piloted ar note-taking via gaze selection of llm suggestions to match users’ intentions. arXiv preprint arXiv:2407.01161 , 2024. [28] E. Ulqinaku, H. Assal, A. Abdou, S. Chiasson, and S. Capkun. Is real-time phishing eliminated with {FIDO }? social engineering downgrade attacks against {FIDO }
+
+protocols. In 30th USENIX Security Symposium (USENIX Security 21) , pages 3811–3828, 2021. [29] P. Vadrevu and R. Perdisci. What you see is not what you get: Discovering and tracking social engineering attack campaigns. In Proceedings of the Internet Measurement Conference , pages 308–321, 2019. [30] T. A. Venema, F. M. Kroese, J. S. Benjamins, and D. T. De Ridder. When in doubt, follow the crowd? responsiveness to social proof nudges in the absence of clear preferences. Frontiers in psychology , 11:1385, 2020. [31] C. Wang, S. Chen, Y. Wu, Z. Zhang, L. Zhou, S. Liu, Z. Chen, Y. Liu, H. Wang, J. Li, et al. Neural codec language models are zero-shot text to speech synthesizers. 
+
+arXiv preprint arXiv:2301.02111 , 2023. [32] I. Wang, J. Smith, and J. Ruiz. Exploring virtual agents for augmented reality. In 
+
+Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems ,pages 1–12, 2019. [33] B. Yang, Y. Guo, L. Xu, Z. Yan, H. Chen, G. Xing, and X. Jiang. Socialmind: Llm-based proactive ar social assistive system with human-like perception for in-situ live interactions. Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies , 9(1):1–30, 2025. [34] Z. Yang, J. Allen, M. Landen, R. Perdisci, and W. Lee. {TRIDENT }: Towards detecting and mitigating web-based social engineering attacks. In 32nd USENIX Security Symposium (USENIX Security 23) , pages 6701–6718, 2023. [35] S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao. React: Synergizing reasoning and acting in language models. In International Conference on Learning Representations (ICLR) , 2023. [36] T. Yu, C. Ye, Z. Yang, Z. Zhou, C. Tang, Z. Tao, J. Zhang, K. Wang, L. Zhou, Y. Yang, and T. Bi. Sear: A multimodal dataset for analyzing ar-llm-driven social engineering behaviors. In Proceedings of the 33rd ACM International Conference on Multimedia , pages 12981–12987, 2025. [37] Y. Zhang, C. Slocum, J. Chen, and N. Abu-Ghazaleh. It’s all in your head (set): Side-channel attacks on {AR/VR } systems. In 32nd USENIX Security Symposium (USENIX Security 23) , pages 3979–3996, 2023.

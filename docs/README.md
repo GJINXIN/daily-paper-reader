@@ -6,73 +6,67 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-01
-- 运行时间：2026-05-01 20:52:35 UTC
+- 最新运行日期：2026-05-02
+- 运行时间：2026-05-02 20:07:44 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：15
+- 精读区：4
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 17 篇前沿成果，深度剖析 AI 智能体社区的涌现规律与科学认知的社会学本质。
-满分论文揭示了合成社交图谱中的复杂行为，并警示科学界警惕因“成功”而产生的理解幻觉。
-建议关注智能体演化对制度的影响，以及博弈论与热力学统一框架下的集体推理新范式。
-- 详情：[/202605/01/README](/202605/01/README)
+今日精选 15 篇前沿论文，深度剖析 AI 代理在市场交易与自动化机器学习中的角色演变。
+重点关注 AI 代理在购物场景的角色一致性，以及利用自愈式多智能体系统实现全自动 ML 流水线生成。
+建议普通读者警惕 AR 结合大模型的社会工程学风险，并关注人机共生背景下的社会治理新范式。
+- 详情：[/202605/02/README](/202605/02/README)
 
 ### 精读区论文标签
-1. [The Synthetic Social Graph: Emergent Behavior in AI Agent Communities](/202605/01/2604.27271v1-the-synthetic-social-graph-emergent-behavior-in-ai-agent-communities)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：大语言模型智能体在社交平台环境中模拟社交互动与涌现行为
-2. [Nothing Deceives Like Success: Social Learning and the Illusion of Understanding in Science](/202605/01/2604.27188v1-nothing-deceives-like-success-social-learning-and-the-illusion-of-understanding-in-science)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：科学共同体中社会学习的基于智能体模拟
-3. [The Inverse-Wisdom Law: Architectural Tribalism and the Consensus Paradox in Agentic Swarms](/202605/01/2604.27274v1-the-inverse-wisdom-law-architectural-tribalism-and-the-consensus-paradox-in-agentic-swarms)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：智能体集群中出现的共识悖论和架构部落主义
-4. [Safe Bilevel Delegation (SBD): A Formal Framework for Runtime Delegation Safety in Multi-Agent Systems](/202605/01/2604.27358v1-safe-bilevel-delegation-sbd-a-formal-framework-for-runtime-delegation-safety-in-multi-agent-systems)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体系统中的运行时委派安全
-5. [Clustering in co-evolving opinion dynamics: reduced SPDE models](/202605/01/2604.27961v1-clustering-in-co-evolving-opinion-dynamics-reduced-spde-models)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于智能体的舆论动力学中的涌现聚类
-6. [CODA: Coordination via On-Policy Diffusion for Multi-Agent Offline Reinforcement Learning](/202605/01/2604.23308v1-coda-coordination-via-on-policy-diffusion-for-multi-agent-offline-reinforcement-learning)  
+1. [When Agents Shop for You: Role Coherence in AI-Mediated Markets](/202605/02/2604.26220v1-when-agents-shop-for-you-role-coherence-in-ai-mediated-markets)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：利用扩散模型解决多智能体强化学习中的协同问题
+   evidence：AI介导市场中的社会话语与偏好泄露
+2. [Think it, Run it: Autonomous ML pipeline generation via self-healing multi-agent AI](/202605/02/2604.27096v1-think-it-run-it-autonomous-ml-pipeline-generation-via-self-healing-multi-agent-ai)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于机器学习流水线的自愈多智能体AI
+3. [LLM-Enhanced Topical Trend Detection at Snapchat](/202605/02/2604.27131v1-llm-enhanced-topical-trend-detection-at-snapchat)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：短视频社交平台上的话题趋势检测
+4. [Building Persona-Based Agents On Demand: Tailoring Multi-Agent Workflows to User Needs](/202605/02/2604.27882v1-building-persona-based-agents-on-demand-tailoring-multi-agent-workflows-to-user-needs)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：基于人格的智能体及根据用户需求定制的多智能体工作流
 
 ### 速读区论文标签
-1. [When Agents Evolve, Institutions Follow](/202605/01/2604.27691v1-when-agents-evolve-institutions-follow)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体系统面临集体组织和历史制度的挑战
-2. [On Agentic Behavioral Modeling](/202605/01/2604.27894v1-on-agentic-behavioral-modeling)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：用于解释人类行为的智能体行为建模
-3. [A Collective Variational Principle Unifying Bayesian Inference, Game Theory, and Thermodynamics](/202605/01/2604.27942v1-a-collective-variational-principle-unifying-bayesian-inference-game-theory-and-thermodynamics)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统中集体智能的统一原则
-4. [Trust as a Situated User State in Social LLM-Based Chatbots: A Longitudinal Study of Snapchat's My AI](/202605/01/2604.22417v1-trust-as-a-situated-user-state-in-social-llm-based-chatbots-a-longitudinal-study-of-snapchats-my-ai)  
+1. [Emergent Strategic Reasoning Risks in AI: A Taxonomy-Driven Evaluation Framework](/202605/02/2604.22119v1-emergent-strategic-reasoning-risks-in-ai-a-taxonomy-driven-evaluation-framework)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：研究基于大语言模型的社交对话智能体及其与用户的交互行为
-5. [Architecture Matters for Multi-Agent Security](/202605/01/2604.23459v1-architecture-matters-for-multi-agent-security)  
+   evidence：智能体框架中的涌现性策略推理风险
+2. [A Co-Evolutionary Theory of Human-AI Coexistence: Mutualism, Governance, and Dynamics in Complex Societies](/202605/02/2604.22227v2-a-co-evolutionary-theory-of-human-ai-coexistence-mutualism-governance-and-dynamics-in-complex-societies)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统架构及其安全风险分析
-6. [GraphPlanner: Graph Memory-Augmented Agentic Routing for Multi-Agent LLMs](/202605/01/2604.23626v1-graphplanner-graph-memory-augmented-agentic-routing-for-multi-agent-llms)  
+   evidence：复杂社会中的人机共存
+3. [PhySE: A Psychological Framework for Real-Time AR-LLM Social Engineering Attacks](/202605/02/2604.23148v1-physe-a-psychological-framework-for-real-time-ar-llm-social-engineering-attacks)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体大模型路由与协作工作流
-7. [GamED.AI: A Hierarchical Multi-Agent Framework for Automated Educational Game Generation](/202605/01/2604.23947v2-gamedai-a-hierarchical-multi-agent-framework-for-automated-educational-game-generation)  
+   evidence：用于社会工程与交互的大模型驱动智能体
+4. [AFA: Identity-Aware Memory for Preventing Persona Confusion in Multi-User Dialogue](/202605/02/2604.25022v1-afa-identity-aware-memory-for-preventing-persona-confusion-in-multi-user-dialogue)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：使用 LangGraph 的分层多智能体框架，用于自动化任务执行
-8. [AgenticCache: Cache-Driven Asynchronous Planning for Embodied AI Agents](/202605/01/2604.24039v1-agenticcache-cache-driven-asynchronous-planning-for-embodied-ai-agents)  
+   evidence：多用户对话与基于人格的智能体
+5. [OxyGent: Making Multi-Agent Systems Modular, Observable, and Evolvable via Oxy Abstraction](/202605/02/2604.25602v1-oxygent-making-multi-agent-systems-modular-observable-and-evolvable-via-oxy-abstraction)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体具身基准的规划框架
-9. [GAMED.AI: A Hierarchical Multi-Agent Framework for Automated Educational Game Generation](/202605/01/2604.23947v1-gamedai-a-hierarchical-multi-agent-framework-for-automated-educational-game-generation)  
+   evidence：多智能体系统的模块化框架
+6. [HotComment: A Benchmark for Evaluating Popularity of Online Comments](/202605/02/2604.25614v1-hotcomment-a-benchmark-for-evaluating-popularity-of-online-comments)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：社交媒体评论热度的多模态基准
+7. [Usable Agent Discovery for Decentralized AI Systems](/202605/02/2604.23080v1-usable-agent-discovery-for-decentralized-ai-systems)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：分层多智能体框架
-10. [Measuring Successful Cooperation in Human-AI Teamwork: Development and Validation of the Perceived Cooperativity and Teaming Perception Scales](/202605/01/2604.24461v1-measuring-successful-cooperation-in-human-ai-teamwork-development-and-validation-of-the-perceived-cooperativity-and-teaming-perception-scales)  
+   evidence：去中心化AI系统中的智能体发现
+8. [From Coarse to Fine: Self-Adaptive Hierarchical Planning for LLM Agents](/202605/02/2604.23194v1-from-coarse-to-fine-self-adaptive-hierarchical-planning-for-llm-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：人机交互中涌现的团队协作感
-11. [AgentWard: A Lifecycle Security Architecture for Autonomous AI Agents](/202605/01/2604.24657v1-agentward-a-lifecycle-security-architecture-for-autonomous-ai-agents)  
+   evidence：大语言模型智能体的分层规划
+9. [DARC-CLIP: Dynamic Adaptive Refinement with Cross-Attention for Meme Understanding](/202605/02/2604.23214v1-darc-clip-dynamic-adaptive-refinement-with-cross-attention-for-meme-understanding)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：自主AI智能体和多步规划系统的安全架构
+   evidence：用于检测社交媒体有害内容的多模态理解
+10. [ClawMark: A Living-World Benchmark for Multi-Turn, Multi-Day, Multimodal Coworker Agents](/202605/02/2604.23781v1-clawmark-a-living-world-benchmark-for-multi-turn-multi-day-multimodal-coworker-agents)  
+   标签：评分：6.0/10、query:mas-ss
+   evidence：多模态同事智能体基准测试
+11. [Skill Retrieval Augmentation for Agentic AI](/202605/02/2604.24594v1-skill-retrieval-augmentation-for-agentic-ai)  
+   标签：评分：6.0/10、query:mas-ss
+   evidence：智能体AI系统的技能检索增强
 
 
 <div class="dpr-home-promo-card">
