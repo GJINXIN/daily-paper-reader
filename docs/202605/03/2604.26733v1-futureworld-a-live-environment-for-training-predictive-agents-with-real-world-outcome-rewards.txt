@@ -1,0 +1,557 @@
+Title: FutureWorld: A Live Environment for Training Predictive Agents with Real-World Outcome Rewards
+
+URL Source: https://arxiv.org/pdf/2604.26733v1
+
+Published Time: Thu, 30 Apr 2026 00:58:36 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+# FutureWorld: A Live Environment for Training Predictive Agents with Real-World Outcome Rewards 
+
+Zhixin Han 1,3∗
+
+, Yanzhi Zhang 2,3∗
+
+, Chuyang Wei 3, Maohang Gao 3
+
+Xiawei Yue 1,3, Kefei Chen 3,4, Yu Zhuang 3, Haoxiang Guan 3, Jiyan He 3
+
+Jian Li 4, Yitong Duan 3†
+
+, Yu Shi 3†
+
+, Mengting Hu 1†
+
+, Shuxin Zheng 3†
+
+> 1
+
+College of Software, Nankai University 
+
+> 2
+
+Academy of Mathematics and Systems Science, Chinese Academy of Sciences 
+
+> 3
+
+Zhongguancun Academy, Beijing, China 4Tsinghua University 
+
+zhixinhan@mail.nankai.edu.cn, zhangyanzhi20@mails.ucas.ac.cn duanyitong@zgci.ac.cn, {shiyu, sz}@bza.edu.cn, mthu@nankai.edu.cn 
+
+Abstract 
+
+Live future prediction refers to the task of making predictions about real-world events before they unfold. This task is increasingly studied using large language model-based agent systems, and it is important for building agents that can con-tinually learn from real-world. Just as interactive environments have often driven progress in agents, advancing live future prediction naturally motivates viewing it as a learning environment. Prior works have explored future prediction from several different parts, but have generally not framed it as a unified learning envi-ronment. This task is appealing for learning because it can provide a large number of prediction questions grounded in diverse real-world events, while preventing answer leakage. To leverage the advantages of live future prediction, we present FutureWorld, a live agentic reinforcement learning environment that closes the training loop between prediction, outcome realization, and parameters update. In our environment, we take three open-source base models and train them for con-secutive days. The results show that training is effective. Furthermore, we build a daily benchmark based on the environment and evaluate several frontier agents on it to establish performance baselines for current agent systems. 
+
+1 Introduction 
+
+Live future prediction refers to the task of making predictions about real-world events before they unfold, where the results are unknown at prediction time but can be verified based on subsequently observed real-world outcomes Zeng et al. [2025], Liu et al. [2026], Karger et al. [2025]. Recent works Zeng et al. [2025], Liu et al. [2026], Karger et al. [2025], Turtel et al. [2025], Metaculus [2025], UniPat AI [2026], Jeen et al. [2026], Su et al. [2026] increasingly study this task using large language model (LLM)-based agent systems, often in the form of agentic prediction pipelines that retrieve relevant information, reason over retrieved evidence, and generate predictions. This task naturally supports the development of agent systems that make predictions, observe realized outcomes, and update their behavior accordingly. In this way, they can remain aligned with evolving real-world dynamics instead of relying solely on static knowledge acquired during training. This ability is important for building agents that can continually learn from real-world feedback, adapt to changing conditions, and remain reliable in dynamic real-world environments. 
+
+> ∗These authors contributed equally to this work.
+> †Corresponding authors. Preprint.
+> arXiv:2604.26733v1 [cs.AI] 29 Apr 2026
+
+Recent works Zhou et al. [2024], Trivedi et al. [2024], Drouin et al. [2024], Majumder et al. [2023], Chen et al. [2025] on LLM agents have often advanced capability development through interactive environments. In the same spirit, improving live future prediction also requires prediction, outcome feedback, and policy improvement over time, which naturally motivates treating it as a learning environment. Such an environment should satisfy three requirements. First, the stream of questions should remain live, because new prediction targets continually emerge from ongoing real-world developments, and a static collection of historical questions cannot meet the need for live continual learning. Second, the learning signal should be grounded in realized outcomes, rather than relying solely on proxy signals such as process rewards, so that optimization remains aligned with the true objective of prediction. Third, training should include the agent’s own information retrieval and evidence analysis, because in realistic future prediction the agent must learn not only how to make predictions from evidence, but also what evidence to seek and how to interpret it. In this way, live future prediction defines a learning environment in which agents can continually adapt their policies through real-world feedback and continually update their understanding of an evolving world. Prior works have explored future prediction from several different parts. Existing works Zeng et al. [2025], Karger et al. [2025], Liu et al. [2026] take an important step by providing live evaluation infrastructures that continually introduce new prediction questions over time. Another step is to place learning and agentic rollouts inside a live setting. UniPat AI [2026] moves in this direction by combining reinforcement learning (RL) with agentic rollouts in a live prediction setup. However, its learning signal is based on rubric-based process rewards rather than realized outcomes, leaving a gap between the training signal and the true objective of prediction. A further step is to optimize learning directly against realized outcomes. Recent works Turtel et al. [2025], Jeen et al. [2026] move in this objective by exploring outcome-based RL. However, they do so only on static datasets of previously resolved questions, where the evidence available for prediction is fixed in advance. As a result, the agent is not truly trained to search for, select, and interpret evidence in a live environment. Taken together, prior work has explored different important aspects of live future prediction, but no existing work has yet established it as a unified training environment. A closer look at live future prediction reveals several properties that make it particularly well suited as a learning environment. Feedback can be derived directly from real-world outcomes, without requiring human annotation. This greatly reduces supervision cost and makes it possible to scale training over a large number of prediction questions. In addition, because the real world is rich and diverse, prediction questions can naturally span a wide range of domains. Notably, data leakage is prevented by construction. These properties make live future prediction particularly well suited as a learning environment. To leverage the advantages of live future prediction, we present FutureWorld, a live agentic RL environment that closes the training loop between prediction, outcome realization, and parameters update. Each day, the system automatically generates a large number (2047.29 on average, see Section 3.5) of prediction questions from a broad set of carefully selected, high-value event sources spanning many sectors, as illustrated in Figure 1 (a). The generated questions are first filtered to remove low-quality items, after which the remaining questions are resampled to balance question counts across domains. For each prediction question, the agent executes a rollout that may involve issuing search queries, reading retrieved documents, reasoning over evidence, and producing a prediction, while the environment records the resulting trajectory. The ground-truth outcome is provided only later, when the event resolves, at which point it is matched to the corresponding stored rollout and used to compute a reward. Many accumulated rewards are then used to update the model’s parameters. The entire pipeline runs autonomously on a daily cycle and covers question generation, rollout execution, outcome collection, reward computation, and model update. In our environment, we take three open-source base models and train them using outcome-based RL. The results show that training is effective. Furthermore, we build a daily benchmark based on the environment and evaluate several frontier agents on it to establish performance baselines for current agent systems. In summary, our contributions are as follows: • We introduce FutureWorld, a live agentic RL training environment for live future prediction. To the best of our knowledge, it is the first open training environment in which agents learn directly from the outcomes of their own predictions about the future. 2(a) Domain distribution of website sources 
+
+Financial 
+
+Markets 
+
+> Agriculture
+> Options
+> Volatility
+> Exchange
+> Rates
+> Industry
+> Weather
+> Logistics
+> Entertainment
+> Politics
+> (b) Domain distribution of questions before resampling
+> Financial
+> Markets
+> Agriculture
+> Options
+> Volatility
+> Exchange
+> Rates
+> Industry
+> Weather
+> Logistics
+
+Entertainment  
+
+> Politics
+> (c) Domain distribution of questions after resampling
+> Financial
+> Markets Agriculture
+> Options
+> Volatility
+> Exchange
+> Rates
+> Industry
+> Weather
+> Logistics
+> Entertainment
+> Politics
+
+Figure 1: Domain distributions of website sources (a), questions before resampling (b), and questions after resampling (c). • We provide empirical evidence that outcome-based RL in a live environment can improve prediction ability over time. An open-source model trained in FutureWorld achieves pro-gressively better performance across successive training rounds, and demonstrates that delayed rewards from real-world outcomes can serve as an effective learning signal for future prediction. • We evaluate several frontier agents on the FutureWorld daily benchmark to establish perfor-mance baselines for current systems. 
+
+2 Related work 
+
+2.1 Agent environments 
+
+Agent environments have established the value of interaction and feedback for training and evaluating large language agents. Prior works have studied a range of controlled environments for sequential de-cision making. Early text-based settings such as Jericho Hausknecht et al. [2020] provide interactive fiction games for language-conditioned action, ScienceWorld Wang et al. [2022] focuses on grounded scientific reasoning in an interactive text environment, and ALFWorld Shridhar et al. [2021] connects text-based interaction with embodied household tasks. Other work studies web and software interac-tion in more realistic yet still controllable settings. WebShop Yao et al. [2023] formulates grounded web interaction as an online shopping task, WebArena Zhou et al. [2024] recreates functional websites in a reproducible sandbox, VisualWebArena Koh et al. [2024] extends this paradigm to visually grounded web tasks, AppWorld Trivedi et al. [2024] builds a controllable ecosystem of apps populated with fictitious users, and WorkArena Drouin et al. [2024] targets browser-based knowledge-work tasks in enterprise software. However, despite their diversity, most of these environments remain closed or semi-closed, which limit their ability to expose agents to open-ended real-world change. 
+
+2.2 Benchmarks for future prediction 
+
+Future prediction benchmarks bring evaluation closer to real-world outcomes that unfold over time, yet they remain primarily designed for assessment rather than training. Earlier benchmarks such as ForecastQA Jin et al. [2021] and AutoCast Zou et al. [2022] formulate prediction with temporal text or historical prediction questions, while PROPHET Tao et al. [2025] further emphasizes inferability by constructing prediction questions paired with supporting news evidence. More recent efforts have moved prediction evaluation closer to live settings. ForecastBench Karger et al. [2025] and FutureX Zeng et al. [2025] introduce automatically updated benchmarks of unresolved prediction questions, while FutureX-Pro Liu et al. [2026] extends this live paradigm to higher-value vertical domains. 
+
+2.3 Training agents for future prediction 
+
+Existing methods have already explored the problem of improving future prediction ability for future prediction in LLM-based systems. Some works apply outcome-based RL to static datasets of resolved prediction questions. Turtel et al. [2025] demonstrate that fine tuning with negative Brier score as a reward signal yields substantial accuracy gains on a 14B parameter model trained over 3Online real-world sources 
+
+network requests 
+
+Automated 
+
+Candidate future events  Candidate prediction questions 
+
+Question-description pairs 
+
+Filtering 
+
+GPT-5.4 
+
+Predefined rules 
+
+A probability estimation question 
+
+Resampling 
+
+Transformation 
+
+Will the highest temperature in Dallas be between 84-85 °F on April 18? 
+
+Will the price of Bitcoin be above $84,000 on April 23? 
+
+Will Damac Saudi Club vs. Al Okhdood SC end in a draw? 
+
+In the upcoming game, scheduled for April 23, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. 
+
+This market will resolve to \"Yes\" if the Binance 1 minute candle for BTC/USDT 12:00 in the ET timezone (noon) on the date specified in the title has a final \"Close\" price higher than the price specified in the title. Otherwise, this market will resolve to \"No\".\n\nThe resolution source for this market is Binance, specifically the BTC/USDT \"Close\" prices currently available at https://www.binance.com/en/trade/BTC_ USDT with \"1m\" and \"Candles\" selected on the top bar.\n\nPlease note that this market is about the price according to Binance BTC/USDT, not according to other exchanges or trading pairs.\n\nPrice precision is determined by the number of decimal places in the source. 
+
+This market will resolve to the temperature range that contains the highest temperature recorded at the Dallas Love Field Station in degrees Fahrenheit on 18 Apr '26.\n\nThe resolution source for this market will be information from Wunderground, specifically the highest temperature recorded for all times on this day by the Forecast for the Dallas Love Field Station once information is finalized, available here: https://www.wunderground.com/history/daily/us/tx/dallas/K DAL.\n\nTo toggle between Fahrenheit and Celsius, click the gear icon next to the search bar and switch the Temperature setting between °F and °C.\n\nThis market can not resolve to \"Yes\" until all data for this date has been finalized.\n\nThe resolution source for this market measures temperatures to whole degrees Fahrenheit (eg, 21 °F). Thus, this is the level of precision that will be used when resolving the market.\n\nAny revisions to temperatures recorded after data is finalized for this market's timeframe will not be considered for this market's resolution. 
+
+In the upcoming game, scheduled for April 23, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. 
+
+This market will resolve to the temperature range that contains the highest temperature recorded at the Dallas Love Field Station in degrees Fahrenheit on 18 Apr '26.\n\nThe resolution source for this market will be information from Wunderground, specifically the highest temperature recorded for all times on this day by the Forecast for the Dallas Love Field Station once information is finalized, available here: https://www.wunderground.com/history/daily/us/tx/dallas/K DAL.\n\nTo toggle between Fahrenheit and Celsius, click the gear icon next to the search bar and switch the Temperature setting between °F and °C.\n\nThis market can not resolve to \"Yes\" until all data for this date has been finalized.\n\nThe resolution source for this market measures temperatures to whole degrees Fahrenheit (eg, 21 °F). Thus, this is the level of precision that will be used when resolving the market.\n\nAny revisions to temperatures recorded after data is finalized for this market's timeframe will not be considered for this market's resolution. 
+
+Will the highest temperature in Dallas be between 84-85 °F on April 18? 
+
+Will Damac Saudi Club vs. Al Okhdood SC end in a draw? 
+
+Will the highest temperature in Dallas be between 84-85 °F on April 18? 
+
+This market will resolve to the temperature range that contains the highest temperature recorded at the Dallas Love Field Station in degrees Fahrenheit on 18 Apr '26.\n\nThe resolution source for this market will be information from Wunderground, specifically the highest temperature recorded for all times on this day by the Forecast for the Dallas Love Field Station once information is finalized, available here: https://www.wunderground.com/history/daily/us/tx/dallas/K DAL.\n\nTo toggle between Fahrenheit and Celsius, click the gear icon next to the search bar and switch the Temperature setting between °F and °C.\n\nThis market can not resolve to \"Yes\" until all data for this date has been finalized.\n\nThe resolution source for this market measures temperatures to whole degrees Fahrenheit (eg, 21 °F). Thus, this is the level of precision that will be used when resolving the market.\n\nAny revisions to temperatures recorded after data is finalized for this market's timeframe will not be considered for this market's resolution. 
+
+Will the highest temperature in Dallas be between 84-85 °F on April 18? 
+
+Provide a probability between 0 and 100%. Figure 2: Overview of the FutureWorld pipeline for constructing prediction questions. 110,000 resolved Polymarket 3 events, but the agent operates only on a fixed prompt that contains pre collected information, rather than acquiring information through its own search process, so the information gathering behavior remains entirely untrained. Jeen et al. [2026] apply Group Relative Policy Optimization (GRPO) Shao et al. [2024] to a 120B-parameter model using Brier score rewards on approximately 10k binary questions, achieving notable improvements on the Metaculus benchmark Metaculus [2025]. However, its research phase is pre-computed before training, meaning the model’s ability to retrieve and synthesize evidence is frozen rather than learned. Other work, exemplified by UniPat AI [2026], operates in a live setting with agentic rollouts and a daily rolling cycle, but uses rubric-based process rewards calibrated against outcome-derived rankings rather than direct outcome-based rewards, introducing an indirection between the training signal and the target metric. Across these efforts, no existing system simultaneously trains on outcome-derived rewards, performs agentic information retrieval inside the training loop, and operates over a live, rolling stream of questions. 
+
+3 FutureWorld environment 
+
+3.1 Environment overview 
+
+FutureWorld is a live environment for future prediction that supports the complete pipeline from question generation to delayed reward assignment. As illustrated in Figure 2, the process begins by collecting data from a broad set of public online sources about candidate future events, and then constructs question-description pairs by instantiating prediction questions through predefined rules or templates and, when applicable, associating them with supplementary descriptions that provide additional background context. These pairs are further processed through filtering and resampling so that the final retained set is both higher quality and more balanced across domains. The retained questions are then transformed, via predefined prompt templates, into probability-estimation prompts that ask the agent to estimate the probability that the specific future event will actually occur. Once deployed in the environment, as shown in Figure 3, an agent interacts with these prompts by conducting search and reasoning before producing a probabilistic prediction. FutureWorld records each prediction episode as a rollout trajectory. At later scheduled times, when the corresponding real-world outcomes are expected to be available according to their original resolution schedule, the environment attempts to retrieve the ground truth, injects resolved outcomes back into the 
+
+3https://polymarket.com/ 
+
+476 85431 Prediction prompt  2 Agent search and reasoning 
+
+> Probabilistic prediction
+> Stored trajectory
+> Delayed out-
+> come resolution
+> Ground-truth retrieval
+> Outcome-based reward
+> Agent update
+> Will the highest temperature in Dallas be between 84-85 °F on April 18?
+> Provide a probability between 0 and 100%.
+> News & data
+> Reports & analysis
+> Expert commentary
+> …
+
+𝑃𝑃 = 0.68  
+
+> 68%
+> Confidence: High
+> Prompt received
+> Search &
+> reasoning
+> Prediction (0.68)
+> Stored
+> Awaiting outcome
+> Later sched-
+> uled time
+> Resolved outcome:
+> YES (event occurred)
+> reward = 𝑓𝑓 (pred, gold)
+> Continuous adaptation and improvement
+
+Figure 3: Overview of the FutureWorld training loop. stored trajectories, and computes outcome-based rewards according to predefined rules. In this way, FutureWorld serves as a continuously refreshed, delayed-feedback environment that not only provides a persistent stream of new future prediction questions, but also closes the loop between agent behavior and realized outcomes, thereby supporting the agent’s continuous adaptation and improvement. 
+
+3.2 Data Sources 
+
+FutureWorld begins by collecting candidate future events from a broad set of online sources through automated network requests. 4 In the current version, we maintain a pool of 72 candidate websites. 5
+
+These sources cover a wide range of domains, enabling the environment to generate prediction tasks with substantial breadth. Figure 1 (a) shows the detailed categorization of the website sources and the proportion accounted for by each domain. Moreover, most of these website sources track more consequential real-world developments. 
+
+3.3 Construction of question-description pairs 
+
+After collecting data from source websites, FutureWorld instantiates candidate prediction questions using predefined rules or templates. These questions are formulated as binary prediction questions that ask whether a specific event will occur. For example, a question may take the form Will the highest temperature in Dallas be between 84-85°F on April 18? Each question may also be paired with a supplementary description that is not a necessary part of the question itself, but instead provides additional context to make the prediction target more explicit and provide more complete background information. The question alone remains sufficient for answering, while the description can provide richer background information. For some websites, the description can be directly extracted from the raw source data, whereas for others, we use descriptions that have been pre-generated with the assistance of an LLM, i.e., GPT-5.4 6. In this way, FutureWorld constructs question-description pairs that are used in the subsequent filtering (Section 3.4) and resampling (Section 3.5) stages. 7
+
+3.4 Question-description pairs filtering 
+
+After constructing question-description pairs, FutureWorld applies a dedicated filtering stage to re-move problematic or low-quality instances. Through manual inspection, we find that these undesirable cases mainly fall into three categories: • Some questions are not objectively resolvable. Their outcomes may depend on private or insider information, rumors, ambiguous wording. 
+
+> 4
+
+FutureWorld only uses publicly accessible sources and restricts collection to sources whose published access conditions permit automated retrieval or otherwise expose public programmatic interfaces. The collected data are used solely for academic research, and not for any illegal, non-compliant, or commercial purpose. 
+
+> 5
+
+This source pool is not fixed and will continue to expand as additional eligible websites are incorporated in future releases. 
+
+> 6
+
+https://openai.com/index/introducing-gpt-5-4 
+
+> 7
+
+We make our best effort to provide each prediction question with a corresponding description. However, this cannot be guaranteed in all cases. 
+
+5• Some questions have limited predictive value. Correctly predicting them would provide little practical utility. • Some questions involve sensitive content and are therefore not suitable for public release. They may concern topics that should not be openly discussed on the internet or in public forums. To address these three categories of issues, we design a dedicated prompt template for each category and use a LLM, bytedance-seed/seed-1.6 8, to filter the question-description pairs, since the supplementary description provides additional background context that can help the LLM interpret the question more comprehensively and accurately. 
+
+3.5 Question-description pairs resampling 
+
+After filtering, we further apply a resampling stage to the remaining question-description pairs. This stage is designed to balance the relative proportions across question domains while reducing semantic redundancy within each domain. We first assign filtered pairs to different domains using heuristic rules based on keyword-matching mappings. Then, for each domain, we aim to select a subset of representative questions with low semantic similarity to one another and retain them as the final pairs. We perform the following selection procedure separately for each domain. Let P = {p1, . . . , p N }
+
+denote the set of filtered pairs assigned to a domain, and let M denote the target number of pairs to retain in the same domain, where M ⩽ N . The value of M is determined with respect to the domain assignment obtained from the heuristic method. For each pair, we construct a joint textual representation by concatenating the question with its associated description. We denote the resulting text for pair pi by si.We encode each si into a dense semantic embedding xi using a pretrained embedding model, 
+
+BAAI/bge-small-en-v1.5 Xiao et al. [2024]. We then apply K-means clustering to the entire filtered set with K = M thereby partitioning the candidate pool into M semantic clusters. Let 
+
+Cc ⊆ { 1, . . . , N } denote the index set of cluster c, where c ∈ { 1, . . . , M }, and let μc denote the centroid of cluster c.Rather than deterministically selecting the nearest question to each centroid, FutureWorld samples one representative question from every cluster using a center-biased softmax distribution. For each candidate pi in cluster c, we compute its Euclidean distance to the centroid: 
+
+di = ∥xi − μc∥2 (1) We then define a cluster-specific temperature as 
+
+τc = max  std( {dj }j∈C c ), ε  (2) where std( ·) denotes the standard deviation, and ε is a small positive constant used to ensure numerical stability when the within-cluster standard deviation is extremely small. In practice, we set ε = 10 −8.We then assign sampling probability 
+
+πi = exp( −di/τ c)
+
+P 
+
+> j∈C c
+
+exp( −dj /τ c) , i ∈ C c (3) This distribution gives higher probability to question-description pairs that are closer to the cluster center, while still preserving randomness among semantically similar candidates. After performing the above selection procedure separately for each domain, we obtain the final set of retained pairs. In practice, when we consider only prediction questions whose outcomes are all expected to be resolved on a given future business day, the number of filtered pairs before the resampling stage is typically around 2047.29 9. We then set the total number of questions to be retained after the resampling stage to 500. The distributions of question domains before and after resampling are shown in Figure 1 (b) and (c), respectively. As shown in the figure, the numbers of questions across domains become more balanced after resampling. 
+
+> 8https://seed.bytedance.com/en/seed1_6
+> 9This number is computed as the average number of filtered pairs over 7 consecutive days.
+
+63.6 Prompt construction for agent prediction 
+
+After resampling, FutureWorld obtains the final set of retained prediction questions and applies a predefined prompt template to transform them into executable future prediction prompts that can be directly provided to LLM agents. Although the retained questions are all binary questions, the template reformulates them as probability estimation tasks by asking the agent to estimate the likelihood that each event will occur. This reformulation allows the agent to express uncertainty explicitly and yields a richer, more fine-grained supervision signal for learning. Although some questions are paired with supplementary descriptions in earlier stages to support filtering and resampling, these descriptions are intentionally omitted from the final prompts given to the agent, so that the task remains appropriately challenging and the agent is not given additional hints. 
+
+3.7 Agent prediction and trajectory logging 
+
+For each prediction question, FutureWorld creates an agent episode in which the model receives an executable prediction prompt and produces a probability estimate before the corresponding real-world outcome is known. In our training setup, the agent is required to perform at least one web-search action before giving its final prediction, and it may conduct multiple rounds of search and information analysis if needed. The final response must therefore be a probability in [0 , 1] , while non-probabilistic outputs are treated as invalid for training. FutureWorld records a complete prediction episode as a rollout trajectory. This stored trajectory includes the prompt, the sequence of model-generated actions, the environment observations returned after valid tool calls, such as retrieved search results and information snippets, and the final model response. In practice, multiple stochastic rollouts may be sampled for the same question. As a result, the logged trajectory serves as a fixed behavioral record of the agent’s decision process at prediction time, which is essential for learning from delayed real-world feedback. 
+
+3.8 Ground-truth retrieval and learning from delayed rewards 
+
+At regular intervals, FutureWorld attempts to retrieve the ground-truth outcomes of previously issued prediction questions. In the replay phase, the resolved outcomes are injected back into the stored prediction episodes and used to compute outcome-based rewards according to a predefined function. Questions that remain unresolved at a scheduled replay time are either left pending until later resolution or discarded from reward computation. The effective replayed trajectories are then used for RL updates, allowing the model to improve the search and reasoning behavior that produced the prediction. 
+
+4 Training Agents in FutureWorld 
+
+4.1 Daily schedule strategy 
+
+After constructing FutureWorld as a learning environment, we train three agents based on 
+
+Qwen3-4B-Instruct-2507 Team [2025], Qwen2.5-3B-Instruct Team [2024], Yang et al. [2024], and DeepSeek-R1-0528-Qwen3-8B DeepSeek-AI [2025], respectively. To maintain a high-frequency update cycle, the environment runs on a daily schedule. Specifically, at 20:00 each evening, the environment releases a batch of prediction questions whose outcomes are expected to be resolved on the following day, while simultaneously retrieving the ground-truth outcomes for the batch released on the previous evening. We fix the number of prediction questions released each day at 500. Real-world events and public reporting are not perfectly synchronized. As a result, ground truth cannot always be retrieved on time. Even when an event has already resolved, its outcome may not yet be available on the corresponding source website because of delays in data collection, statistical processing, or public release. This may occur for government or public-interest data sources, where published records can lag behind the underlying event by one or more days. Moreover, some prediction targets may be postponed or canceled. Therefore, when ground-truth retrieval is performed on the evening, some questions may still remain unresolved. Across five consecutive days 7of observation, an average of 35.65% of prediction questions do not have retrievable ground truth at the scheduled retrieval time. When ground-truth retrieval is performed not on the evening of the expected resolution day, but on the following evening instead, the proportion of questions that remain unresolved decreased to 20%. When ground truth cannot be successfully retrieved, our strategy is to discard corresponding questions and exclude them from computing rewards. This choice is simple and practical from an implemen-tation perspective, but it inevitably wastes both computation and potentially valuable supervision signal, because some of these discarded questions may become resolvable after a longer delay. How to handle such longer delayed feedback more effectively, remains an important direction for our future work. 
+
+4.2 Rollout generation 
+
+In addition to the prediction prompt prepared by FutureWorld, the system prompt also instructs the agent to issue at least one Google search action. The agent is given a lightweight Google-search interface backed by the Serper API 10 . Tool observations are provided as context for the agent’s subsequent reasoning, while being masked out from the delayed policy loss. For each question, we sample four stochastic trajectories with temperature 1.0 and top-p = 1 .0,meaning that nucleus sampling Holtzman et al. [2020] is disabled. Each trajectory records the full interaction history, including the original prompt, every search action generated by the agent, the corresponding observations returned by the search tool, and the final probability response. 
+
+4.3 Reward and replay 
+
+For a resolved question q, we define the realized event label as 
+
+zq =
+
+1, if the target event occurs ,
+
+0, otherwise . (4) For each q, the k-th sampled trajectory produces a response containing a final valid probability prediction ˆπq,k ∈ [0 , 1] . Here, k indexes the stochastic rollout among the four trajectories sampled for the same question. Given the realized label zq , the trajectory-level reward is defined as the negative Brier loss Jeen et al. [2026], Turtel et al. [2025]: 
+
+rq,k = − (ˆ πq,k − zq )2 . (5) If the response does not contain any valid probability in [0 , 1] , we assign a constant penalty -1 11 .Since valid negative Brier rewards lie in [−1, 0] , this penalty is set to the worst valid reward, thereby penalizing malformed outputs or probability values outside [0 , 1] .We optimize the policy with GRPO. For each question, we sample four trajectories that form a rollout group, and GRPO normalizes the scalar outcome rewards within that group. Tool observations serve as conditioning context for reasoning, but because they are masked from the policy loss, they do not receive direct policy-gradient credit. 
+
+4.4 Experiments 4.4.1 Implementation details 
+
+To decouple data collection, inference, answer acquisition, and model updating, we modify verl-tool [Jiang et al., 2025b] to support storing the contents of LLM rollouts on local disk. We refer to our modified framework as verl-tool-future , which we plan to release as open source in the future. All experiments are conducted on 2 Nvidia A100 GPUs. We train the policy with Verl-Tool Jiang et al. [2025a], using FSDP Zhao et al. [2023] as the distributed training backend and vLLM Kwon et al. [2023] for rollout generation. Model computation is performed in BF16 precision, with FlashAttention-2 Dao [2023] enabled. 
+
+> 10 https://serper.dev/
+> 11 In evaluation, by contrast, malformed negative Brier-score outputs receive a score of -0.25, corresponding to a probability prediction of 0.5.
+
+8day0 day1 day2 day3 day4 day5 day6 day7 day8                   
+
+> Checkpoint day
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> 0.8
+> 0.9
+> Metric value
+> Accuracy
+> day0 day1 day2 day3 day4 day5 day6 day7 day8
+> Checkpoint day
+> 0.125
+> 0.150
+> 0.175
+> 0.200
+> 0.225
+> 0.250
+> 0.275
+> 0.300
+> Brier score
+> day0 day1 day2 day3 day4 day5 day6 day7 day8
+> Checkpoint day
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> ECE (10 bins)
+> DeepSeek-0528-Qwen3-8B Qwen2.5-3B Qwen3-4B
+
+Figure 4: Prediction performance across model checkpoints saved on different days. Shaded regions indicate 95% bootstrap confidence intervals. Financial           
+
+> Markets
+> Agriculture
+> Options
+> Volatility
+> Exchange
+> Rates
+> Industry Weather
+> Logistics
+> Entertainment
+> Politics
+> 0.25 0.50 0.75 1.00
+> DeepSeek-0528-Qwen3-8B
+> Financial
+> Markets
+> Agriculture
+> Options
+> Volatility
+> Exchange
+> Rates
+> Industry Weather
+> Logistics
+> Entertainment
+> Politics
+> 0.25 0.50 0.75 1.00
+> Qwen2.5-3B
+> Financial
+> Markets
+> Agriculture
+> Options
+> Volatility
+> Exchange
+> Rates
+> Industry Weather
+> Logistics
+> Entertainment
+> Politics
+> 0.25 0.50 0.75 1.00
+> Qwen3-4B
+> day0 day9
+
+Figure 5: Prediction performance across model checkpoints saved on different days. Shaded regions indicate 95% bootstrap confidence intervals. We use the AdamW optimizer Loshchilov and Hutter [2019]. Learning rate is set to 1 × 10 −6, with weight decay 0.01 . In the replay stage (updating LLM parameters), the GRPO mini-batch size is 32 and the per-GPU micro-batch size is 2. We use one training epoch per replay run and save the updated checkpoint at the end of the run. 
+
+4.4.2 Results 
+
+After each day of training, we archive the model checkpoint from that day. After training for 8 consecutive days, we evaluate the checkpoints saved from all previous days on the same daily prediction dataset. Concretely, all 8 day’s checkpoints are tested on the same day, with each agent asked to predict a set of questions whose outcomes are expected to be realized the next day. Figure 4 summarizes the evaluation results across model checkpoints saved on different days. Fig-ure 4 reports the prediction accuracy, where each prediction is converted into a binary decision by thresholding the predicted probability at 0.5. When the predicted probability is exactly 0.5, we treat it as a positive prediction, i.e., the model is considered to predict that the specified event will occur in the future. Accuracy generally improves over the consecutive training days. Figure 4 also reports the Brier score, which directly evaluates the quality of the probabilistic predictions. For the Brier score, lower values indicate better predictions. Furthermore, We use 10 equal-width probability bins to compute expected calibration error (ECE) Guo et al. [2017]. ECE also decreases gradually over time. All these results indicate that RL training in FutureWorld can improve agents’ ability to predict future events. To further examine where the improvements come from, Figure 5 provides a domain-wise comparison between the initial checkpoint and the checkpoint after 8 days of training. The Figure shows that the day8 checkpoints generally outperform the day0 checkpoints across most domains. These results 9day0 day1 day2 day3 day4           
+
+> Checkpoint day
+> 0.45
+> 0.50
+> 0.55
+> 0.60
+> 0.65
+> Metric value
+> Accuracy
+> day0 day1 day2 day3 day4
+> Checkpoint day
+> 0.22
+> 0.24
+> 0.26
+> 0.28
+> 0.30
+> 0.32
+> 0.34
+> Brier score
+> day0 day1 day2 day3 day4
+> Checkpoint day
+> 0.075
+> 0.100
+> 0.125
+> 0.150
+> 0.175
+> 0.200
+> 0.225
+> 0.250
+> ECE (10 bins)
+> Qwen2.5-3B scale eval metrics, run 2026-04-28
+> num=100 num=500 num=1000
+
+Figure 6: Effect of scaling the number of daily prediction questions on Qwen2.5-3B-Instruct 
+
+training. Each curve corresponds to a different daily question budget. suggest that RL training in FutureWorld does not merely improve aggregate performance, but also leads to broader gains across diverse real-world domains. We also study the effect of scaling the number of daily prediction questions on model training. Specifically, we select Qwen2.5-3B-Instruct for this study and train it continuously over four consecutive days. To ensure a consistent comparison, all checkpoints are evaluated on prediction questions whose outcomes are expected to be realized on the same day. Figure 6 reports the results, which suggest a positive scaling trend, with agent performance generally improving as the number of prediction questions increases. 
+
+5 FutureWorld daily benchmark 
+
+5.1 Benchmark design 
+
+Beyond its role as a training environment, FutureWorld also supports a live benchmark for evaluating state-of-the-art agents on future prediction. This benchmark is constructed from the data collected by our environment. Compared with the dataset used for RL training, it features both greater diversity in question formats and higher overall difficulty. For practical cost reasons, we limit the benchmark to at most 50 live prediction questions per day. We release a subset of our historical data on Hugging Face 12 .The benchmark contains four question types. The first is binary choice questions, each with exactly one correct option, with no more than 5 such questions per day. The second is simple multiple choice questions, where there may be one or multiple correct options and the number of options is 3 or 4, with no more than 10 such questions per day. The third is difficult multiple choice questions, where there may be one or multiple correct options and the total number of options is greater than 4 but no more than 26, with no more than 15 such questions per day. The fourth is numeric prediction questions, which ask the model to predict a specific value, with no more than 20 such questions per day. Table 1 provides representative examples for each question type. Each day at 20:00, the benchmark is refreshed with a new batch of prediction questions whose answers are expected to be revealed on the following day. Because the benchmark is used only for evaluation, we allow a longer delay before answer collection. Specifically, we retrieve the ground-truth outcomes for the batch of questions released two evenings earlier. This design increases the fraction of questions that can be resolved. Since many real-world events and information sources are governed by recurring weekly and holiday-related schedules, the benchmark may exhibit periodic distribution shifts. For instance, some types of information are unlikely to be released when markets are closed or public institutions are not operating, while other events such as sports competitions or entertainment programs are more likely to occur on weekends. Consequently, the composition of benchmark questions can shift abruptly across some calendar boundaries. For evaluation, we use different scoring rules for different question types. For binary choice, simple multiple choice, and difficult multiple choice questions, the gold answer and the model prediction are 
+
+> 12
+
+https://huggingface.co/datasets/PredictingFuture/FutureWorld 
+
+10 Table 1: Examples of the four question types in the FutureWorld daily benchmark. 
+
+Question type Example 
+
+Binary choice Will Trump visit North Korea by April 30? A. Yes B. No Simple multiple choice Shimizu S-Pulse vs. V-Varen Nagasaki A. Shimizu S-Pulse B. Draw (Shimizu S-Pulse vs. V-Varen Nagasaki) C. V-Varen Nagasaki Difficult multiple choice What will Google say during their next earnings call? A. Banana B. Translate / Translation C. Autonomous / Autonomously D. Dividend E. CAPTCHA / reCAPTCHA F. Flash / Flash-Lite G. Lens H. Google Maps I. NVIDIA J. Maps K. Circle to Search L. Gemini Live M. Token N. Anthropic O. Pixel 10 / Pixel 10a P. Alphabet Q. YouTube R. TikTok S. Cutting-edge T. ChatGPT / OpenAI U. Advertising / Advertisement V. Find the Look / Virtual Try-On Numeric prediction On 2026-04-29 (UTC+8), what will Internal Three-Way Crossbred Hog hog price be, in CNY per kilogram? each mapped to a binary vector over all candidate options, and the instance-level score is computed as the F1 score between the two vectors. In the binary choice setting, any prediction that selects more than one option is treated as invalid. For numeric prediction questions, we use a bounded score based on the squared prediction error, where the error is normalized by the historical standard deviation of the target variable. This normalization accounts for differences in scale and volatility across numeric questions. After scoring individual instances, we compute the mean score for each question type separately, and the final overall score is obtained by taking the equally weighted average of the four type-level means. 
+
+5.2 Scoring rules 
+
+We use type-specific scoring rules for different question formats. Only resolved questions with valid ground-truth answers are scored. If a question remains unresolved, it is excluded from scoring and statistics. For binary choice, simple multiple choice, and difficult multiple choice questions, both the gold answer and the model prediction are mapped to binary indicator vectors over the candidate options. Suppose a question has m options. We denote the gold vector by y ∈ { 0, 1}m and the prediction 11 vector by ˆy ∈ { 0, 1}m, where 
+
+yj =
+
+1, if option j is a correct answer ,
+
+0, otherwise ,
+
+ˆyj =
+
+1, if option j is selected by the model ,
+
+0, otherwise .
+
+(6) The question-level score is then computed as the option-level F1 score 
+
+sF1 (y, ˆy) = 2 y⊤ ˆy
+
+∥y∥1 + ∥ˆy∥1
+
+. (7) For binary choice questions, the prediction must contain exactly one selected option. Any prediction that selects more than one option is treated as invalid and assigned an F1 score of 0. For numeric prediction questions, we evaluate prediction accuracy relative to the recent variability of the prediction target. Let ˆv denote the predicted value, and let 
+
+V = {v1, v 2, . . . , v 8} (8) denote eight consecutive historical values associated with the prediction target, where v8 = v is the resolved true value on the target date, and v1, . . . , v 7 are the values from the seven most recent data release dates preceding that target date. We define the score as 
+
+snum = max 0, 1 −
+
+ ˆv − v
+
+3σ(V) + ε
+
+2!
+
+, (9) where σ(V) denotes the sample standard deviation of V, and ε is a small number introduced for numerical stability, defined as 
+
+ε =
+
+(10 −8, if μ(V) = 0 ,
+
+10 −8μ(V), otherwise , (10) with μ(V) denoting the mean of V. This score is bounded in [0 , 1] and drops as the prediction moves farther from the true value, but it drops more slowly for targets that naturally fluctuate more. After computing question-level scores, we average them separately within each question type. Let 
+
+Sbin , Ssmc , Sdmc , and Snum denote the mean scores for binary choice, simple multiple choice, difficult multiple choice, and numeric prediction questions, respectively. The final overall score 
+
+Soverall is then computed as the average over all question types with mean scores. 
+
+5.3 Evaluation of frontier agents 
+
+We evaluate several frontier agents 13 Qwen Team [2025] with live web search capabilities on four consecutive days of this daily benchmark, and report the four-day average results in Table 2. On average, qwen/qwen3-max-thinking achieves the best overall performance. From the performance of different models across question types, it is evident that binary choice and simple multiple choice questions are very easy, while difficult multiple choice and numeric prediction questions are considerably more difficult. Figure 7 further shows the daily overall score achieved by each agent over the four consecutive days. The figure shows that all agents exhibit a substantial performance drop on the third day, providing empirical evidence for the abrupt distribution shifts that can arise in this benchmark. 
+
+5.4 Evaluation of trained agents 
+
+We further evaluate our trained agents on a selected day using the checkpoints saved after eight days of training, and compare their performance with that of the corresponding untrained models. For this comparison, we use GPT-5.5 to select a set of relatively simple prediction questions, because more   
+
+> 13 https://docs.z.ai/guides/llm/glm-5.1 ,https://grok.com/,https://ai.google.dev/gemini-api/ docs/models/gemini-3.1-pro-preview ,https://www.anthropic.com/news/claude-opus-4-6
+
+12 Table 2: Average performance of several frontier agents on the FutureWorld daily benchmark over four consecutive days. The best results are bold-typed and the second best ones are underlined. 
+
+Agents Sbin Ssmc Sdmc Snum Soverall 
+
+x-ai/grok-4.20 70.00 36.70 6.33 15.24 32.07 
+
+z-ai/glm-5.1 71.25 45.71 2.79 15.24 33.75 
+
+openai/gpt-5.4 81.25 40.31 20.78 5.17 36.88 
+
+anthropic/claude-opus-4.6 63.75 47.14 20.28 16.84 37.00 
+
+google/gemini-3.1-pro-preview 81.25 42.77 7.95 18.84 37.70 
+
+qwen/qwen3-max-thinking 81.25 47.38 15.73 11.70 39.01 day1 day2 day3 day4      
+
+> Date
+> 0
+> 10
+> 20
+> 30
+> 40
+> 50
+> Overall score (%)
+> Qwen3 Max Gemini 3.1 Pro Claude Opus 4.6 GPT-5.4 GLM-5.1 Grok 4.20
+
+Figure 7: Daily overall scores of frontier agents on the FutureWorld daily benchmark over four consecutive days. difficult questions are often challenging for both trained and untrained models and therefore make the performance differences less visible. The results are reported in Table 3. As shown in the table, most agents achieve substantial performance gains, even though the four question types in our daily benchmark are not seen during RL. This suggests that the RL process generalizes beyond the training question format. It is also worth noting that the completely untrained Qwen2.5-3B-Instruct 
+
+receives a score of 0. A manual inspection of its outputs shows that, for the vast majority of questions, the model fails to strictly follow the prediction prompt and the required output format. Table 3: Performance of trained agents and their corresponding untrained models on one selected day of the FutureWorld daily benchmark. 
+
+Agents Sbin Ssmc Sdmc Snum Soverall 
+
+DeepSeek-R1-0528-Qwen3-8B (day0) 40.00 14.29 0.00 0.00 13.57 
+
+DeepSeek-R1-0528-Qwen3-8B (day8) 60.00 35.71 42.41 0.00 34.53 
+
+Qwen2.5-3B-Instruct (day0) 0.00 0.00 0.00 0.00 0.00 
+
+Qwen2.5-3B-Instruct (day8) 80.00 71.43 13.59 9.86 43.72 
+
+Qwen3-4B-Instruct-2507 (day0) 100.00 57.14 52.78 9.94 54.96 
+
+Qwen3-4B-Instruct-2507 (day8) 80.00 85.71 32.41 10.18 52.08 
+
+13 6 Conclusion 
+
+We introduce FutureWorld, a live environment for training predictive agents with real-world outcome rewards. Unlike prior works that rely on static collections of resolved questions or proxy process-based rewards, FutureWorld keeps the prediction stream live, places agentic search and reasoning inside the training loop, and learns directly from realized future outcomes. Our experiments show that this delayed real-world feedback can serve as an effective training signal, leading to improved prediction performance over successive days, while the benchmark built on top of FutureWorld also provides a practical testbed for evaluating frontier agents on live prediction tasks. We hope FutureWorld can serve as a useful step toward agent systems that continually improve by making predictions, observing outcomes, and adapting to an evolving real world. 
+
+Acknowledgments and Disclosure of Funding 
+
+This work is supported by the Zhongguancun Academy, (Grant No.s C20250210). 
+
+References 
+
+Kevin Chen, Marco Cusumano-Towner, Brody Huval, Aleksei Petrenko, Jackson Hamburger, Vladlen Koltun, and Philipp Krähenbühl. Reinforcement learning for long-horizon interactive llm agents, 2025. URL https://arxiv.org/abs/2502.01600 .Tri Dao. Flashattention-2: Faster attention with better parallelism and work partitioning, 2023. URL 
+
+https://arxiv.org/abs/2307.08691 .DeepSeek-AI. Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning, 2025. URL https://arxiv.org/abs/2501.12948 .Alexandre Drouin, Maxime Gasse, Massimo Caccia, Issam H. Laradji, Manuel Del Verme, Tom Marty, Léo Boisvert, Megh Thakkar, Quentin Cappart, David Vazquez, Nicolas Chapados, and Alexandre Lacoste. Workarena: How capable are web agents at solving common knowledge work tasks?, 2024. URL https://arxiv.org/abs/2403.07718 .Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. On calibration of modern neural networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning , volume 70 of Proceedings of Machine Learning Research , pages 1321–1330. PMLR, 06–11 Aug 2017. URL https://proceedings.mlr.press/v70/guo17a. html .Matthew Hausknecht, Prithviraj Ammanabrolu, Marc-Alexandre Côté, and Xingdi Yuan. Interactive fiction games: A colossal adventure. Proceedings of the AAAI Conference on Artificial Intelligence ,34(05):7903–7910, Apr. 2020. doi: 10.1609/aaai.v34i05.6297. URL https://ojs.aaai.org/ index.php/AAAI/article/view/6297 .Ari Holtzman, Jan Buys, Li Du, Maxwell Forbes, and Yejin Choi. The curious case of neural text degeneration, 2020. URL https://arxiv.org/abs/1904.09751 .Scott Jeen, Matthew Aitchison, and Mantic. Training llms to predict world events. Thinking Machines Lab: News , 2026. https://thinkingmachines.ai/news/training-llms-to-predict-world-events/. Dongfu Jiang, Yi Lu, Zhuofeng Li, Zhiheng Lyu, Ping Nie, Haozhe Wang, Alex Su, Hui Chen, Kai Zou, Chao Du, et al. Verltool: Towards holistic agentic reinforcement learning with tool use. arXiv preprint arXiv:2509.01055 , 2025a. Dongfu Jiang, Yi Lu, Zhuofeng Li, Zhiheng Lyu, Ping Nie, Haozhe Wang, Alex Su, Hui Chen, Kai Zou, Chao Du, et al. Verltool: Towards holistic agentic reinforcement learning with tool use. arXiv preprint arXiv:2509.01055 , 2025b. Woojeong Jin, Rahul Khanna, Suji Kim, Dong-Ho Lee, Fred Morstatter, Aram Galstyan, and Xiang Ren. Forecastqa: A question answering challenge for event forecasting with temporal text data, 2021. URL https://arxiv.org/abs/2005.00792 .14 Ezra Karger, Houtan Bastani, Chen Yueh-Han, Zachary Jacobs, Danny Halawi, Fred Zhang, and Philip E. Tetlock. Forecastbench: A dynamic benchmark of ai forecasting capabilities, 2025. URL 
+
+https://arxiv.org/abs/2409.19839 .Jing Yu Koh, Robert Lo, Lawrence Jang, Vikram Duvvur, Ming Lim, Po-Yu Huang, Graham Neubig, Shuyan Zhou, Russ Salakhutdinov, and Daniel Fried. VisualWebArena: Evaluating multimodal agents on realistic visual web tasks. In Lun-Wei Ku, Andre Martins, and Vivek Srikumar, editors, 
+
+Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 881–905, Bangkok, Thailand, August 2024. Association for Computational Linguistics. doi: 10.18653/v1/2024.acl-long.50. URL https://aclanthology.org/2024. acl-long.50/ .Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph E. Gonzalez, Hao Zhang, and Ion Stoica. Efficient memory management for large language model serving with pagedattention. In Proceedings of the ACM SIGOPS 29th Symposium on Operating Systems Principles , 2023. Jiashuo Liu, Siyuan Chen, Zaiyuan Wang, Zhiyuan Zeng, Jiacheng Guo, Liang Hu, Lingyue Yin, Suozhi Huang, Wenxin Hao, Yang Yang, Zerui Cheng, Zixin Yao, Lingyue Yin, Haoxin Liu, Jiayi Cheng, Yuzhen Li, Zezhong Ma, Bingjie Wang, Bingsen Qiu, Xiao Liu, Zeyang Zhang, Zijian Liu, Jinpeng Wang, Mingren Yin, Tianci He, Yali Liao, Yixiao Tian, Zhenwei Zhu, Anqi Dai, Ge Zhang, Jingkai Liu, Kaiyuan Zhang, Wenlong Wu, Xiang Gao, Xinjie Chen, Zhixin Yao, Zhoufutu Wen, B. Aditya Prakash, Jose Blanchet, Mengdi Wang, Nian Si, and Wenhao Huang. Futurex-pro: Extending future prediction to high-value vertical domains, 2026. URL 
+
+https://arxiv.org/abs/2601.12259 .Ilya Loshchilov and Frank Hutter. Decoupled weight decay regularization, 2019. URL https: //arxiv.org/abs/1711.05101 .Bodhisattwa Prasad Majumder, Bhavana Dalvi Mishra, Peter Jansen, Oyvind Tafjord, Niket Tandon, Li Zhang, Chris Callison-Burch, and Peter Clark. Clin: A continually learning language agent for rapid task adaptation and generalization, 2023. URL https://arxiv.org/abs/2310.10134 .Metaculus. Ai forecasting benchmark series q2 (2025). Metaculus, 2025. URL https://www. metaculus.com/aib/2025/q2/ .Qwen Team. Qwen3-max: Just scale it, September 2025. Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, Mingchuan Zhang, Y. K. Li, Y. Wu, and Daya Guo. Deepseekmath: Pushing the limits of mathemat-ical reasoning in open language models, 2024. URL https://arxiv.org/abs/2402.03300 .Mohit Shridhar, Xingdi Yuan, Marc-Alexandre Côté, Yonatan Bisk, Adam Trischler, and Matthew Hausknecht. Alfworld: Aligning text and embodied environments for interactive learning, 2021. URL https://arxiv.org/abs/2010.03768 .Shiqian Su, Sen Xing, Xuan Dong, Muyan Zhong, Bin Wang, Xizhou Zhu, Yuntao Chen, Wenhai Wang, Yue Deng, Pengxiang Zhu, Ziyuan Liu, Tiantong Li, Jiaheng Yu, Zhe Chen, Lidong Bing, and Jifeng Dai. Miroflow: Towards high-performance and robust open-source agent framework for general deep research tasks, 2026. URL https://arxiv.org/abs/2602.22808 .Zhengwei Tao, Zhi Jin, Bincheng Li, Xiaoying Bai, Haiyan Zhao, Chengfeng Dou, Xiancai Chen, Jia Li, Linyu Li, and Chongyang Tao. Prophet: An inferable future forecasting benchmark with causal intervened likelihood estimation, 2025. URL https://arxiv.org/abs/2504.01509 .Qwen Team. Qwen2.5: A party of foundation models, September 2024. URL https://qwenlm. github.io/blog/qwen2.5/ .Qwen Team. Qwen3 technical report, 2025. URL https://arxiv.org/abs/2505.09388 .Harsh Trivedi, Tushar Khot, Mareike Hartmann, Ruskin Manku, Vinty Dong, Edward Li, Shashank Gupta, Ashish Sabharwal, and Niranjan Balasubramanian. Appworld: A controllable world of apps and people for benchmarking interactive coding agents, 2024. URL https://arxiv.org/ abs/2407.18901 .15 Benjamin Turtel, Danny Franklin, Kris Skotheim, Luke Hewitt, and Philipp Schoenegger. Outcome-based reinforcement learning to predict the future, 2025. URL https://arxiv.org/abs/2505. 17989 .UniPat AI. Echo: Towards general ai prediction, 2026. URL https://unipat.ai/blog/Echo .Ruoyao Wang, Peter Jansen, Marc-Alexandre Côté, and Prithviraj Ammanabrolu. Scienceworld: Is your agent smarter than a 5th grader?, 2022. URL https://arxiv.org/abs/2203.07540 .Shitao Xiao, Zheng Liu, Peitian Zhang, Niklas Muennighoff, Defu Lian, and Jian-Yun Nie. C-pack: Packed resources for general chinese embeddings. In Proceedings of the 47th International ACM SI-GIR Conference on Research and Development in Information Retrieval , SIGIR ’24, page 641–649, New York, NY, USA, 2024. Association for Computing Machinery. ISBN 9798400704314. doi: 10.1145/3626772.3657878. URL https://doi.org/10.1145/3626772.3657878 .An Yang, Baosong Yang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Zhou, Chengpeng Li, Chengyuan Li, Dayiheng Liu, Fei Huang, Guanting Dong, Haoran Wei, Huan Lin, Jialong Tang, Jialin Wang, Jian Yang, Jianhong Tu, Jianwei Zhang, Jianxin Ma, Jin Xu, Jingren Zhou, Jinze Bai, Jinzheng He, Junyang Lin, Kai Dang, Keming Lu, Keqin Chen, Kexin Yang, Mei Li, Mingfeng Xue, Na Ni, Pei Zhang, Peng Wang, Ru Peng, Rui Men, Ruize Gao, Runji Lin, Shijie Wang, Shuai Bai, Sinan Tan, Tianhang Zhu, Tianhao Li, Tianyu Liu, Wenbin Ge, Xiaodong Deng, Xiaohuan Zhou, Xingzhang Ren, Xinyu Zhang, Xipin Wei, Xuancheng Ren, Yang Fan, Yang Yao, Yichang Zhang, Yu Wan, Yunfei Chu, Yuqiong Liu, Zeyu Cui, Zhenru Zhang, and Zhihao Fan. Qwen2 technical report. arXiv preprint arXiv:2407.10671 , 2024. Shunyu Yao, Howard Chen, John Yang, and Karthik Narasimhan. Webshop: Towards scalable real-world web interaction with grounded language agents, 2023. URL https://arxiv.org/ abs/2207.01206 .Zhiyuan Zeng, Jiashuo Liu, Siyuan Chen, Tianci He, Yali Liao, Yixiao Tian, Jinpeng Wang, Zaiyuan Wang, Yang Yang, Lingyue Yin, Mingren Yin, Zhenwei Zhu, Tianle Cai, Zehui Chen, Jiecao Chen, Yantao Du, Xiang Gao, Jiacheng Guo, Liang Hu, Jianpeng Jiao, Xiangsheng Li, Jingkai Liu, Shuang Ni, Zhoufutu Wen, Ge Zhang, Kaiyuan Zhang, Xin Zhou, Jose Blanchet, Xipeng Qiu, Mengdi Wang, and Wenhao Huang. Futurex: An advanced live benchmark for llm agents in future prediction, 2025. URL https://arxiv.org/abs/2508.11987 .Yanli Zhao, Andrew Gu, Rohan Varma, Liang Luo, Chien-Chin Huang, Min Xu, Less Wright, Hamid Shojanazeri, Myle Ott, Sam Shleifer, Alban Desmaison, Can Balioglu, Pritam Damania, Bernard Nguyen, Geeta Chauhan, Yuchen Hao, Ajit Mathews, and Shen Li. Pytorch fsdp: Experiences on scaling fully sharded data parallel, 2023. URL https://arxiv.org/abs/2304.11277 .Shuyan Zhou, Frank F. Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar, Xianyi Cheng, Tianyue Ou, Yonatan Bisk, Daniel Fried, Uri Alon, and Graham Neubig. Webarena: A realistic web environment for building autonomous agents, 2024. URL https://arxiv.org/abs/2307. 13854 .Andy Zou, Tristan Xiao, Ryan Jia, Joe Kwon, Mantas Mazeika, Richard Li, Dawn Song, Jacob Steinhardt, Owain Evans, and Dan Hendrycks. Forecasting future world events with neural networks, 2022. URL https://arxiv.org/abs/2206.15474 .16
