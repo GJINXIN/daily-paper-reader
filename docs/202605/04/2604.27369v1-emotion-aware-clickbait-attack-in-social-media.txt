@@ -1,0 +1,355 @@
+Title: Emotion-Aware Clickbait Attack in Social Media
+
+URL Source: https://arxiv.org/pdf/2604.27369v1
+
+Published Time: Fri, 01 May 2026 00:26:34 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# Emotion-Aware Clickbait Attack in Social Media 
+
+# Syed Mhamudul Hasan 
+
+Southern Illinois University Carbondale, IL, USA syedmhamudul.hasan@siu.edu 
+
+# Mohd. Farhan Israk Soumik 
+
+Southern Illinois University Carbondale, IL, USA mohdfarhanisrak.soumik@siu.edu 
+
+# Abdur R. Shahid 
+
+Southern Illinois University Carbondale, IL, USA shahid@cs.siu.edu 
+
+## Abstract 
+
+Clickbait is characterized by disproportionately high emotional intensity relative to informational content, often reinforced by specific structural patterns. However, current research considers clickbait as a static textual phenomenon characterized by linguis-tic patterns and structural cues. Additionally, existing detection systems primarily rely on surface-level features of clickbait. This paper introduces an emotion-aware clickbait generation attack, where stylistic transformations are used to optimize emotional impact. We propose an emotion-aware framework based on the Valence–Arousal–Dominance (VAD) space to model the emotional dynamics underlying clickbait generation for optimal user engage-ment. To simulate realistic attack scenarios, we align clickbait head-lines with semantically similar social media posts using Sentence-BERT and generate multiple stylistic rewrites via Large Language Models (LLMs). Building on this, we define a Curiosity Gap (CG) function that computes clickbait’s headline variation to the cur-rent post to quantify how emotional activation will contribute to user curiosity and evade the existing system found on social media. Experimental results demonstrate that emotion-aware stylization significantly degrades the performance of state-of-the-art classi-fiers, leading to misclassification rates of up to 2.58% to 30.63% on the base system. 
+
+## CCS Concepts 
+
+• Computing Methodologies → Natural Language Genera-tion ; • Information Systems → Social Networks ; • Security and Privacy → Social Engineering Attacks .
+
+## Keywords 
+
+Large Language Model (LLM), Clickbait, Prompt Engineering, Stylis-tic Rewrite 
+
+ACM Reference Format: 
+
+Syed Mhamudul Hasan, Mohd. Farhan Israk Soumik, and Abdur R. Shahid. 2018. Emotion-Aware Clickbait Attack in Social Media. In Proceedings of Make sure to enter the correct conference title from your rights confirmation email (Conference acronym ’XX). ACM, New York, NY, USA, 8 pages. https: //doi.org/XXXXXXX.XXXXXXX  
+
+> Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.
+> Conference acronym ’XX, Woodstock, NY
+> ©2018 Copyright held by the owner/author(s). Publication rights licensed to ACM. ACM ISBN 978-1-4503-XXXX-X/2018/06 https://doi.org/XXXXXXX.XXXXXXX
+
+## 1 Introduction 
+
+Clickbait has become a dominant mechanism for maximizing en-gagement in digital media by exploiting user attention through emotionally charged and information-incomplete content [ 13 , 15 ]. Unlike traditional misinformation, which presents factually false content, clickbaiting operates through a more subtle mechanism: using eye-catching but often misleading headlines or descriptions to encourage users to click on content, thereby generating ad revenue and increasing click-through rates [ 27 ]. This content tends to focus on sensational, personalized, and entertaining topics, while non-clickbait content is more aligned with public affairs and informative news. Clickbait shares similarities with misleading content but dif-fers in that it manipulates attention primarily through exaggeration and curiosity rather than factual falsification [26]. In emerging agentic media, such as multi-agent social platforms named Moltbook, clickbait evolves from a static content property into a dynamic strategy, where agents adaptively generate emo-tionally optimized content to influence interaction and maximize engagement. In Moltbook, an agent can post multiple automated clickbait with the contextual understanding with the post. An agent deliberately generates emotionally manipulative, incomplete, or ex-aggerated content to influence other agents’ behavior and maximize engagement. This introduces risks such as coordinated emotional manipulation, attention hijacking, and large-scale amplification of misleading content. Social media platforms have implemented a range of strategies to address clickbait and misinformation. For example, flagging tweets as originating from bot accounts [ 2 ] or as containing misinforma-tion has been shown to reduce users’ positive attitudes toward such content, although this effect is weaker among individuals who use social media frequently [ 11 ]. Similarly, LLMs have demonstrated substantial capabilities in detecting clickbait contents [ 21 ]. Through reinforcement learning with human feedback, LLMs can increase the effectiveness of its detection system [10]. Despite significant progress in clickbait detection and mitiga-tion by LLM, several important challenges remain [ 4, 29 ]. Existing approaches to clickbait detection primarily focus on surface-level linguistic features, such as lexical patterns and headline structures. However, these methods overlook a critical dimension: the role of emotional manipulation in driving engagement. Prior studies show that clickbait relies heavily on curiosity gaps, exaggeration, and emotional triggers, yet these factors are rarely modeled explicitly. In this study, we propose an emotion-aware formulation of click-bait, where clickbait is modeled not only as a textual artifact but as an emotion-driven behavioral strategy that shapes interaction dynamics over time. We use a strategic form of digital content that leverages curiosity gaps, emotional stimulation, exaggeration, and incomplete information to maximize user engagement (e.g., clicks,     
+
+> arXiv:2604.27369v1 [cs.CL] 30 Apr 2026 Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Hasan et al. Valence 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Arousal
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> ADM
+> AMU
+> ANG
+> ANN
+> APR
+> CAR
+> CON
+> CUR
+> DES
+> DSP
+> DSA
+> DIS
+> EMB
+> EXC
+> FEA
+> GRT
+> GRI
+> JOY LOV
+> NER
+> OPT
+> PRI
+> REA
+> REL
+> REM SAD
+> SUR
+> NEU
+> Dominance
+
+Figure 1: Emotion mapping in Valence-Arousal-Dominance (VAD) Framework 
+
+views, interactions), often at the cost of content quality or accu-racy [ 14 ]. The headline plays a pivotal role in clickbait strategy, as it is designed to capture attention and provoke curiosity, encour-aging readers to engage with the full article or share it on social media [6, 30]. This work addresses the following research questions for this proposed attack based on stylistic transfer of clickbait: 
+
+• RQ1: How to build emotion aware clickbaiting? 
+
+• RQ2: How many different ways can we apply the emotion to create clickbait through the VAD space? 
+
+## 2 Background 2.1 Stylistic Transformation 
+
+Stylistic transformation refers to modifying the expression of a mes-sage while preserving its original meaning [ 23 ]. LLMs can perform stylistic transformation through prompt engineering by rewriting text into different tones while preserving semantic meaning. 
+
+## 2.2 Social Amplification Attack 
+
+Social amplification attack is a strategy in which an adversary generates emotionally optimized clickbait content to amplify user engagement and influence interaction dynamics in social networks by stylistic transformation. This attack can be devised by modern social media platforms, where both post titles and content are pub-licly accessible. An attacker can leverage this accessible information to analyze the underlying semantic and emotional structure of a post and strategically craft a response that maximizes its impact. Specifically, the attacker increases the curiosity gap by exploiting both the title and the post content, selectively emphasizing emotion-ally activating and informationally incomplete aspects. To ensure contextual relevance, the attacker identifies appropriate clickbait content through semantic similarity, aligning the generated text with the target post. This alignment is performed in the embed-ding space, enabling the attacker to inject semantically coherent yet emotionally amplified content into the comment section of the original post. As a result, the injected content appears contextually relevant while simultaneously increasing emotional activation and reducing informational closure, thereby amplifying user attention and interaction. This behavior transforms clickbait from a passive content property into an active amplification mechanism within social networks. 
+
+## 2.3 Related Work 
+
+The proliferation of clickbait on digital platforms has become a major issue that disrupts accurate reporting and erodes public con-fidence in online content [ 20 , 28 ]. Social media platforms, with their emphasis on content virality and engagement metrics, have created an ideal environment for clickbaiting. The economic in-centives underlying clickbait creation are particularly important to understand: online publishers exploit attractive news headlines as a way to create advertisements, with spammers capitalizing on the attention-grabbing nature of sensationalized content [ 3 ]. This practice, while profitable, compromises the credibility of digital media and undermines informed public discourse [9]. To detect and understand the nature of clickbait, Mackey et al. [ 19 ] proposed a novel framework by focusing on emotional ma-nipulation rather than just linguistic patterns using the Valence Arousal Dominance (VAD) emotion space, where effective click-bait typically combines high emotional intensity (arousal), strong positive or negative sentiment (valence), and low informational clarity (dominance) to create a curiosity gap. This curiosity gap explains why users feel compelled to click. The study further in-tegrates semantic similarity techniques to ensure that generated clickbait remains relevant to the original content while maximizing emotional impact. Rony et al. [ 24 ] showed that the clickbait posts generally generate higher user engagement, such as more reactions, shares, and comments, although they may reduce trust and credi-bility over time. To detect such text, Naeem et al. [ 22 ] proposed a deep learning framework for clickbait detection on social media by combining linguistic feature analysis with a modified LSTM model, showing that clickbait can be effectively identified through natural language cues such as curiosity gaps, pronoun usage, and sensa-tional phrasing. Liu et al. [ 17 ] also proposed an emotion-aware framework for fake news detection that integrates textual content, emotional signals, and propagation structure within a unified graph-based model. Despite its strong performance, the paper primarily focuses on detection of fake news after it has been generated and propagated, rather than modeling how emotionally manipulative content is actively created or injected into social networks. Addi-tionally, the framework assumes static propagation structures and does not fully address dynamic, real-time interaction scenarios or semantic alignment between injected content and existing posts. These limitations suggest a gap in understanding emotion-driven content generation as an active amplification mechanism, which this work addresses by framing clickbait as a social amplification at-tack using semantic similarity and curiosity gap modeling. Further, Emotion-Aware Clickbait Attack in Social Media Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+Kaushal et al. [ 16 ] showed that clickbait headlines attract clicks but reduce news credibility and are influenced by user traits like age and curiosity. However, there is a gap of modeling clickbait as an emotion-driven, context-aware, and adversarial generation process rather than just studying its effects. Existing work [ 25 ] also explained clickbait as a linguistic mecha-nism that creates curiosity gaps, but it fails to model clickbait as an emotion-driven, context-aware, and adversarial generation process within social interactions in digital media. 
+
+Contribution. 
+
+In this paper, we aim to understand clickbait in modern social networks by introducing a novel formulation of clickbait. We define a social amplification attack as a strategy in which an adversary generates emotionally optimized clickbait content to amplify user engagement and influence interaction dynamics in social networks. This framework defines a Curiosity Gap (CG) function to formally measure how emotional activation, infor-mational incompleteness, and sentiment jointly drive user curiosity and interaction. Finally, we frame click-bait generation as a social amplification attack, where an adversary generates emotionally optimized and semanti-cally aligned content to influence interaction dynamics. To support this formulation, we incorporate a semantic similarity–based alignment strategy that pairs gener-ated clickbait with relevant social media posts, ensuring contextual realism in adversarial injection scenarios. 
+
+## 3 Attack Model 
+
+Assumptions. We assume that the attacker operates under a black-box setting with no access to internal platform ranking or moderation mechanisms. The attack relies solely on publicly avail-able textual information such as posts and comments. We also consider a social media environment where user-generated content, including post titles and associated text, is publicly accessible. These posts serve as the primary contextual signals for user interaction and engagement. We consider an adversary whose objective is to maximize user engagement by generating emotionally optimized clickbait content. The adversary does not modify the original post but operates by injecting clickbait content (e.g., comments) into the discussion thread or publish clickbait content on similar discussing community. 
+
+Adversary Capabilities. The attacker has access to publicly available post titles and content, which are used to infer semantic and emotional context. Leveraging this information, the attacker can analyze the post to identify emotionally salient and information-ally incomplete aspects. Then, he generates clickbait-style content that increases the curiosity gap, and compute semantic similarity between candidate clickbait texts and the target post to ensure contextual alignment. 
+
+Attack Strategy. Given a target post, the attacker generates a clickbait or select suitable text such that it is similar to post. This is achieved by maximizing semantic similarity in embedding space. thereafter, the attacker applies the curiosity gap in that text and inject the generated content into the comment section of the post. 
+
+Adversary Goal. The goal of the attacker is to maximize atten-tion and interaction e.g., clicks, replies, or engagement by increasing the curiosity gap and emotional activation of users while maintain-ing sufficient semantic consistency to avoid detection. The attacker also selectively aligns clickbait with semantically relevant posts and injects it into ongoing discussions, increasing the curiosity gap and emotional activation of users, thereby maximizing attention and interaction. 
+
+## 4 Methodology 4.1 Curiosity Gap 
+
+Clickbait works by leveraging a psychological concept known as the Curiosity Gap [ 7]. The clickbait headlines attract users by creat-ing an information gap through specific linguistic features such as pronouns and superlatives, which trigger curiosity and exploit hu-man cognitive tendencies to seek relevant information, as modeled using relevance theory. 
+
+## 5 Analysis in VAD Space 
+
+To analyze the emotional structure of clickbait, we define the Cu-riosity Gap (𝐶𝐺 ) in the Valence Arousal Dominance (VAD) space. Let a headline ℎ be represented by a VAD vector where 𝑉 ℎ denotes valence, 𝐴 ℎ denotes arousal, and 𝐷 ℎ denotes dominance, then we formalize 
+
+𝑣 ℎ = (𝑉 ℎ, 𝐴 ℎ, 𝐷 ℎ ), 𝑉 ℎ, 𝐴 ℎ, 𝐷 ℎ ∈ [ 0, 1],
+
+The proposed score represents a continuous measure of a head-line’s curiosity-inducing potential where: 
+
+• high 𝐴 ℎ increases attentional activation, 
+
+• low 𝐷 ℎ increases ambiguity or lack of closure, 
+
+• high 𝑉 ℎ reinforces engagement through positive emotional framing. We treat the post emotion as the affective ground truth of the un-derlying content, and evaluate whether stylized headline rewrites amplify curiosity beyond the post’s emotional baseline while pre-serving semantic consistency. Let 𝑝 denote the original post and let 𝑐 (𝑠 ) denote a clickbait-stylized comment under style 𝑠 . We map each text into the VAD space using 
+
+𝜙 (𝑥 ) = (𝑉 𝑥 , 𝐴 𝑥 , 𝐷 𝑥 ),
+
+where 𝑉 𝑥 , 𝐴 𝑥 , and 𝐷 𝑥 denote valence, arousal, and dominance, respectively. The valence term 𝑉 ℎ is incorporated as an additive component to reflect the tendency of positively framed content to encourage approach-oriented engagement. Under this interpretation, a head-line with higher valence can amplify the likelihood of user interac-tion, even when the curiosity signal is primarily driven by arousal and reduced dominance. Thus, higher values of 𝐶𝐺 (ℎ) indicate stronger curiosity-inducing potential. In practice, clickbait-oriented rewrites are expected to yield higher 𝐶𝐺 values than neutral or fully informative headlines. Conversely, de-clickbaited or informa-tional rewrites should reduce 𝐶𝐺 by lowering arousal, increasing Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Hasan et al. 
+
+Figure 2: Overview of the emotion-aware clickbait generation and social amplification attack pipeline 
+
+dominance, or both. To measure the emotional shift between the post and the stylized clickbait comment, we define the VAD-space. In addition, to quantify the increase in curiosity induced by the stylized comment, we define the curiosity gap score for a text 𝑥 as 
+
+𝐶𝐺 (𝑥 ) = 𝐴 𝑥 (1 − 𝐷 𝑥 ) + 𝑉 𝑥 .
+
+Clickbait texts are designed to maximize arousal while minimiz-ing informational closure, creating a state of activated uncertainty that encourages user interaction which is captured by arousal. At the same time, it withholds key details or resolution, producing low dominance. Therefore, the term 𝐴 ℎ (1 − 𝐷 ℎ ) models the core mech-anism of curiosity as activated uncertainty . When arousal is high and dominance is low, the reader experiences a stronger tendency to seek closure by clicking. Here, the term, 𝐴 ℎ (1 − 𝐷 ℎ ), captures the interaction between emotional activation and lack of informa-tional control, while the second term, 𝑉 ℎ , reflects the contribution of positive affect. The curiosity amplification from the post to the stylized clickbait comment is then defined as 
+
+Δ𝐶𝐺 (𝑠 ) = 𝐶𝐺 (𝑝 ) − 𝐶𝐺 (𝑐 (𝑠 ) )
+
+or equivalently, 
+
+Δ𝐶𝐺 (𝑠 ) = 𝐴 𝑝 (1 − 𝐷 𝑝 ) + 𝑉 𝑝 
+
+ − 𝐴 𝑐 (𝑠 ) (1 − 𝐷 𝑐 (𝑠 ) ) + 𝑉 𝑐 (𝑠 )
+
+
+
+Here, Δ𝐶𝐺 (𝑠 ) measures whether the stylized comment amplifies curiosity relative to the original post either positively or negatively. Let 𝑝 denote the original post and 𝑐 (𝑠 ) denote a clickbait-stylized comment under style 𝑠 . We define two key quantities: (i) emotional drift in VAD space, Δ𝐸 (𝑠 ) , and (ii) curiosity amplification, Δ𝐶𝐺 (𝑠 ) .A clickbait comment is considered effective when it can simulta-neously increases curiosity while maintaining semantic and emo-tional coherence with the original post. Formally, this can be ex-pressed as: 
+
+Δ𝐶𝐺 (𝑠 ) ≥ 0 or Δ𝐶𝐺 (𝑠 ) < 0
+
+The first condition ensures that the stylized comment amplifies the curiosity gap relative to the post, while the second condition constrains the emotional deviation to remain within a reasonable range. Therefore, the curiosity gap is maximized when a headline is emotionally activating, informationally unresolved, and framed accordingly. To make this precise, we define the effectiveness con-dition as positivie framing and negative framing: 
+
+Δ𝐶𝐺 (𝑠 ) ≥ 0 𝑝𝑜𝑠𝑡𝑖𝑣𝑒 𝑓 𝑟𝑎𝑚𝑖𝑛𝑔 
+
+and 
+
+Δ𝐶𝐺 (𝑠 ) < 0 𝑛𝑒𝑔𝑎𝑡𝑖𝑣𝑒 𝑓 𝑟𝑎𝑚𝑖𝑛𝑔 
+
+A large positive Δ𝐶𝐺 (𝑠 ) indicates that the comment introduces heightened arousal and reduced dominance (i.e., a stronger informa-tion gap), which are characteristic of clickbait. However, if Δ𝐶𝐺 (𝑠 )
+
+becomes too large, the comment may diverge significantly from the original post, reducing semantic coherence and potentially harm-ing credibility. Therefore, an optimal clickbait strategy balances curiosity amplification is to maximize Δ𝐶𝐺 (𝑠 ) or minimize Δ𝐶𝐺 (𝑠 )
+
+for emotional activation. 
+
+## 6 Approach 6.1 Dataset Selection 
+
+The primary dataset used in this study is the Clickbait Challenge 2017 Dataset. It is a widely adopted benchmark for clickbait detec-tion tasks that consists of short textual content, primarily social media posts and headlines, collected from platforms such as Twitter. Each instance is paired with a human-annotated label indicating the degree of clickbait, typically represented in scores 0 (non-clickbait) and 1 (highly clickbait) [ 12 ]. For social media posts, we use the Pushshift Reddit Dataset, a large-scale publicly available corpus of Reddit posts and comments collected via the Pushshift API. The dataset contains millions of user-generated entries spanning diverse topics, which are available with communities, posts, and threaded comments in text format [5]. To integrate this dataset with our clickbait framework, we align Reddit posts with externally generated clickbait-style headlines using semantic similarity techniques. Specifically, each clickbait instance is matched to the most semantically relevant Reddit post using sentence embedding models, ensuring contextual consistency. This pairing enables us to simulate realistic clickbait insertion sce-narios within organic discussions. Furthermore, we annotate the resulting text pairs with emotion labels and map them into the Valence–Arousal–Dominance (VAD) space. Using these representations, we compute the curiosity gap Emotion-Aware Clickbait Attack in Social Media Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+Table 1: Comparison of LLMs (e.g. Roberta and BERT) Performance Across Original Text and Stylized Rewrites of Clickbait Text Text Type Roberta BERT Accuracy Precision ∗ Recall ∗ F1 Accuracy Precision ∗ Recall ∗ F1 
+
+Original Text 0.9998 1.0000 0.9998 0.9999 0.9991 1.0000 0.9991 0.9995 Clickbait Rewrite 0.7370 1.0000 0.7370 0.8486 0.9770 1.0000 0.9770 0.9884 Neutral Rewrite 0.6362 1.0000 0.6362 0.7777 0.8927 1.0000 0.8927 0.9433 Formal Rewrite 0.4683 1.0000 0.4683 0.6379 0.8527 1.0000 0.8527 0.9205 Casual Rewrite 0.8027 1.0000 0.8027 0.8906 0.9864 1.0000 0.9864 0.9931 Inspirational Rewrite 0.5678 1.0000 0.5678 0.7244 0.9629 1.0000 0.9629 0.9811 Humor Rewrite 0.7600 1.0000 0.7600 0.8636 0.9747 1.0000 0.9747 0.9872 
+
+> Note: Precision is 1.0 and Recall is same as accuracy across all configurations because the evaluation dataset contains only positive clickbait samples, resulting in zero false positives. Therefore, accuracy, recall and F1-score provide meaningful insights into model performance under stylistic variations
+
+(CG) and its variation ( Δ𝐶𝐺 ) across different stylistic transforma-tions. This enriched dataset allows us to analyze how emotional and stylistic factors influence clickbait effectiveness and model robustness in a real-world social media setting. 
+
+## 6.2 Dataset Merging 
+
+To construct a realistic evaluation setting, we combine the Clickbait Challenge 2017 Dataset with the Pushshift Reddit Dataset using a semantic similarity matching strategy. Specifically, we employ the Sentence-BERT (SBERT) model, implemented via the sentence transformers library, with the pre-trained model “BAAI/bge-large-en-v1.5” to encode both clickbait headlines and Reddit posts into dense vector representations. Given a set of clickbait headlines 
+
+{ℎ𝑖 } and a pool of Reddit posts {𝑝 𝑗 }, we compute cosine similarity between their embeddings. For each clickbait instance, we select the most semantically similar Reddit post as: 
+
+𝑝 ∗ = arg max  
+
+> 𝑝 𝑗
+
+cos  SBERT (ℎ𝑖 ), SBERT (𝑝 𝑗 )
+
+To ensure data diversity and avoid duplication, we enforce a one-to-one matching constraint, where each Reddit post is assigned to at most one clickbait headline. This results in a set of aligned pairs 
+
+(ℎ𝑖 , 𝑝 ∗) that are semantically consistent. Due to the large size of the Pushshift dataset, we use the first 500,000 posts that have 118,447 valid title and post data which is merged it with valid clickbait text with above approach. 
+
+## 6.3 Training the Classifier 
+
+We train two LLM models “microsoft/deberta-v3-base” and “bert-base-uncased” with the clickbait datasets containing both clickbait and nonclickbait. For DEBERTA and BERT model training, we use the full clickbait dataset, however, we utilize the only click-bait (15999 samples) discarding the other non-clickbait text for post matching. Thereafter, we combine the clickbait with the Red-dit dataset with sBERT SentenceTransformer named “BAAI/bge-large-en-v1.5” based on the semantic similarity. The minimum and maximum cosine similarity scores, ranging from 0.5889 to 0.8923, indicate moderate to high semantic alignment between clickbait headlines and matched posts. 
+
+## 6.4 Stylization and Emotion Annotation 
+
+To generate stylistic variations of the aligned text pairs, we utilize the instruction-tuned language model microsoft’s Phi-3 [ 1 ] where we use the medium-4k-instruct version which does not require fine tuning to do syphilitic conversion. Given an input text, the model produces multiple rewrites under different stylistic constraints, including neutral, formal, casual, inspirational, and humor-based tones. These rewrites preserve the core semantic content while altering the linguistic style, enabling controlled analysis of stylistic effects on clickbait behavior. For emotion annotation, we employ the pre-trained model roberta-base-go_emotions [ 18 ], which is fine-tuned on the GoEmotions dataset [ 8 ]. This model assigns emotion labels from a set of fine-grained categories to each text instance. The predicted emotion labels are subsequently mapped into the VAD space, allowing us to quantify the emotional characteristics of both original and stylized texts. These annotations are further used to compute the curiosity gap (CG) and its variation ( Δ𝐶𝐺 ), enabling a systematic analysis of how stylistic and emotional transformations influence clickbait effectiveness and model predictions. 
+
+## 7 Results and Analysis 
+
+We evaluate the effectiveness of emotion-aware clickbait generation by analyzing its impact on model performance under different stylistic transformations and different levels of curiosity gap ( Δ𝐶𝐺 ). 
+
+## 7.1 Impact of Stylization on Performance 
+
+Table 1 shows the performance of two LLMs, RoBERTa and BERT across the original text and multiple stylistic rewrites. Both models achieve good performance on the original dataset, with accuracy exceeding 99%. However, performance decreases significantly once the same semantic content is rewritten in alternative styles. For RoBERTa, accuracy decreases from 99.98% on the original text to 73.7% for clickbait rewrites, 63.6% for neutral rewrites, and 46.8% for formal rewrites. BERT shows a similar but less severe trend, where accuracy decreases from 99.91% to 97.7% for clickbait rewrites, 89.3% for neutral rewrites, and 85.3% for formal rewrites. Among the rewritten variants, casual and humor-based styles re-main relatively more robust than other rewrites, although both Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Hasan et al. 
+
+Table 2: RoBERTa Performance Comparison Between Lowest and Highest Δ𝐶𝐺 
+
+## Δ𝐶𝐺 Accuracy Precision ∗ Recall ∗ F1 
+
+Lowest 0.7272 1.0000 0.7272 0.8420 Highest 0.6937 1.0000 0.6937 0.8192  
+
+> Note: Precision is 1.0 and Recall is same as accuracy due to the absence of negative samples in the evaluation dataset, resulting in zero false positives. Highest and lowest
+> Δ𝐶𝐺 refers to the positive and negative framing respectively.
+
+Table 3: BERT Performance Comparison Between Lowest and Highest Δ𝐶𝐺 
+
+## Δ𝐶𝐺 Accuracy Precision ∗ Recall ∗ F1 
+
+Lowest 0.9742 1.0000 0.9742 0.9870 Highest 0.9474 1.0000 0.9474 0.9730  
+
+> Note: Precision is 1.0 and Recall is same as accuracy due to the absence of negative samples in the evaluation dataset, resulting in zero false positives. Highest and lowest
+> Δ𝐶𝐺 refers to the positive and negative framing respectively.
+
+still reduce performance compared to the original text. These find-ings suggest that stylistic transformation, can substantially affect classifier behavior. In particular, the results indicate that existing models rely not only on semantic content but also on surface-level stylistic patterns, making them vulnerable to emotionally motivated rewrites. 
+
+## 7.2 Curiosity Gap on Classification 
+
+To examine whether emotional amplification contributes to adver-sarial attack, we compare model performance on texts with the highest and lowest Δ𝐶𝐺 values. Tables 2 and 3 summarize these results. For RoBERTa, accuracy drops from 72.72% for the lowest Δ𝐶𝐺 
+
+cases to 69.37% for the highest Δ𝐶𝐺 cases. A similar trend appears for BERT, where accuracy decreases from 97.42% to 94.74%. Al-though the reduction is moderate, the decline is consistent across both models indicate that texts with stronger curiosity amplifi-cation are harder for LLM to classify correctly. The higher Δ𝐶𝐺 
+
+values correspond to a stronger adversarial effect, suggesting that emotionally amplified clickbait increases the difficulty of detection. 
+
+## 7.3 Style Distribution & Curiosity Gap 
+
+Figure 3 shows the distribution of rewriting styles among the high-est and lowest Δ𝐶𝐺 cases. For the highest Δ𝐶𝐺 group, clickbait rewrites account for 68.0% of the samples, followed by neutral rewrites at 28.9%, while all other styles contribute only marginally. For the lowest Δ𝐶𝐺 group, clickbait rewrites remain dominant at 71.1%, followed by casual (9.6%), humor (8.1%), and inspirational (7.6%) rewrites. The high Δ𝐶𝐺 cases are much more concentrated around click-bait, whereas low Δ𝐶𝐺 cases are distributed more broadly across other stylistic categories. This indicates that strong curiosity am-plification is most strongly associated with explicitly clickbait-oriented phrasing, while lower curiosity amplification allows greater stylistic diversity. Furthermore, the results demonstrate that the pro-posed emotion-aware clickbaiting strategy can produce measurable clickbait_rewrite    
+
+> neutral_rewrite
+> formal_rewrite
+> casual_rewrite
+> humor_rewrite
+> inspirational_rewrite
+> 0
+> 10
+> 20
+> 30
+> 40
+> Percentage
+> 68.0%
+> 28.9%
+> 1.8% 0.7% 0.3% 0.2%
+
+1(a) Highest Δ𝐶𝐺 clickbait_rewrite    
+
+> casual_rewrite
+> humor_rewrite
+> inspirational_rewrite
+> neutral_rewrite
+> formal_rewrite
+> 0
+> 10
+> 20
+> 30
+> 40
+> Percentage
+> 71.1%
+> 9.6% 8.1% 7.6%
+> 2.6% 0.9%
+
+1(b) Lowest Δ𝐶𝐺 
+
+Figure 3: Style distribution for highest and lowest Δ𝐶𝐺 cases. 
+
+degradation in detection performance. Across styles and models, the performance reduction is approximately 3% to 27%, depend-ing on the classifier. This validates that emotion-aware rewriting functions as an effective adversarial mechanism. The main insight from the results is that stylistic rewriting alone is sufficient to degrade clickbait detection performance, even when the underlying meaning is preserved. Secondly, larger curiosity-gap shifts are associated with increased misclassification, showing that emotional amplification contributes directly to adversarial success. Finally, clickbait-style rewrites dominate high Δ𝐶𝐺 scenarios, con-firming that emotionally charged, information-incomplete phrasing is the most effective strategy for inducing curiosity and reducing model robustness. The results also indicate that emotionally opti-mized clickbait can meaningfully affect classification performance and expose vulnerabilities in existing clickbait detection models. Moreover, the attack remains semantically aligned with the source post through SBERT-based matching while modifying the emotional framing through stylization. This makes the generated clickbait both contextually relevant yet difficult to detect, which increases the realism of the attack setting in social media environments. Emotion-Aware Clickbait Attack in Social Media Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+## 8 Limitation 
+
+We acknowledge the following limitation for this research. Firstly, there is no publicly available dataset that jointly captures clickbait and social media posts, which limits the ability to evaluate the framework on fully integrated real-world data. Additionally, the stylistic transformations generated using the Phi-3 LLM may intro-duce bias, as the model is used without fine-tuning. Furthermore, the semantic similarity alignment relies on moderate embedding scores, and higher similarity would further improve contextual relevance in adversarial injection scenarios. Finally, the proposed approach has not been evaluated under real-world human inter-action settings or its effectiveness in the presence of active user feedback or platform moderation. 
+
+## 9 Conclusion 
+
+This work redefines clickbait as an emotion-driven social amplifica-tion strategy in online networks, where adversarial agents generate emotionally optimized and semantically stylistic clickbait to in-crease user engagement. An attacker devises clickbait as a dynamic, emotion-driven behavior using the VAD framework and defines a curiosity gap (CG) function to quantify how emotional activation through positive or negative framing drives user curiosity and in-teraction. The methodology combines two datasets, the Clickbait Challenge and Pushshift Reddit dataset, using semantic matching with SBERT and stylistic rewrites to analyze how different tones af-fect clickbait strength. Experimental results show that emotionally stylized content can significantly influence model predictions and user engagement, even causing misclassification in trained filters in social media. 
+
+## 10 Ethical Considerations 
+
+This study does not include any harmful content to demonstrate the efficacy of emotion in clickbaiting. Furthermore, this research is for educational purposes only. 
+
+## References 
+
+[1] Marah Abdin, Jyoti Aneja, Harkirat Behl, Sébastien Bubeck, Ronen Eldan, Suriya Gunasekar, Michael Harrison, Russell J Hewett, Mojan Javaheripi, Piero Kauff-mann, et al . 2024. Phi-4 technical report. arXiv preprint arXiv:2412.08905 (2024). [2] Norah Abokhodair, Daisy Yoo, and David W McDonald. 2015. Dissecting a social botnet: Growth, content and influence in Twitter. In Proceedings of the 18th ACM conference on computer supported cooperative work & social computing . 839–851. [3] Twana Nasih Ahmed, Neaz Naif Mustafa, Rawezh Kamaran Ahmed, Mo-hammed Satar Saeed, Ahmed Qadir Ali, and Karwan Ali Qadir. 2025. The impact of digital technologies on journalistic integrity: An analysis of clickbait, algorith-mic influence and societal consequences. Asian Journal of Education and Social Studies 51, 6 (2025), 566–580. [4] Wei Ai, Yilong Tan, Yuntao Shou, Tao Meng, Haowen Chen, Zhixiong He, and Keqin Li. 2026. The paradigm shift: A comprehensive survey on large vision language models for multimodal fake news detection. Computer Science Review 
+
+60 (2026), 100893. [5] Jason Baumgartner, Savvas Zannettou, Brian Keegan, Megan Squire, and Jeremy Blackburn. 2020. The pushshift reddit dataset. In Proceedings of the international AAAI conference on web and social media , Vol. 14. 830–839. [6] Ángela Bazaco and Pilar Sánchez-García. 2019. Clickbait as a strategy of viral journalism: conceptualisation and methods. Revista Latina de Comunicación Social (2019). [7] Ohad Dan, Maya Leshkowitz, and Ran R Hassin. 2020. On clickbaits and evolution: curiosity from urge and interest. Current Opinion in Behavioral Sciences 35 (2020), 150–156. [8] Dorottya Demszky, Dana Movshovitz-Attias, Jeongwoo Ko, Alan Cowen, Gaurav Nemade, and Sujith Ravi. 2020. GoEmotions: A Dataset of Fine-Grained Emotions. In 58th Annual Meeting of the Association for Computational Linguistics (ACL) .[9] Kavita Devi and Palwinder Singh. 2025. Truth in the Age of Clickbait: A Review of Social Media Misinformation Through Case Studies. Journal of Communication and Management 4, 02 (2025), 32–40. [10] Hongyang Du, Ruichen Zhang, Dusit Niyato, Jiawen Kang, Zehui Xiong, and Dong In Kim. 2024. Reinforcement learning with large language models (LLMs) interaction for network services. Authorea Preprints (2024). [11] Ullrich KH Ecker, Stephan Lewandowsky, John Cook, Philipp Schmid, Lisa K Fazio, Nadia Brashier, Panayiota Kendeou, Emily K Vraga, and Michelle A Amazeen. 2022. The psychological drivers of misinformation belief and its resistance to correction. Nature Reviews Psychology 1, 1 (2022), 13–29. [12] Tim Gollub, Martin Potthast, Matthias Hagen, and Benno Stein. 2017. Clickbait challenge 2017. [13] Nicole Immorlica, Meena Jagadeesan, and Brendan Lucier. 2024. Clickbait vs. quality: How engagement-based optimization shapes the content landscape in online platforms. In Proceedings of the ACM Web Conference 2024 . 36–45. [14] Daniel Jácobo-Morales and Mauro Marino-Jiménez. 2024. Clickbait: Research, challenges and opportunities–A systematic literature review. Online Journal of Communication and Media Technologies 14, 4 (2024), e202458. [15] Anna-Katharina Jung, Stefan Stieglitz, Tobias Kissmer, Milad Mirbabaie, and Tobias Kroll. 2022. Click me. . . ! The influence of clickbait on user engagement in social media and the role of digital nudging. Plos one 17, 6 (2022), e0266743. [16] Vivek Kaushal and Kavita Vemuri. 2021. Clickbait—trust and credibility of digital news. IEEE Transactions on Technology and Society 2, 3 (2021), 146–154. [17] Fei Liu, Xinsheng Zhang, and Qi Liu. 2023. An emotion-aware approach for fake news detection. IEEE Transactions on Computational Social Systems 11, 3 (2023), 3516–3524. [18] Sam Lowe. 2022. roberta-base-go_emotions LLM model. https://huggingface.co/ SamLowe/roberta-base-go_emotions. Accessed: 2026-01-14. [19] Andrew Lee Mackey. 2025. Emotion Analysis and Neural Language Models for Classification . Ph. D. Dissertation. University of Arkansas. [20] Kevin Munger. 2020. All the news that’s fit to click: The economics of clickbait media. Political communication 37, 3 (2020), 376–397. [21] Amara Muqadas, Hikmat Ullah Khan, Muhammad Ramzan, Anam Naz, Tariq Alsahfi, and Ali Daud. 2025. Deep learning and sentence embeddings for detection of clickbait news from online content. Scientific Reports 15, 1 (2025), 13251. [22] Bilal Naeem, Aymen Khan, Mirza Omer Beg, and Hasan Mujtaba. 2020. A deep learning framework for clickbait detection on social area network using natural language cues. Journal of Computational Social Science 3, 1 (2020), 231–243. [23] Emily Reif, Daphne Ippolito, Ann Yuan, Andy Coenen, Chris Callison-Burch, and Jason Wei. 2022. A recipe for arbitrary text style transfer with large lan-guage models. In Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers) . 837–848. [24] Md Main Uddin Rony, Naeemul Hassan, and Mohammad Yousuf. 2017. Diving deep into clickbaits: Who use them to what extents in which topics with what effects?. In Proceedings of the 2017 IEEE/ACM international conference on advances in social networks analysis and mining 2017 . 232–239. [25] Kate Scott. 2021. You won’t believe what’s in this paper! Clickbait, relevance and the curiosity gap. Journal of pragmatics 175 (2021), 53–66. [26] Jieun Shin, Chris DeFelice, and Soojong Kim. 2025. Emotion sells: Rage bait vs. information bait in clickbait news headlines on social media. Digital Journalism 
+
+13, 7 (2025), 1271–1290. [27] Ankit Shrestha, Audrey Flood, Saniat Sohrawardi, Matthew Wright, and Mahdi Nasrullah Al-Ameen. 2024. A first look into targeted clickbait and its coun-termeasures: The power of storytelling. In Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems . 1–23. [28] Ghosh Thinnakkakath. 2025. Social Media and the Internet: Fake News and Clickbait. In Impacts of Leakage, Whistleblowing, and the Rise of Propaganda . IGI Global Scientific Publishing, 37–56. [29] Han Wang, Yi Zhu, Ye Wang, Yun Li, Yunhao Yuan, and Jipeng Qiang. 2025. Clickbait detection via large language models. In International Conference on Intelligent Computing . Springer, 462–474. [30] Yikai Wang, Bin Hu, Chaolan Tang, and Xian Yang. 2025. Decoding clickbait: The impact of clickbait types and structures on cognitive and emotional responses in online interactions. Cyberpsychology, Behavior, and Social Networking 28, 1 (2025), 18–27. 
+
+## A APPENDIX 
+
+This appendix presents additional materials to support the study. 
+
+## A.1 Generative AI Usage 
+
+Our paper uses ChatGPT, QuillBot, and Grammarly as grammar checking and sentence refinement tools. Additionally, for some icon generation, we take help from Gemini. However, the authors are solely responsible for the experiments, analyses, and conclusion. Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Hasan et al. 
+
+## A.2 Language Models 
+
+In this study, we use the following LLMs to generate and analyze the output. Firstly, we use BERT style the pretrained model “BAAI/bge-large-en-v1.5” to compute semantic similarity between clickbait headlines and social media posts (ref table 4). This allows us to align each generated or existing clickbait instance with the most contextually relevant post in the embedding space using cosine similarity. Secondly, we employ the instruction-tuned model Phi-3-mini-4k-instruct to generate multiple stylistic rewrites of the aligned text, including clickbait, neutral, formal, casual, inspira-tional, and humor-based variations while preserving the original semantic meaning (ref table 7). Finally, we utilize the pretrained roberta-base-go_emotions model to extract fine-grained emotional labels from both the original and stylized texts (ref table 8) and use the deberta (ref table 5) and BERT (ref table 6) model to classify clickbait. 
+
+Table 4: Configuration of BAAI/bge-large-en-v1.5 Configuration Value 
+
+Pretrained Model BAAI/bge-large-en-v1.5 Model Type Encoder Architecture Encoder-only Hidden Size 1024 Embedding Dimension 1024 Number of Layers 24 Attention Heads 16 Max Sequence Length 512 tokens Similarity Metric Cosine Similarity 
+
+Table 5: DeBERTa Configuration Configuration Value 
+
+Pretrained Model microsoft/deberta-v3-base Learning Rate 2e-5 Batch Size 16 Max Sequence Length 64 Weight Decay 0.01 Optimizer AdamW 
+
+Table 6: BERT Configuration Configuration Value 
+
+Pretrained Model bert-base-uncased Learning Rate 2e-5 Batch Size 16 Max Sequence Length 64 Weight Decay 0.01 Optimizer AdamW 
+
+> Received 20 February 2007; revised 12 March 2009; accepted 5 June 2009
+
+Table 7: Phi-3 mini 4k instruct Configuration for Stylization Configuration Value 
+
+Pretrained Model microsoft/Phi-3-mini-4k-instruct Model Type Decoder-only Transformer Context Length 4,096 tokens Generation Method Greedy Decoding Temperature 0.0 Top-p 1.0 Max New Tokens 400 Precision bfloat16 
+
+Table 8: RoBERTa Configuration for Emotion Extraction Trained on Google’s GoEmotions Dataset Configuration Value 
+
+Pretrained Model SamLowe/roberta-base-go_emotions Model Type Encoder Task Emotion Classification Number of Classes 28 (GoEmotions)

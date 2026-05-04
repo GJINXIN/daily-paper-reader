@@ -6,68 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-03
-- 运行时间：2026-05-03 20:25:08 UTC
+- 最新运行日期：2026-05-04
+- 运行时间：2026-05-04 20:21:55 UTC
 - 运行状态：成功
-- 本次总论文数：16
-- 精读区：5
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-聚焦 16 篇前沿成果，深度复盘历史群体冲突模拟并解析 LLM 在复杂社交情境
-- 详情：[/202605/03/README](/202605/03/README)
+今日精选 17 篇前沿成果，深度拆解 LLM 驱动的“硅基社会”构建指南与金融市场自组织生态。
+重点关注满分论文提出的社会模拟设计空间，以及异质偏好学习如何重塑对复杂金融系统演化的认知。
+建议从多智能体协作与因果推断入手，探索 AI 模拟人类集体行为与心理决策的最新边界。
+- 详情：[/202605/04/README](/202605/04/README)
 
 ### 精读区论文标签
-1. [Crowd Dynamics in Historical Perspective: Reframing the Amritsar Massacre through Agent-Based Modelling and Social Psychology](/202605/03/2604.27737v1-crowd-dynamics-in-historical-perspective-reframing-the-amritsar-massacre-through-agent-based-modelling-and-social-psychology)  
+1. [The $\textit{Silicon Society}$ Cookbook: Design Space of LLM-based Social Simulations](/202605/04/2605.00197v1-the-textitsilicon-society-cookbook-design-space-of-llm-based-social-simulations)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：基于 LLM 的社会模拟和硅基社会的设计空间
+2. [Financial Market as a Self-Organized Ecosystem: Simulation via Learning with Heterogeneous Preferences](/202605/04/2604.23975v1-financial-market-as-a-self-organized-ecosystem-simulation-via-learning-with-heterogeneous-preferences)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：基于智能体的群体动力学与社会心理学建模
-2. [What Did They Mean? How LLMs Resolve Ambiguous Social Situations across Perspectives and Roles](/202605/03/2604.23942v1-what-did-they-mean-how-llms-resolve-ambiguous-social-situations-across-perspectives-and-roles)  
+   evidence：多智能体金融市场模拟中的涌现动态
+3. [A well-motivated model of pedestrian dynamics](/202605/04/2604.26858v2-a-well-motivated-model-of-pedestrian-dynamics)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：大模型解决跨角色的模糊社会情境
-3. [I Would If I Could: Reasoning about Dynamics of Actions in Multi-Agent Systems](/202605/03/2604.26053v1-i-would-if-i-could-reasoning-about-dynamics-of-actions-in-multi-agent-systems)  
+   evidence：行人动力学与社会条件的智能体建模
+4. [Web2BigTable: A Bi-Level Multi-Agent LLM System for Internet-Scale Information Search and Extraction](/202605/04/2604.27221v1-web2bigtable-a-bi-level-multi-agent-llm-system-for-internet-scale-information-search-and-extraction)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统中动作动力学的推理
-4. [Self-Evolving Software Agents](/202605/03/2604.27264v1-self-evolving-software-agents)  
+   evidence：用于信息搜索的双层多智能体系统
+5. [Emotion-Aware Clickbait Attack in Social Media](/202605/04/2604.27369v1-emotion-aware-clickbait-attack-in-social-media)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：动态多智能体环境中的自我进化智能体
-5. [AgentEconomist: An End-to-end Agentic System Translating Economic Intuitions into Executable Computational Experiments](/202605/03/2604.27725v1-agenteconomist-an-end-to-end-agentic-system-translating-economic-intuitions-into-executable-computational-experiments)  
+   evidence：社交媒体中的情感感知点击诱饵
+6. [RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems](/202605/04/2604.27616v1-roadmapper-a-multi-agent-system-for-roadmap-generation-of-solving-complex-research-problems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于经济学可执行计算实验的智能体系统
+   evidence：用于路线图生成的多智能体系统
 
 ### 速读区论文标签
-1. [Towards Automated Ontology Generation from Unstructured Text: A Multi-Agent LLM Approach](/202605/03/2604.23090v1-towards-automated-ontology-generation-from-unstructured-text-a-multi-agent-llm-approach)  
+1. [Causal Foundations of Collective Agency](/202605/04/2605.00248v1-causal-foundations-of-collective-agency)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体系统中的集体代理与涌现目标
+2. [DySRec: Dynamic Context-Aware Psychometric Scale Recommendation via Multi-Agent Collaboration](/202605/04/2605.00574v1-dysrec-dynamic-context-aware-psychometric-scale-recommendation-via-multi-agent-collaboration)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于动态心理测量量表推荐的多智能体对话系统
+3. [NonZero: Interaction-Guided Exploration for Multi-Agent Monte Carlo Tree Search](/202605/04/2605.00751v1-nonzero-interaction-guided-exploration-for-multi-agent-monte-carlo-tree-search)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体蒙特卡洛树搜索与协作效益
+4. [MemeScouts@LT-EDI 2026: Asking the Right Questions -- Prompted Weak Supervision for Meme Hate Speech Detection](/202605/04/2604.24179v1-memescoutslt-edi-2026-asking-the-right-questions----prompted-weak-supervision-for-meme-hate-speech-detection)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于本体生成的LLM多智能体方法
-2. [DPEPO: Diverse Parallel Exploration Policy Optimization for LLM-based Agents](/202605/03/2604.24320v1-dpepo-diverse-parallel-exploration-policy-optimization-for-llm-based-agents)  
+   evidence：利用弱监督进行多模态Meme仇恨言论检测
+5. [Seeing Is No Longer Believing: Frontier Image Generation Models, Synthetic Visual Evidence, and Real-World Risk](/202605/04/2604.24197v1-seeing-is-no-longer-believing-frontier-image-generation-models-synthetic-visual-evidence-and-real-world-risk)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于大语言模型智能体的并行探索
-3. [FAMA: Failure-Aware Meta-Agentic Framework for Open-Source LLMs in Interactive Tool Use Environments](/202605/03/2604.25135v1-fama-failure-aware-meta-agentic-framework-for-open-source-llms-in-interactive-tool-use-environments)  
+   evidence：合成视觉证据与现实世界风险
+6. [Beyond the Attention Stability Boundary: Agentic Self-Synthesizing Reasoning Protocols](/202605/04/2604.24512v1-beyond-the-attention-stability-boundary-agentic-self-synthesizing-reasoning-protocols)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：自主智能体的元智能体框架
-4. [Pythia: Toward Predictability-Driven Agent-Native LLM Serving](/202605/03/2604.25899v1-pythia-toward-predictability-driven-agent-native-llm-serving)  
+   evidence：用于自主数字协作和多轮推理的LLM智能体
+7. [TRUST: A Framework for Decentralized AI Service v.0.1](/202605/04/2604.27132v1-trust-a-framework-for-decentralized-ai-service-v01)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：复杂工作流的多智能体架构
-5. [SecMate: Multi-Agent Adaptive Cybersecurity Troubleshooting with Tri-Context Personalization](/202605/03/2604.26394v1-secmate-multi-agent-adaptive-cybersecurity-troubleshooting-with-tri-context-personalization)  
+   evidence：多智能体系统与审计的去中心化框架
+8. [Heterogeneous Scientific Foundation Model Collaboration](/202605/04/2604.27351v1-heterogeneous-scientific-foundation-model-collaboration)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于故障排除的多智能体虚拟客户助手
-6. [GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents](/202605/03/2604.26752v1-glm-5v-turbo-toward-a-native-foundation-model-for-multimodal-agents)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：感知视频和真实环境的多模态智能体
-7. [Co-Director: Agentic Generative Video Storytelling](/202605/03/2604.24842v1-co-director-agentic-generative-video-storytelling)  
+   evidence：代理大语言模型系统和异构代理框架
+9. [MarketBench: Evaluating AI Agents as Market Participants](/202605/04/2604.23897v1-marketbench-evaluating-ai-agents-as-market-participants)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于视频叙事的层级多智能体框架
-8. [AgentDID: Trustless Identity Authentication for AI Agents](/202605/03/2604.25189v1-agentdid-trustless-identity-authentication-for-ai-agents)  
+   evidence：评估作为市场参与者的AI智能体
+10. [ClawGym: A Scalable Framework for Building Effective Claw Agents](/202605/04/2604.26904v1-clawgym-a-scalable-framework-for-building-effective-claw-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：自主AI智能体的身份认证
-9. [Split over $n$ resource sharing problem: Are fewer capable agents better than many simpler ones?](/202605/03/2604.26374v1-split-over-n-resource-sharing-problem-are-fewer-capable-agents-better-than-many-simpler-ones)  
+   evidence：构建有效个人智能体的框架
+11. [A High-Throughput Compute-Efficient POMDP Hide-And-Seek-Engine (HASE) for Multi-Agent Operations](/202605/04/2604.27162v1-a-high-throughput-compute-efficient-pomdp-hide-and-seek-engine-hase-for-multi-agent-operations)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多智能体系统中的资源共享问题
-10. [AgentSim: A Platform for Verifiable Agent-Trace Simulation](/202605/03/2604.26653v1-agentsim-a-platform-for-verifiable-agent-trace-simulation)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：模拟RAG智能体及其推理轨迹
-11. [FutureWorld: A Live Environment for Training Predictive Agents with Real-World Outcome Rewards](/202605/03/2604.26733v1-futureworld-a-live-environment-for-training-predictive-agents-with-real-world-outcome-rewards)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：基于大语言模型的智能体系统用于现实事件预测
+   evidence：多智能体操作的高效计算引擎
 
 
 <div class="dpr-home-promo-card">

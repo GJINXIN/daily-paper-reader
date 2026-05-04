@@ -1,0 +1,681 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-04T20:18:39.959929+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 9,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 19,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2605.00197v1",
+      "title": "The $\\textit{Silicon Society}$ Cookbook: Design Space of LLM-based Social Simulations",
+      "abstract": "Studies attempting to simulate human behavior with $\\textit{Silicon Societies}$ grow in numbers while LLM-only social networks have started appearing outside of controlled settings. However, the design space of these networks remains under-studied, which contributes to a gap in validating model realism. To enable future works to make more informed design decisions, we perform a systematic analysis of the consequences and interactions of key design choices in simulated social networks, including the choice of base model used to model individual agents, and how they are connected to each other. Using surveys as a proxy for agent opinions, our findings suggest that the geometry of the design space is non-trivial, with some parameters behaving in additive ways while others display more complex interactions. In particular, the choice of the base LLM is the most important variable impacting the simulation outcomes.",
+      "authors": [
+        "Aurélien Bück-Kaeffer",
+        "Sneheel Sarangi",
+        "Maximilian Puelma Touzel",
+        "Reihaneh Rabbany",
+        "Zachary Yang",
+        "Jean-François Godbout"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-04-30T20:22:18+00:00",
+      "link": "https://arxiv.org/pdf/2605.00197v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "design space of LLM-based social simulations and Silicon Societies",
+      "llm_evidence_cn": "基于 LLM 的社会模拟和硅基社会的设计空间",
+      "llm_evidence": "基于 LLM 的社会模拟和硅基社会的设计空间",
+      "canonical_evidence": "基于 LLM 的社会模拟和硅基社会的设计空间",
+      "llm_tldr_en": "Systematically analyzes design choices for LLM-based social simulations to improve model realism.",
+      "llm_tldr_cn": "系统分析了基于 LLM 的社会模拟的设计选择，以提高模型的真实性。",
+      "llm_tldr": "系统分析了基于 LLM 的社会模拟的设计选择，以提高模型的真实性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.23975v1",
+      "title": "Financial Market as a Self-Organized Ecosystem: Simulation via Learning with Heterogeneous Preferences",
+      "abstract": "Agent-based models provide a constructive approach to studying emergent dynamics in life-like systems composed of interacting, adaptive agents. Financial markets serve as a canonical example of such systems, where collective price dynamics arise from individual decision-making. In this modeling tradition, investor behavior has typically been captured by two distinct mechanisms -- learning and heterogeneous preferences -- which have been explored as separate paradigms in prior studies. However, the impact of their joint modeling on the resulting collective dynamics remains largely unexplored. We develop a multi-agent reinforcement learning framework in which agents endowed with heterogeneous risk aversion, time discounting, and information access learn trading strategies interactively within an artificial market. The experiment reveals that (i) learning under heterogeneous preferences drives agents to develop functionally differentiated strategies through interaction, rather than trait-specific rules, resulting in role specialization, and (ii) the interactions by the differentiated agents are essential for the emergence of realistic market dynamics such as fat-tailed price fluctuations and volatility clustering. Overall, this study demonstrates that the joint design of heterogeneous preferences and learning mechanisms enables the synthesis of an artificial market in which adaptive interactions drive the self-organization of a market ecology, providing a computational realization of the Adaptive Market Hypothesis.",
+      "authors": [
+        "Ryuji Hashimoto",
+        "Ryosuke Takata",
+        "Masahiro Suzuki",
+        "Yuki Tanaka",
+        "Kiyoshi Izumi"
+      ],
+      "primary_category": "q-fin.CP",
+      "categories": [
+        "q-fin.CP",
+        "nlin.AO"
+      ],
+      "published": "2026-04-27T02:38:38+00:00",
+      "link": "https://arxiv.org/pdf/2604.23975v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "emergent dynamics in multi-agent financial market simulation",
+      "llm_evidence_cn": "多智能体金融市场模拟中的涌现动态",
+      "llm_evidence": "多智能体金融市场模拟中的涌现动态",
+      "canonical_evidence": "多智能体金融市场模拟中的涌现动态",
+      "llm_tldr_en": "Simulates emergent collective dynamics in financial markets using multi-agent reinforcement learning.",
+      "llm_tldr_cn": "利用多智能体强化学习模拟金融市场中涌现的集体动态。",
+      "llm_tldr": "利用多智能体强化学习模拟金融市场中涌现的集体动态。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.26858v2",
+      "title": "A well-motivated model of pedestrian dynamics",
+      "abstract": "In pedestrian dynamics, the internal drive that propels individuals toward their goals is typically captured by a single, fixed parameter, the desired walking speed. This simplification overlooks that motivation fluctuates in response to changing spatial and social conditions within a crowd. This paper proposes a dynamic motivation model grounded in expectancy-value theory from psychology, in which each agent's motivation evolves over time depending on proximity to the goal, relative position among other pedestrians, and individual goal importance. The resulting motivation modulates multiple movement parameters simultaneously, including walking speed, gap-closing behavior, and interpersonal spacing. The model is evaluated in simulated pre-bottleneck waiting scenarios using paired statistical comparisons across multiple random seeds and population sizes, and compared with trajectory data from the CROMA concert-entry bottleneck experiments under low- and high-motivation framings. Simulations show that the dynamic model produces structured heterogeneity in the crowd: agents self-organize into differentiated positions near the bottleneck, with those closer to the front occupying less space, a pattern absent in the static baseline but clearly present in the experimental data. These findings suggest that motivation in crowds should be understood not as a uniform increase in urgency, but as a mechanism that reorganizes competitive positioning along spatial and social axes. Future work should extend the framework to open-door throughput scenarios, larger populations, and richer social interactions such as group cohesion and cooperative strategies.",
+      "authors": [
+        "Ezel Üsten",
+        "Anna Sieben",
+        "Mohcine Chraibi",
+        "Armin Seyfried"
+      ],
+      "primary_category": "physics.soc-ph",
+      "categories": [
+        "physics.soc-ph"
+      ],
+      "published": "2026-04-29T16:26:27+00:00",
+      "link": "https://arxiv.org/pdf/2604.26858v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "agent-based model of pedestrian dynamics and social conditions",
+      "llm_evidence_cn": "行人动力学与社会条件的智能体建模",
+      "llm_evidence": "行人动力学与社会条件的智能体建模",
+      "canonical_evidence": "行人动力学与社会条件的智能体建模",
+      "llm_tldr_en": "Proposes a dynamic motivation model for pedestrian agents based on psychological theory to simulate crowd behavior.",
+      "llm_tldr_cn": "基于心理学理论提出行人智能体动态动机模型，用于模拟人群行为。",
+      "llm_tldr": "基于心理学理论提出行人智能体动态动机模型，用于模拟人群行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.27369v1",
+      "title": "Emotion-Aware Clickbait Attack in Social Media",
+      "abstract": "Clickbait is characterized by disproportionately high emotional intensity relative to informational content, often reinforced by specific structural patterns. However, current research considers clickbait as a static textual phenomenon characterized by linguistic patterns and structural cues. Additionally, existing detection systems primarily rely on surface-level features of clickbait. This paper introduces an emotion-aware clickbait generation attack, where stylistic transformations are used to optimize emotional impact. We propose an emotion-aware framework based on the Valence-Arousal-Dominance (VAD) space to model the emotional dynamics underlying clickbait generation for optimal user engagement. To simulate realistic attack scenarios, we align clickbait headlines with semantically similar social media posts using Sentence-BERT and generate multiple stylistic rewrites via Large Language Models (LLMs). Building on this, we define a Curiosity Gap (CG) function that computes clickbait's headline variation to the current post to quantify how emotional activation will contribute to user curiosity and evade the existing system found on social media. Experimental results demonstrate that emotion-aware stylization significantly degrades the performance of state-of-the-art classifiers, leading to misclassification rates of up to 2.58% to 30.63% on the base system.",
+      "authors": [
+        "Syed Mhamudul Hasan",
+        "Mohd. Farhan Israk Soumik",
+        "Abdur R. Shahid"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.SI"
+      ],
+      "published": "2026-04-30T03:36:04+00:00",
+      "link": "https://arxiv.org/pdf/2604.27369v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "emotion-aware clickbait in social media",
+      "llm_evidence_cn": "社交媒体中的情感感知点击诱饵",
+      "llm_evidence": "社交媒体中的情感感知点击诱饵",
+      "canonical_evidence": "社交媒体中的情感感知点击诱饵",
+      "llm_tldr_en": "Models emotional dynamics for clickbait generation and attack simulation in social media.",
+      "llm_tldr_cn": "为社交媒体中的点击诱饵生成和攻击模拟建模情感动态。",
+      "llm_tldr": "为社交媒体中的点击诱饵生成和攻击模拟建模情感动态。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.27221v1",
+      "title": "Web2BigTable: A Bi-Level Multi-Agent LLM System for Internet-Scale Information Search and Extraction",
+      "abstract": "Agentic web search increasingly faces two distinct demands: deep reasoning over a single target, and structured aggregation across many entities and heterogeneous sources. Current systems struggle on both fronts. Breadth-oriented tasks demand schema-aligned outputs with wide coverage and cross-entity consistency, while depth-oriented tasks require coherent reasoning over long, branching search trajectories. We introduce \\textbf{Web2BigTable}, a multi-agent framework for web-to-table search that supports both regimes. Web2BigTable adopts a bi-level architecture in which an upper-level orchestrator decomposes the task into sub-problems and lower-level worker agents solve them in parallel. Through a closed-loop run--verify--reflect process, the framework jointly improves decomposition and execution over time via persistent, human-readable external memory, with self-evolving updates to each single-agent. During execution, workers coordinate through a shared workspace that makes partial findings visible, allowing them to reduce redundant exploration, reconcile conflicting evidence, and adapt to emerging coverage gaps. Web2BigTable sets a new state of the art on WideSearch, reaching an Avg@4 Success Rate of \\textbf{38.50} ($7.5\\times$ the second best at 5.10), Row F1 of \\textbf{63.53} (+25.03 over the second best), and Item F1 of \\textbf{80.12} (+14.42 over the second best). It also generalises to depth-oriented search on XBench-DeepSearch, achieving 73.0 accuracy. Code is available at https://github.com/web2bigtable/web2bigtable.",
+      "authors": [
+        "Yuxuan Huang",
+        "Yihang Chen",
+        "Zhiyuan He",
+        "Yuxiang Chen",
+        "Ka Yiu Lee",
+        "Huichi Zhou",
+        "Weilin Luo",
+        "Meng Fang",
+        "Jun Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-29T21:43:16+00:00",
+      "link": "https://arxiv.org/pdf/2604.27221v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "bi-level multi-agent system for information search",
+      "llm_evidence_cn": "用于信息搜索的双层多智能体系统",
+      "llm_evidence": "用于信息搜索的双层多智能体系统",
+      "canonical_evidence": "用于信息搜索的双层多智能体系统",
+      "llm_tldr_en": "A multi-agent framework for internet-scale search using an orchestrator and parallel worker agents.",
+      "llm_tldr_cn": "一种利用编排器和并行工作智能体进行互联网规模搜索的多智能体框架。",
+      "llm_tldr": "一种利用编排器和并行工作智能体进行互联网规模搜索的多智能体框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.27616v1",
+      "title": "RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems",
+      "abstract": "People commonly leverage structured content to accelerate knowledge acquisition and research problem solving. Among these, roadmaps guide researchers through hierarchical subtasks to solve complex research problems step by step. Despite progress in structured content generation, the roadmap generation task has remained unexplored. To bridge this gap, we introduce RoadMap, a novel benchmark designed to evaluate the ability of large language models (LLMs) to construct high-quality roadmaps for solving complex research problems. Based on this, we identify three limitations of LLMs: (1) lack of professional knowledge, (2) unreasonable task decomposition, and (3) disordered logical relationships. To address these challenges, we propose RoadMapper, an LLM-based multi-agent system that decomposes the research roadmap generation task into three key stages (i.e., initial generation, knowledge augmentation, and iterative \"critique-revise-evaluate\"). Extensive experiments demonstrate that RoadMapper can improve LLMs' ability for roadmap generation, while enhancing average performance by more than 8% and saving 84% of the time required by human experts, highlighting its effectiveness and application potential.",
+      "authors": [
+        "Jiacheng Liu",
+        "Zichen Tang",
+        "Zhongjun Yang",
+        "Xinyi Hu",
+        "Xueyuan Lin",
+        "Linwei Jia",
+        "Ruofei Bai",
+        "Rongjin Li",
+        "Shiyao Peng",
+        "Haocheng Gao",
+        "Haihong E"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-04-30T09:08:14+00:00",
+      "link": "https://arxiv.org/pdf/2604.27616v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent system for roadmap generation",
+      "llm_evidence_cn": "用于路线图生成的多智能体系统",
+      "llm_evidence": "用于路线图生成的多智能体系统",
+      "canonical_evidence": "用于路线图生成的多智能体系统",
+      "llm_tldr_en": "Proposes RoadMapper, a multi-agent system that uses LLMs to construct roadmaps for complex research problems.",
+      "llm_tldr_cn": "提出 RoadMapper，一个利用 LLM 为复杂研究问题构建路线图的多智能体系统。",
+      "llm_tldr": "提出 RoadMapper，一个利用 LLM 为复杂研究问题构建路线图的多智能体系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.00248v1",
+      "title": "Causal Foundations of Collective Agency",
+      "abstract": "A key challenge for the safety of advanced AI systems is the possibility that multiple simpler agents might inadvertently form a collective agent with capabilities and goals distinct from those of any individual. More generally, determining when a group of agents can be viewed as a unified collective agent is a foundational question in the study of interactions and incentives in both biological and artificial systems. We adopt a behavioral perspective in answering this question, ascribing collective agency to a group when viewing the group's joint actions as rational and goal-directed successfully predicts its behavior. We formalize this perspective on collective agency using causal games -- which are causal models of strategic, multi-agent interactions -- and causal abstraction -- which formalizes when a simple, high-level model faithfully captures a more complex, low-level model. We use this framework to solve a puzzle regarding multi-agent incentives in actor-critic models and to make quantitative assessments of the degree of collective agency exhibited by different voting mechanisms. Our framework aims to provide a foundation for theoretical and empirical work to understand, predict, and control emergent collective agents in multi-agent AI systems.",
+      "authors": [
+        "Frederik Hytting Jørgensen",
+        "Sebastian Weichwald",
+        "Lewis Hammond"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.GT",
+        "cs.MA"
+      ],
+      "published": "2026-04-30T21:32:10+00:00",
+      "link": "https://arxiv.org/pdf/2605.00248v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Collective agency and emergent goals in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的集体代理与涌现目标",
+      "llm_evidence": "多智能体系统中的集体代理与涌现目标",
+      "canonical_evidence": "多智能体系统中的集体代理与涌现目标",
+      "llm_tldr_en": "Formalizes collective agency in multi-agent interactions using causal games and abstraction.",
+      "llm_tldr_cn": "利用因果博弈和抽象化方法，对多智能体交互中的集体代理行为进行形式化研究。",
+      "llm_tldr": "利用因果博弈和抽象化方法，对多智能体交互中的集体代理行为进行形式化研究。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.24179v1",
+      "title": "MemeScouts@LT-EDI 2026: Asking the Right Questions -- Prompted Weak Supervision for Meme Hate Speech Detection",
+      "abstract": "Detecting hate speech in memes is challenging due to their multimodal nature and subtle, culturally grounded cues such as sarcasm and context. While recent vision-language models (VLMs) enable joint reasoning over text and images, end-to-end prompting can be brittle, as a single prediction must resolve target, stance, implicitness, and irony. These challenges are amplified in multilingual settings. We propose a prompted weak supervision (PWS) approach that decomposes meme understanding into targeted, question-based labeling functions with constrained answer options for homophobia and transphobia detection in the LT-EDI 2026 shared task. Using a quantized Qwen3-VLM to extract features by answering targeted questions, our method outperforms direct VLM classification, with substantial gains for Chinese and Hindi, ranking 1st in English, 2nd in Chinese, and 3rd in Hindi. Iterative refinement via error-driven LF expansion and feature pruning reduces redundancy and improves generalization. Our results highlight the effectiveness of prompted weak supervision for multilingual multimodal hate speech detection.",
+      "authors": [
+        "Ivo Bueno",
+        "Lea Hirlimann",
+        "Enkelejda Kasneci"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-27T08:36:23+00:00",
+      "link": "https://arxiv.org/pdf/2604.24179v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multimodal meme hate speech detection using weak supervision",
+      "llm_evidence_cn": "利用弱监督进行多模态Meme仇恨言论检测",
+      "llm_evidence": "利用弱监督进行多模态Meme仇恨言论检测",
+      "canonical_evidence": "利用弱监督进行多模态Meme仇恨言论检测",
+      "llm_tldr_en": "Decomposes meme understanding into question-based labeling for multimodal hate speech detection.",
+      "llm_tldr_cn": "将Meme理解分解为基于问题的标注，用于多模态仇恨言论检测。",
+      "llm_tldr": "将Meme理解分解为基于问题的标注，用于多模态仇恨言论检测。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.23897v1",
+      "title": "MarketBench: Evaluating AI Agents as Market Participants",
+      "abstract": "Markets are a promising way to coordinate AI agent activity for similar reasons to those used to justify markets more broadly. In order to effectively participate in markets, agents need to have informative signals of their own ability to successfully complete a task and the cost of doing so. We propose MarketBench, a benchmark for assessing whether AI agents have these capabilities. We use a 93-task subset of SWE-bench Lite, a software engineering benchmark, with six recently released LLMs as a demonstration. These LLMs are miscalibrated on both success probability and token usage, and auctions built from these self-reports diverge from a full-information allocation. A follow-up intervention where we add information about capabilities from prior experiments to the context improves calibration, but only modestly narrows the gap to a full-information benchmark. We also document the performance of a market-based scaffolding with these LLMs. Our results point to self-assessment as a key bottleneck for market-style coordination of AI agents.",
+      "authors": [
+        "Andrey Fradkin",
+        "Rohit Krishnan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "econ.GN"
+      ],
+      "published": "2026-04-26T21:48:01+00:00",
+      "link": "https://arxiv.org/pdf/2604.23897v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evaluating AI agents as market participants",
+      "llm_evidence_cn": "评估作为市场参与者的AI智能体",
+      "llm_evidence": "评估作为市场参与者的AI智能体",
+      "canonical_evidence": "评估作为市场参与者的AI智能体",
+      "llm_tldr_en": "Evaluates the calibration and coordination capabilities of AI agents acting as market participants.",
+      "llm_tldr_cn": "评估作为市场参与者的AI智能体的校准和协调能力。",
+      "llm_tldr": "评估作为市场参与者的AI智能体的校准和协调能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.00574v1",
+      "title": "DySRec: Dynamic Context-Aware Psychometric Scale Recommendation via Multi-Agent Collaboration",
+      "abstract": "Choosing suitable psychometric scales is an essential and difficult step in psychological consultation, which requires clinicians to integrate patient information, behaviors, and dynamic contextual information. Existing systems mainly use static pipelines to choose scale, or directly predict symptoms according to user inputs, limiting their ability to support dynamic assessment, risk management, and transparent decision-making. To address these limitations, we propose DySRec, a multi-agent conversational system for dynamic psychometric scale recommendation. DySRec operates as an interactive chatbot that engages users in multi-turn dialogue, models scale selection as a continuous conversational decision process, and coordinates specialized agents to maintain user context, recommend assessment scales, monitor psychological risk, and log decision trajectories. In this way, DySRec can integrate and capture heterogeneous signals, including semantic, interaction behaviors, assessment history, and content state, to dynamically update user representations and calculate scale-context compatibility score for recommending most matched scales. Moreover, DySRec incorporates a closed-loop refinement mechanism. Recommendation agent will feedback the missing or uncertain attributes and guide the conversation to elicit the targeted information. In this paper, we showcase the prototype design and architecture of DySRec, and this system has been verified in a real-world application.",
+      "authors": [
+        "Yanzeng Li",
+        "Xiaoning Cao",
+        "Jialun Zhong",
+        "Jianpeng Hu",
+        "Jiangshan Tan",
+        "Ningning Liu",
+        "Feng Xiang",
+        "Shasha Han"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-05-01T11:17:10+00:00",
+      "link": "https://arxiv.org/pdf/2605.00574v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent conversational system for dynamic psychometric scale recommendation",
+      "llm_evidence_cn": "用于动态心理测量量表推荐的多智能体对话系统",
+      "llm_evidence": "用于动态心理测量量表推荐的多智能体对话系统",
+      "canonical_evidence": "用于动态心理测量量表推荐的多智能体对话系统",
+      "llm_tldr_en": "Proposes DySRec, a multi-agent system for dynamic and context-aware psychometric scale recommendation.",
+      "llm_tldr_cn": "提出 DySRec，一种用于动态和上下文感知心理量表推荐的多智能体系统。",
+      "llm_tldr": "提出 DySRec，一种用于动态和上下文感知心理量表推荐的多智能体系统。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.24197v1",
+      "title": "Seeing Is No Longer Believing: Frontier Image Generation Models, Synthetic Visual Evidence, and Real-World Risk",
+      "abstract": "Frontier image generation has moved from artistic synthesis toward synthetic visual evidence. Systems such as GPT Image 2, Nano Banana Pro, Nano Banana 2, Grok Imagine, Qwen Image 2.0 Pro, and Seedream 5.0 Lite combine photorealistic rendering, readable typography, reference consistency, editing control, and in several cases reasoning or search-grounded image construction. These capabilities create large benefits for design, education, accessibility, and communication, yet they also weaken one of society's most common trust shortcuts: the belief that a plausible picture is a reliable record. This paper provides a source-grounded technical and policy analysis of synthetic visual risk. We first summarize the public capabilities of recent image models, then analyze public incidents involving fake crisis images, celebrity and public-figure imagery, medical scans, forged-looking documents, synthetic screenshots, phishing assets, and market-moving rumors. We introduce a capability-weighted risk framework that links model affordances to real-world harm in finance, medicine, news, law, emergency response, identity verification, and civic discourse. Our findings show that risk is driven less by photorealism alone than by the convergence of realism, legible text, identity persistence, fast iteration, and distribution context. We argue for layered control: model-side restrictions, cryptographic provenance, visible labeling, platform friction, sector-grade verification, and incident response. The paper closes with practical recommendations for model providers, platforms, newsrooms, financial institutions, healthcare systems, legal organizations, regulators, and ordinary users.",
+      "authors": [
+        "Shuai Wu",
+        "Xue Li",
+        "Yanna Feng",
+        "Yufang Li",
+        "Zhijun Wang",
+        "Ran Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-27T08:59:40+00:00",
+      "link": "https://arxiv.org/pdf/2604.24197v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "synthetic visual evidence and real-world risk",
+      "llm_evidence_cn": "合成视觉证据与现实世界风险",
+      "llm_evidence": "合成视觉证据与现实世界风险",
+      "canonical_evidence": "合成视觉证据与现实世界风险",
+      "llm_tldr_en": "Analyzes risks of synthetic images from frontier models, relevant to fake news detection.",
+      "llm_tldr_cn": "分析前沿模型合成图像的风险，与虚假新闻检测高度相关。",
+      "llm_tldr": "分析前沿模型合成图像的风险，与虚假新闻检测高度相关。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.26904v1",
+      "title": "ClawGym: A Scalable Framework for Building Effective Claw Agents",
+      "abstract": "Claw-style environments support multi-step workflows over local files, tools, and persistent workspace states. However, scalable development around these environments remains constrained by the absence of a systematic framework, especially one for synthesizing verifiable training data and integrating it with agent training and diagnostic evaluation. To address this challenge, we present ClawGym, a scalable framework that supports the full lifecycle of Claw-style personal agent development. Concretely, we construct ClawGym-SynData, a diverse dataset of 13.5K filtered tasks synthesized from persona-driven intents and skill-grounded operations, paired with realistic mock workspaces and hybrid verification mechanisms. We then train a family of capable Claw-style models, termed ClawGym-Agents, through supervised fine-tuning on black-box rollout trajectories, and further explore reinforcement learning via a lightweight pipeline that parallelizes rollouts across per-task sandboxes.To support reliable evaluation, we further construct ClawGym-Bench, a benchmark of 200 instances calibrated through automated filtering and human-LLM review. Relevant resources will be soon released at https://github.com/ClawGym.",
+      "authors": [
+        "Fei Bai",
+        "Huatong Song",
+        "Shuang Sun",
+        "Daixuan Cheng",
+        "Yike Yang",
+        "Chuan Hao",
+        "Renyuan Li",
+        "Feng Chang",
+        "Yuan Wei",
+        "Ran Tao",
+        "Bryan Dai",
+        "Jian Yang",
+        "Wayne Xin Zhao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-04-29T17:12:22+00:00",
+      "link": "https://arxiv.org/pdf/2604.26904v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "framework for building effective personal agents",
+      "llm_evidence_cn": "构建有效个人智能体的框架",
+      "llm_evidence": "构建有效个人智能体的框架",
+      "canonical_evidence": "构建有效个人智能体的框架",
+      "llm_tldr_en": "Presents ClawGym, a framework for synthesizing training data and developing personal agents for multi-step workflows.",
+      "llm_tldr_cn": "提出 ClawGym 框架，用于合成训练数据并开发处理多步工作流的个人智能体。",
+      "llm_tldr": "提出 ClawGym 框架，用于合成训练数据并开发处理多步工作流的个人智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.00751v1",
+      "title": "NonZero: Interaction-Guided Exploration for Multi-Agent Monte Carlo Tree Search",
+      "abstract": "Monte Carlo Tree Search (MCTS) scales poorly in cooperative multi-agent domains because expansion must consider an exponentially large set of joint actions, severely limiting exploration under realistic search budgets. We propose NonZero, which keeps multi-agent MCTS tractable by running surrogate-guided selection over a low-dimensional nonlinear representation using an interaction-guided proposal rule, instead of directly exploring the full joint-action space. Our exploration uses an interaction score: single-agent deviations are ranked by predicted gain, while two-agent deviations are scored by a mixed-difference measure that reveals coordination benefits even when no single agent can improve alone. We formalize candidate proposal as a bandit problem over local deviations and derive a proposal rule, NonZero, with a sublinear local-regret guarantee for reaching approximate graph-local optima without enumerating the joint-action space. Empirically, NonZero improves sample efficiency and final performance on MatGame, SMAC, and SMACv2 relative to strong model-based and model-free baselines under matched search budgets.",
+      "authors": [
+        "Sizhe Tang",
+        "Zuyuan Zhang",
+        "Mahdi Imani",
+        "Tian Lan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-01T16:02:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.00751v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent Monte Carlo Tree Search and coordination benefits",
+      "llm_evidence_cn": "多智能体蒙特卡洛树搜索与协作效益",
+      "llm_evidence": "多智能体蒙特卡洛树搜索与协作效益",
+      "canonical_evidence": "多智能体蒙特卡洛树搜索与协作效益",
+      "llm_tldr_en": "Proposes NonZero to keep multi-agent MCTS tractable via interaction-guided exploration in joint-action spaces.",
+      "llm_tldr_cn": "提出NonZero，通过交互引导的探索使多智能体MCTS在联合动作空间中保持可计算性。",
+      "llm_tldr": "提出NonZero，通过交互引导的探索使多智能体MCTS在联合动作空间中保持可计算性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.24512v1",
+      "title": "Beyond the Attention Stability Boundary: Agentic Self-Synthesizing Reasoning Protocols",
+      "abstract": "As LLM agents transition to autonomous digital coworkers, maintaining deterministic goal-directedness in non-linear multi-turn conversations emerged as an architectural bottleneck. We identify and formalize a systemic failure mode termed the Attention Latch in decoder-only autoregressive Transformers. This phenomenon, a behavioral manifestation of Information Over-squashing, occurs when the cumulative probabilistic weight of historical context overrides mid-task updates, causing agents to remain anchored to obsolete constraints despite explicit contradictory instructions. We propose Self-Synthesizing Reasoning Protocols (SSRP), a metacognitive framework that implements a discrete separation between high-level architectural planning (Architect) and turn-by-turn procedural execution (Executive). We evaluate SSRP across 9K trajectories using the MultiWOZ 2.2 dataset and the Aggregate Pivot Accuracy (APA), a novel metric we validate by mapping its scores to the U-shaped 'Lost in the Middle' curve. We present 3 experimental tiers: a shallow recency-based retrieval pilot, a high-entropy SOP, and a semantic hijacked 3-hop Multi-Fact Synthesis task. Our results empirically locate the Attention Stability Boundary, where stateless Vanilla ReAct baselines for GPT 5.4 collapse to 0.1% success while SSRP achieves a 715X Resilience Lift. We demonstrate statistically significant gains across Gemini 3.1 Pro, Claude Sonnet 4.6 and DeepSeek V3.2. Audits confirm SSRP necessity by proving attentional lapse via a recursive reflexion baseline (100% success); decoupling the latch from positional bias through equidistant stress testing (90% accuracy); and formalizing SSRP via the Information Bottleneck principle and granularity ablations. Procedural Integrity audit (98.8% adherence) reveals a Grounding Paradox where high-stability models fail by refusing to hallucinate under retrieval-reasoning contamination.",
+      "authors": [
+        "Dahlia Shehata",
+        "Ming Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-27T14:13:30+00:00",
+      "link": "https://arxiv.org/pdf/2604.24512v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM agents for autonomous digital coworkers and multi-turn reasoning",
+      "llm_evidence_cn": "用于自主数字协作和多轮推理的LLM智能体",
+      "llm_evidence": "用于自主数字协作和多轮推理的LLM智能体",
+      "canonical_evidence": "用于自主数字协作和多轮推理的LLM智能体",
+      "llm_tldr_en": "Proposes a metacognitive framework to fix attention issues in LLM agents, improving goal-directed reasoning.",
+      "llm_tldr_cn": "提出一种元认知框架来解决LLM智能体的注意力滞后问题，提升其目标导向的推理能力。",
+      "llm_tldr": "提出一种元认知框架来解决LLM智能体的注意力滞后问题，提升其目标导向的推理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.27162v1",
+      "title": "A High-Throughput Compute-Efficient POMDP Hide-And-Seek-Engine (HASE) for Multi-Agent Operations",
+      "abstract": "Reinforcement Learning (RL) algorithms exhibit high sample complexity, particularly when applied to Decentralized Partially Observable Markov Decision Processes (Dec-POMDPs). As a response, projects such as SampleFactory, EnvPool, Brax, and IsaacLab migrate parallel execution of classic environments such as MuJoCo and Atari into C++ thread pools or the GPU to decrease the computational cost of environment steps. We are interested in optimizing the decision-level of human-AI joint operations, so we introduce a compute-efficient Dec-POMDP engine natively architected in C++ called Hide-And-Seek-Engine. By employing Data-Oriented Design (DOD) principles, explicit 64-byte cache-line alignment to remove false sharing, and a zero-copy PyTorch memory bridge using pinned memory and Direct Memory Access (DMA), our engine sustains throughput of up to 33,000,000 steps per second (SPS) in a single-agent, 1024-environment, decentralized observations on an AMD Ryzen 9950X (16 cores). Ten agents reduces FPS to 7M SPS with generating random actions contributing 1/3rd the total runtime for reference. The engine achieves a throughput increase of approximately 3,500$\\times$ over the baseline single threaded vectorized NumPy implementation and successfully trains cooperative multi-agent policies via PPO, DQN, and SAC in minutes, validating both its performance and generality.",
+      "authors": [
+        "Timothy Flavin",
+        "Sandip Sen"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG",
+        "cs.PF"
+      ],
+      "published": "2026-04-29T20:09:13+00:00",
+      "link": "https://arxiv.org/pdf/2604.27162v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "compute-efficient engine for multi-agent operations",
+      "llm_evidence_cn": "多智能体操作的高效计算引擎",
+      "llm_evidence": "多智能体操作的高效计算引擎",
+      "canonical_evidence": "多智能体操作的高效计算引擎",
+      "llm_tldr_en": "Presents HASE, a high-throughput C++ engine for decentralized partially observable multi-agent reinforcement learning.",
+      "llm_tldr_cn": "展示了HASE，一个用于分散式部分可观测多智能体强化学习的高吞吐量C++引擎。",
+      "llm_tldr": "展示了HASE，一个用于分散式部分可观测多智能体强化学习的高吞吐量C++引擎。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2604.27132v1",
+      "title": "TRUST: A Framework for Decentralized AI Service v.0.1",
+      "abstract": "Large Reasoning Models (LRMs) and Multi-Agent Systems (MAS) in high-stakes domains demand reliable verification, yet centralized approaches suffer four limitations: (1) Robustness, with single points of failure vulnerable to attacks and bias; (2) Scalability, as reasoning complexity creates bottlenecks; (3) Opacity, as hidden auditing erodes trust; and (4) Privacy, as exposed reasoning traces risk model theft. We introduce TRUST (Transparent, Robust, and Unified Services for Trustworthy AI), a decentralized framework with three innovations: (i) Hierarchical Directed Acyclic Graphs (HDAGs) that decompose Chain-of-Thought reasoning into five abstraction levels for parallel distributed auditing; (ii) the DAAN protocol, which projects multi-agent interactions into Causal Interaction Graphs (CIGs) for deterministic root-cause attribution; and (iii) a multi-tier consensus mechanism among computational checkers, LLM evaluators, and human experts with stake-weighted voting that guarantees correctness under 30% adversarial participation. We prove a Safety-Profitability Theorem ensuring honest auditors profit while malicious actors incur losses. All decisions are recorded on-chain, while privacy-by-design segmentation prevents reconstruction of proprietary logic. Across multiple LLMs and benchmarks, TRUST attains 72.4% accuracy (4-18% above baselines) and remains resilient against 20% corruption. DAAN reaches 70% root-cause attribution (vs. 54-63% for standard methods) with 60% token savings. Human studies validate the design (F1 = 0.89, Brier = 0.074). The framework supports (A1) decentralized auditing, (A2) tamper-proof leaderboards, (A3) trustless data annotation, and (A4) governed autonomous agents, pioneering decentralized AI auditing for safe, accountable deployment of reasoning-capable systems.",
+      "authors": [
+        "Yu-Chao Huang",
+        "Zhen Tan",
+        "Mohan Zhang",
+        "Pingzhi Li",
+        "Zhuo Zhang",
+        "Tianlong Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-29T19:32:58+00:00",
+      "link": "https://arxiv.org/pdf/2604.27132v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized framework for multi-agent systems and auditing",
+      "llm_evidence_cn": "多智能体系统与审计的去中心化框架",
+      "llm_evidence": "多智能体系统与审计的去中心化框架",
+      "canonical_evidence": "多智能体系统与审计的去中心化框架",
+      "llm_tldr_en": "A decentralized framework for trustworthy AI using hierarchical graphs to audit multi-agent reasoning.",
+      "llm_tldr_cn": "一种利用分层图对多智能体推理进行审计的去中心化可信人工智能框架。",
+      "llm_tldr": "一种利用分层图对多智能体推理进行审计的去中心化可信人工智能框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.27351v1",
+      "title": "Heterogeneous Scientific Foundation Model Collaboration",
+      "abstract": "Agentic large language model systems have demonstrated strong capabilities. However, their reliance on language as the universal interface fundamentally limits their applicability to many real-world problems, especially in scientific domains where domain-specific foundation models have been developed to address specialized tasks beyond natural language. In this work, we introduce Eywa, a heterogeneous agentic framework designed to extend language-centric systems to a broader class of scientific foundation models. The key idea of Eywa is to augment domain-specific foundation models with a language-model-based reasoning interface, enabling language models to guide inference over non-linguistic data modalities. This design allows predictive foundation models, which are typically optimized for specialized data and tasks, to participate in higher-level reasoning and decision-making processes within agentic systems. Eywa can serve as a drop-in replacement for a single-agent pipeline (EywaAgent) or be integrated into existing multi-agent systems by replacing traditional agents with specialized agents (EywaMAS). We further investigate a planning-based orchestration framework in which a planner dynamically coordinates traditional agents and Eywa agents to solve complex tasks across heterogeneous data modalities (EywaOrchestra). We evaluate Eywa across a diverse set of scientific domains spanning physical, life, and social sciences. Experimental results demonstrate that Eywa improves performance on tasks involving structured and domain-specific data, while reducing reliance on language-based reasoning through effective collaboration with specialized foundation models.",
+      "authors": [
+        "Zihao Li",
+        "Jiaru Zou",
+        "Feihao Fang",
+        "Xuying Ning",
+        "Mengting Ai",
+        "Tianxin Wei",
+        "Sirui Chen",
+        "Xiyuan Yang",
+        "Jingrui He"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-04-30T03:02:27+00:00",
+      "link": "https://arxiv.org/pdf/2604.27351v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "agentic large language model systems and heterogeneous agentic framework",
+      "llm_evidence_cn": "代理大语言模型系统和异构代理框架",
+      "llm_evidence": "代理大语言模型系统和异构代理框架",
+      "canonical_evidence": "代理大语言模型系统和异构代理框架",
+      "llm_tldr_en": "Introduces Eywa, a framework for collaborating heterogeneous scientific foundation models via LLM reasoning.",
+      "llm_tldr_cn": "介绍 Eywa，一个通过 LLM 推理协作异构科学基础模型的框架。",
+      "llm_tldr": "介绍 Eywa，一个通过 LLM 推理协作异构科学基础模型的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
