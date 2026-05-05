@@ -6,73 +6,82 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-04
-- 运行时间：2026-05-04 20:21:55 UTC
+- 最新运行日期：2026-05-05
+- 运行时间：2026-05-05 20:10:33 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：20
+- 精读区：9
 - 速读区：11
 
 ### 今日简报（AI）
-今日精选 17 篇前沿成果，深度拆解 LLM 驱动的“硅基社会”构建指南与金融市场自组织生态。
-重点关注满分论文提出的社会模拟设计空间，以及异质偏好学习如何重塑对复杂金融系统演化的认知。
-建议从多智能体协作与因果推断入手，探索 AI 模拟人类集体行为与心理决策的最新边界。
-- 详情：[/202605/04/README](/202605/04/README)
+今日精研 20 篇前沿成果，重点攻克了智能体社交偏见与多模态深度伪造检测两大难题。
+研究揭示了“内群体偏好”对 AI 事实判断的干扰，并推出了针对社交媒体虚假信息识别的统一基准 Omni-Fake。
+建议关注 AI 在社交互动中的立场偏差，并利用最新技术手段提升对多模态伪造内容的辨别力。
+- 详情：[/202605/05/README](/202605/05/README)
 
 ### 精读区论文标签
-1. [The $\textit{Silicon Society}$ Cookbook: Design Space of LLM-based Social Simulations](/202605/04/2605.00197v1-the-textitsilicon-society-cookbook-design-space-of-llm-based-social-simulations)  
+1. [Truth or Tribe: How In-group Favoritism Prioritize Facts in Persona Agents](/202605/05/2605.01329v1-truth-or-tribe-how-in-group-favoritism-prioritize-facts-in-persona-agents)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：基于 LLM 的社会模拟和硅基社会的设计空间
-2. [Financial Market as a Self-Organized Ecosystem: Simulation via Learning with Heterogeneous Preferences](/202605/04/2604.23975v1-financial-market-as-a-self-organized-ecosystem-simulation-via-learning-with-heterogeneous-preferences)  
+   evidence：大语言模型驱动的人格化智能体模拟社会偏见与虚假信息传播
+2. [Omni-Fake: Benchmarking Unified Multimodal Social Media Deepfake Detection](/202605/05/2605.01638v1-omni-fake-benchmarking-unified-multimodal-social-media-deepfake-detection)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：包含视频的多模态社交媒体深度伪造检测
+3. [LLM-enabled Social Agents](/202605/05/2605.02335v1-llm-enabled-social-agents)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：基于角色和人格的LLM社交智能体
+4. [When Embedding-Based Defenses Fail: Rethinking Safety in LLM-Based Multi-Agent Systems](/202605/05/2605.01133v1-when-embedding-based-defenses-fail-rethinking-safety-in-llm-based-multi-agent-systems)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体金融市场模拟中的涌现动态
-3. [A well-motivated model of pedestrian dynamics](/202605/04/2604.26858v2-a-well-motivated-model-of-pedestrian-dynamics)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：行人动力学与社会条件的智能体建模
-4. [Web2BigTable: A Bi-Level Multi-Agent LLM System for Internet-Scale Information Search and Extraction](/202605/04/2604.27221v1-web2bigtable-a-bi-level-multi-agent-llm-system-for-internet-scale-information-search-and-extraction)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：用于信息搜索的双层多智能体系统
-5. [Emotion-Aware Clickbait Attack in Social Media](/202605/04/2604.27369v1-emotion-aware-clickbait-attack-in-social-media)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：社交媒体中的情感感知点击诱饵
-6. [RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems](/202605/04/2604.27616v1-roadmapper-a-multi-agent-system-for-roadmap-generation-of-solving-complex-research-problems)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：用于路线图生成的多智能体系统
+   evidence：大语言模型驱动的多智能体系统中的虚假信息传播
+5. [Position: Safety and Fairness in Agentic AI Depend on Interaction Topology, Not on Model Scale or Alignment](/202605/05/2605.01147v1-position-safety-and-fairness-in-agentic-ai-depend-on-interaction-topology-not-on-model-scale-or-alignment)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：多智能体交互拓扑中的涌现病态行为
+6. [Talk is Cheap, Communication is Hard: Dynamic Grounding Failures and Repair in Multi-Agent Negotiation](/202605/05/2605.01750v1-talk-is-cheap-communication-is-hard-dynamic-grounding-failures-and-repair-in-multi-agent-negotiation)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：多智能体交互中的动态基元与协商
+7. [An Information-theoretic Propagation Denoising and Fusion Framework for Fake News Detection](/202605/05/2605.02259v1-an-information-theoretic-propagation-denoising-and-fusion-framework-for-fake-news-detection)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：大语言模型模拟用户交互用于虚假新闻检测
+8. [Mitigating Misalignment Contagion by Steering with Implicit Traits](/202605/05/2605.02751v1-mitigating-misalignment-contagion-by-steering-with-implicit-traits)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：多智能体社会困境游戏中的失调传染
+9. [Reinforcement Learning for LLM-based Multi-Agent Systems through Orchestration Traces](/202605/05/2605.02801v1-reinforcement-learning-for-llm-based-multi-agent-systems-through-orchestration-traces)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：基于大语言模型的多智能体系统强化学习
 
 ### 速读区论文标签
-1. [Causal Foundations of Collective Agency](/202605/04/2605.00248v1-causal-foundations-of-collective-agency)  
+1. [ARIS: Agentic and Relationship Intelligence System for Social Robots](/202605/05/2605.00943v1-aris-agentic-and-relationship-intelligence-system-for-social-robots)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统中的集体代理与涌现目标
-2. [DySRec: Dynamic Context-Aware Psychometric Scale Recommendation via Multi-Agent Collaboration](/202605/04/2605.00574v1-dysrec-dynamic-context-aware-psychometric-scale-recommendation-via-multi-agent-collaboration)  
+   evidence：用于社交机器人和关系推理的智能体框架
+2. [Adaptive Pluralistic Alignment: A pipeline for dynamic artificial democracy](/202605/05/2605.01642v1-adaptive-pluralistic-alignment-a-pipeline-for-dynamic-artificial-democracy)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于动态心理测量量表推荐的多智能体对话系统
-3. [NonZero: Interaction-Guided Exploration for Multi-Agent Monte Carlo Tree Search](/202605/04/2605.00751v1-nonzero-interaction-guided-exploration-for-multi-agent-monte-carlo-tree-search)  
+   evidence：人工民主与社会选择理论投票
+3. [A Study of Belief Revision Postulates in Multi-Agent Systems (Extended Version)](/202605/05/2605.02249v1-a-study-of-belief-revision-postulates-in-multi-agent-systems-extended-version)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体蒙特卡洛树搜索与协作效益
-4. [MemeScouts@LT-EDI 2026: Asking the Right Questions -- Prompted Weak Supervision for Meme Hate Speech Detection](/202605/04/2604.24179v1-memescoutslt-edi-2026-asking-the-right-questions----prompted-weak-supervision-for-meme-hate-speech-detection)  
+   evidence：多智能体系统中的信念修正
+4. [SOTOPIA-TOM: Evaluating Information Management in Multi-Agent Interaction with Theory of Mind](/202605/05/2605.02307v1-sotopia-tom-evaluating-information-management-in-multi-agent-interaction-with-theory-of-mind)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：利用心理理论评估多智能体交互中的信息管理
+5. [Bridging Values and Behavior: A Hierarchical Framework for Proactive Embodied Agents](/202605/05/2604.27699v1-bridging-values-and-behavior-a-hierarchical-framework-for-proactive-embodied-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：利用弱监督进行多模态Meme仇恨言论检测
-5. [Seeing Is No Longer Believing: Frontier Image Generation Models, Synthetic Visual Evidence, and Real-World Risk](/202605/04/2604.24197v1-seeing-is-no-longer-believing-frontier-image-generation-models-synthetic-visual-evidence-and-real-world-risk)  
+   evidence：基于大模型的决策模块用于主动智能体
+6. [Scaling Video Understanding via Compact Latent Multi-Agent Collaboration](/202605/05/2605.00444v1-scaling-video-understanding-via-compact-latent-multi-agent-collaboration)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：合成视觉证据与现实世界风险
-6. [Beyond the Attention Stability Boundary: Agentic Self-Synthesizing Reasoning Protocols](/202605/04/2604.24512v1-beyond-the-attention-stability-boundary-agentic-self-synthesizing-reasoning-protocols)  
+   evidence：多智能体协作进行视频理解
+7. [Learning to Act and Cooperate for Distributed Black-Box Consensus Optimization](/202605/05/2605.00691v1-learning-to-act-and-cooperate-for-distributed-black-box-consensus-optimization)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于自主数字协作和多轮推理的LLM智能体
-7. [TRUST: A Framework for Decentralized AI Service v.0.1](/202605/04/2604.27132v1-trust-a-framework-for-decentralized-ai-service-v01)  
+   evidence：多智能体系统中的分布式共识优化协作
+8. [Multi-Agent Reasoning Improves Compute Efficiency: Pareto-Optimal Test-Time Scaling](/202605/05/2605.01566v1-multi-agent-reasoning-improves-compute-efficiency-pareto-optimal-test-time-scaling)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统与审计的去中心化框架
-8. [Heterogeneous Scientific Foundation Model Collaboration](/202605/04/2604.27351v1-heterogeneous-scientific-foundation-model-collaboration)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：代理大语言模型系统和异构代理框架
-9. [MarketBench: Evaluating AI Agents as Market Participants](/202605/04/2604.23897v1-marketbench-evaluating-ai-agents-as-market-participants)  
+   evidence：多智能体推理与辩论以提高效率
+9. [Think Before You Act -- A Neurocognitive Governance Model for Autonomous AI Agents](/202605/05/2604.25684v1-think-before-you-act----a-neurocognitive-governance-model-for-autonomous-ai-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：评估作为市场参与者的AI智能体
-10. [ClawGym: A Scalable Framework for Building Effective Claw Agents](/202605/04/2604.26904v1-clawgym-a-scalable-framework-for-building-effective-claw-agents)  
+   evidence：自主AI智能体的神经认知治理
+10. [AgentReputation: A Decentralized Agentic AI Reputation Framework](/202605/05/2605.00073v1-agentreputation-a-decentralized-agentic-ai-reputation-framework)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：构建有效个人智能体的框架
-11. [A High-Throughput Compute-Efficient POMDP Hide-And-Seek-Engine (HASE) for Multi-Agent Operations](/202605/04/2604.27162v1-a-high-throughput-compute-efficient-pomdp-hide-and-seek-engine-hase-for-multi-agent-operations)  
+   evidence：去中心化智能体AI声誉框架
+11. [Adaptive Querying with AI Persona Priors](/202605/05/2605.00696v1-adaptive-querying-with-ai-persona-priors)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多智能体操作的高效计算引擎
+   evidence：大语言模型生成的AI人格用于用户建模
 
 
 <div class="dpr-home-promo-card">
