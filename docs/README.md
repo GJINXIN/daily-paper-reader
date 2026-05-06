@@ -6,82 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-05
-- 运行时间：2026-05-05 20:10:33 UTC
+- 最新运行日期：2026-05-06
+- 运行时间：2026-05-06 20:24:43 UTC
 - 运行状态：成功
-- 本次总论文数：20
-- 精读区：9
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日精研 20 篇前沿成果，重点攻克了智能体社交偏见与多模态深度伪造检测两大难题。
-研究揭示了“内群体偏好”对 AI 事实判断的干扰，并推出了针对社交媒体虚假信息识别的统一基准 Omni-Fake。
-建议关注 AI 在社交互动中的立场偏差，并利用最新技术手段提升对多模态伪造内容的辨别力。
-- 详情：[/202605/05/README](/202605/05/README)
+今日精选 17 篇前沿论文，深度解析生成式模型在模拟人类协作行为及多模态争议检测中的突破。
+重点关注满分论文对交互式表征的探索，以及无需训练即可实现多模态争议识别的智能体框架。
+建议优先研读智能体生态系统的编排语言与自动化工作流构建，把握人机协同信息检索的新趋势。
+- 详情：[/202605/06/README](/202605/06/README)
 
 ### 精读区论文标签
-1. [Truth or Tribe: How In-group Favoritism Prioritize Facts in Persona Agents](/202605/05/2605.01329v1-truth-or-tribe-how-in-group-favoritism-prioritize-facts-in-persona-agents)  
+1. [Evaluating Generative Models as Interactive Emergent Representations of Human-Like Collaborative Behavior](/202605/06/2605.03855v1-evaluating-generative-models-as-interactive-emergent-representations-of-human-like-collaborative-behavior)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：大语言模型驱动的人格化智能体模拟社会偏见与虚假信息传播
-2. [Omni-Fake: Benchmarking Unified Multimodal Social Media Deepfake Detection](/202605/05/2605.01638v1-omni-fake-benchmarking-unified-multimodal-social-media-deepfake-detection)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：包含视频的多模态社交媒体深度伪造检测
-3. [LLM-enabled Social Agents](/202605/05/2605.02335v1-llm-enabled-social-agents)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：基于角色和人格的LLM社交智能体
-4. [When Embedding-Based Defenses Fail: Rethinking Safety in LLM-Based Multi-Agent Systems](/202605/05/2605.01133v1-when-embedding-based-defenses-fail-rethinking-safety-in-llm-based-multi-agent-systems)  
+   evidence：LLM智能体模拟类人协作行为
+2. [From Static Analysis to Audience Dissemination: A Training-Free Multimodal Controversy Detection Multi-Agent Framework](/202605/06/2605.02939v1-from-static-analysis-to-audience-dissemination-a-training-free-multimodal-controversy-detection-multi-agent-framework)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：大语言模型驱动的多智能体系统中的虚假信息传播
-5. [Position: Safety and Fairness in Agentic AI Depend on Interaction Topology, Not on Model Scale or Alignment](/202605/05/2605.01147v1-position-safety-and-fairness-in-agentic-ai-depend-on-interaction-topology-not-on-model-scale-or-alignment)  
+   evidence：用于视频多模态争议检测的多智能体框架
+3. [Attention: What Prevents Young Adults from Speaking Up Against Cyberbullying in an LLM-Powered Social Media Simulation](/202605/06/2605.03287v1-attention-what-prevents-young-adults-from-speaking-up-against-cyberbullying-in-an-llm-powered-social-media-simulation)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体交互拓扑中的涌现病态行为
-6. [Talk is Cheap, Communication is Hard: Dynamic Grounding Failures and Repair in Multi-Agent Negotiation](/202605/05/2605.01750v1-talk-is-cheap-communication-is-hard-dynamic-grounding-failures-and-repair-in-multi-agent-negotiation)  
+   evidence：大模型驱动的网络欺凌社交媒体模拟
+4. [Multi-Agent Strategic Games with LLMs](/202605/06/2605.03604v1-multi-agent-strategic-games-with-llms)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体交互中的动态基元与协商
-7. [An Information-theoretic Propagation Denoising and Fusion Framework for Fake News Detection](/202605/05/2605.02259v1-an-information-theoretic-propagation-denoising-and-fusion-framework-for-fake-news-detection)  
+   evidence：将LLM作为研究战略社会行为与冲突的主体
+5. [Agent-Based Modeling of Low-Emission Fertilizer Adoption for Dairy Farm Decarbonisation using Empirical Farm Data](/202605/06/2605.03648v1-agent-based-modeling-of-low-emission-fertilizer-adoption-for-dairy-farm-decarbonisation-using-empirical-farm-data)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：大语言模型模拟用户交互用于虚假新闻检测
-8. [Mitigating Misalignment Contagion by Steering with Implicit Traits](/202605/05/2605.02751v1-mitigating-misalignment-contagion-by-steering-with-implicit-traits)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体社会困境游戏中的失调传染
-9. [Reinforcement Learning for LLM-based Multi-Agent Systems through Orchestration Traces](/202605/05/2605.02801v1-reinforcement-learning-for-llm-based-multi-agent-systems-through-orchestration-traces)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体系统强化学习
+   evidence：农业中社会互动与同伴影响的智能体建模
+6. [DynoSLAM: Dynamic SLAM with Generative Graph Neural Networks for Real-World Social Navigation](/202605/06/2605.02759v1-dynoslam-dynamic-slam-with-generative-graph-neural-networks-for-real-world-social-navigation)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于现实社交导航的社交感知图神经网络
 
 ### 速读区论文标签
-1. [ARIS: Agentic and Relationship Intelligence System for Social Robots](/202605/05/2605.00943v1-aris-agentic-and-relationship-intelligence-system-for-social-robots)  
+1. [Pact: A Choreographic Language for Agentic Ecosystems](/202605/06/2605.03143v1-pact-a-choreographic-language-for-agentic-ecosystems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于社交机器人和关系推理的智能体框架
-2. [Adaptive Pluralistic Alignment: A pipeline for dynamic artificial democracy](/202605/05/2605.01642v1-adaptive-pluralistic-alignment-a-pipeline-for-dynamic-artificial-democracy)  
+   evidence：多方环境中的智能体自利与博弈论
+2. [From Intent to Execution: Composing Agentic Workflows with Agent Recommendation](/202605/06/2605.03986v1-from-intent-to-execution-composing-agentic-workflows-with-agent-recommendation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：人工民主与社会选择理论投票
-3. [A Study of Belief Revision Postulates in Multi-Agent Systems (Extended Version)](/202605/05/2605.02249v1-a-study-of-belief-revision-postulates-in-multi-agent-systems-extended-version)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统中的信念修正
-4. [SOTOPIA-TOM: Evaluating Information Management in Multi-Agent Interaction with Theory of Mind](/202605/05/2605.02307v1-sotopia-tom-evaluating-information-management-in-multi-agent-interaction-with-theory-of-mind)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：利用心理理论评估多智能体交互中的信息管理
-5. [Bridging Values and Behavior: A Hierarchical Framework for Proactive Embodied Agents](/202605/05/2604.27699v1-bridging-values-and-behavior-a-hierarchical-framework-for-proactive-embodied-agents)  
+   evidence：使用大语言模型规划器自动创建和编排多智能体系统（MAS）的框架。
+3. [Knowledge Affordances for Hybrid Human-AI Information Seeking](/202605/06/2604.27539v1-knowledge-affordances-for-hybrid-human-ai-information-seeking)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于大模型的决策模块用于主动智能体
-6. [Scaling Video Understanding via Compact Latent Multi-Agent Collaboration](/202605/05/2605.00444v1-scaling-video-understanding-via-compact-latent-multi-agent-collaboration)  
+   evidence：人机混合社会环境中的信息寻求
+4. [Agent Capsules: Quality-Gated Granularity Control for Multi-Agent LLM Pipelines](/202605/06/2605.00410v1-agent-capsules-quality-gated-granularity-control-for-multi-agent-llm-pipelines)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体协作进行视频理解
-7. [Learning to Act and Cooperate for Distributed Black-Box Consensus Optimization](/202605/05/2605.00691v1-learning-to-act-and-cooperate-for-distributed-black-box-consensus-optimization)  
+   evidence：多智能体大模型流水线优化
+5. [Position: agentic AI orchestration should be Bayes-consistent](/202605/06/2605.00742v1-position-agentic-ai-orchestration-should-be-bayes-consistent)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统中的分布式共识优化协作
-8. [Multi-Agent Reasoning Improves Compute Efficiency: Pareto-Optimal Test-Time Scaling](/202605/05/2605.01566v1-multi-agent-reasoning-improves-compute-efficiency-pareto-optimal-test-time-scaling)  
+   evidence：智能体AI编排与决策中的贝叶斯原则
+6. [CoFlow: Coordinated Few-Step Flow for Offline Multi-Agent Decision Making](/202605/06/2605.01457v1-coflow-coordinated-few-step-flow-for-offline-multi-agent-decision-making)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体推理与辩论以提高效率
-9. [Think Before You Act -- A Neurocognitive Governance Model for Autonomous AI Agents](/202605/05/2604.25684v1-think-before-you-act----a-neurocognitive-governance-model-for-autonomous-ai-agents)  
+   evidence：协同多智能体决策
+7. [CP-SynC: Multi-Agent Zero-Shot Constraint Modeling in MiniZinc with Synthesized Checkers](/202605/06/2605.01675v1-cp-sync-multi-agent-zero-shot-constraint-modeling-in-minizinc-with-synthesized-checkers)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：零样本约束建模的多智能体工作流
+8. [Catching the Infection Before It Spreads: Foresight-Guided Defense in Multi-Agent Systems](/202605/06/2605.01758v1-catching-the-infection-before-it-spreads-foresight-guided-defense-in-multi-agent-systems)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：多智能体系统中的防御
+9. [AGEL-Comp: A Neuro-Symbolic Framework for Compositional Generalization in Interactive Agents](/202605/06/2604.26522v1-agel-comp-a-neuro-symbolic-framework-for-compositional-generalization-in-interactive-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：自主AI智能体的神经认知治理
-10. [AgentReputation: A Decentralized Agentic AI Reputation Framework](/202605/05/2605.00073v1-agentreputation-a-decentralized-agentic-ai-reputation-framework)  
+   evidence：交互式智能体的神经符号框架
+10. [Rethinking Agentic Reinforcement Learning In Large Language Models](/202605/06/2604.27859v1-rethinking-agentic-reinforcement-learning-in-large-language-models)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：去中心化智能体AI声誉框架
-11. [Adaptive Querying with AI Persona Priors](/202605/05/2605.00696v1-adaptive-querying-with-ai-persona-priors)  
+   evidence：大模型中的智能体强化学习
+11. [Collaborative Agent Reasoning Engineering (CARE): A Three-Party Design Methodology for Systematically Engineering AI Agents with Subject Matter Experts, Developers, and Helper Agents](/202605/06/2604.28043v1-collaborative-agent-reasoning-engineering-care-a-three-party-design-methodology-for-systematically-engineering-ai-agents-with-subject-matter-experts-developers-and-helper-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：大语言模型生成的AI人格用于用户建模
+   evidence：LLM智能体工程化方法论
 
 
 <div class="dpr-home-promo-card">
