@@ -1,0 +1,654 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-07T20:09:17.032999+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 7,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 26,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2605.03855v2",
+      "title": "Evaluating Generative Models as Interactive Emergent Representations of Human-Like Collaborative Behavior",
+      "abstract": "Human-AI collaboration requires AI agents to understand human behavior for effective coordination. While advances in foundation models show promising capabilities in understanding and showing human-like behavior, their application in embodied collaborative settings needs further investigation. This work examines whether embodied foundation model agents exhibit emergent collaborative behaviors indicating underlying mental models of their collaborators, which is an important aspect of effective coordination. This paper develops a 2D collaborative game environment where large language model agents and humans complete color-matching tasks requiring coordination. We define five collaborative behaviors as indicators of emergent mental model representation: perspective-taking, collaborator-aware planning, introspection, theory of mind, and clarification. An automated behavior detection system using LLM-based judges identifies these behaviors, achieving fair to substantial agreement with human annotations. Results from the automated behavior detection system show that foundation models consistently exhibit emergent collaborative behaviors without being explicitly trained to do so. These behaviors occur at varying frequencies during collaboration stages, with distinct patterns across different LLMs. A user study was also conducted to evaluate human satisfaction and perceived collaboration effectiveness, with the results indicating positive collaboration experiences. Participants appreciated the agents' task focus, plan verbalization, and initiative, while suggesting improvements in response times and human-like interactions. This work provides an experimental framework for human-AI collaboration, empirical evidence of collaborative behaviors in embodied LLM agents, a validated behavioral analysis methodology, and an assessment of collaboration effectiveness.",
+      "authors": [
+        "Shinas Shaji",
+        "Teena Chakkalayil Hassan",
+        "Sebastian Houben",
+        "Alex Mitrevski"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-05T15:20:15+00:00",
+      "link": "https://arxiv.org/pdf/2605.03855v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "emergent collaborative behaviors in foundation model agents",
+      "llm_evidence_cn": "基础模型智能体中的涌现协作行为",
+      "llm_evidence": "基础模型智能体中的涌现协作行为",
+      "canonical_evidence": "基础模型智能体中的涌现协作行为",
+      "llm_tldr_en": "Investigates emergent human-like collaborative behaviors in embodied LLM agents.",
+      "llm_tldr_cn": "研究具身大模型智能体中涌现出的类人协作行为。",
+      "llm_tldr": "研究具身大模型智能体中涌现出的类人协作行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.04312v1",
+      "title": "Agent Island: A Saturation- and Contamination-Resistant Benchmark from Multiagent Games",
+      "abstract": "Static capabilities benchmarks suffer from saturation and contamination, making it difficult to track capabilities progress over time. We introduce Agent Island, a multiplayer simulation environment in which language-model agents compete in a game of interagent cooperation, conflict, and persuasion. The environment yields a dynamic benchmark designed to mitigate both saturation and contamination; new models can always outperform the current leading player in this winner-take-all game, and agents compete against other adaptive agents rather than face a fixed task set. We rank players with a Bayesian Plackett-Luce model, allowing us to quantify uncertainty in player skill. In 999 games involving 49 unique models, openai/gpt-5.5 dominates its peers with a posterior mean skill of 5.64, compared with 3.10 for the second-ranked model, openai/gpt-5.2, and 2.86 for the third-ranked model, openai/gpt-5.3-codex. We release the game logs as a dataset for analyses of model behavior. As an example, we investigate same-provider preference in final-round votes and find that models are 8.3 p.p. more likely to support a same-provider finalist than finalists from other providers. This preference is not uniform across providers: among separately estimated providers, the effect is strongest for OpenAI models and weakest for Anthropic models.",
+      "authors": [
+        "Connacher Murphy"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-05-05T21:24:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.04312v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multiplayer simulation of persuasion and conflict",
+      "llm_evidence_cn": "说服与冲突的多人模拟环境",
+      "llm_evidence": "说服与冲突的多人模拟环境",
+      "canonical_evidence": "说服与冲突的多人模拟环境",
+      "llm_tldr_en": "Introduces Agent Island, a multi-agent game environment for simulating social interaction and competition.",
+      "llm_tldr_cn": "引入Agent Island，一个用于模拟社交互动、竞争与说服的多智能体游戏环境。",
+      "llm_tldr": "引入Agent Island，一个用于模拟社交互动、竞争与说服的多智能体游戏环境。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.02624v1",
+      "title": "Synthetic Users, Real Differences: an Evaluation Framework for User Simulation in Multi-Turn Conversations",
+      "abstract": "There is growing interest in exploring user simulation as an alternative to gathering and scoring real user-chatbot interactions for AI chatbot evaluation. For this purpose, it is important to ensure the realism of the simulation, i.e., the extent to which simulated dialogues reflect real dialogues users have with chatbots. Most existing methods evaluating simulation realism produce coarse quality signal and remain solely at the level of individual dialogues. To support more rigorous evaluation in this area, we propose realsim, an evaluation framework that enables practitioners to take a distributional view of real vs. simulated dialogues along 8 dimensions, covering attributes related to the communicative functions of the interaction, user states, and the surface form of user messages. We then instantiate the framework with a curated dataset of 1K multi-turn task-focused real user-chatbot dialogues that cover 16 domains of chatbot applications. Overall, we find that simulated users tend to struggle at capturing communication frictions that real users introduce to interactions, which could make evaluations based on such simulations overly optimistic. We also observe variability in performance across different domains, which may indicate a need for domain-specific user simulators.",
+      "authors": [
+        "Yu Lu Liu",
+        "Hyokun Yun",
+        "Tanya Roosta",
+        "Ziang Xiao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-04T14:14:40+00:00",
+      "link": "https://arxiv.org/pdf/2605.02624v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "User simulation for evaluating AI chatbots",
+      "llm_evidence_cn": "用于评估AI聊天机器人的用户模拟",
+      "llm_evidence": "用于评估AI聊天机器人的用户模拟",
+      "canonical_evidence": "用于评估AI聊天机器人的用户模拟",
+      "llm_tldr_en": "Proposes an evaluation framework for the realism of synthetic user simulations in conversations.",
+      "llm_tldr_cn": "提出一种评估框架，用于衡量多轮对话中合成用户模拟的真实性。",
+      "llm_tldr": "提出一种评估框架，用于衡量多轮对话中合成用户模拟的真实性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.02379v1",
+      "title": "Fair Agents: Balancing Multistakeholder Alignment in Multi-Agent Personalization Systems",
+      "abstract": "LLM agents are increasingly used for personalization due to their ability to communicate directly with users in natural language, integrate external knowledge bases, and negotiate with other (possibly human) agents. Especially in multistakeholder AI systems with multiple distinct objectives, LLM agents are used to independently optimize for each stakeholder's goals. Here, stakeholder alignment is essential to identify and map these goals to provide LLM agents with quantifiable objectives. Plus, the way in which the outputs of the LLM agents are aggregated is fundamental to ensuring fair outcomes for all agents and, therefore, stakeholders. In this work, we identify open research challenges and propose a conceptual framework for designing fair multi-agent multistakeholder personalization systems that balance competing stakeholder objectives. Our framework integrates (i) methods to align stakeholder objectives and LLM agents, (ii) aggregation strategies, e.g., based on social choice theory, to form fair collective decisions, and (iii) stakeholder-centric evaluation procedures for both individual and collective agent behavior. We showcase our framework through a tourism use case and discuss possible applications in other domains, such as education and healthcare. Finally, we discuss domain-specific fairness tensions and review datasets for evaluating multistakeholder fairness and multi-agent personalization systems.",
+      "authors": [
+        "Andrea Forster",
+        "Peter Müllner",
+        "Denis Helic",
+        "Elisabeth Lex",
+        "Dominik Kowald"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-05-04T09:18:38+00:00",
+      "link": "https://arxiv.org/pdf/2605.02379v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-agent personalization and stakeholder alignment",
+      "llm_evidence_cn": "多智能体个性化与利益相关者对齐",
+      "llm_evidence": "多智能体个性化与利益相关者对齐",
+      "canonical_evidence": "多智能体个性化与利益相关者对齐",
+      "llm_tldr_en": "Proposes a framework for fair outcomes in multi-agent systems with multiple distinct objectives.",
+      "llm_tldr_cn": "提出了一个在具有多个不同目标的多智能体系统中确保公平结果的框架。",
+      "llm_tldr": "提出了一个在具有多个不同目标的多智能体系统中确保公平结果的框架。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.03357v1",
+      "title": "Population-Aware Imitation Learning in Mean-field Games with Common Noise",
+      "abstract": "Mean Field Games (MFGs) provide a powerful framework for modeling the collective behavior of large populations of interacting agents. In this paper, we address the problem of Imitation Learning (IL) in MFGs subject to common noise, where the population distribution evolves stochastically. This stochasticity compels agents to adopt population-aware policies to respond to aggregate shocks. We formulate two distinct learning objectives: recovering a Nash equilibrium and maximizing performance against an expert population. We investigate two imitation proxies: Behavioral Cloning (BC) and Adversarial (ADV) divergence. We then establish finite-sample error bounds showing that minimizing these proxies effectively controls both the policy's exploitability and its performance gap relative to the expert. Furthermore, we propose a numerical framework using generalized Fictitious Play and Deep Learning to compute expert population-aware policies. Through experiments on three environments we demonstrate that standard population-unaware policies fail to capture the equilibrium dynamics. Our results highlight that learning population-aware policies is crucial to avoid being misled by the randomness inherent in common noise.",
+      "authors": [
+        "Grégoire Lambrecht",
+        "Mathieu Laurière"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.OC"
+      ],
+      "published": "2026-05-05T04:33:40+00:00",
+      "link": "https://arxiv.org/pdf/2605.03357v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "modeling collective behavior of large populations in Mean Field Games",
+      "llm_evidence_cn": "平均场博弈中大规模群体的集体行为建模",
+      "llm_evidence": "平均场博弈中大规模群体的集体行为建模",
+      "canonical_evidence": "平均场博弈中大规模群体的集体行为建模",
+      "llm_tldr_en": "Addresses imitation learning in Mean Field Games to model collective behavior in large populations.",
+      "llm_tldr_cn": "研究平均场博弈中的模仿学习，用于模拟大规模群体的集体行为。",
+      "llm_tldr": "研究平均场博弈中的模仿学习，用于模拟大规模群体的集体行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.03847v1",
+      "title": "Mechanical Conscience: A Mathematical Framework for Dependability of Machine Intelligenc",
+      "abstract": "Distributed collaborative intelligence (DCI), encompassing edge-to-edge architectures, federated learning, transfer learning, and swarm systems, creates environments in which emergent risk is structurally unavoidable: locally correct decisions by individual agents compose into globally unacceptable behavioral trajectories under uncertainty. Existing approaches such as constrained optimization, safe reinforcement learning, and runtime assurance evaluate acceptability at the level of individual actions rather than across behavioral trajectories, and none addresses the multi-participant, uncertainty-laden nature of DCI deployments. This paper introduces mechanical conscience (MC), a novel concept and simplified mathematical framework that operationalizes trajectory-level normative regulation for both single-agent and distributed intelligent systems. Mechanical conscience is defined as a supervisory filter that minimally corrects a baseline policy's actions to reduce cumulative deviation from a normatively admissible region, while accounting for epistemic uncertainty. We introduce associated constructs, conscience score, mechanical guilt, and resonant dependability, that provide an interpretable vocabulary and computable governance signals for this emerging field. Core theoretical properties are established: admissibility equivalence, existence of optimal regulation, and monotonic deviation reduction. Illustrative results demonstrate that MC-regulated agents maintain trajectory-level normative acceptability where conventional controllers drift outside admissible bounds, and that the framework naturally extends to suppress interaction-induced emergent risk in multi-agent DCI settings.",
+      "authors": [
+        "Munkhdegerekh Batzorig",
+        "Purevbaatar Ganbold",
+        "Kyungbin Park",
+        "Pilkong Jeong",
+        "Kangbin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-05T15:14:02+00:00",
+      "link": "https://arxiv.org/pdf/2605.03847v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "emergent risk in distributed collaborative intelligence",
+      "llm_evidence_cn": "分布式协作智能中的涌现风险",
+      "llm_evidence": "分布式协作智能中的涌现风险",
+      "canonical_evidence": "分布式协作智能中的涌现风险",
+      "llm_tldr_en": "Introduces a mathematical framework to address emergent risks in multi-agent collaborative systems.",
+      "llm_tldr_cn": "引入了一个数学框架，用于解决多智能体协作系统中的涌现风险问题。",
+      "llm_tldr": "引入了一个数学框架，用于解决多智能体协作系统中的涌现风险问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.04906v1",
+      "title": "Strat-Reasoner: Reinforcing Strategic Reasoning of LLMs in Multi-Agent Games",
+      "abstract": "While Large Language Models (LLMs) excel in certain reasoning tasks, they struggle in multi-agent games where the final outcome depends on the joint strategies of all agents. In multi-agent games, the non-stationarity of other agents brings significant challenges on the evaluation of the reasoning process and the credit assignment over multiple reasoning steps. Existing single-agent reinforcement learning (RL) approaches and their multi-agent extensions fail to address these challenges as they do not incorporate other agents in the reasoning process. In this work, we propose Strat-Reasoner, a novel RL-based framework that improves LLMs' strategic reasoning ability in multi-agent games. We introduce a novel recursive reasoning paradigm where an agent's reasoning also integrates other agents' reasoning processes. To provide effective reward signals for the intermediate reasoning sequences, we employ a centralized Chain-of-Thought (CoT) comparison module to evaluate the reasoning quality. Finally, we compute an accurate hybrid advantage and develop a group-relative RL approach to optimize the LLM policy. Experimental results show that Strat-Reasoner substantially improves strategic abilities of underlying LLMs, achieving 22.1\\% average performance improvements across various multi-agent games.",
+      "authors": [
+        "Yidong He",
+        "Yutao Lai",
+        "Pengxu Yang",
+        "Jiarui Gan",
+        "Jiexin Wang",
+        "Yi Cai",
+        "Mengchen Zhao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-06T13:35:14+00:00",
+      "link": "https://arxiv.org/pdf/2605.04906v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "strategic reasoning in multi-agent games",
+      "llm_evidence_cn": "多智能体游戏中的策略推理",
+      "llm_evidence": "多智能体游戏中的策略推理",
+      "canonical_evidence": "多智能体游戏中的策略推理",
+      "llm_tldr_en": "Enhances LLM strategic reasoning in multi-agent games using a recursive reasoning RL framework.",
+      "llm_tldr_cn": "利用递归推理强化学习框架提升大模型在多智能体游戏中的策略推理能力。",
+      "llm_tldr": "利用递归推理强化学习框架提升大模型在多智能体游戏中的策略推理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.01102v1",
+      "title": "Towards Multi-Agent Autonomous Reasoning in Hydrodynamics",
+      "abstract": "Single-agent systems (SAS) have become the default pattern for LLM-driven scientific workflows, but routing planning, tool use, and synthesis through a single context window comes with a well-known cost: as tool specifications and observational traces accumulate, the effective context available for each decision shrinks, and end-to-end reliability suffers. We present a multi-agent system (MAS) prototype for hydrodynamics in which specialized agents are coordinated through a Layer Execution Graph (LEG). A planner agent constructs query-specific execution topologies from natural-language routing heuristics that capture domain knowledge without hard-coding it as rigid control logic; specialist agents operate under strict tool allowlists and occupy complementary data-class roles. Between layers, consolidator agents fuse parallel outputs into concise briefs, and a reporter agent synthesizes the final response, while the runtime logs provenance for every tool invocation to support auditability. All benchmarks, ablations, and stress tests use Claude Sonnet~4.6 as the backbone model for both specialist and general-purpose agents. Evaluated on 37 queries spanning six complexity categories, the prototype achieves 93.6% factual precision with a 100% pass rate. Accuracy remains above 90% across runs from single-threaded to five independent parallel tracks, and under simulated loss of individual data sources the system degrades gracefully, still returning substantive partial answers. Together, these results suggest that planner-guided, graph-structured multi-agent orchestration can meaningfully alleviate the context-saturation bottlenecks that constrain monolithic single-agent architectures.",
+      "authors": [
+        "Jinpai Zhao",
+        "Albert Cerrone",
+        "Joannes Westerink",
+        "Clint Dawson"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "physics.ao-ph"
+      ],
+      "published": "2026-05-01T21:17:55+00:00",
+      "link": "https://arxiv.org/pdf/2605.01102v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent system prototype for scientific workflows",
+      "llm_evidence_cn": "用于科学工作流的多智能体系统原型",
+      "llm_evidence": "用于科学工作流的多智能体系统原型",
+      "canonical_evidence": "用于科学工作流的多智能体系统原型",
+      "llm_tldr_en": "Presents a multi-agent system using specialized agents to improve reliability in scientific reasoning.",
+      "llm_tldr_cn": "提出一种利用专业智能体协调的多智能体系统，提升科学推理的可靠性。",
+      "llm_tldr": "提出一种利用专业智能体协调的多智能体系统，提升科学推理的可靠性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2604.27859v2",
+      "title": "A Brief Overview: Agentic Reinforcement Learning In Large Language Models",
+      "abstract": "Reinforcement Learning (RL) has traditionally focused on training specialized agents to optimize predefined reward functions within narrowly defined environments. However, the advent of powerful Large Language Models (LLMs) and increasingly complex, open-ended tasks has catalyzed a paradigm shift towards agentic paradigms within RL. This emerging framework extends beyond traditional RL by emphasizing the development of autonomous agents capable of goal-setting, long-term planning, dynamic strategy adaptation, and interactive reasoning in uncertain, real-world environments. Unlike conventional approaches that rely heavily on static objectives and episodic interactions, LLM-based Agentic RL incorporates cognitive-like capabilities such as meta-reasoning, self-reflection, and multi-step decision-making directly into the learning loop. In this paper, we provide a deep insight for looking the conceptual foundations, methodological innovations, and effective designs underlying this trend. Furthermore, we identify critical challenges and outline promising future directions for building LLM-based Agentic RL.",
+      "authors": [
+        "Fangming Cui",
+        "Ruixiao Zhu",
+        "Cheng Fang",
+        "Sunan Li",
+        "Jiahong Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.ET"
+      ],
+      "published": "2026-04-30T13:43:25+00:00",
+      "link": "https://arxiv.org/pdf/2604.27859v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agentic reinforcement learning for autonomous agents",
+      "llm_evidence_cn": "用于自主智能体的代理强化学习",
+      "llm_evidence": "用于自主智能体的代理强化学习",
+      "canonical_evidence": "用于自主智能体的代理强化学习",
+      "llm_tldr_en": "Overviews the shift toward agentic reinforcement learning for LLM-based autonomous agents.",
+      "llm_tldr_cn": "综述了基于大模型的自主智能体向代理强化学习范式的转变。",
+      "llm_tldr": "综述了基于大模型的自主智能体向代理强化学习范式的转变。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.01610v1",
+      "title": "Less Interaction But More Explanation: A Communication Perspective on Agentic AI Interfaces",
+      "abstract": "AI systems have long been expected to interact with users, answering questions, generating content, and continuing (social) conversations. Agentic AI, however, breaks from this expectation, as its primary objective is workflow execution on behalf of the users. If a system becomes more agentic, do users need less interaction with the system? Our answer is: less routine back-and-forth, but more communication for oversight and explanation, as agentic AI proactively acts, not just responds. Grounded in a communication perspective, we discuss how users perceive the communicative roles of AI systems (whether as the source of actions or merely a channel), and how this can shape trust. Because agentic AI can play multiple communicative roles, it can complicate this source perception and introduce potential risks. To address this, we propose three types of explanations that agentic AI needs to incorporate (action-process, uncertainty, and coordination), and suggest that customization affordances that allow users to decide when and which explanations they see may be key to preserving human agency as AI autonomy increases.",
+      "authors": [
+        "Eunchae Jang",
+        "S. Shyam Sundar"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-05-02T21:21:21+00:00",
+      "link": "https://arxiv.org/pdf/2605.01610v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "communication perspective on agentic AI and social trust",
+      "llm_evidence_cn": "智能体AI与社会信任的沟通视角",
+      "llm_evidence": "智能体AI与社会信任的沟通视角",
+      "canonical_evidence": "智能体AI与社会信任的沟通视角",
+      "llm_tldr_en": "Analyzes how the communicative roles of agentic AI systems shape user trust and the need for explanation.",
+      "llm_tldr_cn": "从沟通视角分析智能体AI系统的角色如何影响用户信任以及对解释性的需求。",
+      "llm_tldr": "从沟通视角分析智能体AI系统的角色如何影响用户信任以及对解释性的需求。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.00505v1",
+      "title": "LLM-Oriented Information Retrieval: A Denoising-First Perspective",
+      "abstract": "Modern information retrieval (IR) is no longer consumed primarily by humans but increasingly by large language models (LLMs) via retrieval-augmented generation (RAG) and agentic search. Unlike human users, LLMs are constrained by limited attention budgets and are uniquely vulnerable to noise; misleading or irrelevant information is no longer just a nuisance, but a direct cause of hallucinations and reasoning failures. In this perspective paper, we argue that denoising-maximizing usable evidence density and verifiability within a context window-is becoming the primary bottleneck across the full information access pipeline. We conceptualize this paradigm shift through a four-stage framework of IR challenges: from inaccessible to undiscoverable, to misaligned, and finally to unverifiable. Furthermore, we provide a pipeline-organized taxonomy of signal-to-noise optimization techniques, spanning indexing, retrieval, context engineering, verification, and agentic workflow. We also present research works on information denoising in domains that rely heavily on retrieval such as lifelong assistant, coding agent, deep research, and multimodal understanding.",
+      "authors": [
+        "Lu Dai",
+        "Liang Sun",
+        "Fanpu Cao",
+        "Ziyang Rao",
+        "Cehao Yang",
+        "Hao Liu",
+        "Hui Xiong"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-05-01T08:30:52+00:00",
+      "link": "https://arxiv.org/pdf/2605.00505v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agentic search and information retrieval for LLMs",
+      "llm_evidence_cn": "面向大语言模型的智能体搜索与信息检索",
+      "llm_evidence": "面向大语言模型的智能体搜索与信息检索",
+      "canonical_evidence": "面向大语言模型的智能体搜索与信息检索",
+      "llm_tldr_en": "Discusses the shift toward denoising-first information retrieval to support LLM-based agentic search and RAG.",
+      "llm_tldr_cn": "探讨信息检索向去噪优先范式的转变，以支持基于LLM的智能体搜索和RAG系统。",
+      "llm_tldr": "探讨信息检索向去噪优先范式的转变，以支持基于LLM的智能体搜索和RAG系统。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.02358v2",
+      "title": "Predicting Post Virality with Temporal Cross-Attention over Trend Signals",
+      "abstract": "Current models for predicting social media virality rely heavily on static textual and structural features, effectively ignoring the highly dynamic nature of trend signals. We study whether real-world attention signals can improve the prediction of social-media virality beyond what post text alone reveals. We introduce ViralityNet, an architecture that predicts Reddit post virality by fusing internal platform representations with exogenous temporal signals derived from Wikipedia pageview spikes. We frame virality as a binary classification task that accounts for differences in subreddit scale, labeling posts as viral if they exceed the 90th percentile of per-subreddit engagement and a minimum absolute score threshold.   ViralityNet combines four post-level streams: title embeddings, body embeddings, structural metadata, and learned subreddit embeddings with a cross-attention block that queries a daily sliding-window trends matrix encoding the top-512 Wikipedia spike terms from the preceding seven days. Empirical results suggest that incorporating external attention signals yields consistent gains, outperforming text-only baselines by +0.015 AUC-PR and achieving an overall AUC-ROC of 0.836. Overall, we provide evidence that incorporating external attention signals yields measurable improvements over text-only baselines, highlighting the importance of real-world dynamics in shaping online virality.",
+      "authors": [
+        "Sarvagya Somvanshi",
+        "Mohan Xu",
+        "Rakhi Chadalavada",
+        "Nathan Canera"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "published": "2026-05-04T08:59:39+00:00",
+      "link": "https://arxiv.org/pdf/2605.02358v2",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "social media virality and trend signals",
+      "llm_evidence_cn": "社交媒体病毒式传播与趋势信号",
+      "llm_evidence": "社交媒体病毒式传播与趋势信号",
+      "canonical_evidence": "社交媒体病毒式传播与趋势信号",
+      "llm_tldr_en": "Predicts Reddit post virality by fusing internal platform data with exogenous temporal signals.",
+      "llm_tldr_cn": "通过融合平台内部数据和外部时间信号来预测Reddit帖子的病毒式传播。",
+      "llm_tldr": "通过融合平台内部数据和外部时间信号来预测Reddit帖子的病毒式传播。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.01247v1",
+      "title": "FP-Agent: Fingerprinting AI Browsing Agents",
+      "abstract": "AI browsing agents are an emerging class of AI-powered bots capable of autonomously navigating websites. Unlike traditional web bots, AI browsing agents typically operate using real browsers and perform everyday tasks, making them difficult to detect. Yet little is known about whether existing AI browsing agents can be distinguished from humans and one another based on their browser or behavioral fingerprints. In this paper, we present the first controlled measurement study of seven AI browsing agents and human users. Using an instrumented honey website, we collect browser and behavioral fingerprint features while AI browsing agents and humans perform three tasks: flight booking, online shopping, and forum interaction. We then train FP-Agent, a multi-class classifier, to evaluate the discriminative power of these features. We find that browser fingerprints provide limited discriminative power when shared by multiple AI browsing agents. Behavioral fingerprints, however, are distinctive: differences in typing, scrolling, and mouse behavior separate AI browsing agents from humans and one another. In a case study evaluating Cloudflare's bot detection, FP-Agent detects all seven AI browsing agents, whereas Cloudflare detects only one. Our findings show that behavioral fingerprints are a critical component to reliably detect and control this emerging form of web traffic.",
+      "authors": [
+        "Ethan Wang",
+        "Zubair Shafiq",
+        "Yash Vekaria"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-05-02T04:58:08+00:00",
+      "link": "https://arxiv.org/pdf/2605.01247v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "detecting AI browsing agents in social forums",
+      "llm_evidence_cn": "检测社交论坛中的AI浏览智能体",
+      "llm_evidence": "检测社交论坛中的AI浏览智能体",
+      "canonical_evidence": "检测社交论坛中的AI浏览智能体",
+      "llm_tldr_en": "Studies behavioral fingerprints to distinguish AI browsing agents from humans in web tasks.",
+      "llm_tldr_cn": "研究行为指纹，以在网络任务中区分AI浏览智能体与人类用户。",
+      "llm_tldr": "研究行为指纹，以在网络任务中区分AI浏览智能体与人类用户。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.02411v1",
+      "title": "FitText: Evolving Agent Tool Ecologies via Memetic Retrieval",
+      "abstract": "A semantic gap separates how users describe tasks from how tools are documented. As API ecosystems scale to tens of thousands of endpoints, static retrieval from the initial query alone cannot bridge this gap: the agent's understanding of what it needs evolves during execution, but its tool set does not. We introduce FitText, a training-free framework that makes retrieval dynamic by embedding it directly in the agent's reasoning loop. FitText generates natural-language pseudo-tool descriptions as retrieval probes, refines them iteratively using retrieval feedback, and explores diverse alternatives through stochastic generation. Memetic Retrieval adds evolutionary selection pressure over candidate descriptions, guided by a tool memory that avoids redundant search. On ToolRet (43k tools, 4 domains), FitText improves average retrieval rank from 8.81 to 2.78; on StableToolBench (16,464 APIs), it achieves a 0.73 average pass rate--a 24-point absolute gain over static query retrieval. The gains transfer across base models capable of acting as competent semantic operators; under weaker base models, Memetic's evolutionary search inverts--amplifying noise rather than refining signal--surfacing model capacity as a prerequisite for evolutionary tool exploration.",
+      "authors": [
+        "Kyle Zheng",
+        "Han Zhang",
+        "Renliang Sun",
+        "Chenchen Ye",
+        "Wei Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.IR",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-05-04T10:01:24+00:00",
+      "link": "https://arxiv.org/pdf/2605.02411v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "evolving agent tool ecologies and reasoning loops",
+      "llm_evidence_cn": "演化的智能体工具生态与推理循环",
+      "llm_evidence": "演化的智能体工具生态与推理循环",
+      "canonical_evidence": "演化的智能体工具生态与推理循环",
+      "llm_tldr_en": "Introduces FitText, a framework that uses memetic retrieval to dynamically evolve an agent's tool set during execution.",
+      "llm_tldr_cn": "提出FitText框架，通过模因检索在执行过程中动态演化智能体的工具集。",
+      "llm_tldr": "提出FitText框架，通过模因检索在执行过程中动态演化智能体的工具集。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.02463v1",
+      "title": "When Stress Becomes Signal: Detecting Antifragility-Compatible Regimes in Multi-Agent LLM Systems",
+      "abstract": "Multi-agent LLM systems are increasingly used to solve complex tasks through decomposition, debate, specialization, and ensemble reasoning. However, these systems are usually evaluated in terms of robustness: whether performance is preserved under perturbation. This paper studies a different question: whether semantic stress exposes structured variation that could support future antifragile learning. We introduce CAFE, a statistical framework for detecting antifragility-compatible regimes in multi-agent architectures. CAFE models a controlled expected distribution of semantic stressors, reconstructs an architecture-specific observed effective stress distribution from multi-dimensional judge signals, and compares both distributions using a distributional Jensen Gap under a convex stress potential. A positive gap does not imply immediate performance improvement; instead, it indicates a convex-expansive deformation of the observed stress distribution, suggesting that the architecture exposes learnable stress structure. We evaluate CAFE on a banking-risk analysis benchmark with five multi-agent architectures: flat, hierarchical, debate, meta-adaptive, and ensemble. Across all architectures, semantic stress reduces average judged quality by roughly one third. Yet all architectures exhibit positive distributional Jensen Gaps with bootstrap confidence intervals above zero. These results show that immediate quality degradation can coexist with statistically detectable antifragility-compatible stress geometry. CAFE is therefore not an antifragile learner itself, but a measurement layer for identifying when and where antifragility learning may be worth applying.",
+      "authors": [
+        "Jose Manuel de la Chica",
+        "Juan Manuel Vera",
+        "Jairo Rodríguez"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CE"
+      ],
+      "published": "2026-05-04T11:06:19+00:00",
+      "link": "https://arxiv.org/pdf/2605.02463v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent LLM systems and ensemble reasoning",
+      "llm_evidence_cn": "多智能体大模型系统与集成推理",
+      "llm_evidence": "多智能体大模型系统与集成推理",
+      "canonical_evidence": "多智能体大模型系统与集成推理",
+      "llm_tldr_en": "Introduces CAFE to detect antifragility in multi-agent LLM systems under semantic stress.",
+      "llm_tldr_cn": "引入CAFE框架，用于检测多智能体大模型系统在语义压力下的抗脆弱性。",
+      "llm_tldr": "引入CAFE框架，用于检测多智能体大模型系统在语义压力下的抗脆弱性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.02463v2",
+      "title": "When Stress Becomes Signal: Detecting Antifragility-Compatible Regimes in Multi-Agent LLM Systems",
+      "abstract": "Multi-agent LLM systems are increasingly used to solve complex tasks through decomposition, debate, specialization, and ensemble reasoning. However, these systems are usually evaluated in terms of robustness: whether performance is preserved under perturbation. This paper studies a different question: whether semantic stress exposes structured variation that could support future antifragile learning. We introduce CAFE (Cognitive Antifragility Framework for Evaluation), a statistical framework for detecting antifragility-compatible regimes in multi-agent architectures. CAFE models a controlled expected distribution of semantic stressors, reconstructs an architecture-specific observed effective stress distribution from multi-dimensional judge signals, and compares both distributions using a distributional Jensen Gap under a convex stress potential. A positive gap does not imply immediate performance improvement; instead, it indicates a convex-expansive deformation of the observed stress distribution, suggesting that the architecture exposes learnable stress structure. We evaluate CAFE on a banking-risk analysis benchmark with five multi-agent architectures: flat, hierarchical, debate, meta-adaptive, and ensemble. Across all architectures, semantic stress reduces average judged quality by roughly one third. Yet all architectures exhibit positive distributional Jensen Gaps with bootstrap confidence intervals above zero. These results show that immediate quality degradation can coexist with statistically detectable antifragility-compatible stress geometry. CAFE is therefore not an antifragile learner itself, but a measurement layer for identifying when and where antifragility learning may be worth applying.",
+      "authors": [
+        "Jose Manuel de la Chica",
+        "Juan Manuel Vera",
+        "Jairo Rodríguez"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CE"
+      ],
+      "published": "2026-05-04T11:06:19+00:00",
+      "link": "https://arxiv.org/pdf/2605.02463v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent LLM systems evaluation",
+      "llm_evidence_cn": "多智能体大模型系统评估",
+      "llm_evidence": "多智能体大模型系统评估",
+      "canonical_evidence": "多智能体大模型系统评估",
+      "llm_tldr_en": "Introduces CAFE to detect antifragility in multi-agent LLM systems under semantic stress.",
+      "llm_tldr_cn": "引入CAFE框架，用于检测多智能体大模型系统在语义压力下的反脆弱性。",
+      "llm_tldr": "引入CAFE框架，用于检测多智能体大模型系统在语义压力下的反脆弱性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.02489v2",
+      "title": "GRAIL: A Deep-Granularity Hybrid Resonance Framework for Real-Time Agent Discovery via SLM-Enhanced Indexing",
+      "abstract": "As the ecosystem of Large Language Model (LLM)-based agents expands rapidly, efficient and accurate Agent Discovery becomes a critical bottleneck for large-scale multi-agent collaboration. Existing approaches typically face a dichotomy: either relying on heavy-weight LLMs for intent parsing, leading to prohibitive latency (often exceeding 30 seconds), or using monolithic vector retrieval that sacrifices semantic precision for speed. To bridge this gap, we propose \\textbf{GRAIL} (Granular Resonance-based Agent/AI Link), a novel framework achieving sub-400ms discovery latency without compromising accuracy. GRAIL introduces three key innovations: (1) \\textbf{SLM-Enhanced Prediction}, replacing the generalized LLM parser with a specialized, fine-tuned Small Language Model (SLM) for millisecond-level capability tag prediction; (2) \\textbf{Pseudo-Document Expansion}, augmenting agent descriptions with synthetic queries to enhance semantic density for robust dense retrieval; and (3) \\textbf{MaxSim Resonance}, a fine-grained matching mechanism computing maximum similarity between user queries and discrete agent usage examples, effectively mitigating semantic dilution. Validated on \\textbf{AgentTaxo-9K}, our new large-scale dataset of 9,240 agents, GRAIL reduces end-to-end discovery latency by over \\textbf{79$\\times$} compared to LLM-parsing baselines, while significantly outperforming traditional vector search in Recall@10. This framework offers a scalable, industrial-grade solution for the real-time ``Internet of Agents.\"",
+      "authors": [
+        "Jinliang Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.IR"
+      ],
+      "published": "2026-05-04T11:41:45+00:00",
+      "link": "https://arxiv.org/pdf/2605.02489v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Real-time agent discovery for multi-agent collaboration",
+      "llm_evidence_cn": "多智能体协作中的实时智能体发现",
+      "llm_evidence": "多智能体协作中的实时智能体发现",
+      "canonical_evidence": "多智能体协作中的实时智能体发现",
+      "llm_tldr_en": "Proposes GRAIL for efficient and accurate agent discovery in large-scale multi-agent ecosystems.",
+      "llm_tldr_cn": "提出GRAIL框架，用于在大规模多智能体生态中实现高效准确的智能体发现。",
+      "llm_tldr": "提出GRAIL框架，用于在大规模多智能体生态中实现高效准确的智能体发现。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
