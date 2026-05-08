@@ -1,6 +1,85 @@
 {
-  "generated_at": "2026-05-07T20:09:17.034164+00:00",
-  "updated_date": "20260507",
+  "generated_at": "2026-05-08T20:03:46.885419+00:00",
+  "updated_date": "20260508",
   "carryover_days": 9,
-  "items": []
+  "items": [
+    {
+      "id": "2605.06435v1",
+      "title": "COVID-19 Infodemic. Understanding content features in detecting fake news using a machine learning approach",
+      "abstract": "The use of content features, particularly textual and linguistic for fake news detection is under-researched, despite empirical evidence showing the features could contribute to differentiating real and fake news. To this end, this study investigates a selection of content features such as word bigrams, part of speech distribution etc. to improve fake news detection. We performed a series of experiments on a new dataset gathered during the COVID-19 pandemic and using Decision Tree, K-Nearest Neighbor, Logistic Regression, Support Vector Machine and Random Forest. Random Forest yielded the best results, followed closely by Support Vector Machine, across all setups. In general, both the textual and linguistic features were found to improve fake news detection when used separately, however, combining them into a single model did not improve the detection significantly. Differences were also noted between the use of bigrams and part of speech tags. The study shows that textual and linguistic features can be used successfully in detecting fake news using the traditional machine learning approach as opposed to deep learning.",
+      "authors": [
+        "Balakrishnan Vimala",
+        "Hii Lee Zing",
+        "Laporte Eric"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-05-07T15:36:17+00:00",
+      "link": "https://arxiv.org/pdf/2605.06435v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "fake news detection using content features",
+      "llm_evidence_cn": "利用内容特征进行虚假新闻检测",
+      "llm_evidence": "利用内容特征进行虚假新闻检测",
+      "canonical_evidence": "利用内容特征进行虚假新闻检测",
+      "llm_tldr_en": "Investigates textual and linguistic features to improve fake news detection during the COVID-19 pandemic.",
+      "llm_tldr_cn": "研究文本和语言特征，以提高COVID-19大流行期间的虚假新闻检测效果。",
+      "llm_tldr": "研究文本和语言特征，以提高COVID-19大流行期间的虚假新闻检测效果。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.06435v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2605.06525v1",
+      "title": "Sustaining Cooperation in Populations Guided by AI: A Folk Theorem for LLMs",
+      "abstract": "Large language models (LLMs) are increasingly used to provide instructions to many agents who interact with one another. Such shared reliance couples agents who appear to act independently: they may in fact be guided by a common model. This coupling can change the prospects for cooperation among agents with misaligned incentives. We study settings in which multiple LLMs each advise a population of clients who participate in instances of an underlying game, creating strategic interaction at the level of the LLMs themselves. This induces a meta-game among the LLMs, mediated through clients. We first analyze the one-shot setting, where shared instructions can change equilibrium behavior only when an LLM may influence more than one role in the same interaction; in such cases, cooperation may emerge, and the effect of client share can be beneficial, harmful, or non-monotone, depending on the base game. Our main result concerns the repeated setting. We prove a folk theorem for LLMs: despite indirect observation and the clients' inability to identify which LLM advised their opponents, all feasible and individually rational outcomes can be sustained as $\\varepsilon$-equilibria. The result does not follow from the standard folk theorem and requires new proof techniques. Together, these results show that shared LLM guidance can sustain cooperation among populations of agents even when the underlying incentives are misaligned.",
+      "authors": [
+        "Jonathan Shaki",
+        "Eden Hartman",
+        "Sarit Kraus",
+        "Yonatan Aumann"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.MA",
+        "econ.TH"
+      ],
+      "published": "2026-05-07T16:31:12+00:00",
+      "link": "https://arxiv.org/pdf/2605.06525v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLMs guiding populations of agents in strategic games",
+      "llm_evidence_cn": "LLM引导群体智能体进行博弈",
+      "llm_evidence": "LLM引导群体智能体进行博弈",
+      "canonical_evidence": "LLM引导群体智能体进行博弈",
+      "llm_tldr_en": "Explores how shared LLM instructions influence cooperation and strategic behavior in agent populations.",
+      "llm_tldr_cn": "研究共享LLM指令如何影响智能体群体中的合作与博弈行为，涉及社会模拟核心。",
+      "llm_tldr": "研究共享LLM指令如何影响智能体群体中的合作与博弈行为，涉及社会模拟核心。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.06525v1",
+      "carry_days": 1
+    }
+  ]
 }
