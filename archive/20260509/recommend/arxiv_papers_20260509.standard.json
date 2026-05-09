@@ -1,0 +1,569 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-09T20:26:47.463920+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 26,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2605.06525v1",
+      "title": "Sustaining Cooperation in Populations Guided by AI: A Folk Theorem for LLMs",
+      "abstract": "Large language models (LLMs) are increasingly used to provide instructions to many agents who interact with one another. Such shared reliance couples agents who appear to act independently: they may in fact be guided by a common model. This coupling can change the prospects for cooperation among agents with misaligned incentives. We study settings in which multiple LLMs each advise a population of clients who participate in instances of an underlying game, creating strategic interaction at the level of the LLMs themselves. This induces a meta-game among the LLMs, mediated through clients. We first analyze the one-shot setting, where shared instructions can change equilibrium behavior only when an LLM may influence more than one role in the same interaction; in such cases, cooperation may emerge, and the effect of client share can be beneficial, harmful, or non-monotone, depending on the base game. Our main result concerns the repeated setting. We prove a folk theorem for LLMs: despite indirect observation and the clients' inability to identify which LLM advised their opponents, all feasible and individually rational outcomes can be sustained as $\\varepsilon$-equilibria. The result does not follow from the standard folk theorem and requires new proof techniques. Together, these results show that shared LLM guidance can sustain cooperation among populations of agents even when the underlying incentives are misaligned.",
+      "authors": [
+        "Jonathan Shaki",
+        "Eden Hartman",
+        "Sarit Kraus",
+        "Yonatan Aumann"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.MA",
+        "econ.TH"
+      ],
+      "published": "2026-05-07T16:31:12+00:00",
+      "link": "https://arxiv.org/pdf/2605.06525v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLMs guiding populations of agents in strategic social interactions",
+      "llm_evidence_cn": "大语言模型引导多智能体群体进行策略性社会互动",
+      "llm_evidence": "大语言模型引导多智能体群体进行策略性社会互动",
+      "canonical_evidence": "大语言模型引导多智能体群体进行策略性社会互动",
+      "llm_tldr_en": "Analyzes how LLMs influence cooperation and strategic behavior in multi-agent populations through shared instructions.",
+      "llm_tldr_cn": "分析了大语言模型如何通过共享指令影响多智能体群体中的合作与策略行为。",
+      "llm_tldr": "分析了大语言模型如何通过共享指令影响多智能体群体中的合作与策略行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.05752v1",
+      "title": "Generative AI-Based Monte Carlo Simulation for Method Evaluation Using Synthetic Multilevel Data",
+      "abstract": "The role of AI-generated synthetic data has recently been expanded to support realistic Monte Carlo simulations. However, guidance is limited on generating data with multilevel structures and designing simulations based on such data. This study proposes a general framework for AI-based simulation studies to evaluate the predictive performance and parameter recovery of quantitative methods, specifically using multilevel data commonly observed in the social sciences. Our proposed six-stage workflow consists of (i) specifying a method and real data, (ii) training Generative AI with real data, (iii) assessing synthetic data quality, (iv) designing and conducting simulations, (v) evaluating method performance, and (vi) checking robustness. To enhance fidelity in multilevel data generation, we also introduce targeted modifications to diffusion models and Generative Adversarial Networks (GANs). Furthermore, we develop a systematic quality evaluation framework that assesses both within-table and between-table fidelity, and discuss how AI-based simulation designs should differ depending on whether the simulation's objective is predictive performance or parameter recovery. Finally, using empirical multilevel data and multilevel modeling methods, we demonstrate the utility of the proposed AI-based simulation framework. This approach leads to more accurate and honest evaluations of quantitative methods in the real world, unlike traditional simulation studies based on arbitrary simulated scenarios.",
+      "authors": [
+        "Youmi Suk",
+        "Chenguang Pan",
+        "Weixuan Xiao"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.AP"
+      ],
+      "published": "2026-05-07T06:45:17+00:00",
+      "link": "https://arxiv.org/pdf/2605.05752v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "synthetic multilevel data for social sciences simulation",
+      "llm_evidence_cn": "用于社会科学模拟的合成多层数据",
+      "llm_evidence": "用于社会科学模拟的合成多层数据",
+      "canonical_evidence": "用于社会科学模拟的合成多层数据",
+      "llm_tldr_en": "A framework for using Generative AI to create synthetic multilevel data for social science simulations.",
+      "llm_tldr_cn": "一个利用生成式 AI 为社会科学模拟创建合成多层数据的框架。",
+      "llm_tldr": "一个利用生成式 AI 为社会科学模拟创建合成多层数据的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.06435v1",
+      "title": "COVID-19 Infodemic. Understanding content features in detecting fake news using a machine learning approach",
+      "abstract": "The use of content features, particularly textual and linguistic for fake news detection is under-researched, despite empirical evidence showing the features could contribute to differentiating real and fake news. To this end, this study investigates a selection of content features such as word bigrams, part of speech distribution etc. to improve fake news detection. We performed a series of experiments on a new dataset gathered during the COVID-19 pandemic and using Decision Tree, K-Nearest Neighbor, Logistic Regression, Support Vector Machine and Random Forest. Random Forest yielded the best results, followed closely by Support Vector Machine, across all setups. In general, both the textual and linguistic features were found to improve fake news detection when used separately, however, combining them into a single model did not improve the detection significantly. Differences were also noted between the use of bigrams and part of speech tags. The study shows that textual and linguistic features can be used successfully in detecting fake news using the traditional machine learning approach as opposed to deep learning.",
+      "authors": [
+        "Vimala Balakrishnan",
+        "Lee Zing Hii",
+        "Eric Laporte"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-05-07T15:36:17+00:00",
+      "link": "https://arxiv.org/pdf/2605.06435v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Fake news detection using linguistic and content features",
+      "llm_evidence_cn": "利用语言和内容特征进行虚假新闻检测",
+      "llm_evidence": "利用语言和内容特征进行虚假新闻检测",
+      "canonical_evidence": "利用语言和内容特征进行虚假新闻检测",
+      "llm_tldr_en": "Explores machine learning approaches and content features for detecting COVID-19 related fake news.",
+      "llm_tldr_cn": "探索机器学习方法和内容特征，用于检测与新冠疫情相关的虚假新闻。",
+      "llm_tldr": "探索机器学习方法和内容特征，用于检测与新冠疫情相关的虚假新闻。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.01292v1",
+      "title": "Addressing Data Scarcity in Bangla Fake News Detection: An LLM-Based Dataset Augmentation Approach",
+      "abstract": "The growing spread of misinformation in digital media highlights the need for reliable fake news detection systems, yet progress in under-resourced languages such as Bangla is limited by small and imbalanced datasets. This study investigates whether Large Language Model (LLM) based augmentation can effectively address this limitation and improve Bangla fake news classification. Existing datasets remain valuable but highly imbalanced, limiting model performance, and LLM based augmentation for Bangla has been scarcely explored. To fill this gap, we propose a systematic augmentation framework that generates synthetic Bangla news articles using the instruction tuned Gemma 3 27B IT model, supported by semantic filtering and controlled subsampling to preserve label consistency and diversity. We compare zero shot and few shot prompting, evaluate multiple augmentation rates, and examine random versus similarity-based selection strategies. Our experiments show that augmenting only the minority class with a high augmentation rate and random subsampling yields the strongest gains, raising the Fake News F1 score from 0.85 to 0.88. To support reproducibility and further research in this low-resource domain, we publicly release 4,545 synthetically generated Bangla fake news samples along with our full implementation. These findings demonstrate that well-designed LLM-driven augmentation can significantly improve fake news detection in low resource settings and provide a practical foundation for advancing multilingual misinformation research.",
+      "authors": [
+        "Ahmed Alfey Sani",
+        "Kazi Akib Zaoad",
+        "Shefayat E Shams Adib",
+        "Md Abdul Muqtadir",
+        "Ajwad Abrar"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-02T07:02:29+00:00",
+      "link": "https://arxiv.org/pdf/2605.01292v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM-based fake news detection and data augmentation",
+      "llm_evidence_cn": "基于大语言模型的虚假新闻检测与数据增强",
+      "llm_evidence": "基于大语言模型的虚假新闻检测与数据增强",
+      "canonical_evidence": "基于大语言模型的虚假新闻检测与数据增强",
+      "llm_tldr_en": "Proposes an LLM-based framework to augment datasets for improving fake news detection in low-resource languages.",
+      "llm_tldr_cn": "提出一种基于大语言模型的框架，通过数据增强提升低资源语言的虚假新闻检测效果。",
+      "llm_tldr": "提出一种基于大语言模型的框架，通过数据增强提升低资源语言的虚假新闻检测效果。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.00334v1",
+      "title": "AgentFloor: How Far Up the tool use Ladder Can Small Open-Weight Models Go?",
+      "abstract": "Production agentic systems make many model calls per user request, and most of those calls are short, structured, and routine. This raises a practical routing question that existing evaluations do not directly answer: which parts of an agent workflow truly require large frontier intelligence, and which can be handled by smaller models? We introduce AgentFloor, a deterministic 30-task benchmark organized as a six-tier capability ladder, spanning instruction following, tool use, multi-step coordination, and long-horizon planning under persistent constraints. We evaluate 16 open-weight models, from 0.27B to 32B parameters, alongside GPT-5 across 16,542 scored runs. Our results reveal a clear boundary of model necessity. Small and mid-sized open-weight models are already sufficient for much of the short-horizon, structured tool use work that dominates real agent pipelines, and in aggregate, the strongest open-weight model matches GPT-5 on our benchmark while being substantially cheaper and faster to run. The gap appears most clearly on long-horizon planning tasks that require sustained coordination and reliable constraint tracking over many steps, where frontier models still hold an advantage, though neither side reaches strong reliability. We also find that this boundary is not explained by scale alone: some failures respond to targeted interventions, but the effects are model-specific rather than universal. These findings suggest a practical design principle for agentic systems: use smaller open-weight models for the broad base of routine actions, and reserve large frontier models for the narrower class of tasks that truly demand deeper planning and control. We release the benchmark, harness, sweep configurations, and full run corpus.",
+      "authors": [
+        "Ranit Karmakar",
+        "Jayita Chatterjee"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-05-01T01:25:56+00:00",
+      "link": "https://arxiv.org/pdf/2605.00334v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-step coordination in agentic systems",
+      "llm_evidence_cn": "智能体系统中的多步协作",
+      "llm_evidence": "智能体系统中的多步协作",
+      "canonical_evidence": "智能体系统中的多步协作",
+      "llm_tldr_en": "A benchmark to evaluate the capabilities of small open-weight models in complex agentic workflows.",
+      "llm_tldr_cn": "一个评估小型开源模型在复杂智能体工作流中能力的基准测试。",
+      "llm_tldr": "一个评估小型开源模型在复杂智能体工作流中能力的基准测试。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.04466v1",
+      "title": "Distributed TD Tracking with Linear Function Approximation over Directed Communication Networks",
+      "abstract": "We study the policy evaluation problem in multi-agent reinforcement learning (MARL) over directed communication networks, where agents cooperate with each other to explore an unknown environment and accomplish a specific task. We propose a Push-Pull-type distributed algorithm, named PP-DTD, for policy evaluation in MARL within the framework of temporal difference (TD) learning with linear function approximation. PP-DTD integrates TD learning with the Push-Pull mechanism to accommodate directed communication networks, and further utilizes variance reduction techniques to enhance both algorithmic stability and convergence rate. We show that PP-DTD achieves linear convergence to a neighborhood of the optimum under constant step-sizes and a convergence rate of $\\mathcal{O}({T^{-1}})$ under decaying step-sizes when the sample is independent and identically distributed or Markovian. To the best of our knowledge, PP-DTD is the first distributed algorithm for policy evaluation in MARL over directed graphs that achieves a comparable convergence rate to single-agent TD. The numerical experiments on cooperative navigation tasks demonstrate the robustness and effectiveness of PP-DTD.",
+      "authors": [
+        "Haocheng Yang",
+        "Shengchao Zhao",
+        "Yongchao Liu"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-05-06T03:47:03+00:00",
+      "link": "https://arxiv.org/pdf/2605.04466v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent reinforcement learning over communication networks",
+      "llm_evidence_cn": "通信网络上的多智能体强化学习",
+      "llm_evidence": "通信网络上的多智能体强化学习",
+      "canonical_evidence": "通信网络上的多智能体强化学习",
+      "llm_tldr_en": "Presents a distributed algorithm for policy evaluation in multi-agent reinforcement learning over directed networks.",
+      "llm_tldr_cn": "提出一种分布式算法，用于解决有向通信网络下的多智能体强化学习策略评估问题。",
+      "llm_tldr": "提出一种分布式算法，用于解决有向通信网络下的多智能体强化学习策略评估问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.00742v2",
+      "title": "Position: agentic AI orchestration should be Bayes-consistent",
+      "abstract": "LLMs excel at predictive tasks and complex reasoning tasks, but many high-value deployments rely on decisions under uncertainty, for example, which tool to call, which expert to consult, or how many resources to invest. While the usefulness and feasibility of Bayesian approaches remain unclear for LLM inference, this position paper argues that the control layer of an agentic AI system (that orchestrates LLMs and tools) is a clear case where Bayesian principles should shine. Bayesian decision theory provides a framework for agentic systems that can help to maintain beliefs over task-relevant latent quantities, to update these beliefs from observed agentic and human-AI interactions, and to choose actions. Making LLMs themselves explicitly Bayesian belief-updating engines remains computationally intensive and conceptually nontrivial as a general modeling target. In contrast, this paper argues that coherent decision-making requires Bayesian principles at the orchestration level of the agentic system, not necessarily the LLM agent parameters. This paper articulates practical properties for Bayesian control that fit modern agentic AI systems and human-AI collaboration, and provides concrete examples and design patterns to illustrate how calibrated beliefs and utility-aware policies can improve agentic AI orchestration.",
+      "authors": [
+        "Theodore Papamarkou",
+        "Pierre Alquier",
+        "Matthias Bauer",
+        "Wray Buntine",
+        "Andrew Davison",
+        "Gintare Karolina Dziugaite",
+        "Maurizio Filippone",
+        "Andrew Y. K. Foong",
+        "Vincent Fortuin",
+        "Dimitris Fouskakis",
+        "Jes Frellsen",
+        "Eyke Hüllermeier",
+        "Theofanis Karaletsos",
+        "Mohammad Emtiyaz Khan",
+        "Nikita Kotelevskii",
+        "Salem Lahlou",
+        "Yingzhen Li",
+        "Fang Liu",
+        "Clare Lyle",
+        "Thomas Möllenhoff",
+        "Konstantina Palla",
+        "Maxim Panov",
+        "Yusuf Sale",
+        "Kajetan Schweighofer",
+        "Artem Shelmanov",
+        "Siddharth Swaroop",
+        "Martin Trapp",
+        "Willem Waegeman",
+        "Andrew Gordon Wilson",
+        "Alexey Zaytsev"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-05-01T15:43:43+00:00",
+      "link": "https://arxiv.org/pdf/2605.00742v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Bayesian principles for agentic AI orchestration",
+      "llm_evidence_cn": "智能体AI编排的贝叶斯原则",
+      "llm_evidence": "智能体AI编排的贝叶斯原则",
+      "canonical_evidence": "智能体AI编排的贝叶斯原则",
+      "llm_tldr_en": "Argues for Bayes-consistent orchestration in multi-agent systems to handle decision uncertainty.",
+      "llm_tldr_cn": "主张在多智能体系统中使用贝叶斯一致性编排来处理决策不确定性。",
+      "llm_tldr": "主张在多智能体系统中使用贝叶斯一致性编排来处理决策不确定性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.04608v1",
+      "title": "SensingAgents: A Multi-Agent Collaborative Framework for Robust IMU Activity Recognition",
+      "abstract": "Human Activity Recognition (HAR) using Inertial Measurement Unit (IMU) sensors is a cornerstone of mobile health, smart environments, and human-computer interaction. However, current deep learning-based HAR models often struggle with heavy reliance on labeled data, position-specific ambiguity, and a lack of transparent reasoning. Inspired by the advanced agents framework, which emulates a collaborative agent using Large Language Models (LLMs), we propose SensingAgents, a novel multi-agent system for robust IMU activity recognition. SensingAgents organizes LLM-powered agents into specialized roles: a group of Analyst Agents for position-specific sensor analysis (arm, wrist, belt, pocket), a pair of Advocate Agents that resolves sensor conflicts through dynamic and static dialectical debates, and a Decision Agent that ensures reliability under sensor drift or failure. Evaluation on the Shoaib dataset demonstrates that SensingAgents significantly outperforms state-of-the-art single-agent and multi-agent LLM models, achieving an accuracy of 79.5% in a zero setting--29% higher than existing agent models and 9.4% higher than deep learning baselines--particularly in complex scenarios where multi-sensor data is conflicting or noisy. Our work highlights the potential of multi-agent collaborative reasoning for advancing the robustness and interpretability of ubiquitous sensing systems.",
+      "authors": [
+        "Naiyu Zheng",
+        "Tianlong Yu",
+        "Haochen Yin",
+        "Xiaoyi Fan",
+        "Xiping Hu",
+        "Zhimeng Yin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-06T07:55:46+00:00",
+      "link": "https://arxiv.org/pdf/2605.04608v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM-powered multi-agent system for collaborative sensor analysis",
+      "llm_evidence_cn": "基于大语言模型的多智能体协作传感器分析系统",
+      "llm_evidence": "基于大语言模型的多智能体协作传感器分析系统",
+      "canonical_evidence": "基于大语言模型的多智能体协作传感器分析系统",
+      "llm_tldr_en": "Proposes SensingAgents, a multi-agent framework using LLMs to improve robust human activity recognition.",
+      "llm_tldr_cn": "提出SensingAgents，一种利用大语言模型提高人体活动识别鲁棒性的多智能体框架。",
+      "llm_tldr": "提出SensingAgents，一种利用大语言模型提高人体活动识别鲁棒性的多智能体框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.01865v1",
+      "title": "Quality-Aware Exploration Budget Allocation for Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative multi-agent reinforcement learning (MARL) requires agents to discover joint strategies in a combinatorially large state-action space, yet effective coordination configurations are exceedingly rare. Intrinsic motivation, which augments task rewards with novelty bonuses, is a popular approach for driving exploration, but its effectiveness hinges on the exploration intensity $β$, where too large a value overwhelms the task signal and causes coordination collapse, while too small a value prevents discovery of rare strategies. We address two complementary challenges: adapting $β$ globally over training, and allocating the exploration budget across agents whose intrinsic reward signals vary in reliability. Our framework combines a return-conditioned sigmoid schedule (RCB) for global intensity control with a per-agent Reward Signal Quality (RSQ) metric that concentrates the exploration budget on agents with reliable signals. The core insight is that agents receiving noisy intrinsic rewards should explore less aggressively, and this allocation can be determined automatically from signal-to-noise statistics. Successor Distance (SD), a quasimetric intrinsic reward, naturally produces distinguishable per-agent signal quality, completing the framework with convergence and ordering preservation guarantees. On seven cooperative benchmarks (MPE, SMAX, MABrax), our method achieves top-tier returns across all environments.",
+      "authors": [
+        "Dahyun Oh",
+        "Minhyuk Yoon",
+        "H. Jin Kim"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-05-03T13:20:00+00:00",
+      "link": "https://arxiv.org/pdf/2605.01865v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Cooperative multi-agent reinforcement learning",
+      "llm_evidence_cn": "协作式多智能体强化学习",
+      "llm_evidence": "协作式多智能体强化学习",
+      "canonical_evidence": "协作式多智能体强化学习",
+      "llm_tldr_en": "Proposes a budget allocation framework for exploration in cooperative multi-agent RL.",
+      "llm_tldr_cn": "提出了一种用于协作式多智能体强化学习探索的预算分配框架。",
+      "llm_tldr": "提出了一种用于协作式多智能体强化学习探索的预算分配框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.04922v1",
+      "title": "Evolving Idea Graphs with Learnable Edits-and-Commits for Multi-Agent Scientific Ideation",
+      "abstract": "LLM-empowered multi-agent systems offer new potential to accelerate scientific discovery by generating novel research ideas. However, existing methods typically coordinate agents through temporary texts, such as drafts or chat logs; it is difficult to pinpoint the weaknesses in the generated ideas and how the agents refine them. To this end, we introduce \\textbf{Evolving Idea Graphs} (EIG), a graph-based multi-agent scientific ideation framework that can generate high-performance research ideas across various benchmark-native metrics, such as novelty, feasibility, and clarity. Instead of coordinating solely through texts, EIG represents a partially formed proposal as an evolving idea graph, where nodes capture scientific claims and edges encode relations (e.g., support and conflict), enabling unresolved weaknesses to remain identifiable throughout the idea evolving process. Specifically, a learned two-head controller operates over the evolving graph to guide the ideation: one head selects graph edits for agents to execute, while the other decides when the graph is ready for commit as final proposal synthesis. On AI Idea Bench 2025 and LiveIdeaBench, EIG outperforms all compared systems on both automatic benchmark scores and blind expert ratings. Ablations further show that explicit graph state provides the main performance gains, and learned edit-and-commit control adds consistent improvements.",
+      "authors": [
+        "Jiangwen Dong",
+        "Bo Li",
+        "Wanyu Lin"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-05-06T13:50:40+00:00",
+      "link": "https://arxiv.org/pdf/2605.04922v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "graph-based multi-agent scientific ideation framework",
+      "llm_evidence_cn": "基于图的多智能体科学构思框架",
+      "llm_evidence": "基于图的多智能体科学构思框架",
+      "canonical_evidence": "基于图的多智能体科学构思框架",
+      "llm_tldr_en": "Uses evolving idea graphs to coordinate multi-agent systems for generating novel scientific research ideas.",
+      "llm_tldr_cn": "利用演化思想图协调多智能体系统，以产生新颖的科学研究构思。",
+      "llm_tldr": "利用演化思想图协调多智能体系统，以产生新颖的科学研究构思。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.03409v1",
+      "title": "Robust Agent Compensation (RAC): Teaching AI Agents to Compensate",
+      "abstract": "We present Robust Agent Compensation (RAC), a log-based recovery paradigm (providing a safety net) implemented through an architectural extension that can be applied to most Agent frameworks to support reliable executions (avoiding unintended side effects). Users can choose to enable RAC without changing their current agent code (e.g., LangGraph agents). The proposed approach can be implemented in most existing agent frameworks via their existing extension points. We present an implementation based on LangChain, demonstrate its viability through the $τ$-bench and REALM-Bench, and show that when solving complex problems, RAC is 1.5-8X or more better in both latency and token economy compared to state-of-the-art LLM-based recovery approaches.",
+      "authors": [
+        "Srinath Perera",
+        "Kaviru Hapuarachchi",
+        "Frank Leymann",
+        "Rania Khalaf"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-05T06:27:34+00:00",
+      "link": "https://arxiv.org/pdf/2605.03409v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Recovery paradigm for reliable execution in agent frameworks",
+      "llm_evidence_cn": "智能体框架中可靠执行的恢复范式",
+      "llm_evidence": "智能体框架中可靠执行的恢复范式",
+      "canonical_evidence": "智能体框架中可靠执行的恢复范式",
+      "llm_tldr_en": "Introduces Robust Agent Compensation (RAC) to provide a safety net for reliable agent task execution.",
+      "llm_tldr_cn": "引入鲁棒智能体补偿（RAC），为智能体任务的可靠执行提供安全网。",
+      "llm_tldr": "引入鲁棒智能体补偿（RAC），为智能体任务的可靠执行提供安全网。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.05007v1",
+      "title": "Uno-Orchestra: Parsimonious Agent Routing via Selective Delegation",
+      "abstract": "Large language model (LLM) multi-agent systems typically rely on rigid orchestration, committing either to flat per-query routing or to hand-engineered task decomposition, so decomposition depth, worker choice, and inference budget are not jointly optimized under one objective. We introduce Uno-Orchestra, a unified orchestration policy that selectively decomposes a task and dispatches each subtask to an admissible (model, primitive) pair, with both decisions learned together from curated RL trajectories grounded in real worker interactions. Against 22 baselines on a 13-benchmark suite spanning math, code, knowledge, long-context, and agentic tool-use, Uno-Orchestra reaches 77.0% macro pass@1, roughly 16% above the strongest workflow baseline, at roughly an order of magnitude lower per-query cost, advancing the accuracy-efficiency frontier of selective delegation.",
+      "authors": [
+        "Zhiqing Cui",
+        "Haotong Xie",
+        "Jiahao Yuan",
+        "Cheng Yang",
+        "Hanqing Wang",
+        "Yuxin Wu",
+        "Yifan Wu",
+        "Siru Zhong",
+        "Tao Yu",
+        "Yifu Guo",
+        "Siyu Zhang",
+        "Xinlei Yu",
+        "Qibing Ren",
+        "Usman Naseem"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-06T15:07:14+00:00",
+      "link": "https://arxiv.org/pdf/2605.05007v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM multi-agent systems orchestration and task decomposition",
+      "llm_evidence_cn": "大语言模型多智能体系统编排与任务分解",
+      "llm_evidence": "大语言模型多智能体系统编排与任务分解",
+      "canonical_evidence": "大语言模型多智能体系统编排与任务分解",
+      "llm_tldr_en": "Proposes a unified orchestration policy for efficient task decomposition and routing in multi-agent systems.",
+      "llm_tldr_cn": "提出了一种统一的编排策略，用于多智能体系统中的高效任务分解和路由。",
+      "llm_tldr": "提出了一种统一的编排策略，用于多智能体系统中的高效任务分解和路由。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.03989v2",
+      "title": "An Agent-Oriented Pluggable Experience-RAG Skill for Experience-Driven Retrieval Strategy Orchestration",
+      "abstract": "Retrieval-augmented generation systems often assume that one fixed retrieval pipeline is sufficient across heterogeneous tasks, yet factoid question answering, multi-hop reasoning, and scientific verification exhibit different retrieval preferences. We present Experience-RAG Skill, an agent-oriented pluggable retrieval orchestration layer positioned between the agent and the retriever pool. The proposed skill analyzes the current scene, consults an experience memory, selects an appropriate retrieval strategy, and returns structured evidence to the agent. Under a fixed candidate pool, Experience-RAG Skill achieves an overall nDCG@10 of 0.8924 on BeIR/nq, BeIR/hotpotqa, and BeIR/scifact, outperforming fixed single-retriever baselines and remaining competitive with Adaptive-RAG-style routing. The results suggest that retrieval strategy selection can be productively encapsulated as a reusable agent skill rather than being hard-coded in the upper workflow.",
+      "authors": [
+        "Dutao Zhang",
+        "Tian Liao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-05T17:10:25+00:00",
+      "link": "https://arxiv.org/pdf/2605.03989v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent-oriented retrieval strategy orchestration for heterogeneous tasks",
+      "llm_evidence_cn": "面向智能体的异构任务检索策略编排",
+      "llm_evidence": "面向智能体的异构任务检索策略编排",
+      "canonical_evidence": "面向智能体的异构任务检索策略编排",
+      "llm_tldr_en": "Develops an Experience-RAG Skill for agents to dynamically select retrieval strategies based on task context.",
+      "llm_tldr_cn": "开发Experience-RAG技能，使智能体能够根据任务上下文动态选择检索策略。",
+      "llm_tldr": "开发Experience-RAG技能，使智能体能够根据任务上下文动态选择检索策略。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.05020v1",
+      "title": "Graph-SND: Sparse Aggregation for Behavioral Diversity in Multi-Agent Reinforcement Learning",
+      "abstract": "System Neural Diversity (SND) measures behavioral heterogeneity in multi-agent reinforcement learning by averaging pairwise distances over all $\\binom{n}{2}$ agent pairs, making each call quadratic in team size. We introduce Graph-SND, which replaces this complete-graph average with a weighted average over the edges of an arbitrary graph $G$. Three regimes follow: $G=K_n$ recovers SND exactly; a fixed sparse $G$ defines a localized diversity measure at $O(|E|)$ cost; and random edge samples yield an unbiased Horvitz-Thompson estimator and a normalized sample mean with $O(1/\\sqrt{m})$ concentration in the sampled edge count $m$. For fixed sparse graphs we prove forwarding-index distortion bounds for expanders and a spectral refinement under low-rank distance structure; for random $d$-regular graphs we prove an unconditional probabilistic $\\widetilde{\\mathcal{O}}(D_{\\max}/\\sqrt{n})$ bound. On VMAS we verify recovery, unbiasedness, concentration, and wall-clock scaling, with a PettingZoo TVD panel checking non-Gaussian transfer. In a 500-iteration $n=100$ PPO run, Bernoulli-$0.1$ Graph-SND tracks full SND while reducing per-call metric time by about $10\\times$, and frozen-policy GPU timing up to $n=500$ follows the predicted $\\binom{n}{2}/|E|$ speedup. Random $d$-regular expanders empirically achieve $\\mathrm{SND}_{G}^{\\mathrm{u}}/\\mathrm{SND} \\in [0.9987, 1.0013]$ at $Θ(n \\log n)$ edges. In DiCo diversity control at $n=50$, Bernoulli-$0.1$ Graph-SND preserves set-point tracking with paired reward differences indistinguishable from zero across nine matched cells while cutting per-call metric cost by ${\\sim}9.5\\times$. Together, these results show that the SND aggregation bottleneck can be removed without changing the metric's semantics, yielding a drop-in sparse alternative that scales beyond complete-graph SND and supports both passive measurement and closed-loop diversity control.",
+      "authors": [
+        "Shawn Ray"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-05-06T15:18:42+00:00",
+      "link": "https://arxiv.org/pdf/2605.05020v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Behavioral diversity in multi-agent reinforcement learning",
+      "llm_evidence_cn": "多智能体强化学习中的行为多样性",
+      "llm_evidence": "多智能体强化学习中的行为多样性",
+      "canonical_evidence": "多智能体强化学习中的行为多样性",
+      "llm_tldr_en": "Introduces Graph-SND to efficiently measure behavioral heterogeneity in multi-agent systems.",
+      "llm_tldr_cn": "引入Graph-SND，用于高效衡量多智能体系统中的行为异构性。",
+      "llm_tldr": "引入Graph-SND，用于高效衡量多智能体系统中的行为异构性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

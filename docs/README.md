@@ -6,71 +6,62 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-08
-- 运行时间：2026-05-08 20:06:11 UTC
+- 最新运行日期：2026-05-09
+- 运行时间：2026-05-09 20:28:28 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：14
+- 精读区：3
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度复盘 17 篇前沿成果，聚焦多智能体协作治理与对话式推荐系统的决策模拟。
-重点推荐通过“人工选择”机制优化智能体协作记忆，以及利用决策感知代理提升推荐评估的真实性。
-建议关注多智能体在电商搜索与可信自动化工厂中的落地，探索智能体间的高效通信与治理。
-- 详情：[/202605/08/README](/202605/08/README)
+今日深度研读14篇前沿成果，聚焦AI引导群体合作的博弈机制与生成式模拟技术。
+重点关注LLM在维持社会性合作中的“大众定理”应用，以及生成式AI对多层级数据评估的效能提升。
+推荐关注LLM在小语种反虚假新闻及多智能体感官识别等垂直领域的落地潜力。
+- 详情：[/202605/09/README](/202605/09/README)
 
 ### 精读区论文标签
-1. [Governed Collaborative Memory as Artificial Selection in LLM-Based Multi-Agent Systems](/202605/08/2605.04264v1-governed-collaborative-memory-as-artificial-selection-in-llm-based-multi-agent-systems)  
+1. [Sustaining Cooperation in Populations Guided by AI: A Folk Theorem for LLMs](/202605/09/2605.06525v1-sustaining-cooperation-in-populations-guided-by-ai-a-folk-theorem-for-llms)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：大模型多智能体系统中的受控协作记忆
-2. [Decision-aware User Simulation Agent for Evaluating Conversational Recommender Systems](/202605/08/2605.05250v1-decision-aware-user-simulation-agent-for-evaluating-conversational-recommender-systems)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于LLM的用户社会行为模拟
-3. [Active Learning for Communication Structure Optimization in LLM-Based Multi-Agent Systems](/202605/08/2605.05703v1-active-learning-for-communication-structure-optimization-in-llm-based-multi-agent-systems)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体系统通信结构优化
-4. [Coordination as an Architectural Layer for LLM-Based Multi-Agent Systems](/202605/08/2605.03310v1-coordination-as-an-architectural-layer-for-llm-based-multi-agent-systems)  
+   evidence：大语言模型引导多智能体群体进行策略性社会互动
+2. [Generative AI-Based Monte Carlo Simulation for Method Evaluation Using Synthetic Multilevel Data](/202605/09/2605.05752v1-generative-ai-based-monte-carlo-simulation-for-method-evaluation-using-synthetic-multilevel-data)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体系统架构层
-5. [ARMATA: Auto-Regressive Multi-Agent Task Assignment](/202605/08/2605.04225v1-armata-auto-regressive-multi-agent-task-assignment)  
+   evidence：用于社会科学模拟的合成多层数据
+3. [COVID-19 Infodemic. Understanding content features in detecting fake news using a machine learning approach](/202605/09/2605.06435v1-covid-19-infodemic-understanding-content-features-in-detecting-fake-news-using-a-machine-learning-approach)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于多智能体任务分配与协作的自回归框架
-6. [MASPO: Joint Prompt Optimization for LLM-based Multi-Agent Systems](/202605/08/2605.06623v1-maspo-joint-prompt-optimization-for-llm-based-multi-agent-systems)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：LLM多智能体系统的联合提示词优化
+   evidence：利用语言和内容特征进行虚假新闻检测
 
 ### 速读区论文标签
-1. [SANEmerg: An Emergent Communication Framework for Semantic-aware Agentic AI Networking](/202605/08/2605.05861v1-sanemerg-an-emergent-communication-framework-for-semantic-aware-agentic-ai-networking)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体涌现通信框架
-2. [A Case-Driven Multi-Agent Framework for E-Commerce Search Relevance](/202605/08/2605.05991v1-a-case-driven-multi-agent-framework-for-e-commerce-search-relevance)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：在搜索相关性中取代人类角色的多智能体框架
-3. [Safactory: A Scalable Agent Factory for Trustworthy Autonomous Intelligence](/202605/08/2605.06230v1-safactory-a-scalable-agent-factory-for-trustworthy-autonomous-intelligence)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：具有并行模拟功能的扩展智能体工厂，用于智能体进化
-4. [Improving the Efficiency of Language Agent Teams with Adaptive Task Graphs](/202605/08/2605.06320v1-improving-the-efficiency-of-language-agent-teams-with-adaptive-task-graphs)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：使用自适应任务图协调语言智能体团队
-5. [Planner Matters! An Efficient and Unbalanced Multi-agent Collaboration Framework for Long-horizon Planning](/202605/08/2605.02168v1-planner-matters-an-efficient-and-unbalanced-multi-agent-collaboration-framework-for-long-horizon-planning)  
+1. [Addressing Data Scarcity in Bangla Fake News Detection: An LLM-Based Dataset Augmentation Approach](/202605/09/2605.01292v1-addressing-data-scarcity-in-bangla-fake-news-detection-an-llm-based-dataset-augmentation-approach)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于规划的多智能体协作框架
-6. [GRAIL: A Deep-Granularity Hybrid Resonance Framework for Real-Time Agent Discovery via SLM-Enhanced Indexing](/202605/08/2605.02489v1-grail-a-deep-granularity-hybrid-resonance-framework-for-real-time-agent-discovery-via-slm-enhanced-indexing)  
+   evidence：基于大语言模型的虚假新闻检测与数据增强
+2. [Distributed TD Tracking with Linear Function Approximation over Directed Communication Networks](/202605/09/2605.04466v1-distributed-td-tracking-with-linear-function-approximation-over-directed-communication-networks)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：大规模多智能体协作
-7. [mdok-style at SemEval-2026 Task 10: Finetuning LLMs for Conspiracy Detection](/202605/08/2605.02712v1-mdok-style-at-semeval-2026-task-10-finetuning-llms-for-conspiracy-detection)  
+   evidence：通信网络上的多智能体强化学习
+3. [SensingAgents: A Multi-Agent Collaborative Framework for Robust IMU Activity Recognition](/202605/09/2605.04608v1-sensingagents-a-multi-agent-collaborative-framework-for-robust-imu-activity-recognition)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：社会话语中的阴谋论检测
-8. [Tree-based Credit Assignment for Multi-Agent Memory System](/202605/08/2605.04811v1-tree-based-credit-assignment-for-multi-agent-memory-system)  
+   evidence：基于大语言模型的多智能体协作传感器分析系统
+4. [Evolving Idea Graphs with Learnable Edits-and-Commits for Multi-Agent Scientific Ideation](/202605/09/2605.04922v1-evolving-idea-graphs-with-learnable-edits-and-commits-for-multi-agent-scientific-ideation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体记忆系统的信用分配
-9. [Hybrid Inspection and Task-Based Access Control in Zero-Trust Agentic AI](/202605/08/2605.02682v1-hybrid-inspection-and-task-based-access-control-in-zero-trust-agentic-ai)  
+   evidence：基于图的多智能体科学构思框架
+5. [Uno-Orchestra: Parsimonious Agent Routing via Selective Delegation](/202605/09/2605.05007v1-uno-orchestra-parsimonious-agent-routing-via-selective-delegation)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：大语言模型多智能体系统编排与任务分解
+6. [Graph-SND: Sparse Aggregation for Behavioral Diversity in Multi-Agent Reinforcement Learning](/202605/09/2605.05020v1-graph-snd-sparse-aggregation-for-behavioral-diversity-in-multi-agent-reinforcement-learning)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：多智能体强化学习中的行为多样性
+7. [AgentFloor: How Far Up the tool use Ladder Can Small Open-Weight Models Go?](/202605/09/2605.00334v1-agentfloor-how-far-up-the-tool-use-ladder-can-small-open-weight-models-go)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体分布式协作中的访问控制
-10. [The Fragility of AI Companionship: Ontological, Structural, and Normative Uncertainty in Human-AI Relationships](/202605/08/2605.03367v1-the-fragility-of-ai-companionship-ontological-structural-and-normative-uncertainty-in-human-ai-relationships)  
+   evidence：智能体系统中的多步协作
+8. [Position: agentic AI orchestration should be Bayes-consistent](/202605/09/2605.00742v2-position-agentic-ai-orchestration-should-be-bayes-consistent)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：人机关系与社会话语
-11. [An Agent-Oriented Pluggable Experience-RAG Skill for Experience-Driven Retrieval Strategy Orchestration](/202605/08/2605.03989v1-an-agent-oriented-pluggable-experience-rag-skill-for-experience-driven-retrieval-strategy-orchestration)  
+   evidence：智能体AI编排的贝叶斯原则
+9. [Quality-Aware Exploration Budget Allocation for Cooperative Multi-Agent Reinforcement Learning](/202605/09/2605.01865v1-quality-aware-exploration-budget-allocation-for-cooperative-multi-agent-reinforcement-learning)  
+   标签：评分：6.0/10、query:mas-ss
+   evidence：协作式多智能体强化学习
+10. [Robust Agent Compensation (RAC): Teaching AI Agents to Compensate](/202605/09/2605.03409v1-robust-agent-compensation-rac-teaching-ai-agents-to-compensate)  
+   标签：评分：6.0/10、query:mas-ss
+   evidence：智能体框架中可靠执行的恢复范式
+11. [An Agent-Oriented Pluggable Experience-RAG Skill for Experience-Driven Retrieval Strategy Orchestration](/202605/09/2605.03989v2-an-agent-oriented-pluggable-experience-rag-skill-for-experience-driven-retrieval-strategy-orchestration)  
    标签：评分：6.0/10、query:mas-ss
    evidence：面向智能体的异构任务检索策略编排
 
