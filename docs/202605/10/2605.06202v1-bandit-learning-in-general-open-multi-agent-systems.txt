@@ -1,0 +1,5014 @@
+Title: Bandit Learning in General Open Multi-agent Systems
+
+URL Source: https://arxiv.org/pdf/2605.06202v1
+
+Published Time: Fri, 08 May 2026 01:11:45 GMT
+
+Number of Pages: 46
+
+Markdown Content:
+# Bandit Learning in General Open Multi-agent Systems 
+
+Mengfan Xu 
+
+Mechanical and Industrial Engineering University of Massachusetts Amherst 
+
+mengfanxu@umass.edu 
+
+## Abstract 
+
+Recent developments in digital platforms have highlighted the prevalence of open systems, where agents can arrive and depart over time. While bandit learning in open systems has recently received initial attention, existing work imposes structural assumptions that are frequently violated in practice. A learning paradigm for general open systems creates fresh challenges: newly arriving agents induce endogenous non-stationarity; agent patterns determine how quickly information accumulates; and new agents make regret scale further with the time horizon. To this end, we formulate a unified open-system bandit problem with general dynamics, including heterogeneous rewards and general agent patterns. We introduce new concepts to capture the inherent complexities: the pre-training degree of new agents quantifies how much information an agent carries upon entry, stability measures the impact of new agents on the system, and global dynamic regret compares the cumulative expected reward of all active agents with that of the varying optimal arms. We develop certified global-UCB learning methodologies with provable guarantees. Our regret bounds reveal that entry uncertainty enters linearly via the pre-training degree, while in stable regimes, regret is governed by the time needed to identify a persistent optimal arm, as well as by the agent patterns. We further show that these dependencies are tight via lower bounds in hard instances. 
+
+## 1 Introduction 
+
+Multi-armed bandits [Auer et al., 2002a,b] have been extensively studied due to their mathematical elegance and broad applicability. In the classical setting, a decision-maker sequentially selects one action from a finite set of actions and receives the reward (feedback) of the chosen action, with the goal of maximizing the cumulative reward over a fixed time horizon. This is equivalently formulated as minimizing regret, namely, the difference between the cumulative reward of the best action in hindsight and the actual cumulative reward obtained. The most fundamental challenge is the trade-off between exploration, which tries different arms to infer their reward distributions, and exploitation, which selects the currently best-known action to secure immediate reward. Seminal algorithms that balance this trade-off through statistical estimation and uncertainty quantification, such as Upper Confidence Bounds [Auer et al., 2002a] and Thompson Sampling [Thompson, 1933], have enabled applications in e-commerce [Xiang et al., 2022, Jiang et al., 2021, Barraza-Urbina and Glowacka, 2020, Zhu and Van Roy, 2023] and, more recently, large language models (LLMs) [Atalar, 2026, Poon et al., 2026, Bouneffouf and Feraud, 2026, Bouneffouf and Féraud, 2024]. With the rapid and exciting development of the Internet and modern technology, these applications have evolved while also introducing new challenges. In particular, modern organizations increasingly rely on multiple interacting decision-makers, ranging from distributed services [Zhu et al., 2021, Yang et al., 2024] and store branches [Mes and Gerrits, 2018, Khatua et al., 2011] to teams of agents in agentic AI systems [He et al., 2025, Chen et al., 2025]. The classical bandit learning framework no longer directly applies in such settings, and multi-agent multi-armed bandits (MA-MABs) emerge as a natural and successful remedy [Landgren et al., 2016a,b, 2021, Zhu et al., 2020, Martínez-Rubio et al., 2019, Agarwal et al., 2022, Wang et al., 2022, 2020, Li and Song, 2022, Sankararaman et al., 
+
+> Preprint.
+> arXiv:2605.06202v1 [cs.LG] 7 May 2026
+
+2019, Chawla et al., 2020, Xu and Klabjan, 2023, 2024, 2025]. In this framework, decision-makers are distributed over a graph, where each node represents an agent. At each round, an agent selects an action, observes the local reward of the chosen arm, communicates its information to neighboring agents on the graph, and incorporates the received information into its statistical estimators. The objective is to maximize the cumulative global reward, which aggregates the local rewards of the same arm across agents. This interplay between local and global information introduces additional challenges in consensus and communication, and has motivated several seminal methods. However, it is commonly assumed in MA-MAB and related bandit-learning frameworks that the system is closed, in the sense that the set of decision-makers remains fixed throughout the learning process. This significantly limits the generality of these learning paradigms. In practice, data centers [Shehabi et al., 2018] and their tenants [Shieh et al., 2011] may expand or shut down depending on the availability of natural resources such as water and electricity; store branches may open or close according to the business needs of a wholesale company [Clapp et al., 2014]; and LLM agents may be added to or removed from an agentic workflow by users [Liu et al., 2026a, Wang et al., 2025]. What these examples share is that the decision-makers, or agents, evolve over time in an open system, often referred to as an open multi-agent system (OMAS) [Deplano et al., 2026, Liu et al., 2026b]. This reveals an emerging gap between these two areas. Very recently, a line of work has begun to investigate bandit learning in open systems in an effort to bridge this gap. In these works, the agent set is allowed to change over time, and the objective is defined only with respect to the agents that are currently active [Rosenski et al., 2016, Trinh and Combes, 2021]. While valuable, most of these works assume that the active agents are drawn from a fixed pool of bounded size. Under such an assumption, the resulting regret notion does not fully address scalability, since the regret remains bounded by that of the underlying fixed pool. Notably, [Xu and Klabjan, 2026] has recently overcome this limitation by allowing the system to evolve according to a stochastic process and to admit an unbounded set of agents. However, two major assumptions remain. First, the reward distribution of a given arm is assumed to be identical across agents, namely, homogeneous. Second, the agent population is modeled through a specific Poisson-type arrival and departure pattern. Emerging applications may readily violate both assumptions. For example, store branches may exhibit different reward distributions for the same product across locations, where the reward may correspond to the product return rate and therefore vary by location, such as a large city versus a small city. In addition, agent arrivals and departures may be seasonal, bursty, or driven by operational events, rather than following a fixed Poisson pattern. These motivate a unified open-system framework that accommodates heterogeneous reward distributions while separating the learning problem from any particular agent-arrival model. A thorough literature review is provided in Appendix A.1. Removing these assumptions introduces both conceptual and technical challenges. The difficulty does not come from reward heterogeneity or agent dynamics alone, but from their interaction: reward heterogeneity determines how each agent affects the global reward profile and how new agents learn from the system’s interaction history, while the arrival/departure pattern determines when and how strongly such effects enter the system. Consequently, even if each agent’s reward distribution is stationary, the step-wise globally optimal arm may change over time because the active population changes. This creates an endogenous form of non-stationarity and calls for new formulations that capture these complexities, including the entry information carried by newly arriving agents and the stability of the globally optimal arm, together with regret definitions that compare the algorithm against a time-varying global benchmark. This benchmark non-stationarity also changes the algorithmic problem. Classical multi-agent bandit algorithms rely on pooling samples over time to identify a fixed optimal arm. In general open systems, however, newly arriving agents may alter the global optimum, and their impact depends jointly on their reward vectors, their entry information, and the agent pattern governing arrivals and departures. The degree of entry information is especially important under reward heterogeneity: information that is accurate for one agent or subgroup may be biased for another, so transferring estimates without quantifying their error can mislead the global decision. Agent patterns further determine how quickly information accumulates, how large the active population becomes, and whether the impact of future arrivals eventually becomes negligible. These interactions motivate a stability perspective on open heterogeneous systems. In the worst case, each arrival may introduce enough uncertainty or shift the aggregate reward vector enough to create a 2new learning problem. In more favorable regimes, the population may become sufficiently large or compositionally stable so that new arrivals no longer change the globally optimal arm. Thus, system performance depends on whether the combined effect of reward heterogeneity, entry-information quality, and agent patterns produces persistent changes in the global benchmark or only transient perturbations. Characterizing this distinction is essential for understanding when open systems are intrinsically hard and how their regret can be controlled. Hence, we ask 
+
+How to characterize the intrinsic complexities of general open systems; how to design learning methodologies that address these complexities; and how system performance varies with them? 
+
+1.1 Main Contributions 
+
+We answer this question firmly through the following contributions. 
+
+Conceptual paradigm. We formulate a unified open MA-MAB problem with heterogeneous rewards and dynamic populations. Agents may arrive and depart according to general patterns, with Poisson dynamics as a special case, and the same arm may have different reward means across agents. To capture the intrinsic complexity behind this unified regime, we introduce new concepts. First, we introduce global dynamic regret , where the comparator at each round is the arm that maximizes the aggregate, equivalently average, reward over the currently active agents. Because the active population changes over time, this benchmark may change even when individual rewards are stationary. Second, we introduce the pre-training error Pm and pre-training degree Dm = 1 /P m for newly arriving agents, which quantify the accuracy of the reward information an agent carries upon entry from pre-training, side information, neighboring agents, or model-based transfer. Finally, we introduce a stability measure and identify a stable regime under an alternative form of dynamic regret that separates the effect of entering agents on the system from the growth of the system. In this regime, future entry errors may remain nonzero but are no longer decision-relevant once the stable arm has been identified. 
+
+Methodology. We develop a certified global-UCB framework for heterogeneous open systems. The algorithm first initializes newly arriving agents through certified transfer: an agent may inherit information from pre-training, model-based parameter transfer, or cluster-level estimates only when the associated entry error can be bounded. It then aggregates the certified local estimates into global arm-value estimates and selects a common arm using a global-UCB index that separates continuing-agent statistical uncertainty from arrival uncertainty. After each pull, agents update their local estimates and certificates. This design adapts to scenarios while preserving the same global decision rule. 
+
+Regret analyses. We prove an upper bound for RT of order O(M0 log T + PTt=1 
+
+P 
+
+> m∈A t
+
+Pm),equivalently O(M0 log T + PTt=1 |A t|/D t), showing how regret depends on initial learning, arrival patterns, and pre-training quality. For the stable-arm regime, we prove that ¯RT ≤ τ on the good event and ¯RT ≤ τ + δ(T − τ ) unconditionally, where δ is the failure probability of stability and identification, and τ is the time at which the system becomes stable. We also provide hard-instance lower bounds showing that the entry-error term is unavoidable in pivotal-arrival instances and that zero-knowledge arrivals can force linear regret. Finally, linear, nonlinear, clustered, and zero-knowledge models instantiate these results. 
+
+## 2 Problem Formulation 
+
+We study an open cooperative multi-agent multi-armed bandit problem with K arms, indexed by 
+
+[K] := {1, 2, . . . , K }, over a horizon of T rounds. Rounds are indexed by t ∈ [T ], and t = 0 is used only for the initial system state. At the beginning of each round t ∈ [T ], arrivals and departures are realized, producing the active set Mt and the communication graph Gt. Agents in Mt then select arms, observe rewards, and communicate over a complete Gt. Here Gt = ( Vt, Et), where Vt = Mt.For each m ∈ M t, let Nm(t) = {n ∈ M t : ( m, n ) ∈ E t} denote its neighbor set. 
+
+Reward model. If agent m ∈ M t pulls arm i ∈ [K] at round t, it receives reward rim(t) from a stationary distribution with mean 0 ≤ μim = E[rim(t)] ≤ 1. Different from the homogeneous setting [Xu and Klabjan, 2026], we allow μim̸ = μin for m̸ = n. The homogeneous model is recovered when 
+
+μim = μi for all agents m and arms i. As is standard in the bandit literature, we assume that the rewards are sub-Gaussian. The unnormalized and normalized global reward values, computed across agents, are Vt(i) := P 
+
+> m∈M t
+
+μim and ¯Vt(i) := M −1
+
+> t
+
+P 
+
+> m∈M t
+
+μim, respectively. 3Agent patterns. We consider a general open system. A common special case is a Poisson arrival-departure pattern [Xu and Klabjan, 2026], where At ∼ Poisson( λA) and Dt ∼ Poisson( λD ) denote the total arrivals and departures at round t. Then Mt = ( Mt−1 + At − Dt)+, with initial population size M0. This reduces to the classical fixed-population setting when λA = λD = 0 .
+
+Arm selection and observations. Let am(t) ∈ [K] denote the arm selected by agent m at round 
+
+t. The local pull count of arm i by agent m is nm,i (t) = Pts=1 1{m ∈ M s, a m(s) = i}, and the number of observed neighbor pulls of arm i is Nm,i (t) = Pts=1 
+
+P 
+
+> n∈N m(s)
+
+1{n ∈ M s, a n(s) = i}.
+
+Pre-training degree/error. A key feature of general open systems is that newly arriving agents may not enter with zero information. Instead, an arriving agent may already carry an initial estimator that is informative about its own local reward means. To capture this effect, we introduce the degree of pre-training .Let At := Mt \ M t−1 denote the set of agents that arrive at round t. For an agent m ∈ A t, let 
+
+T am = t be its arrival time, and let ˆμmi (T am − 1) denote the arm-i estimator available to agent m upon entry. This estimator may come from pre-training, side information, or inherited knowledge. We define the pre-training degree and pre-training error of agent m by 
+
+Dm = 1/Pm, Pm := max  
+
+> i∈[K]
+
+ˆμmi (T am − 1) − μim .
+
+We write Dm = ∞ when Pm = 0 . Thus, Pm measures the worst-case initialization error of agent m
+
+across all arms. We also define the instantaneous pre-training degree at round t as 
+
+Dt = 1/Pt, Pt := max 
+
+> m∈A t
+
+Pm,
+
+with the convention that Pt = 0 and Dt = ∞ if At = ∅.
+
+Remark (Pre-trained agents) . We introduce the concept of pre-trained agents in MA-MAB and quantify it through the accuracy of the information agents carry upon entry. This notion captures information accuracy and information flow in open systems, and is motivated by pre-trained models in the LLM community. It also provides a path for extending the MA-MAB paradigm to LLM-agent systems. 
+
+Remark. Our notion of pre-training error is closely related in spirit to the information-theoretic view of nonstationary bandits in [Min and Russo, 2023]. In that work, the difficulty of learning in a changing environment is characterized by the entropy rate of the optimal-action process and by the information ratio, which measures the price paid by an algorithm to acquire information. In our open multi-agent setting, the source of nonstationarity is different: the global optimal arm may change because newly arriving agents alter the aggregate reward vector. The pre-training error Pm
+
+measures the residual uncertainty an arriving agent carries about its own reward means, while the pre-training degree Dm = 1 /P m measures the amount of useful information it brings into the system. Thus, the cumulative entry-error term can be interpreted as an entry-uncertainty rate: it measures how much unresolved information is injected into the system by arrivals. This is analogous to the role of entropy rate in [Min and Russo, 2023], but is tailored to open systems where uncertainty enters through agent arrivals rather than exogenous changes in a latent environment state. 
+
+Stability. We first quantify how fast the global reward values change due to the entry of new agents: max i∈[K] |Vt(i) − Vt−1(i)|, max i∈[K] | ¯Vt(i) − ¯Vt−1(i)|. Here Vt(i) := P 
+
+> m∈M t
+
+μim and 
+
+¯Vt(i) := M −1 
+
+> t
+
+Vt(i). Since Mt is common across arms at round t, the maximizer of ¯Vt(i) is the same as the maximizer of Vt(i) at time t. We then quantify whether the globally optimal arm changes from round t − 1 to round t through the stability indicator 
+
+1{arg max 
+
+> i∈[K]
+
+¯Vt(i) = arg max 
+
+> i∈[K]
+
+¯Vt−1(i)}.
+
+Equivalently, one may replace ¯Vt(i) with Vt(i) in the above indicator. This stability notion is unique 
+
+to our open systems with heterogeneous rewards: in a closed system the active population is fixed, while in a homogeneous open system all agents contribute the same arm-wise means, so arrivals alone do not change the identity of the globally optimal arm. 
+
+Objective. Under heterogeneous rewards, the best arm depends on the active population. We define the instantaneous globally optimal arm as i⋆t ∈ arg max i∈[K] Vt(i), equivalently, i⋆t ∈
+
+arg max i∈[K] ¯Vt(i). Thus, i⋆t maximizes both the unnormalized and normalized global expected 4reward over the currently active agents, and may vary over time even when each individual reward distribution is stationary. We define the unnormalized and normalized group regret as 
+
+RT = E[
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈M t
+
+(Vt(i⋆t ) − Vt(am(t))) , ¯RT = E[
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈M t
+
+( ¯Vt(i⋆t ) − ¯Vt(am(t)))] .
+
+Our goal is to design a cooperative learning policy that minimizes the group regret despite reward heterogeneity, population openness, and dynamic graph-constrained communication. 
+
+## 3 Methodology 
+
+We propose a new method, summarized in Algorithm 1. The method matches the global dynamic re-gret benchmark by estimating global arm values rather than optimizing agents’ local reward estimates separately. It has three modules: C ERTIFIED ARRIVAL TRANSFER , G LOBAL VALUE AGGREGATION ,and L OCAL UPDATE AND BROADCAST .
+
+Algorithm 1: General Open MA-MAB with Certified Arrival Transfer and Global-UCB 
+
+Input: Arms K, horizon T , constants C1 > 0, β > 0, communication tolerance ϵcomm 
+
+> t
+
+Output: Common arm choices {at}t∈[T ] and agent actions am(t) = at 
+
+> 1
+
+Initialize nm,i (0) = 0 , ˆμm,i (0) = 0 , and ρm,i (0) = 1 for all m ∈ M 0, i ∈ [K] 
+
+> 2
+
+for t = 1 , 2, . . . , T do  
+
+> 3
+
+Observe Mt and Gt = ( Vt, E t) 
+
+> 4
+
+Set At = Mt \ M t−1, Rt = Mt ∩ M t−1, Dt = Mt−1 \ M t. 
+
+> 5
+
+CERTIFIED ARRIVAL TRANSFER (At, Rt, G t) 
+
+> 6
+
+( bVt(i), B stat  
+
+> t
+
+(i), E At )i∈[K] ← GLOBAL VALUE AGGREGATION (Mt, At, Rt, G t) 
+
+> 7
+
+at ← arg max i∈[K]
+
+n bVt(i) + Bstat  
+
+> t
+
+(i) + EAt
+
+o
+
+. 
+
+> 8
+
+foreach m ∈ M t do  
+
+> 9
+
+Set am(t) ← at; Pull arm at and observe rat 
+
+> m
+
+(t) 
+
+> 10
+
+LOCAL UPDATE AND BROADCAST (Mt, G t, a t)
+
+Initialization. Each initial agent m ∈ M 0 sets nm,i (0) = 0 , ˆμm,i (0) = 0 , and ρm,i (0) = 1 for every arm i ∈ [K]. These quantities are updated as the active population and graph evolve. 
+
+Population decomposition. At round t, the algorithm observes the active set Mt and graph 
+
+Gt = ( Vt, E t), and decomposes the population into arrivals At = Mt \ M t−1, continuing agents 
+
+Rt = Mt ∩ M t−1, and departures Dt = Mt−1 \ M t. The newly arriving agents are initialized by CERTIFIED ARRIVAL TRANSFER .
+
+Certified arrival transfer. For each m ∈ A t, the algorithm constructs entry estimates ˆμm,i (t − 1) 
+
+and a certified entry-error radius ¯Pm. If certified pretrained estimates {ˆμentry  
+
+> m,i
+
+}i∈[K] are available, it sets ˆμm,i (t − 1) = ˆ μentry  
+
+> m,i
+
+with certificate max i∈[K] |ˆμentry  
+
+> m,i
+
+− μim| ≤ ¯Pm. If certified model-based transfer is available from Nm(t)∩R t, it sets ˆμm,i (t−1) ← CERTIFIED TRANSFER i(m, Nm(t)∩R t)
+
+and assigns the corresponding ¯Pm. This transfer can be implemented by transferring parameter estimates in linear or nonlinear parametric models, or by inheriting cluster-level empirical estimates in clustered stochastic models. If no reliable transfer is available, the agent is treated as zero-knowledge: ˆμm,i (t − 1) = 0 for all i, with maximal bounded certificate ¯Pm = 1 under normalized rewards. Finally, the arriving agent sets nm,i (t − 1) = 0 and ρm,i (t − 1) = ¯Pm for all i.
+
+Global-value aggregation. The algorithm estimates the global value Vt(i) := P 
+
+> m∈M t
+
+μim of each arm. The module G LOBAL VALUE AGGREGATION runs a sum-consensus or aggregation routine over Gt to compute bVt(i) ← P 
+
+> m∈M t
+
+ˆμm,i (t − 1) . It also computes the statistical bonus Bstat  
+
+> t
+
+(i) ←
+
+P 
+
+> m∈R t
+
+ρm,i (t − 1) + ϵcomm  
+
+> t
+
+(i), where ϵcomm  
+
+> t
+
+(i) bounds graph-aggregation error, and the arrival bonus EAt ← P
+
+> m∈A t
+
+¯Pm. Thus, the global index separates continuing-agent statistical uncertainty, communication error, and certified arrival uncertainty. 5Algorithm 2: CERTIFIED ARRIVAL TRANSFER 
+
+Input: Arrivals At, continuing agents Rt, graph Gt
+
+Output: Entry estimates ˆμm,i (t − 1) and certificates ¯Pm for m ∈ A t 
+
+> 1
+
+foreach m ∈ A t do  
+
+> 2
+
+if agent m has certified pretrained estimates {ˆμentry  
+
+> m,i
+
+}i∈[K] then  
+
+> 3
+
+foreach i ∈ [K] do  
+
+> 4
+
+ˆμm,i (t − 1) ← ˆμentry  
+
+> m,i
+> 5
+
+Set certified entry radius ¯Pm such that max i∈[K] ˆμentry  
+
+> m,i
+
+− μim ≤ ¯Pm 
+
+> 6
+
+else if a certified model-based transfer is available from Nm(t) ∩ R t then  
+
+> 7
+
+foreach i ∈ [K] do  
+
+> 8
+
+ˆμm,i (t − 1) ← CERTIFIED TRANSFER i(m, Nm(t) ∩ R t). 
+
+> 9
+
+Set the corresponding certified radius ¯Pm 
+
+> 10
+
+else  
+
+> 11
+
+foreach i ∈ [K] do  
+
+> 12
+
+ˆμm,i (t − 1) ← 0 
+
+> 13
+
+Set ¯Pm ← 1 // Zero-knowledge initialization for normalized rewards  
+
+> 14
+
+foreach i ∈ [K] do  
+
+> 15
+
+nm,i (t − 1) ← 0 
+
+> 16
+
+ρm,i (t − 1) ← ¯Pm
+
+Algorithm 3: GLOBAL VALUE AGGREGATION 
+
+Input: Active set Mt, arrivals At, continuing agents Rt, graph Gt
+
+Output: Global estimates bVt(i), statistical bonuses Bstat  
+
+> t
+
+(i), and arrival bonus EAt 
+
+> 1
+
+Run a sum-consensus or aggregation routine over Gt to compute, for every i ∈ [K],
+
+bVt(i) ← P 
+
+> m∈M t
+
+ˆμm,i (t − 1) . 
+
+> 2
+
+For every i ∈ [K], compute the continuing-agent statistical uncertainty 
+
+Bstat  
+
+> t
+
+(i) ← P 
+
+> m∈R t
+
+ρm,i (t − 1) + ϵcomm  
+
+> t
+
+(i), where ϵcomm  
+
+> t
+
+(i) bounds the aggregation error  
+
+> 3
+
+Compute the arrival uncertainty EAt ← P
+
+> m∈A t
+
+¯Pm. 
+
+> 4
+
+return ( bVt(i), B stat  
+
+> t
+
+(i), E At )i∈[K]
+
+Common global-UCB selection. The algorithm selects a common arm at ← arg max i∈[K]{ bVt(i)+ 
+
+Bstat  
+
+> t
+
+(i) + EAt }. Each active agent m ∈ M t sets am(t) = at, pulls arm at, and observes rat 
+
+> m
+
+(t). This common-arm rule is aligned with the global benchmark, whose optimal arm maximizes aggregate reward over the active population. 
+
+Local update and broadcast. After observing rewards, L OCAL UPDATE AND BROADCAST up-dates each active agent’s local statistics. For the selected arm at, agent m sets nm,a t (t) ←
+
+nm,a t (t − 1) + 1 , ˆμm,a t (t) ← (( nm,a t (t) − 1)ˆ μm,a t (t − 1) + rat 
+
+> m
+
+(t)) /n m,a t (t), and ρm,a t (t) ←
+
+min {ρm,a t (t − 1) , (C1 log t/ max {1, n m,a t (t)})β }. For every unpulled arm i̸ = at, it keeps 
+
+nm,i (t) = nm,i (t − 1) , ˆμm,i (t) = ˆ μm,i (t − 1) , and ρm,i (t) = ρm,i (t − 1) . Each active agent then broadcasts {nm,i (t), ˆμm,i (t), ρ m,i (t)}i∈[K] to its neighbors. 
+
+Remark (Novelty) . This method optimizes toward the global arm value Vt(i), the quantity appearing in the global dynamic regret benchmark, rather than each agent’s local reward estimate. It also ex-tends previous open-system MA-MAB methods, where new agents directly fetch or inherit aggregated reward information under homogeneous rewards and complete communication. In the heterogeneous setting considered here, scalar reward estimates from different agents are not automatically com-parable, and direct averaging can be biased. Our algorithm therefore allows information transfer only when it is certified by the model structure, such as through parameter transfer, cluster-level estimates, or externally pretrained estimators. Each transfer is accompanied by a certificate ¯Pm,which enters the global-UCB index through the arrival uncertainty term EAt . The method further separates continuing-agent statistical uncertainty Bstat  
+
+> t
+
+(i), graph-aggregation error ϵcomm  
+
+> t
+
+(i), and 
+
+6Algorithm 4: LOCAL UPDATE AND BROADCAST 
+
+Input: Active set Mt, graph Gt, selected arm at
+
+Output: Updated local estimates and uncertainty radii  
+
+> 1
+
+foreach m ∈ M t do  
+
+> 2
+
+foreach i ∈ [K] do  
+
+> 3
+
+if i = at then  
+
+> 4
+
+nm,i (t) ← nm,i (t − 1) + 1; ˆ μm,i (t) ← (nm,i (t)−1)ˆ μm,i (t−1)+ rim(t) 
+
+> nm,i (t)
+
+; ρm,i (t) ←
+
+min 
+
+n
+
+ρm,i (t − 1) , ( C1 log t 
+
+> max {1,n m,i (t)}
+
+)β
+
+o
+
+. 
+
+> 5
+
+else  
+
+> 6
+
+nm,i (t) ← nm,i (t − 1) , ˆμm,i (t) ← ˆμm,i (t − 1) , ρm,i (t) ← ρm,i (t − 1) . 
+
+> 7
+
+Broadcast {nm,i (t), ˆμm,i (t), ρ m,i (t)}i∈[K] to neighbors in Nm(t)
+
+arrival uncertainty EAt . This modular design supports heterogeneous rewards, random communica-tion graphs, and different pre-training regimes, while enabling the regret analysis to decompose the baseline learning cost from the cumulative entry uncertainty of newly arriving agents. 
+
+## 4 Theoretical Analyses 
+
+We present both regret upper and lower bounds. Full proof is deferred to Appendix. 
+
+4.1 Regret Upper Bounds on RT
+
+We subsequently prove that, the regret is actually dominated by this pre-training degree through the following theorem. 
+
+Theorem 1 (Regret upper bound with pre-trained arrivals) . Suppose the algorithm uses the global-value UCB rule at ∈ arg max i∈[K]
+
+n bVt(i) + Bstat  
+
+> t
+
+(i) + EAt
+
+o
+
+. Let EAt := P 
+
+> m∈A t
+
+Pm. Let A be the event on which, for all t ∈ [T ] and i ∈ [K], bVt(i) − Vt(i) ≤ Bstat  
+
+> t
+
+(i)+ EAt , and PTt=1 Bstat  
+
+> t
+
+(at) ≤
+
+C0M0 log T . Then, on event A,
+
+RT ≤ O(M0 log T +
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm) ≤ O(M0 log T +
+
+> T
+
+X
+
+> t=1
+
+|A t|Pt) ≤ O(M0 log T +
+
+> T
+
+X
+
+> t=1
+
+|A t|
+
+Dt
+
+).
+
+The theorem highlights that, in the general open system, the extra regret beyond the usual logarithmic term is governed by the quality of the information carried by newly arriving agents. If the arriving agents are well pre-trained, then Pt is small and the additional regret remains controlled. If, on the other hand, arriving agents enter with poor or inaccurate initial information, then the resulting regret may be substantially larger. It additionally depends on the agent patterns, i.e. how Mt changes over time. 
+
+4.2 Sharper Bounds on ¯RT
+
+The pre-training-error bound is worst-case because it charges every arrival according to the uncertainty it introduces. In many open systems, however, arrivals need not change the globally optimal arm. To quantify this effect, let i⋆t ∈ arg max i∈[K] ¯Vt(i), with a fixed tie-breaking rule if the maximizer is not unique, and the stability indicator is St = 1 i⋆t = i⋆t−1 . Thus, St = 1 means that the globally optimal arm remains unchanged from round t − 1 to round t, while St = 0 means that the global benchmark changes. This stability notion is specific to open systems with heterogeneous rewards. When the active population changes, the average global reward profile ¯Vt(i) may change even if each individual reward distribution is stationary. However, if the active population grows sufficiently fast, the marginal impact of a small arrival batch can vanish over time. Thus, even if an arriving agent has nontrivial local uncertainty, this uncertainty may no longer be decision-relevant once the globally optimal arm is stable. In this regime, ¯RT is the appropriate regret notion because it measures the effect of arrivals on the average global reward profile, rather than mechanically scaling the regret by 7the growing number of active agents. This motivates a stability study for the normalized regret ¯RT ,in which newly arriving agents can inherit the existing global decision after a burn-in period rather than triggering fresh exploration. More precisely, since Mt is common across arms at round t, the maximizer of ¯Vt(i) is the same as the maximizer of the aggregate value Vt(i) := P 
+
+> m∈M t
+
+μim. When the maximizer is unique, define the global gap 
+
+∆t := ¯Vt(i⋆t ) − max 
+
+> i̸=i⋆t
+
+¯Vt(i).
+
+Assuming no departures, the effect of new arrivals on the average global value satisfies 
+
+max i∈[K] | ¯Vt(i) − ¯Vt−1(i)| ≤ |A t| 
+
+> Mt
+
+. Therefore, if |A t| 
+
+> Mt
+
+< ∆t−1 
+
+> 2
+
+, then St = 1 , i.e., the globally optimal arm remains unchanged from round t − 1 to round t. Hence openness does not necessarily induce persistent nonstationarity: once the active population is sufficiently large relative to the arrival batch, the marginal impact of new agents may be too small to alter the global optimum. This one-step stability condition motivates a favorable stable-arm regime. For a burn-in time τ ,define S(τ, ∆) := ∃i† ∈ [K] such that ¯Vt(i†) − max i̸=i† ¯Vt(i) ≥ ∆, ∀t ∈ { τ, τ + 1 , . . . , T } .
+
+On this event, the same arm i† is globally optimal from time τ onward with a uniform gap at least ∆.The remaining requirement is statistical: the algorithm must estimate the global values accurately enough to identify i†. Under standard Hoeffding-type concentration, this requires O(log T / ∆2)
+
+effective samples per arm. Let b¯V τ (i) be an estimator of ¯Vτ (i) constructed at the end of burn-in, and define the identification event 
+
+I(τ, ∆) := 
+
+
+
+max 
+
+> i∈[K]
+
+b¯V τ (i) − ¯Vτ (i) ≤ ∆4
+
+
+
+.
+
+Theorem 2 (Stable globally optimal arm after burn-in) . Assume λD = 0 and rewards are normal-ized in [0 , 1] . Consider an algorithm that explores during rounds 1, . . . , τ , constructs estimates 
+
+{ b¯V τ (i)}i∈[K], and then commits to biτ ∈ arg max i∈[K] b¯V τ (i) for all rounds t > τ . On the event 
+
+Gτ, ∆ = S(τ, ∆) ∩ I (τ, ∆) , the regret satisfies ¯RT ≤ Pτt=1 Mt. As such, ¯RT ≤ O(λAτ 2) in the Poisson arrival/departure case. In particular, after the burn-in period, the algorithm incurs no additional regret on this event. 
+
+This result uncovers a sharper insight: the stable-arm regime consider the regrer ¯R(T ) yields a genuinely smaller regret mechanism than the worst-case pre-training-error bound. The general bound charges the cumulative entry error of future arrivals, while the stable-arm bound charges only the burn-in cost needed to reach τ . The characterization τ = max {τstab , τ id } makes this distinction explicit: τstab depends on how quickly the active population average concentrates around the limiting population reward vector, whereas τid depends on how quickly the algorithm collects enough effective samples to identify the stable arm. For example, under Poisson arrivals with rate λA and round-robin exploration over K arms, one can obtain τstab = O(λ−1 
+
+> A
+
+log( T /δ ) + ( λA∆2)−1 log( KT /δ )) , and, when the population-growth term dominates, τid = O(pK log( K/δ )/(λA∆2)) . Thus, the regret is governed by the burn-in cost Pτt=1 Mt, e.g., O(λAτ 2) = O(log T 2) under Poisson agent patterns, rather than by the cumulative entry error over all future arrivals. After time τ , arrivals may still have nonzero pre-training error, but this uncertainty is no longer decision-relevant because the globally optimal arm is already stable and identified. We include a thorough discussion on this parameter τ in Appendix. 
+
+Corollary 2.1 (Total regret) . Assume the conditions of Theorem 2. Let Gτ, ∆ := S(τ, ∆) ∩ I (τ, ∆) 
+
+and suppose P(Gcτ, ∆) ≤ δ. Then the normalized average regret satisfies 
+
+¯RT ≤ τ + δ(T − τ ).
+
+In particular, if δ ≤ τ /T , then ¯RT = O(τ ).
+
+In general, let Nmin (τ ) := min i∈[K] Ni(τ ), where Ni(τ ) is the effective number of samples used to estimate ¯Vτ (i). Then δ = 2 K(T − τ + 1) exp( −Mτ (∆ 0 − ∆) 2/2) + 2 K exp( −Nmin (τ )∆ 2/8) .
+
+Remark (Tightness of the upper bounds) . We highlight that, in this general case, our regret upper bounds are tight in view of the regret lower bounds in Section 4.4. Specifically, we construct hard instances for which no algorithm can improve upon these upper bounds. 
+
+This framework, together with the new notion of pre-training error, unifies several modeling regimes in open systems. The pre-training-error bound captures the worst-case effect of arrivals by charging 8each new agent according to the uncertainty it introduces. The stable-arm perspective refines this picture by showing that arrivals do not always create a new learning problem: if their aggregate impact is too small to change the globally optimal arm, then they can inherit the existing global decision quantified by ¯RT .
+
+4.3 Representative models. 
+
+We present four case studies: a linear stochastic case, a nonlinear parametric case, a clustered case, and a zero-knowledge case. These cases represent different entry-error regimes; for convenience, we assume that agents follow Poisson patterns. Linear and nonlinear parametric models can yield high pre-training degree and small pre-training error through accurate parameter transfer. Clustered models yield an intermediate regime, where new agents can inherit information from agents in the same cluster. Zero-knowledge arrivals represent the least favorable regime, where agents enter without useful prior information and have maximal bounded entry error under normalized rewards. Full details of the four cases are presented in Appendix. Notably, the algorithmic modules must be adapted to the structure of the pre-training error. In CERTIFIED ARRIVAL TRANSFER , the initialization ˆμm,i (t − 1) and the certificate ¯Pm should be constructed according to the modeling regime. In linear and nonlinear parametric models, an arriving agent m ∈ A t transfers arm-level parameter estimates from continuing neighbors, ˆθm,i (t − 1) = 
+
+P 
+
+> j∈N m(t)∩R t
+
+wAmj (t)ˆθj,i (t − 1) , and then forms its own arm-value estimate through ˆμm,i (t − 1) = 
+
+x⊤ 
+
+> m
+
+ˆθm,i (t − 1) in the linear case, or ˆμm,i (t − 1) = fi(xm, ˆθm,i (t − 1)) in the nonlinear case. In clustered stochastic models, m instead inherits the cluster-level empirical estimator, ˆμm,i (t − 1) = ˆθic(m)(t − 1) , whenever its cluster c(m) has already been observed. In the zero-knowledge case, no reliable transfer is available, so the module sets ˆμm,i (t − 1) = 0 and assigns a maximal bounded certificate ¯Pm = O(1) . These certificates enter G LOBAL VALUE AGGREGATION through the arrival uncertainty term EAt = P
+
+> m∈A t
+
+¯Pm, which is added to the global-UCB index bVt(i) + Bstat  
+
+> t
+
+(i) + EAt .
+
+Thus, the unified algorithm has the same global decision structure across models, while the arrival-transfer and uncertainty-certification steps adapt to the source of pre-training information for RT ,and also stopping time τ for ¯RT .
+
+4.4 Regret Lower Bounds 
+
+The dependence in the upper bounds is worst-case tight. We establish this through hard-instance lower bounds, showing that the pre-training-error term is unavoidable: there exist instances in which each arriving agent is pivotal for determining the globally optimal arm. In stable instances, by contrast, arrivals may have large entry error but little decision impact; for this regime, we prove a separate lower bound based on the burn-in time needed to identify the stable arm. 
+
+Theorem 3 (Pre-training-error lower bound) . Consider the general open MA-MAB problem with 
+
+K = 2 , normalized rewards in [0 , 1] , and no departures, i.e., λD = 0 . Fix a population path 
+
+{A t}Tt=1 . There exists a class of heterogeneous open-system instances with pre-training errors 
+
+{Pm}m∈A t,t ∈[T ] such that, for any algorithm whose action at round t is measurable with respect to the history before observing rewards from the newly arriving agents at round t, E[RT | A] ≥
+
+Ω
+
+
+
+Rbase (T ) + PTt=1 
+
+P 
+
+> m∈A t
+
+Pm
+
+
+
+. In particular, if all agents arriving at round t have the same en-try error Pm = Pt, then E[RT | A] ≥ Ω
+
+
+
+Rbase (T ) + PTt=1 |A t|Pt
+
+
+
+. When the base closed-system problem satisfies Rbase (T ) = Ω( M0 log T ), this yields E[RT | A] ≥ Ω
+
+
+
+M0 log T + PTt=1 |A t|Pt
+
+
+
+.
+
+Theorem 4 (Stable-arm lower bound) . Consider the stable-arm setting with normalized average regret ¯RT := E
+
+hPTt=1 
+
+  ¯Vt(i⋆) − ¯Vt(at)i
+
+, where at is the common arm selected at round t. Assume 
+
+λD = 0 and rewards are normalized in [0 , 1] . Fix a gap ∆ ∈ (0 , 1/4) . There exists a two-arm stable globally optimal-arm instance such that, for any consistent algorithm, if the identification time satisfies τ = Θ 
+
+ log T
+
+> ∆2
+
+
+
+, then ¯RT ≥ Ω(∆ τ ) ≥ Ω( τ ).
+
+Theorem 5 (Stable-arm lower bound) . Consider the stable-arm setting with normalized average regret ¯RT = E[PTt=1 ( ¯Vt(i⋆t ) − ¯Vt(at))] . Assume that, after burn-in, the algorithm commits to biτ
+
+for all t > τ . Suppose that on S(τ, ∆) , there exists a unique stable arm i† satisfying ¯Vt(i†) −
+
+max i̸=i† ¯Vt(i) ≥ ∆ for all t > τ . Define the post-burn-in misidentification probability qτ := 
+
+P(S(τ, ∆) ,biτ̸ = i†). Then ¯RT ≥ ∆qτ (T − τ ).
+
+9References 
+
+Mridul Agarwal, Vaneet Aggarwal, and Kamyar Azizzadenesheli. Multi-agent multi-armed bandits with limited communication. Journal of Machine Learning Research , 23(212):1–24, 2022. Baran Atalar. Neural bandit based optimal llm selection for pipeline of tasks. ACM SIGMETRICS Performance Evaluation Review , 53(3):15–17, 2026. Peter Auer, Nicolo Cesa-Bianchi, and Paul Fischer. Finite-time analysis of the multiarmed bandit problem. Machine Learning , 47(2-3):235–256, 2002a. Peter Auer, Nicolo Cesa-Bianchi, Yoav Freund, and Robert E Schapire. The nonstochastic multiarmed bandit problem. SIAM Journal on Computing , 32(1):48–77, 2002b. Benjamin Avi-Itzhak and Daniel P Heyman. Approximate queuing models for multiprogramming computer systems. Operations Research , 21(6):1212–1230, 1973. Andrew D Barbour. Stein’s method and poisson process convergence. Journal of Applied Probability ,25(A):175–184, 1988. Andrea Barraza-Urbina and Dorota Glowacka. Introduction to bandits in recommender systems. In 
+
+Proceedings of the 14th ACM Conference on Recommender Systems , pages 748–750, 2020. Richard Bellman. A markovian decision process. Journal of mathematics and mechanics , pages 679–684, 1957. Djallel Bouneffouf and Raphaël Féraud. A tutorial on multi-armed bandit applications for large language models. In Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining , pages 6412–6413, 2024. Djallel Bouneffouf and Raphael Feraud. Multi-armed bandits meet large language models. In 
+
+Proceedings of the AAAI Conference on Artificial Intelligence , volume 40, pages 39682–39690, 2026. Ronshee Chawla, Abishek Sankararaman, Ayalvadi Ganesh, and Sanjay Shakkottai. The gossip-ing insert-eliminate algorithm for multi-agent bandits. In International conference on artificial intelligence and statistics , pages 3471–3481. PMLR, 2020. Weize Chen, Jiarui Yuan, Chen Qian, Cheng Yang, Zhiyuan Liu, and Maosong Sun. Optima: Optimizing effectiveness and efficiency for llm-based multi-agent system. In Findings of the Association for Computational Linguistics: ACL 2025 , pages 11534–11557, 2025. Erhan Cinlar. Introduction to stochastic processes . Courier Corporation, 2013. John M Clapp, Katsiaryna Salavei Bardos, and Tingyu Zhou. Expansions and contractions of major us shopping centers. The Journal of Real Estate Finance and Economics , 48(1):16–56, 2014. David Roxbee Cox. The theory of stochastic processes . Routledge, 2017. Diego Deplano, Nicola Bastianello, Mauro Franceschelli, and Karl H Johansson. Optimization and learning in open multi-agent systems. IEEE Transactions on Automatic Control , 2026. Eyal Even-Dar, Sham M Kakade, and Yishay Mansour. Online markov decision processes. Mathe-matics of Operations Research , 34(3):726–736, 2009. Junda He, Christoph Treude, and David Lo. Llm-based multi-agent systems for software engineering: Literature review, vision, and the road ahead. ACM Transactions on Software Engineering and Methodology , 34(5):1–30, 2025. Jiaqi Hu, Karl H Johansson, and Apostolos I Rikos. Distributed coordination algorithms with efficient communication for open multi-agent systems with dynamic communication links and processing delays. arXiv preprint arXiv:2603.08038 , 2026. Svante Janson. Poisson convergence and poisson processes with applications to random graphs. 
+
+Stochastic processes and their Applications , 26:1–30, 1987. 10 Daniel Jiang, Haipeng Luo, Chu Wang, and Yingfei Wang. Multi-armed bandits and reinforcement learning: Advancing decision making in e-commerce and beyond. In Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery & Data Mining , pages 4133–4134, 2021. Sougata Khatua, Zhang Yuheng, Arijit Das, and N Ch SN Iyengar. A multi agent based e-shopping system. Journal of Global Research in Computer Science , 2(4), 2011. Peter Landgren, Vaibhav Srivastava, and Naomi Ehrich Leonard. On distributed cooperative decision-making in multiarmed bandits. In 2016 European Control Conference . 243–248. IEEE, 2016a. Peter Landgren, Vaibhav Srivastava, and Naomi Ehrich Leonard. Distributed cooperative decision-making in multiarmed bandits: Frequentist and Bayesian algorithms. In 2016 IEEE 55th Conference on Decision and Control . 167–172. IEEE, 2016b. Peter Landgren, Vaibhav Srivastava, and Naomi Ehrich Leonard. Distributed cooperative decision making in multi-agent multi-armed bandits. Automatica , 125:109445, 2021. Tan Li and Linqi Song. Privacy-preserving communication-efficient federated multi-armed bandits. 
+
+IEEE Journal on Selected Areas in Communications , 40(3):773–787, 2022. Guangyi Liu, Haojun Lin, Huan Zeng, Heng Wang, and Quanming Yao. Mas-on-the-fly: Dynamic adaptation of llm-based multi-agent systems at test time. arXiv preprint arXiv:2602.13671 , 2026a. Yuxuan Liu, Maojiao Ye, Lei Ding, and Qing-Long Han. Algorithm design and regret analysis for aggregative optimization in open multi-agent systems. IEEE Transactions on Automatic Control ,2026b. David Martínez-Rubio, Varun Kanade, and Patrick Rebeschini. Decentralized cooperative stochastic bandits. Advances in Neural Information Processing Systems , 32, 2019. Martijn Mes and Berry Gerrits. Multi-agent systems. In Operations, Logistics and Supply Chain Management , pages 611–636. Springer, 2018. Seungki Min and Daniel Russo. An information-theoretic analysis of nonstationary bandit learning. In International Conference on Machine Learning , pages 24831–24849. PMLR, 2023. Tomoki Nakamura, Naoki Hayashi, and Masahiro Inuiguchi. Cooperative learning for adversarial multi-armed bandit on open multi-agent systems. IEEE Control Systems Letters , 7:1712–1717, 2023. Raghu Pasupathy. Generating homogeneous poisson processes. Wiley Encyclopedia of Operations Research and Management Science , 2010. Manhin Poon, XiangXiang Dai, Xutong Liu, Fang Kong, John CS Lui, and Jinhang Zuo. Online multi-llm selection via contextual bandits under unstructured context evolution. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 40, pages 24855–24863, 2026. Jonathan Rosenski, Ohad Shamir, and Liran Szlak. Multi-player bandits–a musical chairs approach. In International Conference on Machine Learning , pages 155–163. PMLR, 2016. SM Samuels. A characterization of the poisson process. Journal of Applied Probability , 11(1):72–85, 1974. Abishek Sankararaman, Ayalvadi Ganesh, and Sanjay Shakkottai. Social learning in multi agent multi armed bandits. Proceedings of the ACM on Measurement and Analysis of Computing Systems , 3 (3):1–35, 2019. Arman Shehabi, Sarah J Smith, Eric Masanet, and Jonathan Koomey. Data center growth in the united states: decoupling the demand for services from electricity use. Environmental Research Letters , 13(12):124030, 2018. Alan Shieh, Srikanth Kandula, Albert Greenberg, Changhoon Kim, and Bikas Saha. Sharing the data center network. In 8th USENIX Symposium on Networked Systems Design and Implementation (NSDI 11) , 2011. 11 Ioannis Simaiakis and Hamsa Balakrishnan. A queuing model of the airport departure process. 
+
+Transportation Science , 50(1):94–109, 2016. William R Thompson. On the likelihood that one unknown probability exceeds another in view of the evidence of two samples. Biometrika , 25(3/4):285–294, 1933. Cindy Trinh and Richard Combes. A high performance, low complexity algorithm for multi-player bandits without collision sensing information. arXiv preprint arXiv:2102.10200 , 2021. Po-An Wang, Alexandre Proutiere, Kaito Ariu, Yassir Jedra, and Alessio Russo. Optimal algorithms for multiplayer multi-armed bandits. In International Conference on Artificial Intelligence and Statistics , pages 4120–4129. PMLR, 2020. Xuchuang Wang, Lin Yang, Yu-Zhen Janice Chen, Xutong Liu, Mohammad Hajiesmaili, Don Towsley, and John CS Lui. Achieving near-optimal individual regret & low communications in multi-agent bandits. In The Eleventh International Conference on Learning Representations , 2022. Zhexuan Wang, Yutong Wang, Xuebo Liu, Liang Ding, Miao Zhang, Jie Liu, and Min Zhang. Agentdropout: Dynamic agent elimination for token-efficient and high-performance llm-based multi-agent collaboration. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 24013–24035, 2025. Wolfram Wiesemann, Daniel Kuhn, and Berç Rustem. Robust markov decision processes. Mathe-matics of Operations Research , 38(1):153–183, 2013. Ding Xiang, Rebecca West, Jiaqi Wang, Xiquan Cui, and Jinzhou Huang. Multi armed bandit vs. a/b tests in e-commerce-confidence interval and hypothesis test power perspectives. In Proceedings of the 28th ACM SIGKDD conference on knowledge discovery and data mining , pages 4204–4214, 2022. Mengfan Xu and Diego Klabjan. Decentralized randomly distributed multi-agent multi-armed bandit with heterogeneous rewards. In Advances on Neural Information Processing Systems , 2023. Mengfan Xu and Diego Klabjan. Decentralized blockchain-based robust multi-agent multi-armed ban-dit. Coordination and Cooperation in Multi-Agent Reinforcement Learning (Honorable Mention) ,2024. Mengfan Xu and Diego Klabjan. Multi-agent multi-armed bandit regret complexity and optimality. In The 28th International Conference on Artificial Intelligence and Statistics , 2025. Mengfan Xu and Diego Klabjan. Open multi-agent multi-armed bandit with applications in permis-sionless blockchain. In Proceedings of the International Conference on Artificial Intelligence and Statistics , 2026. Mengfan Xu, Liren Shan, Fatemeh Ghaffari, Xuchuang Wang, Xutong Liu, and Mohammad Hajies-maili. Heterogeneous multi-agent multi-armed bandits on stochastic block models. In Proceedings of the ACM on Measurement and Analysis of Computer Systems , 2025. Lin Yang, Yu-Zhen Janice Chen, Stephen Pasteris, Mohammad Hajiesmaili, John Lui, and Don Towsley. Cooperative stochastic bandits with asynchronous agents and constrained feedback. 
+
+Advances in Neural Information Processing Systems , 34:8885–8897, 2021. Meiyi Yang, Deyun Gao, Chuan Heng Foh, Wei Quan, and Victor CM Leung. Multi-agent reinforce-ment learning-based joint caching and routing in heterogeneous networks. IEEE Transactions on Cognitive Communications and Networking , 10(5):1959–1974, 2024. Jingxuan Zhu, Romeil Sandhu, and Ji Liu. A distributed algorithm for sequential decision making in multi-armed bandit with homogeneous rewards. In 59th IEEE Conference on Decision and Control . 3078–3083. IEEE, 2020. Kun Zhu, Lujiu Li, Yuanyuan Xu, Tong Zhang, and Lu Zhou. Multi-connection based scalable video streaming in udns: A multi-agent multi-armed bandit approach. IEEE Transactions on Wireless Communications , 21(2):1156–1169, 2021. 12 Zheqing Zhu and Benjamin Van Roy. Scalable neural contextual bandit for recommender sys-tems. In Proceedings of the 32nd ACM International Conference on Information and Knowledge Management , pages 3636–3646, 2023. 13 A Technical appendices and supplementary material 
+
+A.1 Related Work Cooperative multi-agent bandits with fixed populations. Cooperative multi-agent multi-armed bandits (MA-MABs) with a fixed set of agents have been studied extensively in recent years, motivated by distributed online learning over networked systems [Landgren et al., 2016a,b, 2021, Zhu et al., 2020, Martínez-Rubio et al., 2019, Agarwal et al., 2022, Wang et al., 2022, 2020, Li and Song, 2022, Sankararaman et al., 2019, Chawla et al., 2020, Xu and Klabjan, 2023, 2024, 2025]. Much of this literature focuses on the homogeneous setting, in which all agents face the same reward distribution for a given arm [Landgren et al., 2016a,b, 2021, Zhu et al., 2020, Martínez-Rubio et al., 2019]. Within this line of work, one typically distinguishes centralized architectures, where agents communicate through a coordinator, from decentralized ones, where communication is constrained by a graph topology. The latter introduces additional statistical and algorithmic challenges because information aggregation depends on network structure. Existing analyses cover a range of graph models, including complete graphs [Landgren et al., 2016a], connected graphs [Wang et al., 2022, Chawla et al., 2020, Sankararaman et al., 2019], random graphs [Xu and Klabjan, 2023], and stochastic block models [Xu et al., 2025]. Beyond the homogeneous case, several works have already explored heterogeneous cooperative bandits under fixed populations, but in rather different ways. One line studies heterogeneity through unequal arm accessibility and asynchronous action rates across agents [Yang et al., 2021]. Another line allows the reward distribution of the same arm to vary across agents and investigates decentralized learning over random graphs [Xu and Klabjan, 2023]. More recently, cluster-structured heterogeneity has been studied through stochastic block models, where the latent cluster structure simultaneously affects both communication and reward statistics [Xu et al., 2025]. Nevertheless, these works all assume that the agent set is fixed throughout the learning horizon. Our setting differs fundamentally in that the agent population itself evolves over time, which changes both the benchmark and the information-sharing mechanism. 
+
+Open multi-agent bandits with dynamic populations. Work on bandit learning with a time-varying set of agents remains limited. Some studies have considered learning in an open system, but assume that the agent population is bounded [Rosenski et al., 2016, Trinh and Combes, 2021], meaning that it is always a subset of a fixed, bounded agent set. To the best of our knowledge, the first closely related result is the adversarial open-system model in [Nakamura et al., 2023], where agents may join and leave a distributed bandit network. That work is developed for adversarial rewards and under a substantially different modeling framework. In the stochastic setting, [Xu and Klabjan, 2026] introduced an open MA-MAB formulation in which the population size may evolve stochastically and can be unbounded over time. However, two assumptions play a central simplifying role there: first, rewards are homogeneous across agents; second, communication takes place over a complete graph. These assumptions eliminate two major sources of difficulty. Homogeneous rewards allow all observations on the same arm to be pooled without correcting for agent identity, while the complete graph removes sparsity and connectivity effects from the communication layer. In contrast, our model allows heterogeneous rewards and nontrivial graph structure, thereby coupling statistical heterogeneity, network effects, and agent churn in a single formulation. 
+
+Open multi-agent systems [Deplano et al., 2026, Liu et al., 2026b] have investigated the optimiza-tion problem in open systems, where agent population is dynamic as well. The main differences are: 1) we target at the online sequential decision making problem, instead of an optimization problem and thus the formulation and objective functions are fundamentally different, 2) we additionally consider the potential random graph structure which itself is not necessarily connected, and 3) [Deplano et al., 2026] under strong assumptions that new agents carry over sufficient information for the minimizer of the local optimization problem. [Hu et al., 2026] has studied dynamic graph in an open multi-agent systems, but 1) assuming that the total agent population is a subset of a fixed agent pool, and 2) focusing on communication designs instead of regret minimization in an online decision learning problem. 
+
+Stochastic/Queuing systems Stochastic systems constitute a broad class of models in which uncer-tainty plays a central role in the system evolution, and they are typically studied through probabilistic analysis and stochastic-process theory [Cinlar, 2013, Cox, 2017, Simaiakis and Balakrishnan, 2016, Avi-Itzhak and Heyman, 1973]. Representative examples include queueing systems [Simaiakis and Balakrishnan, 2016, Avi-Itzhak and Heyman, 1973] and Markov decision processes [Bellman, 1957, 14 Wiesemann et al., 2013, Even-Dar et al., 2009]. Among them, queueing models are especially funda-mental. They describe environments in which entities arrive randomly and receive service from one or more servers, with both the arrival and service dynamics governed by stochastic laws. Poisson and compound Poisson processes are among the most standard tools used in this context. Classical queue-ing theory has mainly focused on performance measures such as waiting times, congestion, and server utilization. However, the same modeling framework is flexible enough to support richer applications beyond traditional service systems. In particular, it has been much less studied in scenarios where the arriving entities are intelligent decision-makers rather than passive customers. This suggests a natural opportunity to use queueing-based stochastic models to describe agent participation in online learning environments. Motivated by this perspective, we adopt queueing-inspired population dynamics, and in particular Poisson processes [Samuels, 1974, Pasupathy, 2010, Barbour, 1988, Janson, 1987], to model agent arrivals and departures in the multi-agent multi-armed bandit setting. More broadly, this viewpoint may enable future work to incorporate more sophisticated queueing mechanisms into cooperative online learning systems. 
+
+A.2 Characterization of τ
+
+The stable-arm result depends on a burn-in time τ . This time is not an arbitrary parameter: it consists of two conceptually distinct components. The first is the time needed for the active population to become sufficiently large so that future arrivals have limited impact on the global reward profile. The second is the time needed for the algorithm to identify the stable globally optimal arm with high probability. We formalize this by writing 
+
+τ = max {τstab , τ id }.
+
+Assumption 1 (Stationary arrival composition) . Assume λD = 0 . Each arriving agent m has a reward-mean vector μm = ( μ1
+
+> m
+
+, . . . , μ Km) ∈ [0 , 1] K , drawn independently from a fixed population distribution. Let 
+
+v(i) := E[μim]
+
+be the population-average value of arm i. Assume there is a unique population-optimal arm i† ∈ [K],with gap 
+
+∆ := v(i†) − max 
+
+> i̸=i†
+
+v(i) > 0.
+
+Definition 1 (Stability time) . For a confidence level δ ∈ (0 , 1) , define 
+
+Nstab (∆ , δ, T ) := 8∆2 log 2KT δ .
+
+The population stability time is 
+
+τstab := inf {t ∈ [T ] : Ms ≥ Nstab (∆ , δ, T ), ∀s ∈ { t, t + 1 , . . . , T }} .
+
+Because λD = 0 , Mt is nondecreasing, so this reduces to 
+
+τstab = inf {t ∈ [T ] : Mt ≥ Nstab (∆ , δ, T )} .
+
+Theorem 6 (Population stability after τstab ). Under Assumption 1, with probability at least 1 − δ,for every t ≥ τstab ,
+
+¯Vt(i†) − max 
+
+> i̸=i†
+
+¯Vt(i) ≥ ∆2 .
+
+Consequently, the globally optimal arm is i† for all t ≥ τstab .Proof. Fix a round t and an arm i. Conditional on Mt, the value ¯Vt(i) is the empirical average of Mt
+
+bounded random variables in [0 , 1] with mean v(i). By Hoeffding’s inequality, 
+
+P  | ¯Vt(i) − v(i)| > ε | Mt
+
+ ≤ 2 exp( −2Mtε2).
+
+Taking ε = ∆ /4, we obtain 
+
+P
+
+
+
+| ¯Vt(i) − v(i)| > ∆4 | Mt
+
+
+
+≤ 2 exp 
+
+
+
+− Mt∆2
+
+8
+
+
+
+.
+
+On the event t ≥ τstab , we have Mt ≥ Nstab (∆ , δ, T ). Hence 
+
+2 exp 
+
+
+
+− Mt∆2
+
+8
+
+
+
+≤ δKT .
+
+15 A union bound over all i ∈ [K] and all t ∈ [T ] gives that, with probability at least 1 − δ,
+
+max  
+
+> i∈[K]
+
+| ¯Vt(i) − v(i)| ≤ ∆4 , ∀t ≥ τstab .
+
+On this event, for any i̸ = i†,
+
+¯Vt(i†) − ¯Vt(i) ≥ v(i†) − v(i) − | ¯Vt(i†) − v(i†)| − | ¯Vt(i) − v(i)|≥ ∆ − ∆4 − ∆4 = ∆2 .
+
+Thus i† is the unique globally optimal arm for all t ≥ τstab .
+
+Definition 2 (Identification time) . Let Ni(t) denote the effective number of samples used by the algorithm to estimate ¯Vt(i) during burn-in. Define 
+
+Nid (∆ , δ ) := 8∆2 log 2Kδ .
+
+The identification time is 
+
+τid := inf 
+
+
+
+t ∈ [T ] : min  
+
+> i∈[K]
+
+Ni(t) ≥ Nid (∆ , δ )
+
+
+
+.
+
+Theorem 7 (Identification after τid ). Suppose that, during burn-in, the estimator b¯V t(i) satisfies Hoeffding-type concentration: 
+
+P
+
+
+
+| b¯V t(i) − ¯Vt(i)| > ε 
+
+
+
+≤ 2 exp( −2Ni(t)ε2).
+
+Then, with probability at least 1 − δ,
+
+max  
+
+> i∈[K]
+
+| b¯V τid (i) − ¯Vτid (i)| ≤ ∆4 .
+
+Proof. By definition of τid , for every arm i,
+
+Ni(τid ) ≥ 8∆2 log 2Kδ .
+
+Taking ε = ∆ /4, Hoeffding’s inequality gives 
+
+P
+
+
+
+| b¯V τid (i) − ¯Vτid (i)| > ∆4
+
+
+
+≤ 2 exp 
+
+
+
+−2Ni(τid ) ∆2
+
+16 
+
+
+
+= 2 exp 
+
+
+
+− Ni(τid )∆ 2
+
+8
+
+
+
+≤ δK .
+
+A union bound over arms gives 
+
+P
+
+
+
+max  
+
+> i∈[K]
+
+| b¯V τid (i) − ¯Vτid (i)| > ∆4
+
+
+
+≤ δ. 
+
+Theorem 8 (Characterization of the burn-in time) . Suppose Assumption 1 holds. Let τ =max {τstab , τ id }. Then, with probability at least 1 − 2δ,
+
+biτ := arg max 
+
+> i∈[K]
+
+b¯V τ (i) = i†,
+
+and i† remains globally optimal for every t ≥ τ . Consequently, a commit-after-burn-in policy that selects biτ for all t > τ incurs no post-burn-in regret. Its total regret satisfies 
+
+¯RT ≤
+
+> τ
+
+X
+
+> t=1
+
+Mt
+
+on this event. 
+
+16 Proof. By Theorem 6, with probability at least 1 − δ, for all t ≥ τstab ,
+
+¯Vt(i†) − max 
+
+> i̸=i†
+
+¯Vt(i) ≥ ∆2 .
+
+Since τ ≥ τstab , this holds at time τ . By Theorem 7, with probability at least 1 − δ,
+
+max  
+
+> i∈[K]
+
+| b¯V τ (i) − ¯Vτ (i)| ≤ ∆4 .
+
+Taking a union bound, both events hold with probability at least 1 − 2δ.On their intersection, for any i̸ = i†,
+
+b¯V τ (i†) − b¯V τ (i) ≥ ¯Vτ (i†) − ∆4 −
+
+
+
+¯Vτ (i) + ∆4
+
+
+
+= ¯Vτ (i†) − ¯Vτ (i) − ∆2
+
+≥ 0.
+
+If ties are broken in favor of i†, then biτ = i†. If one wants strict identification without a tie-breaking convention, replace the constants above by ∆/8 in the identification event. Since i† remains globally optimal for all t ≥ τ , committing to biτ = i† incurs no regret after τ . During burn-in, rewards are normalized in [0 , 1] , so the group regret at round t is at most Mt. Therefore, 
+
+¯RT ≤
+
+> τ
+
+X
+
+> t=1
+
+Mt.
+
+A.2.1 Instantiations Corollary 8.1 (Burn-in rate under Poisson arrivals) . Assume λD = 0 and At ∼ Poisson( λA)
+
+independently over time. Then Mt = M0 + Pts=1 As. With probability at least 1 − δ,
+
+Mt ≥ M0 + λAt
+
+2 , ∀t ≥ 8
+
+λA
+
+log Tδ .
+
+Consequently, 
+
+τstab = O
+
+ 1
+
+λA
+
+log Tδ + 1
+
+λA∆2 log KT δ
+
+
+
+with high probability. Proof. Since Pts=1 As ∼ Poisson( λAt), a standard Chernoff bound gives 
+
+P
+
+> t
+
+X
+
+> s=1
+
+As ≤ λAt
+
+2
+
+!
+
+≤ exp 
+
+
+
+− λAt
+
+8
+
+
+
+.
+
+A union bound over t = 1 , . . . , T gives that, with probability at least 1 − δ,
+
+> t
+
+X
+
+> s=1
+
+As ≥ λAt
+
+2
+
+17 for all t ≥ (8 /λ A) log( T /δ ). Hence 
+
+Mt ≥ M0 + λAt
+
+2 .
+
+To ensure Mt ≥ Nstab (∆ , δ, T ), it suffices that 
+
+M0 + λAt
+
+2 ≥ 8∆2 log 2KT δ .
+
+Solving for t gives the stated bound. 
+
+Corollary 8.2 (Identification time under round-robin exploration) . Suppose that during burn-in, all active agents follow a round-robin exploration schedule over K arms. Then each arm receives at least 
+
+Ni(t) ≥ 1
+
+K
+
+> t
+
+X
+
+> s=1
+
+Ms − 1
+
+effective samples by time t. Therefore, 
+
+τid ≤ inf 
+
+(
+
+t : 1
+
+K
+
+> t
+
+X
+
+> s=1
+
+Ms ≥ 8∆2 log 2Kδ + 1 
+
+)
+
+.
+
+If Ms ≥ M0 + λAs/ 2, then 
+
+τid = O
+
+r KλA∆2 log Kδ
+
+!
+
+when the growth term dominates. Proof. Under round-robin exploration, each arm is selected at least once every K rounds. Since Ms
+
+agents are active at round s, the total number of agent-level observations collected up to time t is Pts=1 Ms. Therefore each arm receives at least 
+
+1
+
+K
+
+> t
+
+X
+
+> s=1
+
+Ms − 1
+
+samples. By Definition 2, it is enough that 
+
+1
+
+K
+
+> t
+
+X
+
+> s=1
+
+Ms ≥ 8∆2 log 2Kδ + 1 .
+
+If Ms ≥ M0 + λAs/ 2, then 
+
+> t
+
+X
+
+> s=1
+
+Ms ≥ M0t + λA
+
+4 t(t + 1) .
+
+When the quadratic term dominates, it is sufficient that 
+
+λA
+
+4K t2 ≳ 1∆2 log Kδ .
+
+Thus, 18 τid = O
+
+r KλA∆2 log Kδ
+
+!
+
+.
+
+Model-specific characterization of the burn-in time. The stable-arm burn-in time can be written as 
+
+τ = max {τstab , τ id }.
+
+The first component, τstab , is population-level and is common across the special cases. It is the time needed for the active population average ¯Vt(i) to concentrate around its limiting population value 
+
+v(i). If arrivals are stationary with rate λA, rewards are bounded in [0 , 1] , and the limiting population gap is 
+
+∆ := v(i†) − max 
+
+> i̸=i†
+
+v(i) > 0,
+
+then under Poisson arrivals one obtains, with high probability, 
+
+τstab = O
+
+ 1
+
+λA
+
+log Tδ + 1
+
+λA∆2 log KT δ
+
+
+
+.
+
+The second component, τid , is model-dependent. It is the time needed for the algorithm’s estimator to identify the stable arm within accuracy ∆/4.
+
+Linear stochastic case. In the linear stochastic model, μim = x⊤
+
+> m
+
+θi, where ∥xm∥2 ≤ 1. The identification time is determined by how quickly the transferred linear estimator concentrates. If 
+
+∥ˆθi(t) − θi∥2 ≤ C
+
+s
+
+d log( KT /δ )
+
+N eff  
+
+> i
+
+(t) ,
+
+then it is sufficient to have 
+
+N eff  
+
+> i
+
+(t) ≳ d log( KT /δ )∆2 , ∀i ∈ [K].
+
+Therefore, 
+
+τ lin id := inf 
+
+
+
+t : min  
+
+> i∈[K]
+
+N eff  
+
+> i
+
+(t) ≳ d log( KT /δ )∆2
+
+
+
+.
+
+If N eff  
+
+> i
+
+(t) ≥ ct γ , with γ ∈ { 1, 2}, then 
+
+τ lin id = O
+
+ d log( KT /δ )∆2
+
+1/γ !
+
+.
+
+Thus, under the strong open-system information regime γ = 2 ,
+
+τ lin id = O
+
+pd log( KT /δ )∆
+
+!
+
+,
+
+whereas under the standard regime γ = 1 ,
+
+τ lin id = O
+
+ d log( KT /δ )∆2
+
+
+
+.
+
+Hence 
+
+τ lin = max {τstab , τ lin id }.
+
+19 Nonlinear parametric case. In the nonlinear parametric model, μim = fi(xm, θ i), where fi is 
+
+Li-Lipschitz in θi. Suppose the nonlinear estimator satisfies 
+
+∥ˆθi(t) − θi∥2 ≤ C
+
+s
+
+p log( KT /δ )
+
+N eff  
+
+> i
+
+(t) .
+
+Then the mean-estimation error satisfies 
+
+|ˆμim(t) − μim| ≤ Li∥ˆθi(t) − θi∥2.
+
+Let Lmax := max i∈[K] Li. To identify the stable arm, it is sufficient that 
+
+N eff  
+
+> i
+
+(t) ≳ L2max p log( KT /δ )∆2 , ∀i ∈ [K].
+
+Therefore, 
+
+τ nl id := inf 
+
+
+
+t : min  
+
+> i∈[K]
+
+N eff  
+
+> i
+
+(t) ≳ L2max p log( KT /δ )∆2
+
+
+
+.
+
+If N eff  
+
+> i
+
+(t) ≥ ct γ , then 
+
+τ nl id = O
+
+ L2max p log( KT /δ )∆2
+
+1/γ !
+
+.
+
+Hence 
+
+τ nl = max {τstab , τ nl id }.
+
+Clustered stochastic case. In the clustered stochastic model, each agent belongs to a cluster 
+
+c(m) ∈ [C], and agents in the same cluster share arm means μim = θic(m). Let qc denote the limiting population proportion of cluster c, so that 
+
+v(i) = 
+
+> C
+
+X
+
+> c=1
+
+qcθic.
+
+The identification time depends on estimating the cluster-level means θic. If the empirical cluster estimator satisfies 
+
+|ˆθic(t) − θic| ≤ C
+
+s
+
+log( KCT /δ )
+
+Nc,i (t) ,
+
+then it is sufficient that 
+
+Nc,i (t) ≳ log( KCT /δ )∆2 , ∀c ∈ [C], i ∈ [K],
+
+up to constants depending on the cluster proportions qc. Thus 
+
+τ clust id := inf 
+
+
+
+t : min  
+
+> c∈[C],i ∈[K]
+
+Nc,i (t) ≳ log( KCT /δ )∆2
+
+
+
+.
+
+If Nc,i (t) ≥ κctγ , then 
+
+τ clust id = O max 
+
+> c∈[C]
+
+ log( KCT /δ )
+
+κc∆2
+
+1/γ !
+
+.
+
+If some clusters are initially unseen, one must also include the cluster discovery time 
+
+τdisc := max  
+
+> c∈[C]
+
+τc, τc := inf {t : A(c)
+
+> t
+
+̸ = ∅} .
+
+When each cluster has arrival rate at least λmin > 0,
+
+τdisc = O
+
+ 1
+
+λmin 
+
+log Cδ
+
+
+
+with high probability. Hence 
+
+τ clust = max {τstab , τ disc , τ clust id }.
+
+If all clusters are represented initially, then τdisc = 0 .20 Zero-knowledge case. In the zero-knowledge case, newly arriving agents have no reliable trans-ferable information, so their entry error is maximal bounded error, Pm = O(1) . In the worst-case pre-training-error bound, this yields a linear entry-error cost. However, in the stable-arm regime, zero-knowledge arrivals do not affect regret after the stable arm has been identified, because their local uncertainty is no longer decision-relevant. The identification time is therefore the nonparametric mean-estimation time for the stable global arm. If the algorithm uses round-robin exploration during burn-in and Ni(t) denotes the number of effective samples for arm i, then it is sufficient that 
+
+Ni(t) ≳ log( K/δ )∆2 , ∀i ∈ [K].
+
+Thus 
+
+τ zero id := inf 
+
+
+
+t : min  
+
+> i∈[K]
+
+Ni(t) ≳ log( K/δ )∆2
+
+
+
+.
+
+Under Poisson arrivals with rate λA, no departures, and round-robin exploration, Mt grows linearly and 
+
+Ni(t) ≳ 1
+
+K
+
+> t
+
+X
+
+> s=1
+
+Ms ≍ λAt2
+
+K .
+
+Therefore, when the population-growth term dominates, 
+
+τ zero id = O
+
+r KλA∆2 log Kδ
+
+!
+
+.
+
+Hence 
+
+τ zero = max {τstab , τ zero id }.
+
+This shows that even with zero-knowledge arrivals, the stable-arm regime can avoid the cumulative 
+
+O(T ) entry-error cost after the stable arm is identified. 
+
+A.2.2 Characterization of δ
+
+Lemma 9 (Probability of the stable-arm good event) . Let Nmin (τ ) := min i∈[K] Ni(τ ), where 
+
+Ni(τ ) is the effective number of samples used to estimate ¯Vτ (i). Then P(Gτ, ∆) ≥ 1 − δ, where 
+
+δ = 2 K(T − τ + 1) exp( −Mτ (∆ 0 − ∆) 2/2) + 2 K exp( −Nmin (τ )∆ 2/8) .Proof. Since Gτ, ∆ = S(τ, ∆) ∩ I (τ, ∆) , we have P(Gcτ, ∆) ≤ P(S(τ, ∆) c) + P(I(τ, ∆) c).We first bound P(S(τ, ∆) c). If max i∈[K] | ¯Vt(i) − v(i)| ≤ (∆ 0 − ∆) /2 for every t ∈ { τ, . . . , T },then for every i̸ = i† and every t ≥ τ , we have ¯Vt(i†) − ¯Vt(i) ≥ v(i†) − v(i) − | ¯Vt(i†) − v(i†)| − | ¯Vt(i) − v(i)| ≥ ∆0 − (∆ 0 − ∆) /2 − (∆ 0 − ∆) /2 = ∆ . Hence S(τ, ∆) holds. Therefore, 
+
+P(S(τ, ∆) c) ≤ P(∃t ∈ { τ, . . . , T }, ∃i ∈ [K] : | ¯Vt(i) − v(i)| > (∆ 0 − ∆) /2) . For fixed t and i,Hoeffding’s inequality gives P(| ¯Vt(i) − v(i)| > (∆ 0 − ∆) /2) ≤ 2 exp( −Mt(∆ 0 − ∆) 2/2) . Since 
+
+λD = 0 , Mt ≥ Mτ for all t ≥ τ . Taking a union bound over K arms and T − τ + 1 rounds gives 
+
+P(S(τ, ∆) c) ≤ 2K(T − τ + 1) exp( −Mτ (∆ 0 − ∆) 2/2) .Next, by the definition of I(τ, ∆) , I(τ, ∆) c occurs only if there exists i ∈ [K] such that | b¯V τ (i) −
+
+¯Vτ (i)| > ∆/4. By the assumed concentration inequality with ε = ∆ /4, P(| b¯V τ (i) − ¯Vτ (i)| >
+
+∆/4) ≤ 2 exp( −Ni(τ )∆ 2/8) . Taking a union bound over arms and using Ni(τ ) ≥ Nmin (τ ), we obtain P(I(τ, ∆) c) ≤ 2K exp( −Nmin (τ )∆ 2/8) .Combining the two bounds yields P(Gcτ, ∆) ≤ δG(τ, ∆) , and therefore P(Gτ, ∆) ≥ 1 − δG(τ, ∆) .
+
+A.2.3 Instantiation. Corollary 9.1 (Linear stochastic instantiation) . Consider the linear stochastic model μim = x⊤
+
+> m
+
+θi,where ∥xm∥2 ≤ 1. Suppose the global-value estimator is constructed from arm-level linear estimators and satisfies, for some constant clin > 0,
+
+P
+
+
+
+| b¯V τ (i) − ¯Vτ (i)| > ε 
+
+
+
+≤ 2 exp 
+
+
+
+−clin 
+
+N lin  
+
+> i
+
+(τ )ε2
+
+d
+
+
+
+,
+
+21 where d is the parameter dimension and N lin  
+
+> i
+
+(τ ) is the effective design-matrix sample size for arm i.Let N lin min (τ ) := min i∈[K] N lin  
+
+> i
+
+(τ ). Then 
+
+P(Gτ, ∆) ≥ 1 − δlin  
+
+> G
+
+(τ, ∆) ,
+
+where 
+
+δlin  
+
+> G
+
+(τ, ∆) := 2 K(T − τ + 1) exp 
+
+
+
+− Mτ (∆ 0 − ∆) 2
+
+2
+
+
+
++ 2 K exp 
+
+
+
+−clin 
+
+N lin min (τ )∆ 2
+
+16 d
+
+
+
+.
+
+Consequently, it is sufficient to have 
+
+Mτ ≳ log( KT /δ )(∆ 0 − ∆) 2 , N lin min (τ ) ≳ d log( K/δ )∆2 ,
+
+to ensure P(Gτ, ∆) ≥ 1 − δ.Proof. The stability term is identical to Lemma 9. For the identification event, substitute ε = ∆ /4
+
+into the assumed linear-estimator concentration inequality. This gives 
+
+P
+
+
+
+| b¯V τ (i) − ¯Vτ (i)| > ∆/4
+
+
+
+≤ 2 exp 
+
+
+
+−clin 
+
+N lin  
+
+> i
+
+(τ )∆ 2
+
+16 d
+
+
+
+.
+
+Taking a union bound over i ∈ [K] and using N lin  
+
+> i
+
+(τ ) ≥ N lin min (τ ) gives the second term in δlin  
+
+> G
+
+(τ, ∆) .The sufficient sample-size conditions follow by making each failure term at most a constant multiple of δ.
+
+Corollary 9.2 (Nonlinear parametric instantiation) . Consider the nonlinear parametric model μim =
+
+fi(xm, θ i). Suppose fi is Li-Lipschitz in θi, and let Lmax := max i∈[K] Li. Assume the nonlinear estimator satisfies, for some constant cnl > 0,
+
+P
+
+
+
+| b¯V τ (i) − ¯Vτ (i)| > ε 
+
+
+
+≤ 2 exp 
+
+
+
+−cnl 
+
+N nl  
+
+> i
+
+(τ )ε2
+
+L2max p
+
+
+
+,
+
+where p is the parameter dimension and N nl  
+
+> i
+
+(τ ) is the effective sample size for estimating θi. Let 
+
+N nl min (τ ) := min i∈[K] N nl  
+
+> i
+
+(τ ). Then 
+
+P(Gτ, ∆) ≥ 1 − δnl  
+
+> G
+
+(τ, ∆) ,
+
+where 
+
+δnl  
+
+> G
+
+(τ, ∆) := 2 K(T − τ + 1) exp 
+
+
+
+− Mτ (∆ 0 − ∆) 2
+
+2
+
+
+
++ 2 K exp 
+
+
+
+−cnl 
+
+N nl min (τ )∆ 2
+
+16 L2max p
+
+
+
+.
+
+Consequently, it is sufficient to have 
+
+Mτ ≳ log( KT /δ )(∆ 0 − ∆) 2 , N nl min (τ ) ≳ L2max p log( K/δ )∆2 ,
+
+to ensure P(Gτ, ∆) ≥ 1 − δ.Proof. The proof is the same as the linear case. The stability term is model-independent. For identification, substitute ε = ∆ /4 into the nonlinear estimator concentration inequality and take a union bound over arms. The Lipschitz factor Lmax and parameter dimension p enter only through the identification term. 
+
+Corollary 9.3 (Clustered stochastic instantiation) . Consider the clustered stochastic model with C
+
+clusters, where μim = θic(m). Suppose cluster labels are known and the estimator b¯V τ (i) is constructed from cluster-level empirical means. Let Nc,i (τ ) be the number of effective observations of arm i from cluster c, and define N clust min (τ ) := min c∈[C],i ∈[K] Nc,i (τ ). Then 
+
+P(Gτ, ∆) ≥ 1 − δclust  
+
+> G
+
+(τ, ∆) ,
+
+22 where 
+
+δclust  
+
+> G
+
+(τ, ∆) := 2 K(T − τ + 1) exp 
+
+
+
+− Mτ (∆ 0 − ∆) 2
+
+2
+
+
+
++ 2 KC exp 
+
+
+
+− N clust min (τ )∆ 2
+
+8
+
+
+
+.
+
+Consequently, it is sufficient to have 
+
+Mτ ≳ log( KT /δ )(∆ 0 − ∆) 2 , N clust min (τ ) ≳ log( KC/δ )∆2 ,
+
+to ensure P(Gτ, ∆) ≥ 1 − δ. If some clusters are initially unseen, an additional cluster-discovery failure term should be added to δclust  
+
+> G
+
+(τ, ∆) .Proof. The stability term is again identical to Lemma 9. For the identification event, it is enough that every cluster-arm empirical mean is accurate to order ∆/4. For each pair (c, i ), Hoeffding’s inequality gives 
+
+P
+
+
+
+|ˆθic(τ ) − θic| > ∆/4
+
+
+
+≤ 2 exp 
+
+
+
+− Nc,i (τ )∆ 2
+
+8
+
+
+
+.
+
+Taking a union bound over C clusters and K arms gives 
+
+P(I(τ, ∆) c) ≤ 2KC exp 
+
+
+
+− N clust min (τ )∆ 2
+
+8
+
+
+
+.
+
+Combining this with the common stability bound proves the result. If each cluster has appeared by time τ with probability at least 1 − δdisc (τ ), then the bound becomes 
+
+P(Gτ, ∆) ≥ 1 − δclust  
+
+> G
+
+(τ, ∆) − δdisc (τ ).
+
+For example, if cluster c arrives with rate at least λmin > 0, then δdisc (τ ) ≤ C exp( −λmin τ ).
+
+Corollary 9.4 (Zero-knowledge instantiation) . Consider the zero-knowledge case in which arriving agents have no reliable entry information. Suppose the algorithm uses burn-in exploration to estimate the global values directly. Let N zero  
+
+> i
+
+(τ ) denote the number of effective samples of arm i collected by time τ , and define N zero min (τ ) := min i∈[K] N zero  
+
+> i
+
+(τ ). Then 
+
+P(Gτ, ∆) ≥ 1 − δzero  
+
+> G
+
+(τ, ∆) ,
+
+where 
+
+δzero  
+
+> G
+
+(τ, ∆) := 2 K(T − τ + 1) exp 
+
+
+
+− Mτ (∆ 0 − ∆) 2
+
+2
+
+
+
++ 2 K exp 
+
+
+
+− N zero min (τ )∆ 2
+
+8
+
+
+
+.
+
+If burn-in uses round-robin exploration, then 
+
+N zero min (τ ) ≥ 1
+
+K
+
+> τ
+
+X
+
+> s=1
+
+Ms − 1.
+
+Consequently, under linear population growth C−s ≤ Ms ≤ C+s, it is sufficient to take 
+
+τ ≳ max 
+
+(
+
+1
+
+C−(∆ 0 − ∆) 2 log KT δ ,
+
+s
+
+KC−∆2 log Kδ
+
+)
+
+to ensure P(Gτ, ∆) ≥ 1 − δ.Proof. The zero-knowledge case has no model-based transfer, so identification relies only on direct burn-in samples. Applying Lemma 9 with Nmin (τ ) = N zero min (τ ) gives the stated probability bound. Under round-robin exploration, each arm is selected at least once every K rounds, so the effective sample count satisfies 
+
+N zero min (τ ) ≥ 1
+
+K
+
+> τ
+
+X
+
+> s=1
+
+Ms − 1.
+
+23 If Ms ≥ C−s, then τX
+
+> s=1
+
+Ms ≥ C−
+
+> τ
+
+X
+
+> s=1
+
+s = Ω( C−τ 2).
+
+Thus the identification term is small once 
+
+τ ≳
+
+s
+
+KC−∆2 log Kδ .
+
+The stability term is small once 
+
+Mτ ≥ C−τ ≳ 1(∆ 0 − ∆) 2 log KT δ .
+
+Combining the two requirements gives the stated lower bound on τ .
+
+A.3 Additional Theoretical Results A.3.1 Lower Bounds Results. 
+
+We also establish that under a braoder problem instance, beyond the constructed instance, the lower bound holds. 
+
+Assumption 2 (Pivotal arrival batches) . For each round t, conditional on the history before observing rewards from At, there exist two admissible reward configurations of the arrival batch, denoted +
+
+and −, such that: 1. the two configurations are indistinguishable to the algorithm before it chooses at round t;2. under the + configuration, arm 1 is globally optimal, while under the − configuration, arm 
+
+2 is globally optimal; 3. choosing the wrong arm under either configuration incurs regret at least c P 
+
+> m∈A t
+
+Pm for some universal constant c > 0.
+
+Theorem 10 (Lower bound under pivotal arrivals) . Suppose Assumption 2 holds on event A. Then for any algorithm, E[RT | A] ≥ Ω
+
+PTt=1 
+
+P 
+
+> m∈A t
+
+Pm
+
+
+
+. If in addition the initial system con-tains a closed-system hard instance with baseline lower bound Rbase (T ), then E[RT | A] ≥
+
+Ω
+
+
+
+Rbase (T ) + PTt=1 
+
+P 
+
+> m∈A t
+
+Pm
+
+
+
+.
+
+Lemma 11 (A sufficient condition for identification) . Assume that, by the end of burn-in time τ , for each arm i, the estimator b¯V τ (i) is formed from Ni(τ ) independent bounded observations whose average has expectation ¯Vτ (i). If 
+
+Ni(τ ) ≥ 8∆2 log 2Kδ , ∀i ∈ [K],
+
+then 
+
+P I(τ, ∆)  ≥ 1 − δ. 
+
+Proof. For any fixed arm i, Hoeffding’s inequality gives 
+
+P
+
+b¯V τ (i) − ¯Vτ (i) > ∆4
+
+
+
+≤ 2 exp 
+
+
+
+−2Ni(τ ) ∆2
+
+16 
+
+
+
+= 2 exp 
+
+
+
+− Ni(τ )∆ 2
+
+8
+
+
+
+.
+
+If 
+
+Ni(τ ) ≥ 8∆2 log 2Kδ ,
+
+then this probability is at most δ/K . A union bound over i ∈ [K] yields 
+
+P
+
+
+
+max 
+
+> i∈[K]
+
+b¯V τ (i) − ¯Vτ (i) > ∆4
+
+
+
+≤ δ. 
+
+Thus P(I(τ, ∆)) ≥ 1 − δ.24 Corollary 11.1 (High-probability regret under stable optimal arm) . Assume the conditions of Theo-rem 2 and Lemma 11. If 
+
+Ni(τ ) ≥ 8∆2 log 2Kδ , ∀i ∈ [K],
+
+then on the event S(τ, ∆) , with probability at least 1 − δ,
+
+RT ≤
+
+> τ
+
+X
+
+> t=1
+
+Mt.
+
+Proof. By Lemma 11, the identification event I(τ, ∆) holds with probability at least 1 − δ. On 
+
+S(τ, ∆) ∩ I (τ, ∆) , the result follows directly from Theorem 2. 
+
+Corollary 11.2 (Zero-knowledge lower bound) . There exists a heterogeneous two-arm stochastic instance, generated by a Poisson-compatible arrival process, such that under any consistent algorithm, 
+
+E[RT ] ≥ Ω( T ).
+
+A.4 Proof of Results in General Systems A.4.1 Proof of Theorem 1 
+
+Proof. For each arm i, define the true global arm value 
+
+Vt(i) := X
+
+> m∈M t
+
+μim.
+
+Let 
+
+i⋆t ∈ arg max  
+
+> i∈[K]
+
+Vt(i)
+
+be the globally optimal arm at round t. Since the modified algorithm selects 
+
+at ∈ arg max 
+
+> i∈[K]
+
+n bVt(i) + Bstat  
+
+> t
+
+(i) + EAt
+
+o
+
+,
+
+we have bVt(i⋆t ) + Bstat  
+
+> t
+
+(i⋆t ) + EAt ≤ bVt(at) + Bstat  
+
+> t
+
+(at) + EAt .
+
+On event A, the confidence condition gives 
+
+Vt(i⋆t ) ≤ bVt(i⋆t ) + Bstat  
+
+> t
+
+(i⋆t ) + EAt
+
+and bVt(at) ≤ Vt(at) + Bstat  
+
+> t
+
+(at) + EAt .
+
+Combining the previous three inequalities yields 
+
+Vt(i⋆t ) − Vt(at) ≤ 2Bstat  
+
+> t
+
+(at) + 2 EAt .
+
+Therefore, 
+
+RT =
+
+> T
+
+X
+
+> t=1
+
+(Vt(i⋆t ) − Vt(at)) 
+
+≤ 2
+
+> T
+
+X
+
+> t=1
+
+Bstat  
+
+> t
+
+(at) + 2 
+
+> T
+
+X
+
+> t=1
+
+EAt .
+
+By the definition of EAt ,
+
+EAt = X
+
+> m∈A t
+
+Pm.
+
+Moreover, on event A, TX
+
+> t=1
+
+Bstat  
+
+> t
+
+(at) ≤ C0M0 log T. 
+
+Hence, 
+
+RT ≤ O M0 log T +
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm
+
+!
+
+.
+
+25 Finally, since X
+
+> m∈A t
+
+Pm ≤ |A t| max 
+
+> m∈A t
+
+Pm = |A t|Pt,
+
+we obtain 
+
+RT ≤ O M0 log T +
+
+> T
+
+X
+
+> t=1
+
+|A t|Pt
+
+!
+
+.
+
+Using Dt = 1 /P t, with Dt = ∞ when Pt = 0 , gives the equivalent degree-of-pre-training expression. 
+
+A.4.2 Proof of Theorem 2 Lemma 12 (Arrival perturbation of average global values) . Assume λD = 0 and rewards are normalized so that μim ∈ [0 , 1] for all agents m and arms i. Then, for every round t and arm i,
+
+¯Vt(i) − ¯Vt−1(i) ≤ |A t|
+
+Mt
+
+.
+
+Consequently, 
+
+max 
+
+> i∈[K]
+
+¯Vt(i) − ¯Vt−1(i) ≤ |A t|
+
+Mt
+
+.
+
+Proof. Since λD = 0 , we have 
+
+Mt = Mt−1 ∪ A t, Mt = Mt−1 + |A t|.
+
+Fix an arm i. Then 
+
+¯Vt(i) = 1
+
+Mt
+
+ X
+
+> m∈M t−1
+
+μim + X
+
+> m∈A t
+
+μim
+
+
+
+= Mt−1
+
+Mt
+
+¯Vt−1(i) + |A t|
+
+Mt
+
+1
+
+|A t|
+
+X
+
+> m∈A t
+
+μim
+
+!
+
+,
+
+with the convention that the second term is zero if At = ∅. Therefore, 
+
+¯Vt(i) − ¯Vt−1(i) = |A t|
+
+Mt
+
+1
+
+|A t|
+
+X
+
+> m∈A t
+
+μim − ¯Vt−1(i)
+
+≤ |A t|
+
+Mt
+
+,
+
+because both terms inside the absolute value lie in [0 , 1] . This proves the claim. 
+
+Lemma 13 (One-step stability of the globally optimal arm) . Assume the conditions of Lemma 12. Suppose i⋆t−1 is the unique globally optimal arm at round t − 1, with gap ∆t−1 > 0. If 
+
+|A t|
+
+Mt
+
+< ∆t−1
+
+2 ,
+
+then the globally optimal arm does not change at round t, namely, 
+
+i⋆t = i⋆t−1.
+
+Moreover, 
+
+∆t ≥ ∆t−1 − 2 |A t|
+
+Mt
+
+.
+
+26 Proof. Let i⋆ = i⋆t−1. For any i̸ = i⋆,
+
+¯Vt−1(i⋆) − ¯Vt−1(i) ≥ ∆t−1.
+
+By Lemma 12, 
+
+| ¯Vt(i⋆) − ¯Vt−1(i⋆)| ≤ |A t|
+
+Mt
+
+,
+
+and similarly, 
+
+| ¯Vt(i) − ¯Vt−1(i)| ≤ |A t|
+
+Mt
+
+.
+
+Thus, 
+
+¯Vt(i⋆) − ¯Vt(i) ≥ ¯Vt−1(i⋆) − ¯Vt−1(i) − 2 |A t|
+
+Mt
+
+≥ ∆t−1 − 2 |A t|
+
+Mt
+
+.
+
+If |A t|/M t < ∆t−1/2, the right-hand side is positive. Hence i⋆ remains strictly better than every other arm at round t, so i⋆t = i⋆t−1. The same inequality gives the lower bound on ∆t.
+
+Proof. On S(τ, ∆) , there exists an arm i† such that for every t ≥ τ ,
+
+¯Vt(i†) − max 
+
+> i̸=i†
+
+¯Vt(i) ≥ ∆.
+
+In particular, at time τ , ¯Vτ (i†) − max 
+
+> i̸=i†
+
+¯Vτ (i) ≥ ∆.
+
+On I(τ, ∆) , for all arms i,
+
+b¯V τ (i) − ¯Vτ (i) ≤ ∆4 .
+
+Therefore, for any i̸ = i†,
+
+b¯V τ (i†) − b¯V τ (i) ≥ ¯Vτ (i†) − ∆4 −
+
+
+
+¯Vτ (i) + ∆4
+
+
+
+= ¯Vτ (i†) − ¯Vτ (i) − ∆2
+
+≥ ∆2 > 0.
+
+Hence biτ = i†.
+
+Since i† is globally optimal for every t ≥ τ , committing to biτ after burn-in incurs zero regret for all 
+
+t > τ .During the burn-in rounds 1, . . . , τ , the per-agent regret is at most one because rewards are normalized in [0 , 1] . Hence the group regret in round t is at most Mt. Therefore, 
+
+RT ≤
+
+> τ
+
+X
+
+> t=1
+
+Mt.
+
+A.4.3 Proof of Corollary 2.1 
+
+Proof. On the good event Gτ, ∆, Theorem 2 implies that the algorithm incurs no regret after the burn-in period. Since the normalized per-round regret is at most one, this gives ¯RT ≤ τ on Gτ, ∆. On the complement Gcτ, ∆, the normalized regret after burn-in is at most T − τ . Therefore, 
+
+¯RT ≤ τ + δ(T − τ ).
+
+If δ ≤ τ /T , then δ(T − τ ) = O(τ ), and hence ¯RT = O(τ ).27 A.4.4 Proof of Theorem 3 
+
+Proof. We construct a hard class with two arms. The proof has two parts. 
+
+Step 1: Baseline closed-system hardness. Choose the reward distributions of the initial M0 agents so that the corresponding closed-system problem has regret lower bound 
+
+Rbase (T ).
+
+For example, under standard stochastic-bandit regularity conditions, this can be chosen so that 
+
+Rbase (T ) = Ω( M0 log T ).
+
+Step 2: Pivotal arrival construction. Fix a round t and an arriving agent m ∈ A t. We construct two possible reward vectors for m:
+
+ν+ 
+
+> m
+
+: μ1 
+
+> m
+
+= 12 + Pm, μ2 
+
+> m
+
+= 12 ,
+
+and 
+
+ν− 
+
+> m
+
+: μ1 
+
+> m
+
+= 12 , μ2 
+
+> m
+
+= 12 + Pm.
+
+The entry estimate is taken to be uninformative: 
+
+ˆμm, 1(T am − 1) = ˆ μm, 2(T am − 1) = 12 .
+
+Thus, in either case, 
+
+max  
+
+> i∈{ 1,2}
+
+ˆμm,i (T am − 1) − μim = Pm.
+
+The remaining agents are chosen so that, immediately before the contribution of the new arrivals at round t is resolved, the aggregate values of the two arms are balanced up to lower-order terms. Hence the reward vector of the arriving agents is pivotal: under the + configuration, arm 1 is globally optimal, while under the − configuration, arm 2 is globally optimal. Because the two configurations are indistinguishable before observing rewards from the new arrivals, the algorithm’s action at round t is the same under both configurations. Therefore, for at least one of the two configurations, the algorithm selects the suboptimal arm for the arrival contribution. The resulting one-step regret is at least a constant multiple of 
+
+X
+
+> m∈A t
+
+Pm.
+
+Equivalently, averaging over the two configurations gives expected one-step regret at least 
+
+c X
+
+> m∈A t
+
+Pm
+
+for a universal constant c > 0.
+
+Step 3: Summing over pivotal rounds. The hard instance is constructed so that arrivals remain pivotal over the rounds under consideration. This can be done by balancing the cumulative contribu-tion of previous arrivals, so that the aggregate gap before each new arrival batch is of the same order as the new batch’s contribution. Summing the one-step lower bound over t = 1 , . . . , T gives 
+
+E[RT | A] ≥ Ω
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm
+
+!
+
+.
+
+Combining this with the baseline lower bound gives 
+
+E[RT | A] ≥ Ω Rbase (T ) + 
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm
+
+!
+
+.
+
+If Pm = Pt for all m ∈ A t, then X
+
+> m∈A t
+
+Pm = |A t|Pt,
+
+which yields the stated bound. 28 A.4.5 Proof of Theorem 10 
+
+Proof. At each round t, before rewards from the arriving agents are observed, the algorithm has the same information under the + and − configurations in Assumption 2. Hence it must choose the same arm under both configurations. Since the globally optimal arms are different under the two configurations, the chosen arm is suboptimal in at least one configuration. Therefore, for one of the two configurations, the conditional expected regret at round t is at least 
+
+c X
+
+> m∈A t
+
+Pm.
+
+Equivalently, under a uniform random choice of the two configurations, the expected regret is at least 
+
+c
+
+2
+
+X
+
+> m∈A t
+
+Pm.
+
+By the probabilistic method, there exists a deterministic choice of configurations for which the same lower bound holds up to constants. Summing over t gives 
+
+E[RT | A] ≥ Ω
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm
+
+!
+
+.
+
+Adding the independent closed-system hard instance gives the baseline term Rbase (T ).
+
+A.4.6 Proof of Corollary 11.2 
+
+Proof. We construct a hard subclass of the general open system. 
+
+Step 1: Poisson-compatible informative arrivals. Fix a constant block length H0 ≥ 2, and partition the horizon into disjoint blocks 
+
+Bs := {(s − 1) H0 + 1 , . . . , sH 0}, s = 1 , . . . , ⌊ TH0
+
+⌋.
+
+Split the arrival process into two independent components: 
+
+At = Ainf  
+
+> t
+
++ Aord  
+
+> t
+
+,
+
+where Ainf  
+
+> t
+
+∼ Poisson( λI ) and Aord  
+
+> t
+
+∼ Poisson( λO ), with λI , λ O > 0 constants. Thus the total arrival count remains Poisson with rate λI + λO .Each informative agent has an independent geometric lifetime L with parameter q ∈ (0 , 1) , so that 
+
+P(L = H0) = (1 − q)H0−1q > 0.
+
+Ordinary agents may follow any stochastic lifetime rule. 
+
+Step 2: Good blocks. Call a block Bs good if all of the following occur: 1. exactly one informative agent arrives at the first round of Bs;2. no other informative agents arrive during the remaining H0 − 1 rounds of Bs;3. the informative agent survives for exactly H0 rounds and departs at the end of the block. Since the informative arrivals are Poisson and the informative lifetime is geometric, the probability that a given block is good is 
+
+pgood = P(Ainf (s−1) H0+1 = 1) P(
+
+> sH 0
+
+X
+
+> t=( s−1) H0+2
+
+Ainf  
+
+> t
+
+= 0) P(L = H0),
+
+which is a strictly positive constant depending only on λI , q, and H0. Therefore, the expected number of good blocks is 
+
+E[N good  
+
+> T
+
+] = pgood ⌊ TH0
+
+⌋ = Θ( T ).
+
+29 Step 3: Heterogeneous rewards within a good block. Fix a good block Bs, and let ms denote its unique informative agent. Let Zs ∈ { 1, 2} be a latent variable with 
+
+P(Zs = 1) = P(Zs = 2) = 12 ,
+
+independently across good blocks and independently of the past history. Conditional on Zs, define the informative agent’s reward means by 
+
+Zs = 1 =⇒ (μ1 
+
+> ms
+
+, μ 2 
+
+> ms
+
+) = ( 12 + ∆ , 12 ),
+
+and 
+
+Zs = 2 =⇒ (μ1 
+
+> ms
+
+, μ 2 
+
+> ms
+
+) = ( 12 , 12 + ∆) ,
+
+for some fixed ∆ > 0. For every other agent m̸ = ms active during the block, let 
+
+(μ1
+
+> m
+
+, μ 2
+
+> m
+
+) = ( bm, b m),
+
+where bm may vary across agents. Hence the instance is heterogeneous, but all non-informative agents are arm-indifferent. It follows that during a good block, the identity of the globally optimal arm is determined entirely by the informative agent ms. In particular, if 
+
+i⋆s := arg max  
+
+> i∈{ 1,2}
+
+μims ,
+
+then 
+
+i⋆t = i⋆s , ∀t ∈ Bs.
+
+Step 4: Constant regret per good block. Because Zs is independent of the history prior to block 
+
+Bs, the past observations do not reveal which arm is optimal for the informative agent ms. Therefore, conditioned on the start of a good block, the learner faces a fresh two-armed stochastic decision problem of horizon H0.By a standard finite-horizon two-point testing argument for stochastic bandits, there exists a constant 
+
+c0 > 0, depending only on ∆ and H0, such that any algorithm incurs expected regret at least c0 on this block: 
+
+E[RT (Bs) | Bs is good ] ≥ c0.
+
+Thus each good block contributes a constant amount of expected regret. 
+
+Step 5: Summing over good blocks. Summing over all blocks, 
+
+E[RT ] ≥ c0 E[N good  
+
+> T
+
+] = Ω( T ).
+
+This proves the theorem. 
+
+A.4.7 Proof of Theorem 4 
+
+Proof. We prove the lower bound by constructing two stable-arm instances that are hard to distinguish. Fix ∆ ∈ (0 , 1/4) . Consider the following two Bernoulli open-system instances. In both instances, all active agents have the same arm means, so the average global values are identical to the individual arm means. Under instance ν, the two arms have means 
+
+¯Vt(1) = 12 + ∆ , ¯Vt(2) = 12 , ∀t ∈ [T ].
+
+Thus arm 1 is the unique globally optimal arm at every round, with stable gap ∆.Under the alternative instance ν′, arm 1 is unchanged, but arm 2 has mean 
+
+¯V ′ 
+
+> t
+
+(1) = 12 + ∆ , ¯V ′ 
+
+> t
+
+(2) = 12 + 2∆ , ∀t ∈ [T ].
+
+Thus, under ν′, arm 2 is the unique globally optimal arm at every round, again with stable gap ∆.Both instances therefore belong to the stable globally optimal-arm regime. 30 Let N M 
+
+> 2
+
+(T ) denote the effective number of observations collected from arm 2 up to time T :
+
+N M 
+
+> 2
+
+(T ) := 
+
+> T
+
+X
+
+> t=1
+
+Mt1{at = 2 }.
+
+Because all Mt active agents pull the common arm at, pulling arm 2 at round t produces Mt
+
+independent Bernoulli observations from arm 2.Let Pν and Pν′ denote the probability laws of the full history under ν and ν′, respectively. The two instances differ only in the distribution of rewards from arm 2. Therefore, by the chain rule for KL divergence, 
+
+KL( Pν , Pν′ ) = kl 
+
+ 12 , 12 + 2∆ 
+
+
+
+Eν [N M 
+
+> 2
+
+(T )] ,
+
+where kl( p, q ) denotes the Bernoulli KL divergence. Let N2(T ) := PTt=1 1{at = 2 } be the number of rounds in which the algorithm selects arm 2. Since 
+
+Mt ≤ MT for all t ≤ T ,
+
+N M 
+
+> 2
+
+(T ) = 
+
+> T
+
+X
+
+> t=1
+
+Mt1{at = 2 } ≤ MT N2(T ).
+
+Taking expectations under ν, we have 
+
+Eν [N M 
+
+> 2
+
+(T )] ≤ MT Eν [N2(T )] .
+
+We next use consistency to lower bound Eν [N M 
+
+> 2
+
+(T )] . Define the event 
+
+ET := {N2(T ) ≤ T / 2}.
+
+Under instance ν, arm 2 is suboptimal. Since the algorithm is consistent, for every a > 0,
+
+Eν [N2(T )] = o(T a).
+
+By Markov’s inequality, 
+
+Pν (EcT ) = Pν (N2(T ) > T / 2) ≤ 2Eν [N2(T )] 
+
+T = o(T a−1).
+
+Choosing any fixed a ∈ (0 , 1) , this implies 
+
+Pν (ET ) → 1.
+
+Under the alternative instance ν′, arm 2 is optimal and arm 1 is suboptimal. Consistency implies 
+
+Eν′ [T − N2(T )] = o(T a)
+
+for every a > 0. Therefore, 
+
+Pν′ (ET ) = Pν′ (N2(T ) ≤ T / 2) = Pν′ (T − N2(T ) ≥ T / 2) ≤ 2Eν′ [T − N2(T )] 
+
+T = o(T a−1).
+
+Thus Pν′ (ET ) → 0.By the data-processing inequality for KL divergence applied to the event ET ,
+
+KL( Pν , Pν′ ) ≥ kl ( Pν (ET ), Pν′ (ET )) .
+
+Since Pν (ET ) → 1 and Pν′ (ET ) = o(T a−1), the Bernoulli KL divergence satisfies 
+
+kl ( Pν (ET ), Pν′ (ET )) ≥ (1 − a − o(1)) log T. 
+
+Because a ∈ (0 , 1) is arbitrary, this yields 
+
+KL( Pν , Pν′ ) ≥ (1 − o(1)) log T. 
+
+Combining this with the earlier KL identity gives 
+
+kl 
+
+ 12 , 12 + 2∆ 
+
+
+
+Eν [N M 
+
+> 2
+
+(T )] ≥ (1 − o(1)) log T. 
+
+31 Hence 
+
+Eν [N M 
+
+> 2
+
+(T )] ≥ (1 − o(1)) log T
+
+kl   12 , 12 + 2∆  .
+
+Using N M 
+
+> 2
+
+(T ) ≤ MT N2(T ), we obtain 
+
+Eν [N2(T )] ≥ (1 − o(1)) log TMT kl   12 , 12 + 2∆  .
+
+Under instance ν, each round in which the algorithm selects arm 2 incurs normalized average regret 
+
+¯Vt(1) − ¯Vt(2) = ∆ .
+
+Therefore, 
+
+¯RT = ∆ Eν [N2(T )] ≥ (1 − o(1))∆ log TMT kl   12 , 12 + 2∆  .
+
+For ∆ ∈ (0 , 1/4) , the Bernoulli KL divergence satisfies 
+
+kl 
+
+ 12 , 12 + 2∆ 
+
+
+
+≤ C∆2
+
+for a universal constant C > 0. Hence 
+
+¯RT ≥ c log T
+
+∆MT
+
+for a universal constant c > 0.Finally, suppose the burn-in time τ is characterized by 
+
+Mτ τ ≍ log T
+
+∆2 .
+
+Since Mt is nondecreasing, MT can be replaced by the relevant pre-identification scale Mτ when the lower bound is applied to the history up to the burn-in time. Then 
+
+log T
+
+∆Mτ
+
+≍ ∆τ. 
+
+Thus ¯RT ≥ Ω(∆ τ ).
+
+If ∆ = Θ(1) , this becomes ¯RT ≥ Ω( τ ).
+
+This proves the theorem. 
+
+A.4.8 Proof of 5 
+
+Proof. On the event S(τ, ∆) , the same arm i† is globally optimal for every t > τ , with gap at least 
+
+∆. If biτ̸ = i†, then for every t > τ ,
+
+¯Vt(i⋆t ) − ¯Vt(biτ ) = ¯Vt(i†) − ¯Vt(biτ ) ≥ ∆.
+
+Since the algorithm commits to biτ after burn-in, its post-burn-in regret on this event is at least 
+
+∆( T − τ ). Therefore, 
+
+¯RT ≥ E
+
+" TX 
+
+> t=τ+1
+
+ ¯Vt(i⋆t ) − ¯Vt(biτ )
+
+
+
+1{S (τ, ∆) ,biτ̸ = i†}
+
+#
+
+≥ ∆( T − τ )P(S(τ, ∆) ,biτ̸ = i†)= ∆ qτ (T − τ ).
+
+This proves the result. 32 A.5 Case Studies - RT
+
+A.5.1 Linear Stochastic Case: Two Pre-tainning Error Regimes 
+
+We consider a stationary linear stochastic reward model as a structured special case of the general heterogeneous open-system formulation. The goal of this section is to quantify how the quality of the information inherited by newly arriving agents affects the entry-error term in the regret bound. 
+
+Linear stochastic reward model. Each agent m is associated with an observed feature vector 
+
+xm ∈ Rd, satisfying ∥xm∥2 ≤ 1. For each arm i ∈ [K], there exists an unknown arm-level parameter 
+
+θi ∈ Rd, satisfying ∥θi∥2 ≤ S, such that 
+
+μim = x⊤
+
+> m
+
+θi.
+
+When agent m pulls arm i at round s, it observes 
+
+rim(s) = x⊤
+
+> m
+
+θi + ηim(s),
+
+where ηim(s) is conditionally mean-zero and σ-sub-Gaussian. Although θi is shared across agents, the model remains heterogeneous because agents may have different feature vectors. Thus, for a fixed arm i, μim and μin need not be equal when m̸ = n.
+
+Available information and ridge estimators. For each active agent m, arm i, and round t, let 
+
+Dm,i (t) denote the set of arm-i observations available to agent m by the end of round t. This set includes agent m’s own observations and observations received through communication. Since θi is common across agents, every observation (xℓ, r iℓ(s)) ∈ D m,i (t) is informative for estimating θi.Define 
+
+Vm,i (t) = λI d + X
+
+> (ℓ,s )∈D m,i (t)
+
+xℓx⊤ 
+
+> ℓ
+
+, bm,i (t) = X
+
+> (ℓ,s )∈D m,i (t)
+
+xℓriℓ(s),
+
+where λ > 0. Agent m’s ridge estimator for arm i is 
+
+ˆθm,i (t) = Vm,i (t)−1bm,i (t),
+
+and the corresponding estimate of its own arm-i mean is 
+
+ˆμm,i (t) = x⊤ 
+
+> m
+
+ˆθm,i (t).
+
+Arrival transfer through parameter estimates. When a new agent m ∈ A t enters the system at round t, it initializes its arm-level parameter estimates by aggregating estimates from continuing neighbors. Specifically, for each arm i ∈ [K],
+
+ˆθm,i (t − 1) = X
+
+> j∈N m(t)∩R t
+
+wAmj (t)ˆθj,i (t − 1) ,
+
+where wAmj (t) ≥ 0 and X
+
+> j∈N m(t)∩R t
+
+wAmj (t) = 1 .
+
+The newly arriving agent then estimates its own arm-i mean by 
+
+ˆμm,i (t − 1) = x⊤ 
+
+> m
+
+ˆθm,i (t − 1) .
+
+This parameter-transfer step is essential: averaging scalar predictions ˆμj,i would generally estimate neighbors’ means x⊤ 
+
+> j
+
+θi, not the arriving agent’s mean x⊤
+
+> m
+
+θi.
+
+Entry error. For a newly arriving agent m ∈ A t, define its entry error by 
+
+Pm(t) := max  
+
+> i∈[K]
+
+ˆμm,i (t − 1) − μim .
+
+The aggregate entry-error term in the regret analysis is 
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t).
+
+33 Effective information condition. For γ ∈ { 1, 2}, define the event Eγ on which there exist constants 
+
+κ > 0 and cγ > 0 such that every informative continuing agent j, arm i ∈ [K], and round t ≤ T
+
+satisfies 
+
+λmin (Vj,i (t − 1)) ≥ λ + κN eff  
+
+> j,i
+
+(t − 1) , N eff  
+
+> j,i
+
+(t − 1) ≥ cγ tγ .
+
+Here N eff  
+
+> j,i
+
+(t − 1) denotes the effective number of informative arm-i samples available to agent j.The case γ = 1 corresponds to the standard linear-estimation regime, while γ = 2 corresponds to a stronger open-system information-sharing regime in which the cumulative number of effective observations grows quadratically. 
+
+Lemma 14 (Entry-error rate under effective information) . Assume the linear stochastic reward model above. Suppose that, with probability at least 1 − δ, the following events hold: 1. the effective information condition Eγ holds for some γ ∈ { 1, 2};2. every newly arriving agent m ∈ A t connects to at least one informative continuing neighbor in Nm(t) ∩ R t;3. arriving agents transfer arm-level parameter estimates using row-stochastic weights. Then, for every round t ≤ T , every newly arriving agent m ∈ A t, and every arm i ∈ [K],
+
+ˆμm,i (t − 1) − μim ≤ C
+
+r log( KT /δ )
+
+tγ ,
+
+where C > 0 depends on σ, S, d, λ, κ , and cγ . Consequently, 
+
+Pm(t) ≤ C
+
+r log( KT /δ )
+
+tγ .
+
+Proof. Fix an arm i ∈ [K] and an informative continuing agent j. By the standard self-normalized concentration inequality for ridge regression with sub-Gaussian noise, with probability at least 1 − δ,uniformly over the relevant agents, arms, and rounds, 
+
+ˆθj,i (t − 1) − θi Vj,i (t−1) 
+
+≤ βT (δ),
+
+where 
+
+βT (δ) = O(σpd log( KT /δ ) + √λS ).
+
+Therefore, 
+
+ˆθj,i (t − 1) − θi 2
+
+≤ βT (δ)
+
+pλmin (Vj,i (t − 1)) .
+
+On the event Eγ ,
+
+λmin (Vj,i (t − 1)) ≥ λ + κN eff  
+
+> j,i
+
+(t − 1) ≥ λ + κc γ tγ .
+
+Thus, 
+
+ˆθj,i (t − 1) − θi 2
+
+≤ C
+
+r log( KT /δ )
+
+tγ .
+
+Now consider a newly arriving agent m ∈ A t. By the parameter-transfer rule, 
+
+ˆθm,i (t − 1) = X
+
+> j∈N m(t)∩R t
+
+wAmj (t)ˆθj,i (t − 1) .
+
+Since the weights are row-stochastic, 
+
+ˆθm,i (t − 1) − θi = X
+
+> j∈N m(t)∩R t
+
+wAmj (t)( ˆθj,i (t − 1) − θi).
+
+Therefore, 
+
+ˆμm,i (t − 1) − μim = x⊤
+
+> m
+
+(ˆθm,i (t − 1) − θi)
+
+≤ ∥ xm∥2
+
+X
+
+> j∈N m(t)∩R t
+
+wAmj (t) ˆθj,i (t − 1) − θi 2
+
+≤ C
+
+r log( KT /δ )
+
+tγ ,
+
+34 where we used ∥xm∥2 ≤ 1. Taking the maximum over arms i ∈ [K] gives the stated bound for 
+
+Pm(t).
+
+Theorem 15 (Logarithmic entry contribution under strong effective information) . Assume the condi-tions of Lemma 14 with γ = 2 . Suppose the regret bound contains the linear entry-error contribution 
+
+Rentry  
+
+> T
+
+≤ CPTX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t).
+
+If E[|A t|] = λA for all t, then on the high-probability event E2,
+
+ERentry  
+
+> T
+
+| E 2
+
+ ≤ CP Cλ A
+
+plog( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+1
+
+t = eO(λA log T ).
+
+Consequently, when combined with the baseline logarithmic learning term, the linear stochastic open system achieves logarithmic-order regret up to logarithmic factors. Proof. By Lemma 14 with γ = 2 ,
+
+Pm(t) ≤ C
+
+r log( KT /δ )
+
+t2 = Cplog( KT /δ )
+
+t .
+
+Therefore, 
+
+ERentry  
+
+> T
+
+| E 2
+
+ ≤ CPTX
+
+> t=1
+
+E
+
+" X
+
+> m∈A t
+
+Pm(t) | E 2
+
+#
+
+≤ CP Cplog( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+E[|A t|]
+
+t
+
+= CP Cλ A
+
+plog( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+1
+
+t = eO(λA log T ).
+
+Theorem 16 (Square-root entry contribution under weak effective information) . Assume the con-ditions of Lemma 14 with γ = 1 . Suppose the regret bound contains the same linear entry-error contribution 
+
+Rentry  
+
+> T
+
+≤ CPTX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t).
+
+If E[|A t|] = λA for all t, then on the high-probability event E1,
+
+ERentry  
+
+> T
+
+| E 1
+
+ ≤ CP Cλ A
+
+plog( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+1
+
+√t = eO(λA
+
+√T ).
+
+Thus, under the weaker and more standard effective-information condition, the entry-error contribu-tion is of square-root order. Proof. By Lemma 14 with γ = 1 ,
+
+Pm(t) ≤ C
+
+r log( KT /δ )
+
+t .
+
+Therefore, 
+
+ERentry  
+
+> T
+
+| E 1
+
+ ≤ CPTX
+
+> t=1
+
+E
+
+" X
+
+> m∈A t
+
+Pm(t) | E 1
+
+#
+
+≤ CP Cplog( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+E[|A t|]
+
+√t
+
+= CP Cλ A
+
+plog( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+1
+
+√t = eO(λA
+
+√T ).
+
+35 A.5.2 Non-linear Stochastic Case Nonlinear parametric stochastic model. We consider a nonlinear parametric reward model in which 
+
+μim = fi(xm, θ i),
+
+where xm is an observed agent feature, fi is known, and θi ∈ Θi ⊂ Rp is an unknown arm-level parameter. The parameter θi is shared across agents for arm i, while agents may still be heterogeneous through their features xm. We assume that fi is Li-Lipschitz in θ:
+
+|fi(x, θ ) − fi(x, θ ′)| ≤ Li∥θ − θ′∥2, ∀x, θ, θ ′.
+
+Nonlinear M-estimator. For each active agent j, arm i, and round t, let Dj,i (t) denote the effective set of arm-i observations available to agent j. Let N eff  
+
+> j,i
+
+(t) = |D j,i (t)| denote its effective sample size. Given a loss function ℓi(x, r ; θ), define the empirical loss 
+
+bLj,i,t (θ) := 1
+
+N eff  
+
+> j,i
+
+(t)
+
+X
+
+> (ℓ,s )∈D j,i (t)
+
+ℓi(xℓ, r iℓ(s); θ).
+
+Agent j’s nonlinear parameter estimator for arm i is 
+
+ˆθj,i (t) ∈ arg min 
+
+> θ∈Θi
+
+bLj,i,t (θ).
+
+Lemma 17 (Nonlinear parameter-estimation error) . Fix an arm i ∈ [K], agent j, and round t.Suppose that, on an event Enl , the following two conditions hold: 1. Empirical strong convexity: the empirical loss bLj,i,t is αi-strongly convex over Θi, i.e., 
+
+bLj,i,t (θ′) ≥ bLj,i,t (θ) + 
+
+D
+
+∇ bLj,i,t (θ), θ ′ − θ
+
+E
+
++ αi
+
+2 ∥θ′ − θ∥22, ∀θ, θ ′ ∈ Θi.
+
+2. Score concentration at the true parameter: 
+
+∇ bLj,i,t (θi) 2
+
+≤ Gi
+
+s
+
+p log( KT /δ )
+
+N eff  
+
+> j,i
+
+(t) .
+
+Then 
+
+ˆθj,i (t) − θi 2
+
+≤ 2Gi
+
+αi
+
+s
+
+p log( KT /δ )
+
+N eff  
+
+> j,i
+
+(t) .
+
+Proof. Because ˆθj,i (t) minimizes the empirical loss over Θi,
+
+bLj,i,t (ˆθj,i (t)) ≤ bLj,i,t (θi).
+
+By empirical strong convexity, with 
+
+d := ˆθj,i (t) − θi,
+
+we have 
+
+bLj,i,t (ˆθj,i (t)) ≥ bLj,i,t (θi) + 
+
+D
+
+∇ bLj,i,t (θi), d 
+
+E
+
++ αi
+
+2 ∥d∥22.
+
+Combining the two inequalities gives 
+
+0 ≥
+
+D
+
+∇ bLj,i,t (θi), d 
+
+E
+
++ αi
+
+2 ∥d∥22.
+
+Therefore, αi
+
+2 ∥d∥22 ≤ ∇ bLj,i,t (θi) 2
+
+∥d∥2.
+
+If d = 0 , the claim is trivial. Otherwise, dividing both sides by ∥d∥2 gives 
+
+∥d∥2 ≤ 2
+
+αi
+
+∇ bLj,i,t (θi) 2
+
+.
+
+Using the score concentration condition yields 
+
+ˆθj,i (t) − θi 2
+
+≤ 2Gi
+
+αi
+
+s
+
+p log( KT /δ )
+
+N eff  
+
+> j,i
+
+(t) .
+
+36 Theorem 18 (Pre-training error in nonlinear parametric open systems) . Assume the nonlinear parametric reward model above. Suppose that, for every arm i ∈ [K], the mean function fi is 
+
+Li-Lipschitz in θ, and the conditions of Lemma 17 hold on the event Enl .When a newly arriving agent m ∈ A t enters the system, suppose it initializes its arm-level parameter estimate by transferring estimates from continuing neighbors: 
+
+ˆθm,i (t − 1) = X
+
+> j∈N m(t)∩R t
+
+wAmj (t)ˆθj,i (t − 1) ,
+
+where wAmj (t) ≥ 0 and X
+
+> j∈N m(t)∩R t
+
+wAmj (t) = 1 .
+
+The arriving agent then forms 
+
+ˆμm,i (t − 1) = fi(xm, ˆθm,i (t − 1)) .
+
+Then, on Enl ,
+
+Pm(t) := max  
+
+> i∈[K]
+
+ˆμm,i (t − 1) − μim ≤ Cnl max  
+
+> i∈[K]
+
+Li
+
+s p log( KT /δ )
+
+N A, eff  
+
+> m,i
+
+(t − 1) ,
+
+where 
+
+N A, eff  
+
+> m,i
+
+(t − 1) := 
+
+ X
+
+> j∈N m(t)∩R t
+
+wAmj (t)
+
+q
+
+N eff  
+
+> j,i
+
+(t − 1) 
+
+
+
+> −2
+
+is the effective transferred sample size, and 
+
+Cnl := max 
+
+> i∈[K]
+
+2Gi
+
+αi
+
+.
+
+In particular, if every informative neighbor satisfies 
+
+N eff  
+
+> j,i
+
+(t − 1) ≥ nt ∀j ∈ N m(t) ∩ R t, i ∈ [K],
+
+then 
+
+Pm(t) ≤ Cnl max  
+
+> i∈[K]
+
+Li
+
+s
+
+p log( KT /δ )
+
+nt
+
+.
+
+Proof. Fix an arriving agent m ∈ A t and an arm i ∈ [K]. Since 
+
+μim = fi(xm, θ i), ˆμm,i (t − 1) = fi(xm, ˆθm,i (t − 1)) ,
+
+the Lipschitz property of fi gives 
+
+ˆμm,i (t − 1) − μim ≤ Li ˆθm,i (t − 1) − θi 2 .
+
+By the transfer rule and the row-stochasticity of the weights, 
+
+ˆθm,i (t − 1) − θi = X
+
+> j∈N m(t)∩R t
+
+wAmj (t)
+
+ˆθj,i (t − 1) − θi
+
+
+
+.
+
+Hence, by the triangle inequality, 
+
+ˆθm,i (t − 1) − θi 2
+
+≤ X
+
+> j∈N m(t)∩R t
+
+wAmj (t) ˆθj,i (t − 1) − θi 2
+
+.
+
+Applying Lemma 17 to each informative neighbor j gives 
+
+ˆθj,i (t − 1) − θi 2
+
+≤ 2Gi
+
+αi
+
+s
+
+p log( KT /δ )
+
+N eff  
+
+> j,i
+
+(t − 1) .
+
+37 Therefore, 
+
+ˆμm,i (t − 1) − μim ≤ Li
+
+2Gi
+
+αi
+
+pp log( KT /δ ) X
+
+> j∈N m(t)∩R t
+
+wAmj (t)
+
+q
+
+N eff  
+
+> j,i
+
+(t − 1) 
+
+.
+
+By the definition of N A, eff  
+
+> m,i
+
+(t − 1) ,
+
+X
+
+> j
+
+wAmj (t)
+
+q
+
+N eff  
+
+> j,i
+
+(t − 1) = 1
+
+q
+
+N A, eff  
+
+> m,i
+
+(t − 1) 
+
+.
+
+Thus, 
+
+ˆμm,i (t − 1) − μim ≤ Cnl Li
+
+s p log( KT /δ )
+
+N A, eff  
+
+> m,i
+
+(t − 1) .
+
+Taking the maximum over i ∈ [K] gives the first claim. If every informative neighbor satisfies 
+
+N eff  
+
+> j,i
+
+(t − 1) ≥ nt,
+
+then X
+
+> j
+
+wAmj (t)
+
+q
+
+N eff  
+
+> j,i
+
+(t − 1) 
+
+≤ 1
+
+√nt
+
+X
+
+> j
+
+wAmj (t) = 1
+
+√nt
+
+,
+
+so 
+
+N A, eff  
+
+> m,i
+
+(t − 1) ≥ nt.
+
+The simplified bound follows. 
+
+Corollary 18.1 (Nonlinear parametric arrivals as a pre-training-error case) . Suppose the unified pre-training-error regret bound holds: 
+
+RT ≤ O Rbase (T ) + 
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t)
+
+!
+
+.
+
+Assume E[|A t|] = λA for all t. Under the conditions of Theorem 18, the following two regimes hold. 1. Strong nonlinear information regime. If 
+
+N A, eff  
+
+> m,i
+
+(t − 1) ≥ c2t2, ∀m ∈ A t, i ∈ [K],
+
+then 
+
+RT ≤ eO
+
+
+
+Rbase (T ) + λA max  
+
+> i∈[K]
+
+Li
+
+√p log T
+
+
+
+.
+
+2. Weak nonlinear information regime. If 
+
+N A, eff  
+
+> m,i
+
+(t − 1) ≥ c1t, ∀m ∈ A t, i ∈ [K],
+
+then 
+
+RT ≤ eO
+
+
+
+Rbase (T ) + λA max  
+
+> i∈[K]
+
+Li
+
+ppT 
+
+
+
+.
+
+Proof. By Theorem 18, if N A, eff  
+
+> m,i
+
+(t − 1) ≥ cγ tγ , where γ ∈ { 1, 2}, then 
+
+Pm(t) ≤ C max  
+
+> i∈[K]
+
+Li
+
+r p log( KT /δ )
+
+tγ .
+
+Therefore, TX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t) ≤ C max  
+
+> i∈[K]
+
+Li
+
+pp log( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+|A t|
+
+tγ/ 2 .
+
+38 Taking expectation and using E[|A t|] = λA, we get 
+
+E
+
+" TX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t)
+
+#
+
+≤ Cλ A max  
+
+> i∈[K]
+
+Li
+
+pp log( KT /δ )
+
+> T
+
+X
+
+> t=1
+
+t−γ/ 2.
+
+If γ = 2 , then TX
+
+> t=1
+
+t−1 = O(log T ),
+
+which gives the logarithmic regime. If γ = 1 , then 
+
+> T
+
+X
+
+> t=1
+
+t−1/2 = O(√T ),
+
+which gives the square-root regime. Substituting these bounds into the unified pre-training-error regret bound proves the two claims. 
+
+A.5.3 Cluster Model Case Clustered stochastic model. Suppose there are C clusters. Each agent m belongs to a known cluster c(m) ∈ [C], and agents in the same cluster share the same arm means: 
+
+μim = θic(m), i ∈ [K].
+
+When an agent m from cluster c pulls arm i, it observes a σ-sub-Gaussian reward with mean θic. For each cluster-arm pair (c, i ), let Nc,i (t) denote the total number of arm-i observations collected from agents in cluster c up to round t, and let ˆθic(t) denote the corresponding empirical mean. When a newly arriving agent m ∈ A t belongs to an already observed cluster c(m), it initializes by inheriting the cluster-level estimator: 
+
+ˆμm,i (t − 1) = ˆθic(m)(t − 1) .
+
+Thus its entry error is 
+
+Pm(t) = max 
+
+> i∈[K]
+
+ˆθic(m)(t − 1) − θic(m) .
+
+Hence, in the clustered stochastic model, the pre-training error of a newly arriving agent is exactly the estimation error of its cluster-level reward vector. The homogeneous setting corresponds to C = 1 .
+
+Burn-in. We begin with an initialization phase of length L, whose value will be specified in the regret analysis. In this phase, we leverage the clustered reward structure. Recall that each agent m is associated with a cluster label c(m) ∈ [C], and that agents belonging to the same cluster share the same mean reward vector. For each cluster c, define 
+
+M(c) 
+
+> t
+
+:= {m ∈ M t : c(m) = c}, M (c) 
+
+> t
+
+:= |M (c) 
+
+> t
+
+|.
+
+During the first L = O(log T ) rounds, the agents collect exploratory observations so that the reward means of the clusters currently represented in the system can be estimated accurately. In particular, each active agent cycles through the arms according to am(t) = 1+(( t−1) mod K). Newly arriving agents are treated according to whether their cluster has already been observed. If an arriving agent 
+
+m ∈ M t \ M t−1 satisfies M (c(m))  
+
+> t−1
+
+> 0, then it initializes its statistics using the current information of cluster c(m). Otherwise, it continues with the same exploration rule until enough samples have been gathered for that previously unseen cluster. At time L, each agent m ∈ M L has its local pull count and local empirical estimator for arm 
+
+i, nm,i (L), ¯μmi (L) =    
+
+> P
+> s≤L:am (s)= irim(s)max {1,n m,i (L)}
+
+. We then aggregate these quantities within each cluster. For every cluster c and arm i, define nc,i (L) := P
+
+> m∈M (c)
+> L
+
+nm,i (L), ˆθic(L) :=   
+
+> P
+> m∈M (c)
+> L
+> nm,i (L)¯ μmi(L)max {1,n c,i (L)}
+
+. Thus, nc,i (L) and ˆθic(L) represent the total amount of information gath-ered for arm i within cluster c. Once this initialization stage ends, the procedure moves to the main learning phase, where these cluster-level statistics are continually updated and shared. 39 Arm selection. Throughout the burn-in period, every active agent follows the exploration schedule 
+
+am(t) = 1 + (( t − 1) mod K). After that, at each round t, agent m ∈ M t computes a UCB-style score for every arm using the currently available cluster-level estimates. Since performance is measured against the step-wise globally optimal arm over the active population, we first define the estimated global value of arm i by ˜μmi (t) := P    
+
+> c:M(c)
+> t>0
+
+M (c) 
+
+> t
+
+ˆθic(t). To quantify uncertainty, we define F (m, i, t ) := P    
+
+> c:M(c)
+> t>0
+
+M (c) 
+
+> t
+
+( C1 log t 
+
+> max {1,n c,i (t)}
+
+)β , where C1 > 0 and β > 0 are constants determined in the theoretical results. Agent m then chooses the arm 
+
+am(t) = arg max  
+
+> i∈[K]
+
+{˜μmi (t − 1) + F (m, i, t − 1) } .
+
+Broadcasting. At every round t, each active agent m ∈ M t transmits its cluster label c(m) together with its local statistics {nm,i (t), ¯μmi (t)}i∈[K] to all neighboring agents j ∈ N m(t). In this way, the exchanged information preserves cluster membership and can therefore be pooled at the cluster level rather than across all agents indiscriminately. 
+
+Aggregation. For each active agent m ∈ M t, the received information is pooled separately for each cluster. More precisely, for cluster c and arm i, define nmc,i (t) := P  
+
+> j∈N m(t): c(j)= c
+
+nj,i (t),
+
+and the corresponding cluster-level empirical estimator available to agent m by ˆθmc,i (t) :=     
+
+> P
+> j∈N m(t): c(j)= cnj,i (t)¯ μji(t)max {1,n mc,i (t)}
+
+. Using these quantities, agent m forms its aggregated estimate for arm i
+
+as ˆμmi (t) := P  
+
+> c:nmc,i (t)>0
+
+M (c) 
+
+> t
+
+ˆθmc,i (t).
+
+When a new agent m ∈ M t+1 \ M t enters the system, two cases arise. If its cluster has already been observed, that is, if M (c(m))  
+
+> t
+
+> 0, then the agent initializes its cluster-level statistics from a neighbor or an active agent j ∈ M t satisfying c(j) = c(m), namely, 
+
+nmc(m),i (t) = njc(m),i (t), ˆθmc(m),i (t) = ˆθjc(m),i (t).
+
+If instead M (c(m))  
+
+> t
+
+= 0 , then the new agent corresponds to a previously unseen cluster, and its statistics are initialized from scratch and subsequently learned through exploration. 
+
+Update. After arm am(t) is pulled, each active agent m ∈ M t refreshes its local statistics via 
+
+nm,i (t) = nm,i (t − 1) + 1{am(t) = i}, and ¯μmi (t) = nm,i (t−1)¯ μmi (t−1)+ ram (t)  
+
+> m(t)1{am(t)= i}
+> max {1,n m,i (t)}
+
+. These updated local quantities are then used to refresh the cluster-level counts nc,i (t) and the cluster-level estimators ˆθic(t). In turn, those quantities determine the global arm-value estimates ˜μmi (t) used for the next round of decisions. 
+
+Regret Upper Bounds Lemma 19 (Cluster-level entry-error bound) . Assume rewards are σ-sub-Gaussian and cluster labels are known. With probability at least 1 − δ, for all clusters c ∈ [C], arms i ∈ [K], and rounds t ≤ T ,
+
+ˆθic(t) − θic ≤ σ
+
+s
+
+2 log(2 KCT /δ )max {1, N c,i (t)} .
+
+Consequently, if a new agent m ∈ A t arrives from an already observed cluster c(m), then 
+
+Pm(t) ≤ σ max 
+
+> i∈[K]
+
+s
+
+2 log(2 KCT /δ )max {1, N c(m),i (t − 1) } .
+
+Proof. Fix a cluster c, arm i, and round t. Since ˆθic(t) is the empirical mean of Nc,i (t) independent 
+
+σ-sub-Gaussian observations with mean θic, standard sub-Gaussian concentration gives 
+
+P ˆθic(t) − θic > σ 
+
+s
+
+2 log(2 KCT /δ )max {1, N c,i (t)}
+
+!
+
+≤ δKCT .
+
+Taking a union bound over all c ∈ [C], i ∈ [K], and t ≤ T gives the first claim. 40 For a newly arriving agent m from an already observed cluster c(m), the algorithm initializes 
+
+ˆμm,i (t − 1) = ˆθic(m)(t − 1) .
+
+Therefore, 
+
+Pm(t) = max  
+
+> i∈[K]
+
+ˆμm,i (t − 1) − μim
+
+= max 
+
+> i∈[K]
+
+ˆθic(m)(t − 1) − θic(m) ,
+
+and the bound follows from the first part. 
+
+Proof. Since every cluster is represented initially, every newly arriving agent belongs to a cluster whose estimator is already available. Let A(c) 
+
+> t
+
+denote the set of agents arriving from cluster c at round 
+
+t. By Lemma 19, for every m ∈ A (c) 
+
+> t
+
+,
+
+Pm(t) ≤ σ max 
+
+> i∈[K]
+
+s
+
+2 log(2 KCT /δ )
+
+Nc,i (t − 1) .
+
+Using the effective cluster sample-size condition 
+
+Nc,i (t − 1) ≥ κc(t − 1) 2,
+
+we obtain, for t ≥ 2,
+
+Pm(t) ≤ Cc
+
+plog(2 KCT /δ )
+
+t ,
+
+where Cc depends on σ and κc.Therefore, TX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t) = 
+
+> C
+
+X
+
+> c=1
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A (c)
+> t
+
+Pm(t)
+
+≤
+
+> C
+
+X
+
+> c=1
+
+Cc
+
+plog(2 KCT /δ )
+
+> T
+
+X
+
+> t=1
+
+|A (c) 
+
+> t
+
+|
+
+t .
+
+If E[|A (c) 
+
+> t
+
+|] = λ(c) 
+
+> A
+
+= O(1) , or on the corresponding high-probability population event, we have 
+
+> T
+
+X
+
+> t=1
+
+|A (c) 
+
+> t
+
+|
+
+t = O(λ(c) 
+
+> A
+
+log T ).
+
+Hence, TX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t) = eO(C log T ),
+
+assuming the cluster-specific arrival rates are O(1) .Applying the unified regret bound gives 
+
+RT ≤ eO(Rbase (T ) + C log T ).
+
+If Rbase (T ) = O(M0 log T ), this yields 
+
+RT ≤ eO(( C + M0) log T ).
+
+Theorem 20 (Clustered arrivals with initially unseen clusters) . Assume λD = 0 , rewards are bounded in [0 , 1] , cluster labels are known, and every cluster has positive arrival rate 
+
+λ(c) 
+
+> A
+
+≥ λmin > 0.
+
+41 For each cluster c, define its first-arrival time 
+
+τc := inf {t ≥ 1 : A(c)
+
+> t
+
+̸ = ∅} ,
+
+and let 
+
+τmax := max  
+
+> c∈[C]
+
+τc.
+
+Then, with probability at least 1 − δ,
+
+τmax ≤ 1
+
+λmin 
+
+log Cδ .
+
+Assume that after cluster c first appears, its cluster sample sizes satisfy 
+
+Nc,i (t) ≥ κc(t − τc)2, t > τ c, i ∈ [K].
+
+Then, on the cluster-confidence event, 
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t) = eO(Cτ max + C log T ).
+
+Consequently, 
+
+RT ≤ eO(Rbase (T ) + Cτ max + C log T ) .
+
+In particular, taking δ = T −1, if C = O(1) , λmin = Ω(1) , and Rbase (T ) = O(M0 log T ), then 
+
+RT ≤ eO(( C + M0) log T ) .
+
+Proof. First, we bound the time by which all clusters appear. For a fixed cluster c, since arrivals from cluster c follow a Poisson process with rate λ(c) 
+
+> A
+
+, the probability that no cluster-c agent arrives by time s is 
+
+P(τc > s ) = exp( −λ(c) 
+
+> A
+
+s) ≤ exp( −λmin s).
+
+By a union bound over clusters, 
+
+P(τmax > s ) ≤
+
+> C
+
+X
+
+> c=1
+
+P(τc > s ) ≤ C exp( −λmin s).
+
+Setting 
+
+s = 1
+
+λmin 
+
+log Cδ
+
+gives 
+
+P(τmax > s ) ≤ δ. 
+
+Thus, 
+
+τmax ≤ 1
+
+λmin 
+
+log Cδ
+
+with probability at least 1 − δ.Next, decompose the entry-error contribution by clusters. Before cluster c appears, there are no arrivals from that cluster. At time τc, the first agents from cluster c cannot inherit a previously learned cluster estimate. Since rewards are normalized in [0 , 1] , their entry errors are at most one. More generally, during the initial cluster-discovery period, we can bound the entry error of cluster-c arrivals by one. This contributes at most 
+
+O
+
+
+
+> C
+
+X
+
+> c=1
+
+X
+
+> t≤τc
+
+|A (c) 
+
+> t
+
+|
+
+ = eO(Cτ max )
+
+on the corresponding population event. After cluster c has appeared, newly arriving agents from cluster c inherit the cluster estimator. By Lemma 19, 
+
+Pm(t) ≤ σ max 
+
+> i∈[K]
+
+s
+
+2 log(2 KCT /δ )
+
+Nc,i (t − 1) .
+
+42 Using 
+
+Nc,i (t − 1) ≥ κc(t − 1 − τc)2,
+
+we obtain 
+
+Pm(t) ≤ Cc
+
+plog(2 KCT /δ )
+
+t − τc
+
+.
+
+Therefore, TX
+
+> t=τc+1
+
+X
+
+> m∈A (c)
+> t
+
+Pm(t) ≤ Cc
+
+plog(2 KCT /δ )
+
+> T
+
+X
+
+> t=τc+1
+
+|A (c) 
+
+> t
+
+|
+
+t − τc
+
+.
+
+Taking expectation, or working on a standard population event, 
+
+> T
+
+X
+
+> t=τc+1
+
+|A (c) 
+
+> t
+
+|
+
+t − τc
+
+= O(λ(c) 
+
+> A
+
+log T ).
+
+Summing over clusters gives 
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t) = eO(Cτ max + C log T ).
+
+Applying the unified pre-training-error regret bound, 
+
+RT ≤ O Rbase (T ) + 
+
+> T
+
+X
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm(t)
+
+!
+
+,
+
+yields 
+
+RT ≤ eO(Rbase (T ) + Cτ max + C log T ) .
+
+Substituting the high-probability bound on τmax completes the proof. 
+
+A.5.4 Zero-knowledge Case Corollary 20.1 (Zero-knowledge arrivals as constant pre-training error) . Suppose rewards are normalized so that μim ∈ [0 , 1] for all agents m and arms i. Assume λD = 0 and E[|A t|] = λA for all t, where At = Mt \ M t−1 denotes the set of newly arriving agents at round t. Suppose each newly arriving agent enters with zero initial information, namely, 
+
+ˆμm,i (T am − 1) = 0 , ∀m ∈ A t, i ∈ [K].
+
+If the regret of the proposed algorithm satisfies the general entry-error bound 
+
+E[RT ] ≤ O(M0 log T + E
+
+" TX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm
+
+#
+
+),
+
+where 
+
+Pm := max  
+
+> i∈[K]
+
+ˆμm,i (T am − 1) − μim ,
+
+then 
+
+E[RT ] ≤ O(M0 log T + λAT ).
+
+In particular, if M0 = O(1) and λA = O(1) , then 
+
+E[RT ] = O(T ).
+
+Proof. For any newly arriving agent m ∈ A t, the zero-knowledge initialization gives 
+
+ˆμm,i (T am − 1) = 0 , ∀i ∈ [K].
+
+Therefore, 
+
+Pm = max  
+
+> i∈[K]
+
+ˆμm,i (T am − 1) − μim
+
+= max  
+
+> i∈[K]
+
+|μim|.
+
+43 Since rewards are normalized so that μim ∈ [0 , 1] , we have 
+
+Pm ≤ 1.
+
+Hence, TX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm ≤
+
+> T
+
+X
+
+> t=1
+
+|A t|.
+
+Taking expectations and using E[|A t|] = λA, we obtain 
+
+E
+
+" TX
+
+> t=1
+
+X
+
+> m∈A t
+
+Pm
+
+#
+
+≤ E
+
+" TX
+
+> t=1
+
+|A t|
+
+#
+
+=
+
+> T
+
+X
+
+> t=1
+
+E[|A t|]= λAT. 
+
+Substituting this into the general entry-error regret bound yields 
+
+E[RT ] ≤ O(M0 log T + λAT ).
+
+If M0 = O(1) and λA = O(1) , then the bound reduces to 
+
+E[RT ] = O(T ).
+
+A.6 Case Studies - ¯RT
+
+A.6.1 Linear Stochastic Case Corollary 20.2 (Stable-arm regret: linear stochastic case) . Consider the linear stochastic model 
+
+μim = x⊤
+
+> m
+
+θi, with parameter dimension d. Suppose the linear estimator satisfies the identification bound 
+
+P
+
+
+
+| b¯V τ (i) − ¯Vτ (i)| > ε 
+
+
+
+≤ 2 exp 
+
+
+
+−clin 
+
+N lin  
+
+> i
+
+(τ )ε2
+
+d
+
+
+
+,
+
+and let N lin min (τ ) := min i∈[K] N lin  
+
+> i
+
+(τ ). Then 
+
+¯RT ≤ τ + δlin  
+
+> G
+
+(τ, ∆)( T − τ ),
+
+where 
+
+δlin  
+
+> G
+
+(τ, ∆) = δstab (τ, ∆) + 2 K exp 
+
+
+
+−clin 
+
+N lin min (τ )∆ 2
+
+16 d
+
+
+
+.
+
+If N lin min (τ ) ≥ cγ τ γ for γ ∈ { 1, 2}, then it suffices to take 
+
+τlin = max 
+
+(
+
+O
+
+ 1
+
+C−(∆ 0 − ∆) 2 log KT η
+
+
+
+, O 
+
+ dcγ ∆2 log Kη
+
+1/γ !) 
+
+to ensure δlin  
+
+> G
+
+(τlin , ∆) ≤ η. Consequently, 
+
+¯RT ≤ τlin + η(T − τlin ).
+
+In particular, if η ≤ τlin /T , then ¯RT = O(τlin ).
+
+A.6.2 Nonlinear Parametric Case Corollary 20.3 (Stable-arm regret: nonlinear parametric case) . Consider the nonlinear parametric model μim = fi(xm, θ i), where fi is Li-Lipschitz in θi, and let Lmax := max i∈[K] Li. Suppose the nonlinear estimator satisfies 
+
+P
+
+
+
+| b¯V τ (i) − ¯Vτ (i)| > ε 
+
+
+
+≤ 2 exp 
+
+
+
+−cnl 
+
+N nl  
+
+> i
+
+(τ )ε2
+
+L2max p
+
+
+
+,
+
+44 where p is the parameter dimension, and let N nl min (τ ) := min i∈[K] N nl  
+
+> i
+
+(τ ). Then 
+
+¯RT ≤ τ + δnl  
+
+> G
+
+(τ, ∆)( T − τ ),
+
+where 
+
+δnl  
+
+> G
+
+(τ, ∆) = δstab (τ, ∆) + 2 K exp 
+
+
+
+−cnl 
+
+N nl min (τ )∆ 2
+
+16 L2max p
+
+
+
+.
+
+If N nl min (τ ) ≥ cγ τ γ , then it suffices to take 
+
+τnl = max 
+
+(
+
+O
+
+ 1
+
+C−(∆ 0 − ∆) 2 log KT η
+
+
+
+, O 
+
+ L2max pcγ ∆2 log Kη
+
+1/γ !) 
+
+to ensure δnl  
+
+> G
+
+(τnl , ∆) ≤ η. Consequently, 
+
+¯RT ≤ τnl + η(T − τnl ),
+
+and if η ≤ τnl /T , then ¯RT = O(τnl ).
+
+A.6.3 Clustered Stochastic Case Corollary 20.4 (Stable-arm regret: clustered stochastic case) . Consider the clustered stochastic model with C clusters and μim = θic(m). Suppose cluster labels are known, and let Nc,i (τ ) be the effective number of observations of arm i from cluster c. Define N clust min (τ ) := min c∈[C],i ∈[K] Nc,i (τ ).If some clusters are initially unseen, let δdisc (τ ) denote the probability that at least one cluster has not appeared by time τ . Then 
+
+¯RT ≤ τ + δclust  
+
+> G
+
+(τ, ∆)( T − τ ),
+
+where 
+
+δclust  
+
+> G
+
+(τ, ∆) = δstab (τ, ∆) + δdisc (τ ) + 2 KC exp 
+
+
+
+− N clust min (τ )∆ 2
+
+8
+
+
+
+.
+
+If each cluster arrives with rate at least λmin > 0, then δdisc (τ ) ≤ C exp( −λmin τ ). If additionally 
+
+N clust min (τ ) ≥ κτ γ , then it suffices to take 
+
+τclust = max 
+
+(
+
+O
+
+ 1
+
+C−(∆ 0 − ∆) 2 log KT η
+
+
+
+, O 
+
+ 1
+
+λmin 
+
+log Cη
+
+
+
+, O 
+
+ 1
+
+κ∆2 log KC η
+
+1/γ !) 
+
+to ensure δclust  
+
+> G
+
+(τclust , ∆) ≤ η. Consequently, 
+
+¯RT ≤ τclust + η(T − τclust ),
+
+and if η ≤ τclust /T , then ¯RT = O(τclust ). If all clusters are represented initially, the discovery term can be removed. 
+
+A.6.4 Zero-Knowledge Case Corollary 20.5 (Stable-arm regret: zero-knowledge case) . Consider the zero-knowledge case, where arriving agents have no reliable entry information. Suppose the algorithm uses burn-in exploration to estimate the global values directly. Let N zero  
+
+> i
+
+(τ ) be the effective number of samples of arm i
+
+collected by time τ , and define N zero min (τ ) := min i∈[K] N zero  
+
+> i
+
+(τ ). Then 
+
+¯RT ≤ τ + δzero  
+
+> G
+
+(τ, ∆)( T − τ ),
+
+where 
+
+δzero  
+
+> G
+
+(τ, ∆) = δstab (τ, ∆) + 2 K exp 
+
+
+
+− N zero min (τ )∆ 2
+
+8
+
+
+
+.
+
+If burn-in uses round-robin exploration, then N zero min (τ ) ≥ K−1 Pτs=1 Ms − 1. Under linear popula-tion growth Ms ≥ C−s, it suffices to take 
+
+τzero = max 
+
+(
+
+O
+
+ 1
+
+C−(∆ 0 − ∆) 2 log KT η
+
+
+
+, O 
+
+s
+
+KC−∆2 log Kη
+
+!) 
+
+to ensure δzero  
+
+> G
+
+(τzero , ∆) ≤ η. Consequently, 
+
+¯RT ≤ τzero + η(T − τzero ),
+
+and if η ≤ τzero /T , then ¯RT = O(τzero ).
+
+45 Proof of Corollaries 20.2–20.5. All four results follow from Corollary 2.1. The only difference across models is the bound on P(I(τ, ∆) c), which determines the second term in δG(τ, ∆) . The stability term δstab (τ, ∆) is common because it depends only on the active population average ¯Vt,the population gap ∆0, and the population size Mτ .For the linear and nonlinear parametric models, substituting ε = ∆ /4 into the corresponding estimator concentration inequality gives the stated identification terms. For the clustered model, a union bound over K arms and C clusters gives the factor KC , and an additional cluster-discovery term is included if some clusters are initially unseen. For the zero-knowledge model, identification relies only on direct burn-in samples; under round-robin exploration, N zero min (τ ) ≥ K−1 Pτs=1 Ms − 1.In each case, choosing τ so that both the stability and identification failure terms are at most order η
+
+yields δG(τ, ∆) ≤ η. Applying ¯RT ≤ τ + δG(τ, ∆)( T − τ ) gives the displayed regret bounds. If 
+
+η ≤ τ /T , the failure contribution is O(τ ), so ¯RT = O(τ ).46

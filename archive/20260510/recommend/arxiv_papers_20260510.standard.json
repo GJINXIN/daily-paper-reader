@@ -1,0 +1,551 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-10T20:05:42.577670+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 22,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2605.05949v1",
+      "title": "MAS-Algorithm: A Workflow for Solving Algorithmic Programming Problems with a Multi-Agent System",
+      "abstract": "Algorithmic problem solving serves as a rigorous testbed for evaluating structured reasoning in AI coding systems, as it directly reflects a model's ability to perform structured reasoning in complex scenarios.Existing approaches predominantly rely on model-centric strategies, such as architectural modifications and data scaling, which are costly and offer limited interpretability. Alternative methods leveraging external tools or prompting techniques (e.g., chain-of-thought) are often fragmented and lack a unified framework. In this paper, we propose MAS-Algorithm, a systematic multi-agent workflow for algorithmic problem solving inspired by the practices of competitive programmers and algorithm engineers. Our framework decomposes the end-to-end solving process into modular stages, enabling structured reasoning, tool integration, and flexible coordination among agents. The design emphasizes both rigor and extensibility, allowing it to generalize across diverse problem types.Experimental results on a self-constructed benchmark demonstrate consistent improvements across multiple Qwen series models, achieving an average gain of 6.48% in acceptance rate. In contrast, parameter-efficient fine-tuning on the same data yields only a marginal improvement of 0.89%. We further observe a 4.72% gain on LiveCodeBench-Pro, along with consistent improvements across additional accuracy and efficiency metrics.Beyond performance gains, we conduct comprehensive analyses to better understand the reasoning process within the workflow, including error patterns and cross-scenario behaviors. We further perform customized replacement and ablation studies to explore the upper bound of the framework, showing that individual agents can contribute improvements of up to 27.7%. These results highlight the strong potential of MAS-Algorithm for advancing AI-driven algorithmic reasoning.",
+      "authors": [
+        "Yuliang Xu",
+        "Xiang Xu",
+        "Yao Wan",
+        "Hu Wei",
+        "Tong Jia"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-05-07T09:57:53+00:00",
+      "link": "https://arxiv.org/pdf/2605.05949v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Systematic multi-agent workflow for algorithmic problem solving",
+      "llm_evidence_cn": "用于算法问题解决的系统化多智能体工作流",
+      "llm_evidence": "用于算法问题解决的系统化多智能体工作流",
+      "canonical_evidence": "用于算法问题解决的系统化多智能体工作流",
+      "llm_tldr_en": "Develops a multi-agent system inspired by human practices to solve complex algorithmic programming tasks.",
+      "llm_tldr_cn": "开发了一种受人类实践启发的多智能体系统，用于解决复杂的算法编程任务。",
+      "llm_tldr": "开发了一种受人类实践启发的多智能体系统，用于解决复杂的算法编程任务。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.06028v1",
+      "title": "Multi-agent decision making: A Blackwell's informativeness approach",
+      "abstract": "The rapid development of large language models (LLMs) has motivated research on decision-making in multi-agent systems, where multiple agents collaborate to achieve shared objectives. Existing aggregation approaches, such as voting and debate, are largely ad-hoc and lack formal guarantees regarding the informativeness of the resulting decisions. In this paper, we provide a principled approach to analyse decisions made in the multi-LLM setting using Blackwell's informativeness framework. Within the Blackwell information-structure abstraction, we show that voting and debate induce information structures that are no more informative than the pooled private information of all agents. This result identifies Bayesian pooled posterior maximisation as an information-theoretic upper-bound decision rule under the Blackwell ordering. Motivated by this theoretical analysis, we introduce a practical method for LLM-based question-answering (QA) tasks that estimates each agent's posterior and approximates the pooled posterior using a product-of-posteriors estimator. Extensive experiments on six QA benchmarks demonstrate that our approach outperforms state-of-the-art multi-LLM debate and voting methods.",
+      "authors": [
+        "Zheng Zhang",
+        "Cuong C. Nguyen",
+        "Kevin Wells",
+        "Gustavo Carneiro"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-07T11:19:31+00:00",
+      "link": "https://arxiv.org/pdf/2605.06028v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent decision making and multi-LLM aggregation approaches",
+      "llm_evidence_cn": "多智能体决策与多大模型聚合方法",
+      "llm_evidence": "多智能体决策与多大模型聚合方法",
+      "canonical_evidence": "多智能体决策与多大模型聚合方法",
+      "llm_tldr_en": "Provides a principled framework for analyzing informativeness in multi-LLM decision-making systems.",
+      "llm_tldr_cn": "利用Blackwell信息框架分析多大模型决策系统中的信息聚合有效性。",
+      "llm_tldr": "利用Blackwell信息框架分析多大模型决策系统中的信息聚合有效性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.06557v1",
+      "title": "Coordination Matters: Evaluation of Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Cooperative multi-agent reinforcement learning (MARL) benchmarks commonly emphasize aggregate outcomes such as return, success rate, or completion time. While essential, these metrics often fail to reveal how agents coordinate, particularly in settings where agents, tasks, and joint assignment choices scale combinatorially. We propose a coordination-aware evaluation perspective that supplements return with process-level diagnostics. We instantiate this perspective using STAT, a controlled commitment-constrained spatial task-allocation testbed that systematically varies agents, tasks, and environment size while holding observation access and task rules fixed. We evaluate six representative value-based MARL methods across varying levels of centralization. Our results show that similar return trends can reflect distinct coordination mechanisms, including differences in redundant assignment, assignment diversity, and task-completion efficiency. We find that in commitment-constrained task allocation, performance under scale is shaped not only by nominal action-space size, but also by assignment pressure, sparse decision opportunities, and redundant choices among interdependent agents. Our findings motivate coordination-aware evaluation as a necessary complement to return-based benchmarking for cooperative MARL.",
+      "authors": [
+        "Maria Ana Cardei",
+        "Matthew Landers",
+        "Afsaneh Doryab"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-05-07T16:50:53+00:00",
+      "link": "https://arxiv.org/pdf/2605.06557v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "evaluation of cooperative multi-agent reinforcement learning",
+      "llm_evidence_cn": "协作式多智能体强化学习的评估",
+      "llm_evidence": "协作式多智能体强化学习的评估",
+      "canonical_evidence": "协作式多智能体强化学习的评估",
+      "llm_tldr_en": "Proposes a coordination-aware evaluation perspective for cooperative MARL using process-level diagnostics.",
+      "llm_tldr_cn": "为协作式多智能体强化学习提出一种基于过程诊断的协调感知评估视角。",
+      "llm_tldr": "为协作式多智能体强化学习提出一种基于过程诊断的协调感知评估视角。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.03782v1",
+      "title": "What You Think is What You See: Driving Exploration in VLM Agents via Visual-Linguistic Curiosity",
+      "abstract": "To navigate partially observable visual environments, recent VLM agents increasingly internalize world modeling capabilities into their policies via explicit CoT reasoning, enabling them to mentally simulate futures before acting. However, relying solely on passive reasoning over visited states is insufficient for sparse-reward tasks, as it lacks the epistemic drive to actively uncover the ``known unknown'' required for robust generalization. We ask: Can VLM agents actively find signals that challenge and refine their internal world model through curiosity-driven exploration? In this work, we propose GLANCE, a unified framework that bridges reasoning and exploration by grounding the agent's linguistic world model into the stable visual representations of an evolving target network. Crucially, GLANCE leverages the discrepancy between linguistic prediction and visual reality as an intrinsic curiosity signal within reinforcement learning, steering the agent to actively explore areas where its internal model is uncertain. Extensive experiments across a series of agentic tasks show the effectiveness of GLANCE, and demonstrate that aligning ``what the agent thinks'' with ``what the agent sees'' is key to solving complex or sparse agentic tasks.",
+      "authors": [
+        "Haoxi Li",
+        "Qinglin Hou",
+        "Jianfei Ma",
+        "Jinxiang Lai",
+        "Tao Han",
+        "Sikai Bai",
+        "Jingcai Guo",
+        "Jie Zhang",
+        "Song Guo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-05T14:08:54+00:00",
+      "link": "https://arxiv.org/pdf/2605.03782v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "VLM agents simulating world models via reasoning",
+      "llm_evidence_cn": "视觉语言模型智能体通过推理模拟世界模型",
+      "llm_evidence": "视觉语言模型智能体通过推理模拟世界模型",
+      "canonical_evidence": "视觉语言模型智能体通过推理模拟世界模型",
+      "llm_tldr_en": "Proposes a framework for VLM agents to explore environments by grounding linguistic models in visual states.",
+      "llm_tldr_cn": "提出一种框架，通过将语言模型落地到视觉状态，驱动视觉语言智能体探索环境。",
+      "llm_tldr": "提出一种框架，通过将语言模型落地到视觉状态，驱动视觉语言智能体探索环境。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.01293v1",
+      "title": "Lifting Traces to Logic: Programmatic Skill Induction with Neuro-Symbolic Learning for Long-Horizon Agentic Tasks",
+      "abstract": "Foundation model-driven agents often struggle with long-horizon planning due to the transient nature of purely prompting-based reasoning. While existing skill induction methods mitigate this by distilling experience into state-blind parameterized scripts, they fail to capture the conditional logic required for robust execution in dynamic environments. In this paper, we propose Neuro-Symbolic Skill Induction (NSI), a framework that lifts interaction traces into modular, \\textit{logic-grounded} programs. By synthesizing explicit control flows and dynamic variable binding, NSI empowers agents to discover \\textit{when} and \\textit{why} to act. This paradigm enables the efficient generalization, allowing agents to induce skills from few-shot examples and flexibly adapt to unseen goals. Experiments on a series of agentic tasks demonstrate that NSI consistently outperforms state-of-the-art baselines, empowering agents to self-evolve into architects of logic-grounded skills.",
+      "authors": [
+        "Jie-Jing Shao",
+        "Haiyan Yin",
+        "Yueming Lyu",
+        "Xingrui Yu",
+        "Lan-Zhe Guo",
+        "Ivor Tsang",
+        "James Kwok",
+        "Yu-Feng Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-02T07:06:01+00:00",
+      "link": "https://arxiv.org/pdf/2605.01293v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "skill induction for long-horizon agentic tasks",
+      "llm_evidence_cn": "长程智能体任务的技能归纳",
+      "llm_evidence": "长程智能体任务的技能归纳",
+      "canonical_evidence": "长程智能体任务的技能归纳",
+      "llm_tldr_en": "NSI is a neuro-symbolic framework that helps agents induce modular, logic-grounded programs for complex tasks.",
+      "llm_tldr_cn": "NSI是一个神经符号框架，帮助智能体为复杂任务归纳模块化的逻辑程序。",
+      "llm_tldr": "NSI是一个神经符号框架，帮助智能体为复杂任务归纳模块化的逻辑程序。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.04692v1",
+      "title": "Towards Lag Consensus with Noisy Digital Twins Perception in Second-order Multi-agent Cyber-physical Systems",
+      "abstract": "In this paper, we study second-order lag consensus in multi-agent cyber-physical networks subject to random noise and input failures, within a framework modeling the interactions and perceptions between physical twins and digital twins. We propose a lag consensus protocol and establish sufficient conditions for the mean-square (exponential) stability of the resulting stochastic lag error dynamics. The consensus criteria are derived via Lyapunov analysis using the Itô formula, ensuring robustness to random perturbations and intermittent input failures. Numerical examples illustrate the effectiveness of the proposed method.",
+      "authors": [
+        "Zhicheng Zhang",
+        "Fausto Lizzio",
+        "Zhongjun Ma",
+        "Masaaki Nagahara"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "nlin.AO"
+      ],
+      "published": "2026-05-06T09:43:43+00:00",
+      "link": "https://arxiv.org/pdf/2605.04692v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Lag consensus in multi-agent cyber-physical systems",
+      "llm_evidence_cn": "多智能体信息物理系统中的滞后一致性",
+      "llm_evidence": "多智能体信息物理系统中的滞后一致性",
+      "canonical_evidence": "多智能体信息物理系统中的滞后一致性",
+      "llm_tldr_en": "Studies consensus protocols for multi-agent systems under noise and input failures in cyber-physical networks.",
+      "llm_tldr_cn": "研究信息物理网络中存在噪声和输入故障时的多智能体系统一致性协议。",
+      "llm_tldr": "研究信息物理网络中存在噪声和输入故障时的多智能体系统一致性协议。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.02162v1",
+      "title": "AAFLOW: Scalable Patterns for Agentic AI Workflows",
+      "abstract": "Agentic workflows in large language model systems integrate retrieval, reasoning, and memory, but existing frameworks suffer from scalability and reproducibility limitations due to fragmented data orchestration, serialization overhead, and non-deterministic execution. Although these frameworks increase flexibility, they don't have a formal execution model that adheres to the principles of high-performance computing. We introduce AAFLOW, a unified distributed runtime that creates communication-efficient execution plans by modeling agentic workflows as an operator abstraction. Using Apache Arrow and Cylon, AAFLOW creates a zero-copy data plane that allows direct interoperability between preprocessing, embedding, and vector retrieval without the need for serialization overhead. To lower coordination costs, it uses resource-deterministic scheduling and asynchronous batching. While retaining comparable LLM generation throughput, experimental results demonstrate up to 4.64 times pipeline speedup and 2.8 times gains in embedding and upsert phases. Rather than LLM inference acceleration, these advantages result from enhanced data flow, batching, and communication efficiency.",
+      "authors": [
+        "Arup Kumar Sarker",
+        "Mills Staylor",
+        "Aymen Alsaadi",
+        "Gregor von Laszewski",
+        "Shantenu Jha",
+        "Geoffrey Fox"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.MA"
+      ],
+      "published": "2026-05-04T02:39:13+00:00",
+      "link": "https://arxiv.org/pdf/2605.02162v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "distributed runtime for agentic AI workflows",
+      "llm_evidence_cn": "智能体AI工作流的分布式运行时",
+      "llm_evidence": "智能体AI工作流的分布式运行时",
+      "canonical_evidence": "智能体AI工作流的分布式运行时",
+      "llm_tldr_en": "AAFLOW is a distributed runtime that optimizes communication and data orchestration for agentic workflows.",
+      "llm_tldr_cn": "AAFLOW是一个分布式运行时，优化了智能体工作流的通信和数据编排。",
+      "llm_tldr": "AAFLOW是一个分布式运行时，优化了智能体工作流的通信和数据编排。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.04939v1",
+      "title": "Modular Reinforcement Learning For Cooperative Swarms",
+      "abstract": "A cooperative robot swarm is a collective of computationally-limited robots that share a common goal. Each robot can only interact with a small subset of its peers, without knowing how this affects the collective utility. Recent advances in distributed multi-agent reinforcement learning have demonstrated that it is possible for robots to learn how to interact effectively with others, in a manner that is aligned with the common goal, despite each robot learning independently of others. However, this requires each robot to represent a potentially combinatorial number of interaction states, challenging the memory capabilities of the robots. This paper proposes an alternative approach for representing spatial interaction states for multi-robot reinforcement learning in swarms. A modular (decomposed) representation is used, where each feature of the state is handled by a separate learning procedure, and the results aggregated. We demonstrate the efficacy of the approach in numerous experiments with simulated robot swarms carrying out foraging.",
+      "authors": [
+        "Erel Shtossel",
+        "Gal A. Kaminka"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-05-06T14:05:36+00:00",
+      "link": "https://arxiv.org/pdf/2605.04939v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "distributed multi-agent reinforcement learning for robot swarms",
+      "llm_evidence_cn": "机器人集群的分布式多智能体强化学习",
+      "llm_evidence": "机器人集群的分布式多智能体强化学习",
+      "canonical_evidence": "机器人集群的分布式多智能体强化学习",
+      "llm_tldr_en": "This paper proposes a modular reinforcement learning approach for cooperative robot swarms with limited memory.",
+      "llm_tldr_cn": "本文提出了一种适用于内存受限的协作机器人集群的模块化强化学习方法。",
+      "llm_tldr": "本文提出了一种适用于内存受限的协作机器人集群的模块化强化学习方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.02681v1",
+      "title": "The Design and Composition of Structural Causal Decision Processes",
+      "abstract": "We present two new classes of causal models of decision-making agents. Our approach is motivated by the needs of modeling the economics of computing systems. These systems are composed of subsystems and can exhibit endogenous limits on cognitive resources and value discounting. Structural Causal Decision Models (SCDMs) expand on Structural Causal Influence Models. Like SCIMs, they explicitly represent the causal relationships between model variables and the payoffs of agent decisions. Additionally, agent decisions can be constrained by their causal antecedents, and SCDMs can have open root variables for which no probability distribution or structural equation is given. We show that SCDMs have a well-defined and computationally useful property of composability. Building on SCDMs, we then define a Structural Causal Decision Process (SCDP) as a recurring SCDM with a discount variable. SCDPs benefit from the useful composition properties of SCDMs. Moreover, SCDPs are strictly more expressive than POMDPs because they do not assume rational belief formation. Indeed, an SCDP can endogenously model the memory-formation process, and is thus useful for modeling resource rational agents in dynamic settings. SCDPs are also capable of modeling variable discounting, a tool used widely in social scientific modeling. We pose that SCDPs are a useful framework for policy simulation for the digital economy, mechanism design for information systems, and digital twin modeling of cyberinfrastructure.",
+      "authors": [
+        "Sebastian Benthall",
+        "Alan Lujan"
+      ],
+      "primary_category": "cs.CE",
+      "categories": [
+        "cs.CE",
+        "cs.AI",
+        "cs.GT",
+        "econ.TH"
+      ],
+      "published": "2026-05-04T15:00:32+00:00",
+      "link": "https://arxiv.org/pdf/2605.02681v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Causal models of decision-making agents in computing systems",
+      "llm_evidence_cn": "计算系统中决策智能体的因果模型",
+      "llm_evidence": "计算系统中决策智能体的因果模型",
+      "canonical_evidence": "计算系统中决策智能体的因果模型",
+      "llm_tldr_en": "Develops structural causal models for decision-making agents to represent relationships and payoffs.",
+      "llm_tldr_cn": "为决策智能体开发结构化因果模型，以显式表示因果关系与决策收益。",
+      "llm_tldr": "为决策智能体开发结构化因果模型，以显式表示因果关系与决策收益。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.05492v1",
+      "title": "MEMOA: Massive Mixtures of Online Agents via Mean-Field Decentralized Nash Equilibria",
+      "abstract": "In the modern age of large-scale AI, federated learning has become an increasingly important tool for training large populations of AI agents; however, its computational and communication costs can rapidly fail to scale with the number of agents. This is precisely where decentralized agentic strategies shine: each agent acts autonomously, using only its own state together with a minimal summary of the ensemble, namely the mean-field. We derive the unique optimal decentralized policy in closed form. Optimality is characterized through a worst-client/minimax criterion: minimizing the under-performer regret, namely the maximal online cost incurred by the weakest agent in the ensemble. We further prove that the resulting decentralized policy asymptotically converges, in the large-population limit, to the Nash-optimal centralized policy, whose direct computation is not scalable. We use an online weighting mechanism to optimize the server-computed mixture of client predictions, thereby improving the mean prediction in addition to the previously optimized weakest-client prediction. Numerical experiments verify our theoretical guarantees and demonstrate that our decentralized policy typically outperforms natural greedy decentralized baselines.",
+      "authors": [
+        "Xuwei Yang",
+        "David B. Emerson",
+        "Fatemeh Tavakoli",
+        "Anastasis Kratsios"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-06T22:26:59+00:00",
+      "link": "https://arxiv.org/pdf/2605.05492v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized agentic strategies for large populations",
+      "llm_evidence_cn": "大规模智能体群体的去中心化策略",
+      "llm_evidence": "大规模智能体群体的去中心化策略",
+      "canonical_evidence": "大规模智能体群体的去中心化策略",
+      "llm_tldr_en": "Derives optimal decentralized policies for massive agent ensembles using mean-field Nash equilibria.",
+      "llm_tldr_cn": "利用平均场纳什均衡推导大规模智能体群体的最优去中心化策略。",
+      "llm_tldr": "利用平均场纳什均衡推导大规模智能体群体的最优去中心化策略。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.03838v1",
+      "title": "TRACE: A Metrologically-Grounded Engineering Framework for Trustworthy Agentic AI Systems in Operationally Critical Domains",
+      "abstract": "We introduce TRACE, a cross-domain engineering framework for trustworthy agentic AI in operationally critical domains. TRACE combines a four-layer reference architecture with an explicit classical-ML vs. LLM-validator split (L2a/L2b), a stateful orchestration-and-escalation policy (L3), and bounded human supervision (L4); a metrologically grounded trust-metric suite mapped to GUM/VIM/ISO 17025; and a Model-Parsimony principle quantified by the Computational Parsimony Ratio (CPR). Three instantiations--clinical decision support, industrial multi-domain operations, and a judicial AI assistant--transfer the samearchitecture and metrics across principally different governance contexts. The L2a/L2b separation makes the use of large language models a deliberate design decision rather than an architectural default, with parsimony quantified through CPR. TRACE introduces CPR as a first-class design principle in trustworthy-AI engineering.",
+      "authors": [
+        "Serhii Zabolotnii"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.HC"
+      ],
+      "published": "2026-05-05T15:05:00+00:00",
+      "link": "https://arxiv.org/pdf/2605.03838v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "engineering framework for trustworthy agentic AI systems",
+      "llm_evidence_cn": "可信智能体AI系统的工程框架",
+      "llm_evidence": "可信智能体AI系统的工程框架",
+      "canonical_evidence": "可信智能体AI系统的工程框架",
+      "llm_tldr_en": "Introduces TRACE, a framework for building and measuring trust in multi-agent AI systems for critical domains.",
+      "llm_tldr_cn": "介绍了TRACE，一个用于在关键领域构建和衡量多智能体AI系统信任度的框架。",
+      "llm_tldr": "介绍了TRACE，一个用于在关键领域构建和衡量多智能体AI系统信任度的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.06056v1",
+      "title": "Multiagent Stochastic Shortest Path Problem",
+      "abstract": "We introduce and study the multi-agent stochastic shortest path (MSSP) problem, in which $k$ agents strive to reach a target state, aiming to minimize the expected time to reach the target by any agent. We analyze the computational and strategy-complexity of the problem in both autonomous and coordinated settings, and we design efficient strategy-synthesis algorithms. The algorithms are experimentally evaluated on instances of increasing size against natural baselines.",
+      "authors": [
+        "Martin Jonáš",
+        "Antonín Kučera",
+        "Vojtěch Kůr",
+        "Jan Mačák",
+        "Vojtěch Řehák"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-05-07T11:41:33+00:00",
+      "link": "https://arxiv.org/pdf/2605.06056v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent stochastic shortest path problem and strategy synthesis",
+      "llm_evidence_cn": "多智能体随机最短路径问题与策略合成",
+      "llm_evidence": "多智能体随机最短路径问题与策略合成",
+      "canonical_evidence": "多智能体随机最短路径问题与策略合成",
+      "llm_tldr_en": "Analyzes computational complexity and designs algorithms for multi-agent stochastic shortest path problems.",
+      "llm_tldr_cn": "研究多智能体随机最短路径问题，并设计了高效的策略合成算法。",
+      "llm_tldr": "研究多智能体随机最短路径问题，并设计了高效的策略合成算法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.04984v1",
+      "title": "Self-Induced Outcome Potential: Turn-Level Credit Assignment for Agents without Verifiers",
+      "abstract": "Long-horizon LLM agents depend on intermediate information-gathering turns, yet training feedback is usually observed only at the final answer, because process-level rewards require high-quality human annotation. Existing turn-level shaping methods reward turns that increase the likelihood of a gold answer, but they require answer supervision or stable task-specific verifiers. Conversely, label-free RL methods extract self-signals from output distributions, but mainly at the answer or trajectory level and therefore cannot assign credit to intermediate turns. We propose Self-Induced Outcome Potential (SIOP), which treats semantic clusters of final answers as latent future outcome states for potential-based turn-level credit assignment. For each query, SIOP samples multiple rollouts, clusters final answers into semantic outcome modes, and builds a reliability-aware target distribution over these states. It then rewards turns for increasing posterior support for reliable future states using a tractable cluster-level approximation. The objective generalizes information-potential shaping from gold-answer supervision to settings without task-specific gold verifiers while avoiding the broadcasted rollout-level advantages used by standard GRPO. We formalize the framework, characterize its supervised gold-answer limit, and show that SIOP improves average performance over verifier-free outcome-level baselines on seven search-augmented agentic reasoning benchmarks while approaching a gold-supervised outcome baseline. Code is available at https://github.com/dl-m9/SIOP.git.",
+      "authors": [
+        "Senkang Hu",
+        "Yong Dai",
+        "Xudong Han",
+        "Zhengru Fang",
+        "Yuzhi Zhao",
+        "Sam Tak Wu Kwong",
+        "Yuguang Fang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-05-06T14:38:48+00:00",
+      "link": "https://arxiv.org/pdf/2605.04984v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "turn-level credit assignment for LLM agents",
+      "llm_evidence_cn": "大语言模型智能体的轮次级信用分配",
+      "llm_evidence": "大语言模型智能体的轮次级信用分配",
+      "canonical_evidence": "大语言模型智能体的轮次级信用分配",
+      "llm_tldr_en": "Develops a label-free method for assigning credit to intermediate turns in long-horizon LLM agent tasks.",
+      "llm_tldr_cn": "为长程大模型智能体任务开发了一种无需标签的中间轮次信用分配方法。",
+      "llm_tldr": "为长程大模型智能体任务开发了一种无需标签的中间轮次信用分配方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.06202v1",
+      "title": "Bandit Learning in General Open Multi-agent Systems",
+      "abstract": "Recent developments in digital platforms have highlighted the prevalence of open systems, where agents can arrive and depart over time. While bandit learning in open systems has recently received initial attention, existing work imposes structural assumptions that are frequently violated in practice. A learning paradigm for general open systems creates fresh challenges: newly arriving agents induce endogenous non-stationarity; agent patterns determine how quickly information accumulates; and new agents make regret scale further with the time horizon. To this end, we formulate a unified open-system bandit problem with general dynamics, including heterogeneous rewards and general agent patterns. We introduce new concepts to capture the inherent complexities: the \\emph{pre-training degree} of new agents quantifies how much information an agent carries upon entry, \\emph{stability} measures the impact of new agents on the system, and \\emph{global dynamic regret} compares the cumulative expected reward of all active agents with that of the varying optimal arms. We develop certified global-UCB learning methodologies with provable guarantees. Our regret bounds reveal that entry uncertainty enters linearly via the pre-training degree, while in stable regimes, regret is governed by the time needed to identify a persistent optimal arm, as well as by the agent patterns. We further show that these dependencies are tight via lower bounds in hard instances.",
+      "authors": [
+        "Mengfan Xu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-05-07T13:10:24+00:00",
+      "link": "https://arxiv.org/pdf/2605.06202v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "bandit learning in open multi-agent systems",
+      "llm_evidence_cn": "开放式多智能体系统中的老虎机学习",
+      "llm_evidence": "开放式多智能体系统中的老虎机学习",
+      "canonical_evidence": "开放式多智能体系统中的老虎机学习",
+      "llm_tldr_en": "Formulates a bandit learning paradigm for open multi-agent systems with dynamic agent arrival and departure.",
+      "llm_tldr_cn": "为具有动态智能体加入和离开的开放式多智能体系统制定了老虎机学习范式。",
+      "llm_tldr": "为具有动态智能体加入和离开的开放式多智能体系统制定了老虎机学习范式。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

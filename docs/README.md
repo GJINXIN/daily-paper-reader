@@ -6,64 +6,64 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-09
-- 运行时间：2026-05-09 20:28:28 UTC
+- 最新运行日期：2026-05-10
+- 运行时间：2026-05-10 20:07:10 UTC
 - 运行状态：成功
 - 本次总论文数：14
 - 精读区：3
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度研读14篇前沿成果，聚焦AI引导群体合作的博弈机制与生成式模拟技术。
-重点关注LLM在维持社会性合作中的“大众定理”应用，以及生成式AI对多层级数据评估的效能提升。
-推荐关注LLM在小语种反虚假新闻及多智能体感官识别等垂直领域的落地潜力。
-- 详情：[/202605/09/README](/202605/09/README)
+今日聚焦多智能体系统（MAS）的深度进化，涵盖从算法编程自动化到复杂决策信息论建模的 14 篇前沿成果。
+核心突破在于利用 MAS 工作流高效解决编程难题，并引入 Blackwell 信息论优化多智能体决策的准确性。
+建议关注多智能体协作在数字孪生与群体控制中的应用，探索视觉语言好奇心如何驱动智能体自主探索。
+- 详情：[/202605/10/README](/202605/10/README)
 
 ### 精读区论文标签
-1. [Sustaining Cooperation in Populations Guided by AI: A Folk Theorem for LLMs](/202605/09/2605.06525v1-sustaining-cooperation-in-populations-guided-by-ai-a-folk-theorem-for-llms)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：大语言模型引导多智能体群体进行策略性社会互动
-2. [Generative AI-Based Monte Carlo Simulation for Method Evaluation Using Synthetic Multilevel Data](/202605/09/2605.05752v1-generative-ai-based-monte-carlo-simulation-for-method-evaluation-using-synthetic-multilevel-data)  
+1. [MAS-Algorithm: A Workflow for Solving Algorithmic Programming Problems with a Multi-Agent System](/202605/10/2605.05949v1-mas-algorithm-a-workflow-for-solving-algorithmic-programming-problems-with-a-multi-agent-system)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：用于社会科学模拟的合成多层数据
-3. [COVID-19 Infodemic. Understanding content features in detecting fake news using a machine learning approach](/202605/09/2605.06435v1-covid-19-infodemic-understanding-content-features-in-detecting-fake-news-using-a-machine-learning-approach)  
+   evidence：用于算法问题解决的系统化多智能体工作流
+2. [Multi-agent decision making: A Blackwell's informativeness approach](/202605/10/2605.06028v1-multi-agent-decision-making-a-blackwells-informativeness-approach)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：利用语言和内容特征进行虚假新闻检测
+   evidence：多智能体决策与多大模型聚合方法
+3. [Coordination Matters: Evaluation of Cooperative Multi-Agent Reinforcement Learning](/202605/10/2605.06557v1-coordination-matters-evaluation-of-cooperative-multi-agent-reinforcement-learning)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：协作式多智能体强化学习的评估
 
 ### 速读区论文标签
-1. [Addressing Data Scarcity in Bangla Fake News Detection: An LLM-Based Dataset Augmentation Approach](/202605/09/2605.01292v1-addressing-data-scarcity-in-bangla-fake-news-detection-an-llm-based-dataset-augmentation-approach)  
+1. [What You Think is What You See: Driving Exploration in VLM Agents via Visual-Linguistic Curiosity](/202605/10/2605.03782v1-what-you-think-is-what-you-see-driving-exploration-in-vlm-agents-via-visual-linguistic-curiosity)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于大语言模型的虚假新闻检测与数据增强
-2. [Distributed TD Tracking with Linear Function Approximation over Directed Communication Networks](/202605/09/2605.04466v1-distributed-td-tracking-with-linear-function-approximation-over-directed-communication-networks)  
+   evidence：视觉语言模型智能体通过推理模拟世界模型
+2. [Towards Lag Consensus with Noisy Digital Twins Perception in Second-order Multi-agent Cyber-physical Systems](/202605/10/2605.04692v1-towards-lag-consensus-with-noisy-digital-twins-perception-in-second-order-multi-agent-cyber-physical-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：通信网络上的多智能体强化学习
-3. [SensingAgents: A Multi-Agent Collaborative Framework for Robust IMU Activity Recognition](/202605/09/2605.04608v1-sensingagents-a-multi-agent-collaborative-framework-for-robust-imu-activity-recognition)  
+   evidence：多智能体信息物理系统中的滞后一致性
+3. [Modular Reinforcement Learning For Cooperative Swarms](/202605/10/2605.04939v1-modular-reinforcement-learning-for-cooperative-swarms)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体协作传感器分析系统
-4. [Evolving Idea Graphs with Learnable Edits-and-Commits for Multi-Agent Scientific Ideation](/202605/09/2605.04922v1-evolving-idea-graphs-with-learnable-edits-and-commits-for-multi-agent-scientific-ideation)  
+   evidence：机器人集群的分布式多智能体强化学习
+4. [MEMOA: Massive Mixtures of Online Agents via Mean-Field Decentralized Nash Equilibria](/202605/10/2605.05492v1-memoa-massive-mixtures-of-online-agents-via-mean-field-decentralized-nash-equilibria)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于图的多智能体科学构思框架
-5. [Uno-Orchestra: Parsimonious Agent Routing via Selective Delegation](/202605/09/2605.05007v1-uno-orchestra-parsimonious-agent-routing-via-selective-delegation)  
+   evidence：大规模智能体群体的去中心化策略
+5. [Multiagent Stochastic Shortest Path Problem](/202605/10/2605.06056v1-multiagent-stochastic-shortest-path-problem)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：大语言模型多智能体系统编排与任务分解
-6. [Graph-SND: Sparse Aggregation for Behavioral Diversity in Multi-Agent Reinforcement Learning](/202605/09/2605.05020v1-graph-snd-sparse-aggregation-for-behavioral-diversity-in-multi-agent-reinforcement-learning)  
+   evidence：多智能体随机最短路径问题与策略合成
+6. [Bandit Learning in General Open Multi-agent Systems](/202605/10/2605.06202v1-bandit-learning-in-general-open-multi-agent-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体强化学习中的行为多样性
-7. [AgentFloor: How Far Up the tool use Ladder Can Small Open-Weight Models Go?](/202605/09/2605.00334v1-agentfloor-how-far-up-the-tool-use-ladder-can-small-open-weight-models-go)  
+   evidence：开放式多智能体系统中的老虎机学习
+7. [Lifting Traces to Logic: Programmatic Skill Induction with Neuro-Symbolic Learning for Long-Horizon Agentic Tasks](/202605/10/2605.01293v1-lifting-traces-to-logic-programmatic-skill-induction-with-neuro-symbolic-learning-for-long-horizon-agentic-tasks)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体系统中的多步协作
-8. [Position: agentic AI orchestration should be Bayes-consistent](/202605/09/2605.00742v2-position-agentic-ai-orchestration-should-be-bayes-consistent)  
+   evidence：长程智能体任务的技能归纳
+8. [AAFLOW: Scalable Patterns for Agentic AI Workflows](/202605/10/2605.02162v1-aaflow-scalable-patterns-for-agentic-ai-workflows)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体AI编排的贝叶斯原则
-9. [Quality-Aware Exploration Budget Allocation for Cooperative Multi-Agent Reinforcement Learning](/202605/09/2605.01865v1-quality-aware-exploration-budget-allocation-for-cooperative-multi-agent-reinforcement-learning)  
+   evidence：智能体AI工作流的分布式运行时
+9. [The Design and Composition of Structural Causal Decision Processes](/202605/10/2605.02681v1-the-design-and-composition-of-structural-causal-decision-processes)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：协作式多智能体强化学习
-10. [Robust Agent Compensation (RAC): Teaching AI Agents to Compensate](/202605/09/2605.03409v1-robust-agent-compensation-rac-teaching-ai-agents-to-compensate)  
+   evidence：计算系统中决策智能体的因果模型
+10. [TRACE: A Metrologically-Grounded Engineering Framework for Trustworthy Agentic AI Systems in Operationally Critical Domains](/202605/10/2605.03838v1-trace-a-metrologically-grounded-engineering-framework-for-trustworthy-agentic-ai-systems-in-operationally-critical-domains)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体框架中可靠执行的恢复范式
-11. [An Agent-Oriented Pluggable Experience-RAG Skill for Experience-Driven Retrieval Strategy Orchestration](/202605/09/2605.03989v2-an-agent-oriented-pluggable-experience-rag-skill-for-experience-driven-retrieval-strategy-orchestration)  
+   evidence：可信智能体AI系统的工程框架
+11. [Self-Induced Outcome Potential: Turn-Level Credit Assignment for Agents without Verifiers](/202605/10/2605.04984v1-self-induced-outcome-potential-turn-level-credit-assignment-for-agents-without-verifiers)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：面向智能体的异构任务检索策略编排
+   evidence：大语言模型智能体的轮次级信用分配
 
 
 <div class="dpr-home-promo-card">
