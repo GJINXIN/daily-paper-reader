@@ -1,6 +1,174 @@
 {
-  "generated_at": "2026-05-11T20:59:47.513692+00:00",
-  "updated_date": "20260511",
+  "generated_at": "2026-05-12T20:18:19.080327+00:00",
+  "updated_date": "20260512",
   "carryover_days": 9,
-  "items": []
+  "items": [
+    {
+      "id": "2605.09826v1",
+      "title": "EnactToM: An Evolving Benchmark for Functional Theory of Mind in Embodied Agents",
+      "abstract": "Theory of Mind (ToM), the ability to track others epistemic state, makes humans efficient collaborators. AI agents need the same capacity in multi agent settings, yet existing benchmarks mostly test literal ToM by asking direct belief questions. The ability act optimally on implicit beliefs in embodied environments, called functional ToM, remains largely untested. We introduce EnactToM, an evolving benchmark of 300 embodied multi-agent tasks set in a 3D household with partial observability, private information, and constrained communication. Each task is formally verified for solvability and required epistemic depth, and new tasks are generated increase difficulty as models improve. On the hard split, all seven evaluated frontier models score 0.0% Pass^3 on functional task completion, while averaging 45.0% on literal belief probes. Manual analysis traces 93% of sampled failures to epistemic coordination breakdowns such as withheld information, ignored partner constraints, and misallocated messages, providing a concrete target for future work.",
+      "authors": [
+        "Gurusha Juneja",
+        "Dylan Lu",
+        "Saaket Agashe",
+        "Parth Diwane",
+        "Edward Gunn",
+        "Jayanth Srinivasa",
+        "Gaowen Liu",
+        "William Yang Wang",
+        "Yali Du",
+        "Xin Eric Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-05-11T00:04:19+00:00",
+      "link": "https://arxiv.org/pdf/2605.09826v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent tasks with epistemic depth and theory of mind",
+      "llm_evidence_cn": "具有认知深度和心理理论的多智能体任务",
+      "llm_evidence": "具有认知深度和心理理论的多智能体任务",
+      "canonical_evidence": "具有认知深度和心理理论的多智能体任务",
+      "llm_tldr_en": "Introduces a benchmark for functional Theory of Mind in embodied multi-agent environments.",
+      "llm_tldr_cn": "引入了一个具身多智能体环境中功能性心理理论的评估基准。",
+      "llm_tldr": "引入了一个具身多智能体环境中功能性心理理论的评估基准。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.09826v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2605.09076v1",
+      "title": "Robust Multi-Agent LLMs under Byzantine Faults",
+      "abstract": "Large language model (LLM) agents increasingly collaborate over peer-to-peer networks to improve their reliability. However, these same interactions can also become a source of vulnerability, as unreliable or Byzantine agents may sway neighboring agents toward incorrect conclusions and degrade overall system performance. Existing methods rely on leader-based coordination or self-reported confidence, both of which are susceptible to adversarial manipulation. We study decentralized LLM multi-agent systems (LLM-MAS) and propose Self-Anchored Consensus (SAC), a fully decentralized iterative filter-and-refine protocol in which agents iteratively exchange responses, locally evaluate and filter unreliable messages, and refine their own outputs. We present $(F{+}1)$-robustness conditions for the communication graph that ensure honest agents preserve and propagate reliable information despite Byzantine influence. Experiments on mathematical and commonsense reasoning benchmarks show that SAC effectively suppresses Byzantine influence and consistently improves performance across diverse communication topologies, whereas prior methods degrade under adversarial conditions.",
+      "authors": [
+        "Haejoon Lee",
+        "Vincent-Daniel Yun",
+        "Hyeonho Oh",
+        "Dimitra Panagou",
+        "Sai Praneeth Karimireddy"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-05-09T17:37:43+00:00",
+      "link": "https://arxiv.org/pdf/2605.09076v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "robustness in decentralized multi-agent systems",
+      "llm_evidence_cn": "去中心化多智能体系统的鲁棒性",
+      "llm_evidence": "去中心化多智能体系统的鲁棒性",
+      "canonical_evidence": "去中心化多智能体系统的鲁棒性",
+      "llm_tldr_en": "Introduces a decentralized protocol to ensure consensus and reliability in multi-agent LLM networks.",
+      "llm_tldr_cn": "引入一种去中心化协议，确保多智能体大模型网络中的共识与可靠性。",
+      "llm_tldr": "引入一种去中心化协议，确保多智能体大模型网络中的共识与可靠性。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.09076v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2605.09539v1",
+      "title": "TacoMAS: Test-Time Co-Evolution of Topology and Capability in LLM-based Multi-Agent Systems",
+      "abstract": "Multi-agent systems (MAS) have emerged as a promising paradigm for solving complex tasks. Recent work has explored self-evolving MAS that automatically optimize agent capabilities or communication topologies. However, existing methods either learn a topology that remains fixed at inference time or adapt only the topology or capability during inference. We empirically and theoretically show that effective test-time evolution requires jointly adapting both axes, but on different time scales: capabilities should update rapidly to handle emerging subtasks, while the topology should evolve more slowly to preserve coordination stability. We then introduce TacoMAS, a test-time co-evolution framework for dynamic MAS. TacoMAS formulates MAS inference as a task of online graph adaptation, where nodes represent agents with role-specific capabilities and edges define their communication topology. During inference, a fast capability loop updates agent expertise using trajectory-level feedback, while a slow meta-LLM-driven topology loop performs agents' birth-death operations on MAS, including edge edit, agent addition, and agent removal. We further show that this fast-slow design drives MAS evolution toward a task-conditioned stable equilibrium. Experiments on four benchmarks demonstrate that TacoMAS outperforms nearly 20 multi-agent baselines, achieving an average improvement of 13.3% over the strongest baseline. The codes are released at https://github.com/chenxu2-gif/TacoMAS-MultiAgent.",
+      "authors": [
+        "Chen Xu",
+        "Yicheng Hu",
+        "Ruizi Wang",
+        "Xinyu Lin",
+        "Wenjie Wang",
+        "Dongrui Liu",
+        "Fuli Feng"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-10T13:52:00+00:00",
+      "link": "https://arxiv.org/pdf/2605.09539v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "test-time evolution in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统的测试时演化",
+      "llm_evidence": "多智能体系统的测试时演化",
+      "canonical_evidence": "多智能体系统的测试时演化",
+      "llm_tldr_en": "Presents a framework for co-evolving agent capabilities and communication topologies in MAS.",
+      "llm_tldr_cn": "提出一个在多智能体系统中协同演化智能体能力和通信拓扑的框架。",
+      "llm_tldr": "提出一个在多智能体系统中协同演化智能体能力和通信拓扑的框架。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "recent advances in multi agent social simulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.09539v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2605.10365v1",
+      "title": "Agent-ValueBench: A Comprehensive Benchmark for Evaluating Agent Values",
+      "abstract": "Autonomous agents have rapidly matured as task executors and seen widespread deployment via harnesses such as OpenClaw. Safety concerns have rightly drawn growing research attention, and beneath them lie the values silently steering agent behavior. Existing value benchmarks, however, remain confined to LLMs, leaving agent values largely uncharted. From intuitive, empirical, and theoretical vantage points, we show that an agent's values diverge from those of its underlying LLM, and the agentic modality further introduces dataset-, evaluation-, and system-level challenges absent from text-only protocols. We close this gap with Agent-ValueBench, the first benchmark dedicated to agent values. It features 394 executable environments across 16 domains, offering 4,335 value-conflict tasks that cover 28 value systems and 332 dimensions. Every instance is co-synthesized through our purpose-built end-to-end pipeline and curated per-instance by professional psychologists. Each task ships with two pole-aligned golden trajectories whose checkpoints anchor a trajectory-level rubric-based judge. Benchmarking 14 frontier proprietary and open-weights models across 4 mainstream harnesses, we uncover three concerted findings. Agent values first manifest as a Value Tide of cross-model homogeneity beneath interpretable counter-currents. This tide bends non-additively under harness pull, and yet more decisively under deliberate steering via embedded skills. Together these results signal that the agent-alignment lever is shifting from classical model alignment and prompt steering toward harness alignment and skill steering.",
+      "authors": [
+        "Haonan Dong",
+        "Qiguan Feng",
+        "Kehan Jiang",
+        "Haoran Ye",
+        "Xin Zhang",
+        "Guojie Song"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-11T11:09:04+00:00",
+      "link": "https://arxiv.org/pdf/2605.10365v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "benchmark for evaluating values steering agent behavior",
+      "llm_evidence_cn": "评估引导智能体行为的价值观的基准",
+      "llm_evidence": "评估引导智能体行为的价值观的基准",
+      "canonical_evidence": "评估引导智能体行为的价值观的基准",
+      "llm_tldr_en": "Introduces a comprehensive benchmark to evaluate the underlying values that steer autonomous agent behavior.",
+      "llm_tldr_cn": "引入了一个全面的基准，用于评估引导自主智能体行为的底层价值观。",
+      "llm_tldr": "引入了一个全面的基准，用于评估引导自主智能体行为的底层价值观。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.10365v1",
+      "carry_days": 1
+    }
+  ]
 }
