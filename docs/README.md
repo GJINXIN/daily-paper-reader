@@ -6,88 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-12
-- 运行时间：2026-05-12 20:20:47 UTC
+- 最新运行日期：2026-05-13
+- 运行时间：2026-05-13 20:29:10 UTC
 - 运行状态：成功
-- 本次总论文数：22
-- 精读区：11
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日聚焦多智能体社会系统，深度解析 AI 行为逻辑与社会理论的融合。
-满分论文揭示了将社会理论作为 AI 结构先验的重要性，并剖析了人格与护栏如何决定社交网络中的 AI 表现。
-建议优先研读 AI 协作中的亲社会性设计与安全防御，以应对多智能体环境下的潜在内部攻击。
-- 详情：[/202605/12/README](/202605/12/README)
+今日聚焦多智能体系统（MAS）前沿，深度解析 17 篇关于 AI 社会化建模与安全防御的最新研究。
+重点推荐将社会理论引入 AI 架构的创新框架，以及针对社交网络中 AI 行为决定因素的多维度分析。
+建议普通读者关注 AI 智能体如何从“单打独斗”转向具备社会常识与安全约束的群体协作。
+- 详情：[/202605/13/README](/202605/13/README)
 
 ### 精读区论文标签
-1. [Social Theory Should Be a Structural Prior for Agentic AI: A Formal Framework for Multi-Agent Social Systems](/202605/12/2605.07069v2-social-theory-should-be-a-structural-prior-for-agentic-ai-a-formal-framework-for-multi-agent-social-systems)  
+1. [Social Theory Should Be a Structural Prior for Agentic AI: A Formal Framework for Multi-Agent Social Systems](/202605/13/2605.07069v3-social-theory-should-be-a-structural-prior-for-agentic-ai-a-formal-framework-for-multi-agent-social-systems)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：多智能体社会系统与涌现动态的正式框架
-2. [Behavioral Determinants of Deployed AI Agents in Social Networks: A Multi-Factor Study of Personality, Model, and Guardrail Specification](/202605/12/2605.08463v1-behavioral-determinants-of-deployed-ai-agents-in-social-networks-a-multi-factor-study-of-personality-model-and-guardrail-specification)  
+   evidence：多智能体社会系统形式化框架与涌现动力学
+2. [Behavioral Determinants of Deployed AI Agents in Social Networks: A Multi-Factor Study of Personality, Model, and Guardrail Specification](/202605/13/2605.08463v2-behavioral-determinants-of-deployed-ai-agents-in-social-networks-a-multi-factor-study-of-personality-model-and-guardrail-specification)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：在类Reddit社交网络中部署LLM智能体研究社交行为
-3. [Strategic Exploitation in LLM Agent Markets: A Simulation Framework for E-Commerce Trust](/202605/12/2605.10059v1-strategic-exploitation-in-llm-agent-markets-a-simulation-framework-for-e-commerce-trust)  
+   evidence：部署在社交网络中的大模型智能体以研究涌现行为
+3. [Attributing Emergence in Million-Agent Systems](/202605/13/2605.11404v1-attributing-emergence-in-million-agent-systems)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：用于电子商务社交和经济模拟的大模型智能体
-4. [Mitigating Misalignment Contagion by Steering with Implicit Traits](/202605/12/2605.02751v2-mitigating-misalignment-contagion-by-steering-with-implicit-traits)  
+   evidence：百万级智能体系统中的涌现归因
+4. [Towards multi-modal forgery representation learning for AI-generated video detection and localization](/202605/13/2605.07232v1-towards-multi-modal-forgery-representation-learning-for-ai-generated-video-detection-and-localization)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体社会困境博弈中的失调传染
-5. [Too Many Specialists: Emergent Inefficiencies and Bottlenecks for Multi-agent Ad-hoc Collaboration](/202605/12/2605.08540v1-too-many-specialists-emergent-inefficiencies-and-bottlenecks-for-multi-agent-ad-hoc-collaboration)  
+   evidence：AI生成视频检测与定位
+5. [EVOCHAMBER: Test-Time Co-evolution of Multi-Agent System at Individual, Team, and Population Scales](/202605/13/2605.11136v1-evochamber-test-time-co-evolution-of-multi-agent-system-at-individual-team-and-population-scales)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体协作中的涌现低效现象
-6. [Modeling Decision-Making with Will for Cooperation in Social Dilemmas](/202605/12/2605.08669v1-modeling-decision-making-with-will-for-cooperation-in-social-dilemmas)  
+   evidence：多智能体测试时演化中的涌现分化现象
+6. [Beyond Inefficiency: Systemic Costs of Incivility in Multi-Agent Monte Carlo Simulations](/202605/13/2605.11789v1-beyond-inefficiency-systemic-costs-of-incivility-in-multi-agent-monte-carlo-simulations)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：社会困境中的涌现合作行为
-7. [Internal vs. External: Comparing Deliberation and Evolution for Multi-Agent Constitutional Design](/202605/12/2605.09128v1-internal-vs-external-comparing-deliberation-and-evolution-for-multi-agent-constitutional-design)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体系统中的涌现规则与社会环境
-8. [Emergent Communication for Co-constructed Emotion Between Embodied Agents via Collective Predictive Coding](/202605/12/2605.09522v1-emergent-communication-for-co-constructed-emotion-between-embodied-agents-via-collective-predictive-coding)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：智能体之间的涌现通信和共享理解
-9. [AgentGR: Semantic-aware Agentic Group Decision-Making Simulator for Group Recommendation](/202605/12/2605.10367v1-agentgr-semantic-aware-agentic-group-decision-making-simulator-for-group-recommendation)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于大语言模型驱动的智能体进行社交平台人类行为模拟
-10. [The Bystander Effect in Multi-Agent Reasoning: Quantifying Cognitive Loafing in Collaborative Interactions](/202605/12/2605.10698v1-the-bystander-effect-in-multi-agent-reasoning-quantifying-cognitive-loafing-in-collaborative-interactions)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：大模型智能体中的模拟社会压力与旁观者效应
-11. [Conformity Generates Collective Misalignment in AI Agents Societies](/202605/12/2605.10721v1-conformity-generates-collective-misalignment-in-ai-agents-societies)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：模拟AI智能体社会中的观点动态和集体失调
+   evidence：基于LLM的多智能体系统作为受控社会学沙盒
 
 ### 速读区论文标签
-1. [Insider Attacks in Multi-Agent LLM Consensus Systems](/202605/12/2605.08268v1-insider-attacks-in-multi-agent-llm-consensus-systems)  
+1. [Robust Multi-Agent LLMs under Byzantine Faults](/202605/13/2605.09076v1-robust-multi-agent-llms-under-byzantine-faults)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体共识中的内部攻击与对抗行为
-2. [SACHI: Structured Agent Coordination via Holistic Information Integration in Multi-Agent Reinforcement Learning](/202605/12/2605.08391v1-sachi-structured-agent-coordination-via-holistic-information-integration-in-multi-agent-reinforcement-learning)  
+   evidence：去中心化大语言模型多智能体系统
+2. [Safe Multi-Agent Behavior Must Be Maintained, Not Merely Asserted: Constraint Drift in LLM-Based Multi-Agent Systems](/202605/13/2605.10481v1-safe-multi-agent-behavior-must-be-maintained-not-merely-asserted-constraint-drift-in-llm-based-multi-agent-systems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体强化学习中的结构化智能体协作
-3. [Mechanism Design Is Not Enough: Prosocial Agents for Cooperative AI](/202605/12/2605.08426v1-mechanism-design-is-not-enough-prosocial-agents-for-cooperative-ai)  
+   evidence：基于大语言模型的多智能体系统安全性
+3. [Control Charts for Multi-agent Systems](/202605/13/2605.11135v1-control-charts-for-multi-agent-systems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：大语言模型智能体的社会福利与亲社会行为
-4. [AgentCollabBench: Diagnosing When Good Agents Make Bad Collaborators](/202605/12/2605.08647v1-agentcollabbench-diagnosing-when-good-agents-make-bad-collaborators)  
+   evidence：监控开放式多智能体系统的动态
+4. [Controllable User Simulation](/202605/13/2605.11519v1-controllable-user-simulation)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统中的社会压力与错误信念传播
-5. [Rethinking Experience Utilization in Self-Evolving Language Model Agents](/202605/12/2605.07164v1-rethinking-experience-utilization-in-self-evolving-language-model-agents)  
+   evidence：使用大模型进行可控用户仿真以进行评估
+5. [The Reciprocity Gradient](/202605/13/2605.08323v1-the-reciprocity-gradient)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：自我进化语言模型智能体的经验利用
-6. [DRIP-R: A Benchmark for Decision-Making and Reasoning Under Real-World Policy Ambiguity in the Retail Domain](/202605/12/2605.07699v1-drip-r-a-benchmark-for-decision-making-and-reasoning-under-real-world-policy-ambiguity-in-the-retail-domain)  
+   evidence：策略性互动中的互惠与合作
+6. [Iterative Critique-and-Routing Controller for Multi-Agent Systems with Heterogeneous LLMs](/202605/13/2605.08686v1-iterative-critique-and-routing-controller-for-multi-agent-systems-with-heterogeneous-llms)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：基于大语言模型智能体和人格的对话模拟
-7. [AIPO: : Learning to Reason from Active Interaction](/202605/12/2605.08401v1-aipo--learning-to-reason-from-active-interaction)  
+   evidence：异构大模型多智能体协作
+7. [AgentPSO: Evolving Agent Reasoning Skill via Multi-agent Particle Swarm Optimization](/202605/13/2605.08704v1-agentpso-evolving-agent-reasoning-skill-via-multi-agent-particle-swarm-optimization)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于大模型推理的主动多智能体交互
-8. [When Child Inherits: Modeling and Exploiting Subagent Spawn in Multi-Agent Networks](/202605/12/2605.08460v1-when-child-inherits-modeling-and-exploiting-subagent-spawn-in-multi-agent-networks)  
+   evidence：通过多智能体粒子群优化演化推理技能
+8. [EvoMAS: Learning Execution-Time Workflows for Multi-Agent Systems](/202605/13/2605.08769v1-evomas-learning-execution-time-workflows-for-multi-agent-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体网络中的安全风险
-9. [Knowledge-Graph Paths as Intermediate Supervision for Self-Evolving Search Agents](/202605/12/2605.05702v1-knowledge-graph-paths-as-intermediate-supervision-for-self-evolving-search-agents)  
+   evidence：执行时多智能体工作流构建
+9. [Recursive Agent Optimization](/202605/13/2605.06639v1-recursive-agent-optimization)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多步搜索与推理智能体
-10. [Optimizing Social Utility in Sequential Experiments](/202605/12/2605.06520v1-optimizing-social-utility-in-sequential-experiments)  
+   evidence：用于子任务委派的递归智能体优化
+10. [Generalization Bounds of Emergent Communications for Agentic AI Networking](/202605/13/2605.08613v1-generalization-bounds-of-emergent-communications-for-agentic-ai-networking)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：在实验中为社会效用建模智能体策略
-11. [HMACE: Heterogeneous Multi-Agent Collaborative Evolution for Combinatorial Optimization](/202605/12/2605.07214v1-hmace-heterogeneous-multi-agent-collaborative-evolution-for-combinatorial-optimization)  
+   evidence：代理AI网络中的涌现通信
+11. [Beyond the All-in-One Agent: Benchmarking Role-Specialized Multi-Agent Collaboration in Enterprise Workflows](/202605/13/2605.08761v1-beyond-the-all-in-one-agent-benchmarking-role-specialized-multi-agent-collaboration-in-enterprise-workflows)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：异构多智能体协作进化
+   evidence：角色专业化多智能体协作基准
 
 
 <div class="dpr-home-promo-card">
