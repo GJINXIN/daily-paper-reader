@@ -6,73 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-13
-- 运行时间：2026-05-13 20:29:10 UTC
+- 最新运行日期：2026-05-14
+- 运行时间：2026-05-14 20:47:50 UTC
 - 运行状态：成功
 - 本次总论文数：17
 - 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日聚焦多智能体系统（MAS）前沿，深度解析 17 篇关于 AI 社会化建模与安全防御的最新研究。
-重点推荐将社会理论引入 AI 架构的创新框架，以及针对社交网络中 AI 行为决定因素的多维度分析。
-建议普通读者关注 AI 智能体如何从“单打独斗”转向具备社会常识与安全约束的群体协作。
-- 详情：[/202605/13/README](/202605/13/README)
+今日深度解析 17 篇多智能体前沿进展，重点攻克生成式模拟的机制合理性与认知动力学建模。
+满分论文 ScioMind 揭示了认知锚定在社会模拟中的关键作用，而 AgentSlimming 等新作则展示了 MAS 在效能与成本间的极致平衡。
+建议优先研读两篇满分论文，掌握构建具备高可信度认知动力学且能协同演化的智能体系统核心方法。
+- 详情：[/202605/14/README](/202605/14/README)
 
 ### 精读区论文标签
-1. [Social Theory Should Be a Structural Prior for Agentic AI: A Formal Framework for Multi-Agent Social Systems](/202605/13/2605.07069v3-social-theory-should-be-a-structural-prior-for-agentic-ai-a-formal-framework-for-multi-agent-social-systems)  
+1. [Mechanism Plausibility in Generative Agent-Based Modeling](/202605/14/2605.12824v1-mechanism-plausibility-in-generative-agent-based-modeling)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：多智能体社会系统形式化框架与涌现动力学
-2. [Behavioral Determinants of Deployed AI Agents in Social Networks: A Multi-Factor Study of Personality, Model, and Guardrail Specification](/202605/13/2605.08463v2-behavioral-determinants-of-deployed-ai-agents-in-social-networks-a-multi-factor-study-of-personality-model-and-guardrail-specification)  
+   evidence：用于社交模拟和社交媒体人类行为的大语言模型
+2. [ScioMind: Cognitively Grounded Multi-Agent Social Simulation with Anchoring-Based Belief Dynamics and Dynamic Profiles](/202605/14/2605.13725v1-sciomind-cognitively-grounded-multi-agent-social-simulation-with-anchoring-based-belief-dynamics-and-dynamic-profiles)  
    标签：评分：10.0/10、query:mas-ss
-   evidence：部署在社交网络中的大模型智能体以研究涌现行为
-3. [Attributing Emergence in Million-Agent Systems](/202605/13/2605.11404v1-attributing-emergence-in-million-agent-systems)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：百万级智能体系统中的涌现归因
-4. [Towards multi-modal forgery representation learning for AI-generated video detection and localization](/202605/13/2605.07232v1-towards-multi-modal-forgery-representation-learning-for-ai-generated-video-detection-and-localization)  
+   evidence：基于大模型的多智能体社会舆论动力学模拟
+3. [Beyond Seeing Is Believing: On Crowdsourced Detection of Audiovisual Deepfakes](/202605/14/2605.04797v1-beyond-seeing-is-believing-on-crowdsourced-detection-of-audiovisual-deepfakes)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：AI生成视频检测与定位
-5. [EVOCHAMBER: Test-Time Co-evolution of Multi-Agent System at Individual, Team, and Population Scales](/202605/13/2605.11136v1-evochamber-test-time-co-evolution-of-multi-agent-system-at-individual-team-and-population-scales)  
+   evidence：在虚假信息背景下检测视听深度伪造
+4. [BEHAVE: A Hybrid AI Framework for Real-Time Modeling of Collective Human Dynamics](/202605/14/2605.12730v1-behave-a-hybrid-ai-framework-for-real-time-modeling-of-collective-human-dynamics)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体测试时演化中的涌现分化现象
-6. [Beyond Inefficiency: Systemic Costs of Incivility in Multi-Agent Monte Carlo Simulations](/202605/13/2605.11789v1-beyond-inefficiency-systemic-costs-of-incivility-in-multi-agent-monte-carlo-simulations)  
+   evidence：模拟集体人类动态与涌现的社会现象
+5. [Beyond Cooperative Simulators: Generating Realistic User Personas for Robust Evaluation of LLM Agents](/202605/14/2605.12894v1-beyond-cooperative-simulators-generating-realistic-user-personas-for-robust-evaluation-of-llm-agents)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：基于LLM的多智能体系统作为受控社会学沙盒
+   evidence：用于智能体评估的基于 LLM 的用户模拟器
+6. [When Do LLMs Generate Realistic Social Networks? A Multi-Dimensional Study of Culture, Language, Scale, and Method](/202605/14/2605.12898v1-when-do-llms-generate-realistic-social-networks-a-multi-dimensional-study-of-culture-language-scale-and-method)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：大模型作为行为模拟中人类受试者的替代品
 
 ### 速读区论文标签
-1. [Robust Multi-Agent LLMs under Byzantine Faults](/202605/13/2605.09076v1-robust-multi-agent-llms-under-byzantine-faults)  
+1. [AgentSlimming: Towards Efficient and Cost-Aware Multi-Agent Systems](/202605/14/2605.08813v1-agentslimming-towards-efficient-and-cost-aware-multi-agent-systems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：去中心化大语言模型多智能体系统
-2. [Safe Multi-Agent Behavior Must Be Maintained, Not Merely Asserted: Constraint Drift in LLM-Based Multi-Agent Systems](/202605/13/2605.10481v1-safe-multi-agent-behavior-must-be-maintained-not-merely-asserted-constraint-drift-in-llm-based-multi-agent-systems)  
+   evidence：高效且具备成本意识的多智能体系统
+2. [SkillMAS: Skill Co-Evolution with LLM-based Multi-Agent System](/202605/14/2605.09341v1-skillmas-skill-co-evolution-with-llm-based-multi-agent-system)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：基于大语言模型的多智能体系统安全性
-3. [Control Charts for Multi-agent Systems](/202605/13/2605.11135v1-control-charts-for-multi-agent-systems)  
+   evidence：多智能体系统中的自适应专业化与重构
+3. [TacoMAS: Test-Time Co-Evolution of Topology and Capability in LLM-based Multi-Agent Systems](/202605/14/2605.09539v1-tacomas-test-time-co-evolution-of-topology-and-capability-in-llm-based-multi-agent-systems)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：监控开放式多智能体系统的动态
-4. [Controllable User Simulation](/202605/13/2605.11519v1-controllable-user-simulation)  
+   evidence：基于大语言模型的多智能体系统测试时协同演化
+4. [EnactToM: An Evolving Benchmark for Functional Theory of Mind in Embodied Agents](/202605/14/2605.09826v1-enacttom-an-evolving-benchmark-for-functional-theory-of-mind-in-embodied-agents)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：使用大模型进行可控用户仿真以进行评估
-5. [The Reciprocity Gradient](/202605/13/2605.08323v1-the-reciprocity-gradient)  
+   evidence：多智能体具身环境中的心理理论
+5. [CalBench: Evaluating Coordination-Privacy Trade-offs in Multi-Agent LLMs](/202605/14/2605.09823v1-calbench-evaluating-coordination-privacy-trade-offs-in-multi-agent-llms)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：策略性互动中的互惠与合作
-6. [Iterative Critique-and-Routing Controller for Multi-Agent Systems with Heterogeneous LLMs](/202605/13/2605.08686v1-iterative-critique-and-routing-controller-for-multi-agent-systems-with-heterogeneous-llms)  
+   evidence：通过日历调度的多智能体协作
+6. [RADAR: Redundancy-Aware Diffusion for Multi-Agent Communication Structure Generation](/202605/14/2605.09907v1-radar-redundancy-aware-diffusion-for-multi-agent-communication-structure-generation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：异构大模型多智能体协作
-7. [AgentPSO: Evolving Agent Reasoning Skill via Multi-agent Particle Swarm Optimization](/202605/13/2605.08704v1-agentpso-evolving-agent-reasoning-skill-via-multi-agent-particle-swarm-optimization)  
+   evidence：多智能体通信结构生成
+7. [Priority-Driven Control and Communication in Decentralized Multi-Agent Systems via Reinforcement Learning](/202605/14/2605.10482v2-priority-driven-control-and-communication-in-decentralized-multi-agent-systems-via-reinforcement-learning)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：通过多智能体粒子群优化演化推理技能
-8. [EvoMAS: Learning Execution-Time Workflows for Multi-Agent Systems](/202605/13/2605.08769v1-evomas-learning-execution-time-workflows-for-multi-agent-systems)  
+   evidence：去中心化多智能体系统与通信控制
+8. [LLM-X: A Scalable Negotiation-Oriented Exchange for Communication Among Personal LLM Agents](/202605/14/2605.11376v1-llm-x-a-scalable-negotiation-oriented-exchange-for-communication-among-personal-llm-agents)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：执行时多智能体工作流构建
-9. [Recursive Agent Optimization](/202605/13/2605.06639v1-recursive-agent-optimization)  
+   evidence：个人智能体群体间的通信
+9. [Agentick: A Unified Benchmark for General Sequential Decision-Making Agents](/202605/14/2605.06869v2-agentick-a-unified-benchmark-for-general-sequential-decision-making-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于子任务委派的递归智能体优化
-10. [Generalization Bounds of Emergent Communications for Agentic AI Networking](/202605/13/2605.08613v1-generalization-bounds-of-emergent-communications-for-agentic-ai-networking)  
+   evidence：通用顺序决策智能体的基准
+10. [Priority-Driven Control and Communication in Decentralized Multi-Agent Systems via Reinforcement Learning](/202605/14/2605.10482v1-priority-driven-control-and-communication-in-decentralized-multi-agent-systems-via-reinforcement-learning)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：代理AI网络中的涌现通信
-11. [Beyond the All-in-One Agent: Benchmarking Role-Specialized Multi-Agent Collaboration in Enterprise Workflows](/202605/13/2605.08761v1-beyond-the-all-in-one-agent-benchmarking-role-specialized-multi-agent-collaboration-in-enterprise-workflows)  
+   evidence：去中心化多智能体控制与通信
+11. [OLIVIA: Online Learning via Inference-time Action Adaptation for Decision Making in LLM ReAct Agents](/202605/14/2605.11169v1-olivia-online-learning-via-inference-time-action-adaptation-for-decision-making-in-llm-react-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：角色专业化多智能体协作基准
+   evidence：LLM ReAct 智能体的决策制定
 
 
 <div class="dpr-home-promo-card">
