@@ -6,73 +6,61 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-15
-- 运行时间：2026-05-15 20:16:13 UTC
+- 最新运行日期：2026-05-16
+- 运行时间：2026-05-16 19:50:36 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：13
+- 精读区：2
 - 速读区：11
 
 ### 今日简报（AI）
-今日深度研读 17 篇 AI 论文，聚焦大模型在复杂对话意图识别与社会价值对齐领域的关键进展。
-核心结论指出，通过多轮对话能有效揭示隐藏意图，且智能体正实现从描述性到规范性价值对齐的跨越。
-建议普通读者关注多智能体协作中的价值基准测试，以理解 AI 如何在复杂社会规则下实现自我进化。
-- 详情：[/202605/15/README](/202605/15/README)
+深度复盘 13 篇 AI 前沿进展，聚焦多模态事实核查的证据链构建与多智能体通信拓扑的预测图谱。
+重点推荐 RW-Post 框架，它通过可审计证据实现了野外环境下的多模态事实核查，同时多智能体推理拓扑研究为 LLM 协作提供了全新的后继表示视角。
+建议关注博弈论在多智能体记忆校准中的应用，并思考 AI 不平等背景下集体网络安全的战略应对。
+- 详情：[/202605/16/README](/202605/16/README)
 
 ### 精读区论文标签
-1. [Moltbook Moderation: Uncovering Hidden Intent Through Multi-Turn Dialogue](/202605/15/2605.12856v1-moltbook-moderation-uncovering-hidden-intent-through-multi-turn-dialogue)  
+1. [RW-Post: Auditable Evidence-Grounded Multimodal Fact-Checking in the Wild](/202605/16/2605.10357v1-rw-post-auditable-evidence-grounded-multimodal-fact-checking-in-the-wild)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：多智能体社交社区中的审核与意图检测
-2. [From Descriptive to Prescriptive: Uncover the Social Value Alignment of LLM-based Agents](/202605/15/2605.14034v1-from-descriptive-to-prescriptive-uncover-the-social-value-alignment-of-llm-based-agents)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：引导大模型智能体与人类社会价值观对齐
-3. [GroupMemBench: Benchmarking LLM Agent Memory in Multi-Party Conversations](/202605/15/2605.14498v1-groupmembench-benchmarking-llm-agent-memory-in-multi-party-conversations)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：多方社交对话中大模型智能体记忆的基准测试
-4. [AI Knows When It's Being Watched: Functional Strategic Action and Contextual Register Modulation in Large Language Models](/202605/15/2605.15034v1-ai-knows-when-its-being-watched-functional-strategic-action-and-contextual-register-modulation-in-large-language-models)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：社会结构背景下的LLM多智能体系统
-5. [Embodied Multi-Agent Coordination by Aligning World Models Through Dialogue](/202605/15/2605.12920v1-embodied-multi-agent-coordination-by-aligning-world-models-through-dialogue)  
+   evidence：社交媒体帖子的多模态事实核查
+2. [Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies](/202605/16/2605.11453v2-predictive-maps-of-multi-agent-reasoning-a-successor-representation-spectrum-for-llm-communication-topologies)  
    标签：评分：8.0/10、query:mas-ss
-   evidence：基于大语言模型的具身智能体通过对话对齐世界模型
-6. [SimPersona: Learning Discrete Buyer Personas from Raw Clickstreams for Grounded E-Commerce Agents](/202605/15/2605.14205v1-simpersona-learning-discrete-buyer-personas-from-raw-clickstreams-for-grounded-e-commerce-agents)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：捕获异构买家群体的LLM Web智能体
+   evidence：多智能体大模型通信拓扑与推理
 
 ### 速读区论文标签
-1. [Agent-ValueBench: A Comprehensive Benchmark for Evaluating Agent Values](/202605/15/2605.10365v1-agent-valuebench-a-comprehensive-benchmark-for-evaluating-agent-values)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：评估多智能体系统中自主智能体价值观的基准
-2. [Moltbook Moderation: Uncovering Hidden Intent Through Multi-Turn Dialogue](/202605/15/2605.12856v2-moltbook-moderation-uncovering-hidden-intent-through-multi-turn-dialogue)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体系统监管与有害内容检测
-3. [Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems](/202605/15/2605.14892v1-beyond-individual-intelligence-surveying-collaboration-failure-attribution-and-self-evolution-in-llm-based-multi-agent-systems)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：调研基于大语言模型的多智能体系统协作
-4. [Swarm Skills: A Portable, Self-Evolving Multi-Agent System Specification for Coordination Engineering](/202605/15/2605.10052v1-swarm-skills-a-portable-self-evolving-multi-agent-system-specification-for-coordination-engineering)  
+1. [EquiMem: Calibrating Shared Memory in Multi-Agent Debate via Game-Theoretic Equilibrium](/202605/16/2605.09278v1-equimem-calibrating-shared-memory-in-multi-agent-debate-via-game-theoretic-equilibrium)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：便携式自进化多智能体系统规范
-5. [Coordinated Diffusion: Generating Multi-Agent Behavior Without Multi-Agent Demonstrations](/202605/15/2605.11485v1-coordinated-diffusion-generating-multi-agent-behavior-without-multi-agent-demonstrations)  
+   evidence：多智能体辩论与共享内存校准
+2. [Strategic commitments shape collective cybersecurity under AI inequality](/202605/16/2605.09415v2-strategic-commitments-shape-collective-cybersecurity-under-ai-inequality)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：通过扩散策略生成多智能体行为
-6. [Shaping Zero-Shot Coordination via State Blocking](/202605/15/2605.11688v1-shaping-zero-shot-coordination-via-state-blocking)  
+   evidence：有限群体集体行为的演化博弈论模型
+3. [Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies](/202605/16/2605.11453v1-predictive-maps-of-multi-agent-reasoning-a-successor-representation-spectrum-for-llm-communication-topologies)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体系统中的零样本协同
-7. [No Action Without a NOD: A Heterogeneous Multi-Agent Architecture for Reliable Service Agents](/202605/15/2605.12240v1-no-action-without-a-nod-a-heterogeneous-multi-agent-architecture-for-reliable-service-agents)  
+   evidence：多智能体大模型通信拓扑与推理
+4. [RecRM-Bench: Benchmarking Multidimensional Reward Modeling for Agentic Recommender Systems](/202605/16/2605.11874v1-recrm-bench-benchmarking-multidimensional-reward-modeling-for-agentic-recommender-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：用于服务智能体的异构多智能体架构
-8. [Events as Triggers for Behavioral Diversity in Multi-Agent Reinforcement Learning](/202605/15/2605.12388v1-events-as-triggers-for-behavioral-diversity-in-multi-agent-reinforcement-learning)  
+   evidence：智能体推荐系统与多维奖励建模
+5. [Predicting Decisions of AI Agents from Limited Interaction through Text-Tabular Modeling](/202605/16/2605.12411v1-predicting-decisions-of-ai-agents-from-limited-interaction-through-text-tabular-modeling)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体强化学习中的行为多样性与转换
-9. [Agentick: A Unified Benchmark for General Sequential Decision-Making Agents](/202605/15/2605.06869v1-agentick-a-unified-benchmark-for-general-sequential-decision-making-agents)  
+   evidence：在多智能体交互中预测AI智能体的决策
+6. [Reinforced Collaboration in Multi-Agent Flow Networks](/202605/16/2605.12943v1-reinforced-collaboration-in-multi-agent-flow-networks)  
+   标签：评分：7.0/10、query:mas-ss
+   evidence：优化多智能体协作与工作流
+7. [Trustworthy AI: Ensuring Reliability and Accountability from Models to Agents](/202605/16/2605.08964v1-trustworthy-ai-ensuring-reliability-and-accountability-from-models-to-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：通用顺序决策智能体基准测试
-10. [AgentDisCo: Towards Disentanglement and Collaboration in Open-ended Deep Research Agents](/202605/15/2605.11732v1-agentdisco-towards-disentanglement-and-collaboration-in-open-ended-deep-research-agents)  
+   evidence：在自主设置中评估LLM驱动的智能体并确保问责制
+8. [PRISM: Pareto-Efficient Retrieval over Intent-Aware Structured Memory for Long-Horizon Agents](/202605/16/2605.12260v1-prism-pareto-efficient-retrieval-over-intent-aware-structured-memory-for-long-horizon-agents)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于深度研究的协作智能体架构
-11. [Events as Triggers for Behavioral Diversity in Multi-Agent Reinforcement Learning](/202605/15/2605.12388v2-events-as-triggers-for-behavioral-diversity-in-multi-agent-reinforcement-learning)  
+   evidence：用于长程多智能体交互历史的结构化记忆
+9. [Position: Agentic AI System Is a Foreseeable Pathway to AGI](/202605/16/2605.12966v1-position-agentic-ai-system-is-a-foreseeable-pathway-to-agi)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：多智能体强化学习中的行为多样性
+   evidence：智能体AI与多智能体框架处理复杂任务
+10. [Hierarchical Attacks for Multi-Modal Multi-Agent Reasoning](/202605/16/2605.13213v1-hierarchical-attacks-for-multi-modal-multi-agent-reasoning)  
+   标签：评分：6.0/10、query:mas-ss
+   evidence：多模态多智能体系统的分层攻击研究
+11. [Speculative Interaction Agents: Building Real-Time Agents with Asynchronous I/O and Speculative Tool Calling](/202605/16/2605.13360v2-speculative-interaction-agents-building-real-time-agents-with-asynchronous-io-and-speculative-tool-calling)  
+   标签：评分：6.0/10、query:mas-ss
+   evidence：实时智能体工作流与工具调用
 
 
 <div class="dpr-home-promo-card">

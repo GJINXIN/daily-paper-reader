@@ -1,0 +1,521 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-16T19:48:59.581712+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 18,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2605.10357v1",
+      "title": "RW-Post: Auditable Evidence-Grounded Multimodal Fact-Checking in the Wild",
+      "abstract": "Multimodal misinformation increasingly leverages visual persuasion, where repurposed or manipulated images strengthen misleading text. We introduce \\textbf{RW-Post}, a post-aligned \\textbf{text--image benchmark} for real-world multimodal fact-checking with \\emph{auditable} annotations: each instance links the original social-media post with reasoning traces and explicitly linked evidence items derived from human fact-check articles via an LLM-assisted extraction-and-auditing pipeline. RW-Post supports controlled evaluation across closed-book, evidence-bounded, and open-web regimes, enabling systematic diagnosis of visual grounding and evidence utilization. We provide \\textbf{AgentFact} as a reference verification baseline and benchmark strong open-source LVLMs under unified protocols. Experiments show substantial headroom: current models struggle with faithful evidence grounding, while evidence-bounded evaluation improves both accuracy and faithfulness. Code and dataset will be released at https://github.com/xudanni0927/AgentFact.",
+      "authors": [
+        "Danni Xu",
+        "Shaojing Fan",
+        "Harry Cheng",
+        "Mohan Kankanhalli"
+      ],
+      "primary_category": "cs.MM",
+      "categories": [
+        "cs.MM",
+        "cs.AI"
+      ],
+      "published": "2026-05-11T11:04:04+00:00",
+      "link": "https://arxiv.org/pdf/2605.10357v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multimodal fact-checking for social media posts",
+      "llm_evidence_cn": "社交媒体帖子的多模态事实核查",
+      "llm_evidence": "社交媒体帖子的多模态事实核查",
+      "canonical_evidence": "社交媒体帖子的多模态事实核查",
+      "llm_tldr_en": "Introduces a benchmark and agent-based baseline for auditable multimodal fact-checking of social media content.",
+      "llm_tldr_cn": "引入了一个基准和基于智能体的基准线，用于对社交媒体内容进行可审计的多模态事实核查。",
+      "llm_tldr": "引入了一个基准和基于智能体的基准线，用于对社交媒体内容进行可审计的多模态事实核查。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Short Video Fake News Detection",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.11453v2",
+      "title": "Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies",
+      "abstract": "Practitioners deploying multi-agent large language model (LLM) systems must currently choose between communication topologies such as chain, star, mesh, and richer variants without any pre-inference diagnostic for which topology will amplify drift, converge to consensus, or remain robust under perturbation. Existing evaluation answers these questions only post hoc and only for the task measured. We introduce a structural diagnostic for multi-agent LLM communication graphs based on the successor representation $M = (I - γP)^{-1}$ of the row-stochastic communication operator, and we connect three of its spectral quantities, the spectral radius $ρ(M)$, the spectral gap $Δ(M)$, and the condition number $κ(M)$, to three distinct failure modes. We derive closed-form spectra for the chain, star, and mesh under row-stochastic normalization, and validate the predictions on a 12-step structured state-tracking task with Qwen2.5-7B-Instruct over 100 independent trials. The condition number is a perfect rank-order predictor of empirical perturbation robustness ($r_s = 1.0$); the spectral gap partially predicts consensus dynamics ($r_s = 0.5$); and the spectral radius is perfectly \\emph{inverted} with respect to cumulative error ($r_s = -1.0$). We trace this inversion to a regime in which linear spectra are blind to non-contracting bias drift, and we propose an affine-noise extension of the predictive map that recovers the empirical ordering. We read this as a first step toward representational, drift-aware structural diagnostics for multi-agent LLM systems, sitting alongside classical spectral and consensus theory.",
+      "authors": [
+        "Ethan Parks",
+        "Dalal Alharthi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.LG",
+        "cs.SI",
+        "math.SP"
+      ],
+      "published": "2026-05-12T03:11:39+00:00",
+      "link": "https://arxiv.org/pdf/2605.11453v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent LLM communication topologies and reasoning",
+      "llm_evidence_cn": "多智能体大模型通信拓扑与推理",
+      "llm_evidence": "多智能体大模型通信拓扑与推理",
+      "canonical_evidence": "多智能体大模型通信拓扑与推理",
+      "llm_tldr_en": "Introduces a structural diagnostic for multi-agent LLM communication graphs using successor representations.",
+      "llm_tldr_cn": "引入了一种基于后继表示的多智能体大模型通信图结构诊断方法。",
+      "llm_tldr": "引入了一种基于后继表示的多智能体大模型通信图结构诊断方法。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.09278v1",
+      "title": "EquiMem: Calibrating Shared Memory in Multi-Agent Debate via Game-Theoretic Equilibrium",
+      "abstract": "Multi-agent debate (MAD) systems increasingly rely on shared memory to support long-horizon reasoning, but this convenience opens a critical vulnerability: a single corrupted entry can contaminate the downstream memory-augmented reasoning, and debate alone fails to filter such errors. Existing safeguards filter entries via heuristics or LLM-based validation, yet they rely on AI judgments that share the same failure modes and overlook the cross-agent dynamics of MAD. We address this gap by formulating memory updating in MAD as a zero-trust memory game, in which no agent is assumed honest and the game's equilibrium serves as an indicator of optimal memory trust. Guided by this equilibrium, we propose EquiMem, an inference-time calibration mechanism that quantifies each update algorithmically against the shared memory state, using agents' existing retrieval queries and traversal paths as evidence rather than soliciting any LLM judgment. EquiMem instantiates calibration for both embedding- and graph-based memory, and across diverse benchmarks, MAD frameworks, and memory architectures, it consistently outperforms existing safeguards, remains robust under adversarial agents, and incurs negligible inference overhead.",
+      "authors": [
+        "Yuqiao Meng",
+        "Sakshi Sunil Narvekar",
+        "Luoxi Tang",
+        "Rupali Rajendra Vaje",
+        "Yingxue Zhang",
+        "Muchao Ye",
+        "Zhaohan Xi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-10T03:04:12+00:00",
+      "link": "https://arxiv.org/pdf/2605.09278v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent debate and shared memory calibration",
+      "llm_evidence_cn": "多智能体辩论与共享内存校准",
+      "llm_evidence": "多智能体辩论与共享内存校准",
+      "canonical_evidence": "多智能体辩论与共享内存校准",
+      "llm_tldr_en": "Uses game-theoretic equilibrium to calibrate shared memory and prevent error propagation in multi-agent debates.",
+      "llm_tldr_cn": "利用博弈论均衡校准共享内存，防止多智能体辩论中的错误传播。",
+      "llm_tldr": "利用博弈论均衡校准共享内存，防止多智能体辩论中的错误传播。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.08964v1",
+      "title": "Trustworthy AI: Ensuring Reliability and Accountability from Models to Agents",
+      "abstract": "In this thesis, we develop algorithms with theoretical guarantees for ensuring reliability and accountability of Machine Learning (ML) systems. As ML systems evolve from predictive models to generative models and autonomous agents, the landscape of trustworthy AI has shifted. This thesis introduces tools grounded in information theory, optimization, and statistical learning to mitigate bias, reduce arbitrary decisions, ensure content provenance, and evaluate LLM-driven agents in autonomous settings. Towards mitigating bias and arbitrariness in traditional ML models, we introduce a kernel-based method to achieve multiaccuracy across complex subpopulations that traditional demographic categories may overlook. We also develop methods to address predictive multiplicity, where equally accurate models yield conflicting individual predictions. We ensure the accountability in generative AI through watermarking large language models (LLMs). We characterize the information-theoretic trade-off between watermark detection and text distortion and derive optimal watermarking strategies by leveraging optimal transport and coding theory. Empirical evaluations show our watermarks achieve a superior detection-quality tradeoff across language generation and coding tasks. Finally, we evaluate autonomous LLM agents in multi-agent environments through the first simulator of a fully LLM-driven supply chain. LLM agents offer significant performance gains, outperforming human teams and reducing costs by up to 67%, but also introduce systemic risks, including costly tail events.",
+      "authors": [
+        "Carol Xuan Long"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-09T14:11:36+00:00",
+      "link": "https://arxiv.org/pdf/2605.08964v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evaluating LLM-driven agents in autonomous settings and ensuring accountability",
+      "llm_evidence_cn": "在自主设置中评估LLM驱动的智能体并确保问责制",
+      "llm_evidence": "在自主设置中评估LLM驱动的智能体并确保问责制",
+      "canonical_evidence": "在自主设置中评估LLM驱动的智能体并确保问责制",
+      "llm_tldr_en": "Develops algorithms for reliable and accountable ML systems, including evaluations for LLM-driven autonomous agents.",
+      "llm_tldr_cn": "开发确保机器学习系统可靠性和问责制的算法，包括对LLM驱动的自主智能体的评估。",
+      "llm_tldr": "开发确保机器学习系统可靠性和问责制的算法，包括对LLM驱动的自主智能体的评估。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.09415v2",
+      "title": "Strategic commitments shape collective cybersecurity under AI inequality",
+      "abstract": "The growing integration of AI into cybersecurity is reshaping the balance between attackers and defenders. When access to advanced AI-enabled defence tools is uneven, resource-limited defenders may be unable to adopt effective protection, creating persistent system vulnerabilities. We study the impact of differential AI access using an evolutionary game-theoretic model in a finite population. We first show that when high-capability defence is costly, the population is driven toward low-cost, weak-defence behaviour, sustaining attacks and weakening long-run security. To address this problem, we introduce differential access to AI defence tools by allowing defenders to choose between low- and high-capability protection based on their resources. We then examine the role of a small group of committed defenders who always adopt strong defence and influence others through social learning. Although commitment increases the prevalence of strong defence, it alone cannot stabilise secure outcomes due to high defence costs. We therefore incorporate a targeted subsidy to remove the cost disadvantage from committed defenders. Our analysis shows that subsidised commitment significantly increases strong defence adoption, suppresses successful attacks, and improves overall system resilience. Simulations across a broad parameter space confirm that subsidies consistently outperform commitment alone. In addition, social-welfare analysis shows improved defender outcomes while keeping attacker gains low. These findings suggest that targeted support for key defenders can be an effective mechanism for stabilising cybersecurity in AI-driven environments and provide a theoretical bridge between cybersecurity policy, AI governance, and strategic allocation of defensive AI capabilities.",
+      "authors": [
+        "Adeela Bashir",
+        "Zia Ush Shamszaman",
+        "Zhao Song",
+        "Matjaz Perc",
+        "The Anh Han"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-10T08:34:51+00:00",
+      "link": "https://arxiv.org/pdf/2605.09415v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "evolutionary game-theoretic model for collective behavior in finite populations",
+      "llm_evidence_cn": "有限群体集体行为的演化博弈论模型",
+      "llm_evidence": "有限群体集体行为的演化博弈论模型",
+      "canonical_evidence": "有限群体集体行为的演化博弈论模型",
+      "llm_tldr_en": "Uses evolutionary game theory to study how AI inequality affects collective cybersecurity and emergent defense behavior.",
+      "llm_tldr_cn": "利用演化博弈论研究AI不平等如何影响集体网络安全及涌现的防御行为。",
+      "llm_tldr": "利用演化博弈论研究AI不平等如何影响集体网络安全及涌现的防御行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.12260v1",
+      "title": "PRISM: Pareto-Efficient Retrieval over Intent-Aware Structured Memory for Long-Horizon Agents",
+      "abstract": "Long-horizon language agents accumulate conversation history far faster than any fixed context window can hold, making memory management critical to both answer accuracy and serving cost. Existing approaches either expand the context window without addressing what is retrieved, perform heavy ingestion-time fact extraction at substantial token cost, or rely on heuristic graph traversal that leaves both accuracy and efficiency on the table. We present PRISM, a training-free retrieval-side framework that treats long-horizon memory as a joint retrieval-and-compression problem over a graph-structured memory. PRISM combines four orthogonal inference-time components: Hierarchical Bundle Search over typed relation paths, Query-Sensitive Edge Costing that aligns traversal with detected query intent, Evidence Compression that compresses the candidate bundle into a compact answer-side context, and Adaptive Intent Routing that routes most queries through zero-LLM tiers. By formulating retrieval as min-cost selection over typed path templates and pairing it with an LLM-side compression step, PRISM surfaces the right evidence under a strict context budget without any fine-tuning or modification to the upstream ingestion pipeline. Experiments on the LoCoMo benchmark show that PRISM delivers substantially higher LLM-judge accuracy than every same-protocol baseline at an order-of-magnitude smaller context budget, occupying a previously empty corner of the accuracy-context-cost frontier and demonstrating a superior balance between answer quality and retrieval efficiency.",
+      "authors": [
+        "Jingyi Peng",
+        "Zhongwei Wan",
+        "Weiting Liu",
+        "Qiuzhuang Sun"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-12T15:28:30+00:00",
+      "link": "https://arxiv.org/pdf/2605.12260v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "structured memory for long-horizon multi-agent interaction history",
+      "llm_evidence_cn": "用于长程多智能体交互历史的结构化记忆",
+      "llm_evidence": "用于长程多智能体交互历史的结构化记忆",
+      "canonical_evidence": "用于长程多智能体交互历史的结构化记忆",
+      "llm_tldr_en": "Presents a Pareto-efficient retrieval framework for managing long-horizon memory in language agents.",
+      "llm_tldr_cn": "提出一种帕累托效率检索框架，用于管理语言智能体的长程记忆。",
+      "llm_tldr": "提出一种帕累托效率检索框架，用于管理语言智能体的长程记忆。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.11453v1",
+      "title": "Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies",
+      "abstract": "Practitioners deploying multi-agent large language model (LLM) systems must currently choose between communication topologies such as chain, star, mesh, and richer variants without any pre-inference diagnostic for which topology will amplify drift, converge to consensus, or remain robust under perturbation. Existing evaluation answers these questions only post hoc and only for the task measured. We introduce a structural diagnostic for multi-agent LLM communication graphs based on the successor representation $M = (I - γP)^{-1}$ of the row-stochastic communication operator, and we connect three of its spectral quantities, the spectral radius $ρ(M)$, the spectral gap $Δ(M)$, and the condition number $κ(M)$, to three distinct failure modes. We derive closed-form spectra for the chain, star, and mesh under row-stochastic normalization, and validate the predictions on a 12-step structured state-tracking task with Qwen2.5-7B-Instruct over 100 independent trials. The condition number is a perfect rank-order predictor of empirical perturbation robustness ($r_s = 1.0$); the spectral gap partially predicts consensus dynamics ($r_s = 0.5$); and the spectral radius is perfectly \\emph{inverted} with respect to cumulative error ($r_s = -1.0$). We trace this inversion to a regime in which linear spectra are blind to non-contracting bias drift, and we propose an affine-noise extension of the predictive map that recovers the empirical ordering. We read this as a first step toward representational, drift-aware structural diagnostics for multi-agent LLM systems, sitting alongside classical spectral and consensus theory.",
+      "authors": [
+        "Ethan David James Park",
+        "Dalal Alharthi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.LG",
+        "cs.SI",
+        "math.SP"
+      ],
+      "published": "2026-05-12T03:11:39+00:00",
+      "link": "https://arxiv.org/pdf/2605.11453v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent LLM communication topologies and reasoning",
+      "llm_evidence_cn": "多智能体大模型通信拓扑与推理",
+      "llm_evidence": "多智能体大模型通信拓扑与推理",
+      "canonical_evidence": "多智能体大模型通信拓扑与推理",
+      "llm_tldr_en": "Introduces a structural diagnostic for multi-agent LLM communication graphs using spectral analysis.",
+      "llm_tldr_cn": "引入结构化诊断工具，利用谱分析评估多智能体大模型系统的通信拓扑。",
+      "llm_tldr": "引入结构化诊断工具，利用谱分析评估多智能体大模型系统的通信拓扑。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.12966v1",
+      "title": "Position: Agentic AI System Is a Foreseeable Pathway to AGI",
+      "abstract": "Is monolithic scaling the only path to AGI? This paper challenges the dogma that purely scaling a single model is sufficient to achieve Artificial General Intelligence. Instead, we identify Agentic AI as a necessary paradigm for mastering the complex, heterogeneous distribution of real-world tasks. Through rigorous theoretical derivations, we contrast the optimization constraints of monolithic learners against the efficiency of Agentic systems, progressing from simple routing mechanisms to general Directed Acyclic Graph (DAG) topologies. We demonstrate that Agentic AI achieves exponentially superior generalization and sample efficiency. Finally, we discuss the connection to Mixture-of-Experts, reinterpret the instability of current multi-agent frameworks, and call for greater research focus on Agentic AI.",
+      "authors": [
+        "Junwei Liao",
+        "Shuai Li",
+        "Muning Wen",
+        "Jun Wang",
+        "Weinan Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-13T04:00:43+00:00",
+      "link": "https://arxiv.org/pdf/2605.12966v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agentic AI and multi-agent frameworks for complex tasks",
+      "llm_evidence_cn": "智能体AI与多智能体框架处理复杂任务",
+      "llm_evidence": "智能体AI与多智能体框架处理复杂任务",
+      "canonical_evidence": "智能体AI与多智能体框架处理复杂任务",
+      "llm_tldr_en": "Argues that Agentic AI systems are a superior pathway to AGI compared to monolithic scaling.",
+      "llm_tldr_cn": "论证了智能体AI系统是实现通用人工智能（AGI）的优选路径。",
+      "llm_tldr": "论证了智能体AI系统是实现通用人工智能（AGI）的优选路径。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.11874v1",
+      "title": "RecRM-Bench: Benchmarking Multidimensional Reward Modeling for Agentic Recommender Systems",
+      "abstract": "The integration of Large Language Model (LLM) agents is transforming recommender systems from simple query-item matching towards deeply personalized and interactive recommendations. Reinforcement Learning (RL) provides an essential framework for the optimization of these agents in recommendation tasks. However, current methodologies remain limited by a reliance on single dimensional outcome-based rewards that focus exclusively on final user interactions, overlooking critical intermediate capabilities, such as instruction following and complex intent understanding. Despite the necessity for designing multi-dimensional reward, the field lacks a standardized benchmark to facilitate this development. To bridge this gap, we introduce RecRM-Bench, the largest and most comprehensive benchmark to date for agentic recommender systems. It comprises over 1 million structured entries across four core evaluation dimensions: instruction following, factual consistency, query-item relevance, and fine-grained user behavior prediction. By supporting comprehensive assessment from syntactic compliance to complex intent grounding and preference modeling, RecRM-Bench provides a foundational dataset for training sophisticated reward models. Furthermore, we propose a systematic framework for the construction of multi-dimensional reward models and the integration of a hybrid reward function, establishing a robust foundation for developing reliable and highly capable agentic recommender systems. The complete RecRM-Bench dataset is publicly available at https://huggingface.co/datasets/wwzeng/RecRM-Bench.",
+      "authors": [
+        "Wenwen Zeng",
+        "Jinhui Zhang",
+        "Hao Chen",
+        "Zhaoyu Hu",
+        "Yongqi Liang",
+        "Jiajun Chai",
+        "Dengcan Liu",
+        "Zhenfeng Liu",
+        "Shurui Yan",
+        "Minglong Xue",
+        "Xiaohan Wang",
+        "Wei Lin",
+        "Guojun Yin"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-05-12T09:52:21+00:00",
+      "link": "https://arxiv.org/pdf/2605.11874v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "agentic recommender systems and multi-dimensional reward modeling",
+      "llm_evidence_cn": "智能体推荐系统与多维奖励建模",
+      "llm_evidence": "智能体推荐系统与多维奖励建模",
+      "canonical_evidence": "智能体推荐系统与多维奖励建模",
+      "llm_tldr_en": "Benchmarks multi-dimensional rewards for optimizing agentic recommender systems.",
+      "llm_tldr_cn": "为优化智能体推荐系统，提出了一个多维度奖励建模的基准测试。",
+      "llm_tldr": "为优化智能体推荐系统，提出了一个多维度奖励建模的基准测试。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.13213v1",
+      "title": "Hierarchical Attacks for Multi-Modal Multi-Agent Reasoning",
+      "abstract": "Multi-modal multi-agent systems (MM-MAS) have gained increasing attention for their capacity to enable complex reasoning and coordination across diverse modalities. As these systems continue to expand in scale and functionality, investigating their potential vulnerabilities has become increasingly important. However, existing studies on adversarial attacks in multi-agent systems primarily focus on isolated agents or unimodal settings, leaving the vulnerabilities of MM-MAS largely underexplored. To bridge this gap, we introduce HAM$^{3}$, a Hierarchical Attack framework for multi-modal multi-agent systems that decomposes attacks into three interconnected layers. Specifically, at the perception layer, HAM$^{3}$ mounts attacks by perturbing visual inputs, textual inputs, and their fused visual-textual representations. At the communication layer, it performs communication-level attacks that corrupt message content and interaction topology, such as manipulating shared context or communication links to distort collective information flow. At the reasoning layer, it conducts reasoning-level attacks that interfere with each agent's cognitive pipeline, biasing reasoning trajectories and ultimately compromising final decisions. We evaluate HAM$^{3}$ on the GQA benchmark through multi-agent systems built on distinct reasoning paradigms including ReAct, Plan-and-Solve, and Reflexion. Experiments demonstrate that our framework achieves an Attack Success Rate of up to 78.3%, with reasoning-layer attacks being the most effective. More than half of the successful attacks lead multiple agents to produce consistent errors. These findings offer valuable insights for building more robust and interpretable multi-agent intelligence.",
+      "authors": [
+        "Hao Zhou",
+        "Tiru Wu",
+        "Yan Jiang",
+        "Wanqi Zhou",
+        "Junxing Hu",
+        "Ai Han"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-13T09:06:21+00:00",
+      "link": "https://arxiv.org/pdf/2605.13213v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Hierarchical attacks on multi-modal multi-agent systems",
+      "llm_evidence_cn": "多模态多智能体系统的分层攻击研究",
+      "llm_evidence": "多模态多智能体系统的分层攻击研究",
+      "canonical_evidence": "多模态多智能体系统的分层攻击研究",
+      "llm_tldr_en": "Investigates vulnerabilities in multi-modal multi-agent systems through a hierarchical attack framework.",
+      "llm_tldr_cn": "提出HAM3框架，探索多模态多智能体系统在感知、推理和协作层的漏洞。",
+      "llm_tldr": "提出HAM3框架，探索多模态多智能体系统在感知、推理和协作层的漏洞。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.12411v1",
+      "title": "Predicting Decisions of AI Agents from Limited Interaction through Text-Tabular Modeling",
+      "abstract": "AI agents negotiate and transact in natural language with unfamiliar counterparts: a buyer bot facing an unknown seller, or a procurement assistant negotiating with a supplier. In such interactions, the counterpart's LLM, prompts, control logic, and rule-based fallbacks are hidden, while each decision can have monetary consequences. We ask whether an agent can predict an unfamiliar counterpart's next decision from a few interactions. To avoid real-world logging confounds, we study this problem in controlled bargaining and negotiation games, formulating it as target-adaptive text-tabular prediction: each decision point is a table row combining structured game state, offer history, and dialogue, while $K$ previous games of the same target agent, i.e., the counterpart being modeled, are provided in the prompt as labeled adaptation examples. Our model is built on a tabular foundation model that represents rows using game-state features and LLM-based text representations, and adds LLM-as-Observer as an additional representation: a small frozen LLM reads the decision-time state and dialogue; its answer is discarded, and its hidden state becomes a decision-oriented feature, making the LLM an encoder rather than a direct few-shot predictor. Training on 13 frontier-LLM agents and testing on 91 held-out scaffolded agents, the full model outperforms direct LLM-as-Predictor prompting and game+text features baselines. Within this tabular model, Observer features contribute beyond the other feature schemes: at $K=16$, they improve response-prediction AUC by about 4 points across both tasks and reduce bargaining offer-prediction error by 14%. These results show that formulating counterpart prediction as a target-adaptive text-tabular task enables effective adaptation, and that hidden LLM representations expose decision-relevant signals that direct prompting does not surface.",
+      "authors": [
+        "Eilam Shapira",
+        "Moshe Tennenholtz",
+        "Roi Reichart"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-05-12T17:09:32+00:00",
+      "link": "https://arxiv.org/pdf/2605.12411v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "predicting decisions of AI agents in multi-agent interactions",
+      "llm_evidence_cn": "在多智能体交互中预测AI智能体的决策",
+      "llm_evidence": "在多智能体交互中预测AI智能体的决策",
+      "canonical_evidence": "在多智能体交互中预测AI智能体的决策",
+      "llm_tldr_en": "Predicts AI agent decisions in negotiation games using text-tabular modeling for better multi-agent interaction.",
+      "llm_tldr_cn": "通过文本-表格建模预测谈判博弈中AI智能体的决策，提升多智能体交互能力。",
+      "llm_tldr": "通过文本-表格建模预测谈判博弈中AI智能体的决策，提升多智能体交互能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.13360v2",
+      "title": "Speculative Interaction Agents: Building Real-Time Agents with Asynchronous I/O and Speculative Tool Calling",
+      "abstract": "There is a growing demand for agentic AI technologies for a range of downstream applications like customer service and personal assistants. For applications where the agent needs to interact with a person, real-time low-latency responsiveness is required; for example, with voice-controlled applications, under 1 second of latency is typically required for the interaction to feel seamless. However, if we want the LLM to reason and execute an agentic workflow with tool calling, this can add several seconds or more of latency, which is prohibitive for real-time latency-sensitive applications. In our work, we propose Speculative Interaction Agents to enable real-time interaction even for agents with complex multi-turn tool calling. We propose Asynchronous I/O, which decouples the core agent reason-and-act thread from waiting for additional information from either the user or environment, thereby allowing for overlapping agentic processing while waiting on external delays. We also propose Speculative Tool Calling as a method to manage task execution when the agent is still unsure if it has received the full information or if additional user information may later be provided. For strong cloud models, our method can be applied out-of-the-box to existing real-time cloud APIs, providing 1.3-1.7$\\times$ speedups with minor accuracy loss. To enable real-time interaction with small edge-scale models, we also present a clock-based training methodology that adapts the model to handle streaming inputs and asynchronous responses, and demonstrate a synthetic data generation strategy for SFT. Altogether, this approach provides 1.6-2.2$\\times$ speedups with the Qwen2.5-3B-Instruct and Llama-3.2-3B-Instruct models across multiple tool calling benchmarks.",
+      "authors": [
+        "Coleman Hooper",
+        "Minwoo Kang",
+        "Suhong Moon",
+        "Nicholas Lee",
+        "Eric Wen",
+        "John Wawrzynek",
+        "Michael W. Mahoney",
+        "Yakun Sophia Shao",
+        "Amir Gholami",
+        "Kurt Keutzer"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-13T11:20:52+00:00",
+      "link": "https://arxiv.org/pdf/2605.13360v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "real-time agentic workflows and tool calling",
+      "llm_evidence_cn": "实时智能体工作流与工具调用",
+      "llm_evidence": "实时智能体工作流与工具调用",
+      "canonical_evidence": "实时智能体工作流与工具调用",
+      "llm_tldr_en": "Proposes speculative interaction to reduce latency in multi-turn agentic workflows for real-time applications.",
+      "llm_tldr_cn": "提出了投机性交互，以减少实时应用中多轮智能体工作流的延迟。",
+      "llm_tldr": "提出了投机性交互，以减少实时应用中多轮智能体工作流的延迟。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.12943v1",
+      "title": "Reinforced Collaboration in Multi-Agent Flow Networks",
+      "abstract": "Multi-agent systems provide a powerful way to extend large language models (LLMs) by decomposing a complex task into specialized subtasks handled by different agents. However, their performance is often hindered by error propagation, arising from suboptimal workflow design or inaccurate agent outputs, which can propagate through the agent collaboration process and degrade final results. To address the challenges, we present MANGO (Multi-Agent Network Gradient Optimization), a data-driven framework that organizes and refines agent collaboration via a flow network constructed from past successful workflows. MANGO integrates reinforcement learning and textual gradients to jointly optimize workflow paths and agent behaviors, while a skipping mechanism prevents redundant updates to well-optimized agents for improving efficiency. Extensive experiments on seven benchmarks show that MANGO achieves up to 12.8% performance improvement over state-of-the-art baselines, enhances efficiency by 47.4%, and generalizes effectively to unseen domains. Our code and datasets are publicly available at https://github.com/openJiuwen-ai/agent-store/tree/main/community/mango.",
+      "authors": [
+        "Zheng Wang",
+        "Yuang Liu",
+        "Yangkai Ding"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-13T03:26:07+00:00",
+      "link": "https://arxiv.org/pdf/2605.12943v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "optimizing multi-agent collaboration and workflow",
+      "llm_evidence_cn": "优化多智能体协作与工作流",
+      "llm_evidence": "优化多智能体协作与工作流",
+      "canonical_evidence": "优化多智能体协作与工作流",
+      "llm_tldr_en": "Introduces MANGO to optimize multi-agent collaboration paths and behaviors using reinforcement learning.",
+      "llm_tldr_cn": "引入MANGO框架，利用强化学习优化多智能体协作路径和行为。",
+      "llm_tldr": "引入MANGO框架，利用强化学习优化多智能体协作路径和行为。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

@@ -1,0 +1,574 @@
+Title: Strategic commitments shape collective cybersecurity under AI inequality
+
+URL Source: https://arxiv.org/pdf/2605.09415v2
+
+Published Time: Thu, 14 May 2026 01:39:02 GMT
+
+Number of Pages: 26
+
+Markdown Content:
+# Strategic commitments shape collective cybersecurity under AI inequality 
+
+Adeela Bashir 1, Zia Ush Shamszaman 1,2, Zhao Song 1, Matjaz Perc 3,4,5,6,∗, and The Anh Han 1,2,∗
+
+> 1
+
+School of Computing, Engineering and Digital Technologies, Teesside University 
+
+> 2
+
+Center for Digital Innovation, Teesside University  
+
+> 3
+
+Faculty of Natural Sciences and Mathematics, University of Maribor, Maribor, Slovenia  
+
+> 4
+
+Community Healthcare Center Dr. Adolf Drolc Maribor, Maribor, Slovenia  
+
+> 5
+
+University College, Korea University, Seoul, Republic of Korea  
+
+> 6
+
+Department of Physics, Kyung Hee University, Seoul, Republic of Korea 
+
+> ∗
+
+Corresponding: The Anh Han (T.Han@tees.ac.uk), Matjaz Perc (matjaz.perc@gmail.com) 
+
+Abstract 
+
+The growing integration of AI into cybersecurity is reshaping the balance between attackers and defenders. When access to advanced AI-enabled defence tools is uneven, resource-limited defenders may be unable to adopt effective protection, creating persistent system vulnerabilities. We study the impact of differential AI access using an evolutionary game-theoretic model in a finite population. We first show that when high-capability defence is costly, the population is driven toward low-cost, weak-defence behaviour, sustaining attacks and weakening long-run security. To address this problem, we introduce differential access to AI defence tools by allowing defenders to choose between low- and high-capability protection based on their resources. We then examine the role of a small group of committed defenders who always adopt strong defence and influence others through social learning. Although commitment increases the prevalence of strong defence, it alone cannot stabilise secure outcomes due to high defence costs. We therefore incorporate a targeted subsidy to remove the cost disadvantage from committed defenders. Our analysis shows that subsidised commitment significantly increases strong defence adoption, suppresses successful attacks, and improves overall system resilience. Simulations across a broad parameter space confirm that subsidies consistently outperform commitment alone. In addition, social-welfare analysis shows improved defender outcomes while keeping attacker gains low. These findings suggest that targeted support for key defenders can be an effective mechanism for stabilising cybersecurity in AI-driven environments and provide a theoretical bridge between cybersecurity policy, AI governance, and strategic allocation of defensive AI capabilities. 
+
+Keywords: Evolutionary Game Theory; Cyber Security; AI Security; Finite Population Dynamics; Differential AI Access; Committed Defenders; Social Welfare; Attack–Defence Strategies 
+
+# 1 Introduction 
+
+Artificial intelligence (AI) is rapidly transforming cyber offence and defence [1, 2]. AI-powered security systems improve anomaly detection, automated response, and threat prediction, while at-tackers deploy the same technologies to scale intrusion, craft adaptive phishing, and generate ad-versarial attacks [3, 4]. As a result, the frequency and sophistication of AI-enabled cyberattacks continue to rise, impacting organisations with limited defensive resources [5]. A growing challenge is the unequal access to advanced defence capabilities. Small and medium enterprises (SMEs), which face nearly half of global cyberattacks [6], often cannot afford costly security infrastructure, specialised staff, or advanced AI defence tools. This resource asymmetry results in persistent vulnerability and forces many defenders to adopt weaker, low-cost protection strategies. Recent study on AI safety refer to this imbalance as differential access to AI security tools [7], highlighting how unequal distribution of defensive capability can shape systemic cyber risk. To study this phenomenon analytically, we model two classes of defenders: H defenders using advanced, costly AI defence tools, and L defenders using basic tools. We analyse strategic interaction between attackers and defenders in a finite population using stochastic EGT, allowing realistic modelling of population dynamics, fixation, and transition probabilities [8, 9]. Although 1
+
+> arXiv:2605.09415v2 [cs.AI] 13 May 2026
+
+H-defence is more effective, its high cost drives many defenders toward L-defence, resulting in attack success and reducing overall social welfare. To encourage adoption of strong defence, we introduce a subset of committed defenders (z) who always choose H-defence—representing government agencies, cybersecurity vendors, or regulated institutions capable of absorbing high costs. These players act as persistent examples of secure behaviour which drive the population’s behavioural dynamics through social learning [10, 11]. Results show that committed defenders improve the frequency of H-defence but do not improve social welfare due to high defence cost and persistent attack incentives. We therefore propose a policy mechanism: subsidising the cost of committed defenders (e.g., government funding), aiming to enable rapid growth of high-defence behaviour and increase collective security without requiring universal cost reduction. We study under what parameter conditions and policy interventions can committed defenders shift a competitive attacker–defender ecosystem toward a stable high-defence, low-attack equilibrium and improved social welfare? 
+
+Our results highlight that strengthening defence incentives—rather than penalising attackers—is a more effective mechanism for stabilising cyber ecosystems. In particular, targeted support for a small subset of trusted defenders can trigger system-wide improvements in security and resilience. These findings provide a theoretical foundation for differential AI access policies, including selective deployment of advanced defence tools, certification of trusted defenders, and targeted subsidies for critical infrastructure protection. Such approaches enable economically efficient cybersecurity without requiring universal adoption of costly defence technologies. In the rest of this paper, Section 2 reviews recent advances in cyber defence, AI-driven security, game-theoretic modelling and compare our work with prior research in this domain. Section 3 in-troduces our finite-population game-theoretic framework for attacker–defender interactions. Section 4 presents the concept of strategic AI access allocation and analyses population dynamics using stochastic evolutionary processes. Section 5 introduces a subsidy mechanism for committed defend-ers and demonstrates its impact on system-wide resilience and evaluates collective safety through a social welfare analysis. Section 6 discusses the implications of our findings, connects them to emerging AI governance practices and outlines key research directions. Finally, Section 7 concludes the work by summarising the core theoretical and policy contributions. 
+
+# 2 Related Work 
+
+Cyber defence has increasingly adopted game-theoretic modelling to analyse strategic behaviour between attackers and defenders under uncertainty. EGT offers a powerful framework for study-ing cyber conflict and strategic interactions in dynamic populations, particularly where learning, imitation, and bounded rationality drive strategy evolution [12, 13, 14, 15, 16, 17]. Recent studies demonstrate the value of stochastic finite-population analysis over traditional infinite-population and deterministic models, enabling close predictions of human experimental data [18, 19] and more realistic modelling of cyber environments such as industrial IoT, cloud systems, and autonomous defence ecosystems [20, 21]. Differential access to defence capability—where defenders vary in resources and expertise—has been highlighted as a critical challenge for cybersecurity resilience. Empirical studies report that SMEs face disproportionately high cyberattack rates but lack access to advanced security tools and skilled workforce [22, 23]. The AI governance community emphasises that unequal access to advanced AI defence systems may widen the security gap and create systemic risk [24, 25]. However, formal analytical studies of unequal cyber–defence capability within strategic population models remain limited. Committed or stubborn agents have been shown to shift equilibrium outcomes in social influence and cooperation models, enabling transitions to socially desirable states [26, 27, 28]. Their role in cybersecurity, particularly as a mechanism to promote robust defence behaviour in heterogeneous defender populations, remains largely unexplored. Moreover, existing works have studied subsidy and incentive mechanisms for cyber defence, showing that economic support can change defender behaviour and reduce attack success [29, 30]. However, how resource allocation interacts with evolutionary strategy dynamics and stochastic fixation in finite populations is still an open question. While prior studies have examined aspects of cybersecurity or commitment using game-theoretic or evolutionary models, they typically consider these dimensions in isolation. In contrast, our work provides a unified framework where we model heterogeneous defenders with differential access to security resources, incorporate committed agents to capture persistent secure behaviour, and analyse the role of subsidy as a policy mechanism to improve system resilience. Table 1 highlights the key distinctions between our work and existing literature. To the best of our knowledge, this is the first 2Table 1: Comparative analysis of cyber security and evolutionary game-theoretic models.                                             
+
+> Work Model Type Finite Population Stochastic Dynamics Differential Defence Committed Agents Subsidy Policy
+> [7] Conceptual AI governance model ××✓∼✓
+> [11] Finite population evolutionary game ✓✓×✓×
+> [21] Stochastic field theory ✓✓×××
+> [26] Evolutionary game with hybrid agents ∼✓×✓×
+> [29] Stackelberg security game ×∼∼×✓
+> [30] Multi-layer evolutionary game ×∼××✓
+> This paper Finite population stochastic EGT ✓✓✓✓✓
+
+work that jointly studies stochastic population dynamics, differential defence, commitment, and subsidy-driven incentives in a cybersecurity context. 
+
+# 3 Cybersecurity Game Theoretic Model 
+
+We model cyber conflict as an asymmetric game between two interacting groups: attackers and defenders, within a well-mixed finite-population of size N . Attackers can choose among strategies attack ( A) and not attack ( N A ), while defenders can choose strategies defence ( D) and not defence (N D ). We refer to each combination of attacker and defender strategies as a strategy pair , for example ( A, D ) or ( N A, N D ). To analyse the strategic adaptation, we use EGT because it provides a suitable framework for behavioural evolution in cybersecurity [12, 31]. In addition, EGT assumes fully rational agents, captures bounded rationality and imitation-driven learning, where players adapt strategies based on observed payoff differences rather than perfect optimisation [32, 33], [34]. The game is non-zero-sum, as the gain of one side is not necessarily equal to the loss of the other—both players may simultaneously gain or lose depending on their strategies [35]. The dynam-ics capture realistic cyber engagement, where defence improvements may reduce attack opportunities without eliminating attacker payoffs entirely. The payoff a player X obtains in a pairwise interaction with the player Y is defined in Table 2. 
+
+Table 2: Payoffs of the attacker and defender 
+
+Strategies Payoffs D A Defender Attacker 
+
+N D N A 0 0
+
+N D A −w −ca + ba
+
+D N A −cd + bd 0
+
+D A −cd + pdbd − w(1 − pd) −ca + ba(1 − pd)Payoffs represent the expected utility outcomes of cyber confrontation, incorporating factors such as defence success probability, cost and benefits of defence and attack, and damage resulting from failed defence. Parameter values and their meanings are given in Table 3 and players’ average payoffs are available in the Appendix in equations A1 to A4. 
+
+Table 3: Summary of parameters in the model 
+
+Variables Meaning of variables Constraints 
+
+w Assets value, i.e. loss to the defender for an attack 0 < w ≤ 1
+
+ca Cost to the attacker for attack attempt 0 < c a < w cd Cost to the defender for implementing defence 0 < c d < w ba Attacker’s benefit for a successful attack ca < b a
+
+bd Defender’s benefit for not being breached cd < b d ≤ wpd Probability of successful defence 0 < p d ≤ 1In the following subsection, we analyse the fixation and transition probabilities and stationary distribution of strategies and derive risk-dominant conditions for attack and defence to understand how the strategies evolve in a well-mixed finite population. We first analyse a baseline model in which defenders choose between defence ( D) and no-defence ( N D ) without any external intervention. We then extend this framework in two steps: first by introducing committed defenders who always adopt 3defence, and subsequently by incorporating subsidy mechanisms that reduce the cost of defence. This progression allows us to isolate the impact of commitment and incentives on cybersecurity outcomes. 
+
+# 3.1 Evolutionary dynamics in cyber security 
+
+We model the dynamics using the frequency-dependent Moran process [36, 37], where strategy evolution follows a stochastic learning process rather than perfect rational optimisation. In this case, individuals adapt their behavioural strategy by imitating strategies that achieve higher payoffs, and therefore more successful individuals tend to be imitated more often than the others [38, 8]. To analyse the coupled attacker–defender dynamics, we approximate the evolutionary process as a Markov chain transitioning between four homogeneous states: (A, D ), ( N A, D ), ( A, N D ), and (N A, N D ). As state transition is driven by the imitation process, the evolutionary dynamics unfold in one population at a time. Therefore, we only analyse transitions between states that differ in the strategy of a single population. Transitions across both populations, such as from ( A, D )to ( N A, N D ), occur with zero probability. To illustrate, consider the transition from ( A, D ) to (N A, D ). Suppose that at a given time, the attacker population contains k agents using strategy A
+
+(0 ≤ k ≤ N ) and ( N − k) agents using strategy N A . Then the probability of A switching to N A 
+
+when the defence population is in all-defence ( D) state follows the Fermi function [8]: 
+
+pDA,N A = (1 + e−β(f DN A −f DA ))−1 (1) Here, β is the intensity of selection: β = 0 implies random imitation, while β → ∞ leads to deterministic imitation of the better strategy. Using this update rule, the probability of changing the number of i agents using strategy A by ±1 in each time step can be written as: [38]: 
+
+T ±(i) = N − iNiN
+
+[
+
+1 + e∓β[f DA(i)−f DN A (i)]]−1
+
+(2) The fixation probability of a single mutant using a strategy A introduced into a population of (N − 1) agents using strategy N A is given by: 
+
+ρDN A,A =
+
+1 +  
+
+> N−1
+
+∑
+
+> k=1
+> k
+
+∏
+
+> j=1
+
+T −(j)
+
+T +(j)
+
+
+
+> −1
+
+(3) We consider the rare mutation limit, where mutations occur infrequently so that each mutant either fixates or goes extinct before the next mutation appears [39, 40, 41]. This allows the dynamics to be approximated as a Markov chain over monomorphic states. At each evolutionary step, only one population (either attackers or defenders) is assumed to update, while the other remains fixed. Therefore, transitions occur sequentially between populations, and each transition is weighted by a factor of 12 to reflect the equal probability of updating either population. The fixation probabilities computed above define the transition rates between the four pure states, forming the entries of a Markov transition matrix M available in the Appendix (A5), where the states correspond to 
+
+x = {(A, D ), (N A, D ), (A, N D ), (N A, N D )}.The long-term behaviour of the system is described by the stationary distribution π, defined as the normalised left eigenvector of M associated with eigenvalue 1 [37]: 
+
+πM = π, 
+
+> s
+
+∑
+
+> i=1
+
+πi = 1 .
+
+Each πi represents the long-run probability that the population resides in state i. This stationary distribution allows us to identify which cyber-defence outcomes are most likely to emerge and persist under evolutionary dynamics. 4(a) (b) (c)   
+
+> (d) (e) (f)
+
+Figure 1: Finite population analysis of cybersecurity. Each row corresponds to one representative parameter setting. Top row: stationary probabilities of the strategies ( A, D ), ( A, N D ), ( N A, D ) and ( N A, N D ) as functions of the selection intensity β. Bottom row: the corresponding embedded four-state Markov chains for β = 0 .1. Parameter values for ( a, d ) are ba = 0 .90, bd = 0 .79, ca = 0 .41, cd = 0 .20, w = 0 .98, pd = 0 .26 where attack and defence ( A, D ) becomes dominant under strong selection. For ( b, e ) parameter values are 
+
+ba = 0 .52, bd = 0 .37, ca = 0 .29, cd = 0 .34, w = 0 .43, pd = 0 .09 where attack and not defence ( A, N D )dominates. For ( c, f ) parameter values are ba = 0 .24, bd = 0 .47, ca = 0 .18, cd = 0 .41, w = 0 .47, pd = 0 .54 where not attack and defence ( N A, N D ) dominates. Node colour (purple) indicates the dominant strategy pair. The numbers in the oval shape show the risk-dominant strategy from Table 4. Only transitions where the probability is larger than the reverse direction are shown. Node labels give the stationary distribution of each state, and edge labels show fixation probabilities ρ. The dominant outcome in each case is determined by the relative payoff advantage of attack versus defence, illustrating how cost and effectiveness parameters shape evolutionary stability. 
+
+Figure 1 illustrates the baseline finite-population dynamics of the four strategy pairs. Across the three parameter settings, the stationary distributions are shown in subplots ( a)–( c) to show how payoff differences determine the long-run outcome. The corresponding four-state Markov chains in (d)–( f ) illustrate the fixation pathways between strategy pairs, showing how payoff differences drive the system toward specific dominant states. When the attacker payoff exceeds the cost of attack (i.e., 
+
+ba(1 − pd) > c a) and defence is costly, attack without defence ( A, N D ) becomes dominant, as shown in ( b) and ( e). In contrast, when defence is sufficiently effective and its cost is justified by the benefit (i.e., pdbd > c d), the system converges to defence-dominant states such as ( N A, D ), as in ( c) and (f ). When neither condition strongly dominates, the system exhibits mixed behaviour and ( A, D )dominates, as seen in ( a) and ( d). These results are consistent with the analytical conditions derived from the payoff structure, where dominance is determined by the relative cost–benefit trade-offs of attack and defence strategies. 
+
+Table 4: Risk-dominant conditions for the attack–defence model. 
+
+# Attacker transition Condition # Defender transition Condition 
+
+1 (A, D ) → (N A, D ) ca > b a(1 − pd) 3 (A, D ) → (A, N D ) cd > p d(bd + w)2 (A, N D ) → (N A, N D ) ca > b a 4 (N A, D ) → (N A, N D ) cd > b d
+
+In Markov diagrams, arrow directions show the risk-dominant conditions given in Table 4, while the displayed edge weights give the corresponding transition probabilities. Risk-dominant condi-tions show that attack/defence is favoured in the presence of defenders/attackers if the benefits are higher than the cost to the players. Therefore, the driving factor of A and D strategies is the cost incured by the players. Together, these results demonstrate how finite populations respond to payoff asymmetries and provide the foundation for our broader parameter-sweep analysis, where we systematically explore that besides cost, how varying benefits, and defence effectiveness reshape the evolutionary landscape. 5Figure 2: Frequency of strategies with respect to the parameters such as defence probability ( pd), assest value ( w), cost of attack ( ca) and defence ( cd), and benefit of attack and defence ( ba), ( bd), respectively. Parameter values are N = 100, ba = 0 .90, bd = 0 .79, ca = 0 .41, cd = 0 .20, w = 0 .98, pd = 0 .26 and β = 0 .1. The results highlight that higher ( pd) and ( bd) increase the likelihood of defence strategies, while attack is avoidable by increasing ( ca), and ( pd). 
+
+Parameter-Driven Behaviour Insights. To understand how cyber–attack and defence strate-gies evolve under different security conditions, we conduct parameter sweeps and analyse their effect on the stationary distribution π. The results in Figure 2 illustrate how system dynamics shift be-tween attack-dominated and defence-dominated equilibria depending on payoff parameters. First, when pd < 0.3, defence is unreliable and attacking strategies ( A, D ) and ( A, N D ) dominate. As pd
+
+increases ( pd ≈ 0.3–0 .5), attackers lose their payoff advantage and ( N A, D ) rises. For pd > 0.55, the system rapidly converges to ( N A, D ), effectively driving attacks to extinction. A similar transition is observed with the loss parameter w. When w < 0.3, the penalty of failed defence is small, allowing attackers to exploit high-value defence targets, so ( A, D ) dominates. As w increases ( w ≈ 0.3–0 .5), a transition region emerges, and for w > 0.5, defenders strongly prefer high defence, leading to stable ( N A, D ). The cost of attacking also plays a critical role. When ca < 0.2, attacking remains profitable and ( A, D ) dominates. As ca increases ( ca ≈ 0.3–0 .5), attacks become less attractive and (N A, D ) gains probability. For ca > 0.55, attacks collapse entirely. Similarly, defence cost affects stability. When defence is cheap ( cd < 0.2), defenders maintain high-defence effort and ( N A, D ) pre-vails. Moderate cost ( cd ≈ 0.3–0 .45) introduces instability, while for cd > 0.5, defenders shift to low defence and attack strategies re-emerge. The benefit parameters further shape the dynamics. For 
+
+ba < 0.4, attacks provide little reward and ( N A, D ) dominates, whereas increasing ba (ba ≈ 0.4–0 .7) introduces coexistence. For ba > 0.8, high rewards drive attack resurgence and ( A, D ) dominates. In contrast, strong defence incentives ( bd > 0.6) make defence valuable, leading to ( N A, D ) dominance, whereas when bd < 0.4, defending yields weak payoff and the attack-tolerant state ( A, N D ) emerges. Overall, these results demonstrate that the non-attacking, always-defence strategy ( N A, D ) be-comes the dominant stationary outcome whenever 
+
+pd > 0.5, w > 0.5, ca > 0.4, cd < 0.3, ba < 0.6, bd > 0.6.
+
+Under these conditions, attacks lose evolutionary fitness and the population self-organises into a stable defence equilibrium. Below these thresholds, the system shifts sharply toward attack-dominated regimes. These findings are further supported by robustness analysis across 10 ,000 ran-domly generated games in Figure 3, confirming a broad parameter region where ( N A, D ) dominates and successful attacks remain rare. We computed the stationary distribution for each sample, and the results were averaged across all instances. In other words, defence stabilises and attacks remain rare whenever (i) defence is strong, (ii) attacking well-defended systems is expensive, (iii) defence 6prevents substantial losses, and (iv) the benefit from a successful attack is not too high. Building on these insights that defence stability depends on the capability of defenders, we now introduce a differential access framework that strategically allocates advanced AI security tools across the defender population. The baseline analysis yields the following key insights. (i) High defence cost discourages adoption of defence, driving the system toward weak defence and sustained attack ac-tivity. (ii) Defence becomes dominant only when it is sufficiently effective and economically viable, highlighting the importance of cost–benefit balance.      
+
+> Figure 3: Robustness of stationary strategy frequencies under parameter variation ( β= 1). Each subplot shows the mean stationary probability of the four strategy states as a single model parameter is varied while all other parameters are fixed at baseline values from Figure 2. The solid lines indicate the mean probability, and the shaded regions represent ±one standard deviation, capturing variability from 10,000 randomly generated games, for robustness check. Narrow shaded bands indicate robustness (stable outcomes despite parameter perturbations), while wider bands reflect sensitivity to the chosen parameter.
+
+# 4 Strategic AI Access Allocation 
+
+The parameter-driven analysis in the previous section shows that stable defence states emerge only when defence is sufficiently effective, affordable, and rewarding. However, in real cyber ecosys-tems these favourable conditions rarely hold. Many organisations, particularly SMEs, cannot afford advanced security infrastructure or specialised staff, despite facing a high share of attacks [42, 43]. As a result, defenders often adopt minimal low-cost protection, facing persistent attack success and preventing convergence to a secure equilibrium. The baseline model in Section 3 assumes uniform access to defence and therefore cannot capture the impact of unequal resource availability across defenders. In practice, defenders vary significantly in their ability to deploy advanced AI-based security tools. This gap motivates the need for mecha-nisms that actively shape defender behaviour rather than relying solely on market-driven adoption. A promising direction, recently highlighted in AI governance and safety policy debates, is the prin-ciple of differential access to AI security tools [7, 44]. Rather than providing identical capabilities to all players, access to high-assurance AI defence tools may be restricted to trusted or regulated defenders who can operate them responsibly. In practice, advanced AI defence platforms (e.g., policy-compliant LLMs, automated threat–response systems, and protected inference environments) are increasingly deployed under controlled access conditions [45]. This reflects growing recognition that not every entity should hold unrestricted high-capability tools, and that selective empowerment may improve collective resilience [46, 47]. To capture this unequal access to resources, we generalise the baseline model by introducing hetero-geneous levels of defensive capability. In particular, we divide defenders into two strategic groups: 
+
+High-access (H) defenders, equipped with full-spectrum secure AI capabilities (e.g., automated patching, predictive threat modelling), correspond to the defence (D) strategy, and Low-access (L)7Figure 4: Graphical illustration of the proposed cyber defence model with differential access, committed defenders, and subsidy. The attacker population consists of agents choosing between at-tacking (A) and non-attacking (NA), while the defender population consists of agents choosing high defence (H-D) or low defence (L-D). Dashed lines represent social imitation, where agents copy strategies with higher payoffs, and arrows indicate the evolutionary transitions over time. Initially, high successful attacks lead to weak defence (ND/D). With differential access, defenders can adopt high (H-D) or low (L-D) defence, but high defence incurs a significant cost. The introduction of committed defenders ( z), who always choose high defence, increases the adoption of H-D strategies; however, the high cost limits improvements in social welfare. Finally, under subsidy ( CH = 0), the cost of high defence is removed, leading to greater adoption of H-D, fewer successful attacks, and higher social welfare. Overall, the attacker and defender populations co-evolve and continuously influence each other’s strategy dynamics. 
+
+defenders, who rely on basic public tools with limited performance, corresponds to the no-defence (ND) strategy. The key difference is that we now explicitly distinguish between different levels of effectiveness and cost, allowing us to model realistic inequalities in cyber readiness. While prior work proposes memory-based and recovery mechanisms to mitigate attacks, such approaches do not address the economic barriers that limit adoption of strong defence strategies [48]. Our model creates an asymmetric resource-allocation game in which defenders select their defence level based on expected payoff, cost, and risk exposure to capture the strategic dilemma of whether to invest in costly robust defence or adopt cheaper but weaker protection. The mathematical model below formalises these interactions. The payoffs for attacker and non-attacker in the presence of H defence are f HA and f HN A , respectively. Similarly, the payoffs when interacting with L defence are f LA and f LN A .
+
+Attacker payoffs: 
+
+f HA = −ca + ba (1 − pdH ), f LA = −ca + ba (1 − pdL ),f HN A = 0 , f LN A = 0 . (4) Similarly, the payoffs for H defender and L defender in the presence of A and N A , are respectively: 
+
+Defender payoffs: 
+
+f AH = pdH BH − CH − (1 − pdH )WH , f AL = pdL BL − CL − (1 − pdL )WL,f N A H = BH − CH , f N A L = BL − CL. (5) The parameters are consistent with those introduced in the baseline model. In particular, ca and 
+
+ba denote the attack cost and benefit, respectively. The key extension is that defence effectiveness now depends on access level, captured by pdH and pdL for high- and low-access defenders. Similarly, 
+
+BH and BL denote the benefits of maintaining high- and low-level defence, CH and CL represent the corresponding defence costs, and WH and WL capture the losses from successful attacks. We assume that high defence incurs a higher cost than low defence ( CH > C L), reflecting the expense of advanced AI-based security tools. Similarly, we assume pdH > p dL as increasing AI defence capability can increase the success probability. BH > B L is assumed because better defence tools can be more beneficial, as they can deter attacks and reduce defender loss. These parameters collectively model realistic trade-offs between security effectiveness and economic cost. 8Table 5: Payoff structure for attacker and defender strategies. 
+
+High Defence (H) Low Defence (L)
+
+Attack (A) (f HA , f AH ) (f LA , f AL )
+
+Not Attack (N A ) (f HN A , f N A H ) (f LN A , f N A L )To encourage adoption of H defence strategies, we incorporate a subset of committed H defenders 
+
+(zealots) who always adopt H defence and never change their strategy through social learning. In the literature, empirical and theoretical work shows that even a small number of committed individuals can shift evolutionary dynamics and drive prosocial behaviours such as cooperation, fairness and safe AI development, to fixation [9, 26, 28, 49]. In cyber defence, these zealots represent government bodies, defence vendors, and regulated service providers who act as stable anchors for security best practice. To model strategy adoption in a population size N , we consider z committed H defenders, and 
+
+N − z ordinary defenders who learn and update their strategy via social learning. The defender and attacker average payoffs become: ΠH = (mA)f AH + ( N − mA)f N A H
+
+N , ΠL = (mA)f AL + ( N − mA)f N A L
+
+N ,
+
+ΠA = (mH + z)f HA + ( N − z − mH )f LA
+
+N , ΠN A = 0 .
+
+(6) Strategy updates follow a pairwise comparison (Fermi) rule [50], as in equation 1, and evolve via a frequency-dependent birth–death process. Transition probabilities and fixation dynamics are given by: 
+
+T + 
+
+> nH
+
+= N − z − nH
+
+N − znH + zN pAL,H , T − 
+
+> nH
+
+= nH
+
+N − zN − z − nH
+
+N pAH,L , (7) and for attackers: 
+
+T + 
+
+> nA
+
+= N − nA
+
+NnA
+
+N pDN A,A , T − 
+
+> nA
+
+= nA
+
+NN − nA
+
+N pDA,N A . (8) The fixation probability of a single mutant with a strategy H in a defender population of (N-z-1) agents using L, when other population is all attack is given by: 
+
+ρAL,H =
+
+1 +  
+
+> N−z−1
+
+∑
+
+> k=1
+> k
+
+∏
+
+> j=1
+
+T − 
+
+> nH
+
+(j)
+
+T + 
+
+> nH
+
+(j)
+
+
+
+> −1
+
+(9) The fixation probability for the attacker population (N), when the other population is all defence: 
+
+ρDN A,A =
+
+(
+
+1 +  
+
+> N−1
+
+∑
+
+> k=1
+> k
+
+∏
+
+> i=1
+
+T − 
+
+> nA
+
+(i)
+
+T + 
+
+> nA
+
+(i)
+
+)−1
+
+(10) The stationary distribution π satisfies πM = π. To complement analytical results, we run stochastic simulations exploring how changes in cost and selection intensity alter adoption dynamics and social welfare. 
+
+Table 6: Risk-dominant conditions for the differential-access model. 
+
+# Risk-dominant arrow Condition 
+
+1 (A, H ) → (N A, H ) cah > b ah (1 − pdH )2 (A, L ) → (N A, L ) cal > b al (1 − pdL )3 (A, H ) → (A, L ) pdH BH − CH − (1 − pdH )WH < p dL BL − CL − (1 − pdL )WL
+
+4 (N A, H ) → (N A, L ) BH − CH < B L − CL
+
+The risk-dominant conditions in Table 6 identifies the conditions under which attack, no-attack, high defence, or low defence strategies become risk-dominant, based on the trade-off between attack benefits, defence effectiveness, and defence costs under differential access. Conditions (1)–(4) de-scribe that attacks are discouraged when the attack cost exceeds the expected benefit adjusted by 9defence success probability. Conditions (5)–(8) capture defenders’ incentives to switch between H
+
+and L defence. These depend on the trade-off between defence effectiveness (reduced damage and higher protection probability) and defence cost. Overall, the table shows that high defence becomes risk-dominant only when its benefits outweigh its higher cost, while low defence persists when cost savings dominate. This highlights the central tension in the model: although H-defence is more effective, its adoption is limited by cost, which motivates the need for policy interventions such as subsidies. The aim of the proposed approach, shown in Figure 4, is to shift the cybersecurity balance in favour of defenders by finding the conditions to motivate them to adopt H defence by using safe AI tools [51, 52] and improve overall safety. A recent real-world example of differential AI access [45], is the U.S. General Services Administration’s agreement with OpenAI to provide the federal workforce with ChatGPT Enterprise, for a nominal cost of $1 per agency for one year. These tools were assessed on the grounds of security and performance and are free from ideological bias [53]. It is a restricted, security-compliant version of the AI tool designed to protect sensitive information and meet strict compliance standards, to enhance defence effectiveness without compromising sensitive data. This selective provision of a safeguarded AI environment represents a controlled high-access scenario in our model, where defenders gain advanced defence capabilities to ensure cyber resilience. 
+
+# 4.1 Population Dynamics with Differential Access 
+
+The finite-population analysis in Section 3 reveals that cyber defence can stabilise only when de-fence is sufficiently effective and rewarding and when attacking becomes risky and costly, confirming that meaningful cyber resilience requires strong defence performance rather than simply penalising attackers. However, due to the high cost of H defence, ordinary defenders naturally converge toward 
+
+L defence, leading to persistent attack success. To motivate the ordinary defenders, we introduce a fraction z of committed defenders (zealots) who permanently adopt H and examine whether they can shift behaviour in the remaining population. Figure 5 shows that when z = 0, the system settles into an equilibrium dominated by L defence and high attack frequency, yielding an insecure cyber ecosystem. The Markov diagram confirms that the population spends most time around low–defence states. Thus, when no committed defenders are present, the system tends toward a high-risk equi-librium where attackers maintain strategic advantage by attacking the vulnerable defenders.                                        
+
+> (a) (b)
+> Figure 5: Evolutionary dynamics without committed defenders ( z= 0 ). (a) Stationary probabilities of the states ( A, H ), ( A, L ), ( N A, H ), and ( N A, L ) as a function of the selection intensity βfor the baseline parameters ( N= 100, cah = 0 .85, bah = 1 .90, cal = 0 .1, bal = 1 .60, pdh = 0 .82, pdl = 0 .75, BH= 0 .75, BL=0.55, CH= 0 .41, CL= 0 .20, WH= 0 .22, WL= 0 .10) and no committed players ( z= 0). As βincreases, the population gradually shifts toward the ( A, L ) state, showing the dominance of low-effort defenders when imitation pressure strengthens. (b) Embedded 4-state Markov chain illustrating the transitions among the states for selection intensity β= 0 .1 with the same parameters. Edges represent transition ρvalues, and node labels show the stationary probabilities ( πi) for each state with the purple colour for fixating strategy. The numbers in the oval shape show the risk-dominant strategy from Table 6. Under the absence of committed players ( z= 0), the system converges primarily to the ( A, L ) representing a risk-prone environment where attackers dominate.
+
+10 Figure 6: Stationary strategy frequencies under parameter variations with no committed defenders ( z = 0, 
+
+β = 1). While transitions between attack and non-attack states are visible, low-effort defence ( N A, L ) and attack strategies ( A, L ) retain significant probability mass across most parameter ranges, indicating that high-effort defence ( N A, H ) cannot dominate without structural intervention. 
+
+Figure 6 shows the parameter sensitivity under the absence of committed defenders ( z = 0) and moderate selection intensity ( β = 1). Across all six parameters, π(A, L ) and π(N A, L ) retain significant probability mass, while π(N A, H ) remains low for most parameter ranges. Only under highly favourable conditions — high pdH , high BH , or low CH — does π(N A, H ) begin to rise, but it never dominates. This indicates that, when all defenders face the same high defence cost, evolutionary incentives strongly favour low-effort defence and persistent attacks. These baseline sweeps therefore establish a clear reference point showing that structural intervention is required to improve cyber resilience. This motivates the introduction of committed defenders ( z > 0) in the next section.  
+
+> (a) (b)
+
+Figure 7: Evolutionary dynamics with committed H defenders ( z > 0). (a) Stationary probabilities of the four states ( A, H ), ( A, L ), ( N A, H ), and ( N A, L ) as a function of selection intensity β under baseline parameters ( N = 100, cah = 0 .85, bah = 1 .90, cal = 0 .1, bal = 1 .60, pdh = 0 .82, pdl = 0 .75, BH = 0 .75, 
+
+BL = 0 .55, CH = 0 .41, CL = 0 .20, WH = 0 .22, WL = 0 .10). Committed defenders motivate other defence players to adapt H defence. For small commitment levels ( z = 1), the secure state ( N A, H ) initially increases with selection intensity ( β), indicating that committed defenders can promote high defence. However, as β
+
+becomes large, ( N A, H ) loses stability due to the high defence cost CH , and the system shifts towards ( A, L ). In contrast, for larger commitment levels ( z = 1), as shown in Figure A1 (Appendix), ( N A, H ) becomes stable across high β, demonstrating that sufficient commitment is required to sustain secure outcomes. In (b), embedded Markov chain representation shows similar behavior for β = 0 .1 that committed defenders shift the dynamics towards ( N A, H ). 
+
+11 Introducing committed defenders consistently shifts the system towards high defence, as shown in Figures 7 and 8. The β-dependent dynamics (Figure 7) show that increasing the number of committed defenders z raises the prevalence of H defence, but stable convergence to the secure state ( N A, H ) is achieved only when commitment is sufficiently high, as illustrated in Figure A1 (Appendix). For small and moderate values of z, the system remains sensitive to the selection intensity β, and the population does not reliably settle in the secure equilibrium.            
+
+> Figure 8: Frequency of high-defence adoption πH=π(A, H ) + π(N A, H ) over the ( z, β ) space. Even a small number of committed defenders ( z≥3) is sufficient to drive widespread adoption of Hthrough imitation, particularly under moderate to strong selection. However, high adoption of Hdoes not necessarily imply convergence to the secure state ( N A, H ), indicating a gap between defence adoption and true system stability. The same parameters are used as in Figure 7.
+
+The heatmaps in Figures 8 and A2 (Appendix) provide a complementary view by showing the overall distribution of strategies across parameter ranges. These results confirm that even a small number of committed defenders ( z ≥ 3) can significantly increase the adoption of H defence. How-ever, high adoption alone does not guarantee system-level security. Similar trend is observed in Figure A3 in the Appendix, which shows that for a moderate level of commitment ( z = 10), the system remains highly sensitive to parameter changes. In particular, the cost of H defence ( CH )plays a critical role, increasing CH quickly reduces the adoption of ( N A, H ) and shifts the population towards attack-prone states. This highlights a key distinction between widespread adoption of high defence and true stability of the system. Introducing committed defenders increases the adoption of high defence through social learning. However, commitment alone does not stabilise the secure equilibrium, as high cost of defence CH limits full convergence to ( N A, H ). Thus, while commitment shifts behaviour, it does not resolve the underlying economic constraint. This motivates the need for policy interventions that reduce the cost burden of H defence. In the next section, we introduce a subsidy mechanism to address this limitation and stabilise secure system behaviour. 
+
+# 5 Subsidised Committed Defenders 
+
+To overcome the limitation of high defence cost CH , discussed in the previous section, we introduce a policy mechanism in which committed defenders are subsidised so that they no longer bear the full cost of high defence. The use of subsidies to stabilise equilibria in non-cooperative games is formally studied in [54], where subsidies compensate players deviating from a target profile. This reflects practical cybersecurity governance, where governments financially support critical infrastructure operators to strengthen resilience. In the baseline case, both ordinary and committed high defenders pay cost CH , and their payoffs 12 against attacker ( A) or non-attacker ( N A ) are: 
+
+f AH = pdH BH − CH − (1 − pdH )WH , f N A H = BH − CH .
+
+With subsidy, committed defenders pay no cost, and their payoff becomes: 
+
+f AH (z) = pdH BH − (1 − pdH )WH = f AH + CH , f N A H (z) = BH = f N A H + CH .
+
+Because strategy imitation depends on payoffs, the effective value of playing H increases with the number of subsidised defenders z. When z out of N defenders are subsidised, the subsidy-adjusted average payoff for strategy H is: 
+
+f AH (z) = f AH + zN CH , f N A H (z) = f N A H + zN CH .
+
+Low defenders retain their original payoffs f AL and f N A L , and thus the Fermi imitation update rule becomes: 
+
+p(A) 
+
+> L→H
+
+(z) = 11 + exp (−β [f AH (z) − f AL
+
+]) , p(A)
+
+> H→L
+
+(z) = 11 + exp (−β [f AL − f AH (z)]) ,
+
+and similarly when facing a non-attacker using f N A H (z) and f N A L (z). This subsidy mechanism in-creases the perceived payoff advantage of H defenders, making H defence more attractive and accelerating convergence to the secure equilibrium ( N A, H ).  
+
+> (a) (b)
+
+Figure 9: Stationary outcomes under subsidised committed defenders. (a) Stationary probabilities of the four strategy states across selection intensity β when committed defenders receive subsidy. The secure state ( N A, H ) starts dominating from z = 6, indicating strong stabilisation of high defence under subsidy. (b) Corresponding Markov transition diagram showing transition probabilities ρ on edges and stationary state probabilities at nodes. The numbers in the oval shape show the risk-dominant strategy from Table 6. The system resides in ( N A, H ), while attacker-dominant states become rare, demonstrating that subsidy shifts the population towards a safe equilibrium and suppresses transitions toward vulnerable states. Baseline parameters used are N = 100, cah = 0 .85, bah = 1 .90, cal = 0 .10, bal = 1 .60, pdh = 0 .82, 
+
+pdl = 0 .75, BH = 0 .75, BL = 0 .55, CH = 0 .41, CL = 0 .20, WH = 0 .22, WL = 0 .10, z = 10, β = 0 .1. 
+
+Introducing subsidies for committed H defenders eliminates the cost disadvantage of H defenders and increases their payoff advantage over L defenders. This shifts the imitation dynamics and H
+
+defence becomes more attractive, encouraging ordinary defenders to adopt H strategies through social learning. As shown in Figures 9 A4 (in the Appendix), subsidy fundamentally changes the evolutionary landscape for very less number of subsidised committed defenders. The heatmaps in Figure A5 in the appendix provide a complementary view by showing the overall distribution of strategies across varying levels of β. The stationary distribution concentrates on the secure state (N A, H ), while attacker-dominant states collapse to near zero. Even without subsidy, a small number of committed defenders ( z > 0) can shift the population toward the high-defence state ( N A, H ), but full stability is achieved only at z = N (Figure 7), whereas with subsidy the same shift occurs for 
+
+z > 0 and stable convergence to ( N A, H ) is attained at much lower commitment levels (e.g., z ≈ 6for N = 100). The subsidy converts safety improvements into real economic benefit and suppresses incentives for attack, leading to a more resilient cyber ecosystem. 13 Subsidy Threshold and Optimal Allocation. Prior work on subsidy design shows that govern-ments choose subsidy levels subject to budget constraints [55, 56]. In our model, subsidies increase the payoff advantage of high defence, making H-defence more attractive and accelerating conver-gence toward the secure state ( N A, H ). Even a small number of subsidised defenders improves the adoption of H defence and becomes more pronounced as the number of subsidised defenders increases. However, the benefits of the subsidy do not increase indefinitely. Instead, there exists a threshold level of commitment beyond which additional subsidy yields diminishing improvements in system behaviour. In practice, subsidy policies are constrained by limited resources. Given a government budget G, the feasible level of subsidised defenders satisfies z ≤ G/C H . These results indicate that effective cyber defence does not require subsidising all defenders. Rather, a moderate and well-targeted level of subsidy is sufficient to promote high-defence adoption and stabilise secure outcomes without excessive public expenditure. While prior work models environment dynamics through stochastic game transitions [57], we instead consider structural interventions that modify payoff incentives directly. This allows us to capture how economic constraints and policy support influence the emergence of secure behaviour in cyber systems. To verify that these insights are not driven by specific parameter choices, we next examine the robustness of the model under a wide range of randomly generated environments. 
+
+Random Games Analysis: We simulated 10,000 randomly generated games under uniformly sampled parameters while preserving the logical constraints ( CL < C H , BL < B H , WL < W H ,
+
+pdL < p dH , baL < b aH , caL < c aH , and z ∈ [0 , 10]), for robustness checking of our general findings [58, 12]. For each parameter configuration, we computed the stationary distribution and recorded the resulting defence and attack frequencies, as summarised in Table 7 and illustrated in Figure 10. To better reflect the actual security outcome, we also measured the rate of successful attacks . For each random game, a successful attack is defined as the probability that an attack occurs and the defence fails. This is computed from the stationary distribution by weighting each attack state with its corresponding defence failure probability. Formally, the successful attack rate is given by 
+
+πsucc = π(A,H )(1 − pdH ) + π(A,L )(1 − pdL ), (11) where π(A,H ) and π(A,L ) are the stationary probabilities of the attack states under high and low defence, respectively. To highlight the deterrence mechanism, we analyse a filtered set of games satisfying f HA < f LA to ensure that attacking against high defence is meaningfully less attractive. Under this condition, the effect of commitment becomes clearer: committed defenders drive the population toward high-defence states and reduce the rate of successful attacks . The distribution of these successful attack rates across random games is shown in the boxplots in Figure 10 and Table 7.    
+
+> Table 7: Summary statistics over 10,000 randomly generated games for β= 1. Results are reported as mean
+> ±standard deviation.
+
+Case Attack attempts High defence Successful attacks 
+
+z = 0 0.393 ± 0.077 0.583 ± 0.397 0.134 ± 0.124 
+
+z = 6 0.375 ± 0.072 0.806 ± 0.298 0.108 ± 0.109 
+
+z = 100 0.362 ± 0.064 1.000 ± 0.000 0.091 ± 0.094 
+
+z = 6 (subsidy) 0.360 ± 0.064 0.998 ± 0.024 0.088 ± 0.092 
+
+The results in Table 7 demonstrate that increasing the number of committed defenders has a clear impact on system security. Moving from z = 0 to z = 6, high-defence adoption increases substantially (from 0 .583 to 0 .806), while successful attacks decrease from 0 .134 to 0 .108, indicating improved resilience. Full commitment ( z = 100) leads to complete adoption of high defence and further reduces successful attacks to 0 .091. Introducing subsidy significantly strengthens this effect at low levels of commitment. With only z = 6 subsidised committed defenders, high-defence adoption becomes nearly complete (0 .998), matching the behaviour observed under full commitment, while successful attacks further decrease to 0 .088. Compared to the baseline case ( z = 0), this corresponds to an approximate 34% reduction in successful attacks. These results highlight that while commitment improves average system performance, subsidy enables near-complete adoption of high defence at much lower commitment levels, effectively approaching the benefits of full commitment without requiring all defenders to be committed. 14 Figure 10: Distribution of outcomes across 10,000 random games ( β = 1 , z ∈ { 0, 6, 100 }). The left panel shows the distribution of high-defence frequency, while the top-right and bottom-right panels show attack frequency and successful attack rates, respectively. Increasing the number of committed defenders shifts the population toward high defence and reduces successful attacks. While partial commitment ( z = 6) improves average outcomes, variability remains high. In contrast, subsidised commitment at z = 6 achieves near-complete adoption of high defence and further concentrates the distribution of successful attacks at lower values, matching the behaviour of full commitment ( z = 100). This shows that subsidy enables stable and reliable security at significantly lower levels of commitment. 
+
+This indicates that although commitment does not eliminate attack attempts, it significantly reduces the effectiveness of attacks and subsidy further reduce the required number of committed defenders. Subsidising committed defenders removes the cost disadvantage of high defence and fundamentally changes the evolutionary dynamics. Subsidy enables stable convergence to the secure state even with a small number of committed defenders, reduces successful attacks, and improves defender incentives. We compare three scenarios. In the baseline case, high defence cost leads to weak defence adoption and persistent attacks. With committed defenders, adoption of high defence increases, but the system remains unstable due to the cost burden. In contrast, subsidy removes this economic barrier, enabling stable convergence to the secure equilibrium with fewer committed players. This comparison highlights that incentive design is essential for achieving both stability and resilience. While the subsidy mechanism stabilises the secure equilibrium ( N A, H ) and reduces the prevalence of attacker–dominant states, it is important to evaluate its broader system-level impact. Therefore, to assess the trade-offs between security and economic outcomes, we next analyse the resulting social welfare under different levels of commitment and subsidy. 
+
+# 5.1 Social Welfare and Collective Security Impact 
+
+This mechanism also resolves the earlier limitation of differential access. Previously, committed defenders improved system safety but did not increase defender welfare, as in Figure 11 (a). Under subsidisation, defender social welfare rises with z, attacker welfare declines (Figure 11 (b)). To evaluate the broader consequences of differential AI access on collective security, we analyse the 
+
+social welfare of the system, defined as the long–run expected utility at evolutionary equilibrium. Let S = {(A, H ), (A, L ), (N A, H ), (N A, L ) be the set of macro–states, and let πs(z, β ) denote the stationary probability of state s ∈ S under ( z, β ). If fd(s) and fa(s) are defender and attacker payoffs in state s, respectively, then following [59], total social welfare is computed as: 
+
+SW (z, β ) = ∑
+
+> s∈S
+
+πs(z, β ) [ fd(s) + fa(s)] . (19) This quantity reflects the total expected benefit across the full population when the system has settled into its stationary distribution. Using baseline parameter values, per–state social welfare is the sum of defender and attacker payoffs: 
+
+P ayof f (A, H ) = f HA + f AH , P ayof f (A, L ) = f LA + f AL ,P ayof f (N A, H ) = f HN A + f N A H , P ayof f (N A, L ) = f LN A + f N A L .
+
+15 Since total SW aggregates payoffs of both defenders and attackers, reductions in attacker payoff may decrease total welfare even when security improves. Therefore, from a cybersecurity perspective, it is more informative to evaluate defender and attacker welfare separately: 
+
+SW D (z, β ) = ∑
+
+> s∈S
+
+πs(z, β ) fD (s), SW A(z, β ) = ∑
+
+> s∈S
+
+πs(z, β ) fA(s). (20) 
+
+> Table 8: Impact of committed defenders and subsidy on social welfare.
+
+Case SW D SW A SW 
+
+z = 0 (no subsidy) 0.264 0.011 0.275 
+
+z = 10 (no subsidy) 0.274 -0.190 0.084 
+
+z = 10 (with subsidy) 0.315 -0.191 0.125 
+
+Subfigure 11(a) shows that increasing z sharply reduces attacker social welfare, confirming re-duced attacker advantage—a desirable security outcome. However, defender welfare remains nearly constant because defenders continue to pay the high cost CH . In contrast, when subsidies are intro-duced (Subfigure 11(b)), defender welfare increases with z while attacker welfare declines further, indicating that subsidy not only enhances security but also improves defender incentives.                                 
+
+> (a) (b)
+> Figure 11: Effect of Committed Defenders on Social Welfare. Sub figure (a) shows that as the number of committed defenders z increases, defender welfare SW D(z) (blue) stays nearly flat while attacker welfare
+> SW A(z) (red) drops sharply, and their sum SW (z) (black) also drops. Subfigure (b) adds the case with subsidised committed defenders z, where attacker welfare (red) drops more steeply and defender welfare (blue) rises slightly with z, indicating that subsidising committed defenders benefits defenders. Overall, more committed defenders hurt attackers but do not meaningfully benefit defenders unless the cost of H
+> defence is reduced. Baseline parameters are used for these plots ( N= 100, cah = 0 .85, bah = 1 .90, cal = 0 .1,
+> bal = 1 .60, pdh = 0 .82, pdl = 0 .75, BH= 0 .75, BL= 0 .55, CH= 0 .41, CL= 0 .20, WH= 0 .22, WL= 0 .10).
+
+Overall, these results demonstrate that while committed defenders alone improve system safety, subsidy is essential to translate these improvements into tangible welfare gains and stable adoption of high defence. Having established both the security and welfare benefits of subsidy-enhanced dif-ferential access, we now discuss the broader policy implications, practical relevance, and limitations of this mechanism. 
+
+# 6 Discussion 
+
+This study shows that cyber defence effectiveness in finite populations is strongly influenced by empowering a small number of committed defenders with high–capability AI defence tools. While traditional cybersecurity strategies often emphasise increasing penalties or disruption costs for at-tackers [60, 61], our findings show that strengthening defence incentives has a stronger and more stable impact at the population level. In contrast to behaviour-based defence mechanisms [48], our approach targets structural incentives through commitment and subsidy to shift population-level dynamics. Introducing committed H defenders reshapes the evolutionary dynamics and creates a critical-mass phenomenon that a small number ( z ≥ 1 in N = 100) is sufficient to shift the system toward secure outcomes, even when attackers remain present. However, commitment alone is not sufficient. Without subsidy, the high cost CH limits sustained adoption of H defence and prevents improve-ments in defender welfare. The introduction of subsidy resolves this limitation. By reducing the cost burden for committed defenders, subsidy accelerates convergence to ( N A, H ), increases SW D , and 16 further suppresses attacker incentives. This highlights a key insight: stability and welfare improve-ment require both commitment and incentive support, which is in line with recent work on differential AI access [7] and decentralised cyber defence models [62]. They support practical policy mechanisms such as selective subsidy, enterprise-tier access control, and trusted defender certification. Overall, the study confirms that strengthening defence incentives can stabilise cyber ecosystems more effec-tively than penalising attackers. Differential AI access together with a small group of subsidised committed defenders can accelerate convergence to secure equilibria and improve defender welfare by reducing attack incentives. 
+
+Policy Implications for Secure AI Deployment 
+
+• Targeted defence investment may outperform uniform allocation. The model suggests that a small number of subsidised, committed high-defence actors ( z > 1 for 
+
+N = 100) can drive system-wide adoption of strong defence. 
+
+• Subsidising defenders is more effective than penalising attackers. The results indicate that improving defence incentives leads to more stable and resilient outcomes than increasing attacker costs. 
+
+• Differential AI access can support practical governance. This can be interpreted as controlled access to high-capability AI defence tools improving security without requiring full population deployment. 
+
+• Subsidy can improve both security and welfare. The model shows that reducing defence costs for committed defenders increases adoption of H strategies and raises defender welfare. 
+
+• Certain actors may function as committed defenders. This can be interpreted as security agencies, regulated vendors, or trusted organisations acting as stabilising nodes that promote cooperative defence behaviour. These results provide a clear foundation for designing AI-enabled cybersecurity policies, targeted resource allocation strategies and strategic AI governance in national cybersecurity infrastructures. While this study provides a rigorous EGT analysis of cyber defence in finite populations, several limitations remain. Attackers in our model are homogeneous and do not adapt over time. In practice, attackers learn, coordinate, and evolve strategies, which may change system dynamics. Extending the model to adaptive attackers is an important direction for future work. In addition, the subsidy mechanism is modelled in a simplified way. Real-world implementation would involve budget constraints, regulatory design, and institutional factors that are not captured here. These aspects require further empirical and policy-driven analysis. 
+
+Future Work While the present model captures the essential interplay between differential AI ac-cess, committed defence, and subsidised incentives, several important extensions remain open. First, future work should incorporate richer forms of strategic heterogeneity, including adaptive attack-ers, defenders with diverse resource levels, and endogenous investment decisions. Such extensions would bring the model closer to real cyber environments, where both offensive and defensive capa-bilities evolve over time and actors differ substantially in their ability to bear the cost of advanced protection. Second, it would be valuable to examine broader classes of institutional incentives. In addition to subsidies, future models could study mixed policy instruments such as rewards for adopting strong defence, penalties for weak defence, and adaptive regulatory mechanisms that respond to observed attack prevalence. Analysing such hybrid incentive schemes could clarify how public policy and organisational governance jointly shape defensive behaviour across interconnected sectors [63]. Third, a particularly important direction is the design of principled subsidy mechanisms under explicit budget constraints. Rather than treating subsidy as exogenous, future research could in-vestigate how limited public or institutional resources should be allocated across defenders, which agents should be prioritised, and under what conditions targeted intervention yields the greatest systemic benefit. Addressing these questions would help translate the present theoretical results into actionable guidance for cybersecurity policy and AI governance. Overall, these directions would further connect evolutionary game-theoretic modelling with de-ployable AI-enabled cybersecurity systems and deepen our understanding of how strategic incentives can be used to build resilient digital infrastructures under technological asymmetry. 17 7 Conclusions 
+
+In this paper, we studied cyber attack-defence dynamics in finite populations through an evo-lutionary game-theoretic framework and investigated how differential access to AI-enabled defence capabilities shapes long-run security outcomes. Our results show that costly high-quality defence creates a structural obstacle to cyber resilience: even when powerful defensive tools are available, defenders are often driven toward cheaper and weaker strategies, allowing attacks to persist. We then examined whether this vulnerability can be mitigated through differential AI access, committed defence, and targeted subsidies. Allowing some defenders to access stronger AI-based protection improves the defensive landscape, but this alone is not sufficient to secure the system. A small committed group of high-defence players can redirect the social-learning dynamics and increase the visibility of strong defence, yet commitment by itself does not reliably stabilise the secure equilibrium ( N A, H ). The reason is fundamental: as long as high defence remains costly, most defenders still face incentives to avoid it. The main contribution of the paper is to show that subsidised commitment overcomes this bar-rier. By removing the cost disadvantage for committed defenders, subsidies make strong defence more evolutionarily sustainable and amplify its influence on the wider population. Across extensive random game experiments, subsidised commitment consistently increases adoption of high defence, lowers successful attack rates, and accelerates convergence toward secure outcomes. The welfare analysis further strengthens this conclusion: commitment alone does not guarantee higher defender welfare, whereas subsidy-supported commitment improves defender outcomes while continuing to suppress attacker incentives. Taken together, these findings show that stabilising cyber ecosystems depends less on punishing attackers than on strengthening the incentives and capacity of defenders. A relatively small but well-supported set of trusted defenders can generate system-wide security gains without requiring universal deployment of expensive technologies. This insight is especially relevant in AI-enabled cybersecurity, where capability asymmetries and resource constraints are likely to become increas-ingly important. More broadly, our results provide a theoretical foundation for policy interventions based on differential access, committed defence, and targeted financial support as practical tools for improving resilience in adversarial digital environments. 
+
+# Acknowledgements 
+
+T.A.H. and Z.S. are supported by EPSRC (grant EP/Y00857X/1). M.P. was supported by the Slovenian Research and Innovation Agency (Grant No. P1-0403). 
+
+# References 
+
+[1] Caitriona H Heinl. Artificial (intelligent) agents and active cyber defence: Policy implications. In 2014 6th International Conference On Cyber Conflict (CyCon 2014) , pages 53–66. IEEE, 2014. [2] Thanh Cong Truong, Quoc Bao Diep, and Ivan Zelinka. Artificial intelligence in the cyber domain: Offense and defense. Symmetry , 12(3):410, 2020. [3] Anirban Chakraborty, Manaar Alam, Vishal Dey, Anupam Chattopadhyay, and Debdeep Mukhopadhyay. A survey on adversarial attacks and defences. CAAI Transactions on In-telligence Technology , 6(1):25–45, 2021. [4] Olakunle Abayomi Ajala. Leveraging ai/ml for anomaly detection, threat prediction, and au-tomated response. World Journal of Advanced Research and Reviews , 2024. [5] Kacper Zdrojewski. Ai-powered cyberattacks: A comprehensive review and analysis of emerging threats. Advances in IT and Electrical Engineering , 31:55–70, 2025. [6] Assion K Tetteh. Cybersecurity needs for smes. Issues in Information Systems , 25(1), 2024. [7] Shaun Ee, Chris Covino, Cara Labrador, Christina Krawec, Jam Kraprayoon, and Joe O’Brien. Asymmetry by design: Boosting cyber defenders with differential access to ai. arXiv preprint arXiv:2506.02035 , 2025. 18 [8] Arne Traulsen, Martin A Nowak, and Jorge M Pacheco. Stochastic dynamics of invasion and fixation. Physical Review E—Statistical, Nonlinear, and Soft Matter Physics , 74(1):011909, 2006. [9] Naoki Masuda. Evolution of cooperation driven by zealots. Scientific reports , 2(1):646, 2012. [10] Hasib Mahmud, Samrat Sohel Mondal, and Md Rajib Arefin. Eco-evolutionary games with zealots. Physical Review E , 113(2):024305, 2026. [11] Yohei Nakajima and Naoki Masuda. Evolutionary dynamics in finite populations with zealots. 
+
+Journal of mathematical biology , 70(3):465–484, 2015. [12] Adeela Bashir, Zia Ush Shamszaman, Zhao Song, and The Anh Han. Co-evolutionary dynamics of attack and defence in cybersecurity. Knowledge-Based Systems , page 115750, 2026. [13] Adeela Bashir, Zhao Song, Ndidi Bianca Ogbo, Nataliya Balabanova, Martin Smit, Chin-wing Leung, Paolo Bova, Manuel Chica Serrano, Dhanushka Dissanayake, Manh Hong Duong, et al. Trust as monitoring: Evolutionary dynamics of user trust and ai developer behaviour. arXiv preprint arXiv:2603.24742 , 2026. [14] Maria R D’Orsogna and Matjaˇ z Perc. Statistical physics of crime: A review. Physics of life reviews , 12:1–21, 2015. [15] Matjaˇ z Perc, Jillian J Jordan, David G Rand, Zhen Wang, Stefano Boccaletti, and Attila Szolnoki. Statistical physics of human cooperation. Physics Reports , 687:1–51, 2017. [16] Zhao Song and The Anh Han. Emergence of cooperation and commitment in optional prisoner’s dilemma. Applied Mathematical Modelling , 155:116603, 2026. [17] Xinglong Qu, Shun Kurokawa, and The-Anh Han. The evolution of cooperation and tolerance under conditional dissociation in cohesive population. Chaos, Solitons & Fractals , 208:118214, 2026. [18] David G Rand, Corina E Tarnita, Hisashi Ohtsuki, and Martin A Nowak. Evolution of Fair-ness in the One-shot Anonymous Ultimatum Game. Proceedings of the National Academy of Sciences , 110(7):2581–2586, 2013. [19] Ioannis Zisis, Sibilla Di Guida, The Anh Han, Georg Kirchsteiger, and Tom Lenaerts. Generosity Motivated by Acceptance-Evolutionary Analysis of an Anticipation Game. Scientific reports ,5(1):18076, 2015. [20] Weini Huang, Christoph Hauert, and Arne Traulsen. Stochastic game dynamics under de-mographic fluctuations. Proceedings of the National Academy of Sciences , 112(29):9064–9069, 2015. [21] Ananda Shikhara Bhat. A stochastic field theory for the evolution of quantitative traits in finite populations. Theoretical Population Biology , 161:1–12, 2025. [22] Carlos Rombaldo Junior, Ingolf Becker, and Shane Johnson. Unaware, unfunded and unedu-cated: a systematic review of sme cybersecurity. arXiv preprint arXiv:2309.17186 , 2023. [23] Haiat Perozzo, Aurelio Ravarini, and Fatema Zaghloul. Assessing cybersecurity readiness within smes: proposal of a socio-technical based model. Proceedings http://ceur-ws. org. ISSN ,1613:0073, 2021. [24] Araz Taeihagh. Governance of generative ai, 2025. [25] Emmanouil Papagiannidis, Ida Merete Enholm, Chirstian Dremel, Patrick Mikalef, and John Krogstie. Toward ai governance: Identifying best practices and potential barriers and outcomes. 
+
+Information Systems Frontiers , 25(1):123–141, 2023. [26] Filippo Zimmaro, Manuel Miranda, Jos´ e Mar´ ıa Ramos Fern´ andez, Jes´ us A Moreno L´ opez, Max Reddel, Valeria Widler, Alberto Antonioni, and The Anh Han. Emergence of cooperation in the one-shot prisoner’s dilemma through discriminatory and samaritan ais. Journal of the Royal Society Interface , 21(218):20240212, 2024. 19 [27] David Scott Hunter and Tauhid Zaman. Optimizing opinions with stubborn agents. Operations Research , 70(4):2119–2137, 2022. [28] Theodor Cimpeanu, Francisco C Santos, Lu´ ıs Moniz Pereira, Tom Lenaerts, and The Anh Han. Artificial intelligence development races in heterogeneous settings. Scientific Reports ,12(1):1723, 2022. [29] Xinrun WANG, Bo AN, and Hau CHAN. Who should pay the cost: A game-theoretic model for government subsidized investments to improve national cybersecurity.(2019). In Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI) , pages 10–16, 2019. [30] Hui Ge, Lei Zhao, Dong Yue, Xiangpeng Xie, Linghai Xie, Sergey Gorbachev, Iakov Korovin, and Yuan Ge. A game theory based optimal allocation strategy for defense resources of smart grid under cyber-attack. Information Sciences , 652:119759, 2024. [31] Deepak Tosh, Shamik Sengupta, Charles A Kamhoua, and Kevin A Kwiat. Establishing evo-lutionary game models for cyber security information exchange (cybex). Journal of Computer and System Sciences , 98:27–52, 2018. [32] Josef Hofbauer and Karl Sigmund. Evolutionary game dynamics. Bulletin of the American mathematical society , 40(4):479–519, 2003. [33] Hao Hu, Yuling Liu, Chen Chen, Hongqi Zhang, and Yi Liu. Optimal decision making approach for cyber security defense using evolutionary game. IEEE Transactions on Network and Service Management , 17(3):1683–1700, 2020. [34] Mohammad Salahshour. Perceptual rationality: an evolutionary game theory of perceptually rational decision-making. Royal Society Open Science , 12(10):251125, 2025. [35] Dongyoung Park and Gaby G Dagher. A non-zero-sum game model for optimal cyber defense strategies. arXiv preprint arXiv:2505.16049 , 2025. [36] Drew Fudenberg, Martin A Nowak, Christine Taylor, and Lorens A Imhof. Evolutionary game dynamics in finite populations with strong selection and weak mutation. Theoretical population biology , 70(3):352–363, 2006. [37] Lorens A Imhof, Drew Fudenberg, and Martin A Nowak. Evolutionary cycles of cooperation and defection. Proceedings of the National Academy of Sciences , 102(31):10797–10800, 2005. [38] The Anh Han. Emergence of social punishment and cooperation through prior commitments. In 
+
+Proceedings of the thirtieth AAAI conference on artificial intelligence , pages 2494–2500, 2016. [39] Carl Veller and Laura K Hayward. Finite-population evolution with rare mutations in asym-metric games. Journal of Economic Theory , 162:93–113, 2016. [40] Drew Fudenberg and Lorens A Imhof. Imitation processes with small mutations. Journal of Economic Theory , 131(1):251–262, 2006. [41] Martin A Nowak, Akira Sasaki, Christine Taylor, and Drew Fudenberg. Emergence of cooper-ation and evolutionary stability in finite populations. Nature , 428(6983):646–650, 2004. [42] Martin Wilson and Sharon McDonald. One size does not fit all: exploring the cybersecurity perspectives and engagement preferences of uk-based small businesses. Information Security Journal: A Global Perspective , 34(1):15–49, 2025. [43] Marta F Arroyabe, Carlos FA Arranz, Ignacio Fernandez De Arroyabe, and Juan Carlos Fer-nandez de Arroyabe. Revealing the realities of cybercrime in small and medium enterprises: Understanding fear and taxonomic perspectives. Computers & security , 141:103826, 2024. [44] Teresa Hammerschmidt, Katharina Stolz, and Oliver Posegga. Bridging the gap: inequali-ties that divide those who can and cannot create sustainable outcomes with ai. Behaviour & Information Technology , pages 1–30, 2025. [45] OpenAI. Providing chatgpt to the entire u.s. federal workforce. https://openai.com/blog/ providing-chatgpt-to-the-entire-us-federal-workforce , August 6 2025. 20 [46] Elizabeth Seger, Noemi Dreksler, Richard Moulange, Emily Dardaman, Jonas Schuett, K Wei, Christoph Winter, Mackenzie Arnold, Se´ an ´O h ´Eigeartaigh, Anton Korinek, et al. Open-sourcing highly capable foundation models: An evaluation of risks, benefits, and alternative methods for pursuing open-source objectives. arXiv preprint arXiv:2311.09227 , 2023. [47] Andr´ es Ilcic, Miguel Fuentes, and Diego Lawler. Artificial intelligence, complexity, and systemic resilience in global governance. Frontiers in Artificial Intelligence , 8:1562095, 2025. [48] Xiang Hu and Chuandong Li. Security mechanisms against malicious strategy attacks in the spatial snowdrift game. Applied Mathematical Modelling , page 116374, 2025. [49] Fernando P Santos, Jorge M Pacheco, Ana Paiva, and Francisco C Santos. Evolution of collective fairness in hybrid populations of humans and agents. In Proceedings of the AAAI conference on artificial intelligence , volume 33, pages 6146–6153, 2019. [50] Arne Traulsen, Jorge M Pacheco, and Martin A Nowak. Pairwise comparison and selection temperature in evolutionary game dynamics. Journal of theoretical biology , 246(3):522–529, 2007. [51] Mojca Volk. A safer future: Leveraging the ai power to improve the cybersecurity in critical infrastructures. Electrotechnical Review/Elektrotehniski Vestnik , 91(3), 2024. [52] Oluwatobi Emehin, Ibrahim Akanbi, Isaac Emeteveke, and Oladele J Adeyeye. Enhancing cybersecurity with safe and reliable ai: mitigating threats while ensuring privacy protection. 
+
+International Journal of Computer Applications Technology and Research, doi , 10, 2024. [53] Bloomberg News. Us adds openai, google, and anthropic to list of approved ai vendors for federal agencies. https://www.bloomberg.com/ , August 5 2025. [54] Vittorio Bil` o, Gianpiero Monaco, and Luca Moscardelli. Compensate to not deviate: On sub-sidised equilibria. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 40, pages 16691–16699, 2026. [55] Utsav Sadana and Georges Zaccour. Subsidizing a new technology: An impulse stackelberg game approach. European Journal of Operational Research , 2025. [56] Miaomiao Li, Guikun Cao, Haibo Li, Zhaoxing Hao, and Lu Zhang. How government subsidies affect technology innovation in the context of industry 4.0: evidence from chinese new-energy enterprises. Kybernetes , 53(11):4149–4171, 2024. [57] Chaoyang Luo, Yuji Zhang, Minyu Feng, and Attila Szolnoki. Evolutionary cooperation with game transitions via markov decision chain in networked population. Applied Mathematical Modelling , page 116710, 2025. [58] Manh Hong Duong et al. Random evolutionary games and random polynomials. Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences , 481(2319), 2025. [59] The Anh Han, Manh Hong Duong, and Matjaz Perc. Evolutionary mechanisms that pro-mote cooperation may not promote social welfare. Journal of the Royal Society Interface ,21(220):20240547, 2024. [60] Palvi Aggarwal, Zahid Maqbool, Antra Grover, VS Chandrasekhar Pammi, Saumya Singh, and Varun Dutt. Cyber security: A game-theoretic analysis of defender and attacker strategies in defacing-website games. In 2015 International Conference on Cyber Situational Awareness, Data Analytics and Assessment (CyberSA) , pages 1–8. IEEE, 2015. [61] Nadia Khadam, Nasreen Anjum, Abu Alam, Qublai Ali Mirza, Muhammad Assam, Emad AA Ismail, and Mohamed R Abonazel. How to punish cyber criminals: A study to investigate the target and consequence based punishments for malware attacks in uk, usa, china, ethiopia & pakistan. Heliyon , 9(12), 2023. [62] Ming Liu, Ruiguang Li, Weiling Chang, Jieming Gu, Shouying Bai, Jia Cui, and Lu Ma. Modeling and analysis of the decentralized interactive cyber defense approach. China Commu-nications , 19(10):116–128, 2022. 21 [63] Yuyuan Liu, Lichen Wang, Ruqiang Guo, Shijia Hua, Linjie Liu, Liang Zhang, et al. Evolution of trust in the n-player trust game with transformation incentive mechanism. Journal of the Royal Society Interface , 22(224), 2025. 22 Appendix 
+
+This appendix provides additional technical details and supporting results for the main analysis. We first present the average payoffs used to derive the evolutionary dynamics for both attacker and defender populations in Section 3. We then provide the full Markov transition matrix M that governs the stochastic evolution between the four strategy pairs in Section 4. The remaining figures offer supplementary numerical results, including extended analyses of com-mitment levels and parameter sensitivity for committed players supporting Figures 7 and 8, and the impact of subsidy supporting Figure 9 in the main text. These results support the main findings by illustrating how system behaviour changes across different parameter regimes and confirming the robustness of the secure equilibrium under varying conditions. 
+
+Attacker-side Payoffs: 
+
+When defender population is all defence ( D): 
+
+f DA = (−ca + ba(1 − pd)) NN , f DN A = (0) NN (A1) When defender population is all not defence ( N D ): 
+
+f N D A = (−ca + ba)NN , f N D N A = (0) NN (A2) 
+
+Defender-side Payoffs: 
+
+When attacker population is all attack ( A): 
+
+f AD = (−cd + pdbd − w(1 − pd)) NN , f AN D = (−w)NN (A3) When attacker population is all not attack ( N A ): 
+
+f N A D = (−cd + bd)NN , f N A N D = (0) NN (A4) 
+
+Markov transition matrix M : 
+
+> M=
+
+                                          
+
+> 1−12(ρDA→N A +ρAD→N D )12ρDA→N A 12ρAD→N D 0
+> 12ρDN A →A1−12(ρDN A →A+ρN A D→N D )012ρN A D→N D
+> 12ρAN D →D01−12(ρAN D →D+ρN D A→N A )12ρN D A→N A
+> 012ρN A N D →D12ρN D N A →A1−12(ρN A N D →D+ρN D N A →A)
+
+
+
+> (A5)
+
+23 Figure A1: Figure shows the stationary distribution across different levels of commitment z. For small and moderate values of z, the system remains sensitive to the selection intensity β, and the secure state (N A, H ) is not fully stabilised. As z increases, the system gradually transitions towards stability. Only when 
+
+z approaches the total population size does the stationary distribution concentrate entirely on ( N A, H ), indicating that full commitment is required to guarantee robustness in the absence of subsidy. Baseline parameters used are N = 100, cah = 0 .85, bah = 1 .90, cal = 0 .10, bal = 1 .60, pdh = 0 .82, pdl = 0 .75, 
+
+BH = 0 .75, BL = 0 .55, CH = 0 .41, CL = 0 .20, WH = 0 .22, WL = 0 .10, z = 10, β = 0 .1. 
+
+Figure A2: Stationary distributions of the four states ( A, H ), ( A, L ), ( N A, H ), and ( N A, L ) over the ( z, β )space. Increasing the number of committed defenders z shifts the population towards high-defence states, reducing the attacker-dominated state ( A, L ). However, the secure equilibrium ( N A, H ) becomes dominant only at higher levels of commitment and stronger selection intensity β. This highlights that while committed defenders promote high defence, the high cost CH limits full stabilisation of the secure state when commit-ment is low. Baseline parameters are used for these plots ( N = 100, cah = 0 .85, bah = 1 .90, cal = 0 .1, 
+
+bal = 1 .60, pdh = 0 .82, pdl = 0 .75, BH = 0 .75, BL = 0 .55, CH = 0 .41, CL = 0 .20, WH = 0 .22, WL = 0 .10). 
+
+24 Figure A3: Parameter sensitivity analysis for z = 10 . Stationary probabilities of ( A, H ), ( A, L ), (N A, H ), and ( N A, L ) are shown as key model parameters vary. Increasing the probability and benefit of high defence ( pdH , B H ) promotes the secure state ( N A, H ), while increasing the cost of high defence ( CH )reduces its adoption and shifts the population towards attack states. Variations in low-defence parameters (pdL , B L, C L) have a weaker or mixed effect. Overall, even with committed defenders ( z = 10) and ( β = 1), the system remains sensitive to parameter changes, and high defence is not consistently stabilised due to its cost. 
+
+Figure A4: Figure shows the stationary distribution across different levels of commitment z with subsidy. For small and moderate values of z, the system remains sensitive to the selection intensity β, and the secure state ( N A, H ) is not fully stabilised. As z increases, the system gradually transitions towards stability. Only when z approaches the total population size does the stationary distribution concentrate entirely on (N A, H ), indicating that full commitment is required to guarantee robustness in the absence of subsidy. Baseline parameters used are N = 100, cah = 0 .85, bah = 1 .90, cal = 0 .10, bal = 1 .60, pdh = 0 .82, pdl = 0 .75, 
+
+BH = 0 .75, BL = 0 .55, CH = 0 .41, CL = 0 .20, WH = 0 .22, WL = 0 .10, z = 10, β = 0 .1. 
+
+Committed defenders play a dominant stabilising role in the finite population dynamics, as shown in Figure 9 and 10. With strong commitment ( z = 10), the population concentrates around the 25 safe equilibrium ( NA , H ) and becomes largely insensitive to parameter variations, indicating high systemic robustness. 
+
+> (a)
+> (b)
+
+Figure A5: Stationary outcomes under subsidised committed defenders. Heatmaps show that subsidy reduces the effective cost of high defence, increasing the payoff advantage of H defenders. As a result, the system rapidly shifts toward the secure equilibrium ( N A, H ), which becomes stable at low levels of commitment (approximately z ≈ 6) enabling efficient and robust adoption of high defence across a wide range of β. Baseline parameters are N = 100, cah = 0 .85, bah = 1 .90, cal = 0 .10, bal = 1 .60, pdH = 0 .82, 
+
+pdL = 0 .75, BH = 0 .75, BL = 0 .55, CH = 0 .41, CL = 0 .20, WH = 0 .22, and WL = 0 .10. 
+
+26
