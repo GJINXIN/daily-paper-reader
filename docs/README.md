@@ -6,61 +6,74 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-16
-- 运行时间：2026-05-16 19:50:36 UTC
+- 最新运行日期：2026-05-18
+- 运行时间：2026-05-18 20:42:34 UTC
 - 运行状态：成功
-- 本次总论文数：13
-- 精读区：2
+- 本次总论文数：18
+- 精读区：7
 - 速读区：11
 
 ### 今日简报（AI）
-深度复盘 13 篇 AI 前沿进展，聚焦多模态事实核查的证据链构建与多智能体通信拓扑的预测图谱。
-重点推荐 RW-Post 框架，它通过可审计证据实现了野外环境下的多模态事实核查，同时多智能体推理拓扑研究为 LLM 协作提供了全新的后继表示视角。
-建议关注博弈论在多智能体记忆校准中的应用，并思考 AI 不平等背景下集体网络安全的战略应对。
-- 详情：[/202605/16/README](/202605/16/README)
+今日精选 18 篇前沿成果，深度解析 LLM 增强模拟与多模态事实核查的最新突破
+- 详情：[/202605/18/README](/202605/18/README)
 
 ### 精读区论文标签
-1. [RW-Post: Auditable Evidence-Grounded Multimodal Fact-Checking in the Wild](/202605/16/2605.10357v1-rw-post-auditable-evidence-grounded-multimodal-fact-checking-in-the-wild)  
+1. [The Impact of Heatwaves on Population Health: A Large Language Model-Enhanced Agent-Based Simulation](/202605/18/2605.15918v1-the-impact-of-heatwaves-on-population-health-a-large-language-model-enhanced-agent-based-simulation)  
+   标签：评分：10.0/10、query:mas-ss
+   evidence：大语言模型增强的智能体社会模拟
+2. [RW-Post: Auditable Evidence-Grounded Multimodal Fact-Checking in the Wild](/202605/18/2605.10357v2-rw-post-auditable-evidence-grounded-multimodal-fact-checking-in-the-wild)  
    标签：评分：9.0/10、query:mas-ss
-   evidence：社交媒体帖子的多模态事实核查
-2. [Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies](/202605/16/2605.11453v2-predictive-maps-of-multi-agent-reasoning-a-successor-representation-spectrum-for-llm-communication-topologies)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体大模型通信拓扑与推理
+   evidence：社交媒体帖子的多模态事实核查基准
+3. [Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation](/202605/18/2605.15343v1-belief-engine-configurable-and-inspectable-stance-dynamics-in-multi-agent-llm-deliberation)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：基于LLM的智能体模拟协商互动和观点交换
+4. [Validated Hypotheses as a Lens for Human-Likeness Evaluation in AI Agents](/202605/18/2605.15473v1-validated-hypotheses-as-a-lens-for-human-likeness-evaluation-in-ai-agents)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：通过社会科学验证LLM智能体的人类相似性
+5. [Differentiable Mixture-of-Agents Incentivizes Swarm Intelligence of Large Language Models](/202605/18/2605.15706v1-differentiable-mixture-of-agents-incentivizes-swarm-intelligence-of-large-language-models)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：用于复杂推理的自进化多智能体框架
+6. [ALSO: Adversarial Online Strategy Optimization for Social Agents](/202605/18/2605.15768v1-also-adversarial-online-strategy-optimization-for-social-agents)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：用于研究智能体社会智能的社会模拟实验平台
+7. [Toward Natural and Companionable Virtual Agents via Cross-Temporal Emotional Modeling](/202605/18/2605.15812v1-toward-natural-and-companionable-virtual-agents-via-cross-temporal-emotional-modeling)  
+   标签：评分：9.0/10、query:mas-ss
+   evidence：模拟智能体的社会行为和内部情感
 
 ### 速读区论文标签
-1. [EquiMem: Calibrating Shared Memory in Multi-Agent Debate via Game-Theoretic Equilibrium](/202605/16/2605.09278v1-equimem-calibrating-shared-memory-in-multi-agent-debate-via-game-theoretic-equilibrium)  
+1. [Rethinking Ratio-Based Trust Regions for Policy Optimization in Multi-Agent Reinforcement Learning](/202605/18/2605.09212v1-rethinking-ratio-based-trust-regions-for-policy-optimization-in-multi-agent-reinforcement-learning)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体强化学习中的策略优化
+2. [Emergent Communication between Heterogeneous Visual Agents through Decentralized Learning](/202605/18/2605.11695v1-emergent-communication-between-heterogeneous-visual-agents-through-decentralized-learning)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体环境中的涌现通信
+3. [CHAL: Council of Hierarchical Agentic Language](/202605/18/2605.12718v1-chal-council-of-hierarchical-agentic-language)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：用于社会话语中信念优化的多智能体辩证框架
+4. [Task-Aware Automated User Profile Generation for Recommendation Simulation Using Large Language Models](/202605/18/2605.13497v1-task-aware-automated-user-profile-generation-for-recommendation-simulation-using-large-language-models)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：基于LLM的智能体模拟用于推荐系统
+5. [Swarm Skills: A Portable, Self-Evolving Multi-Agent System Specification for Coordination Engineering](/202605/18/2605.10052v2-swarm-skills-a-portable-self-evolving-multi-agent-system-specification-for-coordination-engineering)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体辩论与共享内存校准
-2. [Strategic commitments shape collective cybersecurity under AI inequality](/202605/16/2605.09415v2-strategic-commitments-shape-collective-cybersecurity-under-ai-inequality)  
+   evidence：多智能体协作工程
+6. [PC3D: Zero-Shot Cooperation Across Variable Rosters via Personalized Context Distillation](/202605/18/2605.10377v1-pc3d-zero-shot-cooperation-across-variable-rosters-via-personalized-context-distillation)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：有限群体集体行为的演化博弈论模型
-3. [Predictive Maps of Multi-Agent Reasoning: A Successor-Representation Spectrum for LLM Communication Topologies](/202605/16/2605.11453v1-predictive-maps-of-multi-agent-reasoning-a-successor-representation-spectrum-for-llm-communication-topologies)  
+   evidence：变动阵容下的协作多智能体强化学习
+7. [Coordinated Diffusion: Generating Multi-Agent Behavior Without Multi-Agent Demonstrations](/202605/18/2605.11485v2-coordinated-diffusion-generating-multi-agent-behavior-without-multi-agent-demonstrations)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体大模型通信拓扑与推理
-4. [RecRM-Bench: Benchmarking Multidimensional Reward Modeling for Agentic Recommender Systems](/202605/16/2605.11874v1-recrm-bench-benchmarking-multidimensional-reward-modeling-for-agentic-recommender-systems)  
+   evidence：通过协调扩散生成多智能体行为
+8. [Goal-Oriented Reasoning for RAG-based Memory in Conversational Agentic LLM Systems](/202605/18/2605.12213v1-goal-oriented-reasoning-for-rag-based-memory-in-conversational-agentic-llm-systems)  
    标签：评分：7.0/10、query:mas-ss
-   evidence：智能体推荐系统与多维奖励建模
-5. [Predicting Decisions of AI Agents from Limited Interaction through Text-Tabular Modeling](/202605/16/2605.12411v1-predicting-decisions-of-ai-agents-from-limited-interaction-through-text-tabular-modeling)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：在多智能体交互中预测AI智能体的决策
-6. [Reinforced Collaboration in Multi-Agent Flow Networks](/202605/16/2605.12943v1-reinforced-collaboration-in-multi-agent-flow-networks)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：优化多智能体协作与工作流
-7. [Trustworthy AI: Ensuring Reliability and Accountability from Models to Agents](/202605/16/2605.08964v1-trustworthy-ai-ensuring-reliability-and-accountability-from-models-to-agents)  
+   evidence：基于大语言模型的对话智能体及其检索增强记忆
+9. [Don't Click That: Teaching Web Agents to Resist Deceptive Interfaces](/202605/18/2605.09497v1-dont-click-that-teaching-web-agents-to-resist-deceptive-interfaces)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：在自主设置中评估LLM驱动的智能体并确保问责制
-8. [PRISM: Pareto-Efficient Retrieval over Intent-Aware Structured Memory for Long-Horizon Agents](/202605/16/2605.12260v1-prism-pareto-efficient-retrieval-over-intent-aware-structured-memory-for-long-horizon-agents)  
+   evidence：检测欺骗性界面和虚假内容
+10. [PIVOT: Bridging Planning and Execution in LLM Agents via Trajectory Refinement](/202605/18/2605.11225v1-pivot-bridging-planning-and-execution-in-llm-agents-via-trajectory-refinement)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：用于长程多智能体交互历史的结构化记忆
-9. [Position: Agentic AI System Is a Foreseeable Pathway to AGI](/202605/16/2605.12966v1-position-agentic-ai-system-is-a-foreseeable-pathway-to-agi)  
+   evidence：通过环境交互优化大模型智能体的轨迹
+11. [When to Ask a Question: Understanding Communication Strategies in Generative AI Tools](/202605/18/2605.11240v1-when-to-ask-a-question-understanding-communication-strategies-in-generative-ai-tools)  
    标签：评分：6.0/10、query:mas-ss
-   evidence：智能体AI与多智能体框架处理复杂任务
-10. [Hierarchical Attacks for Multi-Modal Multi-Agent Reasoning](/202605/16/2605.13213v1-hierarchical-attacks-for-multi-modal-multi-agent-reasoning)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：多模态多智能体系统的分层攻击研究
-11. [Speculative Interaction Agents: Building Real-Time Agents with Asynchronous I/O and Speculative Tool Calling](/202605/16/2605.13360v2-speculative-interaction-agents-building-real-time-agents-with-asynchronous-io-and-speculative-tool-calling)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：实时智能体工作流与工具调用
+   evidence：生成式 AI 中的沟通策略与社会行为
 
 
 <div class="dpr-home-promo-card">
