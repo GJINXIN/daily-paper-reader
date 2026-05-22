@@ -1,0 +1,256 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-22T20:43:19.329198+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 6,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2605.14205v2",
+      "title": "SimPersona: Learning Discrete Buyer Personas from Raw Clickstreams for Grounded E-Commerce Agents",
+      "abstract": "LLM-based web agents can navigate live storefronts, yet they often collapse to a single \"average buyer\" policy, failing to capture the heterogeneous and distributional nature of real buyer populations. Existing personalization methods rely on hand-crafted prompt-based personas that are brittle, difficult to scale, context-inefficient, and unable to faithfully represent population-level behavior. We introduce SimPersona, a novel framework that learns discrete buyer types from historical traffic and exposes them to LLM-based web agents as compact persona tokens. Given raw clickstreams, a behavior-aware VQ-VAE induces a discrete buyer-type space that captures the statistical structure of real buyer behavior and merchant-specific buyer population distributions. To provide behavior-specific guidance to LLM-based web agents, SimPersona maps each learned buyer type to a dedicated persona token in the LLM agent vocabulary and fine-tunes the agent with these tokens on real browsing traces. At inference, each synthetic buyer is assigned to a learned buyer type with a single encoder forward pass, requiring no retraining or store-specific prompt engineering. For population-level simulation, SimPersona samples buyer types from each merchant's empirical distribution over the learned VQ-VAE codebook and instantiates agents with the corresponding persona tokens, preserving merchant-specific buyer population distributions. Evaluated on $8.37$M buyers across $42$ held-out live storefronts, SimPersona achieves $78\\%$ conversion-rate alignment with real buyers, exhibits interpretable behavioral variation across buyer types, and outperforms a baseline with $8\\times$ more parameters on goal-oriented shopping tasks. We further release an open-source data pipeline that converts raw e-commerce event logs into buyer representations and agent-training traces.",
+      "authors": [
+        "Zahra Zanjani Foumani",
+        "Alberto Castelo",
+        "Shuang Xie",
+        "Ted Chaiwachirasak",
+        "Han Li",
+        "Lingyun Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-14T00:01:11+00:00",
+      "link": "https://arxiv.org/pdf/2605.14205v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "simulating heterogeneous population behavior",
+      "llm_evidence_cn": "模拟异构群体行为",
+      "llm_evidence": "模拟异构群体行为",
+      "canonical_evidence": "模拟异构群体行为",
+      "llm_tldr_en": "Learns discrete buyer personas from clickstreams to create grounded, heterogeneous LLM-based e-commerce agents.",
+      "llm_tldr_cn": "从点击流中学习离散买家画像，以创建具有真实感和异构性的LLM电商智能体。",
+      "llm_tldr": "从点击流中学习离散买家画像，以创建具有真实感和异构性的LLM电商智能体。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.14205v2"
+    },
+    {
+      "id": "2605.13663v1",
+      "title": "Fine-tuning with Hierarchical Prompting for Robust Propaganda Classification Across Annotation Schemas",
+      "abstract": "Propaganda detection in social media is challenging due to noisy, short texts and low annotation agreements. We introduce a new intent-focused taxonomy of propaganda techniques and compare it against an established, higher-agreement schema. Along three dimensions (model portfolio, schema effects, and prompting strategy) we evaluate the taxonomies as a classification task with the help of four language models (GPT-4.1-nano, Phi-4 14B, Qwen2.5-14B, Qwen3-14B). Our results show that fine-tuning is essential, since it transforms weak zero-shot baselines into competitive systems and reveals methodological differences that are hidden using base models. Across schemas, the Qwen models achieve the strongest overall performance, and Phi-4 14B consistently outperforms GPT-4.1-nano. Our hierarchical prompting method (HiPP), which predicts fine-grained techniques before aggregating them, is especially beneficial after fine-tuning and on the more ambiguous, low-agreement taxonomy, while remaining competitive on the simpler schema. The HQP dataset, annotated with the new intent-based labels, provides a richer lens on propaganda's strategic goals and a challenging benchmark for future work on robust, real-world detection.",
+      "authors": [
+        "Lukas Stähelin",
+        "Veronika Solopova",
+        "Max Upravitelev",
+        "David Kaplan",
+        "Ariana Sahitaj",
+        "Premtim Sahitaj",
+        "Charlott Jakob",
+        "Sebastian Möller",
+        "Vera Schmitt"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.CY"
+      ],
+      "published": "2026-05-13T15:19:46+00:00",
+      "link": "https://arxiv.org/pdf/2605.13663v1",
+      "tags": [
+        "keyword:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "propaganda detection in social media using language models",
+      "llm_evidence_cn": "利用语言模型进行社交媒体宣传检测",
+      "llm_evidence": "利用语言模型进行社交媒体宣传检测",
+      "canonical_evidence": "利用语言模型进行社交媒体宣传检测",
+      "llm_tldr_en": "Evaluates fine-tuning strategies for robust propaganda classification in social media texts.",
+      "llm_tldr_cn": "评估了在社交媒体文本中进行鲁棒性宣传分类的微调策略与分类模式。",
+      "llm_tldr": "评估了在社交媒体文本中进行鲁棒性宣传分类的微调策略与分类模式。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.13663v1"
+    },
+    {
+      "id": "2605.14879v1",
+      "title": "Temporal Fair Division in Multi-Agent Systems: From Precise Alternation Metrics to Scalable Coordination Proxies",
+      "abstract": "A plethora real-world environments require agents to compete repeatedly for the same limited resource, calling for a temporal notion of fairness judged across entire interaction histories. This paper advances the theory of temporal fair division by introducing Rotational Periodicity (RP), a family of lightweight metrics, alongside the ALT family of sliding-window measures, within a unified framework for repeated multi-agent resource competition.   We formalise the Multi-Agent Battle of the Exes (MBoE) as a repeated fair division instance and establish Perfect Alternation (PA) as its canonical temporally fair solution, drawing connections to proportionality, envy-freeness, and n-periodic round-robin allocation. RP decomposes temporal fairness into two complementary sub-measures: Rotational Score (RS) and Waiting Periods Evaluation (WPE), achieving O(nu+n) time complexity versus the O(nu*n) of ALT, where nu is the episode count and n the agent count.   Empirical evaluation across n in {2,3,5,8,10} reveals three findings. First, both RP and ALT expose a coordination failure invisible to traditional metrics: Q-learning agents perform worse than random policies by 10-73% on RP and 7-35% on CALT, while Reward Fairness remains misleadingly high (above 0.92 for n>=3). Second, RP achieves 12-25x computational speedup over ALT, growing with n. Third, the two families are complementary: ALT provides richer discrimination for small populations; RP scales reliably where ALT becomes intractable. Together they form a diagnostic toolkit for temporal fair division.",
+      "authors": [
+        "Nikolaos Al. Papadopoulos"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.GT",
+        "cs.LG"
+      ],
+      "published": "2026-05-14T14:23:32+00:00",
+      "link": "https://arxiv.org/pdf/2605.14879v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "temporal fair division and resource competition in multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的时序公平分配与资源竞争",
+      "llm_evidence": "多智能体系统中的时序公平分配与资源竞争",
+      "canonical_evidence": "多智能体系统中的时序公平分配与资源竞争",
+      "llm_tldr_en": "This paper formalizes temporal fairness in repeated multi-agent resource competition scenarios.",
+      "llm_tldr_cn": "本文形式化了重复多智能体资源竞争场景中的时序公平性。",
+      "llm_tldr": "本文形式化了重复多智能体资源竞争场景中的时序公平性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.14879v1"
+    },
+    {
+      "id": "2605.16245v1",
+      "title": "AI-Mediated Communication Can Steer Collective Opinion",
+      "abstract": "Generative artificial intelligence (AI) is increasingly integrated into the online platforms where humans exchange opinions; large language models (LLMs) now polish users' posts on LinkedIn and provide context for content shared on X. While prior work has shown that AI can express biased opinions and shape individuals' opinions during human-AI interactions, less attention has been paid to its influence on collective opinion formation when mediating human-to-human communication. We address this gap via a combination of empirical and theoretical analyses. We show empirically that LLMs from multiple popular families introduce directional biases when instructed to edit human-written texts on contested topics, for example, nudging texts in favor of gun control and against atheism. Building on this observation, we introduce a mathematical model of opinion dynamics in which an AI system sits between users on a social network, transforming the opinions they express and perceive. By analytically characterizing the equilibrium of this model and performing simulations on real social network data, we show that biases introduced by AI in human-to-human communication can be amplified through the network and shift collective opinion in their direction. In light of these findings, we investigate whether such biases are controllable by online platforms. We audit the \"Explain this post\" feature on X and find evidence of pro-life bias in Grok's outputs on abortion-related content, which we trace back to specific design choices. We conclude with a discussion of the broader implications of our findings in relation to ongoing legislative efforts in the European Union.",
+      "authors": [
+        "Stratis Tsirtsis",
+        "Kai Rawal",
+        "Chris Russell",
+        "Brent Mittelstadt",
+        "Sandra Wachter"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY",
+        "cs.AI",
+        "cs.CL",
+        "cs.LG",
+        "cs.SI"
+      ],
+      "published": "2026-05-15T17:49:24+00:00",
+      "link": "https://arxiv.org/pdf/2605.16245v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "AI influence on collective opinion and social discourse",
+      "llm_evidence_cn": "AI对集体舆论和社会话语的影响",
+      "llm_evidence": "AI对集体舆论和社会话语的影响",
+      "canonical_evidence": "AI对集体舆论和社会话语的影响",
+      "llm_tldr_en": "Analyzes how LLMs steer collective opinion when mediating human-to-human communication on social platforms.",
+      "llm_tldr_cn": "分析了LLM在调解人与人之间的沟通时如何引导社交平台上的集体舆论。",
+      "llm_tldr": "分析了LLM在调解人与人之间的沟通时如何引导社交平台上的集体舆论。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.16245v1"
+    },
+    {
+      "id": "2605.15033v1",
+      "title": "On the Limits of PAC Learning of Networks from Opinion Dynamics",
+      "abstract": "Agents in social networks with threshold-based dynamics change opinions when influenced by sufficiently many peers. Existing literature typically assumes that the network structure and dynamics are fully known, which is often unrealistic. In this work, we ask how to learn a network structure from samples of the agents' synchronous opinion updates. Firstly, if the opinion dynamics follow a threshold rule in which a fixed number of influencers prevent opinion change (e.g., unanimity and quasi-unanimity), we provide an efficient PAC learning algorithm provided that the number of influencers per agent is bounded. Secondly, under standard computational complexity assumptions, we prove that if agents' opinions follow the majority of their influencers, then there is no efficient PAC learning algorithm. We propose a polynomial-time heuristic that successfully learns consistent networks in over $98\\%$ of our simulations on random graphs, with no failures for some specified conditions on the numbers of agents and opinion diffusion examples.",
+      "authors": [
+        "Dmitry Chistikov",
+        "Luisa Estrada",
+        "Mike Paterson",
+        "Paolo Turrini"
+      ],
+      "primary_category": "cs.SI",
+      "categories": [
+        "cs.SI",
+        "cs.CC"
+      ],
+      "published": "2026-05-14T16:29:05+00:00",
+      "link": "https://arxiv.org/pdf/2605.15033v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "learning network structure from agent opinion dynamics",
+      "llm_evidence_cn": "从智能体舆论动力学中学习网络结构",
+      "llm_evidence": "从智能体舆论动力学中学习网络结构",
+      "canonical_evidence": "从智能体舆论动力学中学习网络结构",
+      "llm_tldr_en": "Analyzes the limits of learning social network structures from observed synchronous opinion updates.",
+      "llm_tldr_cn": "分析了从观察到的同步舆论更新中学习社交网络结构的局限性。",
+      "llm_tldr": "分析了从观察到的同步舆论更新中学习社交网络结构的局限性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "emergent social phenomena in multi agent environments",
+      "matched_requirement_id": "req-7",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.15033v1"
+    },
+    {
+      "id": "2605.15573v1",
+      "title": "Response-Conditioned Parallel-to-Sequential Orchestration for Multi-Agent Systems",
+      "abstract": "Multi-agent systems can solve complex tasks through collaboration between multiple Large Language Model agents. Existing collaboration frameworks typically operate in either a parallel or a sequential mode. In the parallel mode, agents respond independently to queries followed by aggregation of responses. In contrast, sequential systems allow agents to communicate via a directed topology and refine one another step by step. However, both modes are inadequate for achieving the desired objectives of minimizing communication and latency while simultaneously maximizing the accuracy of the final response. In this work, we introduce a hybrid paradigm called Nexa, a trainable response-conditioned policy that bridges the gap between the two modes. Nexa begins with a parallel execution stage, embeds the resulting responses into a shared semantic space, and then predicts a sparse directed acyclic communication graph. If the graph is empty, the system remains purely parallel; if it is non-empty, the system performs one sequential message propagation. The policy is a lightweight transformer model, and the method avoids the need for external LLM judges or reward models, as well as hand-crafted test-time topology search. We formalize this hybrid execution problem, show that the resulting graph is acyclic by construction, and that the framework strictly subsumes pure parallel execution, and present a training procedure based on policy-gradient optimization. Results demonstrate that the response-conditioned policy learned by Nexa under one setting can be reused when the number of agents, the task, or the underlying agent changes, thus emphasizing the generalizability of the learned communication policy.",
+      "authors": [
+        "Nurbek Tastan",
+        "Alex Iacob",
+        "Lorenzo Sani",
+        "Meghdad Kurmanji",
+        "Nicholas D. Lane",
+        "Samuel Horvath",
+        "Karthik Nandakumar"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-05-15T03:33:20+00:00",
+      "link": "https://arxiv.org/pdf/2605.15573v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "collaboration between multiple Large Language Model agents",
+      "llm_evidence_cn": "多个大语言模型智能体之间的协作",
+      "llm_evidence": "多个大语言模型智能体之间的协作",
+      "canonical_evidence": "多个大语言模型智能体之间的协作",
+      "llm_tldr_en": "Proposes Nexa, a hybrid orchestration policy to optimize communication and accuracy in multi-agent systems.",
+      "llm_tldr_cn": "提出了Nexa，一种混合编排策略，旨在优化多智能体系统的通信和准确性。",
+      "llm_tldr": "提出了Nexa，一种混合编排策略，旨在优化多智能体系统的通信和准确性。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.15573v1"
+    }
+  ],
+  "quick_skim": []
+}

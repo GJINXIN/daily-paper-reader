@@ -6,74 +6,41 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-18
-- 运行时间：2026-05-18 20:42:34 UTC
+- 最新运行日期：2026-05-22
+- 运行时间：2026-05-22 20:44:50 UTC
 - 运行状态：成功
-- 本次总论文数：18
-- 精读区：7
-- 速读区：11
+- 本次总论文数：6
+- 精读区：6
+- 速读区：0
 
 ### 今日简报（AI）
-今日精选 18 篇前沿成果，深度解析 LLM 增强模拟与多模态事实核查的最新突破
-- 详情：[/202605/18/README](/202605/18/README)
+- 今日共生成 6 篇推荐（精读 6 篇，速读 0 篇）
+- 精读：《Fine-tuning with Hierarchical Prompting for Robust Propaganda Classification Across Annotation Schemas》（8.0/10）, 《SimPersona: Learning Discrete Buyer Personas from Raw Clickstreams for Grounded E-Commerce Agents》（8.0/10）
+- 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
+- 详情：[/202605/22/README](/202605/22/README)
 
 ### 精读区论文标签
-1. [The Impact of Heatwaves on Population Health: A Large Language Model-Enhanced Agent-Based Simulation](/202605/18/2605.15918v1-the-impact-of-heatwaves-on-population-health-a-large-language-model-enhanced-agent-based-simulation)  
-   标签：评分：10.0/10、query:mas-ss
-   evidence：大语言模型增强的智能体社会模拟
-2. [RW-Post: Auditable Evidence-Grounded Multimodal Fact-Checking in the Wild](/202605/18/2605.10357v2-rw-post-auditable-evidence-grounded-multimodal-fact-checking-in-the-wild)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：社交媒体帖子的多模态事实核查基准
-3. [Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation](/202605/18/2605.15343v1-belief-engine-configurable-and-inspectable-stance-dynamics-in-multi-agent-llm-deliberation)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：基于LLM的智能体模拟协商互动和观点交换
-4. [Validated Hypotheses as a Lens for Human-Likeness Evaluation in AI Agents](/202605/18/2605.15473v1-validated-hypotheses-as-a-lens-for-human-likeness-evaluation-in-ai-agents)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：通过社会科学验证LLM智能体的人类相似性
-5. [Differentiable Mixture-of-Agents Incentivizes Swarm Intelligence of Large Language Models](/202605/18/2605.15706v1-differentiable-mixture-of-agents-incentivizes-swarm-intelligence-of-large-language-models)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：用于复杂推理的自进化多智能体框架
-6. [ALSO: Adversarial Online Strategy Optimization for Social Agents](/202605/18/2605.15768v1-also-adversarial-online-strategy-optimization-for-social-agents)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：用于研究智能体社会智能的社会模拟实验平台
-7. [Toward Natural and Companionable Virtual Agents via Cross-Temporal Emotional Modeling](/202605/18/2605.15812v1-toward-natural-and-companionable-virtual-agents-via-cross-temporal-emotional-modeling)  
-   标签：评分：9.0/10、query:mas-ss
-   evidence：模拟智能体的社会行为和内部情感
+1. [Fine-tuning with Hierarchical Prompting for Robust Propaganda Classification Across Annotation Schemas](/202605/22/2605.13663v1-fine-tuning-with-hierarchical-prompting-for-robust-propaganda-classification-across-annotation-schemas)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：利用语言模型进行社交媒体宣传检测
+2. [SimPersona: Learning Discrete Buyer Personas from Raw Clickstreams for Grounded E-Commerce Agents](/202605/22/2605.14205v2-simpersona-learning-discrete-buyer-personas-from-raw-clickstreams-for-grounded-e-commerce-agents)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：模拟异构群体行为
+3. [Temporal Fair Division in Multi-Agent Systems: From Precise Alternation Metrics to Scalable Coordination Proxies](/202605/22/2605.14879v1-temporal-fair-division-in-multi-agent-systems-from-precise-alternation-metrics-to-scalable-coordination-proxies)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多智能体系统中的时序公平分配与资源竞争
+4. [On the Limits of PAC Learning of Networks from Opinion Dynamics](/202605/22/2605.15033v1-on-the-limits-of-pac-learning-of-networks-from-opinion-dynamics)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：从智能体舆论动力学中学习网络结构
+5. [Response-Conditioned Parallel-to-Sequential Orchestration for Multi-Agent Systems](/202605/22/2605.15573v1-response-conditioned-parallel-to-sequential-orchestration-for-multi-agent-systems)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：多个大语言模型智能体之间的协作
+6. [AI-Mediated Communication Can Steer Collective Opinion](/202605/22/2605.16245v1-ai-mediated-communication-can-steer-collective-opinion)  
+   标签：评分：8.0/10、query:mas-ss
+   evidence：AI对集体舆论和社会话语的影响
 
 ### 速读区论文标签
-1. [Rethinking Ratio-Based Trust Regions for Policy Optimization in Multi-Agent Reinforcement Learning](/202605/18/2605.09212v1-rethinking-ratio-based-trust-regions-for-policy-optimization-in-multi-agent-reinforcement-learning)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体强化学习中的策略优化
-2. [Emergent Communication between Heterogeneous Visual Agents through Decentralized Learning](/202605/18/2605.11695v1-emergent-communication-between-heterogeneous-visual-agents-through-decentralized-learning)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：多智能体环境中的涌现通信
-3. [CHAL: Council of Hierarchical Agentic Language](/202605/18/2605.12718v1-chal-council-of-hierarchical-agentic-language)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：用于社会话语中信念优化的多智能体辩证框架
-4. [Task-Aware Automated User Profile Generation for Recommendation Simulation Using Large Language Models](/202605/18/2605.13497v1-task-aware-automated-user-profile-generation-for-recommendation-simulation-using-large-language-models)  
-   标签：评分：8.0/10、query:mas-ss
-   evidence：基于LLM的智能体模拟用于推荐系统
-5. [Swarm Skills: A Portable, Self-Evolving Multi-Agent System Specification for Coordination Engineering](/202605/18/2605.10052v2-swarm-skills-a-portable-self-evolving-multi-agent-system-specification-for-coordination-engineering)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：多智能体协作工程
-6. [PC3D: Zero-Shot Cooperation Across Variable Rosters via Personalized Context Distillation](/202605/18/2605.10377v1-pc3d-zero-shot-cooperation-across-variable-rosters-via-personalized-context-distillation)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：变动阵容下的协作多智能体强化学习
-7. [Coordinated Diffusion: Generating Multi-Agent Behavior Without Multi-Agent Demonstrations](/202605/18/2605.11485v2-coordinated-diffusion-generating-multi-agent-behavior-without-multi-agent-demonstrations)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：通过协调扩散生成多智能体行为
-8. [Goal-Oriented Reasoning for RAG-based Memory in Conversational Agentic LLM Systems](/202605/18/2605.12213v1-goal-oriented-reasoning-for-rag-based-memory-in-conversational-agentic-llm-systems)  
-   标签：评分：7.0/10、query:mas-ss
-   evidence：基于大语言模型的对话智能体及其检索增强记忆
-9. [Don't Click That: Teaching Web Agents to Resist Deceptive Interfaces](/202605/18/2605.09497v1-dont-click-that-teaching-web-agents-to-resist-deceptive-interfaces)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：检测欺骗性界面和虚假内容
-10. [PIVOT: Bridging Planning and Execution in LLM Agents via Trajectory Refinement](/202605/18/2605.11225v1-pivot-bridging-planning-and-execution-in-llm-agents-via-trajectory-refinement)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：通过环境交互优化大模型智能体的轨迹
-11. [When to Ask a Question: Understanding Communication Strategies in Generative AI Tools](/202605/18/2605.11240v1-when-to-ask-a-question-understanding-communication-strategies-in-generative-ai-tools)  
-   标签：评分：6.0/10、query:mas-ss
-   evidence：生成式 AI 中的沟通策略与社会行为
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
