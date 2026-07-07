@@ -1,0 +1,644 @@
+Title: Joint Effects of Recommender Systems and Network Structure on the Visibility of Content and Creators
+
+URL Source: https://arxiv.org/pdf/2607.00258v1
+
+Published Time: Thu, 02 Jul 2026 00:23:36 GMT
+
+Number of Pages: 24
+
+Markdown Content:
+# JOINT EFFECTS OF RECOMMENDER SYSTEMS AND NETWORK 
+
+# STRUCTURE ON THE VISIBILITY OF CONTENT AND CREATORS 
+
+Virginia Morini 
+
+Department of Computer Science, University of Pisa ISTI-CNR, National Research Council of Italy Pisa, Italy 
+
+virginia.morini@di.unipi.it 
+
+Valentina Pansanella 
+
+ISTI-CNR, National Research Council of Italy Pisa, Italy 
+
+valentina.pansanella@isti.cnr.it 
+
+Luca Pappalardo 
+
+ISTI-CNR, National Research Council of Italy Scuola Normale Superiore Pisa, Italy 
+
+luca.pappalardo@isti.cnr.it 
+
+Dino Pedreschi 
+
+Department of Computer Science, University of Pisa Pisa, Italy 
+
+dino.pedreschi@unipi.it 
+
+Giulio Rossetti 
+
+ISTI-CNR, National Research Council of Italy Pisa, Italy 
+
+giulio.rossetti@isti.cnr.it 
+
+# ABSTRACT 
+
+Social media algorithms allocate users’ visibility by ranking content within their social networks. Yet, how recommendation logic and network structure jointly shape visibility across content and creators remains largely understudied. In this work, we tackle this question through agent-based simulations using YSocial, a social media virtual twin, in which agents interact under 7 recommendation strategies and 2 network topologies. We find that recommender logic sets the visibility regime: popularity creates a reinforcement loop in which early reactions increase later exposure, concentrating visibility on a small subset of content and limiting creator visibility to those whose content enters this loop, while collaborative filtering distributes visibility broadly across the active catalogue and user base. When the follower graph shapes candidate selection, network structure changes the direction of inequality: under popularity ranking, creator-level concentration becomes comparable to global popularity, but visibility is systematically redirected toward creators who are already socially popular. Network topology modulates the magnitude of these effects without changing their qualitative ordering. These results show that visibility allocation should be evaluated across content, creators, network position, and temporal reinforcement, and that controlled simulations can help test how feed design distributes visibility before deployment. 
+
+# 1 Introduction 
+
+Recommender systems have a central role in the attention economy, allocating visibility across competing items and creators [ 27 , 4]. This is especially evident on social media platforms, where algorithmically curated feeds have become the main access point to content, and a key instrument for user engagement and retention [34]. In this ecosystem, recommendation strategies determine which content and creators are made visible, how often they are shown, and how exposure is distributed across the platform [ 31 ]. This allocation of exposure is not neutral: by consistently ranking some content above others, recommender systems can amplify the visibility of users, topics or opinions, while reducing the visibility of others [ 30 ]. Prior work has linked the use of recommendation strategies to the emergence of (unintended) outcomes such as selective exposure, filter bubbles, polarization, and radicalization [5 , 7, 26 , 29 ]. At the same time, empirical evidence is mixed and context-dependent: recommendations can concentrate 
+
+> arXiv:2607.00258v1 [cs.SI] 30 Jun 2026
+
+attention on prominent accounts or high-popularity content [ 30 , 57 ], but it can also increase aggregate diversity in some settings [ 58 ] or deamplify niche content when user utility is taken into account [ 50 ]. Similar effects are found across different environments [ 44 , 43 ]: in online retail platforms, recommenders favor popular products, brands, or sellers [33 ]; in location-based platforms, they favor already popular points of interest [ 36 ]. Therefore, the central question is not whether recommender systems always amplify visibility, but how different ranking strategies allocate exposure across different entities. Social media platforms have a further layer of complexity: recommender systems operate on top of a social network that already structures which content can become visible. Even without algorithmic ranking, social networks give highly connected users larger audiences and more opportunities to accumulate attention [ 59 ]. Friendship and following relations also constrain the content available for ranking: on Facebook, for example, the composition of users’ friend networks is a major filter of political exposure, with algorithmic ranking adding a further but smaller layer of selection [5 ]. Network-mediated affordances, such as reshares, provide another visibility channel, expanding the reach of content beyond its original audience and shaping what users see in their feeds [24]. Visibility on social media platforms is shaped by the interaction between ranking algorithms and network structure: recommender systems can amplify advantages already present in the social network, while the social network determines which content and creators are best positioned to benefit from ranking signals. While much of the existing literature examines visibility through the lens of fairness [ 22 ] or exposure-mitigation objectives [ 53 ], the systemic impact on visibility arising from the interaction between recommender systems and social networks remains underexplored in content recommendation. In this work, we address this gap by studying how the interplay between recommendation strategy and social network structure shapes the visibility of content and creators in social media feeds . To this end, we analyze discrimination, coverage, network amplification, and popularity reinforcement among content and creators, and assess whether: i) 
+
+different recommendation strategies redistribute or concentrate visibility across content and creators; ii) network topology modulates the effects of ranking on creator visibility; iii) recommendation strategies couple early engagement to later exposure. To tackle this goal, we use YSocial, a virtual-twin social media simulator that jointly models recommender systems and social network structure, making it suited to study their interaction [ 51 ]. In YSocial, a population of agents interacts with a social media platform by creating, reading, and reacting to content; the platform exposes a feed ranked by a recommender system, while the underlying social network structures the pool of content available for ranking, depending on the recommendation strategy. This simulation approach allows us to study visibility allocation under controlled conditions, making it possible to causally attribute differences in visibility to the mechanisms under study. It also provides access to data that are often invisible on platforms: content that was eligible for recommendation but not shown, which is crucial for a system-level analysis of visibility. We compare seven feed-generation strategies – ranging from reverse-chronological and popularity-based to collaborative, network-aware, and multi-signal – deliberately simplified to isolate common ranking strategies rather than reproduce opaque real-world pipelines. We organize our analysis around two classes of strategies: global recommender systems , which rank content from all users in the platform, and network-aware recommender systems , which prioritize content from followed accounts. Each category is evaluated against a matched reverse-chronological baseline, a minimal and widely adopted ordering strategy in social media [ 30 , 25 ]. To take into account that visibility depends not only on ranking but also on connectivity, we compare these recommendation strategies under two social network topologies: scale-free networks and random networks. Then, we simulate a population of 1000 users interacting with the generated feed (creating content, reading, and reacting) for 60 days, and analyze how each recommendation strategy shapes the distribution of visibility across contents and creators – in terms of discrimination, coverage, network amplification, and popularity reinforcement. Our results show that: • Recommendation strategies shape visibility across content and creators : relative to the baseline, popularity concentrates visibility through temporal reinforcement, collaborative filtering redistributes visibility, and multi-signal ranking produces intermediate effects. • Network structure changes how visibility is allocated : network-aware recommendation reduces overall concentration, but amplifies the advantage of high-degree creators when feeds are generated through popularity signals alone. • Network structure modulates the magnitude of these effects : the qualitative patterns remain stable across topologies, but become stronger in scale-free networks. Our study contributes to understanding how recommender systems shape the distribution of visibility on social media and the systemic consequences that may arise from their design. 2The remainder of the paper is organized as follows. We first review related work, then describe the simulation framework, recommendation strategies, and visibility metrics. We then present results and conclude with a discussion of findings and limitations. 
+
+# 2 Related Works 
+
+Recommender systems are studied both as models to optimize, typically for accuracy, engagement, or other target metrics, and as socio-technical systems whose effects extend beyond prediction quality. A large body of work has introduced beyond-accuracy metrics, including diversity, novelty, and fairness [ 22 ], while multidisciplinary research in computer science, human–AI interaction, sociology, and complex systems increasingly evaluates their consequences for the social systems they participate in [44, 43]. We position our work within this latter perspective. 
+
+Methods. The impact of recommender systems in social media has been studied through different methodologies. The gold-standard approach is represented by controlled studies, such as A/B tests or randomized trials [ 30 , 5 ]. However, such studies remain rare due to data access restrictions and the difficulty of conducting them. External audits and observational studies offer alternatives [ 49 , 9], but remain limited by the lack of access to candidate sets, ranking strategy, and “invisible data”. Simulation approaches offer a complementary strategy: they allow researchers to control system components, isolate design effects, and study long-term dynamics that are difficult to observe empirically [ 15 , 3]. More recent frameworks move toward virtual or digital twins, reproducing platform primitives such as creating content (i.e., posts and comments), following, reacting, and feed construction, sometimes with LLM-enhanced agents [ 51 , 35 ]. 
+
+Recommender Systems and Visibility in Social Media. Prior work shows that different ranking strategies allocate visibility in different ways, and that their effects may be mediated by an underlying social network. The main baseline used to assess the impact of recommender systems is reverse-chronological ranking [ 30 , 7 , 24 , 25 , 39 , 47 , 9, 10 ]: although arguably neutral [ 37 ], it is considered a minimal form of algorithmic ranking necessary to retrieve relevant information. Random recommendation is also commonly employed as a baseline [ 47 , 21 , 18 , 20 ]. By contrast, recommendations driven directly by popularity have rarely been studied in the social media ecosystem. Yet recent survey work shows that recommender systems frequently over-expose popular items, creating popularity bias and reinforcement effects over time [ 32 ]; popularity signals are therefore an important mechanism to isolate and study. A few works directly model popularity-based recommendations [ 8, 11 , 21 , 35 , 52 ], showing that they can amplify engagement or information diffusion and reinforce exposure distortions. Germano et al. [ 23 ] model a dynamic popularity-based ranking in which clicks increase future rank and exposure, showing that popularity feedback can generate concentrated visibility. The effects of collaborative filtering in social media have mainly been studied in the context of link recommendations impact on minority visibility [ 20 , 17 , 18 ]. Despite not directly rewarding popularity, these algorithms are known to have popularity bias: over-exposing popular items while limiting long-tail visibility [ 1]; this is however tightly linked to user preferences and behaviour. 
+
+Recommender Systems and Network Structure. A number of studies explicitly consider the interplay between recommender systems, network structure, and social dynamics. Cinus et al. [14] combine Monte Carlo simulations, people recommenders, and opinion-dynamics models to study echo chambers and polarization under different levels of homophily and modularity. Fabbri et al. [18] and Ferrara et al. [20] simulate repeated interactions between users and link recommenders, showing that people recommenders can generate long-term exposure inequalities and rich-get-richer effects at both group and individual levels. Other works study algorithmic bias and opinion dynamics under different network structures, focusing on consensus, polarization, echo chambers, or minority visibility [ 41 , 42 , 46 , 45 , 47 , 54 , 55 ]. These studies are close to ours in their use of simulation and network structure, but they mainly focus on opinion dynamics or link recommendation rather than on feed creation and the visibility of content and creators. 
+
+Position of our work. This overview highlights a key gap: the interplay between recommender systems and social network topology in shaping visibility allocation on social media platforms remains underexplored. We address this gap by examining how recommendation strategies and network structure jointly influence the visibility of content and creators. In contrast to prior work that focuses on user-side outcomes, we adopt a system-level perspective on visibility. Moreover, unlike studies centered on people recommendation (i.e., suggesting a user to follow), we focus on feed generation. This perspective allows us to isolate how design choices redistribute attention, quantify how much of the active content catalogue remains unseen, and assess whether early engagement translates into sustained exposure. 33 Methods 
+
+3.1 Experimental Setting 
+
+To study the impact of different recommender systems on visibility, we design simulations using YSocial, 1 a virtual twin that reproduces the structural and behavioral properties of microblogging social media platforms such as X/Twitter, Mastodon, and BlueSky [51]. The architecture of YSocial consists of three components: (i) a server that exposes all primitives (e.g., content, comment, share, follow, etc.) and stores the simulation data in a relational database; (ii) a Large Language Model (LLM) that serves requests related to agent interrogations (e.g., generating content and simulating decision-making protocols); and 
+
+(iii) a client that implements the agent logic acting as a middle layer between the server and the LLM. A YSocial simulation is initialized by specifying a population of agents, their profile attributes, the social network, the recommender system used to generate timelines, and the duration of the experiment. In our setting, agent profiles include topic interests and behavioral parameters controlling activity and action frequency. Time is discretized into hourly rounds, with 24 rounds per simulated day. At each round, agents become active according to an hourly activity distribution fitted from Bluesky data [ 19 ]. Active agents can perform platform actions such as creating content, reading, commenting, sharing and reacting. Once all active agents have completed their actions, the global state is updated and the simulation proceeds to the next round. The process is iterated until the simulation reaches the predefined number of days. In particular, agents execute one of three possible actions based on a defined probability distribution: publishing content (30%), commenting on existing content (50%), or reacting to/sharing content (20%). While creating content is an independent action, the latter two are governed by a recommender system, which populates an agent’s feed ranking the top-k most relevant contents according to a given strategy. From such a feed, the agent selects a specific content for interaction uniformly at random. It is worth noting that we disable the LLM component of YSocial so that agents act according to these fixed probabilistic rules, which allows us to isolate the effect of recommender logic from any variability introduced by content generation. In our setting, simulations span 60 days for a total of 1440 rounds each. Each simulation involves a social graph 
+
+G = ( V, E), where V is the population of agents, |V| = 1000 , and E is the set of edges (u, v ) connecting pairs of agents. The edge set E is generated according to one of two static network topologies: • Scale-free network. Generated through a preferential-attachment process (Barabási–Albert model [ 6 ]) in which each newly added node connects to 10 existing nodes, resulting in a scale-free topology with a heavy-tailed degree distribution, with the presence of hubs and strong degree heterogeneity as in real-world social networks. • Random network. Generated by creating edges with probability pER = 0 .02 (Erd˝ os–Rényi model [ 16 ]), resulting in a random graph with node degrees following a binomial distribution. Under this model, degrees are narrowly concentrated around their mean, and large hubs are unlikely. The scale-free network and the random network have comparable average density but different degree heterogeneity [48]. 
+
+3.1.1 Recommender Systems. 
+
+In the simulation, a content is any publishable unit that can appear in a user feed, e.g., a post. If commenting or reading is selected, the agent queries the platform and the server returns a feed F tv composed of top-k k = |F tv | = 10 pieces of content, selected and ranked by the recommender system. Recommendation is restricted to the active catalogue , defined as the set of contents created within the previous τℓ = 72 
+
+rounds (hours). Contents older than τℓ are removed from the candidate set and cannot be recommended. This recency window reflects the short-lived nature of content visibility in social media feeds. We implement seven recommendation strategies that isolate common feed-generation logics. Four global recommender systems rank content from the whole active content catalogue. Three network-aware recommender systems instead use the social graph as part of candidate filtering, prioritizing content produced by followed accounts before applying the corresponding ranking rule. 
+
+Global recommender systems 
+
+Reverse-Chronological (RC). Ranks currently visible contents by creation time in descending order. It serves as the  
+
+> 1https://y-not.social/ ;https://github.com/YSocialTwin
+
+4baseline for global recommender systems and represents a minimal ordering rule without personalization, popularity weighting, or network awareness. 
+
+Popularity (P). Ranks all visible contents by cumulative reaction count, including both likes and dislikes. Ties are broken by reverse-chronological order. 
+
+Item–Item Collaborative Filtering (ICF). Recommends contents similar to those previously liked by the target user. Similarity is based on overlap in the users who liked each pair of contents. Candidates are ranked by shared-like overlap, with recency as a tie-breaker. 
+
+User–User Collaborative Filtering (UCF). Identifies users with similar liking histories and recommends contents liked by these similar users but not yet seen by the target user. Candidates are ranked by the number of similar users who liked them, with recency as a tie-breaker. 
+
+Network-aware recommenders 
+
+Follower-Reverse-Chronological (F). Fills 60% of the timeline with contents from followed creators, ranked in reverse-chronological order. The remaining 40% is filled from the global catalogue in reverse-chronological order. F serves as the baseline for network-aware recommender systems. 
+
+Follower-Popularity (FP). Uses the 60/40 follower-to-global slot allocation. Within both pools, contents are ranked by popularity. 
+
+Linear Ranker (LR). Combines reverse-chronological follower, global popularity, and user–user collaborative filtering candidate pools. Candidates are reranked through a weighted linear score based on recency, followed-author status, user– author affinity, topic similarity, and similar-user signals. 2 Further implementation details are reported in Appendix A. For each combination of network topology and recommender system, we perform 10 independent runs to account for stochastic variability and assess the robustness of the results. 
+
+3.2 Metrics 
+
+We compute a set of metrics aligned with the three dimensions of the analysis: discrimination and coverage, network amplification, and popularity reinforcement. Each metric is computed separately for each simulation run, and results are reported as cross-run aggregate statistics with variability indicators. Differences are computed with respect to the corresponding baseline feed: RC for global recommenders and F for network-aware recommenders. 
+
+Recommendation volume. It measures how many times an entity appears in users’ timelines. For a content p,recommendation volume is: 
+
+rp = X
+
+> v∈V
+
+X
+
+> t
+
+1p ∈ T tv
+
+, (1) where 1[·] is the indicator function. For a creator a, recommendation volume is the total volume received by all contents created by a:
+
+ra = X
+
+> p∈P a
+
+rp, (2) where Pa ⊆ P is the set of contents created by a. Thus, rp measures content-level visibility, while ra measures creator-level visibility. 
+
+Discrimination. It measures the concentration of recommendation volume across entities, via the Gini coefficient, a standard inequality measure that quantifies aggregate diversity in the distribution of recommended items [ 56 ]. Let 
+
+r = ( r1, r 2, . . . , r n) be the vector of recommendation volumes for n entities, either contents or creators, sorted in non-decreasing order. The Gini coefficient is defined as: 
+
+Gx =
+
+Pni=1 (2 i − n − 1) ri
+
+n Pni=1 ri
+
+. (3) where x ∈ { p, a }. Larger values indicate that visibility is concentrated on a smaller subset of entities. We report changes relative to the matched baseline: 
+
+∆G(f ) 
+
+> x
+
+= G(f ) 
+
+> x
+
+− G(b) 
+
+> x
+
+, x ∈ { p, a }, (4) where f is the recommender system under evaluation and b is the corresponding baseline. Positive values of ∆Gx
+
+indicate stronger concentration than the baseline. 
+
+> 2https://github.com/twitter/the-algorithm
+
+53.2.1 Coverage. 
+
+It follows the notion of catalogue coverage in recommender system evaluation, i.e., the share of available items that are recommended to users at least once [ 28 ]. In our setting, we adapt this measure to the time-bounded active catalogue and compute it separately for contents and creators. Since only recent content can be recommended, coverage is defined with respect to the active catalogue. Let t(p) be the creation round of content p and let τℓ be the visibility window. Then, at round t, the active content catalogue is Pact  
+
+> t
+
+={p ∈ P : 0 ≤ t − t(p) < τ ℓ}, where P is the set of all contents. The corresponding active creator catalogue is Aact  
+
+> t
+
+= {a ∈ A : ∃ p ∈ P a ∩ P act  
+
+> t
+
+}, where A is the set of all creators and Pa the set of all contents created by creator a ∈ A . Let rt(x) denote the recommendation frequency of entity x at round t. Coverage is then: 
+
+Ct(X ) = |{ x ∈ X t : rt(x) ≥ 1}| |X t| × 100 , (5) where Xt is either Pact  
+
+> t
+
+or Aact  
+
+> t
+
+. We compute coverage separately for contents and creators, yielding Cp and Ca. We report coverage differences relative to the matched baseline: 
+
+∆C(f ) 
+
+> x
+
+= C(f ) 
+
+> x
+
+− C(b) 
+
+> x
+
+, x ∈ { p, a }, (6) where positive values indicate higher coverage than the baseline. 
+
+Creator Visibility by Degree. We compute two quantities as a function of creator degree in the social network: mean recommendation volume and mean unique reach. These metrics capture how much recommendation volume and how many distinct viewers are allocated to creators in each degree bin, respectively. Let ka denote the degree of creator 
+
+a ∈ A , i.e., the number of edges incident to a in the undirected social graph, and let Ak be the set of creators whose degree falls in bin k. Degree bins are defined separately for each topology before computing aggregate statistics: (i) for scale-free networks, we define bins of width 10 up to degree 120 and width 20 above degree 120; (ii) for random networks, we define bins of width 2. This choice reflects the different degree distributions (heavy tail vs. binomial). For each topology, the bin ranges are defined from the minimum to the maximum degree observed across all runs. A creator with degree ka is assigned to bin [ℓk, u k) if ℓk ≤ ka < u k; each bin is plotted at its midpoint. Within each bin, mean recommendation volume is: 
+
+¯ra(k) = 1
+
+|A k|
+
+X
+
+> a∈A k
+
+ra, (7) where ra is the creator-level recommendation volume defined in Equation (2). Unique reach is based on the number of distinct viewers exposed to at least one content made by creator a,
+
+ua = v ∈ V : ∃ t, ∃ p ∈ P a such that p ∈ T tv ,
+
+and is averaged within each degree bin as 
+
+¯ua(k) = 1
+
+|A k|
+
+X
+
+> a∈A k
+
+ua. (8) We report differences relative to the matched baseline: 
+
+∆¯ r(f ) 
+
+> a
+
+(k) = ¯ r(f ) 
+
+> a
+
+(k) − ¯r(b) 
+
+> a
+
+(k), (9) and 
+
+∆¯ u(f ) 
+
+> a
+
+(k) = ¯ u(f ) 
+
+> a
+
+(k) − ¯u(b) 
+
+> a
+
+(k), (10) where positive values indicate that recommender system f allocates more volume or reach than the baseline to creators in degree bin k.
+
+Popularity reinforcement. It is the Spearman correlation between a content’s early popularity and its later rec-ommendation exposure. For a content p published at round t(p) and observed at age tp, early popularity is 
+
+πtp (p) = Pt(p)+ tp−1 
+
+> s=t(p)
+
+react s(p), where react s(p) indicates the number of reactions to content p. The future ex-posure under feed f is r(f ) 
+
+> tp
+
+(p) = P
+
+> v∈V
+
+Pt(p)+ τℓ−1 
+
+> s=t(p)+ tp
+
+1[p ∈ T sv ]. Popularity reinforcement is then 
+
+ρ(f ) 
+
+> tp
+
+= corr S
+
+
+
+πtp (p), r (f ) 
+
+> tp
+
+(p)
+
+
+
+, (11) computed across contents. Higher values indicate that contents receiving more reactions early in their lifecycle also receive more recommendation exposure later on. We report ρ(f ) 
+
+> tp
+
+in absolute terms rather than as a difference from the matched baseline. 6Figure 1: Recommendation volume distributions (scale-free network). Distribution conditional on contents or creators receiving at least one recommendation. Panels (a) and (b) show global recommender systems per content, p(rco ),and per creator, p(rcr ), respectively. Panels (c) and (d) report the same quantities for network-aware recommender systems. 
+
+# 4 Results 
+
+We organize the results around two classes of strategies – global and network-aware recommender systems – and, within each, distinguish between contents and creators. For each case, we report recommendation volume, discrimination (∆G), coverage ( ∆C), and popularity reinforcement. We focus on the scale-free network; random network results are in Appendix C. 
+
+4.1 Global recommender systems 
+
+Global recommender systems operate independently of the social network, isolating the contribution of ranking strategy to visibility allocation before examining how network structure modulates these effects. We use RC as the baseline and compare it with P and UCF; since UCF and ICF produce nearly identical results, we focus on UCF and report ICF in Appendix E.  
+
+> Takeaway: Without network filtering, ranking strategy alone determines the visibility regime. Popularity (P) acts as a winner-selection mechanism: fewer than 2% of contents receive any recommendation and half of all creators are entirely invisible. Collaborative filtering (UCF, ICF) produces the opposite outcome, keeping nearly all active content in circulation with near-zero concentration.
+
+Contents. The popularity-based recommender (P) yields a highly polarized content-visibility distribution (Figure 1(a), pink line). The majority of contents accumulates very few recommendations, with the distribution mass concentrated near rco ≈ 1–10 . At intermediate visibility values ( r ∈ [10 , 100] ), P assigns substantially less probability mass than RC, creating a gap between the low- and high-exposure segments of the distribution. At the right end of the range, a 7Figure 2: Discrimination and coverage under global recommenders (scale-free network). Panel (a) reports changes in concentration ( ∆G) and panel (b) reports changes in coverage ( ∆C), both relative to RC. Hatched bars denote contents; plain bars denote creators. Error bars indicate cross-run standard deviation. sparse but persistent region of contents receives between roughly 850 and 1,050 recommendations, indicating that P suppresses moderate visibility for most contents while allocating extreme visibility to a small and variable subset. UCF shows the opposite pattern, with a broader distribution of recommendation volume and a concentration of the mass in the low- and intermediate-exposure range (Figure 1(a), green line). Its right tail is smoother and less extreme than that of P, suggesting that UCF expands moderate visibility across more contents rather than concentrating it among a small number of extreme cases. Figure 2 confirms this pattern. The RC baseline already exhibits a moderately unequal content-level distribution (Gp = 0 .68 ). P pushes this to its near-maximum ( Gp = 0 .99 , ∆Gp ≈ 0.31 ) while collapsing content coverage to just 
+
+Cp = 1 .8% (∆Cp ≈ − 36 .6% ): under P, fewer than 2 in 100 contents receive any recommendation at all and the top 10% of entities capture almost 100% of the exposure (Figure 11 in Appendix C). UCF inverts this entirely: Gp = 0 .19 
+
+(∆Gp ≈ − 0.49 ) and Cp = 99 .7% (∆Cp ≈ +61% ), making it the only recommender under which nearly all active content receives at least one recommendation. The item–item variant produces qualitatively equivalent results and is reported in Table 1 in Appendix B. 
+
+Creators. Compared with RC, P produces a highly uneven creator-visibility distribution (Figure 1(b), pink line). A high-frequency low-visibility region, with creators receiving fewer than 10 recommendations, coexists with a sparse flat tail extending to rcr ≈ 10 3–10 4, separated by a small intermediate bump near 10 1. This indicates that more creators receive little visibility under P than under RC. As the number of recommendations increases, the distribution drops steeply and the right tail extends further, stabilizing at around 10 −3, which in our setting corresponds to roughly one creator per exact exposure value. Both RC and UCF instead produce bell-shaped distributions peaked around 
+
+rcr ≈ 10 2–10 3.Quantitatively, P raises creator-level Gini to Ga = 0 .73 (∆Ga ≈ 0.46 ), a larger absolute shift than its own content-level change, and halves creator coverage: only 50 .9% of creators receive any recommendation ( ∆Ca ≈ − 49% ), meaning roughly one in two creators is entirely invisible under P. By contrast, UCF leaves the creator-level structure essentially unchanged relative to RC: Ga = 0 .24 (∆Ga ≈ − 0.03 ) and Ca = 100% (∆Ca = 0 ). The full creator coverage under UCF reflects the mechanism behind its broad content-level circulation. Since similar-user clusters can differ across users, U CF may introduce a diverse set of contents into recommendation lists, making it more likely that at least one content from almost every active creator reaches at least one user. Figure 3 (panels a–c) visualizes these regimes on the network: nodes are sized by degree and colored by the total visibility accumulated by the corresponding creator over the full simulation. Under RC, visibility is broadly distributed, reflecting moderate and relatively uniform exposure across creators. Under P, visibility collapses to a handful of high-visibility nodes surrounded by nearly invisible ones, regardless of their degree, capturing the winner-takes-all 8dynamic at the network level. Under UCF, visibility spreads uniformly across the graph, consistent with near-complete creator coverage. This comparison is consistent across the scale-free network and the random network. Appendix C shows the same qualitative ordering for recommendation volume (Figure 7); exact absolute and relative values for all feeds, entities, and topologies are reported in Table 1 in Appendix B. Since global recommender systems do not use the social graph in candidate selection, differences between the scale-free network and the random network are limited. See also Appendix D for degree-resolved results under global recommender systems. 
+
+Figure 3: Creator visibility for each recommender system (scale-free network). Each panel shows creator visibility in the BA social network under a different feed: (a) RC, (b) P, (c) UCF, (d) F, (e) FP, (f) LR. Node size is proportional to degree; node saturation reflects normalized visibility. Only high-degree or high-visibility nodes are shown. 
+
+4.2 Network-aware recommender systems 
+
+We next examine network-aware recommender systems, which use the follower graph to constrain the candidate pool, allowing us to assess how network topology and ranking strategy jointly shape visibility allocation. Here, F serves as the baseline, while FP adds popularity ranking and LR applies a linear reranking over multiple signals.  
+
+> Takeaway: When the follower graph enters candidate selection, network structure and ranking strategy interact to shape creator visibility. Popularity ranking within the follower pool (FP) disproportionately amplifies visibility for creators having a high degree in the network, reaching concentration levels comparable to global popularity. Multi-signal ranking (LR) attenuates this gradient but does not eliminate it.
+
+Contents. Figure 1(c)-(d) shows the distributions for contents and creators respectively; panel (c) shows that F maintains the broadest content-level distribution, FP pushes mass into the tail, and LR remains intermediate. Interestingly, the F baseline already achieves high content coverage ( Cp = 93 .2% ), substantially above the RC baseline (38 .4% ), reflecting the effect of the follower pool selecting content that would otherwise quickly become obsolete under a global feed. Figure 4 shows how FP and LR depart from this starting point: FP raises content-level Gini to Gp = 0 .84 
+
+(∆Gp ≈ 0.26 ) and lowers content coverage to Cp = 74 .5% (∆Cp ≈ − 18 .8% ). LR moves in the opposite direction: 
+
+Gp = 0 .46 (∆Gp ≈ − 0.12 ) and Cp = 97 .8% (∆Cp ≈ +4 .6% ), a near-universal coverage comparable to UCF. These results indicate that coupling the follower graph with FP reproduces the concentration pattern seen for P, while the multi-signal LR preserves and even extends the broad circulation of the follower baseline. 
+
+Creators. The creator-level picture diverges from the content level. As Figure 1(d) shows, FP spreads creator visibility over a wider range with a right tail that extends to much higher visibility values. Figure 4(a) shows that FP raises 9creator-level Gini to Ga = 0 .72 (∆Ga ≈ 0.39 ) – a value essentially identical to P’s creator-level Gini of 0.73 , despite FP operating on a follower-filtered pool rather than the global catalogue. This shift is larger than FP’s own content-level change ( ∆Gp ≈ 0.26 ), suggesting that the concentration of contents under FP maps disproportionately onto a smaller set of creators. LR differs: despite reducing content-level concentration, it still yields a small positive ∆Ga ≈ 0.09 ,pointing to a mild decoupling between content-level and creator-level effects under composite ranking. Creator-level coverage is 100% for all three feeds: the follower pool surfaces at least one content per active creator regardless of the ranking criterion, so coverage differences operate entirely at the content level. The degree-resolved plots in Figure 5 reveal the structural dimension of FP’s creator-level concentration. Under FP, both mean recommendation volume ( ∆¯ ra) and mean unique reach ( ∆¯ ua) increase monotonically with creator degree: gains are near zero for low-degree creators ( ka < 30 ) and grow steeply above ka ≈ 50 , reaching ∆¯ ra ≈ 10 ,000 and 
+
+∆¯ ua ≈ 75 for the highest-degree nodes. LR shows a qualitatively similar but substantially attenuated gradient, with 
+
+∆¯ ra remaining below ∼ 2,000 and ∆¯ ua near zero across all degree bins. This reveals a key aspect of the interplay between ranking strategy and network structure: FP does not simply concentrate visibility on a subset of content items; it also channels visibility toward structurally advantaged creators, with the follower graph acting as an amplifier of pre-existing degree inequality when popularity is the ranking criterion. Figure 12 in Appendix D confirms that this degree-linked gradient is absent under pure popularity ranking (P), supporting the fact that it arises from the joint action of the graph and popularity, not from popularity alone. Additionally, Figure 3 (panels (d)–(f)) provides a network-level view of the same pattern. Under F, nodes with either low or high degree can gain visibility; ranking via popularity (FP), distributes visibility across few high degree nodes, leaving many low-degree ones completely invisible. Under LR, visibility is more broadly distributed across nodes of varying degree, consistent with Figure 5, where visibility increases with degree much less sharply than under FP. The random network ablation preserves the same qualitative ordering: FP remains more selective than LR in content-level volume (Figure 7), concentration and coverage follow the same ranking (Table 1 in Appendix B), and the degree-resolved random network plots show the same tendency with weaker separation across degree classes (Figure 8 in Appendix C). This attenuation is consistent with the narrower degree distribution of the random network providing less structural heterogeneity for the popularity signal to amplify. 
+
+4.3 Popularity reinforcement 
+
+Finally, we investigate whether early popularity – measured through reactions accumulated up to content age tp within the 72-hour lifecycle – correlates with later recommendation visibility, and whether the strength of this coupling differs across recommendation designs. We focus on content-level analysis only, as aggregating reactions across multiple contents would confound the measure with differences in creator activity. 
+
+Figure 4: Discrimination and coverage under network-aware recommenders (scale-free network). Panel (a) reports changes in concentration ( ∆G) and panel (b) reports changes in coverage ( ∆C), both relative to F. Hatched bars denote contents; plain bars denote creators. Error bars indicate cross-run standard deviation. 10 Figure 5: Degree-resolved creator visibility under network-aware recommenders (scale-free network). Panel (a) reports changes in mean recommendation volume ( ∆¯ ra) and panel (b) reports changes in mean unique reach ( ∆¯ ua), both relative to F. Creators are grouped into topology-specific degree bins; bins observed in fewer than three runs are omitted. Shaded areas indicate cross-run variability.  
+
+> Takeaway: The strength of popularity reinforcement is primarily determined by the ranking strategy. Early reactions correlate strongly with later visibility under popularity ranking, are partially moderated by follower-based candidate selection, and are decoupled entirely by collaborative filtering.
+
+Contents. Figure 6 reveals that the strength of popularity reinforcement is primarily determined by the ranking strategy within each recommender family. Among global recommender systems (panel a), P and UCF represent opposite extremes: ρtp rises steeply under P, reaching 0.98 by tp = 10 and stabilizing near 1.0 from tp ≈ 20 onward — a content’s visibility under popularity ranking is essentially determined within the first third of its lifecycle. UCF remains essentially flat near zero throughout ( ρtp < 0.02 at all ages), indicating that filtering recommendations through similar-user neighborhoods entirely breaks the coupling between early reactions and later exposure. RC is excluded from the plot because reverse-chronological ranking exhausts the future exposure of older contents almost immediately: 
+
+ρtp is defined only at tp ≈ 2 (ρ ≈ − 0.05 ), leaving no variation to correlate at later ages. The slight negative sign is consistent with RC logic: accumulating reactions requires elapsed time, and elapsed time directly reduces rank under reverse-chronological ordering. This is itself a result: under RC, popularity reinforcement is structurally impossible rather than merely absent, since a content’s recommendation window closes before early reactions can accumulate. Among network-aware recommenders (Figure 6(b)), FP shows positive reinforcement: ρtp grows from ≈ 0.10 at early content ages and plateaus near 0.51 by tp ≈ 32 , a substantially lower ceiling than global P. F and LR both follow a bell-shaped trajectory, rising gradually to a modest peak and declining back toward zero in the final portion of the content lifecycle ( ρtp < 0.09 for F; ρtp < 0.16 for LR), with no sustained growth trend. These patterns mirror the visibility distributions. The recommenders producing the most concentrated and lowest-coverage content visibility, P and F P , also show the strongest link between early engagement and later visibility. The weaker correlation under F P than under P (ρ → 0.51 vs. ρ → 1.0) suggests that the follower graph moderates popularity reinforcement, adding an alternative visibility pathway. Since reactions are random, this shows that the ranking rule alone can generate cumulative advantage. The random network (see Appendix C) preserves the same ordering (Figure 10): P remains the strongest global reinforcement case ( ρ → 1.0), FP remains the strongest network-aware case ( ρ → 0.53 ), and LR remains close to F throughout. The reinforcement gradients are qualitatively identical to the scale-free network, confirming that popularity reinforcement is a property of the ranking strategy and not of the network topology. 
+
+# 5 Discussion 
+
+11 Figure 6: Popularity reinforcement (scale-free network). Spearman correlation ρtp between early popularity (reactions accumulated up to content age tp) and future recommendation exposure after tp. Panel (a) shows global recommenders (P and UCF); RC is omitted because its correlation is defined only at tp ≈ 2 and provides no meaningful trajectory. Panel (b) shows network-aware recommenders (F, FP, and LR). Values are reported in absolute terms; shaded areas indicate cross-run variability. In this work, we have shown that visibility in social-media feeds is not determined by ranking strategy or network structure alone, but by their interaction. Using a controlled simulation, we compared seven feed-generation rules that isolate recency, popularity, collaborative filtering, follower-based filtering, or combine these in multi-signal ranking. The limited variability across independent runs suggests that the observed patterns are systematic properties of the feed–topology combinations considered, rather than artifacts of simulation noise. Importantly, this stability should not be read as convergence to a static equilibrium: new content is continuously produced and old content leaves the active catalogue. What is stable is the allocation regime induced by each recommender. What emerges from our simulations is that ranking strategy defines the main visibility regime . Popularity produces the most unequal outcome by turning early reactions into later exposure: content that receives attention early gains further opportunities to be seen and reacted to. This feedback concentrates exposure on a small subset of content, leaves much of the active catalogue unseen, and limits creator visibility to those whose content enters the loop. This is consistent with work on popularity bias and algorithmic amplification [ 30 ], and relates to the “few-get-richer” effect of popularity-based rankings [ 23 ]. Collaborative filtering shows the opposite content-level pattern: it keeps almost the whole active catalogue in circulation and reduces concentration. This contrasts with studies where UCF and ICF amplify popularity bias when trained on long-tailed interaction logs [ 1]. In our setting, reactions are random, content semantics are absent, and the active catalogue is continuously renewed, so CF does not inherit a stable popularity structure. The result should therefore be read as a controlled effect of similarity-based allocation, not as evidence that deployed CF systems are popularity-free. This also reinforces the multi-stakeholder point that coverage alone is insufficient, because visibility must be evaluated at the creator level and in terms of exposure volume [1]. 
+
+Within social networks, visibility becomes tied to creators’ network position . The follower graph broadens content circulation relative to the corresponding global strategy, because content competes within local neighborhoods rather than only in a single platform-wide pool. However, when popularity signals are applied to content from followed creators, this local filtering amplifies the advantage of high-degree creators, shifting part of the inequality from content-level competition to structural position in the network. FP is consequently less extreme than global popularity at the content level, but it reaches comparable creator-level concentration, generating a rich-get-richer and poorer-get-poorer effect [ 2 ]. This qualifies the interpretation of network-aware recommendation as a diversity-enhancing mechanism: it can broaden circulation while still concentrating attention on structurally advantaged creators. This is consistent with empirical work dividing exposure into network structure, algorithmic filtering, and user choice [ 5], and with evidence that attention inequality can emerge from social-network structure itself [ 59 ], e.g., under people recommenders [18]. 12 Topology does not change the qualitative direction of the effects, but it changes their magnitude . Popularity-based amplification is stronger in scale-free networks, where degree heterogeneity gives high-degree creators more opportunities to enter timelines, and weaker in the more degree-homogeneous random network topology. 
+
+Limitations and Future Work. The simulation relies on simplified user behavior. This makes the mechanism identifiable, but excludes factors central in deployed systems, such as positional bias, cognitive biases, and content relevance [ 13 ]. Future work should replace uniform selection with attention-sensitive interaction rules calibrated on empirical data, or with LLM-enhanced agents [ 51 ]. For example, recent models of online attention could help represent how limited attention shapes interaction with dynamic feeds [ 40 ]. Content semantics should also be introduced to distinguish catalogue coverage from semantic or ideological diversity, since broad coverage may still coexist with belief-aligned exposure [ 38 ]. The scale-free and random networks isolate degree heterogeneity, but omit community structure, homophily, and evolving ties. These factors may interact with ranking in ways that degree alone cannot capture: homophily can reduce minority visibility under people recommendation [ 17 ], while empirical work shows that exposure depends on network composition, algorithmic ranking, and user choice [ 5 ]. Future work should therefore use networks with tunable communities or estimated from platform data, and allow the follower graph to evolve. The simulation also omits visibility pathways beyond the algorithmic timeline, such as shares, likes from followed accounts, or discovery outside the recommended feed. These mechanisms can substantially change exposure [ 24 ], and remain a known challenge for recommender-system simulations [ 12 ]. Adding them would make the framework closer to real platforms while preserving its main advantage: observing both shown and unseen eligible content before deployment. 
+
+# References 
+
+[1] Himan Abdollahpouri and Masoud Mansoury. Multi-sided exposure bias in recommendation. arXiv preprint arXiv:2006.15772 , 2020. [2] Himan Abdollahpouri, Masoud Mansoury, Robin Burke, and Bamshad Mobasher. The unfairness of popularity bias in recommendation. arXiv preprint arXiv:1907.13286 , 2019. [3] Gediminas Adomavicius, Dietmar Jannach, Stephan Leitner, and Jingjing Zhang. Understanding longitudinal dynamics of recommender systems with agent-based modeling and simulation. arXiv preprint arXiv:2108.11068 ,2021. [4] Ricardo Baeza-Yates and Usama M Fayyad. The attention economy and the impact of artificial intelligence. In 
+
+Perspectives on digital humanism , pages 123–134. Springer, 2021. [5] Eytan Bakshy, Solomon Messing, and Lada A Adamic. Exposure to ideologically diverse news and opinion on facebook. Science , 348(6239):1130–1132, 2015. [6] Albert-Lazlo Barabási and Réka Albert. Emergence of scaling in random networks. Science , 286(5439):509–512, 1999. [7] Nathan Bartley, Andres Abeliuk, Emilio Ferrara, and Kristina Lerman. Auditing algorithmic bias on twitter. In 
+
+Proceedings of the 13th ACM web science conference 2021 , pages 65–73, 2021. [8] Nathan Bartley, Keith Burghardt, and Kristina Lerman. Impacts of personalization on social network exposure. In 
+
+International Conference on Advances in Social Networks Analysis and Mining , pages 38–53. Springer, 2024. [9] Paul Bouchaud. Algorithmic amplification of politics and engagement maximization on social media. In 
+
+International conference on complex networks and their applications , pages 131–142. Springer, 2023. [10] Paul Bouchaud. Skewed perspectives: examining the influence of engagement maximization on content diversity in social media feeds. Journal of Computational Social Science , 7(1):721–739, 2024. [11] Rocío Cañamares and Pablo Castells. Exploring social network effects on popularity biases in recommender systems. In RSWeb@ RecSys , 2014. [12] Allison JB Chaney. Recommendation system simulations: A discussion of two key challenges. arXiv preprint arXiv:2109.02475 , 2021. [13] Jiawei Chen, Hande Dong, Xiang Wang, Fuli Feng, Meng Wang, and Xiangnan He. Bias and debias in recommender system: A survey and future directions. ACM Transactions on Information Systems , 41(3):1– 39, 2023. [14] Federico Cinus, Marco Minici, Corrado Monti, and Francesco Bonchi. The effect of people recommenders on echo chambers and polarization. In Proceedings of the International AAAI Conference on Web and Social Media ,volume 16, pages 90–101, 2022. 13 [15] Joshua M Epstein. Generative social science: Studies in agent-based computational modeling . Princeton University Press, 2012. [16] Paul Erd˝ os and Alfred Rényi. On random graphs. i. Publicationes Mathematicae , 6:290–297, 1959. [17] Francesco Fabbri, Francesco Bonchi, Ludovico Boratto, and Carlos Castillo. The effect of homophily on disparate visibility of minorities in people recommender systems. In Proceedings of the International AAAI Conference on Web and Social Media , volume 14, pages 165–175, 2020. [18] Francesco Fabbri, Maria Luisa Croci, Francesco Bonchi, and Carlos Castillo. Exposure inequality in people recommender systems: the long-term effects. In Proceedings of the International AAAI Conference on Web and Social Media , volume 16, pages 194–204, 2022. [19] Andrea Failla and Giulio Rossetti. “i’m in the bluesky tonight”: insights from a year worth of social data. PloS one , 19(11):e0310330, 2024. [20] Antonio Ferrara, Lisette Espín-Noboa, Fariba Karimi, and Claudia Wagner. Link recommendations: Their impact on network structure and minorities. In Proceedings of the 14th ACM Web Science Conference 2022 , pages 228–238. ACM, 2022. [21] Anna Gausen, Wayne Luk, and Ce Guo. Using agent-based modelling to evaluate the impact of algorithmic curation on social media. ACM Journal of Data and Information Quality , 15(1):1–24, 2022. [22] Mouzhi Ge, Carla Delgado-Battenfeld, and Dietmar Jannach. Beyond accuracy: evaluating recommender systems by coverage and serendipity. In Proceedings of the fourth ACM conference on Recommender systems , pages 257–260, 2010. [23] Fabrizio Germano, Vicenç Gómez, and Gaël Le Mens. The few-get-richer: a surprising consequence of popularity-based rankings? In The world wide web conference , pages 2764–2770, 2019. [24] Andrew M Guess, Neil Malhotra, Jennifer Pan, Pablo Barberá, Hunt Allcott, Taylor Brown, Adriana Crespo-Tenorio, Drew Dimmery, Deen Freelon, Matthew Gentzkow, et al. Reshares on social media amplify political news but do not detectably affect beliefs or opinions. Science , 381(6656):404–408, 2023. [25] Andrew M Guess, Neil Malhotra, Jennifer Pan, Pablo Barberá, Hunt Allcott, Taylor Brown, Adriana Crespo-Tenorio, Drew Dimmery, Deen Freelon, Matthew Gentzkow, et al. How do social media feed algorithms affect attitudes and behavior in an election campaign? Science , 381(6656):398–404, 2023. [26] Muhammad Haroon, Magdalena Wojcieszak, Anshuman Chhabra, Xin Liu, Prasant Mohapatra, and Zubair Shafiq. Auditing youtube’s recommendation system for ideologically congenial, extreme, and problematic recommendations. Proceedings of the National Academy of Sciences , 120(50):e2213020120, 2023. [27] Maxi Heitmayer. The second wave of attention economics. attention as a universal symbolic currency on social media and beyond. Interacting with Computers , 37(1):18–29, 2025. [28] Jonathan L Herlocker, Joseph A Konstan, Loren G Terveen, and John T Riedl. Evaluating collaborative filtering recommender systems. ACM Transactions on Information Systems (TOIS) , 22(1):5–53, 2004. [29] Homa Hosseinmardi, Amir Ghasemian, Miguel Rivera-Lanas, Manoel Horta Ribeiro, Robert West, and Duncan J Watts. Causally estimating the effect of youtube’s recommender system using counterfactual bots. Proceedings of the National Academy of Sciences , 121(8), 2024. [30] Ferenc Huszár, Sofia Ira Ktena, Conor O’Brien, Luca Belli, Andrew Schlaikjer, and Moritz Hardt. Algorithmic amplification of politics on twitter. Proceedings of the National Academy of Sciences , 119(1):e2025334119, 2022. [31] Stefania Ionescu, Robin Forsberg, Elsa Lichtenegger, Salima Jaoua, Kshitijaa Jaglan, Florian Dorfler, and Aniko Hannak. Visibility allocation systems: How algorithmic design shapes online visibility and societal outcomes. 
+
+arXiv preprint arXiv:2510.17241 , 2025. [32] Anastasiia Klimashevskaia, Dietmar Jannach, Mehdi Elahi, and Christoph Trattner. A survey on popularity bias in recommender systems. User Modeling and User-Adapted Interaction , 34(5):1777–1834, 2024. [33] Dokyun Lee and Kartik Hosanagar. Impact of recommender systems on sales volume and diversity. In Proceedings of the 2014 International Conference on Information Systems (ICIS 2014) . Association for Information Systems, 2014. [34] Stephan Lewandowsky and Peter Pomerantsev. Technology and democracy: A paradox wrapped in a contradiction inside an irony. Memory, mind & media , 1:e5, 2022. [35] Eli Lucherini, Matthew Sun, Amy Winecoff, and Arvind Narayanan. T-recs: A simulation tool to study the societal impact of recommender systems. arXiv preprint arXiv:2107.08959 , 2021. 14 [36] Giovanni Mauro, Marco Minici, and Luca Pappalardo. The urban impact of ai: modelling feedback loops in location-based recommender systems. Machine Learning , 115(1):19, 2026. [37] Hannah Metzler and David Garcia. Social drivers and algorithmic mechanisms on digital media. Perspectives on Psychological Science , 19(5):735–748, 2024. [38] Tien T Nguyen, Pik-Mai Hui, F Maxwell Harper, Loren Terveen, and Joseph A Konstan. Exploring the filter bubble: the effect of using recommender systems on content diversity. In Proceedings of the 23rd international conference on World wide web , pages 677–686. ACM, 2014. [39] Brendan Nyhan, Jaime Settle, Emily Thorson, Magdalena Wojcieszak, Pablo Barberá, Annie Y Chen, Hunt Allcott, Taylor Brown, Adriana Crespo-Tenorio, Drew Dimmery, et al. Like-minded sources on facebook are prevalent but not polarizing. Nature , 620(7972):137–144, 2023. [40] Jaume Ojer, Filippo Radicchi, Santo Fortunato, Michele Starnini, and Romualdo Pastor-Satorras. Modeling individual attention dynamics on online social media. arXiv preprint arXiv:2507.01511 , 2025. [41] Valentina Pansanella, Giulio Rossetti, and Letizia Milli. From mean-field to complex topologies: Network effects on the algorithmic bias model. In Complex Networks , volume 1016 of Studies in Computational Intelligence .Springer, 2021. [42] Valentina Pansanella, Giulio Rossetti, and Letizia Milli. Modeling algorithmic bias: simplicial complexes and evolving network topologies. Applied Network Science , 7(1):57, 2022. [43] Luca Pappalardo, Salvatore Citraro, Giuliano Cornacchia, Mirco Nanni, Valentina Pansanella, Giulio Rossetti, Gizem Gezici, Fosca Giannotti, Margherita Lalli, Giovanni Mauro, et al. A survey on the impacts of recommender systems on users, items, and human-ai ecosystems. arXiv preprint arXiv:2407.01630 , 2024. [44] Dino Pedreschi, Luca Pappalardo, Emanuele Ferragina, Ricardo Baeza-Yates, Albert-László Barabási, Frank Dignum, Virginia Dignum, Tina Eliassi-Rad, Fosca Giannotti, János Kertész, et al. Human-ai coevolution. 
+
+Artificial Intelligence , 339:104244, 2025. [45] Antonio F Peralta, János Kertész, and Gerardo Iñiguez. Opinion formation on social networks with algorithmic bias: dynamics and bias imbalance. Journal of Physics: Complexity , 2(4), 2021. [46] Antonio F Peralta, Matteo Neri, János Kertész, and Gerardo Iñiguez. Effect of algorithmic bias and network structure on coexistence, consensus, and polarization of opinions. Physical Review E , 104(4):044312, 2021. [47] Nicola Perra and Luis EC Rocha. Modelling opinion dynamics in the age of algorithmic personalisation. Scientific reports , 9(1):7261, 2019. [48] Márton Pósfai and Albert-László Barabási. Network science , volume 3. Cambridge University Press Cambridge, UK, 2016. [49] Manoel Horta Ribeiro, Raphael Ottoni, Robert West, Virgílio AF Almeida, and Wagner Meira Jr. Auditing radicalization pathways on youtube. In Proceedings of the 2020 conference on fairness, accountability, and transparency , pages 131–141. ACM, 2020. [50] Manoel Horta Ribeiro, Veniamin Veselovsky, and Robert West. The amplification paradox in recommender systems. In Proceedings of the International AAAI Conference on Web and Social Media , volume 17. AAAI Press, 2023. [51] Giulio Rossetti, Massimo Stella, Rémy Cazabet, Katherine Abramski, Erica Cau, Salvatore Citraro, Andrea Failla, Riccardo Improta, Virginia Morini, and Valentina Pansanella. Y social: an llm-powered social media digital twin. 
+
+arXiv preprint arXiv:2408.00818 , 2024. [52] Wilbert Samuel Rossi, Jan Willem Polderman, and Paolo Frasca. The closed loop between opinion formation and personalized recommendations. IEEE Transactions on Control of Network Systems , 9(3):1092–1103, 2021. [53] Jonathan Stray, Ian Baker, George Beknazar-Yuzbashev, Ceren Budak, Julia Kamin, Kylan Rutherford, Mateusz Stalinski, Tin Acosta, Chris Bail, Michael Bernstein, et al. The prosocial ranking challenge: Reducing polarization on social media without sacrificing engagement. arXiv preprint arXiv:2603.19626 , 2026. [54] Alina Sîrbu, Dino Pedreschi, Fosca Giannotti, and János Kertész. Algorithmic bias amplifies opinion fragmentation and polarization: A bounded confidence model. PLOS ONE , 14(3):1–20, 03 2019. [55] Carlo M Valensise, Matteo Cinelli, and Walter Quattrociocchi. The drivers of online polarization: Fitting models to data. Information Sciences , 642:119152, 2023. [56] Saúl Vargas and Pablo Castells. Improving sales diversity by recommending users to items. In Proceedings of the 8th ACM Conference on Recommender systems , pages 145–152, 2014. 15 [57] Jinyi Ye, Luca Luceri, and Emilio Ferrara. Auditing political exposure bias: Algorithmic amplification on twitter/x during the 2024 us presidential election. In Proceedings of the 2025 ACM Conference on Fairness, Accountability, and Transparency , pages 2349–2362. ACM, 2025. [58] Renjie Zhou, Samamon Khemmarat, and Lixin Gao. The impact of youtube recommendation system on video views. In Proceedings of the 10th ACM SIGCOMM conference on Internet measurement , pages 404–410, 2010. [59] Linhong Zhu and Kristina Lerman. Attention inequality in social media. arXiv preprint arXiv:1601.07200 , 2016. 
+
+# A Appendix A - Linear Ranker Details 
+
+Linear Ranker implementation details. The Linear Ranker (LR) follows a two-stage recommendation procedure. First, it generates a candidate set by taking the union of three pools: a reverse-chronological follower pool, a global popularity pool, and a user–user collaborative filtering pool. Duplicate candidates are removed before ranking. Second, each candidate content is scored through a weighted linear combination of six features: 
+
+s(u, p ) = 0 .28 r(p) + 0 .25 f (u, a p)+ 0 .15 α(u, a p) + 0 .08 αrecent (u, a p)+ 0 .16 θ(u, p ) + 0 .08 σ(u, a p).
+
+where u is the target user, p is the candidate content, and ap is the creator of p. The recency score r(p) is computed through an exponential decay as a function of content age. The followed-author term f (u, a p) is a binary indicator equal to 1 if u follows ap, and 0 otherwise. User–author affinity α(u, a p) is the log-scaled number of previous likes and comments by u on content produced by ap; αrecent (u, a p) is a discounted version of the same affinity signal. Topic similarity θ(u, p ) is computed as the Jaccard similarity between the target user’s topic labels and the topics assigned to the candidate content. Finally, the similar-user signal σ(u, a p) first identifies users with overlapping liked content and then assigns higher scores to creators followed by more of these similar users, using a log-scaled count. Candidates are ranked by decreasing score, and the top-ranked contents are returned. 
+
+# A Appendix B — Summary Statistics 
+
+Table 1 reports the complete set of discrimination and coverage values for all seven feeds, both content and creator levels, and both network topologies. The table serves as the quantitative reference for the main-text figures and for the ER ablation in Appendix C. 16 Table 1: Absolute and relative discrimination and coverage values for all feeds, entities, and topologies. Entries are means across 10 runs. Gp, Ga: Gini concentration for contents and creators. Cp, Ca: coverage for contents and creators. 
+
+∆ values are relative to the matched baseline (RC for global feeds, F for network-aware feeds). Coverage deltas are in percentage points. 
+
+# Concentration (Gini) Coverage (%) Feed Baseline Gp ∆Gp Ga ∆Ga Cp ∆Cp Ca ∆Ca
+
+# Barabási–Albert (BA) topology 
+
+# RC — 0.680 — 0.263 — 38.44 — 100.00 —P RC 0.989 +0.310 0.728 +0.464 1.83 −36.61 50.90 −49.10 UCF RC 0.191 −0.489 0.238 −0.026 99.70 +61.26 100.00 0.00 ICF RC 0.190 −0.490 0.236 −0.028 99.74 +61.30 100.00 0.00 F — 0.573 — 0.333 — 93.25 — 100.00 —FP F 0.837 +0.264 0.721 +0.387 74.46 −18.79 100.00 0.00 LR F 0.457 −0.116 0.423 +0.090 97.83 +4.58 100.00 0.00 
+
+# Erd˝ os–Rényi (ER) topology 
+
+# RC — 0.680 — 0.263 — 38.47 — 100.00 —P RC 0.989 +0.309 0.730 +0.467 1.81 −36.66 50.63 −49.37 UCF RC 0.190 −0.490 0.234 −0.029 99.70 +61.23 100.00 0.00 ICF RC 0.191 −0.490 0.237 −0.027 99.73 +61.26 100.00 0.00 F — 0.498 — 0.240 — 97.61 — 100.00 —FP F 0.767 +0.269 0.434 +0.194 85.21 −12.39 100.00 0.00 LR F 0.285 −0.213 0.256 +0.017 99.47 +1.86 100.00 0.00 
+
+# B Appendix C — ER Ablation 
+
+This appendix reports the ER counterparts of BA results, covering recommendation volume distributions (Figure 7), degree-resolved creator visibility under network-aware recommenders (Figure 8), network-level creator visibility (Figure 9), popularity reinforcement (Figure 10), and Lorenz curves of cumulative visibility (Figure 11). The volume distributions confirm the qualitative ordering observed in BA. Among global recommenders, P concentrates mass on a narrow high-exposure content tail, while UCF and F maintain broad circulation across the active catalogue. Among network-aware recommenders, FP shifts mass toward the high-exposure region relative to F, while LR preserves a broad distribution. The ranking of all seven feeds is therefore stable across topologies; the ER magnitudes are attenuated relative to BA, consistent with the narrower degree distribution of the Erd˝ os–Rényi model offering less structural heterogeneity for popularity signals to exploit. 17 10 0 10 1 10 2 10 3
+
+# 10 3
+
+# 10 1
+
+> p(rcontent )
+
+(a) 
+
+# 10 0 10 1 10 2 10 3
+
+# 10 3
+
+# 10 2
+
+# 10 1
+
+# 10 0
+
+> p(rcreator )
+
+(b) 
+
+# 10 0 10 1 10 2 10 3
+
+# rcontent 
+
+# 10 4
+
+# 10 3
+
+# 10 2
+
+# 10 1
+
+> p(rcontent )
+
+(c) 
+
+# 10 2 10 3
+
+# rcreator 
+
+# 10 3
+
+# 10 2
+
+# 10 1
+
+# 10 0
+
+> p(rcreator )
+
+(d) 
+
+RC P ICF UCF F FP LR Figure 7: Distribution of recommendation volume on a log–log scale in the ER topology, conditional on contents or creators receiving at least one recommendation. Panels (a) and (b) show global recommenders: recommendations received per content, p(rco ), and per creator, p(rcr ), respectively. Panels (c) and (d) report the same quantities for network-aware recommenders. The degree-resolved results in ER preserve the directional pattern observed for BA in Figure 5 of the main text: under FP, gains in recommendation volume and unique reach increase monotonically with creator degree, while LR shows a substantially attenuated gradient. The separation between FP and LR across degree bins is weaker in ER than in BA, consistent with the reduced structural heterogeneity of the random-graph topology. Figure 9 shows the same six recommenders on the random network. The qualitative patterns mirror those observed for the scale-free network in Figure 3 of the main text: under RC, saturation is broadly distributed; under P, visibility collapses to a handful of nodes regardless of degree; under UCF, saturation spreads uniformly across the graph. Among network-aware recommenders, FP concentrates visibility on the highest-degree nodes while most of the network remains weakly visible, and LR shows a more distributed pattern. Compared with the BA network, the degree-linked gradient under FP is visibly weaker, consistent with the more homogeneous degree distribution of the Erd˝ os–Rényi topology and the attenuated Gini values reported in Table 1. 18 Figure 8: Changes in creator visibility by degree for network-aware recommenders in the ER topology, relative to the follower-reverse-chronological baseline F. Panel (a) shows the change in mean recommendation volume, ∆¯ rcreators ;panel (b) shows the change in mean unique reach, ∆¯ ucreators .
+
+Figure 9: Creator visibility for each recommender system (random network). Each panel shows creator visibility in the ER social network under a different feed: (a) RC, (b) P, (c) UCF, (d) F, (e) FP, (f) LR. Node size is proportional to degree; node saturation reflects normalized visibility. Only high-degree or high-visibility nodes are shown. 19 Figure 10: Spearman correlation ρtp between early popularity (reactions accumulated up to content age tp) and future recommendation exposure after tp, for the ER topology. Panel (a) compares global recommenders (RC, P, and UCF); panel (b) compares network-aware recommenders (F, FP, and LR). Values are reported in absolute terms; shaded areas indicate cross-run variability. 20 The popularity-reinforcement trajectories in ER mirror those reported in Figure 6 of the main text. Under P, ρtp rises steeply and saturates near 1.0; UCF remains flat near zero throughout. Among network-aware recommenders, FP plateaus around 0.53 and LR remains close to F without a sustained growth trend. The reinforcement gradients are qualitatively identical to BA. 0.0 
+
+# 0.2 
+
+# 0.4 
+
+# 0.6 
+
+# 0.8 
+
+# 1.0 
+
+> Visibility
+
+(a) ER Creators (b) ER Content 
+
+# 0.0 0.2 0.4 0.6 0.8 1.0 
+
+# Creators 
+
+# 0.0 
+
+# 0.2 
+
+# 0.4 
+
+# 0.6 
+
+# 0.8 
+
+# 1.0 
+
+> Visibility
+
+(c) BA Creators 
+
+# 0.0 0.2 0.4 0.6 0.8 1.0 
+
+# Content 
+
+(d) BA Content 
+
+RC P UCF ICF F FP LR 
+
+Figure 11: Lorenz curves of cumulative visibility for contents and creators under both network topologies. Rows correspond to the Erd˝ os–Rényi (ER) and Barabási–Albert (BA) networks; columns report content-level and creator-level visibility, respectively. Each curve shows the median cumulative share of exposure across 10 runs; the diagonal denotes perfect equality. Comparing ER and BA, topology primarily affects the creator side. Under BA, author-level Lorenz curves move further from the diagonal for popularity-based and network-aware feeds relative to ER, reflecting the stronger degree heterogeneity of the scale-free topology. At the content level, the ordering of feeds is consistent across both topologies: P is farthest from equality, UCF is closest, and the remaining feeds fall in between. 
+
+# C Appendix D — Degree-Resolved Visibility Under Global Recommenders 
+
+Figure 12 reports degree-resolved creator visibility for global recommenders in both topologies, complementing the network-aware analysis in Figure 5 of the main text. Global recommenders do not use the follower graph for candidate selection, so they do not create the structural coupling between creator degree and visibility that characterises FP. Under P, recommendation volume increases relative to RC across all degree bins without a clear monotonic gradient, while UCF remains close to the RC baseline with weak 21 degree-linked variation. In ER, both P and UCF show even less differentiation across degree classes, consistent with the more homogeneous degree distribution. These results support the interpretation that the degree-linked amplification observed under FP is a product of the joint action of popularity ranking and the follower graph, not of popularity ranking alone. 
+
+Figure 12: Changes in creator visibility by degree for global recommenders relative to the reverse-chronological baseline RC. Panels (a) and (b) show the BA topology; panels (c) and (d) show the ER topology. The left column reports changes in mean recommendation volume, ∆¯ rcreators ; the right column reports changes in mean unique reach, 
+
+∆¯ ucreators .
+
+# D Appendix E — Pairwise Baseline Comparisons 
+
+This appendix provides two pairwise comparisons that motivate design choices discussed in the main text: the comparison between the two baselines RC and F (Figure 13), which establishes that they are not equivalent and justifies treating them separately, and the comparison between the two collaborative-filtering variants UCF and ICF (Figure 14), which justifies reporting only UCF in the main text. 
+
+RC vs. F. At the content level, the two baselines differ clearly. Under RC, the distribution is sharply concentrated at very low visibility values and then shows a moderate-exposure peak around rcontent ≃ 20 –40 . Under F, the distribution decreases more smoothly and extends over a wider range, with higher mass in the low-to-intermediate region and a longer right tail. This reflects the effect of the follower constraint: restricting the candidate pool to followed creators surfaces contents that would otherwise age out under a global stream, spreading visibility across a broader range of 22 recommendation counts. At the creator level, RC and F produce largely overlapping distributions. Both concentrate most probability mass in a similar visibility range, and the curves differ only marginally around the peak. This convergence occurs because creator visibility aggregates over multiple contents, averaging out the content-level differences between the two baselines. Neither baseline amplifies creators through popularity or collaborative signals, which further limits their divergence at the creator level. A further property of RC is that visibility loss is driven by slot competition rather than poor timing: peak-activity hours increase the probability that a post receives no impressions, but the expected exposure of any given post is not biased by the hour of posting. Creators who post more frequently therefore accumulate more recommendation chances regardless of when they post. 0 50 100 
+
+# rcontent 
+
+# 10 3
+
+# 10 0
+
+> p(rcontent )
+
+# (a) 
+
+# 0 1000 2000 
+
+# rcreator 
+
+# 1
+
+# 2
+
+# 3
+
+# 4
+
+> p(rcreator )
+
+# ×10 3
+
+# (b) 
+
+# 0 50 100 
+
+# rcontent 
+
+# 10 3
+
+# 10 0
+
+> p(rcontent )
+
+# (c) 
+
+# 0 2000 4000 
+
+# rcreator 
+
+# 1
+
+# 2
+
+# 3
+
+# 4
+
+> p(rcreator )
+
+# ×10 3
+
+# (d) 
+
+# RC F
+
+Figure 13: Visibility distributions for the reverse-chronological baseline RC and the follower-only baseline F. Panel (a): content visibility distribution in the ER topology, p(rco ). Panel (b): creator visibility distribution in the ER topology, 
+
+p(rcr ). Panels (c) and (d): the same quantities for the BA topology. Lines show the median distribution across 10 simulation runs; shaded areas indicate run-level IQR. 
+
+UCF vs. ICF. UCF and ICF produce nearly identical visibility distributions at both content and creator levels. At the creator level, both strategies show a central peak followed by a gradual decay toward higher visibility values, with differences limited to minor fluctuations in the intermediate range. At the content level, the overlap is even stronger: both curves peak at low-to-moderate visibility values and decay smoothly across the full range. The similarity arises because both methods extract collaborative signals from the same interaction logs generated under identical platform dynamics; in this setting, user-based and item-based neighbourhoods converge on largely overlapping candidate sets, differing only in the computational route used to rank them. Exact values for both feeds are reported in Table 1. 23 0 50 100 
+
+# rcontent 
+
+# 10 3
+
+# 10 0
+
+> p(rcontent )
+
+# (a) 
+
+# 500 1000 
+
+# rcreator 
+
+# 1
+
+# 2
+
+# 3
+
+# 4
+
+> p(rcreator )
+
+# ×10 3
+
+# (b) 
+
+# 0 50 100 
+
+# rcontent 
+
+# 10 3
+
+# 10 0
+
+> p(rcontent )
+
+# (c) 
+
+# 500 1000 1500 
+
+# rcreator 
+
+# 1
+
+# 2
+
+# 3
+
+# 4
+
+> p(rcreator )
+
+# ×10 3
+
+# (d) 
+
+# UCF ICF Figure 14: Visibility distributions for the user–user collaborative filtering recommender (UCF) and the item–item collaborative filtering recommender (ICF). Panel (a): content visibility distribution in the ER topology. Panel (b): creator visibility distribution in the ER topology. Panels (c) and (d): the same quantities for the BA topology. Lines show the mean distribution across simulation runs; shaded areas indicate run-level variability. 24

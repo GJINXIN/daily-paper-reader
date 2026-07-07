@@ -1,0 +1,1284 @@
+Title: Will Scaling Improve Social Simulation with LLMs?
+
+URL Source: https://arxiv.org/pdf/2607.02464v1
+
+Published Time: Fri, 03 Jul 2026 01:26:18 GMT
+
+Number of Pages: 31
+
+Markdown Content:
+# Will Scaling Improve Social Simulation with LLMs? 
+
+Caleb Ziems 1, William Held 1,2 , Su Doga Karaca 1,David Grusky 1, Tatsunori Hashimoto 1, Diyi Yang 1
+
+> 1
+
+Stanford University, 2Open Athena 
+
+{cziems,held,sukaraca,grusky,thashim,diyiy}@stanford.edu 
+
+Abstract 
+
+Large Language Model (LLM) social simulations are a promising research method, but they are not yet faithful enough to be adopted widely. In this work, we investigate whether the current scaling paradigm in language modeling is likely to close these gaps, or whether simulation fidelity is orthogonal to general capabilities and therefore deserving of more research attention. We use scaling laws to study the relationship between LLMs’ compute scale, general capability benchmarks, and the fidelity of social simulation in three representative sub-domains: opinion modeling, behav-ioral simulation, and longitudinal forecasting. Surprisingly, we discover strong compute scaling in all three settings, using a suite of 85 transformer LLMs with the Qwen3 architecture pre-trained on the DCLM web text corpus under fixed-compute budgets from 10 18 to 10 20 FLOPs. Then we evaluate 35 larger and more capable open-weight models up to 70B param-eters, allowing us to predict downstream accuracy from loss. This reveals that the majority of behavioral and opinion simulation tasks will rapidly improve with scale, particularly when they involve populations that are well-represented in English web corpora. Longitudinal forecasting and underrepresented opinions scale more slowly, especially when they are less correlated with general knowledge and reasoning benchmarks like MMLU. In behavior simulation, scaling fails to improve model calibration with human cognitive biases like risk aversion, as well as human heuristics like learning correlated rewards from related tasks. On these tasks, even fine-tuned models fail to noticeably scale up performance from 0.5B to 8B parameters. Taken together, we conclude that scale will improve social simulations in most settings, but outliers exist, and improvements will be less reliable in low-resource domains. 
+
+1 Introduction 
+
+Scaling laws are a useful method for anticipating LLMs’ future capabilities as models scale up (Kaplan et al., 2020). For tasks like question-answering, which are explicitly targeted during model development and have clear ground truth, performance has monotonically increased with model size (Myrzakhan et al., 2024). Conversely, social simulation is not privileged in LLM training decisions, and instead requires models to match distributions of opinions, stochastic behaviors, and sequential dependencies (Park et al., 2024a; Kolluri et al., 2025; Salganik et al., 2020). Generally, LLMs are not well-calibrated for such tasks (Bisbee et al., 2024; Durmus et al., 2023; Hu et al., 2025; Sorensen et al., 2025; Tan et al., 2024). The existence and directionality of scaling laws here are unknown. If we can show the current trajectory in language modeling will rapidly improve LLMs’ simulation fidelity, then researchers will have strong cost and time incentives to begin utilizing LLMs for pilot studies, sensitivity analysis, and replications at scale (Anthis et al., 2025). But if simulations don’t scale, or require distinct capabilities orthogonal to reasoning and math, then our findings will motivate more concerted research on faithful LLM simulations. In this work, we specifically look at how LLMs’ pre-training compute and general bench-marking abilities relate to their ability to simulate social variables over finite probability 1
+
+> arXiv:2607.02464v1 [cs.CL] 2 Jul 2026
+
+spaces (e.g., multiple-choice) where likelihood-based scaling is well-defined (Kaplan et al., 2020; Hoffmann et al., 2022). Future work can investigate scaling properties of open-ended generation and agentic systems (Park et al., 2022; Wang et al., 2025; Taubenfeld et al., 2024; Mou et al., 2024; Tranchero et al., 2024; Weidmann et al., 2025) where the target object is a high-level semantic property of entire sequences or agentic interactions. Finite probability spaces are the natural setting for a large subset of the simulation literature, including work on opinion surveys (Suh et al., 2025), lab experiments (Chen et al., 2025), economic games (del Rio-Chanona et al., 2025), consumer surveys (Brynjolfsson et al., 2025), and longitudinal studies (Salganik et al., 2020). Across these numerous application domains, we focus on three of the most common inference problems: 1. Survey Simulation P(y|x): modeling survey responses y for a given survey context 
+
+x, including demographic information and the survey question. 2. Behavioral Simulation P(at|ht): modeling actions at conditioned on history ht =(a1, r1, ..., at−1, rt−1) composed of prior actions ai and reward signals ri.3. Longitudinal Forecasting P(yt+k|yt, x): predicting future social variables yt+k from past social variables yt and social context x.We operationalize the three inference problems with three tasks: the World Values Survey 
+
+(2022), Psych-101 (Binz et al., 2025), and the Americans’ Changing Lives (House et al., 2024) study. First, we establish compute scaling laws on these tasks by evaluating 85 transformer LLMs from 0.2B to 12B parameters, varying the compute-budget from 10 18 to 10 20 FLOPs, but fixing all other model details like architecture and pre-training distribution. We find surprisingly clean log-linear scaling laws explain as much 97% of the variance in loss (Figure 1). However, computational constraints generally limit such controlled scaling suites to smaller models below 12B parameters (McLeish et al., 2026; Held et al., 2025; Bhagia et al., 2025; Biderman et al., 2023). To understand the implications for downstream utility with larger, more capable models, we establish calibration functions from observational experiments with 35 open-weight models up to 70B parameters, allowing us to predict accuracy from loss. We find that scaling up LLMs by 1-2 orders of magnitude significantly improves performance on a broad range of opinion and behavior simulation tasks. However, for longitudinal forecasting, and a subset of decision-making tasks, accuracy does not scale well. Moreover, only some social simulation results are correlated with general model competence (the Pearson r ranges from 0 to 0.85), with particularly weak correlations for demographic populations that are underrepresented in pre-training data. Moreover, scaling fails to improve model calibration with human cognitive biases like risk aversion, as well as human heuristics like learning correlated rewards from related tasks. To challenge our null scaling conclusions, we fine-tune a suite of Llama3 and Qwen2.5 models from 0.5B to 8B parameters. However, on these null scaling tasks, we also fail to observe parameter scaling after fine-tuning. This shows that, although aggregate simulation will improve with general model improvement, outliers exist, and improvements will be less reliable in low-resource domains. To sum up, our contributions have four components.(§3) Social simulation tasks: we operationalize three benchmarks, along with one new dataset, for scaling law analysis. (§4) Compute scaling laws: we carefully measure the impact of scaling compute on task loss for social simulation. (§5) Observational scaling laws: we conduct large-scale observational scaling law experiments across diverse model families, quantifying the relationship between general benchmark performance and social simulation fidelity. And (§6.2) Trained models: 
+
+we release fine-tuned variants of Llama3 and Qwen2.5 models trained on our tasks, along with all datasets and evaluation code, to support future research on socially faithful language modeling here: https://github.com/SALT-NLP/social-scaling .22 Related Work 
+
+LLM Utility in the Social Sciences. Qualitative studies show that social scientists are eager yet apprehensive to use LLMs as tools (Fecher et al., 2025; Schroeder et al., 2025; Morris, 2023). Already, LLMs can reliably assist with literature review (Liao et al., 2024), data labeling (Ziems et al., 2024; Dai et al., 2023), survey design (Bail, 2024), programming (Jimenez et al., 2024), and paper writing (Liao et al., 2024) without domain-specific training. As predictive models, they can forecast average treatment effects for a wide range of social science studies (Hewitt et al., 2024). Fine-tuning may further enable LLMs to generate new hypotheses (Bazgir & Zhang, 2025) and research ideas (Si et al., 2026). SFT helps models better predict public opinion (Suh et al., 2025) and human behavior, both in the lab (Binz et al., 2025) and in the wild (Kolluri et al., 2025). And with enough in-context data, LLMs can simulate individuals’ opinions, personalities, and decision-making behaviors at high levels of fidelity (Park et al., 2024a). Together, these results suggest that LLMs will be increasingly integrated into the social science pipeline at all stages. 
+
+Social Simulation. Many prior studies evaluate LLMs as simulators of social variables over 
+
+finite probability spaces (e.g., multiple-choice). For example, LLMs have been used to simu-late human opinion and value surveys (Abdurahman et al., 2024; Argyle et al., 2023; Bisbee et al., 2024; Boelaert et al., 2025; Dominguez-Olmedo et al., 2024; Jiang et al., 2024; Kim & Lee, 2023; Qu & Wang, 2024; Santurkar et al., 2023; Suh et al., 2025), psychological experiments (Binz et al., 2025; Chen et al., 2025; Liu et al., 2024; Park et al., 2024b), economic games (Aher et al., 2023; Horton et al., 2023; del Rio-Chanona et al., 2025; Gonzalez-Bonorino et al., 2025; Jia et al., 2024; Ross et al., 2024), consumer surveys (Brand et al., 2023; Brynjolfsson et al., 2025), HCI user studies (Hämäläinen et al., 2023), and aggregate experimental outcomes (Hewitt et al., 2024; Manning et al., 2024), both synchronically and longitudinally (Ahnert et al., 2025). Studies have also evaluated LLM agents with psychometric inventories (Park et al., 2024a; Pellert et al., 2024; Petrov et al., 2024; Wang et al., 2024a) and typicality ratings (Heyman & Heyman, 2024). In these settings, tasks can be formatted as multiple-choice, which is suitable for likelihood-based scaling analysis. Other work on the simulation of open-ended generation and agentic systems is less readily suited for scaling analysis. In these settings, researchers typically rely on human judges to rate the LLM’s human-likeness in simulated social environments (Park et al., 2022; Wang et al., 2025), including dyadic debates (Taubenfeld et al., 2024), social media platforms (Yang et al., 2024), customer service (Zhou et al., 2026), multi-agent collaborations (Tranchero et al., 2024; Weidmann et al., 2025), and small-scale societies (Mou et al., 2024). Across both lines of work, the scaling behavior of simulation fidelity remains to be studied in depth. 
+
+Social Scaling Laws. We are the first to study social simulation performance with parameter-controlled compute-scaling laws. Related to this work, Held et al. (2025) evaluate careful parameter-controlled IsoFLOP sweeps to measure disparities in the scaling of dialect robust-ness and AI risk behaviors. Hu et al. (2025) provide an observational analysis of behavioral simulation across 45 models and find a roughly log-linear scaling trend in smaller models with diminishing returns in larger models. Merali (2024) fit an economic scaling law that shows how, in human-AI partnerships, workers’ earnings are a log-linear function of LLM training compute. And Hackenburg et al. (2025) observe starkly diminishing returns in LLM persuasiveness with scale. 
+
+3 Social Simulation Tasks 
+
+The motivation for this work is to anticipate the future utility of LLMs for simulating experiments in the social sciences. In particular, we consider opinion surveys , behavioral experiments , and longitudinal studies as three representative domains in which LLMs simulations could transform social science but haven’t because even today’s best models lack sufficient fidelity. Concretely, opinion simulation requires LLMs to accurately model opinion distributions rather than a single ground-truth answer. Even the best LLMs collapse variance and heterogeneity in opinion or value distributions (Bisbee et al., 2024; Durmus et al., 2023), and this is exacerbated in post-training (Hu et al., 2025; Sorensen et al., 2025). Relatedly, behavioral simulation requires approximating stochastic human choices, but 3LLMs often violate cognitive constraints on behavior (Bowers et al., 2025; Gao et al., 2024). Finally, longitudinal simulation and forecasting requires modeling temporal dynamics, but LLMs are weak models of time series and sequential dependencies (Tan et al., 2024). As such, longitudinal simulation tasks remain unsolved (Salganik et al., 2020). The above represent the leading challenges in single-agent simulations for the social sciences. There are other high-impact settings involving multi-agent simulations, but these introduce additional design layers in the agent-interaction protocol which can complicate scaling analyses. As the first study of its kind, we focus on single-agent, MCQ-style simulation tasks. We will now briefly discuss how we operationalize and construct each task. Details regarding the precise prompts, inputs, and outputs for this task are in Appendix A. 
+
+Simulating Opinions: WVS . We use data from the largest and most comprehensive set of global opinion surveys to date, the 7th wave of the World Values Survey Association (WVS; 2022). Following Durmus et al. (2023), we evaluate LLMs’ ability to model the opinion distribution for a given target demographic group. Unlike Durmus et al. (2023), which targets only high-level national cultures, we define our target groups at the intersection of 7 explanatory demographic variables: (1) country of origin, (2) sex, (3) age, (4) education, (5) socioeconomic class, (6) religiosity, and (7) whether the participant is from a rural or urban area. For each target demographic, we aggregate the WVS responses to create an opinion distribution and ensure that questions have at least 30 responses from the target demographic. This leaves data from Bangladesh, Bolivia, Canada, China, Egypt, Hong Kong, India, Indonesia, Libya, Myanmar, Nigeria, Pakistan, South Korea, Thailand, Tunisia, Turkey, and Vietnam. Prompts take the form of multiple-choice questions (see Appendix A.1). 
+
+Simulating Behavior: Psych-101 We use Psych-101 (Binz et al., 2025), since this is one of the largest and most diverse collections of psychological experiments available. Psych-101 transcribes experiments with discrete action spaces, indicated by alphabetical indices, and we compute model loss on these indices (see Appendix A.2). Most of these experiments are reward maximization tasks like single- and multi-task bandits (44%). Other task designs include associative learning experiments (10%), and experiments which cover cognitive heuristics and decision-making (23%). 
+
+Forecasting Longitudinal Studies: ACL We are aware of only one shared task for predicting longitudinal study results known as the Fragile Families Challenge (Salganik et al., 2020), focused on the life outcomes of at-risk children. However, we consider a more general domain and construct our own dataset from Americans’ Changing Lives (ACL; House et al., 2024). The ACL is the longest-running nationally representative longitudinal panel survey designed to track how social, economic, and psychological factors shape individuals’ lives over time in the United States. The survey was collected in 6 waves, in the years 1986, 1989, 1994, 2001, 2011, and 2019. We set up the ACL task as next wave prediction, where the output is the predicted answer of a respondent to a target question in the 2019 wave and the input includes the values of all explanatory, control, and target outcome variables from prior waves (see Appendix A.3). 
+
+4 Compute Scaling Laws for Social Simulation 
+
+Compute scaling laws follow the discovery that the loss Lm of LLM m on some held out set is inversely related to the model’s scale, dataset size, and compute measures Cm, following predictable power law trends (Kaplan et al., 2020) given by log (Lm) ≈ β f log (Cm) + α f
+
+The intercept α f represents a hypothetically initial error, and the scaling coefficient β f
+
+indicates the rate of improvement on the task from scaling compute alone. Here, we establish LLMs’ compute-scaling behavior on our three social simulation tasks from §3, using a suite 1 of carefully-controlled model checkpoints from Held et al. (2025). 
+
+> 1https://huggingface.co/collections/marin-community/dclm-baseline-isoflop-models
+
+410 18 10 19 10 20 
+
+> 0.5
+> 1.0
+> 1.5
+
+WVS    
+
+> r2= 0.85
+> slope = -0.27
+> 10 18 10 19 10 20
+
+Psych-101    
+
+> r2= 0.97
+> slope = -0.12
+> 10 18 10 19 10 20
+
+ACL  
+
+> r2= 0.88
+> slope = -0.11
+
+FLOPs 
+
+> Task Loss
+
+Figure 1: Compute Scaling Laws. We observe log-linear improvements in task loss on all three social science tasks after scaling compute alone with models trained on DCLM (Li et al., 2024) from 10 18 to 10 20 FLOPs. 
+
+Specifically, we evaluate a suite of 85 decoder-only Transformers with the Qwen3 architec-ture (Yang et al., 2025) trained on the DCLM pre-training corpus (Li et al., 2024) with fixed compute budgets Cm ranging from 10 18 to 10 20 FLOPs. For each FLOP budget, we sweep token and model size to select the compute-optimal token count. Then, along the compute-optimal points, we report task loss as a function of compute (FLOPs). This IsoFLOP approach from Hoffmann et al. (2022) has been found to be the most stable method for fitting compute scaling laws. 
+
+Results. Figure 1 shows log-linear scaling laws in all three social science tasks. Scaling compute alone consistently improves task performance, explaining at least 85% of model variance in all three settings: behavior simulation ( Psych-101 , r2 = 0.97), longitudinal forecasting ( ACL , r2 = 0.88), and opinion simulation ( WVS , r2 = 0.85). These scaling trends generally hold across the WVS and Psych-101 and subtasks 2 as well (see Figure 11 in Ap-pendix B for more details). Overall, these results show that MCQ-style social simulation is a skill that can be learned directly from pre-training . This is surprising. To some degree, these tasks require an understanding of social and psychological behaviors that are embedded in ambiguous cultural contexts, and these contexts are underrepresented in web corpora (Alkhamissi et al., 2024). Still, the skills to make sense of them derive from web pre-training corpora. Our findings so far seem to reinforce the bitter lesson (Sutton, 2019), indicating that scale alone can produce useful models for social science simulation. However, before we can make conclusions about the utility of models, we need to establish a link between loss scaling and downstream metrics of interest. The checkpoints we use for compute scaling laws are not strong enough to reliably establish this link. For this reason, we instead adopt the two-stage procedure of Grattafiori et al. (2024), shown in Figure 2. After we have the compute-scaling law on task loss, we map loss to accuracy with a linear or sigmoidal calibration function. In §5, we fit these calibration functions observationally (Ruan et al., 2024) to the performances of a wider range of open-weight models, allowing us to make stronger conclusions about the future utility of LLM simulation. 
+
+5 Observational Scaling Laws for Predicting Downstream Utility 
+
+Observational Scaling Laws. In this section, we investigate how the current trajectory of LLM development will translate into utility for social scientists. The current trajectory of LLM development is focused on increasing LLMs’ general intelligence. For this reason, we are interested in the relationship between LLM’s general benchmark performances and social science task performance. Despite the wide array of general intelligence tasks in existence, prior works have found a low-dimensional capability space can explain most   
+
+> 2One outlier is in Psych-101 , where the Schulz et al. (2020) subtask has a slope of zero. We investigate this anomaly in §6.2.
+
+510 18 10 19 10 20   
+
+> FLOPs
+> 0.8
+> 0.9
+> 1.0
+> 1.1
+> Task Loss
+> r2= 0.57
+> slope = -0.15
+> 0.2 0.4 0.6 0.8
+> Task Loss
+> 50%
+> 60%
+> 70%
+> 80%
+> 90%
+> Accuracy (%)  y = 0.4 (12.0x - 0.6) + 0.5
+
+Figure 2: Compute-optimal scaling and downstream forecasting. Left: Compute scaling laws for Hilbig & Moshagen (2014), a subtask of Psych-101 . Right: We show this loss correlates with accuracy sigmoidally, so loss can serve as a proxy for downstream progress. 
+
+of the model variation on general tasks (Ili´ c & Gignac, 2024; Burnell et al., 2023). This common capability space allows direct comparison across families in a method known as observational scaling laws (Ruan et al., 2024). Unlike our experiments in §4, which rely on a carefully-controlled suite of model checkpoints trained with fixed parameters on the same pre-training distribution, observational scaling laws allow us to evaluate larger and more capable models, which are often better-suited for social tasks (Ziems et al., 2024), but lack the controlled checkpoints to run standard compute scaling laws. In addition to correlating general and social performance, observational evaluations allow us to predict downstream utility at scale. When evaluations reveal correlations between upstream metrics like loss and downstream metrics like accuracy, we can link our findings from §4 to predict future performance of models at much larger scales. These extrapolations assume the log-linear fit holds beyond the fitted range and that the observational calibration function remains valid at orders of magnitude beyond observed models. While such extrapolations should be interpreted with caution, prior work demonstrates the viability of this approach. For example, Held (2026) was able to predict the loss of a 25B parameter model with just 0.2% error by extrapolating their scaling laws 300 × past their largest run. 
+
+Models. We evaluate a broad set of 35 base LLMs from 7 model families, including Gemma, Llama, OLMo, OPT, Phi, Qwen, and Yi. These models range from 0.5B to 70B parameters, and follow a variety of training recipes, from standard pre-training on web corpora to training with synthetic data. We opt for base models because we are interested in modeling heterogeneous distributions (Wu et al., 2025) for tasks like WVS , and post-trained models tend to collapse variance in models’ learned opinion and behavior distributions (Hu et al., 2025; Sorensen et al., 2025). 
+
+General Benchmarks. To represent the current paradigm in language modeling, we aggregate the performances of the above models on a wide range of general skills that model developers currently optimized for. These span instruction-following, world knowledge, commonsense, reasoning, and programming. Concretely, we consider general knowledge 
+
+with (1) MMLU (Hendrycks et al., 2020) and (2) MMLU-pro (Wang et al., 2024b); instruction-following with (3) IFEval (Zhou et al., 2023); calibration with (4) TruthfulQA (Lin et al., 2022); commonsense with (5) HellaSwag (Zellers et al., 2019), (6) Winograd (Sakaguchi et al., 2021), and XWinograd (Muennighoff et al., 2023); mathematical reasoning with (7) GSM8K (Cobbe et al., 2021) and (8) MATH (Hendrycks et al., 2021); knowledge-informed reasoning 
+
+with (9) GPQA (Rein et al., 2024) and (10) ARC-C (Clark et al., 2018); multi-step reasoning 
+
+with (11) BIG-Bench Hard (BBH; Suzgun et al., 2022) and (12) MuSR (Sprague et al., 2023); and programming with HumanEval (Chen et al., 2021). 
+
+PC-1. For each model, we project its general task performance into a single scalar, given by the first principal component of the PCA over its benchmarking results. Although we use different benchmarks than Ruan et al. (2024), we similarly observe that PC-1 explains most of the variance (here 62%). 60.5                       
+
+> 1.0
+> 1.5 Canada
+> r2= 0.599
+> China
+> r2= 0.451
+> Vietnam
+> r2= 0.423
+> Korea
+> r2= 0.415
+> Hong Kong
+> r2= 0.411
+> 505
+> 0.5
+> 1.0
+> 1.5 India
+> r2= 0.197
+> 505
+> Tunisia
+> r2= 0.183
+> 505
+> Libya
+> r2= 0.167
+> 505
+> Myanmar
+> r2= 0.080
+> 505
+> Pakistan
+> r2= 0.064
+
+PC1 (The first principal component of general benchmarking performance) 
+
+> Task Loss
+
+Figure 3: Observational Scaling Laws for WVS . Top: The five countries with the strongest correlation to general performance, r2 > 0.4. Bottom: The five countries with the weakest correlation, r2 < 0.2. 
+
+5.1 Results on WVS : Opinion Simulation Correlating General and Social Performance. Opinion simulation is not uniformly aligned with general capabilities. Figure 3 shows the five countries most correlated (top) and five least correlated with general capabilities (bottom). Here we see that benchmarks explain as much as 60% of simulation variance and as little as 6%. The country with the least explained variance is Pakistan ( r2 = 0.064), followed by Myanmar ( r2 = 0.080): two populations that are under-represented in LLM pre-training data. Canada, a well-represented country, is most strongly correlated with general performance ( r2 = 0.60). 2.5 3.0 3.5 4.0 4.5 5.0      
+
+> log (count) keywords in DCLM-baseline-1B
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> Observational Scaling Law Fit  Pearson r= 0.734
+> slope=0.294
+> Spearman = 0.833
+> p< 0.05
+> Canada
+> China
+> India
+> Libya
+> Myanmar Pakistan
+> South Korea
+> Tunisia
+
+Figure 4: Pre-training biases predict observational scaling laws. We find a Spearman correlation of ρ = 0.8 and a Pearson correlation of r = 0.7 between observational fit and pre-training term frequency (p < 0.05 ), which supports our conclusions distributional imbal-ances in LLM pre-training data explain observational scaling discrepancies. 
+
+The scaling discrepancies above are consistent with distributional imbalances in LLM pre-training data. We approximate distributional imbalances by counting country-specific keywords in a random 1B token sam-ple of the DCLM pre-training corpus. Specifically, we count named references to the top 10 most populous metropolitan areas for each country and correlate the cumulative log frequency with the observational scal-ing law coefficients of determination. We find a Spear-man correlation of ρ = 0.8 and a Pearson correlation of r = 0.7 between observational fit and pre-training term frequency (p < 0.05 ), which supports our conclu-sions about pre-training biases. For more details, see Appendix D. Canadian simulation fidelity is intuitively most strongly correlated with commonsense reasoning tasks like Winograd ( r = −0.78) and HellaSwag ( r = −0.73), which measure implicit social reasoning and every-day expectations about behavior. Simulation fidelity is least correlated with multi-step reasoning (MuSR r =
+
+−0.42), epistemic calibration (TruthfulQA r = −0.47), and programming abilities (HumanEval r = −0.38). From these results, we can conclude that opinion sim-ulation is less about formal reasoning and understandably more about how people typically think in social situations. 
+
+Predicting Downstream Utility At Scale. For opinion simulation with the WVS , the task loss is the KL divergence between the survey results and the model’s predicted opinion 7distribution. This is a directly interpretable metric without the need for correlations with other metrics like accuracy. Comparing across countries, observational models obtain a minimum average KL divergence of as high as 0.48 on the Myanmar subset and as low as 0.23 on the Indian subset. While these are still relatively high, introducing significant distributional distortion, our compute scaling results from §4 suggest that scale alone could substantially reduce KL divergence, approaching zero within a reasonable horizon. For the Myanmar scaling law (Figure 10), the slope is -0.25 ( r2 = 0.9), so one can estimate the KL divergence will approach zero with as little as 83 times the compute. 3
+
+5.2 Results on Psych-101 : Behavioral Simulation Correlating General and Social Performance. The alignment between behavioral sim-ulation and general performance depends on the psychological experiment as shown in Figure 5. Most simulation subtasks are at least directionally correlated with general per-formance. However, one subtask from Speekenbrink et al. (2008) appears to be entirely orthogonal to general performance, having a correlation and slope of zero (see the green line in the left subplot under Associative Learning ). To understand which experiments are better explained by general performance, we clustered the Psych-101 subtasks by domain: associative learning, cognitive biases, decision-making, multi-task RL, and reward maximizing bandits (see Figure 5). We found that neither the fit nor the slope appears to be a function of the psychological domain. Within associative learning, there is the subtask with zero slope, as well as a subtask from Gershman (2020) with the steepest slope and best fit ( r2 = 0.63). For a complete table of regression coefficients, see Table 1 in Appendix C. Instead, slope and explained variance are functions of particular psychological experiments. In cases where general performance predicts behavioral simulation, task performance generally correlates with knowledge and reasoning. For example, in Gershman (2020), performance most strongly correlates with the models’ general knowledge (MMLU r =
+
+−0.80; MMLU Pro r = −0.72) and knowledge-informed reasoning (ARC-C r = −0.74), and it is least strongly correlated with instruction following (IFEval r = −0.38). 
+
+Predicting Downstream Utility At Scale. Across subtasks, loss predicts accuracy sig-moidally or linearly (see Figure 9 in Appendix A). A small set of subtasks are nearing performance saturation with accuracies above 90%. On other unsolved subtasks, LLMs appear capable of improving within a reasonable scale horizon. For example, Gershman (2020) has a maximum accuracy of 72%, from Qwen2.5 14B with a loss of 0.7. To reach 90% accuracy would require dropping the loss to 0.2, following the linear fit in Figure 9. Using the scaling fit from §4 (Figure 11), we can determine that such a performance gain would require approximately 40 times more compute. On the other hand, scale alone is not expected to improve at least a third of the behavioral simulation subtasks, one of which has no observed compute-scaling behavior (Schulz et al., 2020), and seven of which have weak correlation ( r2 < 0.3) between accuracy and task loss (Flesch et al., 2018; Frey et al., 2017; Hebart et al., 2023; Ludwig et al., 2023; Plonsky et al., 2018; Sadeghiyeh et al., 2020; Wulff et al., 2018a). Generally, these tasks have the weakest observational slopes and do not align well with general model capabilities, thus indicating that they at least partially occupy a capability space orthogonal to math and reasoning. We investigate these tasks further in §6. 
+
+5.3 Results on ACL : Longitudinal Forecasting Correlating General and Social Performance. Results on the left side of Figure 6 show that longitudinal forecasting improves with generally more capable models (slope = -0.04), and that performance on this task is correlated with general benchmarking performance (r2 = 0.60). Longitudinal forecasting is most strongly correlated with epistemic calibration (r = −0.43), general knowledge (MMLU Pro r = −0.36), and instruction-following (IFEval    
+
+> 3Since 10 0.48 0.25 =83
+
+80.0   
+
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> 1.2
+> 1.4
+> 1.6
+> 1.8
+> Associative
+> Learning
+> Associative
+> Learning
+> Associative
+> Learning
+> Badham
+> Gershman
+> Speekenbrink
+> Cognitive
+> Biases
+> Cognitive
+> Biases
+> Ruggeri
+> Wulff
+> Decision-
+> Making
+> Decision-
+> Making
+> Frey
+> Hilbig
+> Multi-Task
+> RL
+> Multi-Task
+> RL
+> Ludwig
+> Tomov Bandits Bandits Bandits Bandits
+> Flesch
+> Sadeghiyeh
+> Schulz
+> Waltz
+> Bahrami
+> Sadeghiyeh
+> Schulz
+> Steingroever
+> PC1 (The first principal component of general benchmarking performance)
+> Task Loss
+
+Figure 5: Observational Scaling Laws for Psych-101 on representative subtasks. We cluster tasks by their experimental hypothesis domain, including associative learning and cognitive biases , but we do not observe any strong relationship between domain and scaling behavior. 4 2 0 2 4 6  
+
+> PC1
+> 0.8
+> 1.0
+> 1.2
+> Task Loss
+> r2= 0.60
+> slope = -0.04
+> 0.9 1.0 1.1 1.2 1.3 1.4
+> Task Loss
+> 50%
+> 55%
+> 60%
+> 65%
+> Accuracy (%)
+> slope = 0.14
+> r2= 0.41
+
+Figure 6: Observational Scaling and Downstream Forecasting for ACL . Left: Observational scaling law with task loss. Right: We show that loss linearly correlates with accuracy. 
+
+r = −0.34), and least strongly correlated with multi-step reasoning (MuSR r = −0.04) and programming abilities (HumanEval r = −0.10). 
+
+Predicting Downstream Utility At Scale. The plot on the right side reveals a linear rela-tionship between task loss and accuracy. Combined with the clean compute-scaling results on this task (§4), this suggests that the current trajectory in large language modeling will produce tools that can more capably forecast the results of longitudinal studies. How-ever, the rate of improvement may be prohibitively slow. The best model we evaluated observationally was Yi 1.5 34B, which achieved an accuracy of 65%, with 0.9 loss. Our composite scaling estimates suggest that improving performance by an additional 5% on this task would require loss to fall by 0.36, demanding models trained optimally on over 1000 times more compute. As Yi 1.5 34B was already trained on 3.6T tokens, we can quickly see the bottleneck. Moreover, if the current trends continue with scale, we would expect an upper-bound model accuracy of only 77%. Together, these results suggest that longitudinal forecasting will not be solved by scaling pre-training compute alone. 
+
+5.4 Takeaways from Observational Scaling 
+
+Together, the results above show that general model capabilities roughly predict simulation fidelity for three representative inference problems: the prediction of social states, behavioral trajectories, and longitudinal variables. Here, we find that models with the strongest knowledge and knowledge-informed reasoning capabilities are also the most calibrated simulators. On the other hand, programming and formal multi-step reasoning abilities are less correlated with simulation fidelity. Moreover, general capabilities do not uniformly translate into better social simulators. Simulation fidelity is a function of pre-training data representation. The evidence here suggests that under-represented populations will be underserved by the current scaling paradigm. 96 Making Sense of Scaling Laws for Behavior Simulation 
+
+6.1 Characterizing Weaker Scaling Effects 
+
+The results in prior sections are optimistic and surprising. We observe that scaling up compute (§4) and general model capabilities (§5) alone will produce LLMs that are generally more capable of faithfully simulating human opinions, behavior, and longitudinal wellbeing. This effect is continuous and has an observable distribution, where most tasks demonstrably scale to some degree. In demonstrating this effect, we have also narrowed the space of potential simulation tasks which may not scale. Most notably, about a third of the behavior simulation tasks have weak calibration fits ( r2 < 0.3) between loss and downstream accuracy. Table 4 in the Appendix sorts behavior simulation tasks by the strength of the compute scaling law fit and accuracy calibration fit. As discussed in §5.2, the effect of scale is not immediately predictable from the high-level task domain, since, for example, multi-armed bandits have both strong (Gershman) and weak effects (Sadeghiyeh et al., Schulz et al.). However, within-domain analysis allows us to isolate other explanatory factors. 
+
+Multi-armed bandits. All four of the best-scaling tasks in Table 4 (Wilson et al., 2014; Gershman, 2020; Wu et al., 2018; Gershman, 2018) are bandit problems with independent and stationary reward distributions. Like humans, large models can readily infer these re-wards via Rescorla-Wagner-style conditioning (Rescorla, 1972), and thus faithfully simulate behavior. In contrast, Schulz et al. (2020), at the very bottom of the table, is a bandit problem with correlated reward distributions. Participants and models may have different heuristics for inferring the latent correlations and generalizing across tasks, leading to the poor scaling calibration. Similarly, models are uncalibrated in the non-stationary bandit of Bahrami et al. (2025). Second, a related computational challenge is catastrophic forgetting, where LLMs and human solutions differ in Flesch et al. (2018). Third, we observe poor scaling for bandit tasks across individual differences like trait temporal discounting in Sadeghiyeh et al. (2020), or mental illness in Waltz et al. (2020), which may be due to heterogeneity in the population that skews away from what the model is exposed to in pre-training data. 
+
+Associative Learning. In this domain, Badham et al. (2017) is a category learning tasks that scales nicely, whereas (Speekenbrink et al., 2008) is poorly calibrated. The primary difference between these tasks is that the latter studies individual learning differences between individuals with amnesia and those without. As in the multi-armed bandits, so also here we see that population skew may be a challenge for LLM scaling. 
+
+Multi-task RL. The strongest-scaling multi-task RL problem is from Tomov et al. (2021), while the weakest-scaling problem is from Ludwig et al. (2023). Both study how humans can generalize by learning from related tasks. The difference is that Ludwig et al. (2023) modifies the congruence between related tasks as an experimental variable, so that similar tasks may require very different policies. This too introduces heterogeneity which is not present in the easier Tomov et al. (2021). 
+
+Cognitive Biases. Studies of risk-aversion are notoriously idiosyncratic, since individuals’ prospect theory parameters can vary across sessions (Glöckner & Pachur, 2012). This may partly explain the weaker loss calibration in risk aversion studies Plonsky et al. (2018) and Peterson et al. (2021), relative to other cognitive biases like Wulff et al. (2018a). 
+
+6.2 Parameter Scaling with Fine-tuned Models 
+
+In §6.1 we observed the following common features across behavior simulation tasks with weaker scaling: (1) structured reward spaces that require generalization (e.g., Schulz et al.), (2) catastrophic forgetting (e.g., Flesch et al.), (3) population heterogeneity and skew (e.g., Sadeghiyeh et al.), (4) task heterogeneity (e.g., Ludwig et al.), and (5) individual idiosyncrasies (e.g., Plonsky et al.). The five tasks listed here include the four with the weakest calibration fit (Flesch et al., 2018; Ludwig et al., 2023; Plonsky et al., 2018; Sadeghiyeh et al., 2020), as well as Schulz et al. (2020), the only task with a scaling coefficient of zero. Fine-tuning can help us better diagnose the limitations of scale in the tasks above. The problem may be that in-context learning emerges for these tasks only beyond particular scale 10 0.5                          
+
+> 0.7
+> 0.9
+> Qwen
+> 71%
+> 73%
+> 73%
+> 73%
+> flesch2018comparing
+> 62%
+> 61%
+> 63%
+> 62%
+> ludwig2023human
+> 69%
+> 71% 71% 71%
+> plonsky2018when
+> 67%
+> 70%
+> 70%
+> 71%
+> sadeghiyeh2020temporal
+> 62%
+> 63% 64% 65%
+> schulz2020finding
+> 66%
+> 71% 71% 72%
+> gershman2020reward
+> 73%
+> 83% 87% 92%
+> hilbig2014generalized
+> 1B 3B 7B
+> 0.5
+> 0.7
+> 0.9
+> Llama
+> 72%
+> 73%
+> 73%
+> 1B 3B 7B
+> 62%
+> 62%
+> 65%
+> 1B 3B 7B
+> 69% 72% 73%
+> 1B 3B 7B
+> 68%
+> 70%
+> 71%
+> 1B 3B 7B
+> 61%
+> 64% 64%
+> 1B 3B 7B
+> 64% 68% 72%
+> 1B 3B 7B
+> 83%
+> 90% 93%
+> Weak Compute Scaling Tasks Strong Compute Scaling Tasks
+> Parameters
+
+Figure 7: Parameter Scaling after Finetuning on Psych-101. We finetune Qwen2.5 and Llama3 at different scales on each task respectively. Highlighted green are experiments in which the largest model’s advantage over the smallest model is statistically significant ( p < 0.05). Left: For tasks with weak compute scaling, we observe little or no evidence of parameter scaling. Right: For tasks with strong compute scaling, we also observe evidence of parameter scaling. 
+
+thresholds (Wei et al., 2022; Liu et al., 2022). We expect that fine-tuning can produce learning signals earlier than in-context-learning, particularly in the domain of social simulation (Kolluri et al., 2025). Moreover, scaling laws can be highly sensitive to design decisions like prompt formatting (Sclar et al., 2024; Held et al., 2025), and fine-tuning can reduce the sensitivity of our analysis to prompt design. Finally, fine-tuning can possibly address the model’s misalignment to population and task heterogeneity by fitting to the target population and task distributions. 
+
+Fine-tuning. We fine-tune Qwen2.5 (2024) and Llama3 (2024), which have base model checkpoints at multiple parameter scales. Specifically, we evaluate Qwen2.5 {0.5B, 1.5B, 3B, 7B} and Llama 3 {1B, 3B, 8B}. Beyond this scale, we confront optimization issues due to the scarcity of our training data. We fine-tune each model on 16M tokens from the full Psych-101 dataset with a learning rate sweep to select the best configuration. See Appendix E for more training details. Finally, we the parameter scaling behavior of our fine-tuned models on these weakest scaling tasks. As a control, we also evaluate on two strong compute scaling tasks: Gershman (2020), which had strongest scaling fit ( r2 = 0.97 ), and Hilbig & Moshagen (2014), which had the best calibration ( r2 = 0.86). 
+
+Results. Figure 7 shows parameter scaling curves after finetuning. Highlighted in green are experiments in which the largest model’s advantage over the smallest model is sta-tistically significant ( p < 0.05). The five columns on the left show results from the five tasks with the weakest compute scaling. Importantly, we observe statistically significant parameter scaling in Sadeghiyeh et al. (2020), which supports our hypothesis that, under population skew and heterogeneity, distributional alignment can help strengthen weak in-context scaling curves. 4 In other words, weak scaling here is likely a product of distribu-tional misalignment, and not evidence that the behavior is orthogonal or somehow outside the domain of what models can represent. Second, we fail to observe statistically significant parameter scaling in either Qwen2.5 or Llama3 on any of Flesch et al., Ludwig et al., Plonsky et al., or Schulz et al.. One might argue these flat curves are a shortcoming of fine-tuning in a low-data regime. However, the right side of Figure 7 discredits the argument, since two related demonstrate statistically significant parameter scaling in the same low-data training regime. This means the flat fine-tuning curves on the left are diagnostic of the tasks rather than the fine-tuning recipe. These null results allow us to more confidently assert that the weak scaling phenomenon is unlikely to be a thresholding effect of in-context learning. Instead, we argue that, over the interval tested in this experiment, scale alone appears insufficient to close the social simulation gap where human heuristics differ from models in domains like structured reward spaces, catastrophic forgetting, and individual idiosyncrasies. 
+
+> 4
+
+We might expect the same result then for task heterogeneity in Ludwig et al. (2023). However, the fine-tuned model performance on Ludwig et al. (2023) is not even monotonically increasing with parameter scale, so we will refrain from interpreting the null result as anything more than task noise. 
+
+11 7 Conclusion 
+
+This work asks whether the current trajectory of LLM development will produce increas-ingly more faithful models for social and experimental simulation. To answer this, we ran carefully-controlled compute scaling law experiments, and established accuracy-calibration functions from observational experiments to link compute scaling with downstream perfor-mance. Together, these experiments suggested that, in the aggregate, compute scaling is a consistent and reliable lever for progress in social simulation over finite probability spaces, especially when modeling populations that well-represented in pre-training corpora. This result is surprising, given the many known limitations of LLM simulations (Bisbee et al., 2024; Bowers et al., 2025; Tan et al., 2024). With this in mind, we believe it is wise for scien-tists of well-represented populations to begin investing in LLM-driven survey simulations for applications like pilot studies (Anthis et al., 2025), because with rapid progress, it will be cheaper, faster, and more reliable to simulate than to survey participants in countries like Canada and China. Conversely, for underrepresented populations, LLM survey simulations will not as rapidly improve, and if LLMs are widely and injudiciously adopted for social simulation, this dis-parity in relative scaling laws (Held et al., 2025) may ultimately exacerbate the generalizability crisis in the social sciences (Yarkoni, 2022). Observational experiments show that opinion simulations for Pakistan and Myanmar, and some behavioral simulation tasks like Flesch et al. (2018) occupy a capability space that is at least partially distinct from LLMs’ general knowledge and reasoning abilities. These distinct tasks have the weakest observational slopes, and are generally those for which models fail to translate scale to downstream per-formance. For such tasks, even fine-tuned Qwen2.5 and Llama3 models fail to demonstrate performance improvements with scale, indicating that compute scaling alone is insufficient to improve performance for this small set of social simulation tasks. 
+
+Limitations and Future Work 
+
+Task Scope. Our conclusions about social simulation cover only tasks with small, discrete action spaces because likelihood-based loss is well-defined here. The tasks we selected represent three of the most common MCQ-style inference problems in social simulation. Our conclusions should be seen as a careful exploration of scaling in its most natural simulation domains rather than an exhaustive treatment of scaling across the simulation literature. Future work can apply observational scaling analysis to the simulation of open-ended surveys, multi-turn dialogue, and multi-agent interaction where the target is a semantic property of an entire sequence or interaction protocol rather than a next-token distribution. 
+
+Model Scope and Capabilities. We evaluate only base models, which allow us to both isolate the effects of pre-training compute scale on simulation fidelity and to avoid the issue of mode collapse in post-trained models. Our conclusions do not preclude the benefits of post-training for social simulation. Pre-training compute scale alone is not expected to predict the simulation fidelity of frontier reasoning models, or models with retrieval augmented generation and tool use. We provide clean insights into compute scaling, but to better understand the future of social simulation, future work should consider the effect of such additional modeling levers as well. 
+
+Model Size and Extrapolation. Our compute scaling laws are fit over two orders of magnitude, from 10 18 to 10 20 FLOPs, which is standard in controlled scaling analyses (McLeish et al., 2026; Held et al., 2025; Biderman et al., 2023). The fitted range is limited by the computational cost of pre-training a suite of 80+ IsoFLOP checkpoints. Our downstream utility predictions in §5 extrapolate on these fits, and we assume the log-linear fit will hold past our largest run. Although prior work has shown these extrapolations can be accurate at 300 × with as little as 0.2% error Held (2026), one should still interpret our extrapolations with caution as magnitude effect-size estimates rather than precise forecasts. 
+
+Simulation Fidelity and Ethics. Faithful LLM simulations should be calibrated to the ground truth distributions of the human populations they simulate. Our findings show that simulation fidelity is, in part, a function of biases in pre-training data, so we caution 12 against the use of LLMs in simulating underrepresented populations. Moreover, fidelity is a necessary but not sufficient for scientifically valid and ethically responsible simulation. Our work measures only distributional fidelity, not scientific or ethical validity. Social scientists have expressed numerous concerns around transparency (Fecher et al., 2025), bias (Schroeder et al., 2025), and ethics (Liao et al., 2024) of LLM simulations, and we encourage practitioners to carefully consider these concerns before deployment. 
+
+Acknowledgments 
+
+This work was supported by the Google TPU Research Cloud (TRC), a Stanford HAI–GCP Grant, a Stanford HAI Seed Grant, as well as by DSO National Laboratories. The authors thank Myra Cheng, Joe Baumann, Ananya Bhattacharjee, and the SALT Lab broadly for discussions and feedback during the development of this work. 
+
+References 
+
+Suhaib Abdurahman, Mohammad Atari, Farzan Karimi-Malekabadi, Mona J Xue, Jackson Trager, Peter S Park, Preni Golazizian, Ali Omrani, Morteza Dehghani, Matthew Harding, et al. Perils and opportunities in using large language models in psychological research. 
+
+PNAS nexus , 3(7):pgae245, 2024. Gati V Aher, Rosa I Arriaga, and Adam Tauman Kalai. Using large language models to simulate multiple humans and replicate human subject studies. In International conference on machine learning , pp. 337–371. PMLR, 2023. Georg Ahnert, Max Pellert, David Garcia, and Markus Strohmaier. Extracting affect ag-gregates from longitudinal social media data with temporal adapters for large language models. In Proceedings of the International AAAI Conference on Web and Social Media , vol-ume 19, pp. 15–36, 2025. Badr Alkhamissi, Mahmoud ElNokrashy, Muhanad Alkhamissi, and Mona Diab. Investigat-ing cultural alignment of large language models. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 12404–12422, August 2024. Jacy Reese Anthis, Ryan Liu, Sean M Richardson, Austin C Kozlowski, Bernard Koch, James Evans, Erik Brynjolfsson, and Michael Bernstein. Llm social simulations are a promising research method. arXiv preprint arXiv:2504.02234 , 2025. Lisa P Argyle, Ethan C Busby, Nancy Fulda, Joshua R Gubler, Christopher Rytting, and David Wingate. Out of one, many: Using language models to simulate human samples. 
+
+Political Analysis , 31(3):337–351, 2023. Stephen P Badham, Adam N Sanborn, and Elizabeth A Maylor. Deficits in category learning in older adults: Rule-based versus clustering accounts. Psychology and Aging , 32(5):473, 2017. Bahador Bahrami, Joaquin Navajas, Yuyan Wang, and Shangyi Wang. 4 arm bandit task dataset, Jul 2025. URL osf.io/f3t2a .Christopher A. Bail. Can generative ai improve social science? Proceedings of the National Academy of Sciences , 121(21):e2314021121, 2024. Ali Bazgir and Yu Zhang. Agentichypothesis: A survey on hypothesis generation using llm systems. In Towards Agentic AI for Science: Hypothesis Generation, Comprehension, Quantification, and Validation . 2025. Akshita Bhagia, Jiacheng Liu, Alexander Wettig, David Heineman, Oyvind Tafjord, Ananya Harsh Jha, Luca Soldaini, Noah A Smith, Dirk Groeneveld, Pang Wei Koh, et al. Establishing task scaling laws via compute-efficient model ladders. In Second Conference on Language Modeling , 2025. 13 Stella Biderman, Hailey Schoelkopf, Quentin Gregory Anthony, Herbie Bradley, Kyle O’Brien, Eric Hallahan, Mohammad Aflah Khan, Shivanshu Purohit, USVSN Sai Prashanth, Edward Raff, et al. Pythia: A suite for analyzing large language models across training and scaling. In International conference on machine learning , pp. 2397–2430. PMLR, 2023. Marcel Binz, Elif Akata, Matthias Bethge, Fabian Brändle, Fred Callaway, Juliana Coda-Forno, and Eric Schulz. A foundation model to predict and capture human cognition. 
+
+Nature , pp. 1–8, 2025. James Bisbee, Joshua D Clinton, Cassy Dorff, Brenton Kenkel, and Jennifer M Larson. Synthetic replacements for human survey data? the perils of large language models. 
+
+Political Analysis , 32(4):401–416, 2024. Julien Boelaert, Samuel Coavoux, Étienne Ollion, Ivaylo Petev, and Patrick Präg. Machine bias. how do generative language models answer opinion polls? Sociological Methods & Research , 54(3):1156–1196, 2025. Jeffrey S Bowers, Guillermo Puebla, Sushrut Thorat, Konstantinos Tsetsos, and Casimir JH Ludwig. Centaur: A model without a theory. OSF , 2025. James Brand, Ayelet Israeli, and Donald Ngwe. Using llms for market research. Harvard business school marketing unit working paper , (23-062), 2023. Erik Brynjolfsson, José Ramón Enríquez, Sophia Kazinnik, and David Nguyen. Augmenting survey data with generative ai: An application to economic research. Available at SSRN 6343598 , 2025. Ryan Burnell, Han Hao, Andrew RA Conway, and Jose Hernandez Orallo. Revealing the structure of language model capabilities. arXiv preprint arXiv:2306.10062 , 2023. Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan, Henrique Ponde De Oliveira Pinto, Jared Kaplan, Harri Edwards, Yuri Burda, Nicholas Joseph, Greg Brockman, et al. Evalu-ating large language models trained on code. arXiv preprint arXiv:2107.03374 , 2021. Yang Chen, Samuel N Kirshner, Anton Ovchinnikov, Meena Andiappan, and Tracy Jenkin. A manager and an ai walk into a bar: does chatgpt make biased decisions like we do? 
+
+Manufacturing & Service Operations Management , 27(2):354–368, 2025. Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa Schoenick, and Oyvind Tafjord. Think you have solved question answering? try arc, the ai2 reasoning challenge. arXiv preprint arXiv:1803.05457 , 2018. Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, et al. Training verifiers to solve math word problems. arXiv preprint arXiv:2110.14168 , 2021. Shih-Chieh Dai, Aohan Xiong, and Lun-Wei Ku. LLM-in-the-loop: Leveraging large lan-guage models for thematic analysis. In Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing , 2023. R Maria del Rio-Chanona, Marco Pangallo, and Cars Hommes. Can generative ai agents behave like humans? evidence from laboratory market experiments. arXiv preprint arXiv:2505.07457 , 2025. Ricardo Dominguez-Olmedo, Moritz Hardt, and Celestine Mendler-Dünner. Questioning the survey responses of large language models. Advances in Neural Information Processing Systems , 37:45850–45878, 2024. Esin Durmus, Karina Nguyen, Thomas Liao, Nicholas Schiefer, Amanda Askell, Anton Bakhtin, Carol Chen, Zac Hatfield-Dodds, Danny Hernandez, Nicholas Joseph, et al. Towards measuring the representation of subjective global opinions in language models. In First Conference on Language Modeling , 2023. 14 Benedikt Fecher, Marcel Hebing, Max Laufer, Julia Pohle, and Florian Sofsky. Friend or foe? exploring the implications of large language models on the science system. AI & Society ,40(2):447–459, 2025. Timo Flesch, Jan Balaguer, Ronald Dekker, Hamed Nili, and Christopher Summerfield. Comparing continual task learning in minds and machines. Proceedings of the National Academy of Sciences , 115(44):E10313–E10322, 2018. Renato Frey, Andreas Pedroni, Rui Mata, Jörg Rieskamp, and Ralph Hertwig. Risk preference shares the psychometric structure of major psychological traits. Science advances , 3(10): e1701381, 2017. Yuan Gao, Dokyun Lee, Gordon Burtch, and Sina Fazelpour. Take caution in using llms as human surrogates: Scylla ex machina. arXiv preprint arXiv:2410.19599 , 2024. Samuel J Gershman. Deconstructing the human algorithms for exploration. Cognition , 173: 34–42, 2018. Samuel J Gershman. Origin of perseveration in the trade-off between reward and complexity. 
+
+Cognition , 204:104394, 2020. Andreas Glöckner and Thorsten Pachur. Cognitive models of risky choice: Parameter stability and predictive accuracy of prospect theory. Cognition , 123(1):21–32, 2012. Augusto Gonzalez-Bonorino, Monica Capra, and Emilio Pantoja. Llms model non-weird populations: Experiments with synthetic cultural agents. arXiv preprint arXiv:2501.06834 ,2025. Aaron Grattafiori, Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schelten, Alex Vaughan, Amy Yang, Angela Fan, Anirudh Goyal, Anthony Hartshorn, Aobo Yang, Archi Mitra, Archie Sravankumar, Artem Korenev, Arthur Hinsvark, Arun Rao, Aston Zhang, Aurelien Ro-driguez, Austen Gregerson, Ava Spataru, Baptiste Roziere, Bethany Biron, Binh Tang, Bob-bie Chern, Charlotte Caucheteux, Chaya Nayak, Chloe Bi, Chris Marra, Chris McConnell, Christian Keller, Christophe Touret, Chunyang Wu, Corinne Wong, Cristian Canton Ferrer, Cyrus Nikolaidis, Damien Allonsius, Daniel Song, Danielle Pintz, Danny Livshits, Danny Wyatt, David Esiobu, Dhruv Choudhary, Dhruv Mahajan, Diego Garcia-Olano, Diego Perino, Dieuwke Hupkes, Egor Lakomkin, Ehab AlBadawy, Elina Lobanova, Emily Dinan, Eric Michael Smith, Filip Radenovic, Francisco Guzmán, Frank Zhang, Gabriel Synnaeve, Gabrielle Lee, Georgia Lewis Anderson, Govind Thattai, Graeme Nail, Gregoire Mialon, Guan Pang, Guillem Cucurell, Hailey Nguyen, Hannah Korevaar, Hu Xu, Hugo Touvron, Iliyan Zarov, Imanol Arrieta Ibarra, Isabel Kloumann, Ishan Misra, Ivan Evtimov, Jack Zhang, Jade Copet, Jaewon Lee, Jan Geffert, Jana Vranes, Jason Park, Jay Mahadeokar, Jeet Shah, Jelmer van der Linde, Jennifer Billock, Jenny Hong, Jenya Lee, Jeremy Fu, Jianfeng Chi, Jianyu Huang, Jiawen Liu, Jie Wang, Jiecao Yu, Joanna Bitton, Joe Spisak, Jongsoo Park, Joseph Rocca, Joshua Johnstun, Joshua Saxe, Junteng Jia, Kalyan Vasuden Alwala, Karthik Prasad, Kartikeya Upasani, Kate Plawiak, Ke Li, Kenneth Heafield, Kevin Stone, Khalid El-Arini, Krithika Iyer, Kshitiz Malik, Kuenley Chiu, Kunal Bhalla, Kushal Lakhotia, Lauren Rantala-Yeary, Laurens van der Maaten, Lawrence Chen, Liang Tan, Liz Jenkins, Louis Martin, Lovish Madaan, Lubo Malo, Lukas Blecher, Lukas Landzaat, Luke de Oliveira, Madeline Muzzi, Mahesh Pasupuleti, Mannat Singh, Manohar Paluri, Marcin Kardas, Maria Tsimpoukelli, Mathew Oldham, Mathieu Rita, Maya Pavlova, Melanie Kambadur, Mike Lewis, Min Si, Mitesh Kumar Singh, Mona Hassan, Naman Goyal, Narjes Torabi, Nikolay Bashlykov, Nikolay Bogoychev, Niladri Chatterji, Ning Zhang, Olivier Duchenne, Onur Çelebi, Patrick Alrassy, Pengchuan Zhang, Pengwei Li, Petar Vasic, Peter Weng, Prajjwal Bhargava, Pratik Dubal, Praveen Krishnan, Punit Singh Koura, Puxin Xu, Qing He, Qingxiao Dong, Ragavan Srinivasan, Raj Ganapathy, Ramon Calderer, Ricardo Silveira Cabral, Robert Stojnic, Roberta Raileanu, Rohan Maheswari, Rohit Gird-har, Rohit Patel, Romain Sauvestre, Ronnie Polidoro, Roshan Sumbaly, Ross Taylor, Ruan Silva, Rui Hou, Rui Wang, Saghar Hosseini, Sahana Chennabasappa, Sanjay Singh, Sean Bell, Seohyun Sonia Kim, Sergey Edunov, Shaoliang Nie, Sharan Narang, Sharath Ra-parthy, Sheng Shen, Shengye Wan, Shruti Bhosale, Shun Zhang, Simon Vandenhende, 15 Soumya Batra, Spencer Whitman, Sten Sootla, Stephane Collot, Suchin Gururangan, Syd-ney Borodinsky, Tamar Herman, Tara Fowler, Tarek Sheasha, Thomas Georgiou, Thomas Scialom, Tobias Speckbacher, Todor Mihaylov, Tong Xiao, Ujjwal Karn, Vedanuj Goswami, Vibhor Gupta, Vignesh Ramanathan, Viktor Kerkez, Vincent Gonguet, Virginie Do, Vish Vogeti, Vítor Albiero, Vladan Petrovic, Weiwei Chu, Wenhan Xiong, Wenyin Fu, Whitney Meers, Xavier Martinet, Xiaodong Wang, Xiaofang Wang, Xiaoqing Ellen Tan, Xide Xia, Xinfeng Xie, Xuchao Jia, Xuewei Wang, Yaelle Goldschlag, Yashesh Gaur, Yasmine Babaei, Yi Wen, Yiwen Song, Yuchen Zhang, Yue Li, Yuning Mao, Zacharie Delpierre Coudert, Zheng Yan, Zhengxing Chen, Zoe Papakipos, Aaditya Singh, Aayushi Srivastava, Abha Jain, Adam Kelsey, Adam Shajnfeld, Adithya Gangidi, Adolfo Victoria, Ahuva Goldstand, Ajay Menon, Ajay Sharma, Alex Boesenberg, Alexei Baevski, Allie Feinstein, Amanda Kallet, Amit Sangani, Amos Teo, Anam Yunus, Andrei Lupu, Andres Alvarado, Andrew Caples, Andrew Gu, Andrew Ho, Andrew Poulton, Andrew Ryan, Ankit Ramchandani, Annie Dong, Annie Franco, Anuj Goyal, Aparajita Saraf, Arkabandhu Chowdhury, Ashley Gabriel, Ashwin Bharambe, Assaf Eisenman, Azadeh Yazdan, Beau James, Ben Maurer, Benjamin Leonhardi, Bernie Huang, Beth Loyd, Beto De Paola, Bhargavi Paranjape, Bing Liu, Bo Wu, Boyu Ni, Braden Hancock, Bram Wasti, Brandon Spence, Brani Stojkovic, Brian Gamido, Britt Montalvo, Carl Parker, Carly Burton, Catalina Mejia, Ce Liu, Chang-han Wang, Changkyu Kim, Chao Zhou, Chester Hu, Ching-Hsiang Chu, Chris Cai, Chris Tindal, Christoph Feichtenhofer, Cynthia Gao, Damon Civin, Dana Beaty, Daniel Kreymer, Daniel Li, David Adkins, David Xu, Davide Testuggine, Delia David, Devi Parikh, Diana Liskovich, Didem Foss, Dingkang Wang, Duc Le, Dustin Holland, Edward Dowling, Eissa Jamil, Elaine Montgomery, Eleonora Presani, Emily Hahn, Emily Wood, Eric-Tuan Le, Erik Brinkman, Esteban Arcaute, Evan Dunbar, Evan Smothers, Fei Sun, Felix Kreuk, Feng Tian, Filippos Kokkinos, Firat Ozgenel, Francesco Caggioni, Frank Kanayet, Frank Seide, Gabriela Medina Florez, Gabriella Schwarz, Gada Badeer, Georgia Swee, Gil Halpern, Grant Herman, Grigory Sizov, Guangyi, Zhang, Guna Lakshminarayanan, Hakan Inan, Hamid Shojanazeri, Han Zou, Hannah Wang, Hanwen Zha, Haroun Habeeb, Harrison Rudolph, Helen Suk, Henry Aspegren, Hunter Goldman, Hongyuan Zhan, Ibrahim Damlaj, Igor Molybog, Igor Tufanov, Ilias Leontiadis, Irina-Elena Veliche, Itai Gat, Jake Weissman, James Geboski, James Kohli, Janice Lam, Japhet Asher, Jean-Baptiste Gaya, Jeff Marcus, Jeff Tang, Jennifer Chan, Jenny Zhen, Jeremy Reizenstein, Jeremy Teboul, Jessica Zhong, Jian Jin, Jingyi Yang, Joe Cummings, Jon Carvill, Jon Shepard, Jonathan McPhie, Jonathan Torres, Josh Ginsburg, Junjie Wang, Kai Wu, Kam Hou U, Karan Saxena, Kartikay Khandelwal, Katayoun Zand, Kathy Matosich, Kaushik Veeraraghavan, Kelly Michelena, Keqian Li, Kiran Jagadeesh, Kun Huang, Kunal Chawla, Kyle Huang, Lailin Chen, Lakshya Garg, Lavender A, Leandro Silva, Lee Bell, Lei Zhang, Liangpeng Guo, Licheng Yu, Liron Moshkovich, Luca Wehrstedt, Madian Khabsa, Manav Avalani, Manish Bhatt, Martynas Mankus, Matan Hasson, Matthew Lennie, Matthias Reso, Maxim Gro-shev, Maxim Naumov, Maya Lathi, Meghan Keneally, Miao Liu, Michael L. Seltzer, Michal Valko, Michelle Restrepo, Mihir Patel, Mik Vyatskov, Mikayel Samvelyan, Mike Clark, Mike Macey, Mike Wang, Miquel Jubert Hermoso, Mo Metanat, Mohammad Rastegari, Munish Bansal, Nandhini Santhanam, Natascha Parks, Natasha White, Navyata Bawa, Nayan Singhal, Nick Egebo, Nicolas Usunier, Nikhil Mehta, Nikolay Pavlovich Laptev, Ning Dong, Norman Cheng, Oleg Chernoguz, Olivia Hart, Omkar Salpekar, Ozlem Kalinli, Parkin Kent, Parth Parekh, Paul Saab, Pavan Balaji, Pedro Rittner, Philip Bon-trager, Pierre Roux, Piotr Dollar, Polina Zvyagina, Prashant Ratanchandani, Pritish Yuvraj, Qian Liang, Rachad Alao, Rachel Rodriguez, Rafi Ayub, Raghotham Murthy, Raghu Nayani, Rahul Mitra, Rangaprabhu Parthasarathy, Raymond Li, Rebekkah Hogan, Robin Battey, Rocky Wang, Russ Howes, Ruty Rinott, Sachin Mehta, Sachin Siby, Sai Jayesh Bondu, Samyak Datta, Sara Chugh, Sara Hunt, Sargun Dhillon, Sasha Sidorov, Satadru Pan, Saurabh Mahajan, Saurabh Verma, Seiji Yamamoto, Sharadh Ramaswamy, Shaun Lindsay, Shaun Lindsay, Sheng Feng, Shenghao Lin, Shengxin Cindy Zha, Shishir Patil, Shiva Shankar, Shuqiang Zhang, Shuqiang Zhang, Sinong Wang, Sneha Agarwal, Soji Sajuyigbe, Soumith Chintala, Stephanie Max, Stephen Chen, Steve Kehoe, Steve Satter-field, Sudarshan Govindaprasad, Sumit Gupta, Summer Deng, Sungmin Cho, Sunny Virk, Suraj Subramanian, Sy Choudhury, Sydney Goldman, Tal Remez, Tamar Glaser, Tamara Best, Thilo Koehler, Thomas Robinson, Tianhe Li, Tianjun Zhang, Tim Matthews, Timothy Chou, Tzook Shaked, Varun Vontimitta, Victoria Ajayi, Victoria Montanez, Vijai Mohan, 16 Vinay Satish Kumar, Vishal Mangla, Vlad Ionescu, Vlad Poenaru, Vlad Tiberiu Mihailescu, Vladimir Ivanov, Wei Li, Wenchen Wang, Wenwen Jiang, Wes Bouaziz, Will Constable, Xiaocheng Tang, Xiaojian Wu, Xiaolan Wang, Xilun Wu, Xinbo Gao, Yaniv Kleinman, Yanjun Chen, Ye Hu, Ye Jia, Ye Qi, Yenda Li, Yilin Zhang, Ying Zhang, Yossi Adi, Youngjin Nam, Yu, Wang, Yu Zhao, Yuchen Hao, Yundi Qian, Yunlu Li, Yuzi He, Zach Rait, Zachary DeVito, Zef Rosnbrick, Zhaoduo Wen, Zhenyu Yang, Zhiwei Zhao, and Zhiyu Ma. The Llama 3 Herd of Models, 2024. URL https://arxiv.org/abs/2407.21783 .Kobi Hackenburg, Ben M Tappin, Paul Röttger, Scott A Hale, Jonathan Bright, and Helen Margetts. Scaling language model size yields diminishing returns for single-message political persuasion. Proceedings of the National Academy of Sciences , 122(10):e2413443122, 2025. Perttu Hämäläinen, Mikke Tavast, and Anton Kunnari. Evaluating large language models in generating synthetic hci research data: a case study. In Proceedings of the 2023 CHI conference on human factors in computing systems , pp. 1–19, 2023. Martin N Hebart, Oliver Contier, Lina Teichmann, Adam H Rockter, Charles Y Zheng, Alexis Kidder, Anna Corriveau, Maryam Vaziri-Pashkam, and Chris I Baker. Things-data, a multimodal collection of large-scale datasets for investigating object representations in human brain and behavior. Elife , 12:e82580, 2023. Will Held. Scaling laws that extrapolate 300× past the fit. https://www.openathena.ai/ blog/delphi/ , may 2026. Open Athena Blog. William Held, David Hall, Percy Liang, and Diyi Yang. Relative scaling laws for llms. arXiv preprint arXiv:2510.24626 , 2025. Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn Song, and Jacob Steinhardt. Measuring massive multitask language understanding. arXiv preprint arXiv:2009.03300 , 2020. Dan Hendrycks, Collin Burns, Saurav Kadavath, Akul Arora, Steven Basart, Eric Tang, Dawn Song, and Jacob Steinhardt. Measuring mathematical problem solving with the math dataset. arXiv preprint arXiv:2103.03874 , 2021. Luke Hewitt, Ashwini Ashokkumar, Isaias Ghezae, and Robb Willer. Predicting results of social science experiments using large language models. Preprint , 2024. Tom Heyman and Geert Heyman. The impact of chatgpt on human data collection: A case study involving typicality norming data. Behavior Research Methods , 56(5):4974–4981, 2024. Benjamin E Hilbig and Morten Moshagen. Generalized outcome-based strategy classifica-tion: Comparing deterministic and probabilistic choice models. Psychonomic bulletin & review , 21(6):1431–1443, 2014. Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya, Trevor Cai, Eliza Rutherford, Diego de Las Casas, Lisa Anne Hendricks, Johannes Welbl, Aidan Clark, et al. Training compute-optimal large language models. arXiv preprint arXiv:2203.15556 ,2022. John J Horton, Apostolos Filippas, and Benjamin S Manning. Large language models as simulated economic agents: What can we learn from homo silicus? Technical report, National Bureau of Economic Research, 2023. James S. House, Sarah A. Burgard, Margaret T. Hicken, and Paula M. Lantz. Americans’ changing lives: Waves i–vi, 1986–2021, 2024. Tiancheng Hu, Joachim Baumann, Lorenzo Lupo, Nigel Collier, Dirk Hovy, and Paul Röttger. Simbench: Benchmarking the ability of large language models to simulate human behaviors. arXiv preprint arXiv:2510.17516 , 2025. 17 David Ili´ c and Gilles E Gignac. Evidence of interrelated cognitive-like capabilities in large language models: Indications of artificial general intelligence or achievement? Intelligence ,106:101858, 2024. Feiran Jia, Ziyu Ye, Shiyang Lai, Kai Shu, Jindong Gu, Adel Bibi, Ziniu Hu, David Jurgens, James Evans, Philip H Torr, et al. Can large language model agents simulate human trust behavior? Advances in neural information processing systems , 37:15674–15729, 2024. Shapeng Jiang, Lijia Wei, and Chen Zhang. Donald trumps in the virtual polls: Simulating and predicting public opinions in surveys using large language models. arXiv preprint arXiv:2411.01582 , 2024. Carlos E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and Karthik Narasimhan. SWE-bench: Can language models resolve real-world GitHub issues? In International Conference on Learning Representations , 2024. Jared Kaplan, Sam McCandlish, Tom Henighan, Tom B. Brown, Benjamin Chess, Rewon Child, and Dario Amodei. Scaling laws for neural language models, 2020. Junsol Kim and Byungkyu Lee. Ai-augmented surveys: Leveraging large language models and surveys for opinion prediction. arXiv preprint arXiv:2305.09620 , 2023. Akaash Kolluri, Shengguang Wu, Joon Sung Park, and Michael S Bernstein. Finetuning llms for human behavior prediction in social science experiments. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing , pp. 30084–30099, 2025. Jeffrey Li, Alex Fang, Georgios Smyrnis, Maor Ivgi, Matt Jordan, Samir Yitzhak Gadre, Hritik Bansal, Etash Kumar Guha, Sedrick Keh, Kushal Arora, Saurabh Garg, Rui Xin, Niklas Muennighoff, Reinhard Heckel, Jean Mercat, Mayee F Chen, Suchin Gururangan, Mitchell Wortsman, Alon Albalak, Yonatan Bitton, Marianna Nezhurina, Amro Kamal Mohamed Abbas, Cheng-Yu Hsieh, Dhruba Ghosh, Joshua P Gardner, Maciej Kilian, Hanlin Zhang, Rulin Shao, Sarah M Pratt, Sunny Sanyal, Gabriel Ilharco, Giannis Daras, Kalyani Marathe, Aaron Gokaslan, Jieyu Zhang, Khyathi Chandu, Thao Nguyen, Igor Vasiljevic, Sham M. Kakade, Shuran Song, Sujay Sanghavi, Fartash Faghri, Sewoong Oh, Luke Zettlemoyer, Kyle Lo, Alaaeldin El-Nouby, Hadi Pouransari, Alexander T Toshev, Stephanie Wang, Dirk Groeneveld, Luca Soldaini, Pang Wei Koh, Jenia Jitsev, Thomas Kollar, Alex Dimakis, Yair Carmon, Achal Dave, Ludwig Schmidt, and Vaishaal Shankar. DataComp-LM: In search of the next generation of training sets for language models. In The Thirty-eight Conference on Neural Information Processing Systems Datasets and Benchmarks Track , 2024. URL https://openreview.net/forum?id=CNWdWn47IE .Ziyu Liao, Maria Antoniak, Ian Cheong, Emily Y. Y. Cheng, Annie H. Lee, Kyle Lo, and Amy X. Zhang. LLMs as research tools: A large-scale survey of researchers’ usage and perceptions, 2024. Stephanie Lin, Jacob Hilton, and Owain Evans. Truthfulqa: Measuring how models mimic human falsehoods. In Proceedings of the 60th annual meeting of the association for computa-tional linguistics (volume 1: long papers) , pp. 3214–3252, 2022. Haokun Liu, Derek Tam, Mohammed Muqeeth, Jay Mohta, Tenghao Huang, Mohit Bansal, and Colin A Raffel. Few-shot parameter-efficient fine-tuning is better and cheaper than in-context learning. Advances in Neural Information Processing Systems , 35:1950–1965, 2022. Ryan Liu, Jiayi Geng, Joshua C Peterson, Ilia Sucholutsky, and Thomas L Griffiths. Large language models assume people are more rational than we really are. arXiv preprint arXiv:2406.17055 , 2024. T. Ludwig, M. Siegel, and E. Schulz. Human multi-task learning: The why and what. 
+
+http://dx.doi.org/10.32470/CCN.2023.1528-0 , 2023. Benjamin S Manning, Kehang Zhu, and John J Horton. Automated social science: Language models as scientist and subjects. Technical report, National Bureau of Economic Research, 2024. 18 Sean McLeish, John Kirchenbauer, David Miller, Siddharth Singh, Abhinav Bhatele, Micah Goldblum, Ashwinee Panda, and Tom Goldstein. Gemstones: A model suite for multi-faceted scaling laws. Advances in Neural Information Processing Systems , 38:123419–123454, 2026. Ali Merali. Scaling laws for economic productivity: Experimental evidence in llm-assisted translation. arXiv preprint arXiv:2409.02391 , 2024. Meredith Ringel Morris. Scientists’ perspectives on the potential for generative AI in their fields, 2023. Xinyi Mou, Xuanwen Ding, Qi He, Liang Wang, Jingcong Liang, Xinnong Zhang, Libo Sun, Jiayu Lin, Jie Zhou, Xuanjing Huang, et al. From individual to society: A survey on social simulation driven by large language model-based agents. arXiv preprint arXiv:2412.03563 ,2024. Niklas Muennighoff, Thomas Wang, Lintang Sutawika, Adam Roberts, Stella Biderman, Teven Le Scao, M Saiful Bari, Sheng Shen, Zheng-Xin Yong, Hailey Schoelkopf, et al. Crosslingual generalization through multitask finetuning. In Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 15991– 16111, 2023. Adil Myrzakhan, Saba M. Bsharat, and Zhiyuan Shen. Open-LLM-leaderboard: From multi-choice to open-style questions for LLM evaluation, 2024. Joon Sung Park, Lindsay Popowski, Carrie Cai, Meredith Ringel Morris, Percy Liang, and Michael S Bernstein. Social simulacra: Creating populated prototypes for social computing systems. In Proceedings of the 35th annual ACM symposium on user interface software and technology , pp. 1–18, 2022. Joon Sung Park, Carolyn Q Zou, Aaron Shaw, Benjamin Mako Hill, Carrie Cai, Mered-ith Ringel Morris, Robb Willer, Percy Liang, and Michael S Bernstein. Generative agent simulations of 1,000 people. arXiv preprint arXiv:2411.10109 , 2024a. Peter S Park, Philipp Schoenegger, and Chongyang Zhu. Diminished diversity-of-thought in a standard large language model. Behavior Research Methods , 56(6):5754–5770, 2024b. Max Pellert, Clemens M Lechner, Claudia Wagner, Beatrice Rammstedt, and Markus Strohmaier. Ai psychometrics: Assessing the psychological profiles of large language models through psychometric inventories. Perspectives on Psychological Science , 19(5): 808–826, 2024. Joshua C Peterson, David D Bourgin, Mayank Agrawal, Daniel Reichman, and Thomas L Griffiths. Using large-scale experiments and machine learning to discover theories of human decision-making. Science , 372(6547):1209–1214, 2021. Nikolay B Petrov, Gregory Serapio-García, and Jason Rentfrow. Limited ability of llms to simulate human psychological behaviours: a psychometric analysis. arXiv preprint arXiv:2405.07248 , 2024. O. Plonsky, R. Apel, I. Erev, E. Ert, and M. Tennenholtz. When and how can social scientists add value to data scientists? a choice prediction competition for human decision making. Unpublished manuscript, 2018. Yao Qu and Jue Wang. Performance and biases of large language models in public opinion simulation. Humanities and Social Sciences Communications , 11(1):1–13, 2024. Qwen Team, An Yang, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chengyuan Li, Dayiheng Liu, Fei Huang, Haoran Wei, Huan Lin, Jian Yang, Jianhong Tu, Jianwei Zhang, Jianxin Yang, Jiaxi Yang, Jingren Zhou, Junyang Lin, Kai Dang, Keming Lu, Keqin Bao, Kexin Yang, Le Yu, Mei Li, Mingfeng Xue, Pei Zhang, Qin Zhu, Rui Men, Runji Lin, Tianhao Li, Tianyi Tang, Tingyu Xia, Xingzhang Ren, Xuancheng Ren, Yang Fan, Yang Su, Yichang Zhang, Yu Wan, Yuqiong Liu, Zeyu Cui, Zhenru Zhang, and Zihan Qiu. Qwen2.5 technical report. arXiv preprint arXiv:2412.15115 , 2024. 19 David Rein, Betty Li Hou, Asa Cooper Stickland, Jackson Petty, Richard Yuanzhe Pang, Julien Dirani, Julian Michael, and Samuel R Bowman. Gpqa: A graduate-level google-proof q&a benchmark. In First conference on language modeling , 2024. Robert A Rescorla. A theory of pavlovian conditioning: Variations in the effectiveness of reinforcement and non-reinforcement. Classical conditioning, Current research and theory , 2: 64–69, 1972. Jillian Ross, Yoon Kim, and Andrew W Lo. Llm economicus? mapping the behavioral biases of llms via utility theory. arXiv preprint arXiv:2408.02784 , 2024. Yang Ruan, Chris J. Maddison, and Tatsunori B. Hashimoto. Observational scaling laws and the predictability of language model performance. In Advances in Neural Information Processing Systems , volume 37, pp. 15841–15892, 2024. Kai Ruggeri, Amma Panin, Milica Vdovic, Bojana Ve´ ckalov, Nazeer Abdul-Salaam, Jascha Achterberg, Carla Akil, Jolly Amatya, Kanchan Amatya, Thomas Lind Andersen, et al. The globalizability of temporal discounting. Nature Human Behaviour , 6(10):1386–1397, 2022. Hashem Sadeghiyeh, Siyu Wang, Maxwell R Alberhasky, Hannah M Kyllo, Amitai Shenhav, and Robert C Wilson. Temporal discounting correlates with directed exploration but not with random exploration. Scientific reports , 10(1):4020, 2020. Keisuke Sakaguchi, Ronan Le Bras, Chandra Bhagavatula, and Yejin Choi. Winogrande: An adversarial winograd schema challenge at scale. Communications of the ACM , 64(9):99–106, 2021. Matthew J Salganik, Ian Lundberg, Alexander T Kindel, Caitlin E Ahearn, Khaled Al-Ghoneim, Abdullah Almaatouq, Drew M Altschul, Jennie E Brand, Nicole Bohme Carnegie, Ryan James Compton, et al. Measuring the predictability of life outcomes with a scientific mass collaboration. Proceedings of the National Academy of Sciences , 117(15): 8398–8403, 2020. Shibani Santurkar et al. Whose opinions do language models reflect? ICML , 2023. Rylan Schaeffer, Brando Miranda, and Sanmi Koyejo. Are Emergent Abilities of Large Language Models a Mirage?, 2023. URL https://arxiv.org/abs/2304.15004 .Rylan Schaeffer, Hailey Schoelkopf, Brando Miranda, Gabriel Mukobi, Varun Madan, Adam Ibrahim, Herbie Bradley, Stella Biderman, and Sanmi Koyejo. Why Has Predicting Downstream Capabilities of Frontier AI Models with Scale Remained Elusive?, 2025. URL 
+
+https://arxiv.org/abs/2406.04391 .Hannah Schroeder, Marine Aubin Le Quéré, Cristina Randazzo, David Mimno, and Sarita Schoenebeck. Large language models in qualitative research: Uses, tensions, and inten-tions. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems , pp. 1–17, 2025. Eric Schulz, Nicholas T Franklin, and Samuel J Gershman. Finding structure in multi-armed bandits. Cognitive psychology , 119:101261, 2020. Melanie Sclar, Yejin Choi, Yulia Tsvetkov, and Alane Suhr. Quantifying language models’ sensitivity to spurious features in prompt design or: How i learned to start worrying about prompt formatting. In International Conference on Learning Representations , volume 2024, pp. 25055–25083, 2024. Asankhaya Sharma. The 1 billion token challenge: Finding the perfect pre-training mix. 2025. URL https://huggingface.co/blog/codelion/optimal-dataset-mixing/ .Chenglei Si, Zitong Yang, Yejin Choi, Emmanuel Candès, Diyi Yang, and Tatsunori Hashimoto. Towards execution-grounded automated ai research. arXiv preprint arXiv:2601.14525 , 2026. 20 Leah H Somerville, Stephanie F Sasse, Megan C Garrad, Andrew T Drysdale, Nadine Abi Akar, Catherine Insel, and Robert C Wilson. Charting the expansion of strategic exploratory behavior during adolescence. Journal of experimental psychology: general , 146 (2):155, 2017. Taylor Sorensen, Benjamin Newman, Jared Moore, Chan Park, Jillian Fisher, Niloofar Mireshghallah, Liwei Jiang, and Yejin Choi. Spectrum tuning: Post-training for distribu-tional coverage and in-context steerability. arXiv preprint arXiv:2510.06084 , 2025. Maarten Speekenbrink, Shelley Channon, and David R Shanks. Learning strategies in amnesia. Neuroscience & Biobehavioral Reviews , 32(2):292–310, 2008. Zayne Sprague, Xi Ye, Kaj Bostrom, Swarat Chaudhuri, and Greg Durrett. Musr: Testing the limits of chain-of-thought with multistep soft reasoning. arXiv preprint arXiv:2310.16049 ,2023. Helen Steingroever, Daniel J Fridberg, Annette Horstmann, Kimberly L Kjome, Veena Kumari, Scott D Lane, Tiago V Maia, James L McClelland, Thorsten Pachur, Preethi Premkumar, et al. Data from 617 healthy participants performing the iowa gambling task: A “many labs” collaboration. Journal of Open Psychology Data , 3(1):e5–e5, 2015. Joseph Suh, Erfan Jahanparast, Suhong Moon, Minwoo Kang, and Serina Chang. Language model fine-tuning on scaled survey data for predicting distributions of public opinions. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 21147–21170, 2025. Richard Sutton. The bitter lesson, 2019. URL http://www.incompleteideas.net/IncIdeas/ BitterLesson.html . Blog post. Mirac Suzgun, Nathan Scales, Nathanael Schärli, Sebastian Gehrmann, Yi Tay, Hyung Won Chung, Aakanksha Chowdhery, Quoc V Le, Ed H Chi, Denny Zhou, , and Jason Wei. Challenging big-bench tasks and whether chain-of-thought can solve them. arXiv preprint arXiv:2210.09261 , 2022. Mingtian Tan, Mike A Merrill, Vinayak Gupta, Tim Althoff, and Thomas Hartvigsen. Are language models actually useful for time series forecasting? Advances in Neural Information Processing Systems , 37:60162–60191, 2024. Amir Taubenfeld, Yaniv Dover, Roi Reichart, and Ariel Goldstein. Systematic biases in llm simulations of debates. In Proceedings of the 2024 conference on empirical methods in natural language processing , pp. 251–267, 2024. Momchil S Tomov, Eric Schulz, and Samuel J Gershman. Multi-task reinforcement learning in humans. Nature Human Behaviour , 5(6):764–773, 2021. Matteo Tranchero, Cecil-Francis Brenninkmeijer, Arul Murugan, and Abhishek Nagaraj. Theorizing with large language models. Technical report, National Bureau of Economic Research, 2024. James A Waltz, Robert C Wilson, Matthew A Albrecht, Michael J Frank, and James M Gold. Differential effects of psychotic illness on directed and random exploration. Computational Psychiatry (Cambridge, Mass.) , 4:18, 2020. Lei Wang, Jingsen Zhang, Hao Yang, Zhi-Yuan Chen, Jiakai Tang, Zeyu Zhang, Xu Chen, Yankai Lin, Hao Sun, Ruihua Song, et al. User behavior simulation with large language model-based agents. ACM Transactions on Information Systems , 43(2):1–37, 2025. Pengda Wang, Huiqi Zou, Zihan Yan, Feng Guo, Tianjun Sun, Ziang Xiao, and Bo Zhang. Not yet: Large language models cannot replace human respondents for psychometric research. OSF Preprint: https://doi. org/10.31219/osf. io/rwy9b , 2024a. 21 Yubo Wang, Xueguang Ma, Ge Zhang, Yuansheng Ni, Abhranil Chandra, Shiguang Guo, Weiming Ren, Aaran Arulraj, Xuan He, Ziyan Jiang, et al. Mmlu-pro: A more robust and challenging multi-task language understanding benchmark. Advances in Neural Information Processing Systems , 37:95266–95290, 2024b. Jason Wei, Yi Tay, Rishi Bommasani, Colin Raffel, Barret Zoph, Sebastian Borgeaud, Dani Yogatama, Maarten Bosma, Denny Zhou, Donald Metzler, et al. Emergent abilities of large language models. Transactions on Machine Learning Research , 2022. Ben Weidmann, Yixian Xu, and David J Deming. Measuring human leadership skills with ai agents. Technical report, National Bureau of Economic Research, 2025. Robert C Wilson, Andra Geana, John M White, Elliot A Ludvig, and Jonathan D Cohen. Humans use directed and random exploration to solve the explore–exploit dilemma. 
+
+Journal of experimental psychology: General , 143(6):2074, 2014. World Values Survey Association. World values survey wave 7 (2017–2022), 2022. URL 
+
+https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp .Charley M Wu, Eric Schulz, Maarten Speekenbrink, Jonathan D Nelson, and Björn Meder. Generalization guides human exploration in vast decision spaces. Nature human behaviour ,2(12):915–924, 2018. Zengqing Wu, Run Peng, Takayuki Ito, Makoto Onizuka, and Chuan Xiao. Llm-based social simulations require a boundary. arXiv preprint arXiv:2506.19806 , 2025. Dirk U Wulff, Max Mergenthaler-Canseco, and Ralph Hertwig. A meta-analytic review of two modes of learning and the description-experience gap. Psychological bulletin , 144(2): 140, 2018a. Dirk U Wulff, Max Mergenthaler-Canseco, and Ralph Hertwig. A meta-analytic review of two modes of learning and the description-experience gap. Psychological bulletin , 144(2): 140, 2018b. An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao, Chengen Huang, Chenxu Lv, Chujie Zheng, Dayiheng Liu, Fan Zhou, Fei Huang, Feng Hu, Hao Ge, Haoran Wei, Huan Lin, Jialong Tang, Jian Yang, Jianhong Tu, Jianwei Zhang, Jianxin Yang, Jiaxi Yang, Jing Zhou, Jingren Zhou, Junyang Lin, Kai Dang, Keqin Bao, Kexin Yang, Le Yu, Lianghao Deng, Mei Li, Mingfeng Xue, Mingze Li, Pei Zhang, Peng Wang, Qin Zhu, Rui Men, Ruize Gao, Shixuan Liu, Shuang Luo, Tianhao Li, Tianyi Tang, Wenbiao Yin, Xingzhang Ren, Xinyu Wang, Xinyu Zhang, Xuancheng Ren, Yang Fan, Yang Su, Yichang Zhang, Yinger Zhang, Yu Wan, Yuqiong Liu, Zekun Wang, Zeyu Cui, Zhenru Zhang, Zhipeng Zhou, and Zihan Qiu. Qwen3 Technical Report, 2025. URL https://arxiv.org/abs/2505.09388 .Ziyi Yang, Zaibin Zhang, Zirui Zheng, Yuxian Jiang, Ziyue Gan, Zhiyu Wang, Zijian Ling, Jinsong Chen, Martz Ma, Bowen Dong, et al. Oasis: Open agent social interaction simulations with one million agents. arXiv preprint arXiv:2411.11581 , 2024. Tal Yarkoni. The generalizability crisis. Behavioral and Brain Sciences , 45:e1, 2022. Rowan Zellers, Ari Holtzman, Yonatan Bisk, Ali Farhadi, and Yejin Choi. Hellaswag: Can a machine really finish your sentence? arXiv preprint arXiv:1905.07830 , 2019. Jeffrey Zhou, Tianjian Lu, Swaroop Mishra, Siddhartha Brahma, Sujoy Basu, Yi Luan, Denny Zhou, and Le Hou. Instruction-following evaluation for large language models. arXiv preprint arXiv:2311.07911 , 2023. Xuhui Zhou, Weiwei Sun, Qianou Ma, Yiqing Xie, Jiarui Liu, Weihua Du, Sean Welleck, Yiming Yang, Graham Neubig, Sherry Tongshuang Wu, et al. Mind the sim2real gap in user simulation for agentic tasks. arXiv preprint arXiv:2603.11245 , 2026. Caleb Ziems, William Held, Omar Shaikh, Jiaao Chen, Zining Zhang, and Diyi Yang. Can large language models transform computational social science? Computational Linguistics ,50(1):237–291, 2024. 22 1.0 1.2 1.4 1.6 1.8                               
+
+> 30%
+> 40%
+> 50%
+> 60% r2= 0.927
+> Canada
+> 1.2 1.4 1.6 1.8 2.0 2.2
+> 20%
+> 25%
+> 30%
+> 35%
+> 40%
+> 45%
+> 50% r2= 0.821
+> Korea
+> 1.4 1.6 1.8 2.0
+> 20%
+> 30%
+> 40%
+> 50% r2= 0.805
+> Nigeria
+> 1.4 1.6 1.8 2.0
+> 25%
+> 30%
+> 35%
+> 40%
+> 45%
+> 50% r2= 0.774
+> Pakistan
+> 1.25 1.50 1.75 2.00 2.25
+> 20%
+> 25%
+> 30%
+> 35%
+> 40%
+> 45% r2= 0.754
+> Hong Kong
+> 1.4 1.6 1.8 2.0
+> 25%
+> 30%
+> 35%
+> 40%
+> 45%
+> 50%
+> r2= 0.719
+> Bolivia
+> 1.4 1.6 1.8 2.0
+> 20%
+> 25%
+> 30%
+> 35%
+> 40%
+> 45% r2= 0.638
+> Libya
+> 1.4 1.6 1.8
+> 25%
+> 30%
+> 35%
+> 40%
+> 45%
+> 50% r2= 0.631
+> Myanmar
+> 1.4 1.6 1.8 2.0
+> 30%
+> 35%
+> 40%
+> 45% r2= 0.624
+> Turkey
+> 1.2 1.4 1.6 1.8
+> 30%
+> 40%
+> 50%
+> 60% r2= 0.615
+> India
+> 1.4 1.6 1.8 2.0
+> 25%
+> 30%
+> 35%
+> 40%
+> r2= 0.583
+> Thailand
+> 1.4 1.6 1.8
+> 25%
+> 30%
+> 35%
+> 40%
+> 45% r2= 0.525
+> Indonesia
+> 1.4 1.6 1.8 2.0 2.2
+> 25%
+> 30%
+> 35%
+> 40%
+> 45%
+> 50% r2= 0.520
+> Tunisia
+> 1.4 1.5 1.6 1.7 1.8
+> 30%
+> 35%
+> 40%
+> 45% r2= 0.519
+> China
+> 1.4 1.6 1.8 2.0
+> 25%
+> 30%
+> 35%
+> 40%
+> 45%
+> r2= 0.487
+> Bangladesh
+> 1.4 1.6 1.8 2.0 2.2
+> 25%
+> 30%
+> 35%
+> 40%
+> r2= 0.439
+> Egypt
+> 1.4 1.6 1.8 2.0
+> 25%
+> 30%
+> 35%
+> 40%
+> 45% r2= 0.171
+> Vietnam
+
+Task Loss 
+
+> Accuracy
+
+Figure 8: The Model’s Negative Log Likelihood (NLL) on the Majority Answer Generally Predicts Accuracy Sigmoidally for WVS tasks ( r2 > 0.4 for 16 out of 17 tasks) 
+
+A Prompts, Task Design, and Evaluation Protocols 
+
+Scaling laws can be highly sensitive to the manner in which tasks are operationalized, prompts are formatted, and metrics are defined. With respect to metrics, raw log-probabilities generally scale smoothly, while metrics like accuracy can appear more erratic due to thresholding effects (Schaeffer et al., 2023; 2025). However, scaling experiments with loss are meaningful only if they can predict downstream metrics of interest. For this reason, we have worked to optimize our tasks and prompts such that loss can generally predict accuracy. As shown in Figure 8, loss predicts WVS accuracy sigmoidally with r2 > 0.4 for 16 out of 17 countries. In Figure 9 we see that loss predicts Psych-101 accuracy sigmoidally with r2 > 0.4 for 15 out of 24 psychological experiments. 
+
+A.1 WVS 
+
+Here, we evaluate the similarity between gold and predicted distributions using KL di-vergence. We choose not to use accuracy measures here for a few reasons. First, opinion simulations can involve imbalanced outcomes or small treatment effects. Models can often achieve high accuracy on these tasks by predicting the base rates or prior distributions for social variables (i.e., predicting only the most dominant opinion). Models that optimize for accuracy metrics may also underperform for minority groups. In short, distributional similarity helps account for distributional variance, skew, and tail behavior. To reach align loss and accuracy for this task, we followed best practices from Held et al. (2025) and formatted WVS as a multiple-choice (MCQ) task with letter labels and options, and the probabilities are computed over the full label+option strings. 23 0.4 0.5 0.6 0.7 0.8 0.9 
+
+50% 
+
+60% 
+
+70% 
+
+80% 
+
+90% r2 = 0.862 
+
+hilbig2014generalized 
+
+0.6 0.7 0.8 0.9 
+
+55% 
+
+58% 
+
+60% 
+
+62% 
+
+65% 
+
+68% r2 = 0.758 
+
+wilson2014humans 
+
+1.4 1.5 1.6 
+
+46% 
+
+48% 
+
+50% 
+
+52% 
+
+54% 
+
+56% 
+
+58% r2 = 0.750 
+
+schulz2020finding 
+
+2.8 3.0 3.2 3.4 3.6 3.8 
+
+5% 
+
+10% 
+
+15% 
+
+20% 
+
+25% 
+
+30% r2 = 0.749 
+
+wu2018generalisation 
+
+0.30 0.35 0.40 0.45 0.50 
+
+70% 
+
+75% 
+
+80% 
+
+85% 
+
+90% 
+
+r2 = 0.720 
+
+waltz2020differential 
+
+0.5 0.6 0.7 
+
+68% 
+
+70% 
+
+73% 
+
+75% 
+
+78% 
+
+80% 
+
+r2 = 0.686 
+
+gershman2018deconstructing 
+
+0.5 0.6 0.7 
+
+55% 
+
+60% 
+
+65% 
+
+70% 
+
+75% 
+
+80% 
+
+r2 = 0.685 
+
+somerville2017charting 
+
+0.4 0.5 0.6 
+
+70% 
+
+75% 
+
+80% 
+
+85% r2 = 0.666 
+
+wulff2018sampling 
+
+0.6 0.7 0.8 0.9 1.0 
+
+52% 
+
+55% 
+
+57% 
+
+60% 
+
+62% 
+
+65% 
+
+68% r2 = 0.665 
+
+badham2017deficits 
+
+0.7 0.8 0.9 1.0 
+
+55% 
+
+60% 
+
+65% 
+
+70% 
+
+r2 = 0.612 
+
+gershman2020reward 
+
+1.0 1.1 1.2 1.3 
+
+56% 
+
+58% 
+
+60% 
+
+62% 
+
+64% 
+
+66% 
+
+68% r2 = 0.498 
+
+bahrami2020four 
+
+1.0 1.1 1.2 1.3 1.4 1.5 
+
+45% 
+
+50% 
+
+55% 
+
+60% r2 = 0.493 
+
+steingroever2015data 
+
+1.0 1.2 1.4 
+
+38% 
+
+40% 
+
+42% 
+
+44% 
+
+46% 
+
+48% r2 = 0.493 
+
+tomov2021multitask 
+
+0.6 0.7 0.8 0.9 1.0 
+
+60% 
+
+65% 
+
+70% 
+
+75% 
+
+r2 = 0.447 
+
+xiong2023neural 
+
+0.6 0.7 0.8 0.9 
+
+45% 
+
+50% 
+
+55% 
+
+60% 
+
+65% r2 = 0.439 
+
+ruggeri2022globalizability 
+
+0.65 0.70 0.75 0.80 
+
+50% 
+
+55% 
+
+60% 
+
+65% r2 = 0.332 
+
+speekenbrink2008learning 
+
+0.6 0.7 0.8 0.9 1.0 
+
+52% 
+
+55% 
+
+57% 
+
+60% 
+
+62% 
+
+65% r2 = 0.317 
+
+peterson2021using 
+
+0.7 0.8 0.9 1.0 1.1 
+
+48% 
+
+50% 
+
+52% 
+
+55% 
+
+57% 
+
+60% r2 = 0.283 
+
+wulff2018description 
+
+1.1 1.2 1.3 1.4 
+
+33% 
+
+35% 
+
+38% 
+
+40% 
+
+43% 
+
+45% r2 = 0.235 
+
+hebart2023things 
+
+0.30 0.35 0.40 0.45 0.50 0.55 
+
+78% 
+
+80% 
+
+82% 
+
+85% 
+
+88% 
+
+90% r2 = 0.169 
+
+frey2017cct 
+
+0.7 0.8 0.9 1.0 
+
+58% 
+
+60% 
+
+62% 
+
+64% r2 = 0.109 
+
+ludwig2023human 
+
+0.60 0.65 0.70 0.75 
+
+58% 
+
+60% 
+
+62% 
+
+65% 
+
+68% r2 = 0.082 
+
+flesch2018comparing 
+
+0.6 0.7 0.8 0.9 
+
+64% 
+
+66% 
+
+68% 
+
+70% 
+
+72% 
+
+74% r2 = 0.014 
+
+plonsky2018when 
+
+0.7 0.8 0.9 
+
+45% 
+
+50% 
+
+55% 
+
+60% 
+
+r2 = 0.000 
+
+sadeghiyeh2020temporal 
+
+Task Loss 
+
+> Accuracy
+
+Figure 9: The Model’s Negative Log Likelihood (NLL) on the Correct Answer Generally Predicts Accuracy Sigmoidally for the majority of Psych-101 tasks ( r2 > 0.4 for 15 out of 24 tasks) 24 An example of a prompt for this task is as follows: 
+
+Country: Bangladesh Question: What is your biological sex? A. Male B. Female C. N/A Response: B. Female Question: Based on the year of your birth, in which generational group do you fall? A. Silent Generation (1928 - 1945) B. Baby Boomer (1946 - 1964) C. Generation X (1965 - 1980) D. Millennial (1981 - 1996) E. Generation Z (1997 - 2012) F. Generation Alpha (2013 - 2025) G. N/A Response: D. Millennial (1981 - 1996) Question: What is the highest educational level that you have attained? A. Primary education B. Lower secondary education C. Upper secondary education D. Post-secondary non-tertiary education E. Short-cycle tertiary education F. Bachelor or equivalent G. Master or equivalent H. Doctoral or equivalent I. N/A Response: A. Primary education Question: Which of the following socioeconomic classes do you believe you belong to? A. Upper class B. Upper middle class C. Lower middle class D. Working class E. Lower class F. N/A Response: D. Working class Question: How important is religion in your life? A. Very important B. Rather important C. Not very important D. Not at all important E. Don 't know Response: A. Very important Question: How would you describe the type of settlement where this interview is being conducted? A. Urban B. Rural C. N/A 
+
+25 Response: B. Rural Question: How would you rate the importance of family in your life? A. Very important B. Rather important C. Not very important D. Not at all important Response: 
+
+A.2 Psych-101 
+
+An example of a prompt for this task is as follows: 
+
+You will be asked to repeatedly choose between four different options labeled T, Y, P, and Z. You select an option by pressing the corresponding key on your keyboard. Each time you select an option, you will get a different number of points. Your goal is to win as many points as possible. From the options ("T", "Y", "P", "Z"), you press "T" and get 80.0 points. From the options ("T", "Y", "P", "Z"), you press "Y" and get 81.0 points. From the options ("T", "Y", "P", "Z"), you press "P" and get 61.0 points. From the options ("T", "Y", "P", "Z"), you press " 
+
+A.3 ACL 
+
+Our methodology for identifying salient outcome, explanatory, and control variables relies on the hundreds of publications that make use of the ACL. Specifically, we scrape PDF manuscripts for 379 studies that rely on ACL data and use GPT-4.1-mini to parse these studies and determine which ACL variables can be considered outcomes, explanatory, or control variables. We keep as targets any variables used as outcomes in at least one study. We define that outcome’s controls and explanatory variables as the minimum set of controls and explanatory variables from any paper that considered the target outcome. An example of a prompt for this task is as follows: 
+
+(1) Did your (husband/wife) get a high school diploma or pass a high school equivalency test? (Options: "yes", "no", "inappropriate", "don 't know", "na") In the year 1989: "yes" (2) How often do you usually attend religious services? (Options: "more than once a week", "once a week", "2 or 3 times a month", "about once a month", "less than once a month", "never", "don 't know", "na") In the year 1989: "less than once a month" In the year 1994: "less than once a month" In the year 2001: "about once a month" In the year 2011: "less than once a month" In the year 2019: "less than once a month" (3) In a typical week, about how many times do you talk on the telephone with friends, neighbors or relatives? (Options: "more than once a day", "once a day", "2 or 3 times a week", "about once a week", "less than once a week", "never or no phone", "don 't know", "na") In the year 1989: "2 or 3 times a week" In the year 1994: "2 or 3 times a week" In the year 2001: "once a day" In the year 2011: "once a day" In the year 2019: " 
+
+26 0.50                      
+
+> 0.75
+> 1.00
+> 1.25
+> South Korea
+> slope = -0.38
+> r2= 0.908
+> Bangladesh
+> slope = -0.28
+> r2= 0.908
+> Myanmar
+> slope = -0.25
+> r2= 0.895
+> Hong Kong
+> slope = -0.39
+> r2= 0.889
+> China
+> slope = -0.32
+> r2= 0.864
+> 0.50
+> 0.75
+> 1.00
+> 1.25
+> Canada
+> slope = -0.32
+> r2= 0.859
+> Tunisia
+> slope = -0.21
+> r2= 0.849
+> Thailand
+> slope = -0.23
+> r2= 0.846
+> Indonesia
+> slope = -0.27
+> r2= 0.845
+> India
+> slope = -0.20
+> r2= 0.830
+> 0.50
+> 0.75
+> 1.00
+> 1.25
+> Vietnam
+> slope = -0.31
+> r2= 0.828
+> Turkey
+> slope = -0.32
+> r2= 0.806
+> Nigeria
+> slope = -0.21
+> r2= 0.784
+> Pakistan
+> slope = -0.19
+> r2= 0.780
+> Bolivia
+> slope = -0.28
+> r2= 0.772
+> 10 18 10 19 10 20
+> 0.50
+> 0.75
+> 1.00
+> 1.25
+> Libya
+> slope = -0.25
+> r2= 0.757
+> 10 18 10 19 10 20
+> Egypt
+> slope = -0.24
+> r2= 0.750
+
+FLOPs 
+
+> Task Loss
+
+Figure 10: Compute Scaling Laws for WVS . We observe log-linear improvements in task loss on all WVS subtasks by scaling compute alone with models trained on DCLM (Li et al., 2024) from 10 18 to 10 20 FLOPs. 
+
+B Additional Compute Scaling Laws 
+
+We provide detailed plots of compute scaling laws for each subtask of WVS in Figure 10, and each subtask of Psych-101 in Figure 11. 
+
+C Additional Observational Scaling Laws 
+
+Table 1 provides additional details on our observational scaling law fits for the Psych-101 
+
+subtasks, sorted by r2 (descending). The list of model cards we evaluated observationally includes: 01-ai/Yi-1.5-34B, 01-ai/Yi-1.5-9B, 01-ai/Yi-34B, 01-ai/Yi-6B, Qwen/Qwen1.5-0.5B, Qwen/Qwen1.5-1.8B, Qwen/Qwen1.5-14B, Qwen/Qwen1.5-4B, Qwen/Qwen1.5-7B, Qwen/Qwen2-0.5B, Qwen/Qwen2-1.5B, Qwen/Qwen2-7B, allenai/OLMo-1B-hf, allenai/OLMo-7B-hf, bigscience/bloom-7b1, facebook/opt-1.3b, facebook/opt-13b, facebook/opt-2.7b, facebook/opt-30b, facebook/opt-6.7b, facebook/xglm-1.7B, facebook/xglm-4.5B, facebook/xglm-7.5B, google/gemma-2-27b, google/gemma-2-2b, google/gemma-2b, google/gemma-7b, huggyllama/llama-13b, huggyllama/llama-7b, meta-llama/Llama-2-13b-hf, meta-llama/Llama-2-70b-hf, meta-llama/Llama-2-7b-hf, meta-llama/Meta-Llama-3.1-8B, microsoft/phi-1_5, microsoft/phi-2 27 1
+
+2
+
+3 gershman2020reward 
+
+slope = -0.31 
+
+r2 = 0.969 
+
+tomov2021multitask 
+
+slope = -0.23 
+
+r2 = 0.951 
+
+speekenbrink2008learning 
+
+slope = -0.14 
+
+r2 = 0.891 
+
+wilson2014humans 
+
+slope = -0.07 
+
+r2 = 0.852 
+
+ludwig2023human 
+
+slope = -0.19 
+
+r2 = 0.836 
+
+1
+
+2
+
+3 ruggeri2022globalizability 
+
+slope = -0.08 
+
+r2 = 0.828 
+
+steingroever2015data 
+
+slope = -0.12 
+
+r2 = 0.826 
+
+hebart2023things 
+
+slope = -0.12 
+
+r2 = 0.819 
+
+flesch2018comparing 
+
+slope = -0.13 
+
+r2 = 0.816 
+
+badham2017deficits 
+
+slope = -0.18 
+
+r2 = 0.797 
+
+1
+
+2
+
+3 wulff2018description 
+
+slope = -0.21 
+
+r2 = 0.795 
+
+gershman2018deconstructing 
+
+slope = -0.09 
+
+r2 = 0.767 
+
+wu2018generalisation 
+
+slope = -0.14 
+
+r2 = 0.713 
+
+xiong2023neural 
+
+slope = -0.12 
+
+r2 = 0.697 
+
+frey2017cct 
+
+slope = -0.06 
+
+r2 = 0.655 
+
+1
+
+2
+
+3 wulff2018sampling 
+
+slope = -0.10 
+
+r2 = 0.601 
+
+peterson2021using 
+
+slope = -0.05 
+
+r2 = 0.593 
+
+hilbig2014generalized 
+
+slope = -0.15 
+
+r2 = 0.569 
+
+plonsky2018when 
+
+slope = -0.07 
+
+r2 = 0.565 
+
+Not Significant 
+
+somerville2017charting 
+
+slope = -0.07 
+
+r2 = 0.540 
+
+Not Significant 
+
+10 18 10 19 10 20 
+
+1
+
+2
+
+3 bahrami2020four 
+
+slope = -0.08 
+
+r2 = 0.490 
+
+Not Significant 
+
+10 18 10 19 10 20 
+
+sadeghiyeh2020temporal 
+
+slope = -0.05 
+
+r2 = 0.388 
+
+Not Significant 
+
+10 18 10 19 10 20 
+
+waltz2020differential 
+
+slope = -0.07 
+
+r2 = 0.368 
+
+Not Significant 
+
+10 18 10 19 10 20 
+
+schulz2020finding 
+
+slope = 0.00 
+
+r2 = 0.002 
+
+Not Significant 
+
+FLOPs 
+
+> Task Loss
+
+Figure 11: Compute Scaling Laws for Psych-101 . We observe log-linear improvements in task loss on all Psych-101 subtasks by scaling compute alone with models trained on DCLM (Li et al., 2024) from 10 18 to 10 20 FLOPs. However, the slope is not significant with 
+
+p < 0.05 for Plonsky et al. (2018), somerville2017charting, bahrami2020four, Sadeghiyeh et al. (2020), Waltz et al. (2020) , and Schulz et al. (2020) .28 Subtask Category Slope r2 r p-value                                                                                                               
+
+> Hilbig & Moshagen (2014) Decision-Making -0.03 0.72 0.85 0.00 Gershman (2020) Reward Maximization -0.03 0.63 0.79 0.00 Waltz et al. (2020) Single-Arm Bandit -0.01 0.47 0.69 0.00 Peterson et al. (2021) Cognitive Biases -0.02 0.46 0.68 0.00 Tomov et al. (2021) Multi-Task RL -0.03 0.43 0.66 0.00 Wulff et al. (2018a) Cognitive Biases -0.02 0.41 0.64 0.00 Schulz et al. (2020) Multi-Arm Bandit -0.02 0.36 0.60 0.00 Somerville et al. (2017) Reward Maximization -0.01 0.33 0.57 0.01 Wilson et al. (2014) Reward Maximization -0.01 0.31 0.56 0.01 Bahrami et al. (2025) Multi-Arm Bandit -0.02 0.28 0.53 0.01 Ruggeri et al. (2022) Cognitive Biases -0.01 0.26 0.51 0.02 Sadeghiyeh et al. (2020) Single-Arm Bandit -0.01 0.24 0.49 0.02 Frey et al. (2017) Decision-Making -0.01 0.23 0.48 0.03 Badham et al. (2017) Associative Learning -0.02 0.21 0.46 0.04 Flesch et al. (2018) Single-Arm Bandit -0.01 0.21 0.46 0.04 Hebart et al. (2023) Misc -0.01 0.18 0.42 0.06 Ludwig et al. (2023) Multi-Task RL -0.01 0.17 0.41 0.06 Steingroever et al. (2015) Reward Maximization -0.01 0.13 0.36 0.11 Plonsky et al. (2018) Cognitive Biases -0.01 0.12 0.35 0.13 Wulff et al. (2018b) Reward Maximization -0.01 0.12 0.35 0.12 Speekenbrink et al. (2008) Associative Learning -0.00 0.06 0.24 0.31 Wu et al. (2018) Multi-Arm Bandit 0.01 0.02 0.14 0.58
+
+Table 1: Observational scaling law fits across Psych-101 subtasks, sorted by r2 (descending). 
+
+D Pre-training Biases Predict Observational Scaling Laws 
+
+Here, we investigate whether the scaling discrepancies in Figure 3 are consistent with distributional imbalances in LLM pre-training data. To do so, we correlate the strength of observational fits with the log frequency of country-related terms in the DCLM-baseline, which is the pre-training corpus that was used to train our compute scaling law suite (§4). We analyze a statistically unbiased random sample of 1B tokens from the DCLM-baseline, prepared by Sharma (2025). As a proxy for pre-training prevalence, we count the frequency of terms corresponding to the most populous metropolitan areas in each country. To avoid confounds, we exclude any ambiguous metropolitan area names. For example, while 
+
+Hyderabad is the 7th largest city in Pakistan, it could be confused with Hyderabad, India ;therefore we exclude it. After exclusion, we have a list of 10 city names for each country. City terms and counts for each country are given in Table 2. In Figure 4, we correlate the log frequency of city terms in the DCLM with the observational scaling law fit. We find a Spearman correlation of ρ = 0.8 and a Pearson correlation of r = 0.7 between observational fit and pre-training term frequency (p < 0.05 ), which supports our conclusions distributional imbalances in LLM pre-training data explain observational scaling discrepancies. 
+
+E Fine-tuning Details 
+
+We fine-tune Qwen2.5 models at five parameter scales (0.5B, 1.5B, 3B, 7B) on each of our social simulation tasks. All models are initialized from HuggingFace checkpoints and trained with a next-token prediction objective over the task-formatted text. 
+
+Training Configuration. We train each model for 1000 steps with a global batch size of 4 and a sequence length of 4096, yielding approximately 16M tokens per run. For each model–task pair, we sweep learning rates over {1 × 10 −5, 3 × 10 −5, 3 × 10 −4} and select the configuration with the lowest validation loss. The 0.5B–7B models are trained on TPU v5p-8. 29 Country Count Cities Excluded 
+
+Canada 27,107 Toronto, Montreal, Calgary, Ottawa, Winnipeg, Missis-sauga, Vancouver, Quebec City, Markham, Gatineau Edmonton, Brampton, Hamilton, Surrey 
+
+China 15,235 Shanghai, Beijing, Chongqing, Tianjin, Guangzhou, Shenzhen, Chengdu, Wuhan, Dongguan, Hangzhou 
+
+N/A India 12,601 Mumbai, Delhi, Bengaluru, Ahmedabad, Pune, Surat, Jaipur, Lucknow, Kanpur, Nagpur Hyderabad, Chennai 
+
+Tunisia 4,215 Tunis, Sfax, Sousse, Kairouan, Bizerte, Gabes, Ariana, Gafsa, Monastir, Ben Arous 
+
+N/A Libya 3,862 Tripoli, Benghazi, Misrata, Zawiya, Bayda, Ajdabiya, Tobruk, Sabha, Khoms, Derna 
+
+N/A South Korea 3,717 Seoul, Busan, Incheon, Daegu, Daejeon, Gwangju, Su-won, Ulsan, Changwon, Yongin 
+
+N/A Pakistan 3,627 Karachi, Lahore, Faisalabad, Rawalpindi, Gujranwala, Peshawar, Multan, Islamabad, Quetta, Bahawalpur Hyderabad 
+
+Myanmar 761 Yangon, Mandalay, Naypyidaw, Mawlamyine, Bago, Pathein, Monywa, Meiktila, Myingyan, Taunggyi 
+
+N/A 
+
+Table 2: City terms and counts for each country in a 1B token sample of the DCLM-baseline. Excluded city terms are those which are ambiguous, such as Hyderabad which could refer to the city in India or the city in Pakistan. 
+
+Model Tokens FLOPs 
+
+Qwen2.5-0.5B 144M 4.3 × 10 17 
+
+Qwen2.5-1.5B 144M 1.3 × 10 18 
+
+Qwen2.5-3B 144M 2.6 × 10 18 
+
+Qwen2.5-7B 144M 6.0 × 10 18 
+
+Total 576M 1.0 × 10 19 
+
+Table 3: Fine-tuning compute budget per model across all tasks and learning rate configura-tions (3 tasks × 3 learning rates × 16M tokens per run). Estimated via 6 ND .
+
+Splits. For Psych-101 , we create train and test splits of 49K and 520 experimental transcripts (144M and 2M tokens respectively), assuring that there is no overlap in the participants from these sets as a contamination check. 30 Reference Domain Original Study Question Participant Recruitment Scaling Fit Calibration Fit Mean Fit 
+
+Wilson et al. (2014) Reward Maximization How does the time horizon of a task impact how humans navigate the explore-exploit dilemma? Princeton students 0.85 0.76 0.80 
+
+Gershman (2020) Reward Maximization How do people navigate the explore-exploit dilemma? MTurk 0.97 0.61 0.77 Wu et al. (2018) Multi-armed bandit How do humans navigate the explore-exploit dilemma? MTurk 0.71 0.75 0.73 Gershman (2018) Multi-armed bandit How do humans navigate the explore-exploit dilemma? MTurk 0.77 0.69 0.73 Badham et al. (2017) Associative Learning How do people solve category learning problems? Unspecified 0.80 0.66 0.73 Hilbig & Moshagen (2014) Decision-making How do consumers make purchasing de-cisions using reviews with different levels of trustworthiness? Unspecified 0.57 0.86 0.70 Tomov et al. (2021) Multi-task RL How do people transfer knowledge to solve related tasks? MTurk 0.95 0.49 0.68 Steingroever et al. (2015) Reward Maximization How do humans navigate the explore-exploit dilemma? Unspecified 0.83 0.49 0.64 Somerville et al. (2017) Reward Maximization How does age impact people’s strate-gies for navigating the explore-exploit dilemma? Unspecified 0.54 0.69 0.61 Ruggeri et al. (2022) Cognitive Biases What are the differences in how people from 61 different countries delay gratifica-tion? Email, Social Media 0.83 0.44 0.60 Speekenbrink et al. (2008) Associative Learning How do individuals with amnesia learn to solve a category learning problems? Korsakoff’s syndrome 0.89 0.33 0.54 Waltz et al. (2020) Multi-armed bandit How does schizophrenia impact peo-ple’s strategies for navigating the explore-exploit dilemma? UMD Med School 0.37 0.72 0.52 Bahrami et al. (2025) Multi-armed bandit How do people navigate the explore-exploit dilemma with a restless bandit 
+
+(where the rewards drift over time)? Unspecified 0.49 0.50 0.49 Wulff et al. (2018a) Cognitive Biases How does the description-experience gap predict human decision making? Meta-Analysis 0.80 0.29 0.48 Hebart et al. (2023) Analytical Thinking How do fMRIs explain the human ability to identify the odd-one-out in a set? MTurk 0.82 0.24 0.44 Peterson et al. (2021) Cognitive Biases How do cognitive biases like risk aversion influence people’s risk assessment (follow-ing prospect theory)? MTurk 0.59 0.32 0.43 Frey et al. (2017) Decision-Making Is there a general factor of risk preference? Meta-Analysis 0.66 0.17 0.33 Ludwig et al. (2023) Multi-task RL How does the congruence between related tasks influence people’s ability to learn those tasks? Prolific 0.84 0.11 0.30 Flesch et al. (2018) Multi-armed bandit How do humans perform continual learn-ing without catastrophic forgetting? MTurk 0.82 0.08 0.26 Plonsky et al. (2018) Cognitive biases How do cognitive biases like risk aversion influence people’s risk assessment (follow-ing prospect theory)? Unspecified 0.57 0.01 0.08 Sadeghiyeh et al. (2020) Multi-armed bandit Does temporal discounting explain how people navigate the explore-exploit dilemma? Arizona Psych students 0.39 0.00 0.00 Schulz et al. (2020) Multi-armed bandit How do humans use generalization to max-imize rewards over correlated multi-armed bandits? MTurk 0.00 0.75 0.00 
+
+Table 4: Psych-101 Tasks sorted by the geometric mean between the compute scaling law fit and the accuracy calibration fit. Best fits are highlighted . We observe some common features across with weaker scaling tasks: (1) structured reward spaces that require generalization (e.g., Schulz et al.), (2) catastrophic forgetting (e.g., Flesch et al.), (3) population heterogeneity and skew (e.g., Sadeghiyeh et al.), (4) task heterogeneity (e.g., Ludwig et al.), and (5) individual ideosyncracies (e.g., Plonsky et al.). 
+
+31

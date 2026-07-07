@@ -1,6 +1,376 @@
 {
-  "generated_at": "2026-07-06T21:44:11.019307+00:00",
-  "updated_date": "20260706",
+  "generated_at": "2026-07-07T21:55:08.981793+00:00",
+  "updated_date": "20260707",
   "carryover_days": 9,
-  "items": []
+  "items": [
+    {
+      "id": "2607.04470v1",
+      "title": "Regime-Conditional Stabilisation of LLM-Augmented Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "Large Language Models (LLMs) offer a natural interface for translating human objectives into reward signals for cooperative multi-agent reinforcement learning (MARL), yet the training-time dynamics of this integration remain poorly understood. We show that dynamically updating LLM-generated reward weights during off-policy MARL violates the stationarity assumption of Potential-Based Reward Shaping (PBRS) and contaminates the experience replay buffer, whose stored transitions carry reward labels computed under stale shaping weights. We characterise the result as a regime-dependent failure whose severity depends on how competent the unshaped baseline already is. To control it we propose two stabilisation strategies: a Phase-Based Freeze Schedule that enforces strict stationarity within training phases, and Exponential Moving Average (EMA) smoothing that bounds per-episode weight drift. We evaluate across three cooperative environments and five random seeds with QMIX, complemented by an exploratory VDN extension, yielding a three-regime taxonomy. In the augmentative regime (Simple Spread), where the baseline is functional (74.4 %), EMA significantly improves success to 86.7 % ($+12.3$ pp, $p<0.01$) while naive dynamic updates collapse it to 15.2 %. In the essential regime (Level-Based Foraging), where the baseline is broken (0.1 %), any shaping unlocks the task (95.9 % under EMA). In the supplementary regime (SMAC 3m), where the baseline is near-saturated (98.8 %), stabilised shaping preserves performance (99.9 %) while unstabilised shaping adds variance without gain. These findings establish reward-signal stationarity as a necessary design constraint and indicate that regime placement is a practical predictor of whether dynamic LLM shaping helps or harms.",
+      "authors": [
+        "Faid Keddouri",
+        "Sohaib Houhou",
+        "Aissa Boulmerka",
+        "Nadir Farhi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "math.OC"
+      ],
+      "published": "2026-07-05T19:29:21+00:00",
+      "link": "https://arxiv.org/pdf/2607.04470v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-augmented cooperative multi-agent reinforcement learning",
+      "llm_evidence_cn": "LLM 增强的协作式多智能体强化学习",
+      "llm_evidence": "LLM 增强的协作式多智能体强化学习",
+      "canonical_evidence": "LLM 增强的协作式多智能体强化学习",
+      "llm_tldr_en": "Addresses stabilization issues when using LLMs to generate rewards in multi-agent reinforcement learning.",
+      "llm_tldr_cn": "解决了在多智能体强化学习中使用 LLM 生成奖励时的稳定性问题。",
+      "llm_tldr": "解决了在多智能体强化学习中使用 LLM 生成奖励时的稳定性问题。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.04470v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2607.01557v1",
+      "title": "DiPS: Dialogue Policy Selection for High-Stakes Persuasion Agents",
+      "abstract": "Large Language Models (LLMs) often struggle with persuasion in high-stakes scenarios. People's individual personalities and concerns require tailored strategies rather than a one-size-fits-all approach. To address this challenge, we focus on a fire-rescue scenario in which an operator must persuade a resident to evacuate as a high-stakes persuasion domain and propose Dialogue Policy Selection (DiPS), a Q-learning framework to dynamically select persuasion strategies adapted to the evolving conversational context. Specifically, we train a critic, trained to maximize the chance of evacuation success, to select a persuasion policy at each turn based on the resident's recent utterances.We then evaluate DiPS against multiple baselines in both simulated and real human interactions. We find that DiPS achieves higher evacuation success than a zero-shot LLM and generic RAG-augmented approach.",
+      "authors": [
+        "Tianyi Zhang",
+        "Mousumi Das",
+        "Abrar Anwar",
+        "Jesse Thomason",
+        "David Traum"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T00:24:48+00:00",
+      "link": "https://arxiv.org/pdf/2607.01557v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "simulating social persuasion in high-stakes scenarios",
+      "llm_evidence_cn": "模拟高风险场景下的社会说服",
+      "llm_evidence": "模拟高风险场景下的社会说服",
+      "canonical_evidence": "模拟高风险场景下的社会说服",
+      "llm_tldr_en": "Uses Q-learning to select dialogue policies for agents to persuade humans in emergency evacuation simulations.",
+      "llm_tldr_cn": "使用Q学习为智能体选择对话策略，以在紧急疏散模拟中说服人类。",
+      "llm_tldr": "使用Q学习为智能体选择对话策略，以在紧急疏散模拟中说服人类。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.01557v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2607.01661v1",
+      "title": "Diverse Evidence, Better Forecasts: Multi-Agent Deliberation Under Information Asymmetry",
+      "abstract": "Multi-agent systems are increasingly used for forecasting future events, as deliberation among multiple LLMs is believed to improve reasoning and calibration. Yet existing approaches overlook a critical design choice: what information each agent receives. When all agents are given identical evidence, deliberation collapses into herding rather than genuine belief revision, leaving multi-agent systems little better than a single agent. We identify this as a fundamental gap and propose designed information asymmetry to close it: by partitioning evidence into shared public and disjoint private subsets, each agent holds exclusive knowledge that can only reach others through deliberation. We theoretically show that this decomposition reduces inter-agent error correlation, and instantiate it in InfoDelphi, a framework combining relevance-aware evidence routing, rationale-based iterative deliberation, and confidence-weighted aggregation. On PolyGym, a benchmark of 375 binary forecasting questions derived from real-world prediction markets, InfoDelphi outperforms the strongest single-agent and multi-agent baselines by 12--18% in Brier score and 4--8 percentage points in accuracy. More detailed experiments confirm that removing information asymmetry eliminates most deliberation gains, establishing diversity of input as the key enabler of effective multi-agent reasoning.",
+      "authors": [
+        "Yuante Li",
+        "Yicheng Tao",
+        "Kate Zhang",
+        "Taozhi Wang",
+        "Gefei Gu",
+        "Yaxin Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-02T03:41:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.01661v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-agent deliberation and information asymmetry in LLM systems",
+      "llm_evidence_cn": "多智能体商议与LLM系统中的信息不对称",
+      "llm_evidence": "多智能体商议与LLM系统中的信息不对称",
+      "canonical_evidence": "多智能体商议与LLM系统中的信息不对称",
+      "llm_tldr_en": "Explores how information asymmetry prevents herding and improves reasoning in multi-agent deliberation.",
+      "llm_tldr_cn": "探讨了信息不对称如何防止多智能体商议中的从众效应并提高推理能力。",
+      "llm_tldr": "探讨了信息不对称如何防止多智能体商议中的从众效应并提高推理能力。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "Multi-Agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.01661v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2606.31916v1",
+      "title": "Theory of Mind and Persuasion Beyond Conversation: Assessing the Capacity of LLMs to Induce Belief States via Planning and Action",
+      "abstract": "Theory of Mind (ToM) benchmarks for Large Language Models (LLMs) typically rely on passive question-answering formats, but the deployment of LLMs in increasingly agentic and autonomous forms demands new evaluations. In this paper we evaluate an agent's ability to induce specific belief states in other agents by taking actions rather than using conversational persuasion, a capability we call Non-Conversational Planning ToM (NCP-ToM). NCP-ToM is likely to be essential for many agent use-cases, including within user-assistant interactions and pedagogical contexts, but may also present manipulation or misinformation risks. Using a novel framework, NCP-ExploreToM, we subvert the conventional task structure by providing models with a set of belief state goals and requiring them to move objects or direct characters into rooms to achieve their goals. We evaluated six frontier models, including GPT-5, Gemini 2.5 Pro and the Claude 4 series, and a cohort of human participants, across 600 task instances. GPT-5 was successful on approximately 80% of tasks in the agentic setting, and was the only model to outperform human participants on our task, but was still less robust than humans across contexts. We additionally found that all models, like humans, performed better on tasks inducing true belief states than false belief states, which is a positive signal for alignment efforts. These findings highlight emerging social-reasoning capabilities in LLMs for non-conversational task completion and underscore the necessity of agentic evaluations for understanding the safety and alignment of autonomous social agents.",
+      "authors": [
+        "Ben Slater",
+        "Matteo G. Mecattaf",
+        "Lucy G. Cheke",
+        "John Burden",
+        "Winnie Street"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-30T16:22:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.31916v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM capacity for persuasion and misinformation risks in social interaction",
+      "llm_evidence_cn": "LLM在社会互动中的说服能力与误导风险",
+      "llm_evidence": "LLM在社会互动中的说服能力与误导风险",
+      "canonical_evidence": "LLM在社会互动中的说服能力与误导风险",
+      "llm_tldr_en": "Assesses LLMs' ability to induce belief states in others through non-conversational planning.",
+      "llm_tldr_cn": "评估了LLM通过非对话式规划在其他智能体中诱导特定信念状态的能力。",
+      "llm_tldr": "评估了LLM通过非对话式规划在其他智能体中诱导特定信念状态的能力。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.31916v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2607.01557v2",
+      "title": "DiPS: Dialogue Policy Selection for High-Stakes Persuasion Agents",
+      "abstract": "Large Language Models (LLMs) often struggle with persuasion in high-stakes scenarios. People's individual personalities and concerns require tailored strategies rather than a one-size-fits-all approach. To address this challenge, we focus on a fire-rescue scenario in which an operator must persuade a resident to evacuate as a high-stakes persuasion domain and propose Dialogue Policy Selection (DiPS), a Q-learning framework to dynamically select persuasion strategies adapted to the evolving conversational context. Specifically, we train a critic, trained to maximize the chance of evacuation success, to select a persuasion policy at each turn based on the resident's recent utterances. We then evaluate DiPS against multiple baselines in both simulated and real human interactions. We find that DiPS achieves higher evacuation success than a zero-shot LLM and generic RAG-augmented approach.",
+      "authors": [
+        "Tianyi Zhang",
+        "Mousumi Das",
+        "Abrar Anwar",
+        "Jesse Thomason",
+        "David Traum"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T00:24:48+00:00",
+      "link": "https://arxiv.org/pdf/2607.01557v2",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Dialogue policy for persuasion agents in simulated scenarios",
+      "llm_evidence_cn": "模拟场景中说服智能体的对话策略",
+      "llm_evidence": "模拟场景中说服智能体的对话策略",
+      "canonical_evidence": "模拟场景中说服智能体的对话策略",
+      "llm_tldr_en": "Uses Q-learning to select persuasion strategies for LLM agents in high-stakes simulated social interactions.",
+      "llm_tldr_cn": "在极具挑战的模拟社交互动中，利用Q学习为LLM智能体选择说服策略。",
+      "llm_tldr": "在极具挑战的模拟社交互动中，利用Q学习为LLM智能体选择说服策略。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.01557v2",
+      "carry_days": 1
+    },
+    {
+      "id": "2607.03628v1",
+      "title": "Swarm-Driven Multi-Agent Reasoning for Smart City Security",
+      "abstract": "Modern smart cities are interconnected cyber-physical ecosystems where heterogeneous devices exchange data and control commands. Coordinated attacks may appear as weak and distributed indicators, including low-rate scanning, abnormal credential use, protocol misuse, or delayed lateral movement, with each signal remaining below local alert thresholds. Therefore, smart-city security is not only an anomaly detection task but also a reasoning task under uncertainty, partial observability, and adversarial manipulation. This work presents TPSC-Sec, an LLM-based multi-agent approach for stable security reasoning in smart cities. TPSC-Sec decomposes analysis across specialized agents that inspect traffic behavior, protocol interactions, identity usage, and temporal attack progression. Their independent threat hypotheses are aggregated by the proposed Threat-Pheromone Swarm Consensus mechanism, which reinforces supported hypotheses, suppresses contradictions, and preserves temporal consistency, thereby driving competing interpretations toward a stable collective decision. We further introduce Adaptive Verified TPSC, which adds verification-aware calibration, context-sensitive weighting, and disagreement-adaptive control to reduce unsupported LLM outputs and reasoning inconsistency. Experiments over 500 runs show that TPSC-Sec achieves a high consensus acceptance rate of 0.97 plus or minus 0.02, hypothesis-support concentration above 0.99, a consensus margin of 2.08 plus or minus 0.21, low aggregate risk of 0.23 plus or minus 0.04, high inter-agent agreement of 0.82 plus or minus 0.06, and strong support-quality correlation of r equals 0.93. Adaptive agent selection reduces the number of active agents by 50 percent while improving system fitness by 11.6 percent. These results demonstrate robust, interpretable, and efficient security reasoning for adversary-resilient smart-city environments.",
+      "authors": [
+        "Saeid Jamshidi",
+        "Kawser Wazed Nafi",
+        "Carol Fung",
+        "Foutse Khomh"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.MA"
+      ],
+      "published": "2026-07-03T23:04:48+00:00",
+      "link": "https://arxiv.org/pdf/2607.03628v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-based multi-agent reasoning for security",
+      "llm_evidence_cn": "基于大模型的多智能体安全推理",
+      "llm_evidence": "基于大模型的多智能体安全推理",
+      "canonical_evidence": "基于大模型的多智能体安全推理",
+      "llm_tldr_en": "Employs specialized LLM agents to reason about coordinated cyber-physical attacks in smart cities.",
+      "llm_tldr_cn": "采用专门的大模型智能体对智慧城市中的协同信息物理攻击进行推理。",
+      "llm_tldr": "采用专门的大模型智能体对智慧城市中的协同信息物理攻击进行推理。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.03628v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2607.04433v1",
+      "title": "Autonomous Information Seeking: A Roadmap for Agentic Recommender Systems",
+      "abstract": "The rapid integration of large language model-based agents into recommender systems has driven a shift from static, ranking-based pipelines toward autonomous and interactive systems that can reason, plan, and act. This survey provides a comprehensive overview of this emerging landscape by introducing a unified taxonomy grounded in the level of autonomy and three core paradigms of agentic recommender systems: agent-assisted recommendation, agent-as-recommender, and agent-as-user-simulator. The autonomy framework organizes existing methods along increasing capabilities in proactivity, context awareness, interaction flexibility, and adaptivity. Building on this framework, the survey analyzes how each paradigm adopts different agentic architectures and how agents enhance key components such as profiles, memory, tool use, workflows, and optimization mechanisms. We further examine evaluation methodologies for agentic recommendation, covering automated metrics, LLM-based judging, and simulation-based assessment, and discuss their limitations in capturing reasoning quality, user experience, and system behavior. Beyond existing evaluation protocols, we further discuss unresolved issues in evaluating agentic recommender systems, including trajectory-level assessment, agent contribution analysis, and calibration of user simulation. Lastly, the survey outlines open challenges in lifelong user modeling, contextual abstraction, multimodal alignment, controllability, trustworthiness, privacy, scalability, and efficiency. Together, these analyses establish a unified foundation for understanding the current progress of agentic recommender systems and highlight promising opportunities for developing more autonomous, reliable, and human-aligned recommendation agents.",
+      "authors": [
+        "Xinyu Lin",
+        "Yashar Deldjoo",
+        "Sunhao Dai",
+        "Honghui Bao",
+        "Xiaopeng Ye",
+        "Fatemeh Nazary",
+        "Wenjie Wang",
+        "Tommaso Di Noia",
+        "Jun Xu",
+        "Tat-Seng Chua"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.CL"
+      ],
+      "published": "2026-07-05T17:55:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.04433v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "agent-as-user-simulator paradigm",
+      "llm_evidence_cn": "智能体作为用户模拟器范式",
+      "llm_evidence": "智能体作为用户模拟器范式",
+      "canonical_evidence": "智能体作为用户模拟器范式",
+      "llm_tldr_en": "A survey on agentic recommender systems including the use of LLM agents for simulating user behavior.",
+      "llm_tldr_cn": "综述了代理推荐系统，包括使用大模型智能体模拟用户行为的范式。",
+      "llm_tldr": "综述了代理推荐系统，包括使用大模型智能体模拟用户行为的范式。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.04433v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2607.03730v1",
+      "title": "ProACT: Towards Breakdown-Aware Proactive Agent in Multi-User Collaboration",
+      "abstract": "Conversational agents are increasingly embedded in human collaborative work, yet they remain fundamentally passive and reactive: they respond to explicit user requests rather than proactively recognizing moments when a team would benefit from timely intervention as human collaborators often do. This reactive design substantially limits the use of agents as active participants in multi-user collaboration, where disagreements, ambiguous goals, forgotten constraints, underspecified plans, discussion loops, and imbalanced participation can gradually undermine group progress. To move agents from passive assistants toward active participants in multi-user collaboration, we introduce ProACT, a breakdown-aware agent framework grounded in theories of common ground, collaborative planning, and coordination work. ProACT observes the speaker-attributed conversation history, determines whether the current turn contains a collaboration breakdown requiring intervention, decides whether the agent should stay silent or speak, and, when speaking is needed, routes the case to a targeted collaboration skill. We further introduce the first multi-user collaboration benchmark for evaluating proactive agents across project planning, product design, research collaboration, logistics, education, and resource-constrained decision making. Across 3,244 turn-level examples and five LLM backbones, ProACT consistently improves collaborative appropriateness, non-interruptiveness, conciseness, and judged intervention quality over direct chat.",
+      "authors": [
+        "Shu Yang",
+        "Difei Xu",
+        "Jiaxin Pei",
+        "Di Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-04T06:36:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.03730v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "agent in multi-user collaboration and social discourse",
+      "llm_evidence_cn": "多用户协作与社会话语中的智能体",
+      "llm_evidence": "多用户协作与社会话语中的智能体",
+      "canonical_evidence": "多用户协作与社会话语中的智能体",
+      "llm_tldr_en": "A framework for proactive agents that recognize and intervene in social breakdowns during human collaboration.",
+      "llm_tldr_cn": "一种主动式智能体框架，能够识别并干预人类协作中的社会性功能障碍。",
+      "llm_tldr": "一种主动式智能体框架，能够识别并干预人类协作中的社会性功能障碍。",
+      "llm_tags": [
+        "query:mas-ss:composite"
+      ],
+      "matched_query_tag": "query:mas-ss:composite",
+      "matched_query_text": "Papers central to 多智能体系统、社会模拟器及社会话语相关论文检索, especially work that connects or combines: Short Video Fake News Detection; f; Multi-Agent; s; recent advances in multi agent social simulation; LLM powered agents for simulating social behavior; emergent social phenomena in multi agent environments.",
+      "matched_requirement_id": "req-composite-mas-ss",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.03730v1",
+      "carry_days": 1
+    },
+    {
+      "id": "2607.04329v1",
+      "title": "HAS-Bench: Evaluating LLM-Based Human-Agent Systems under Configurable Human Participation",
+      "abstract": "Large language models increasingly operate in settings where humans are active collaborators rather than passive task providers. We introduce HAS-Framework, a graph-based framework that represents humans and LLM-powered agents as first-class participants with explicit roles, permissions, communication paths, and action authority. Building on this framework, HAS-Bench evaluates Human-Agent Systems under configurable human participation across agency levels, interaction channels, and persona policies. The benchmark measures both task outcomes and process-level collaboration behavior, including clarification quality, feedback utilization, control calibration, safety, initiative, and interaction cost. Experiments across six domains show that human participation can substantially improve task completion and failure recovery, but the gains depend on when, how, and by whom human input is exercised.",
+      "authors": [
+        "Yaozu Wu",
+        "Wei-Chieh Huang",
+        "Jizhou Guo",
+        "Dongyuan Li",
+        "Renhe Jiang",
+        "Henry Peng Zou",
+        "Chunyu Miao",
+        "Shanghao Li",
+        "Weizhi Zhang",
+        "WeiWei Ye",
+        "Yankai Chen",
+        "Meng Zhang",
+        "Xue Liu",
+        "Philip S. Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-05T14:23:27+00:00",
+      "link": "https://arxiv.org/pdf/2607.04329v1",
+      "tags": [
+        "keyword:MAS SS",
+        "query:MAS SS"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "evaluating LLM-based human-agent systems and collaboration",
+      "llm_evidence_cn": "评估基于 LLM 的人机系统与协作",
+      "llm_evidence": "评估基于 LLM 的人机系统与协作",
+      "canonical_evidence": "评估基于 LLM 的人机系统与协作",
+      "llm_tldr_en": "Proposes a framework and benchmark for evaluating collaboration in LLM-powered human-agent systems.",
+      "llm_tldr_cn": "提出了一个用于评估 LLM 驱动的人机系统中协作行为的框架和基准测试。",
+      "llm_tldr": "提出了一个用于评估 LLM 驱动的人机系统中协作行为的框架和基准测试。",
+      "llm_tags": [
+        "query:mas-ss"
+      ],
+      "matched_query_tag": "query:mas-ss",
+      "matched_query_text": "LLM powered agents for simulating social behavior",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.04329v1",
+      "carry_days": 1
+    }
+  ]
 }

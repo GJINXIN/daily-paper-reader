@@ -1,0 +1,814 @@
+Title: Using AI Agents to Automate Black-Box Audits of Personalization Algorithms at Scale
+
+URL Source: https://arxiv.org/pdf/2606.30801v1
+
+Published Time: Wed, 01 Jul 2026 00:06:07 GMT
+
+Number of Pages: 43
+
+Markdown Content:
+# Using AI Agents to Automate Black-Box Audits of Personalization Algorithms at Scale 
+
+Alessandro Morosini ∗,1 Sarah H. Cen ∗,2 Andrew Ilyas 2
+
+Hedi Driss 1 Aleksander Mądry 1 Chara Podimata 11Massachusetts Institute of Technology 
+
+> 2
+
+Carnegie Mellon University July 1, 2026 
+
+Abstract 
+
+Personalization algorithms determine what content users encounter on platforms such as so-cial media, search engines, and chatbots. Auditing these systems is difficult because independent auditors typically have only black-box access to the algorithms, while personalization depends on users’ attributes, behavior, and evolving interaction histories. Existing auditing methods face the following tradeoff: studies with real users capture realistic behavior but are costly and hard to control, whereas sock-puppet audits scale more easily but often rely on scripted behavior that limits realism. Beyond this tradeoff, both approaches struggle to decouple user attributes from user behavior, limiting our ability to causally understand personalization. To address this gap, we introduce a framework for black-box audits of personalization al-gorithms using generative AI agents as behavioral engines for synthetic accounts. Each agent is instantiated with a fixed persona, grounded in demographic and political survey data, and interacts with a platform’s content by reasoning about it and choosing actions. Because behav-ior is fixed within each persona, while platform-visible signals such as age, gender, or location can be experimentally perturbed, our design enables counterfactual auditing of how platforms respond to user attributes under controlled behavioral policies. As a case study, we deploy 1,120 agents on X shortly after the 2024 U.S. election period, spanning 14 personas and three counterfactual conditions, and collect over 200,000 content exposures. We find that X’s algorithmic feed amplifies toxic, polarizing, political, and right-leaning content relative to the chronological feed, with amplification varying sharply by user ideology. Counterfactual analyses further show that demographic signals affect content delivery in heterogeneous, persona-dependent ways: pooled effects are largely null, while subgroup-level effects vary in direction and magnitude. Our work establishes GenAI-based agents as a new methodological tool for algorithmic auditing. 
+
+# 1 Introduction 
+
+Personalization underlies countless digital platforms, including social media, chatbots, and search engines. These systems use algorithms to tailor content, responses, and recommendations to users based on their attributes, preferences, and past behavior, thus shaping interactions and information 
+
+> *
+
+Equal contribution. Correspondence to: morosini@mit.edu , sarahcen@andrew.cmu.edu , andrewi@andrew.cmu.edu , hdriss@mit.edu ,
+
+madry@mit.edu , podimata@mit.edu .
+
+1
+
+> arXiv:2606.30801v1 [cs.CL] 29 Jun 2026
+
+online, influencing public discourse and social norms while amplifying certain cultural and political narratives over others. Underscoring the growing public and regulatory concern over how algorithmic systems shape what people see, believe, and do online, Congress has convened multiple hearings to question the CEOs of Meta, Amazon, Google, and OpenAI, among others [75–77]. Yet, it has been difficult to scrutinize and audit any kind of algorithmic system at scale, as they are closely guarded as trade secrets; the ways in which they are designed and trained, along with the data and user logs associated with them, are often considered proprietary business information. Despite repeated calls for external audits by regulators and even tech leaders [41], access to algorithmic internals is rarely granted [55, 56]. As a result, independent and third-party auditors typically have no more than black-box access : the ability to test algorithms on a predetermined set of inputs and observe the outputs [18, 48]. This lack of access makes it difficult to establish strong claims about an algorithmic system [17], though there are some systematic ways to design black-box experiments [18]. Personalization makes this challenge especially severe. Unlike e.g., a static classifier, whose behavior can be probed on a fixed set of inputs, a personalization system responds to a user’s attributes and to an evolving interaction history. That history is itself shaped by previous recommendations, creating a feedback loop between the user and the algorithm. As a result, the relevant input space is enormous and composed of all possible user trajectories arising from different attributes, behaviors, exposure histories, and platform responses over time. Exhaustively exploring this space is infeasible, particularly under black-box access. Motivated by these challenges, our work seeks to answer the following question: how can personalization algorithms be audited at scale with only black-box access? 
+
+Our work answers this question using LLM-based agents to demonstrate how personalization algorithms can be audited at scale, despite limited access. To situate our approach, we contrast it with prior work. Historically, one way to audit personal-ization with black-box access is to recruit human users and observe how the algorithm behaves for them [14, 79]. This approach has strong ecological validity—both user behavior and algorithmic re-sponses are real—but it is less suitable for auditing at scale for three main reasons. First, recruiting human participants is costly. Second, and more fundamentally, researchers have limited control over which user types are represented and thus cannot perform arbitrary causal analyses (e.g., cannot test how the algorithm behaves for users who are not represented by the recruited pool). Third, humans have pre-existing biases, preferences, and exposures that auditors cannot fully observe or control, making it difficult to isolate algorithmic effects from user-specific factors. To address the limitations of human studies, some researchers use “sock puppets”, i.e., user accounts controlled by the researchers themselves. Sock puppets allow more controlled causal analyses and are less costly to scale than human studies, making this approach a powerful tool. That said, sock puppets can be limited in their behavioral diversity and in their ability to mimic real-world interactions . Prior work controls sock puppets using computer programs that follow predefined rules [7, 35, 84]. The resulting sock puppets can be “flat”, exhibiting relatively predictable behavior that compromises the applicability of their findings. Our paper fills this gap by presenting a framework for performing black-box audits of per-sonalization algorithms at scale using AI agents . Specifically, we propose to run sock puppet audits powered by AI agents on the target platform of interest. In contrast to prior work, the actions taken by these synthetic users are controlled by an agent whose behavior is determined by a detailed “persona” description that differs across users. Unlike traditional sock-puppet accounts, 2which typically follow fixed interaction rules, AI agents exhibit richer behaviors. As such, they enable researchers to more comprehensively explore the input space of user conditions to which personalization algorithms tailor content. By systematically varying user attributes, personas, and other experiment conditions, researchers using our framework are able to run rich counterfactual and comparative analyses, such as: “How would the algorithm have behaved if the user had been older?”, “How does the content differ for users with different political personas?”, and “How do different users’ algorithmically personalized feeds differ from their reverse-chronological ones?”. 
+
+1.1 Our Contributions 
+
+Black-Box Auditing Framework. We formalize black-box auditing of personalization systems as the identification of policy-conditional signal responses, and introduce a framework for black-box auditing using LLM-powered agents. Each agent executes a fixed behavioral policy encoded in a prompt that describes its persona . Each persona is characterized by demographic and political ideology attributes, grounded in U.S. Census data [73] and Pew’s Political Typology [58]. Crucially, both the attributes and the behavior are defined a priori , not shaped by platform interaction. This has two consequences. First, because user attributes such as ideology are specified before any engagement with the platform, researchers can stratify algorithmic outcomes by user characteristics, usually confounded in human-based audits and less realistic with scripted bots. Second, because the behavioral policy is held constant across accounts within a persona, auditors can randomize platform-visible “signals” (attributes that a platform can either observe directly or infer confidently, e.g. a user’s age) while keeping agent behavior unchanged: this enables causal identification of the platform’s response to demographic attributes. Our methodology is general and can be adapted to a broad class of algorithmic auditing settings. 
+
+Field Experiment on X. We present the first large-scale deployment of LLM-powered agents for auditing on a live social media platform. We deploy 1,120 agents on X12 over the 24 days following the 2024 U.S. presidential election (November 5–28), a period of heightened political salience. Each agent is grounded in one of 14 personas spanning a range of demographic and ideological profiles. This yields 80 accounts per persona randomly assigned across four conditions (one baseline and three single-attribute counterfactuals over age, gender, and location). Each account browses both the algorithmically curated For You feed and the reverse-chronological Following feed. The divergence between these two feeds has attracted growing attention from researchers and the press alike [30, 38, 65]. In each session, agents observe recommended posts and choose among liking, following the author, reading replies, or ignoring. All these actions are selected by the LLM based on the post’s content and the agent’s persona. The deployment yields over 200 ,000 account-post exposures in total. 
+
+Evidence of Differential Treatment on X. On the aggregate user level, we find that X’s rec-ommendation algorithm systematically amplifies toxic, polarizing, and right-leaning content in the 
+
+For You feed relative to the Following feed, while left-leaning content is not significantly amplified. Stratifying by user ideology reveals even sharper ideological asymmetries: for example, right-leaning content is amplified for both user groups, while left-leaning content is actively suppressed for right-leaning users. On top of this, our counterfactual design provides causal evidence that the algorithm     
+
+> 1Our team obtained an IRB exception for the experiment. Our LLM agents only engage with existing content and do not post original content. This minimizes impact on other users’ experience.
+> 2A note on the legality of scraping from X:A 2018 court decision (see https://www.aclu.org/documents/ sandvig-v-barr-memorandum-opinion ) allowed researchers to violate platforms’ terms of service for research pur-poses. Our team also worked closely with a law clinic to verify the legality of our approach.
+
+3responds to demographic signals, but not uniformly: pooled effects are largely null, yet joint tests reject homogeneity for all outcomes, and persona-level significant effects are roughly double what chance alone would predict. The platform’s response to demographic attributes is thus highly persona-dependent: the same signal perturbation can amplify or de-amplify content depending on the user type. Such heterogeneity would be missed by an aggregate study, even one that successfully decouples behavior from signals. The rest of the paper is organized as follows. Sec. 1.2 reviews related work. Sec. 2 formalizes the auditing problem and defines the target estimand. Sec. 3 describes the experimental design and deployment. Sec. 4 presents the measurement and estimation framework. Sec. 5 reports our findings. Sec. 6 discusses future directions and the implications of our work. 
+
+1.2 Related Work 
+
+Algorithmic Auditing. A broad literature has highlighted the societal importance of algorithmic content curation and personalization on search platforms and social media, given their influence on exposure to information [5, 24, 29, 40, 57]. This influence extends to high-stakes domains such as political elections, where algorithmic curation may shape voter information environments [47, 50, 84, 85]. Algorithmic auditing has emerged as a key methodology for evaluating personalization systems, particularly when internal models and data are unavailable. However, most real-world audits operate under black-box access due to legal limitations and a lack of platform cooperation [64], raising challenges including limited observability, difficulties constructing representative samples, and risks of biased inference [6, 17]. This has motivated calls for principled auditing frameworks that improve transparency, reproducibility, and robustness [39, 60]. 
+
+Human-Based Audits. Multiple studies have examined recommender systems using audits that rely on real users, with varying degrees of experimental control. Platform-run randomized exper-iments offer the strongest identification but are rare and subject to platform discretion; examples include X’s A/B test comparing algorithmic and chronological feeds [38] and Meta’s field experi-ments that manipulated exposure to algorithmic curation [31, 32, 52]. Without platform cooper-ation, researchers have recruited participants into quasi-experimental designs, such as switchback experiments [79] or browser-based interventions [59]. Alternative approaches rely purely on obser-vational data collected via scraping [62] or from consenting users [14, 21]. In general, human-based audits are difficult to scale and do not allow auditors to construct counterfactuals over user profiles or exposure histories, nor to stratify outcomes by latent user characteristics that are endogenous to platform use. 
+
+Sock-Puppet Audits. More recent work focuses on sock-puppet audits, in which researchers deploy synthetic user accounts to study recommender system behavior. Existing approaches fall into two main categories. In the first, puppets are trained to a user profile but remain passive, avoiding engagement actions: Bartley et al. [8] and Ye et al. [84] define the political orientation of a puppet through curated follow networks, while Haroon et al. [35] seed puppets with ideological watch histories and track subsequent recommendations. In the second category, puppets can take actions, but the setting is generally unrealistic: Boeker and Urman [13] and Srba et al. [67] deploy agents on TikTok and YouTube that navigate content via scripted sequences; Bartley et al. [9] and Chen et al. [22] configure bots to perform simple interactions; other works replace scripted behavior with LLM agents, but deploy them in researcher-built simulated environments [25, 71, 78, 83]. Instead, our agents reason about each item and act on a live platform under black-box access. We further decouple user attributes from behavior, enabling counterfactual auditing of attribute-specific 4platform responses. 
+
+Silicon Sampling. A parallel line of research examines whether LLMs can approximate human behavior in experimental settings, sometimes referred to as “silicon sampling” [3] or “homo silicus” [26]. Argyle et al. [3] show that GPT-3, when conditioned on demographic backstories, can ap-proximate human opinion distributions across political and social questions. Filippas et al. [26] demonstrate that LLMs can replicate classic behavioral findings at low cost and with flexibility in varying experimental conditions. Other work has tested LLM behavior in economic games [1, 46] and examined behavioral biases [42, 43]; employed LLMs for market research [16]; and proposed frameworks for accelerating social science research [37, 45, 72]. LLM agents have also been em-bedded in synthetic social networks to reproduce emergent phenomena such as opinion dynamics and homophily [20, 27, 54]; see Anthis et al. [2] for a survey. While a growing literature documents limitations in the ecological validity of LLM-simulated experiments [12, 28, 33], our design mitigates these concerns: personas are defined a priori from survey data rather than generated by the model [3, 44], and the LLM serves as a fixed behavioral policy whose potential biases cancel out under within-persona differencing. 
+
+# 2 Problem Setting and Notation 
+
+We model the platform as an unknown allocation rule that maps user characteristics and interaction history to recommended content [19]. We aim to isolate how the platform’s content allocation changes when platform-visible user signals (e.g., declared profile fields and other attributes the platform can infer) are modified, holding the user’s behavior fixed. We refer to this as counterfactual auditing .We consider a platform that serves content to a user over a finite time horizon T , which may correspond to a fixed deployment window or a number of total interactions. Let Z denote the space of content items (e.g., posts), and let B denote the set of user actions (e.g., like or follow). Each user account i ∈ [N ] is associated with a time-invariant signal vector Si ∈ S representing user attributes visible to or inferrable by the platform (e.g., user’s declared age). At each time step 
+
+t ∈ [T ], the platform serves content Zi,t ∈ Z and the user responds with an action Bi,t ∈ B . Let 
+
+Hi,t = {(Zi, 1, B i, 1), . . . , (Zi,t , B i,t )} denote the interaction history for user account i up to time t.We model the recommendation algorithm as an unknown black-box mapping A : ( Si, H i,t −1) 7 →D(Z), where D(Z) denotes a distribution over content items. User behavior is generated by a 
+
+policy π: a complete behavioral specification that encodes the user’s full type, including both demographic characteristics and latent attributes such as political ideology or education level (in our implementation, π corresponds to the LLM prompt). Given a certain content item Zi,t , the policy induces a distribution over actions: Bi,t ∼ π(Zi,t ). The auditor summarizes each trajectory via an outcome Yi = g(Zi, 1: T , B i, 1: T ). For example, g may capture properties of the content a user is exposed to that are commonly studied in auditing, such as its average toxicity, the share that is political, and the balance of left- versus right-leaning content. 
+
+Policy-Conditional Signal Response. Fix a user policy π and consider two different values 
+
+s0, s 1 ∈ S of a platform-visible signal (e.g., π might encode a progressive user, while s0 and s1
+
+correspond to profiles displaying ages 25 and 55 to the platform, respectively). We define the policy-conditional signal response as the difference in expected outcomes when the same policy π is 5paired with different signals: 
+
+∆π(s1, s 0) = E[Y | S = s1, π ] − E[Y | S = s0, π ] , (1) where expectations are over the distribution of histories induced by (A, π, s 1) and (A, π, s 0), respec-tively. Conceptually, ∆π measures how the expected outcome differs (e.g., the share of toxic content) if the same behavioral policy were exposed to the platform under different signal assignments. Measuring ∆π in Eq. (1) via black-box access is difficult for two reasons. First, black-box access precludes counterfactual simulation: the auditor cannot re-query the algorithm under modified inputs and must instead observe realized trajectories from deployed accounts. Second, even if counterfactuals were observable, existing audit designs fail to decouple behavior from platform-visible signals . As a result, current audits compare users that differ simultaneously in both, estimating 
+
+E[Y | S = s1, π = π1] − E[Y | S = s0, π = π0], (2) where π1̸ = π0, rather than the policy-conditional signal response that holds π fixed. This coupling arises naturally in human audits because for an individual, the behavior (policy) and its induced histories are correlated with S. It also arises in sock-puppet audits because intended “types” are usually instantiated through scripted behaviors, where the policy explicitly depends on S.The comparison in Eq. (2) is not invalid, but it conflates the platform’s response to user signals with its response to user behavior, limiting our causal understanding of personalization systems. Addressing these limitations requires a design that decouples behavior from signals and enables counterfactual comparison across different signal assignments; we present such a framework next. 
+
+# 3 Experiment Design 
+
+Our experimental design centers on deploying LLM-powered agents that interact with the platform’s recommendation system in a closed feedback loop. Unlike common sock puppets, which follow scripted rules of engagement, our agents reason about each piece of content before deciding how to act. Each agent is instantiated with a fixed prompt, a persona , that encodes both demographic attributes (e.g., age, gender, location, race) and political ideology. Given this persona, the LLM-powered agent determines autonomously how to respond to each piece of content it encounters, with no further intervention from us. This produces a realistic feedback loop between user actions and platform recommendations, where behavior follows from a fixed identity rather than hard-coded rules. In the language of Section 2, the persona prompt captures the user’s policy π.Because the behavior policy is held constant across replicas of the same persona, the design supports within-persona randomization of platform-visible demographic signals. This allows us to isolate the causal effect of attributes such as age, gender, or location on algorithmic recommendations, the policy-conditional signal response defined in Equation (1). Our methodology is general and applies whenever (i) a platform serves a sequence of content items to an account, (ii) recommendations depend on platform-visible account signals in addition to interaction history, and (iii) an auditor can deploy multiple accounts and log realized outcomes. An overview of the framework is presented in Figure 1. 
+
+3.1 Overview 
+
+We introduce personas , indexed by p ∈ [P ], each associated with a fixed behavior policy πp. Accounts are indexed by i ∈ [N ] and we let Ip be the set of users associated with persona p. Each account 6Imagine that you identify as a female . You are 46 years old and                 
+
+> live in California . You are Asian ,and you graduated high school
+> and did not go to College . You identify politically as Progressive
+> Left , which is described by Pew as follows: […]
+> U.S. Census Bureau:
+> demographic (d)
+> Pew Research Center:
+> political ideology ( θ)
+> Baseline Location Age Gender
+> Persona 1:
+> (Ambivalent Right, M, 34,
+> AZ, Hisp ., Associate Deg.)
+> Imagine that you identify as a man . You are 34 years old and
+> live in Arizona . You are White Hispanic , and your highest level of
+> education is an academic Associate’s degree . You identify politically
+> as Ambivalent Right , which is described by Pew as follows: […]
+> Policy Prompt ( 𝝅 𝟏 )
+> Policy Prompt ( 𝝅 𝑷 )
+> Persona P:
+> (Progressive Left, F, 46,
+> CA, Asian, High Sch.)
+
+Persona Creation  Counterfactual Generation           
+
+> (M, 34, AZ) (M, 34, NY )(M, 19 , AZ) (F, 34, AZ)
+> (F, 46, CA) (F, 46, TX )(F, 62 , CA) (M, 46, CA)
+
+Content Allocation         
+
+> Perturbation of demographic signals (treatment assignment)
+> System maps sand 𝒉 𝒕
+> to content 𝒛 𝒕 Signals (s)
+> History (𝒉 𝒕 )
+> Actions (𝒃 𝒕 )
+
+Feed Interaction              
+
+> Content (𝒛 𝒕 )
+> “The tweet contains an image about [..] and a text about [..]
+> Given my persona (), I will take the action :”
+> LLM Reasoning
+> Actions (𝒃 𝒕 )Tweet Metadata
+> timestamp
+> label
+> feed
+> content
+> author data
+> engagement
+> history updates to 𝒉 𝒕 +𝟏
+> 1,120 accounts
+> >200k impressions
+> Nov. 5 –28, 2024
+> Black Box System ( 𝓐 )
+
+Figure 1: Overview of our experimental framework. Top: each persona is constructed by combining demographics from the U.S. Census with a political typology from Pew Research, producing an LLM prompt that fully specifies the agent’s behavior policy πp. Each persona is replicated into multiple accounts that share the policy but differ in a single platform-visible signal (location, age, or gender) relative to the baseline. Bottom: The interaction loop for a single account. The platform’s black-box recommendation system A observes the account’s signal s and interaction history ht to allocate content zt. The replicas reason about content via the same policy, and select an action bt; actions are appended to form the updated history ht+1 , creating a feedback loop between agents and platform recommendations. All interactions, reasoning traces and metadata are logged. 
+
+i ∈ I p follows the corresponding policy πp. Persona creation details are presented in Section 3.2. Since our accounts share the same policy within each persona (and hence also the same behavior), we also refer to these accounts as replicas . All replicas interact with the platform following the same protocol, as described in Section 3.3. Because each persona’s policy πp is fixed by construction and encodes latent characteristics (e.g., political ideology) a priori , the design enables stratifying any outcome by user type without the endogeneity that plagues observational studies. In observational settings, any proxy for a user’s ideology derived from engagement history is itself shaped by algorithmic recommendations through the feedback loop between A and Hi,t , making the stratification variable a joint product of the user and the algorithm. As our agents’ policies are specified before any platform interaction, this conditioning is well-defined by construction. In our X case study, we exploit this to measure policy-conditional amplification of content in the For You feed compared to the Following feed. Additionally, replicas differ only through a profile condition assignment Ci ∈ { 0, 1, . . . , K }, where 
+
+Ci = 0 denotes a baseline condition for user i and each Ci = k (for k ≥ 1) denotes a perturbation to a platform-visible signal. Within each persona p, we assign Ci by balanced randomization: replicas in Ip are split into K + 1 equal-size groups, one per condition. In our deployment, we use P = 14 
+
+7personas and |I p| = 80 replicas per persona, with K = 3 counterfactual conditions plus the baseline, splitting replicas into four equal-size groups of 20 accounts each. For each counterfactual condition k, our target estimand is the policy-conditional average treatment effect relative to baseline, 
+
+τp,k = E[ Y | C = k, π p] − E[ Y | C = 0 , π p] , (3) where Y is a metric of interest, e.g., the content toxicity score or its political leaning; see Section 4.1 for more details. Within each persona, each account’s condition assignment Ci determines which component of the platform-visible signal Si is perturbed relative to the baseline, while the behavior policy is held fixed at πp by construction. The estimand τp,k therefore takes the form of a policy-conditional signal response ∆πp (s1, s 0) as in Eq. (1), comparing the signal induced by condition k
+
+against the baseline. In Section 4.3, we present a regression model for estimating this quantity from the experimental outcomes. 
+
+3.2 Personas and Counterfactuals 
+
+We now describe how we construct personas and assign counterfactual conditions. The key design requirement is that all replicas within a persona share an identical behavior policy πp, while differing only in their platform-visible signal Si, as determined by the condition assignment Ci.
+
+Persona Construction. Each persona p is defined by a tuple of attributes (θp, d p), where θp ∈ Θ
+
+denotes a political typology and dp = ( age p, gender p, location p, race p, education p) denotes demo-graphic characteristics. We use data from the U.S. Census Bureau [74] (for demographic attributes) and Pew Research Center [58] (for political typology) to ground these attributes in real-world pop-ulation distributions. Demographic attributes are sampled to approximate the distribution of platform users. Age is drawn from four brackets (18–29, 30–49, 50–64, 65+) according to Census population shares, weighted by age-specific platform usage rates from Pew’s social media surveys. Gender is sampled according to Census proportions (male, female, or other). Race and ethnicity follow Census proportions, collapsed to seven categories (White Non-Hispanic, White Hispanic, Black, Asian, American Indian, Native Hawaiian/Pacific Islander, and Multiracial). Location is drawn from U.S. cities with population exceeding 50,000, with sampling probability proportional to city population. Finally, education is sampled conditional on age, gender, and race using Census educational attainment tables. Exact sampling weights are reported in Appendix A.2. For political typology, we use Pew’s nine-category Political Typology [58], which partitions the U.S. electorate based on political values and party affiliation. These categories span the entire range of political ideologies and are rather fine-grained. Presenting them from right-most to left-most leaning, the categories are: Faith and Flag Conservatives, Committed Conservatives, Populist Right, Ambivalent Right, Stressed Sideliners, Outsider Left, Democratic Mainstays, Establishment Liberals, and Progressive Left. More details on how the typology works and what the characteristics of each type are can be found in Appendix A.3. We sample θp conditional on the persona’s age and gender, using Pew’s published demographic breakdowns of each typology. 
+
+Behavior Policy. Each persona p is associated with a behavior policy πp : Z → D (B) mapping observed content to a distribution over actions. We implement πp using GPT-4o with a fixed prompt that encodes the persona’s attributes in natural language. More detail on the prompt can be found in Appendix A.4. Concretely, when the agent encounters some content item z ∈ Z , the item is sent 8to GPT-4o together with the persona prompt. The model then returns an action b ∈ B based on the encoded identity, with temperature set to zero. The full interaction protocol is presented in Section 3.3. Each account is also assigned platform-required identifiers needed for deployment. Profile images depict non-human subjects (e.g., landscapes) and are generated using DALL-E [61], carrying no demographic signal. Account emails are created via MailSlurp, a disposable-inbox service, and usernames are decided by X at registration. These identifiers are held fixed throughout the experi-ment and are not used to define the persona policy; they play no role in the counterfactual analysis. Instead, display names and birth dates do carry demographic information and serve as the signal for gender and age, respectively: their construction is described in Appendix A.5. 
+
+Treatment Conditions. In general, the choice of which demographic features to perturb is platform-dependent: the relevant signals are the ones that the platform can observe or infer. On X,we consider K = 3 perturbations targeting location ( Ci = 1 ), age ( Ci = 2 ), and gender ( Ci = 3 ). Each perturbation modifies exactly one demographic dimension while holding the behavior policy, political typology, and all remaining demographics at their baseline values; accounts with Ci = 0 
+
+serve as controls. Age is directly observed by the platform through the birth date declared at reg-istration. Gender and location are not explicitly declared; instead, the platform can plausibly infer them from the account’s display name and IP address, respectively. While this cannot be verified under black-box access, demographic inference from names and IP addresses is standard practice in online advertising and content personalization. More details can be found in Appendix A.5. Within each persona p, we partition the |I p| = 80 replicas into 4 equal-sized groups of 20 accounts by balanced randomization, one group per condition C ∈ { 0, 1, 2, 3}. With P = 14 personas, our experiment comprises N = 1 ,120 accounts in total. Crucially, each perturbation modifies exactly one demographic dimension, while holding the persona’s political typology and all other demographics fixed at their baseline values. As the persona prompt is fixed by construction, observed differences in outcomes across conditions Ci capture how the platform’s content allocation responds to the perturbed attribute for a user following a fixed behavior policy (Eq. (3)). 
+
+3.3 Platform Interaction 
+
+We now describe the interaction protocol for our deployment on X. While the experimental design above is mostly platform-agnostic, the choices below reflect the specific constraints of X.
+
+Feed Interaction. We deploy the accounts from November 5 to November 28, 2024, spanning Election Day and its immediate aftermath. Before the experiment begins, each account follows a set of accounts selected during an onboarding phase: the LLM is presented with X’s suggested-accounts page and chooses which accounts to follow given its persona. Each account i then con-ducts eight daily browsing sessions over the deployment period, with session start times sampled randomly throughout the day: four on the algorithmically ranked For You feed and four on the reverse-chronological Following feed. The feed is fixed for the duration of each session, which lasts approximately ten minutes. In each session, the agent navigates to the platform’s feed and observes content items zt served to it. For each item, the agent extracts the tweet’s content and metadata from the rendered page and passes them to GPT-4o in a single API call together with the behavior policy prompt. The model returns an action bt ∈ { like, follow, read-replies, ignore }. The action is executed via browser automation, and the tuple (zt, b t) is logged before advancing to the next item. A prompt-level 9instruction nudges the agent to take at least one active action every five items to ensure sufficient signal for the recommendation algorithm. Full feed engagement prompts and action definitions can be found in Appendix B.2. Once deployed, agents risk suspension if detected by the platform’s systems. To mitigate detection, we introduce inter-action delays that simulate human browsing cadence, route each account through an IP address matching its assigned location, stagger account creation over time, and randomize session start times. Accounts may nonetheless face temporary locks requiring email verification, interrupting scheduled sessions and reducing observed exposures; we automate account recovery through a custom email-verification pipeline. Attrition rates are reported in Appendix B.4; we find no evidence of differential attrition across treatment conditions. 
+
+Data collection. We access the platform via Selenium, a framework to automate web browsers. This allows our sock puppets to observe the rendered feed as it would appear to an ordinary user. For each content item zt served to account i, we record the item’s text and author handle, its timestamp and engagement counts (likes, retweets, replies) at the time of observation, indicators for attached media, and the feed type (algorithmic or chronological). We also log the account’s action bt ∈ B and the full LLM output including its reasoning trace. These logs define the realized trajectories used to construct our metrics of interest (Section 4.1). We define a content item as exposed to an account if it is rendered during browsing and recorded by our logging pipeline. We do not impose a dwell-time threshold to define exposure: even when the agent chooses to ignore a piece of content, the LLM must process it to select the ignore action, so dwell time is mechanically driven by inference rather than serving as a measure of attention. 
+
+# 4 Measurement and Estimation 
+
+This section describes our measurement and estimation framework. We begin by defining the out-come metrics used to characterize content exposure (Section 4.1). We then introduce the amplifica-tion ratio to compare content exposure on the algorithmic feed and chronological feed (Section 4.2). Finally, we present our counterfactual estimation strategy, first pooled across personas to capture average effects, then at the persona level to capture heterogeneity (Section 4.3). 
+
+4.1 Metrics of Interest 
+
+We study how the platform’s content delivery varies across demographic profiles. To this end, we focus on a set of metrics that have been widely used in prior audits of social media platforms. Note that our metrics are not specific to X. That said, we instantiate our discussion to the X case study for clarity of presentation. Classifying tweet content is a non-trivial task. For toxicity, reliable off-the-shelf classifiers exist and we adopt one directly. For political content and polarization, however, off-the-shelf models trained on general corpora performed poorly on our election-period data, likely due to the lack of domain-specific context. We therefore developed a custom LLM-based classification pipeline using chain-of-thought prompting [80], adopting best practices for LLM-based annotation: explicit definitions, structured output constraints, and grounded few-shot examples [10]. Recent work has demonstrated that LLMs can match or exceed human annotators for this class of tasks [36, 70]. We validated our pipeline against a hand-labeled set of 200 tweets; full implementation details and prompts are reported in Appendix C. 10 Toxic Content. Toxicity has been a central outcome metric in prior algorithmic audits and content moderation studies [14, 23, 69]. Multiple off-the-shelf classifiers are available, typically trained on large-scale annotated datasets of abusive or harmful language. We use the open-source Detoxify 
+
+library [34], which outputs a continuous toxicity score for each tweet. We define the binary outcome 
+
+toxic using a 0.5 threshold. 
+
+Political Content. A tweet is labeled as political if it clearly refers to: (i) the U.S. presiden-tial election (e.g., campaigning, voting, results, legitimacy); (ii) U.S. political institutions, public policy, or governance; (iii) formal political actors such as candidates, elected officials, or political parties; or (iv) explicit partisan or electoral positioning. The classifier assigns a category from: 
+
+{not_political , political_left , political_neutral , political_right }. From these we de-rive three binary outcomes: politicalness (any political category, including neutral), right-leaning 
+
+(political_right only), and left-leaning (political_left only), each computed over all tweets. Our method for classifying political content, including the exact prompt specifications, can be found in Appendix C. 
+
+Polarizing Content. A tweet is labeled as polarizing if it satisfies two conditions: (1) it dis-tinguishes between two or more social, political, religious, sexual, or racial groups (explicitly or implicitly), following the conceptual framework of Naseem et al. [51], and (2) it frames those groups in a moralized conflict—such as blame, hostility, moral superiority, threat, or victim-oppressor nar-ratives. Mentioning politics, religion, or identity alone is not sufficient; the tweet must actively pit groups against each other [15, 66]. When classified as polarizing, the model assigns a type from {political , religious , sexual , racial , other }. The categorical breakdown aids labeling accuracy by anchoring the model’s reasoning; our analysis uses only the binary indicator polariz-ing versus not polarizing , pooling across all types. Our method for classifying polarizing content, including the exact prompt specifications, can be found in Appendix C. 
+
+Author Reach. To capture whether the algorithmic feed favors content from high-reach accounts, we measure the follower count of each tweet’s author as a proxy for author virality [84]. We classify a tweet as high-reach if its author’s follower count exceeds the sample median, yielding a binary indicator analogous to the other outcome variables. 
+
+4.2 “For You” vs “Following” Feed Analysis 
+
+We measure whether X’s algorithmic ranking in the For You feed amplifies exposure to specific content types relative to the reverse-chronological Following feed. This comparison addresses long-standing concerns about filter bubbles and echo chambers [63, 68]: if algorithmic curation system-atically over-represents certain content—political material, toxic language, or ideologically skewed viewpoints—the aggregate effect on public discourse may be substantial. These concerns have prompted a growing body of research [32, 38, 49] and press [30, 65] to study whether and how algorithmic curation shapes content exposure. 
+
+Amplification Ratio. Huszár et al. [38] introduced the notion of amplification ratio : the relative likelihood that a set of tweets is seen under an algorithmically ranked feed compared to the reverse-chronological one. In their setting, the ratio is estimated via a randomized experiment where users are assigned exclusively to one of the two feeds. Our experimental design is different: each account browses both feeds during the deployment window, with sessions split evenly between the For You 
+
+and Following feeds (Section 3). This yields paired observations at the user level, enabling within-user comparisons that eliminate confounds from account history or unobserved user characteristics 11 that might correlate with feed assignment in between-subjects designs. Fix a content property of interest and let Z0 ⊂ Z denote the subset of content items satisfying that property (e.g., tweets classified as political). For account i on day d, let fy id and fol id denote the sets of content items observed in the For You and Following feeds, respectively, with cardinalities 
+
+mfy  
+
+> id
+
+= |fy id | and mfol  
+
+> id
+
+= |fol id |. Define the Z0-content rate for account i on day d in each feed as: 
+
+rfy  
+
+> id
+
+= 1
+
+mfy 
+
+> id
+
+X
+
+> z∈fy id
+
+1[z ∈ Z 0], rfol  
+
+> id
+
+= 1
+
+mfol 
+
+> id
+
+X
+
+> z∈fol id
+
+1[z ∈ Z 0]. (4) We aggregate to the account level by averaging daily rates within each account, then compute the mean across accounts to obtain ¯rfy and ¯rfol . The amplification ratio for content property Z0 is: 
+
+A(Z0) = 
+
+ ¯rfy 
+
+¯rfol − 1
+
+
+
+× 100% , (5) This approach first averages content rates within each account and then across accounts, ensuring equal weight per account regardless of the number of active days. 3 A value of 0% indicates equal rates across feeds, while positive (negative) values indicate that the algorithmic feed amplifies (de-amplifies ) the content type relative to the reverse-chronological baseline. Note that the two feeds differ not only in ranking but also in content pool, as the For You feed surfaces content from outside the user’s follow graph. Hence, our ratio captures the full change in exposure from switching feeds rather than isolating the ranking effect. Since each account browses both feeds, cross-feed spillovers may arise (e.g., engagement on one feed updating the platform’s preference model). If present, such spillovers would likely pull the two feeds closer together, making our results conservative. We discuss robustness in more detail in Appendix D. We perform inference via persona-level cluster bootstrap: each draw resamples personas with re-placement, preserving the within-persona dependence structure induced by shared behavioral poli-cies. 
+
+Stratification by Ideology. A central question in the accountability literature is whether rec-ommendation algorithms amplify congenial content, i.e., content that aligns with users’ political views. A growing body of evidence suggests they do, with a focus on political and polarizing content [4, 5, 31]. These findings motivate a stratified analysis: does amplification differ systematically for users with different ideological orientations? Our experimental design is uniquely suited to answer this question. Traditional amplification stud-ies face a fundamental identification challenge when stratifying by user ideology: the behaviors that reveal ideology to researchers (e.g., engagement patterns) are the same signals that platforms use to personalize content, creating circularity between the stratification variable and the outcome. Our design resolves this through an a priori ideology definition: each persona is assigned a po-litical orientation before any platform interaction occurs, and the LLM behavioral policy remains unchanged across all sessions. This clean separation enables a direct test of whether amplification is heterogeneous across user types.   
+
+> 3Because ¯rfol aggregates first over days and then over accounts, the denominator is well-defined whenever the content type has a nonzero base rate in the Following feed, a condition satisfied by all metrics we study.
+
+12 We stratify left-leaning and right-leaning following the Pew typology (see Appendix A.3). We report the estimated amplification ratios stratified by ideology in Section 5.1. As in the aggregate analysis, we perform inference via persona-level cluster bootstrap. 
+
+4.3 Counterfactual Analysis 
+
+Having characterized the platform’s relative amplification bias, we now turn to estimating the causal effect of user attributes on content exposure. We first estimate pooled treatment effects to capture the average algorithmic response to demographic changes across all personas. In Section 2, we defined the outcome as a summary of the user’s full trajectory; in practice, we estimate treatment effects at the account-day level. We aggregate binary tweet labels into daily exposure rates and define the algorithmic lift as the additive difference between the exposure rate in the For You feed and the Following feed: 
+
+yid = rfy  
+
+> id
+
+− rfol  
+
+> id
+
+, (6) where rfy  
+
+> id
+
+and rfol  
+
+> id
+
+are the content rates defined in Equation (4). The algorithmic lift yid is the dependent variable in all counterfactual regressions that follow. Intuitively, yid captures how much extra content of a type the algorithm injects beyond the chronological baseline [49]. We choose this additive specification over the ratio used in Section 4.2 for two reasons specific to the account-day unit of analysis. The first reason is robustness to sparsity: unlike the aggregate means, daily organic exposure to sparse content (e.g., toxic tweets) is frequently zero, making granular ratios undefined. The second reason is to focus on absolute differences: while the amplification ratio describes the system’s relative bias , the additive lift captures the magnitude of exposure. This allows us to quantify the actual “dose” of additional content of a certain type the algorithm injects into the user’s experience, given a counterfactual perturbation. 
+
+Pooled Treatment Effects. To estimate the average effect of demographic signals, we encode the treatment direction explicitly across personas: 
+
+• Location : Durb  
+
+> i
+
+∈ {− 1, 0, +1 }, where +1 indicates the displayed state has a higher urban-ization rate than the persona’s baseline state, −1 indicates a lower rate (more rural), and 0
+
+indicates baseline. We use the percentage of population residing in urbanized areas from the 2020 U.S. Census [73]. 
+
+• Age : Dage  
+
+> i
+
+∈ {− 1, 0, +1 }, where +1 indicates the displayed age bracket exceeds the persona’s baseline, −1 indicates it falls below, and 0 indicates baseline. 
+
+• Gender : Dmale  
+
+> i
+
+= 1 if account i displays a male profile, 0 if female. Note that our ordinal encoding of age and location assumes a monotone relationship between these signals and algorithmic recommendations. Alternative specifications, such as dummies for specific categories, could capture non-monotone effects. Let Ti = ( Durb  
+
+> i
+
+, D age  
+
+> i
+
+, D male  
+
+> i
+
+)⊤ denote the treatment vector. We estimate the following model at the account-day level: 
+
+yid = γd + δpi + β⊤Ti + X⊤
+
+> id
+
+θ + εid , (7) where γd are day fixed effects, δpi are persona fixed effects, and Xid is a vector of time-varying con-trols. The coefficient vector β identifies the average treatment effect of each demographic attribute on algorithmic lift, pooled across all personas. The covariate vector Xid includes two sets of controls 13 to improve precision: (1) Hour-of-day indicators (i.e., binary indicators for session activity in each hour), and (2) Account age (i.e., hours elapsed since account creation). Because treatment is randomly assigned within each persona, β identifies the causal effect of each demographic attribute on algorithmic lift. We cluster standard errors at the account level to adjust for the correlation among repeated daily observations within the same account. 
+
+Heterogeneous Treatment Effects. The pooled analysis assumes that the platform’s response to a demographic signal (e.g., an increase in age) is constant across all user profiles. However, algorithmic personalization is likely context-dependent. In this section, we relax the homogeneity assumption to estimate persona-specific treatment effects. We interact the treatment assignment with the persona indicator. Recall that Ci ∈ { 0, 1, . . . , K }
+
+denotes the profile condition assigned to account i. Let Wi,p,k = 1{pi = p, C i = k} indicate that account i belongs to persona p and was assigned to counterfactual condition k. We estimate: 
+
+yid = γd + δpi +
+
+> P
+
+X
+
+> p=1
+> K
+
+X
+
+> k=1
+
+βp,k Wi,p,k + X⊤
+
+> id
+
+θ + εid . (8) Here, βp,k captures the algorithmic lift for persona p in condition k relative to that persona’s baseline. Under balanced randomization of Ci within each persona, these coefficients identify the persona-specific average treatment effects on algorithmic lift. The control vector Xid is identical to the one defined for the pooled analysis. We cluster standard errors at the account level. 
+
+# 5 Case Study: Results from Deployment on X
+
+We deployed 1, 120 synthetic accounts on Xduring the 2024 U.S. presidential election, as per the experimental design described in Section 3. This section reports and discusses the main results, following the measurement and estimation framework of Section 4. First, we analyze whether X’s algorithmic For You feed systematically amplifies specific content types relative to the chrono-logical Following feed (Section 5.1). Second, we estimate how perturbations to platform-visible demographic signals affect algorithmic content exposure (Section 5.2). 
+
+5.1 “For You” vs “Following” Feed 
+
+We first assess the baseline behavior of the recommendation algorithm by computing the amplifi-cation ratio for different content categories. This within-subject comparison controls for user-level heterogeneity by comparing the algorithmic feed against the user’s own chronological baseline. Re-sults are reported in Table 1. We find that all content types except left-leaning and high-reach are significantly amplified in the For You feed. The largest effects are for toxic (+39.2%) and polarizing (+32.3%) content, consistent with evidence that algorithmic ranking increases exposure to anger and out-group hostility [49]. Political content is amplified by +14.2%; its high baseline prevalence makes this the largest shift in absolute terms. We also observe a statistically significant ideological asymmetry in the aggregate results: right-leaning content is amplified, whereas left-leaning content shows no significant amplification (+23 .3% vs −6.1% , with the 95% CI including zero for the latter). As we demonstrate next, this aggregate pattern masks sharper divergences across user groups. 14 Content Baseline ( ¯rFOL ) Amplification CI (low) CI (high)                         
+
+> Political 38 .0% +14 .2% +9 .1% +19 .8%
+> Right-leaning 14 .9% +23 .3% +15 .8% +31 .9%
+> Left-leaning 6.5% −6.1% −14 .6% +2 .1%
+> Toxic 3.9% +39 .2% +14 .4% +69 .7%
+> Polarizing 14 .0% +32 .3% +23 .7% +41 .6%
+> High-reach 64 .5% +3 .4% −6.1% +16 .7%
+
+Table 1: Amplification of content types in X’s algorithmic For You feed relative to the Following 
+
+feed. The baseline column reports the average content rate in the Following feed ( ¯rFOL ). Am-plification values represent the relative percentage difference in content exposure. The For You 
+
+feed exposes users to significantly more toxic, polarizing, political, and right-leaning content. Confidence intervals (95%) are constructed via persona-level cluster bootstrap. 
+
+Stratification by Ideology. Table 2 and Figure 2 stratify these results by the political leaning of the account. The aggregate patterns mask substantial heterogeneity: amplification effects differ sharply—and for some content types, even reverse sign—across left-leaning and right-leaning users. The most striking example is for toxic content: the algorithm amplifies it by +80.3% for left-leaning users but shows no significant effect for right-leaning users ( −4.0% , CI includes zero)—a gap of 
+
+84 .3 percentage points ( p < 0.01 ). A similar pattern holds for political content, which is amplified roughly twice as much for left-leaning users as for right-leaning users ( +18 .1% vs. +8 .7% ), though the difference is only marginally significant. Polarizing content is also amplified more for left-leaning users ( +36 .9% vs. +25 .8% ), though the difference is not statistically significant. High-reach content shows the opposite pattern, with amplification concentrated among right-leaning users ( +38 .4% vs. 
+
+−11 .0% , p < 0.01 ). Right-leaning content is amplified for both user groups ( +22 .3% for left-leaning users, +24 .5% for right-leaning users), with no significant difference between them. Left-leaning content, by contrast, shows no amplification even for left-leaning users ( −1.4% , not significant) and is actively suppressed for right-leaning users ( −17 .0% ). The uniform amplification of right-leaning content across user types is consistent with a level effect in the algorithm’s content allocation, not with personalization toward ideologically congruent material. For right-leaning users, this effect is reinforced by the suppression of left-leaning content, creating an asymmetric echo chamber that does not arise for left-leaning users. This result reveals striking disparate exposure: to put it plainly, the algorithmic feed amplifies right-leaning content for left-leaning users by more than 22% , while it suppresses left-leaning content by 17% for right-leaning users. Across the hypothesis tests in Tables 1 and 2, all significant results survive Benjamini–Hochberg (BH) correction for multiple hypothesis testing [11], with the exception of the political between-group difference. 
+
+5.2 Counterfactual Analysis 
+
+We now turn to the counterfactual question: does the algorithm respond differently to users with different demographic profiles, holding behavior fixed ? Using the algorithmic lift yid defined in Eq. (6) as the dependent variable, we estimate the causal effect of perturbing age, gender, and location signals on the gap between algorithmic and chronological content exposure. 15 Left-leaning users Right-leaning users Difference Content Ampl. CI (low) CI (high) Ampl. CI (low) CI (high) 
+
+Political +18 .1% +13 .1% +24 .5% +8 .7% +2 .1% +17 .8% −9.4 pp ∗
+
+Right-leaning +22 .3% +11 .5% +34 .2% +24 .5% +16 .2% +37 .2% +2 .2 pp Left-leaning −1.4% −10 .9% +8 .9% −17 .0% −28 .5% −5.5% −15 .6 pp ∗∗ 
+
+Toxic +80 .3% +50 .4% +109 .7% −4.0% −16 .7% +12 .0% −84 .3 pp ∗∗∗ 
+
+Polarizing +36 .9% +26 .6% +46 .6% +25 .8% +14 .7% +43 .1% −11 .0 pp High-reach −11 .0% −12 .8% −9.0% +38 .4% +30 .3% +46 .8% +49 .4 pp ∗∗∗ 
+
+Table 2: Amplification ratios stratified by political leaning of users. The algorithm’s effects differ substantially across user groups. The difference column reports the gap (Right − Left) in percentage points (pp). Confidence intervals (95%) are constructed via persona-level cluster bootstrap; p-values: ∗p < 0.10 , ∗∗ p < 0.05 , ∗∗∗ p < 0.01 .Political Right-Leaning Left-Leaning Toxic Polarizing High Reach 
+
+> −20 020 40 60 80 100
+> Amplification (%)
+> Left-leaning users Right-leaning users
+
+Figure 2: Amplification ratios by content type, stratified by user political leaning (left: blue, right: red). Bars show point estimates. Toxic content is amplified by 80% for left-leaning users but not for right-leaning users; right-leaning content is amplified for both groups, while left-leaning content is suppressed for right-leaning users. Error bars indicate 95% confidence intervals. 
+
+Pooled Treatment Effects. Table 3 reports pooled treatment effects from the model in Equa-tion (7). The main finding is that demographic perturbations have limited systematic effects on algorithmic lift when pooled across user profiles: out of the estimated coefficients, only two are statistically significant at the 5% level. In particular, we find that displaying an older age increases the algorithmic lift of toxic content by 0.80 percentage points ( p = 0 .031 ), and displaying a more urban location reduces the lift of polarizing content by 1.60 percentage points ( p = 0 .024 ). Relative to the baseline algorithmic lift, these approximately correspond to a 70% increase in the algorithm’s additional injection of toxic content (baseline lift: 1.15 pp) and a 38% reduction for polarizing content (baseline lift: 4.18 pp). Gender has no significant effect on any outcome. However, neither result survives BH correction for multiple testing across the 18 hypotheses. 16 Location (Durb ) Age (Dage ) Gender (Dmale )
+
+Content ˆβ 95% CI ˆβ 95% CI ˆβ 95% CI 
+
+Political −1.70 [−3.86 , 0.46] 0.70 [−1.26 , 2.66] 0.90 [−1.45 , 3.25] (0 .142) (0 .473) (0 .449) 
+
+Right-Leaning −0.50 [−1.87 , 0.87] 1.00 [−0.18 , 2.18] −0.40 [−1.58 , 0.78] (0 .477) (0 .102) (0 .534) 
+
+Left-Leaning −0.70 [−1.48 , 0.08] −0.30 [−1.08 , 0.48] 0.30 [−0.48 , 1.08] (0 .131) (0 .367) (0 .436) 
+
+Toxic 0.10 [−0.68 , 0.88] 0.80 [0.02 , 1.58 ] −0.10 [−0.69 , 0.49] (0 .770) (0.031 ) (0 .876) 
+
+Polarizing −1.60 [−2.97 , −0.23 ] 0.50 [−0.68 , 1.68] −0.70 [−2.07 , 0.67] (0.024 ) (0 .439) (0 .302) 
+
+High-reach 1.30 [−1.25 , 3.85] −0.90 [−3.64 , 1.84] −0.10 [−2.84 , 2.64] (0 .334) (0 .524) (0 .939) 
+
+Table 3: Pooled treatment effects on algorithmic lift. Each coefficient represents the average effect of a one-unit change in the demographic signal on the gap between For You and Following content rates. Coefficients for binary outcomes are scaled by 100 and expressed in percentage points. Most pooled effects are small and not statistically significant, suggesting the algorithm’s re-sponse to demographic signals is not systematic across user profiles. Values in parentheses are p-values computed from standard errors clustered at the account level. Significant coefficients (p < 0.05 ) shown in bold. The absence of strong pooled effects does not imply that the platform ignores demographic signals entirely. Rather, it is consistent with the hypothesis that any algorithmic responsiveness to profile attributes is persona-dependent , i.e., conditioned on the full behavioral profile the platform has accumulated. We investigate this possibility next. 
+
+Heterogeneous Treatment Effects. The near-zero pooled estimates could reflect genuinely null effects or heterogeneity that cancels in the aggregate. To distinguish these, we estimate persona-specific treatment effects via the model of Equation (8). Joint F -tests reject the null of zero treatment effects for all outcomes at the 5% level: left-leaning ( F = 2 .02 , p < 0.001 ), politicalness (F = 1 .93 , p < 0.001 ), author reach ( F = 1 .93 , p < 0.001 ), toxic ( F = 1 .89 , p < 0.001 ), right-leaning ( F = 1 .57 , p = 0 .011 ), and polarizing ( F = 1 .49 , p = 0 .022 ). All six remain significant after BH correction. Figure 3 illustrates this pattern for left-leaning content, the outcome with the strongest hetero-geneity. None of the three pooled coefficients for left-leaning content are significant (Table 3), yet persona-specific effects vary in sign and magnitude across personas, so that no consistent average effect emerges in the pooled estimate. Gender and location perturbations drive most of the het-erogeneity, particularly for left-leaning and polarizing content; age effects are largely confined to toxicity and author reach. Full persona-level results are reported in Appendix F. At the individual level, 26 of 252 persona–outcome–treatment coefficients are significant at the 5% level. Given the number of comparisons, these individual coefficients should not be interpreted in isolation. Instead, together with the joint rejection of homogeneity and the near-zero pooled esti-mates, they indicate that the algorithm’s response to demographic signals varies in direction across user types. This has a direct methodological implication: pooled audits that average treatment 17 effects across heterogeneous user populations may fail to detect algorithmic discrimination present for specific subgroups. −10 −5 0 5 10         
+
+> Effect on Lift (pp)
+> P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14
+> Location
+> −10 −50510
+> Effect on Lift (pp)
+> Age
+> −10 −50510
+> Effect on Lift (pp)
+> Gender
+> Counterfactual Lift: Left-Leaning
+
+Figure 3: Persona-specific treatment effects on algorithmic lift for left-leaning content, estimated via model (8). Each row is a persona, each panel a treatment. Points are estimated coefficients with 95% confidence intervals (filled markers indicate significance). Left-leaning content exhibits the most persona-level heterogeneity: all pooled effects are null, yet 7 persona-specific effects are significant. 
+
+5.3 Summary of Findings 
+
+Taken together, the amplification analysis of Section 5.1 and the counterfactual analysis of Sec-tion 5.2 point to two main conclusions. First, consuming content through X’s algorithmic For You 
+
+feed leads to substantially higher exposure to toxic, polarizing, and right-leaning content than re-lying on the chronological Following feed. This amplification gap is uneven across user groups: left-leaning users are disproportionately exposed to toxic content, while right-leaning users expe-rience a one-sided information environment in which politically congenial content is amplified and opposing content is suppressed. Second, perturbing observable demographic signals causally affects algorithmic content delivery, but in a heterogeneous, persona-dependent manner. Pooled treatment effects are largely null, yet joint tests reject the hypothesis of homogeneous effects for all outcomes. The same perturbation can shift content delivery in opposite directions depending on the user’s behavioral profile, producing effects that cancel in the aggregate. A common pattern emerges across both analyses: population-level summaries mask sharp differences in how the algorithm treats distinct user groups. These findings highlight the value of moving beyond aggregate metrics in algorithmic auditing, toward designs that can detect heterogeneous effects across demographically and behaviorally distinct subpopulations. 
+
+# 6 Discussion 
+
+In this paper, we introduced a framework that uses LLM-powered agents for black-box auditing of personalization systems. Our agents are instantiated to follow certain “personas”, and reason about the content they are exposed to before engaging. Both observable and latent attributes can 18 be encoded directly in the agent’s prompt, enabling stratification by design rather than through post-hoc inference from behavioral proxies. Crucially, because behavior is fully specified by the prompt, it is decoupled from user attributes: platform-visible signals can then be perturbed across conditions without altering how the agent behaves, enabling counterfactual auditing. We deployed our auditing framework on X during the 2024 U.S. presidential election, operating 1,120 agents and collecting over 200,000 impressions. Consistent with prior work and anecdotal evidence, we find that the algorithmic feed amplifies toxic, polarizing, political, and right-leaning content relative to the chronological baseline; left-leaning content is not significantly amplified. Stratifying by ideology reveals highly asymmetric amplification: right-leaning content is amplified regardless of user leaning, while left-leaning content is suppressed for right-leaning users. In our counterfactual analysis, pooled demographic effects are largely null, but persona-level analyses reject homogeneity of treatment effects for all outcomes, indicating that the algorithm’s response to demographic signals is persona-dependent. 
+
+Limitations. Our study is subject to a few limitations. First, GPT-4o (which was the LLM that we used for our agents) lacks human lived experience and might carry biases when choosing how to react to certain content, given the persona it has been instructed to follow. To take this point one step further, we do not know the extent to which GPT-4o (with the prompt instructions that we gave it) is the best possible LLM to simulate human behavior in social media interactions. In fact, there has been a lot of recent, exciting work [81] on identifying ways to make LLM agents better imitate humans making choices. All that being said, the validity and importance of our framework does not require LLMs to faithfully approximate humans: it requires a fixed behavioral policy across replicas and behavior realistic enough to trigger personalization. For the counterfactual analysis, any additive LLM bias cancels under within-persona differencing; for the amplification analysis, the within-user comparison remains internally valid, but LLM engagement biases may shape the feedback loop and hence the levels of algorithmic amplification. With regards to our deployment on X, given that we have 20 accounts per persona-condition cell and 6 outcome variables across three treatments, we test a large number of hypotheses relative to the available observations; we therefore present the heterogeneous analysis as exploratory, with evidence for heterogeneity resting on joint F -tests rather than individual coefficients. Finally, our findings are specific to X during a period of exceptional political salience (recall, we ran our study very soon after the 2024 US presidential election), and all of our accounts are newly created. As a result, the algorithm may weight profile signals differently than for established users. 
+
+Future Work. Our work opens up several avenues for future research. Scaling to hundreds of per-sonas would sharpen estimates of demographic effects; with sufficient power, this would also enable moderation analysis to identify which persona attributes (e.g., engagement patterns or political ide-ology) interact with the algorithm to shape its response to demographic signals. Enabling agents to 
+
+create content (posting tweets, replying, quote-tweeting) would generate richer engagement signals and make the feedback loop between agent and algorithm more realistic, likely triggering deeper per-sonalization. This richer interaction mode would require substantially more careful IRB oversight, as agent-generated content could directly affect real users. Perhaps the most important extension is deploying our auditing framework on other platforms. Nothing in our design is specific to X; the same approach applies to any platform with an algo-rithmic feed. The need for such audits is growing: policymakers increasingly demand algorithmic accountability, and platforms themselves have begun to respond. X, for instance, recently published 19 the source code of its recommendation pipeline [82]. However, code alone does not make a system transparent: without model weights, production data, and surrounding infrastructure, the released code cannot be independently verified. Moreover, the patterns that audits seek to detect are often emergent consequences of optimization objectives instead of behaviors readable from source code. Black-box auditing therefore remains necessary to characterize what users actually experience. Finally, we stress that our framework need not be adversarial: platforms themselves could deploy synthetic agent populations in sandboxed environments to stress-test algorithm changes before live rollout, or regulators could run standardized agent cohorts to produce auditable, reproducible com-pliance evidence. 
+
+# Acknowledgments 
+
+This work was generously supported by a MacArthur Foundation grant and by an MIT MGAIC grant. 
+
+# References 
+
+[1] G. Aher, R. I. Arriaga, and A. T. Kalai. Using large language models to simulate multiple humans and replicate human subject studies. In Proceedings of Machine Learning Research ,volume 202, 2023. [2] J. R. Anthis, R. Liu, S. M. Richardson, A. C. Kozlowski, B. Koch, E. Brynjolfsson, J. Evans, and M. S. Bernstein. Position: Llm social simulations are a promising research method. In 
+
+Proceedings of Machine Learning Research , volume 267, 2025. [3] L. P. Argyle, E. C. Busby, N. Fulda, J. R. Gubler, C. Rytting, and D. Wingate. Out of one, many: Using language models to simulate human samples. Political Analysis , 31, 2023. ISSN 14764989. doi: 10.1017/pan.2023.2. [4] C. A. Bail, L. P. Argyle, T. W. Brown, J. P. Bumpus, H. Chen, M. F. Hunzaker, J. Lee, M. Mann, F. Merhout, and A. Volfovsky. Exposure to opposing views on social media can increase political polarization. Proceedings of the National Academy of Sciences , 115(37):9216– 9221, 2018. [5] E. Bakshy, S. Messing, and L. A. Adamic. Exposure to ideologically diverse news and opinion on facebook. Science , 348(6239):1130–1132, 2015. [6] J. Bandy. Problematic machine behavior: A systematic literature review of algorithm audits. 
+
+Proceedings of the acm on human-computer interaction , 5(CSCW1):1–34, 2021. [7] J. Bandy and N. Diakopoulos. Curating quality? how twitter’s timeline algorithm treats different types of news. Social Media and Society , 7, 2021. ISSN 20563051. doi: 10.1177/ 20563051211041648. [8] N. Bartley, A. Abeliuk, E. Ferrara, and K. Lerman. Auditing algorithmic bias on twitter. In 
+
+ACM International Conference Proceeding Series , 2021. doi: 10.1145/3447535.3462491. [9] N. Bartley, K. Burghardt, and K. Lerman. Auditing exposure bias on social media for a healthier online discourse. In Workshop Proceedings of the 18th International AAAI Confer-ence on Web and Social Media (ICWSM Workshops) , 2024. doi: 10.36190/2024.12. URL 20 https://workshop-proceedings.icwsm.org/abstract.php?id=2024_12 . CySoc 2024: 5th International Workshop on Cyber Social Threats. [10] J. Baumann, P. Röttger, A. Urman, A. Wendsjö, F. M. P. del Arco, J. B. Gruber, and D. Hovy. Large language model hacking: Quantifying the hidden risks of using llms for text annotation, 2025. URL https://arxiv.org/abs/2509.08825 .[11] Y. Benjamini and Y. Hochberg. Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal statistical society: series B (Methodological) ,57(1):289–300, 1995. [12] J. Bisbee, J. D. Clinton, C. Dorff, B. Kenkel, and J. M. Larson. Synthetic replacements for human survey data? the perils of large language models. Political Analysis , 32(4):401–416, 2024. [13] M. Boeker and A. Urman. An empirical investigation of personalization factors on tiktok. In 
+
+Proceedings of the ACM web conference 2022 , pages 2298–2309, 2022. [14] P. Bouchaud, D. Chavalarias, and M. Panahi. Crowdsourced audit of twitter’s recommender systems. Scientific Reports , 13(1):16815, 2023. [15] W. J. Brady, K. McLoughlin, T. N. Doan, and M. J. Crockett. How social learning amplifies moral outrage expression in online social networks. Science Advances , 7(33):eabe5641, 2021. [16] J. Brand, A. Israeli, and D. Ngwe. Using gpt for market research. In Proceedings of the 25th ACM Conference on Economics and Computation , EC ’24, page 613, New York, NY, USA, 2024. Association for Computing Machinery. ISBN 9798400707049. doi: 10.1145/3670865. 3673479. URL https://doi.org/10.1145/3670865.3673479 .[17] S. Casper, C. Ezell, C. Siegmann, N. Kolt, T. L. Curtis, B. Bucknall, A. Haupt, K. Wei, J. Scheurer, M. Hobbhahn, et al. Black-box access is insufficient for rigorous ai audits. In 
+
+Proceedings of the 2024 ACM Conference on Fairness, Accountability, and Transparency , pages 2254–2272, 2024. [18] S. H. Cen and R. Alur. From transparency to accountability and back: A discussion of access and evidence in ai auditing. In Proceedings of the 4th ACM Conference on Equity and Access in Algorithms, Mechanisms, and Optimization , pages 1–14, 2024. [19] S. H. Cen, A. Ilyas, J. Allen, H. Li, and A. Madry. Measuring strategization in recommendation: Users adapt their behavior to shape future content. arXiv preprint arXiv:2405.05596 , 2024. [20] S. Chang, A. Chaszczewicz, E. Wang, M. Josifovska, E. Pierson, and J. Leskovec. Llms generate structurally realistic social networks but overestimate political homophily. In Proceedings of the International AAAI Conference on Web and Social Media , volume 19, pages 341–371, 2025. [21] A. Y. Chen, B. Nyhan, J. Reifler, R. E. Robertson, and C. Wilson. Subscriptions and external links help drive resentful users to alternative and extremist youtube channels. Science Advances ,9(35):eadd8080, 2023. [22] W. Chen, D. Pacheco, K.-C. Yang, and F. Menczer. Neutral bots probe political bias on social media. Nature communications , 12(1):5580, 2021. [23] T. Davidson, D. Warmsley, M. Macy, and I. Weber. Automated hate speech detection and the problem of offensive language. In Proceedings of the international AAAI conference on web and social media , volume 11, pages 512–515, 2017. 21 [24] N. Elkin-Koren. Let the crawlers crawl: On virtual gatekeepers and the right to exclude indexing. University of Dayton Law Review , 26(2):3, 2001. [25] A. Ferraro, A. Galli, V. La Gatta, M. Postiglione, G. M. Orlando, D. Russo, G. Riccio, A. Ro-mano, and V. Moscato. Agent-based modelling meets generative ai in social network simula-tions. In International conference on advances in social networks analysis and mining , pages 155–170. Springer, 2024. [26] A. Filippas, J. J. Horton, and B. S. Manning. Large language models as simulated economic agents: What can we learn from homo silicus? In Proceedings of the 25th ACM Conference on Economics and Computation , EC ’24, page 614–615, New York, NY, USA, 2024. Association for Computing Machinery. ISBN 9798400707049. doi: 10.1145/3670865.3673513. URL https: //doi.org/10.1145/3670865.3673513 .[27] C. Gao, X. Lan, Z. Lu, J. Mao, J. Piao, H. Wang, D. Jin, and Y. Li. S3: Social-network simu-lation system with large language model-empowered agents. arXiv preprint arXiv:2307.14984 ,2023. [28] Y. Gao, D. Lee, G. Burtch, and S. Fazelpour. Take caution in using llms as human surrogates. 
+
+Proceedings of the National Academy of Sciences , 122(24):e2501660122, 2025. [29] S. Gerhart. Do web search engines suppress controversy? First Monday , 2004. [30] J. Gillum, A. Corse, and A. Tong. X algorithm feeds users political content— whether they want it or not, 2024. URL https://www.wsj.com/politics/elections/ x-twitter-political-content-election-2024-28f2dadd . Accessed: 2026-02-07. [31] S. González-Bailón, D. Lazer, P. Barberá, M. Zhang, H. Allcott, T. Brown, A. Crespo-Tenorio, D. Freelon, M. Gentzkow, A. M. Guess, et al. Asymmetric ideological segregation in exposure to political news on facebook. Science , 381(6656):392–398, 2023. [32] A. M. Guess, N. Malhotra, J. Pan, P. Barberá, H. Allcott, T. Brown, A. Crespo-Tenorio, D. Dimmery, D. Freelon, M. Gentzkow, et al. How do social media feed algorithms affect attitudes and behavior in an election campaign? Science , 381(6656):398–404, 2023. [33] G. Gui and O. Toubia. The challenge of using llms to simulate human behavior: A causal inference perspective. arXiv preprint arXiv:2312.15524 , 2023. [34] L. Hanu and Unitary team. Detoxify. Github. https://github.com/unitaryai/detoxify, 2020. [35] M. Haroon, M. Wojcieszak, A. Chhabra, X. Liu, P. Mohapatra, and Z. Shafiq. Auditing youtube’s recommendation system for ideologically congenial, extreme, and problematic recom-mendations. Proceedings of the National Academy of Sciences of the United States of America ,120, 2023. ISSN 10916490. doi: 10.1073/pnas.2213020120. [36] M. Heseltine and B. Clemm von Hohenberg. Large language models as a substitute for human experts in annotating political text. Research & Politics , 11(1):20531680241236239, 2024. [37] L. Hewitt, A. Ashokkumar, I. Ghezae, and R. Willer. Predicting results of social science experiments using large language models. Preprint , 2024. [38] F. Huszár, S. I. Ktena, C. O’Brien, L. Belli, A. Schlaikjer, and M. Hardt. Algorithmic amplifica-tion of politics on twitter. Proceedings of the national academy of sciences , 119(1):e2025334119, 2022. 22 [39] B. Imana, A. Korolova, and J. Heidemann. Having your privacy cake and eating it too: Platform-supported auditing of social media algorithms for public interest. Proceedings of the ACM on Human-Computer Interaction , 7, 2023. ISSN 25730142. doi: 10.1145/3579610. [40] L. D. Introna and H. Nissenbaum. Shaping the web: Why the politics of search engines matters. 
+
+The information society , 16(3):169–185, 2000. [41] C. Kang. Openai’s sam altman urges a.i. regulation in senate hearing. The New York Times , May 2023. URL https://www.nytimes.com/2023/05/16/technology/ openai-altman-artificial-intelligence-regulation.html .[42] Y. Leng. Can llms mimic human-like mental accounting and behavioral biases? In Proceedings of the 25th ACM Conference on Economics and Computation , EC ’24, page 581, New York, NY, USA, 2024. Association for Computing Machinery. ISBN 9798400707049. doi: 10.1145/ 3670865.3673632. URL https://doi.org/10.1145/3670865.3673632 .[43] Y. Leng and T. Nguyen. Latent Neural Coupling of Risk and Time Preferences in LLMs Mirrors Human Biases , page 542. Association for Computing Machinery, New York, NY, USA, 2025. ISBN 9798400719431. URL https://doi.org/10.1145/3736252.3742588 .[44] A. Li, H. Chen, H. Namkoong, and T. Peng. Llm generated persona is a promise with a catch, 2025. URL https://arxiv.org/abs/2503.16527 .[45] B. S. Manning, K. Zhu, and J. J. Horton. Automated social science: Language models as scientist and subjects. Technical report, National Bureau of Economic Research, 2024. [46] Q. Mei, Y. Xie, W. Yuan, and M. O. Jackson. A turing test of whether ai chatbots are behaviorally similar to humans. Proceedings of the National Academy of Sciences of the United States of America , 121, 2024. ISSN 10916490. doi: 10.1073/pnas.2313925121. [47] D. Metaxa, J. S. Park, J. A. Landay, and J. Hancock. Search media and elections: A longi-tudinal investigation of political search results. Proceedings of the ACM on Human-Computer Interaction , 3(CSCW):1–17, 2019. [48] D. Metaxa, J. S. Park, R. E. Robertson, K. Karahalios, C. Wilson, J. Hancock, C. Sandvig, et al. Auditing algorithms: Understanding algorithmic systems from the outside in. Foundations and Trends ® in Human–Computer Interaction , 14(4):272–344, 2021. [49] S. Milli, M. Carroll, Y. Wang, S. Pandey, S. Zhao, and A. D. Dragan. Engagement, user satisfaction, and the amplification of divisive content on social media. PNAS nexus , 4(3): pgaf062, 2025. [50] E. Mustafaraj, E. Lurie, and C. Devine. The case for voter-centered audits of search engines during political elections. In FAT* 2020 - Proceedings of the 2020 Conference on Fairness, Accountability, and Transparency , 2020. doi: 10.1145/3351095.3372835. [51] U. Naseem, J. Ren, S. Anwar, S. Kohail, R. A. G. Veliz, R. Geislinger, A. Jabr, I. Abdulmumin, L. Qureshi, A. A. Borkar, M. I. Mukhtar, A. A. Ayele, I. S. Ahmad, A. Ali, M. Semmann, S. H. Muhammad, and S. M. Yimam. Polar: A benchmark for multilingual, multicultural, and multi-event online polarization, 2025. URL https://arxiv.org/abs/2505.20624 .[52] B. Nyhan, J. Settle, E. Thorson, M. Wojcieszak, P. Barberá, A. Y. Chen, H. Allcott, T. Brown, A. Crespo-Tenorio, D. Dimmery, et al. Like-minded sources on facebook are prevalent but not polarizing. Nature , 620(7972):137–144, 2023. 23 [53] OpenAI, :, S. Agarwal, L. Ahmad, J. Ai, S. Altman, A. Applebaum, E. Arbus, R. K. Arora, Y. Bai, B. Baker, H. Bao, B. Barak, A. Bennett, T. Bertao, N. Brett, E. Brevdo, G. Brockman, S. Bubeck, C. Chang, K. Chen, M. Chen, E. Cheung, A. Clark, D. Cook, M. Dukhan, C. Dvo-rak, K. Fives, V. Fomenko, T. Garipov, K. Georgiev, M. Glaese, T. Gogineni, A. Goucher, L. Gross, K. G. Guzman, J. Hallman, J. Hehir, J. Heidecke, A. Helyar, H. Hu, R. Huet, J. Huh, S. Jain, Z. Johnson, C. Koch, I. Kofman, D. Kundel, J. Kwon, V. Kyrylov, E. Y. Le, G. Leclerc, J. P. Lennon, S. Lessans, M. Lezcano-Casado, Y. Li, Z. Li, J. Lin, J. Liss, Lily, Liu, J. Liu, K. Lu, C. Lu, Z. Martinovic, L. McCallum, J. McGrath, S. McKinney, A. McLaughlin, S. Mei, S. Mostovoy, T. Mu, G. Myles, A. Neitz, A. Nichol, J. Pachocki, A. Paino, D. Palmie, A. Pan-tuliano, G. Parascandolo, J. Park, L. Pathak, C. Paz, L. Peran, D. Pimenov, M. Pokrass, E. Proehl, H. Qiu, G. Raila, F. Raso, H. Ren, K. Richardson, D. Robinson, B. Rotsted, H. Salman, S. Sanjeev, M. Schwarzer, D. Sculley, H. Sikchi, K. Simon, K. Singhal, Y. Song, D. Stuckey, Z. Sun, P. Tillet, S. Toizer, F. Tsimpourlas, N. Vyas, E. Wallace, X. Wang, M. Wang, O. Watkins, K. Weil, A. Wendling, K. Whinnery, C. Whitney, H. Wong, L. Yang, Y. Yang, M. Yasunaga, K. Ying, W. Zaremba, W. Zhan, C. Zhang, B. Zhang, E. Zhang, and S. Zhao. gpt-oss-120b and gpt-oss-20b model card, 2025. URL https://arxiv.org/abs/2508.10925 .[54] J. S. Park, J. O’Brien, C. J. Cai, M. R. Morris, P. Liang, and M. S. Bernstein. Generative agents: Interactive simulacra of human behavior. In Proceedings of the 36th annual acm symposium on user interface software and technology , pages 1–22, 2023. [55] F. Pasquale. The Black Box Society: The Secret Algorithms That Control Money and In-formation . Harvard University Press, 2015. URL https://www.hup.harvard.edu/books/ 9780674970847 .[56] F. Patel and J. Melendi. Meta’s oversight board needs access to Facebook’s algorithms to do its job, 2024. URL https://www.brennancenter.org/our-work/analysis-opinion/ metas-oversight-board-needs-access-facebooks-algorithms-do-its-job . Accessed: 2026-03-10. [57] B. Perreault, J. H. Lee, R. Shava, and E. Mustafaraj. Algorithmic misjudgement in google search results: Evidence from auditing the us online electoral information environment. In 
+
+2024 ACM Conference on Fairness, Accountability, and Transparency, FAccT 2024 , 2024. doi: 10.1145/3630106.3658916. [58] Pew Research Center. Beyond red vs. blue: The political typology. Technical report, November 2021. URL https://www.pewresearch.org/politics/2021/11/09/ beyond-red-vs-blue-the-political-typology-2/ .[59] T. Piccardi, M. Saveski, C. Jia, J. Hancock, J. L. Tsai, and M. S. Bernstein. Reranking partisan animosity in algorithmic social media feeds alters affective polarization. Science , 390(6776): eadu5584, 2025. [60] I. D. Raji, A. Smart, R. N. White, M. Mitchell, T. Gebru, B. Hutchinson, J. Smith-Loud, D. Theron, and P. Barnes. Closing the ai accountability gap: Defining an end-to-end frame-work for internal algorithmic auditing. In Proceedings of the 2020 conference on fairness, accountability, and transparency , pages 33–44, 2020. [61] A. Ramesh, M. Pavlov, G. Goh, S. Gray, C. Voss, A. Radford, M. Chen, and I. Sutskever. Zero-shot text-to-image generation. In International conference on machine learning , pages 8821–8831. Pmlr, 2021. 24 [62] M. H. Ribeiro, R. Ottoni, R. West, V. A. Almeida, and W. Meira Jr. Auditing radicalization pathways on youtube. In Proceedings of the 2020 conference on fairness, accountability, and transparency , pages 131–141, 2020. [63] F. Rowland. The filter bubble: What the internet is hiding from you. portal: Libraries and the Academy , 11(4):1009–1011, 2011. [64] C. Sandvig, K. Hamilton, K. Karahalios, and C. Langbort. Auditing algorithms: Research methods for detecting discrimination on internet platforms. Data and discrimination: convert-ing critical concerns into productive inquiry , 22(2014):4349–4357, 2014. [65] F. Siddiqui and J. B. Merrill. Elon musk’s twitter pushes hate speech, extremist content into “for you” pages. The Washington Post , Mar. 2023. URL https://www.washingtonpost.com/ technology/2023/03/30/elon-musk-twitter-hate-speech/ . Accessed: 2026-02-07. [66] A. Simchon, W. J. Brady, and J. J. Van Bavel. Troll and divide: the language of online polarization. PNAS nexus , 1(1):pgac019, 2022. [67] I. Srba, R. Moro, M. Tomlein, B. Pecher, J. Simko, E. Stefancova, M. Kompan, A. Hrckova, J. Podrouzek, A. Gavornik, et al. Auditing youtube’s recommendation algorithm for misinfor-mation filter bubbles. ACM Transactions on Recommender Systems , 1(1):1–33, 2023. [68] C. R. Sunstein. Republic: Divided democracy in the age of social media. 2018. [69] Z. Talat and D. Hovy. Hateful symbols or hateful people? predictive features for hate speech detection on twitter. In Proceedings of the NAACL student research workshop , pages 88–93, 2016. [70] P. Törnberg. Chatgpt-4 outperforms experts and crowd workers in annotating political twitter messages with zero-shot learning. arXiv preprint arXiv:2304.06588 , 2023. [71] P. Törnberg, D. Valeeva, J. Uitermark, and C. Bail. Simulating social media using large language models to evaluate alternative news feed algorithms. arXiv preprint arXiv:2310.05984 ,2023. [72] M. Tranchero, C.-F. Brenninkmeijer, A. Murugan, and A. Nagaraj. Theorizing with large language models. Working Paper 33033, National Bureau of Economic Research, October 2024. URL http://www.nber.org/papers/w33033 .[73] U.S. Census Bureau. 2020 census urban areas facts. https://www.census.gov/ programs-surveys/geography/guidance/geo-areas/urban-rural/2020-ua-facts.html ,2020. Accessed: 2025. [74] U.S. Census Bureau. American community survey and current population survey demographic tables, 2021. URL https://www.census.gov/data.html . Accessed: 2025. [75] U.S. House of Representatives, Committee on Energy and Commerce, Subcommittee on Com-munications and Technology and Subcommittee on Consumer Protection and Commerce. Dis-information Nation: Social Media’s Role in Promoting Extremism and Misinformation, 2021. URL https://docs.house.gov/Committee/Calendar/ByEvent.aspx?EventID=111407 . Ac-cessed: 2026-06-28. [76] U.S. House of Representatives, Committee on Energy and Commerce, Subcommittee on Con-sumer Protection and Commerce. Holding Big Tech Accountable: Legislation to Build a 25 Safer Internet, 2021. URL https://docs.house.gov/Committee/Calendar/ByEvent.aspx? EventID=114299 . Accessed: 2026-06-28. [77] U.S. Senate Committee on the Judiciary, Subcommittee on Privacy, Tech-nology, and the Law. Oversight of A.I.: Rules for Artificial Intelligence, 2023. URL https://www.judiciary.senate.gov/committee-activity/hearings/ oversight-of-ai-rules-for-artificial-intelligence . Accessed: 2026-06-28. [78] L. Wang, J. Zhang, H. Yang, Z.-Y. Chen, J. Tang, Z. Zhang, X. Chen, Y. Lin, H. Sun, R. Song, et al. User behavior simulation with large language model-based agents. ACM Transactions on Information Systems , 43(2):1–37, 2025. [79] S. Wang, S. Huang, A. Zhou, and D. Metaxa. Lower quantity, higher quality: Auditing news content and user perceptions on twitter/x algorithmic versus chronological timelines. 
+
+Proceedings of the ACM on Human-Computer Interaction , 8(CSCW2):507:1–507:25, 2024. doi: 10.1145/3687046. [80] J. Wei, X. Wang, D. Schuurmans, M. Bosma, F. Xia, E. Chi, Q. V. Le, D. Zhou, et al. Chain-of-thought prompting elicits reasoning in large language models. Advances in neural information processing systems , 35:24824–24837, 2022. [81] S. Wu, E. Choi, A. Khatua, Z. Wang, J. He-Yueya, T. C. Weerasooriya, W. Wei, D. Yang, J. Leskovec, and J. Zou. Humanlm: Simulating users with state alignment beats response imitation. arXiv preprint arXiv:2603.03303 , 2026. [82] xAI. xai-org/x-algorithm: Algorithm powering the For You feed on X. https://github.com/ xai-org/x-algorithm , 2026. GitHub repository. [83] Z. Yang, Z. Zhang, Z. Zheng, Y. Jiang, Z. Gan, Z. Wang, Z. Ling, J. Chen, M. Ma, B. Dong, et al. Oasis: Open agent social interaction simulations with one million agents. arXiv preprint arXiv:2411.11581 , 2024. [84] J. Ye, L. Luceri, and E. Ferrara. Auditing political exposure bias: Algorithmic amplification on twitter/x during the 2024 us presidential election. In Proceedings of the 2025 ACM Conference on Fairness, Accountability, and Transparency , pages 2349–2362, 2025. [85] H. Zade, M. Wack, Y. Zhang, K. Starbird, R. Calo, J. Young, and J. D. West. Auditing google’s search headlines as a potential gateway to misleading content: Evidence from the 2020 us election. Journal of Online Trust and Safety , 1(4), 2022. 26 Supplementary Material A Details on Persona Creation 
+
+A.1 Full Profiles 
+
+Table 4 details the three counterfactual perturbations applied to each persona (location, age, and gender) relative to the base profile. Table 5 reports the attributes held fixed across all conditions within each persona (race/ethnicity, education, and political leaning). Persona Location (C=1) Age (C=2) Gender (C=3) 1 Arizona → Texas 30–49 → 65+ M → F2 Florida → Colorado 30–49 → 18–29 M → F3 Florida → North Carolina 18–29 → 30–49 F → M4 Louisiana → New York 30–49 → 50–64 F → M5 Massachusetts → California 18–29 → 50–64 F → M6 Alabama → Illinois 50–64 → 18–29 M → F7 Michigan → Washington 18–29 → 30–49 M → F8 Nevada → Texas 30–49 → 65+ M → F9 Tennessee → Arizona 18–29 → 65+ F → M10 Indiana → California 30–49 → 18–29 M → F11 California → Florida 50–64 → 30–49 M → F12 California → California 18–29 → 30–49 M → F13 New York → Ohio 30–49 → 50–64 F → M14 California → Illinois 30–49 → 18–29 F → MTable 4: Counterfactual perturbations by persona. Each counterfactual changes exactly one platform-visible attribute relative to the base profile. Locations are reported at the state level (cities omitted), ages are sampled uniformly from the buckets. 
+
+A.2 Demographic Sampling Distributions 
+
+Each persona’s demographic attributes are sampled independently from real-world population dis-tributions. We describe the source and sampling weights for each attribute below. All the external information is either derived from the U.S. Census [74] or Pew Research Center [58]. 
+
+Gender. Gender is drawn from U.S. Census population: Female (50.5%), Male (47.2%), Other (2.3%). 
+
+Age. Age brackets are sampled by combining Census population shares with platform-specific usage rates. Let P (age ) denote the Census share and P (Twitter | age ) the platform usage rate. We compute P (age | Twitter ) ∝ P (Twitter | age ) · P (age ), yielding the following sampling weights: 18–29 30–49 50–64 65+ Census share P (age ) 13.3% 25.8% 19.0% 17.1% Usage rate P (Twitter | age ) 84% 81% 73% 45% Sampling weight P (age | Twitter ) 20.8% 38.9% 25.8% 14.4% 27 Persona Race/Ethnicity Education Political Leaning 1 White (Hispanic) Associate’s Ambivalent Right 2 White (Non-Hisp.) Some college Ambivalent Right 3 American Indian Some college Establishment Liberals 4 White (Non-Hisp.) High school Democratic Mainstays 5 White (Non-Hisp.) High school Outsider Left 6 White (Non-Hisp.) Some college Progressive Left 7 White (Non-Hisp.) 11th grade Outsider Left 8 White (Hispanic) High school Faith and Flag Conservatives 9 Black Bachelor’s Outsider Left 10 White (Non-Hisp.) Some college Populist Right 11 Black Bachelor’s Outsider Left 12 White (Non-Hisp.) 10th grade Ambivalent Right 13 White (Non-Hisp.) Bachelor’s Committed Conservatives 14 Asian High school Progressive Left Table 5: Unperturbed persona attributes. These attributes define the behavioral policy, together with the base values of the platform-visible attributes. Within each bracket, a specific age is drawn uniformly at random. 
+
+Race and ethnicity. Race is drawn from Census proportions, collapsed to seven categories: White Non-Hispanic (58.9%), White Hispanic (16.6%), Black (13.6%), Asian (6.3%), American Indian (1.3%), Native Hawaiian/Pacific Islander (0.3%), and Multiracial (3.0%). 
+
+Location. Location is drawn from U.S. incorporated places with population exceeding 50,000, with sampling probability proportional to city population (2022 Census estimates, 333 cities). 
+
+Education. Education is sampled conditional on the persona’s age, gender, and race using Census educational attainment tables, covering 15 levels: none, 1st–4th grade, 5th–6th grade, 7th–8th grade, 9th grade, 10th grade, 11th grade, high school graduate, some college (no degree), occupational Associate’s, academic Associate’s, Bachelor’s, Master’s, professional degree, and doctoral degree. 
+
+Political typology. Political typology is sampled from P (θ | age , gender ), derived from the demo-graphic breakdowns published in Pew’s Political Typology report [58]. We provide more details on this in the next section. 
+
+A.3 Political Typology Descriptions 
+
+We adopt the nine-category political typology developed by Pew Research Center [58], which classi-fies Americans based on their political values and attitudes rather than party affiliation alone. The following descriptions are drawn directly from Pew’s published characterizations. 
+
+Faith and Flag Conservative. Faith and Flag Conservatives are highly religious, politically engaged and both socially and economically conservative. They favor a robust role for religion in public life and a smaller role for government in society, and they hold that a strong American military is essential in international affairs. They overwhelmingly identify with the GOP and remain strong supporters of former President Donald Trump. More than four-in-ten are White evangelical 28 Protestants, the highest share of any political typology group. Faith and Flag Conservatives are more likely than those in other groups to emphasize the importance of religion in their lives and to hold restrictive attitudes on abortion and same-sex marriage. Three-quarters say that the best way to ensure peace is through military strength rather than through diplomatic means. Faith and Flag Conservatives are the oldest typology group, with a median age of 57. 
+
+Committed Conservative. Staunchly conservative and overwhelmingly Republican, Committed Conservatives hold pro-business views traditionally associated with the Republican Party, have favorable attitudes about international trade and favor a limited role of government. Their approach to international relations centers on engaging with U.S. allies and maintaining American military might. Committed Conservatives tend to hold more moderate positions on immigration than the two other deeply conservative groups. While nearly all voted for Donald Trump for president in 2020, and most hold positive views of him today, Committed Conservatives are less likely than Populist Right and Faith and Flag Conservatives to favor a major role for Trump in their party’s future. Committed Conservatives are among the most educated of the GOP-oriented groups and are among the highest-income political typology groups. 
+
+Populist Right. Very conservative and overwhelmingly Republican, Populist Right hold highly restrictive views about immigration policy and are very critical of government. But, in contrast to other parts of the GOP coalition, their criticism extends well beyond government to views of big business and to the economic system as a whole: 82% say that large corporations are having a negative impact on the way things are going in the country, and nearly half support higher taxes on the wealthy and on large corporations. A majority of Populist Right are women (54%). Populist Right are also one of the least highly educated groups; just two-in-ten are college graduates. Nearly nine-in-ten say that the economic system in this country unfairly favors powerful interests, far higher than the share in any other Republican-oriented group. 
+
+Ambivalent Right. On issues ranging from the size of the federal government to views about business, gender and race, Ambivalent Right hold many views that are largely consistent with core conservative values. Yet they also hold more moderate stances on several social issues and differ from some other segments of the GOP coalition in taking a more internationalist view of foreign policy and a less restrictive position on immigration. With 63% under the age of 50, they are substantially younger than other Republican-oriented groups. About two-thirds (65%) are White, making this group more racially and ethnically diverse than other GOP coalition groups. Just over half (54%) say abortion should be legal in all or most cases, a view held by far smaller shares of those in other GOP groups. They are also distinct from other Republican-oriented groups in their views of Donald Trump—more likely to say they feel coldly toward the former president (46%) than warmly (34%). 
+
+Stressed Sideliner. Stressed Sideliners are generally disconnected from politics and the two major parties, voting at lower rates than most other typology groups. Although Stressed Sideliners make up 15% of American adults, they were just 10% of 2020 voters due to their relatively low turnout rate. They are split evenly between those who identify with or lean toward the Republican Party (45%) and those who are Democrats or Democratic leaners (45%). They tend to lean liberal on economic issues and tilt conservative on some social issues. About four-in-ten (43%) live in lower-income households, higher than most other political typology groups. They are the group most likely to describe their personal financial situation as only fair or poor (63%). Stressed Sideliners are also one of the least highly educated groups. 29 Outsider Left. Outsider Left are the youngest typology group, making up 10% of the public. Holding liberal views on most issues and overwhelmingly voting Democratic, they aren’t particularly enamored with the Democratic Party—though they have deeply negative views of the GOP. Nearly half (48%) describe their own political views as liberal. Outsider Left are somewhat more skeptical of government’s role than other Democratic-oriented groups. Four-in-ten are under the age of 30 and 83% are under 50. They are racially and ethnically diverse: about half (49%) are White, 20% are Hispanic, 15% are Black and 10% are Asian. Just 53% say the Democratic Party represents them at least somewhat well, and an overwhelming majority (86%) say that they usually feel like none of the candidates for public office represent their views well. 
+
+Democratic Mainstay. Democratic Mainstays are one of the largest groups in the political typology and the largest single group as a share of the Democratic coalition. They generally favor policies that expand the social safety net and support higher taxes on corporations. But they are somewhat more hawkish than other Democratic-oriented groups on foreign policy and less liberal on immigration policy and some social issues. Nearly half (49%) consider themselves “strong Democrats.” Democratic Mainstays are slightly older and have less formal education than other Democratic-oriented groups. They are the group with the largest share of Black non-Hispanic adults (26%), and six-in-ten are women. They are the only Democratic-oriented typology group in which a larger share say that the decline in the share of Americans belonging to an organized religion is bad for society than say this is good for society. 
+
+Establishment Liberal. Holding liberal positions on nearly all issues, Establishment Liberals are some of the strongest supporters of the current president and the Democratic Party of any political typology group. While deeply liberal, Establishment Liberals are the typology group most likely to see value in political compromise and tend to be more inclined toward more measured approaches to societal change than their Progressive Left counterparts. Like other Democratic-oriented groups, most (73%) say a lot more needs to be done to ensure racial equality. Yet they are the only Democratic-aligned group in which a majority of those who say a lot more needs to be done also say this can be achieved by working within the current system. About half (51%) are White, while 18% are Black, 20% are Hispanic and 10% are Asian. Nearly nine-in-ten (89%) say that compromise is how things get done in politics, higher than the share in any other political typology group. 
+
+Progressive Left. Reflecting their name, Progressive Left have very liberal views across a range of issues—including the size and scope of government, foreign policy, immigration and race. A sizable majority (79%) describe their views as liberal, including 42% who say their views are very liberal. Roughly two-thirds (68%) are White, non-Hispanic, by far the largest share among Democratic-aligned groups. Progressive Left are the second youngest typology group—71% are ages 18 to 49. They are also highly educated, with about half (48%) holding at least a four-year college degree. Their views on race and racial equality distinguish them from other typology groups: sizable majorities say White people benefit from societal advantages that Black people do not have and that most U.S. institutions need to be completely rebuilt to ensure equal rights for all Americans regardless of race or ethnicity. When we stratify personas by political leaning, we group right-leaning personas as those assigned Faith and Flag Conservative, Committed Conservative, Populist Right, or Ambivalent Right, and 
+
+left-leaning personas as those assigned Outsider Left, Democratic Mainstay, Establishment Lib-eral, or Progressive Left. Stressed Sideliners constitute a separate, politically disengaged category; however, no persona in our final sample is assigned this typology (see Table 5). 30 A.4 Behavior Policy 
+
+Each sock puppet’s behavior is governed by a persona prompt that conditions the LLM on a specific demographic and political profile: 
+
+Persona Prompt 
+
+Imagine that you {gender} . You are {age} years old and live {preposition_location} {location} . You are {race} , and {education} . You identify politically as {political_type} ,which is described by Pew as follows: {poltype_description} .Each placeholder in the persona prompt is populated as follows: 
+
+• {gender} : One of “identify as a man,” “identify as a woman,” or “do not identify as a man or a woman.” 
+
+• {age} : A randomly generated integer within the sampled age bracket (18–29, 30–49, 50–64, or 65–85). 
+
+• {preposition_location} : Either “in” or “near,” selected uniformly at random. 
+
+• {location} : A U.S. city sampled from incorporated places with population of 50,000 or more, weighted by population. 
+
+• {race} : One of “White and Non-Hispanic,” “White and Hispanic,” “Black,” “Asian,” “American Indian,” “Native Hawaiian and Other Pacific Islander,” or “Multiracial.” 
+
+• {education} : Highest attainment level (see Table 6). 
+
+• {political_type} : One of the nine categories from Pew’s Political Typology: “Faith and Flag Conservative,” “Committed Conservative,” “Populist Right,” “Ambivalent Right,” “Stressed Sideliner,” “Outsider Left,” “Democratic Mainstay,” “Establishment Liberal,” or “Progressive Left.” 
+
+• {poltype_description} : A detailed description of the political typology category drawn from Pew Research Center’s published characterizations [58]. Full descriptions are provided in Section A.3. Prompt phrase “you received no education” “your highest level of education is [4th/6th/8th/9th/10th/11th] grade” “you graduated high school and did not go to college” “you received some college education and did not finish your degree” “your highest level of education is an [occupational/academic] Associate’s degree” “your highest level of education is a [Bachelor’s/Master’s/professional/Doctoral] degree” Table 6: Education level prompts. 31 A.5 Platform-Visible Signals 
+
+Each counterfactual condition perturbs exactly one demographic dimension while holding the be-havioral policy fixed. We target location, age, and gender because X plausibly observes or infers each: location via IP geolocation, age via the declared birth date at registration, and gender via the display name. On other platforms, different signals may be observable and thus amenable to perturbation. Below we describe how each perturbed signal reaches the platform in our deployment. 
+
+Location ( C = 1 ). The platform does not ask users to declare their location; instead, it infers geographic information from the account’s IP address. We route each account’s traffic through a residential proxy service (SmartProxy) that provides state-level sticky sessions. During preprocess-ing, we query the provider’s API for state-specific port ranges and assign each account a unique port within the range corresponding to its assigned state. For baseline and non-location conditions (C ∈ { 0, 2, 3}), the assigned state is the persona’s baseline location; for location-perturbed ac-counts ( C = 1 ), it is the counterfactual state. At runtime, each account’s browser connects through 
+
+state.smartproxy.com on its assigned port, so the platform observes a residential IP in the target state for every session. 
+
+Age ( C = 2 ). The platform requires a birth date during account registration. For each account, we generate a random birth date within the account’s assigned age bracket: for baseline and non-age conditions ( C ∈ { 0, 1, 3}) this is the persona’s baseline bracket, while for age-perturbed accounts (C = 2 ) it is the counterfactual bracket. The birth date is entered into the platform’s registration form, providing the primary channel through which the platform observes the account’s age. 
+
+Gender ( C = 3 ). Gender is communicated to the platform through the account’s display name. We generate names conditional on demographic attributes using GPT-4o via the following prompt: 
+
+Name Generation Prompt 
+
+{demographic_prompt} Please consider 200 unique full names that would likely fit this person then randomly choose 100. Please return the 100 that you choose as an array of strings. Please do not write anything else in your response, just the array of strings of names. The output should follow the form “[name1, name2, ...]” and contain nothing else. The prompt {demographic_prompt} follows the template defined in Section A.4 but with the gender field set to match the account’s assigned condition rather than the baseline. We generate a pool of 100 candidate names per persona—larger than the 80 accounts per persona—and then randomly sample without replacement when assigning names to individual accounts. 
+
+# B Details on Deployment and Interaction 
+
+B.1 Account Distribution 
+
+We initially planned to deploy 1,120 sock puppets – 80 replicas for 14 different personas. How-ever, due to verification failures at account creation time, 826 accounts were ultimately deployed successfully, yielding 9,733 user-day observations. Table 7 summarizes the distribution of observation time across accounts. The majority of accounts contributed between 10 and 16 days of data, with 9.7% achieving near-full coverage and 2.3% 32 experiencing early dropout. We also report the distribution of user and user–day observations stratified by counterfactual category in Figures 4a and 4b. Statistic Value Accounts successfully deployed 826 User-day observations 9,733 
+
+Days active per account 
+
+Mean 13.2 days Median 12 days IQR [10, 16] days Maximum 23 days Near-full coverage ( ≥ 21 days) 9.7% Early dropout ( ≤ 3 days) 2.3% Table 7: Sample Summary 1 2 3 4 5 6 7 8 9 10 11 12 13 14                                                     
+
+> Persona
+> Base Location Age Gender
+> 17 14 16 16 16 18 16 17 14 17 11 14 17 16
+> 16 13 15 913 17 16 716 12 14 11 15 16
+> 17 13 16 19 16 12 16 15 18 11 16 16 11 13
+> 11 14 17 15 16 17 16 13 19 16 16 15 913
+
+User Count 
+
+> 0
+> 5
+> 10
+> 15
+> 20
+
+(a) Number of active users per cell. 1 2 3 4 5 6 7 8 9 10 11 12 13 14                                                     
+
+> Persona
+> Base Location Age Gender
+> 241 180 194 186 180 224 192 178 165 193 128 127 177 200
+> 200 191 170 111 168 206 197 78 194 142 163 151 167 156
+> 210 186 195 202 198 151 187 155 210 135 193 192 112 157
+> 155 179 205 181 204 181 178 109 218 193 168 187 87 146
+
+User-Day Count 
+
+> 100
+> 125
+> 150
+> 175
+> 200
+> 225
+
+(b) Number of user-day observations per cell. 
+
+Figure 4: Sample sizes by persona × treatment condition. 
+
+B.2 Feed Engagement 
+
+Each sock puppet interacts with the platform’s feed through an LLM-mediated engagement loop. The agent observes tweets served by the recommendation algorithm and decides how to respond based on its persona. We define four possible actions an agent can take in response to each tweet: 33 • Like : Signal positive engagement with the content. 
+
+• Follow : Subscribe to the tweet’s author for future content. 
+
+• Read Replies : View the conversation thread, signaling interest without explicit endorsement (selecting this action navigates into the reply thread, where up to five replies are recursively processed through the same pipeline before returning to the main feed). 
+
+• Ignore : Skip the tweet without interaction. These actions mirror the primary engagement mechanisms available to human users on the platform. To ensure sufficient engagement signal for the recommendation algorithm to learn user preferences, we require agents to take at least one active action (like, follow, or read replies) every five tweets. This constraint prevents purely passive scrolling behavior that would provide minimal signal to the algorithm. Importantly, the constraint is specified only as a prompt-level instruction: each content item is processed in a single, stateless LLM call with no access to prior actions. The instruction therefore acts as a behavioral nudge rather than a hard constraint. The engagement behavior is controlled by two prompts. The system prompt establishes the agent’s identity and explains the available actions: 
+
+Feed Engagement Prompt (System Prompt) 
+
+Welcome to Twitter! In future messages, you will see a sequence of tweets and have to decide how to react to each one. {persona_prompt} In our conversation below, I will show you a sequence of Tweets on Twitter. Please use your persona as described above to decide how you would like to react to each one. You are primarily on Twitter to read tweets, but you can also follow accounts, like tweets, and read replies to tweets. Below, I list the possible actions you can take. 
+
+• If you want to see more tweets like the one you just saw, you can follow the author (to do this, include "[FOLLOW]" in your response). 
+
+• If you are curious to see what other people think about the tweet, you can read the replies (to do this, include "[READ-REPLY]" in your response). 
+
+• If you like the tweet, you can like it (to do this, include "[LIKE]" in your response), 
+
+• If you do not want to react to a tweet (for example, if you are not interested in it), you can ignore it (to do this, include "[IGNORE]" in your response). You should use one of the first three actions ([FOLLOW], [READ-REPLY], [LIKE]) at least once every 5 tweets. You can use [IGNORE] as many times as you like. Your response should contain either [IGNORE], [FOLLOW], [READ-REPLY], or [LIKE]. If it contains [IGNORE], please do not include any other reactions. For each tweet encountered, the agent receives a user prompt containing the tweet’s content and metadata (which optionally contains the quoted tweet text and media image if present): 34 Tweet Prompt (User Prompt) 
+
+You are on twitter and see the following tweet - please first repeat the tweet to ensure that you have understood it, then explain your reaction. Author: {author} Tweet Text: {tweetText} Likes: {likes} Retweets: {retweets} Replies: {replies} We include engagement metrics (likes, retweets, replies) to provide social proof signals that human users would observe. The instruction to “repeat the tweet” serves as a chain-of-thought mechanism, ensuring the agent processes the content before deciding on an action. The agent’s chosen action is then executed on the platform via automated browser interactions. 
+
+B.3 Action Distribution 
+
+Table 8 reports the distribution of actions across all tweet interactions. Agents ignore or read replies to the vast majority of tweets. Likes are relatively rare, and follows are near-absent. Table 8: Distribution of agent actions. Read-Reply Ignore Like Follow Total Count 139,000 90,151 14,095 13 243,259 Share (%) 57.1 37.1 5.8 < 0.01 
+
+In practice, agents engage far more often than the 20% floor implied by the one-in-five nudge: they take an active action (Read-Reply, Like, or Follow) on approximately 63% of rendered tweets. We also examined the gaps between consecutive active actions within each account–feed stream: only 1.17% of these gaps contain five or more consecutive Ignores, confirming that the soft rule is respected in the vast majority of cases. Engagement rates are balanced across treatment arms: Base 63.7%, Location-CF 62.7%, Age-CF 62.5%, and Gender-CF 62.9%. A chi-square test on the full action-by-condition table yields Cramér’s 
+
+V = 0 .009 , well below Cohen’s 0.07 threshold for a small effect, so any cross-condition difference in engagement is negligible. 
+
+B.4 Attrition Analysis 
+
+Our identification strategy for the counterfactual analysis relies on random assignment of treat-ment conditions within each persona. If accounts in certain treatment conditions are more likely to be banned or suspended during the experiment, the resulting imbalance could bias our esti-mates. Therefore, we test whether, conditional on successful deployment, observation time varies systematically by treatment. Note that we focus on mid-experiment attrition (bans and suspensions) rather than pre-deployment 35 failures at the account creation stage. Unlike in human experiments, pre-deployment attrition cannot introduce selection bias in our setting: accounts within the same persona–treatment cell are exchangeable replicas running an identical behavioral policy, so creation failures only reduce statistical power, not the representativeness of surviving accounts. Table 9 reports observation time by treatment condition among the 826 deployed accounts. To test for differential attrition, we regress days active on treatment indicators with fixed effects: DaysActive i = α + βloc · 1[Location ] + βage · 1[Age ] + βgen · 1[Gender ] + γpi + εi (9) No treatment coefficient is statistically significant (Location: p = 0 .805 ; Age: p = 0 .924 ; Gender: 
+
+p = 0 .301 ), indicating that observation time is balanced across conditions. Therefore, we find no evidence that treatment assignment affects the likelihood of mid-experiment attrition. Table 9: Observation Time by Treatment Condition Treatment N Mean Median IQR Base 219 13.20 12 [10, 16] Location 191 13.39 12 [10, 17] Age 209 13.30 13 [10, 16] Gender 207 12.80 12 [10, 16] 
+
+# C Tweet Labeling 
+
+We classify tweet content along two dimensions: political content and polarizing content. Both clas-sifiers use gpt-oss-20b [53], with chain-of-thought prompting and few-shot learning ( k = 4 examples selected via bootstrap optimization). 
+
+C.1 Political Content 
+
+We classify each tweet into one of four mutually exclusive categories: not_political , political_left ,
+
+political_right , or political_neutral . The classifier is prompted as follows: 
+
+Political Classification Prompt 
+
+The tweet was posted in November 2024, during the U.S. presidential election period. Classify (1) whether the tweet contains substantive U.S. political content, and (2) if political, its ideological alignment in U.S. politics. Definition 1 — Political vs Not Political Label a tweet as “political” only if it clearly refers to at least one of the following: - The U.S. presidential election (campaigning, voting, results, legitimacy, turnout) - U.S. political institutions, public policy, or governance - Formal political actors (candidates, elected officials, political parties) - Explicit partisan or electoral positioning 36 If it is unclear whether the tweet contains substantive political content, label it “not_political”. Definition 2 — Ideological Alignment (only if political) Classify ideological alignment based only on the political or policy position explicitly expressed or endorsed by the tweet. - “political_left”: Explicit endorsement of U.S. liberal or progressive positions or policies - “political_right”: Explicit endorsement of U.S. conservative positions or policies - “political_neutral”: Political content that is informational, mixed, anti-partisan, or lacks a clear ideological endorsement Important Guidelines: - Ideological alignment may be inferred from praise, criticism, or sarcasm only when the tweet expresses a clear and unambiguous political stance - Emotional reactions or election outcome commentary without a clear stance should be labeled “political_neutral” - Mentions of political figures alone are not sufficient for left/right classification Output exactly one of: “not_political”, “political_left”, “political_right”, “political_neutral”. For analysis, we derive three outcome variables from these labels: 
+
+• Politicalness: Binary indicator for whether the tweet is political (i.e., not not_political ). 
+
+• Right-leaning: Binary indicator for political_right , computed over all tweets. 
+
+• Left-leaning: Binary indicator for political_left , computed over all tweets. 
+
+C.2 Polarizing Content 
+
+We classify each tweet into one of six mutually exclusive categories, according to [51]: not_polarizing ,
+
+polarizing_political , polarizing_religious , polarizing_sexual , polarizing_racial , or 
+
+polarizing_other . The classifier is prompted as follows: 
+
+Polarization Classification Prompt 
+
+You will be given a tweet collected in November 2024, during the U.S. presidential election period. Your task is to determine whether it is polarizing and, only if so, identify the primary type of polarization. Definition: A tweet is polarizing if and only if it satisfies both conditions: 1. It distinguishes between two or more social, political, religious, sexual, or racial groups (explicitly or implicitly), and 2. It frames those groups in a moralized conflict, such as: blame or hostility; moral superiority or inferiority; threat or danger; victim-oppressor narratives. 37 If either condition is not met, the tweet is not polarizing. Important Constraints - Mentioning politics, religion, gender, sexuality, race, or ideology alone is not sufficient for polarization. - Statements, slogans, values, prayers, or opinions without group-based blame or moral conflict must be labeled “not_polarizing”. - Emotional language is irrelevant unless it is directed at a group as a group. - Attacks on individuals are polarizing only if they generalize to a broader group. - Intra-group discussion or disagreement is not polarizing unless subgroups are framed as ene-mies, traitors, or morally inferior. Output exactly one of: “not_polarizing”, “polarizing_political”, “polarizing_religious”, “polariz-ing_sexual”, “polarizing_racial”, “polarizing_other”. For analysis, due to the sparsity of the polarizing categories, we collapse the six categories into a binary polarization indicator equal to 1 if the tweet is classified into any polarizing category, and 0 otherwise. 
+
+# D Robustness of Amplification 
+
+This appendix presents robustness checks for the amplification ratio analysis in Section 4.2. We ex-amine whether estimates are sensitive to the exposure window used for aggregation (that is, whether using only early observations versus the full deployment period produces different amplification ra-tios). A key identifying assumption of our estimator is that browsing one feed does not causally affect content shown in the other. Potential violations (such as engagement spillovers or prefer-ence updates across feeds) would make feeds more similar over time, biasing amplification estimates toward zero. If such cross-feed contamination occurs, we would expect amplification estimates to 
+
+decline as accounts accumulate browsing history, since the algorithm would increasingly tailor both feeds to the same learned preferences. To address this, we compute amplification ratios using cumulative exposure windows of increasing length: each account’s first day of activity only, first 7 days (Week 1), first 14 days (Week 2), and the full deployment period. Table 10 reports amplification estimates for each content type across these windows. We observe that political and toxic content show no statistically significant change across exposure windows, with confidence intervals overlapping substantially throughout. Right-leaning, polarizing, and high-reach content exhibit attenuation from Day 1 to Week 1 (29.8% to 24.2%, 48.4% to 32.8%, and 14.5% to 3.3%, respectively), followed by stabilization. The attenuation is sharpest for high-reach content, which is amplified on Day 1 ( +14 .5% , significant) but drops to a small and non-significant effect by Week 1 ( +3 .3% ), where it stabilizes. Similarly, left-leaning content shows Day 1 de-amplification ( −21.7%, significant) that attenuates toward zero by Week 1 ( −6.2%, no longer significant) and stabilizes thereafter. The early attenuation observed for some content types (Day 1 to Week 1) likely reflects the algo-38 Content Day 1 Week 1 Week 2 Full 
+
+Political +12 .7% [+7 .8, +18 .1] +14 .6% [+9 .5, +20 .2] +14 .2% [+9 .1, +19 .9] +14 .2% [+9 .1, +19 .8] 
+
+Right-Leaning +29 .8% [+17 .4, +43 .0] +24 .2% [+16 .2, +33 .4] +23 .4% [+15 .8, +32 .1] +23 .3% [+15 .8, +31 .9] 
+
+Left-Leaning −21 .7% [−30 .0, −13 .2] −6.2% [−14 .1, +1 .4] −6.1% [−14 .6, +2 .2] −6.1% [−14 .6, +2 .1] 
+
+Toxic +37 .9% [+9 .9, +75 .3] +42 .5% [+16 .9, +74 .5] +39 .4% [+14 .5, +69 .9] +39 .2% [+14 .4, +69 .7] 
+
+Polarizing +48 .4% [+35 .2, +63 .1] +32 .8% [+24 .2, +42 .3] +32 .6% [+24 .1, +42 .0] +32 .3% [+23 .7, +41 .6] 
+
+High-reach +14 .5% [+0 .8, +35 .5] +3 .3% [−6.3, +16 .8] +3 .4% [−6.1, +16 .6] +3 .4% [−6.1, +16 .7] 
+
+Table 10: Amplification estimates by cumulative exposure window. Uncertainty is 95% CI from persona-level cluster bootstrap: in each iteration, we resample personas with replacement and recompute the amplification ratio, preserving the within-persona correlation structure. rithm calibrating to user behavior before reaching steady state. Crucially, estimates stabilize by Week 1 and remain unchanged thereafter. If cross-feed spillovers were substantially biasing esti-mates toward zero, we would expect continued attenuation throughout the deployment; instead, the estimates plateau. This stability supports our identifying assumption that browsing one feed does not meaningfully affect content shown in the other. Moreover, to the extent that any residual bias exists, it would attenuate estimates toward zero, implying that our reported amplification effects are, if anything, conservative. 
+
+# E Pooled Treatment Effects 
+
+We also report pooled treatment effects estimated without control variables as a robustness check. Results are nearly identical to the primary specification (Table 3), confirming that the controls do not affect the estimates. 
+
+# F Heterogeneous Treatment Effects 
+
+This appendix reports persona-specific treatment effects on algorithmic lift for all six outcomes, estimated via model (8). Each figure shows the estimated coefficient and 95% confidence interval for each persona–treatment pair. Filled markers indicate significance at the 5% level. 39 Location (Durb ) Age (Dage ) Gender (Dmale )
+
+Content ˆβ 95% CI ˆβ 95% CI ˆβ 95% CI 
+
+Political −1.70 [−3.86 , 0.46] 0.70 [−1.26 , 2.66] 1.00 [−1.16 , 3.16] (0 .137) (0 .501) (0 .408) 
+
+Right-leaning −0.50 [−1.87 , 0.87] 0.90 [−0.28 , 2.08] −0.40 [−1.58 , 0.78] (0 .440) (0 .111) (0 .561) 
+
+Left-leaning −0.60 [−1.38 , 0.18] −0.30 [−1.08 , 0.48] 0.40 [−0.38 , 1.18] (0 .183) (0 .383) (0 .379) 
+
+Toxic 0.10 [−0.68 , 0.88] 0.80 [0.02 , 1.58 ] −0.10 [−0.69 , 0.49] (0 .831) (0.033 ) (0 .868) 
+
+Polarizing −1.60 [−2.97 , −0.23 ] 0.50 [−0.68 , 1.68] −0.70 [−2.07 , 0.67] (0.020 ) (0 .444) (0 .304) 
+
+High-reach 1.10 [−1.45 , 3.65] −0.90 [−3.64 , 1.84] −0.10 [−2.84 , 2.64] (0 .381) (0 .510) (0 .928) 
+
+Table 11: Pooled treatment effects on algorithmic lift, without control variables. Each coefficient represents the average effect of a one-unit change in the demographic signal on the gap between For You and Following content rates. Coefficients for binary outcomes are scaled by 100 and expressed in percentage points. Values in parentheses are p-values computed from standard errors clustered at the account level. Significant coefficients ( p < 0.05 ) shown in bold. −20 −10 0 10 20         
+
+> Effect on Lift (pp)
+> P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14
+> Location
+> −20 −10 010 20
+> Effect on Lift (pp)
+> Age
+> −20 −10 010 20
+> Effect on Lift (pp)
+> Gender
+> Counterfactual Lift: Political
+
+Figure 5: Persona-specific treatment effects on algorithmic lift for political content. Each row is a persona; each panel shows a different treatment (location, age, gender). 95% confidence intervals. 40 −20 −15 −10 −5 0 5 10 15 20 
+
+> Effect on Lift (pp)
+> P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14
+
+Location         
+
+> −20 −15 −10 −50510 15 20
+> Effect on Lift (pp)
+
+Age         
+
+> −20 −15 −10 −50510 15 20
+> Effect on Lift (pp)
+
+Gender 
+
+Counterfactual Lift: Right-Leaning Figure 6: Persona-specific treatment effects on algorithmic lift for right-leaning content. Each row is a persona; each panel shows a different treatment (location, age, gender). 95% confidence intervals. −10 −5 0 5 10 
+
+> Effect on Lift (pp)
+> P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14
+
+Location     
+
+> −10 −50510
+> Effect on Lift (pp)
+
+Age     
+
+> −10 −50510
+> Effect on Lift (pp)
+
+Gender 
+
+Counterfactual Lift: Left-Leaning 
+
+Figure 7: Persona-specific treatment effects on algorithmic lift for left-leaning content. Each row is a persona; each panel shows a different treatment (location, age, gender). 95% confidence intervals. 41 −20 −15 −10 −5 0 5 10 15 20 
+
+> Effect on Lift (pp)
+> P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14
+
+Location         
+
+> −20 −15 −10 −50510 15 20
+> Effect on Lift (pp)
+
+Age         
+
+> −20 −15 −10 −50510 15 20
+> Effect on Lift (pp)
+
+Gender 
+
+Counterfactual Lift: Polarizing Figure 8: Persona-specific treatment effects on algorithmic lift for polarizing content. Each row is a persona; each panel shows a different treatment (location, age, gender). 95% confidence intervals. −10 −5 0 5 10 
+
+> Effect on Lift (pp)
+> P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14
+
+Location     
+
+> −10 −50510
+> Effect on Lift (pp)
+
+Age     
+
+> −10 −50510
+> Effect on Lift (pp)
+
+Gender 
+
+Counterfactual Lift: Toxic 
+
+Figure 9: Persona-specific treatment effects on algorithmic lift for toxic content. Each row is a persona; each panel shows a different treatment (location, age, gender). 95% confidence intervals. 42 −40 −20 0 20 40 
+
+> Effect on Lift (pp)
+> P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P12 P13 P14
+
+Location     
+
+> −40 −20 020 40
+> Effect on Lift (pp)
+
+Age     
+
+> −40 −20 020 40
+> Effect on Lift (pp)
+
+Gender 
+
+Counterfactual Lift: High Reach Figure 10: Persona-specific treatment effects on algorithmic lift for high-reach content. Each row is a persona; each panel shows a different treatment (location, age, gender). 95% confidence intervals. 43

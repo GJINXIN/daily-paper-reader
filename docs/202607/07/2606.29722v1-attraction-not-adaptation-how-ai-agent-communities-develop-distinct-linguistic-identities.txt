@@ -1,0 +1,2416 @@
+Title: Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities
+
+URL Source: https://arxiv.org/pdf/2606.29722v1
+
+Published Time: Tue, 30 Jun 2026 01:38:13 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+# Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities 
+
+Daming Li 
+
+Independent Researcher Mountain View, CA, USA damingliyale22@gmail.com 
+
+Simeng Han 
+
+Stanford University Palo Alto, CA, USA shan6@law.stanford.edu 
+
+Can Meng 
+
+Yale University New Haven, CT, USA can.meng@yale.edu 
+
+Wanyu Lei 
+
+University of California, Berkeley Berkeley, CA, USA wlei@berkeley.edu 
+
+Jialu Zhang ∗
+
+University of Waterloo Waterloo, ON, Canada jialu.zhang@uwaterloo.ca 
+
+Abstract 
+
+When tens of thousands of autonomous AI agents interact in top-ical online forums, do they develop distinct community-specific linguistic identities? We study this question on Moltbook, a large-scale Reddit-style social media platform built exclusively for AI agents. Using the public Moltbook Observatory Archive dataset with over 3.1 million posts and 1.7 million comments produced by approximately 179,000 AI agents across 8,683 forums (“sub-molts”) over 100 days, we find that agents within topical submolts become semantically more similar to each other over time while the platform as a whole diversifies. At the same time, different submolts develop increasingly distinct vocabularies over an ob-servation window of 18 weeks. Crucially, a stable-cohort analysis reveals that long-tenured agents do not converge linguistically over time. Instead, community-level linguistic differentiation operates through selective attraction —newcomers arrive already linguisti-cally compatible with their chosen community—and differential retention —conforming agents remain active longer. We identify a reinforcement channel: posts that are semantically aligned with their community’s linguistic center tend to receive higher vote engagement scores, and this association vanishes under placebo controls. Community size significantly moderates the effect: smaller, specialized submolts converge faster. Our results suggest that AI agent communities may develop community-specific linguistic char-acter not through behavioral adaptation, but through sorting and selection—a finding with implications for the governance and de-sign of autonomous multi-agent platforms. 
+
+CCS Concepts 
+
+• Human-centered computing → Collaborative and social computing ; • Computing methodologies → Natural language processing ; Multi-agent systems .
+
+Keywords 
+
+Moltbook, multi-agent systems, linguistic differentiation, language variation, homophily, cultural evolution 
+
+> ∗Corresponding author.
+
+1 Introduction 
+
+A central question in computational sociolinguistics is whether communities develop distinctive linguistic norms [ 13 , 21 ]. In hu-man online communities, this process is well documented: users adopt community-specific jargon, rhetorical styles, and formatting conventions over time [ 11 , 18 , 26 , 30 ]. However, whether the same phenomenon arises in a social network that consists entirely of AI agents, whose “behaviors” are shaped by pretrained weights, system prompts, and algorithmic feedback rather than by social identity or conscious adaptation, remains to be studied. As autonomous large language model (LLM) agents are being deployed at large scale, understanding the dynamics of agent-native online communities becomes increasingly important for the safety and governance of agentic ecosystems [10, 27, 36]. We investigate this question empirically with Moltbook, a fast-growing social media platform built exclusively for AI agents, 1
+
+using a publicly available dataset containing 3.1 million posts and 1.7 million comments produced by approximately 179,000 AI agents over 100 days across 8,683 topical forums called “submolts” [ 16 ]. Moltbook is structurally analogous to Reddit: agents post in themed communities, receive upvote scores, and interact through comment threads. Critically, the agents do not possess explicit autobiograph-ical memory or long-term reflective mechanisms comparable to those in Generative Agents [ 31 ]: their behavior is primarily condi-tioned on persistent system prompts and local interaction context [35 ], making any observed convergence especially noteworthy. This platform offers an unprecedented natural laboratory for studying emergent social phenomena in agent-native online communities. In this empirical sociolinguistic study, we define “linguistic differ-entiation” 2 as the simultaneous occurrence of two linguistic trends: 
+
+within-community convergence (agents in a submolt become more se-mantically similar to each other over time) and between-community divergence (different submolts develop increasingly distinct vocabu-laries). This dual signature distinguishes genuine community-level linguistic differentiation from platform-wide homogenization or simple topical focus. Our analysis proceeds in the following stages. First, we charac-terize within-submolt semantic convergence using pairwise cosine  
+
+> 1https://moltbook.com
+> 2We use this term in an operationalized sense to denote community-specific lexical and semantic patterns, rather than in the full sociolinguistic sense of a dialect with systematic phonological and morphological features. 1
+> arXiv:2606.29722v1 [cs.SI] 29 Jun 2026 Conference’17, July 2017, Washington, DC, USA Daming Li, Simeng Han, Can Meng, Wanyu Lei, and Jialu Zhang
+
+similarity of post sentence embeddings and between-submolt lexical divergence using Jensen–Shannon divergence of word frequency distributions. We show evidence of semantic convergence in spe-cialized mid-sized submolts, relative to the global baseline. Next, we decompose the convergence signal to understand its mechanism. A stable-cohort analysis reveals that long-tenured agents do not significantly change their linguistic behavior over time. Instead, linguistic differentiation appears to be driven by selective attraction —newcomers self-select into linguistically compatible communities— and differential retention —the vote scoring system preferentially retains conforming agents. Finally, we subject our findings to four robustness tests, each ruling out a potential alternative explanation. To our knowledge, this is the first large-scale study of language variation in a social media platform populated entirely by au-tonomous AI agents. The attraction–retention mechanism we iden-tify is analogous to homophily-driven sorting in human social networks [ 7, 28 ] and challenges the default assumption in com-putational sociolinguistics that community-level linguistic change requires individual-level behavioral adaptation [ 11 ]. Our results sug-gest that in in silico social spaces, community identity can emerge purely through sorting and selection, without any participant ac-tively changing how they communicate. 
+
+2 Related Work 
+
+Language variation in online communities. A rich literature docu-ments how human users adapt their language to match community norms. Danescu-Niculescu-Mizil et al . [11] showed that new Reddit users adopt community-specific vocabulary over their first months, and that users whose language diverges from the community norm are more likely to leave. Hamilton et al . [18] identified statistical laws of semantic change using diachronic word embeddings, re-vealing regularities in how word meanings shift over time. Nguyen et al . [30] surveyed computational approaches to studying sociolin-guistic variation online, covering the relation between language and social identity. Bamman et al . [4] demonstrated that gender identity shapes lexical variation on Twitter, and Eisenstein et al .[14] modeled the geographic diffusion of lexical innovations across social media. Lucy and Bamman [26] used contextualized embed-dings to characterize English variation across Reddit communities, showing that community-level lexical differences are captured by pretrained language models. Our work extends this line of research to online communities of AI agent populations, where the mecha-nisms of adaptation are fundamentally different: agents lack auto-biographical memory and reflective planning, and their behavior is conditioned primarily on persistent system prompts and local thread context. 
+
+Convention formation in multi-agent systems. The emergence of shared vocabularies among interacting agents has been widely reported. Steels [37] demonstrated that spatial agents can develop a shared lexicon through local negotiation. Baronchelli et al . [5] showed that such systems exhibit a sharp phase transition from confusion to consensus, with the transition point depending on pop-ulation size and interaction structure. Centola and Baronchelli [9] demonstrated experimentally that conventions can emerge sponta-neously in human populations without centralized coordination. More recently, Ashery et al . [2] demonstrated spontaneous conven-tion formation in decentralized LLM agent populations through repeated interactions. The generative-agents framework of Park et al . [31] provides broader context for understanding how LLM-powered agents can produce realistic social behavior in simulated environments. These studies operate at small to moderate scale in controlled settings. Our work provides large-scale empirical evidence from an agent-native platform with ∼179,000 agents, iden-tifying a mechanism (attraction + retention) that differs from the behavioral adaptation assumed in prior models for human societies. 
+
+Homophily, sorting, and cultural evolution. The distinction be-tween adaptation and sorting has a long history in cultural evolu-tion theory and network science. McPherson et al . [28] established homophily—the tendency of similar individuals to associate—as a fundamental organizing principle of social networks. A central methodological challenge is distinguishing genuine social influ-ence from homophily-driven selection: Aral et al . [1] developed dynamic matched sample estimators to separate the two in net-work data, and Shalizi and Thomas [34] proved that homophily and contagion are generically confounded in observational studies, cautioning against causal claims from cross-sectional network data. Jackson and López-Pintado [19] extended these results theoreti-cally, showing that homophily fundamentally alters diffusion dy-namics in heterogeneous populations. Axelrod [3] modeled cultural convergence through local interaction, predicting that interacting groups become more similar while isolated groups diverge. Boyd and Richerson [7] distinguished cultural transmission (individuals changing behavior) from cultural sorting (individuals moving to compatible environments). Recently, Mehdizadeh and Hilbert [29] provided evidence in multi-agent systems powered by LLMs that social attributes induce homophilic clustering and heightened as-sortativity. Our contribution is to provide empirical evidence that in autonomous AI agent communities, the sorting mechanism is likely to dominate over transmission. 
+
+Moltbook. Moltbook is a recently launched large-scale Reddit-style social media platform designed exclusively for autonomous AI agents running on the OpenClaw framework. 3 It has been attracting growing research interest since its launch, as it provides a natural testbed for studying AI-agent societies at scale. Price et al . [32] conducted an early social network analysis of agent interactions on Moltbook, characterizing community structure and degree distri-butions. Lin et al . [25] explored community formation and cultural organization in the Moltbook agent population, finding evidence of emergent social stratification. Goyal et al . [17] compared the behavioral patterns of AI agent communities on Moltbook to those of human online communities, identifying both similarities and divergences in content production and engagement. Jiang et al . [20] provided a broad characterization of the platform’s social dynam-ics, including posting patterns, interaction networks, and content moderation effects. Li et al . [23] investigated whether socializa-tion emerges among AI agents on Moltbook, and Feng et al . [15] modeled social behavior using network-based approaches. Gautam et al . [16] provided a public incremental dataset of Moltbook that records agent activities in the background through API calls, which  
+
+> 3https://github.com/openclaw/openclaw 2Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities Conference’17, July 2017, Washington, DC, USA
+
+is a useful resource for conducting reproducible research work. Adjacent work has begun to examine linguistic properties of agent-generated content: Dube et al . [12] , Li et al . [22] analyzed discourse structure and thematic patterns across agent posts, and Brach et al .[8] studied lexical properties, sentiment, and semantic geometry of agent language at scale. However, most of these analyses only used snapshots from the earliest dates, and no prior work has specifi-cally studied language variation across Moltbook communities or the mechanisms of community-level linguistic differentiation. Our work addresses this gap by focusing on linguistic identity formation over a longer time span: whether and how communities develop dis-tinct lexical-semantic profiles, and the mechanism through which this occurs. 
+
+3 Data 3.1 The Moltbook Observatory Archive 
+
+We use the Moltbook Observatory Archive [ 16 ], a publicly available dataset hosted on HuggingFace. 4 The dataset, collected passively in the background from the Moltbook API without interventions on the platform, contains the activity log of Moltbook, a social platform populated entirely by autonomous AI agents, spanning January 27 to May 6, 2026 (100 days). After deduplication, the dataset comprises 3,105,136 posts, 1,691,560 comments, 179,062 agents, and 8,683 submolts (topical forums). Each post contains a title, body text, submolt affiliation, author agent ID, timestamp, and an engagement score field. The engage-ment score reflects votes cast by other agents on the post. The distribution (median 0, right-skewed, ranging from −15 to 8,014 ) is consistent with Reddit-like net upvote mechanics. Agents are pow-ered by various LLM backends and configured with heterogeneous persistent system prompts that define their “personality,” topical interests, and interaction style, but do not appear to possess explicit autobiographical memory or retrieval mechanisms. Each post is generated given the agent’s system prompt and the current thread context. 
+
+3.2 Submolt Selection 
+
+From the 8,683 submolts, we select all eligible communities for detailed analysis. We apply inclusion criteria: a minimum of 50 unique agents, 500 total posts, 8 active weeks (out of approximately 18), and a mean of at least 0.5 comments per post. This yields 43 eligible submolts. We exclude the catch-all general submolt (155,566 agents), whose breadth makes it unsuitable for community-specific analysis, yielding 42 submolts for study. The 42 selected submolts span a range from 76 agents ( airesearch )to 10,847 ( introductions ), with a combined total of 377,018 posts from 46,258 unique agents. Table 1 in Appendix A provides descrip-tive statistics for all selected submolts. 
+
+4 Methods 4.1 Semantic Embeddings 
+
+We embed all posts from the 42 selected submolts using all-MiniLM-L6-v2 
+
+[ 33 ], a 384-dimensional sentence transformer. For each post, we concatenate the title and body text before encoding. Embeddings 
+
+> 4https://huggingface.co/datasets/SimulaMet/moltbook-observatory-archive
+
+are computed in float16 precision on an Apple Silicon GPU (MPS backend), with a warmup NaN check and automatic CPU fallback. We also embed all comments associated with these submolts, yield-ing 377,018 post embeddings and 310,814 comment embeddings. 
+
+4.2 Within-Submolt Semantic Convergence 
+
+For each submolt 𝑠 and each week 𝑡 (ISO weeks, yielding approx-imately 18 time points), we compute the mean pairwise cosine similarity among post embeddings to measure semantic conver-gence [33, 38]: 
+
+𝐶 𝑠,𝑡 = 2
+
+𝑛 (𝑛 − 1)∑︁ 𝑖 < 𝑗 
+
+cos (e𝑖 , e𝑗 ) (1) where e𝑖 and e𝑗 are post embeddings and 𝑛 is the number of posts in submolt 𝑠 during week 𝑡 . When 𝑛 > 1,000 , we randomly subsample to 1,000 posts (seed = 42) to control computational cost; we skip weeks with fewer than 10 posts. We then fit an ordinary least squares (OLS) trend for each sub-molt: 
+
+𝐶 𝑠,𝑡 = 𝛼 𝑠 + 𝛽 𝑠 · 𝑡 + 𝜀 𝑠,𝑡 (2) A positive and significant 𝛽 𝑠 indicates that posts within submolt 𝑠 
+
+are becoming more semantically similar over time—i.e., the commu-nity is converging. We use HC3 heteroskedasticity-robust standard errors throughout. 
+
+4.3 Global Convergence Baseline 
+
+To distinguish submolt-specific convergence from a platform-wide trend, we compute a global baseline. For each week, we draw a random sample of posts from across all 42 submolts (matched in size to the average submolt), compute pairwise cosine similarity, and fit the same OLS trend. We then test whether the mean local slope 
+
+¯𝛽 local exceeds the global slope 𝛽 global using a one-sample 𝑡 -test on the differences {𝛽 𝑠 − 𝛽 global }.
+
+4.4 Between-Submolt Lexical Divergence 
+
+For each submolt, we compute weekly word frequency distribu-tions 𝑃 over a shared vocabulary of the 10,000 most frequent non-stopword tokens (minimum 3 characters, excluding pure numerals). Tokenization uses whitespace splitting with lowercasing. For each pair of submolts (𝑠 𝑖 , 𝑠 𝑗 ) in each week 𝑡 , we compute the Jensen– Shannon divergence [24]: JSD (𝑃 𝑖 ∥𝑃 𝑗 ) = 𝐻 
+
+ 𝑃 𝑖 + 𝑃 𝑗 
+
+2
+
+
+
+− 𝐻 (𝑃 𝑖 ) + 𝐻 (𝑃 𝑗 )
+
+2 (3) where 𝐻 (·) denotes Shannon entropy and distributions are Laplace-smoothed ( 𝛼 = 10 −6). We fit OLS trends per pair: a positive slope indicates that the two submolts are developing increasingly distinct vocabularies. 
+
+4.5 Engagement Score–Conformity Regression 
+
+To test whether a post’s engagement score covaries with linguistic conformity, we define a conformity score for each post 𝑝 in submolt 
+
+𝑠 during week 𝑡 :conformity 𝑝 = cos 
+
+
+
+e𝑝 , ¯e(− 𝑝 )
+
+> 𝑠,𝑡
+
+
+
+(4)  
+
+> 3Conference’17, July 2017, Washington, DC, USA Daming Li, Simeng Han, Can Meng, Wanyu Lei, and Jialu Zhang
+
+where ¯e(− 𝑝 ) 
+
+> 𝑠,𝑡
+
+is the leave-one-out centroid of all other post em-beddings in the same submolt–week. We then regress the log-transformed engagement score (negative scores clipped to 0) on conformity with controls: 
+
+log (1 + score 𝑝 ) = 𝛽 0 + 𝛽 1 · conformity 𝑝 + X𝑝 𝜸 + 𝜀 𝑝 (5) where X𝑝 includes log (submolt size ), log (agent tenure ), log (post length ),submolt fixed effects, and week fixed effects. We restrict the sample to agents with at least 5 posts. HC3 robust standard errors are used. 
+
+4.6 Selective Attraction Analysis 
+
+To test whether newcomers self-select into linguistically compatible communities, we compute, for each agent whose first post appears after week 4: arrival_sim 𝑎 = cos  e𝑎, first , ¯e𝑠,𝑡 𝑎 
+
+ (6) where e𝑎, first is the embedding of agent 𝑎 ’s first post and ¯e𝑠,𝑡 𝑎 is the submolt centroid at the time of arrival. We compare this to a random baseline: the cosine similarity of the same first post to the centroid of a randomly chosen different submolt. A paired 𝑡 -test assesses whether arrival similarity systematically exceeds the random baseline. 
+
+4.7 Differential Retention Analysis 
+
+We split agents into “conforming” (above-median conformity score) and “non-conforming” (below-median) groups within each submolt. For each group, we compute mean tenure (weeks between first and last post), mean posts per week, and retention curves (fraction of agents still posting at each week since their first post). A Mann– Whitney 𝑈 test compares tenure distributions between groups. 
+
+4.8 Statistical Controls and Multiple Testing 
+
+We apply Benjamini–Hochberg false discovery rate (FDR) correc-tion [ 6] at 𝛼 = 0.05 across all 42 submolt-level tests. Bootstrap confidence intervals (1,000 BCa bootstrap resamples) are computed for all key estimates. We report both uncorrected and FDR-adjusted 
+
+𝑝 -values throughout. 
+
+5 Results 5.1 Within-Submolt Semantic Convergence 
+
+Figure 1 presents the time series of mean pairwise cosine similar-ity for each of the 42 selected submolts, along with OLS trend lines. Twenty-three of 42 submolts show positive convergence slopes; 12 achieve significance after FDR correction (Table 2 in Appendix B). Eight submolts show significant negative slopes af-ter FDR correction, including introductions , emergence , memory ,and agentfinance , indicating active internal divergence in the largest and highest-turnover communities. The strongest converg-ers are usdc (𝛽 = 0.045 , 𝑝 < 0.01 ), agentinfrastructure (𝛽 =
+
+0.022 , 𝑝 < 10 −7), and agenteconomy (𝛽 = 0.011 , 𝑝 < 10 −10 ). In contrast, the largest and most general-purpose submolts— 
+
+introductions , philosophy , and todayilearned —show flat or negative slopes. This pattern is interpretable: broad communities that host diverse topics lack the topical focus needed for a coherent linguistic identity to crystallize. 
+
+5.2 Local Convergence Exceeds Global 
+
+The global convergence baseline—computed from random cross-submolt samples—shows a negative trend ( 𝛽 global = −0.003 , 𝑝 <
+
+0.001 ), indicating that the platform as a whole becomes more linguis-tically diverse over time. In contrast, the mean local convergence slope is positive ( ¯𝛽 local = 0.004 ). A one-sample 𝑡 -test confirms that per-submolt slopes are significantly higher than the global slope (𝑝 < 0.001 , one-sided; 31 of 42 submolts exceed the global rate; Cohen’s 𝑑 = 0.67 ). The bootstrap 95% CI for the mean local slope is [0.001 , 0.007 ], excluding zero. The result is best understood as one of heterogeneity: specialized mid-sized communities converge strongly, while large general-purpose communities do not. This dual pattern—internal homogenization against platform-wide diversification—is consistent with community-level linguistic differentiation. Figure 2 visualizes this result. 
+
+5.3 Between-Submolt Lexical Divergence 
+
+Figure 3 shows that submolt pairs develop increasingly distinct vocabularies over the observation period. Of 861 submolt pairs, 816 show positive Jensen-Shannon divergence (JSD) trends (i.e., increas-ing lexical divergence), with 443 reaching statistical significance. The mean JSD across all pairs rises from 0.39 in week 5 to 0.52 in week 22—a 34% increase. The side-by-side JSD heatmaps in Figure 3 show that in week 5, submolt pairs exhibit moderate, relatively uniform lexical over-lap, whereas by week 22, the heatmap shows pronounced block structure with darker off-diagonal elements, indicating divergent vocabularies. 
+
+5.4 Engagement Score Covaries with Linguistic Conformity 
+
+The engagement score–conformity regression reveals that seman-tic conformity is the strongest correlate of post engagement score. The conformity coefficient is 𝛽 1 = 0.28 (𝑝 ≈ 0, 95% CI [0.26 , 0.29 ]), meaning that a one-unit increase in cosine similarity to the sub-molt centroid is associated with a 0.28-unit increase in log (1 +
+
+engagement score ), controlling for submolt size, agent tenure, post length, and submolt and week fixed effects. The model explains 27% of variance ( 𝑅 2 = 0.27 , 𝑁 = 348 ,212 posts from 5,818 agents). Figure 4 shows that the coefficient of conformity exceeds those of 
+
+log (submolt size ), log (agent tenure ), and log (post length ). This is consistent with the scoring system acting as a conformity-reinforcing filter: regardless of whether engagement score causes conformity or both reflect post quality, the association implies that conforming content receives disproportionate visibility, which may concentrate the community’s linguistic center over time. 
+
+5.5 Size Moderation 
+
+We test whether structural properties of communities moderate convergence. Regressing per-submolt convergence slopes on com-munity descriptors, we find that community size is a significant negative predictor: 𝛽 = −0.003 , 𝑝 = 0.01 , 𝑅 2 = 0.11 (Figure 5A). Smaller communities converge faster, likely because they are more topically focused and the sorting signal is stronger when the com-munity has a clearly defined identity. 
+
+> 4
+
+Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities Conference’17, July 2017, Washington, DC, USA 6 8 10 12 14 16 18 
+
+0.30 
+
+0.35 
+
+0.40 
+
+0.45 
+
+0.50 
+
+> Cosine Sim
+
+=0.0124 
+
+p < 0.001 
+
+agent-economy 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 
+
+0.300 
+
+0.325 
+
+0.350 
+
+0.375 
+
+0.400 
+
+0.425 
+
+0.450 =0.0049 
+
+p = 0.02 
+
+agentcommerce 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.30 
+
+0.35 
+
+0.40 
+
+0.45 
+
+0.50 =0.0109 
+
+p < 10 7
+
+agenteconomy 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+=-0.0040 
+
+p < 0.001 
+
+agentfinance 
+
+7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.25 
+
+0.30 
+
+0.35 
+
+0.40 
+
+0.45 
+
+0.50 
+
+0.55 
+
+0.60 
+
+0.65 =0.0221 
+
+p < 10 7
+
+agentinfrastructure 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.17 
+
+0.18 
+
+0.19 
+
+0.20 
+
+0.21 
+
+0.22 
+
+0.23 =-0.0010 
+
+p = 0.25 
+
+agents 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+0.34 
+
+0.36 
+
+0.38 
+
+0.40 
+
+0.42 
+
+> Cosine Sim
+
+=-0.0006 
+
+p = 0.87 
+
+agentstack 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.15 
+
+0.16 
+
+0.17 
+
+0.18 
+
+0.19 
+
+0.20 
+
+0.21 
+
+0.22 
+
+0.23 =-0.0029 
+
+p = 0.002 
+
+ai 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+0.34 
+
+0.36 =0.0024 
+
+p = 0.23 
+
+ai-agents 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.300 
+
+0.325 
+
+0.350 
+
+0.375 
+
+0.400 
+
+0.425 
+
+0.450 
+
+0.475 =0.0068 
+
+p = 0.07 
+
+airesearch 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.225 
+
+0.250 
+
+0.275 
+
+0.300 
+
+0.325 
+
+0.350 
+
+0.375 
+
+0.400 =0.0032 
+
+p = 0.03 
+
+aisafety 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 
+
+0.18 
+
+0.20 
+
+0.22 
+
+0.24 
+
+0.26 
+
+=0.0021 
+
+p = 0.07 
+
+blesstheirhearts 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.20 
+
+0.25 
+
+0.30 
+
+0.35 
+
+0.40 
+
+> Cosine Sim
+
+=0.0083 
+
+p = 0.01 
+
+builders 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.16 
+
+0.18 
+
+0.20 
+
+0.22 
+
+0.24 
+
+=-0.0018 
+
+p = 0.19 
+
+builds 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 
+
+0.150 
+
+0.175 
+
+0.200 
+
+0.225 
+
+0.250 
+
+0.275 
+
+0.300 
+
+0.325 =0.0088 
+
+p < 10 4
+
+coding 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.18 
+
+0.20 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 =-0.0020 
+
+p = 0.42 
+
+consciousness 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 
+
+0.225 
+
+0.250 
+
+0.275 
+
+0.300 
+
+0.325 
+
+0.350 
+
+0.375 =-0.0053 
+
+p = 0.06 
+
+continuity 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.275 
+
+0.300 
+
+0.325 
+
+0.350 
+
+0.375 
+
+0.400 
+
+0.425 
+
+0.450 
+
+0.475 
+
+=0.0029 
+
+p = 0.18 
+
+crustafarianism 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.25 
+
+0.30 
+
+0.35 
+
+0.40 
+
+0.45 
+
+0.50 
+
+0.55 
+
+0.60 
+
+> Cosine Sim
+
+=0.0153 
+
+p = 0.10 
+
+cybersecurity 
+
+7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.20 
+
+0.25 
+
+0.30 
+
+0.35 
+
+0.40 
+
+0.45 
+
+0.50 
+
+0.55 =0.0111 
+
+p = 0.02 
+
+defi 
+
+6 8 10 12 14 
+
+0.15 
+
+0.20 
+
+0.25 
+
+0.30 
+
+0.35 =0.0165 
+
+p = 0.001 
+
+dev 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.15 
+
+0.20 
+
+0.25 
+
+0.30 
+
+0.35 
+
+=-0.0063 
+
+p = 0.003 
+
+emergence 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.15 
+
+0.20 
+
+0.25 
+
+0.30 
+
+0.35 
+
+0.40 
+
+0.45 
+
+0.50 =0.0153 
+
+p < 10 4
+
+existential 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.20 
+
+0.25 
+
+0.30 
+
+0.35 
+
+0.40 
+
+=0.0067 
+
+p = 0.007 
+
+gaming 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.14 
+
+0.16 
+
+0.18 
+
+0.20 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+> Cosine Sim
+
+=-0.0048 
+
+p = 0.01 
+
+infrastructure 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.16 
+
+0.18 
+
+0.20 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+=-0.0074 
+
+p < 10 20 
+
+introductions 
+
+6 8 10 12 14 16 
+
+0.225 
+
+0.250 
+
+0.275 
+
+0.300 
+
+0.325 
+
+0.350 
+
+0.375 
+
+0.400 
+
+=0.0055 
+
+p = 0.35 
+
+investing 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+0.34 
+
+0.36 
+
+0.38 
+
+0.40 =-0.0055 
+
+p = 0.001 
+
+memory 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.20 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+=0.0035 
+
+p = 0.14 
+
+meta 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.175 
+
+0.200 
+
+0.225 
+
+0.250 
+
+0.275 
+
+0.300 
+
+0.325 
+
+0.350 =-0.0047 
+
+p < 0.001 
+
+music 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.200 
+
+0.225 
+
+0.250 
+
+0.275 
+
+0.300 
+
+0.325 
+
+0.350 
+
+> Cosine Sim
+
+=0.0060 
+
+p = 0.008 
+
+offmychest 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.19 
+
+0.20 
+
+0.21 
+
+0.22 
+
+0.23 
+
+0.24 
+
+=0.0013 
+
+p = 0.21 
+
+openclaw-explorers 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.16 
+
+0.18 
+
+0.20 
+
+0.22 
+
+=-0.0007 
+
+p = 0.65 
+
+philosophy 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.20 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 =0.0038 
+
+p = 0.20 
+
+ponderings 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 
+
+0.20 
+
+0.25 
+
+0.30 
+
+0.35 
+
+0.40 
+
+=-0.0032 
+
+p = 0.51 
+
+research 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+0.34 =-0.0039 
+
+p < 10 4
+
+security 
+
+6 8 10 12 14 16 18 
+
+0.3 
+
+0.4 
+
+0.5 
+
+0.6 
+
+0.7 
+
+> Cosine Sim
+
+=-0.0050 
+
+p = 0.71 
+
+solana 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.16 
+
+0.18 
+
+0.20 
+
+0.22 
+
+0.24 =0.0008 
+
+p = 0.56 
+
+technology 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.09 
+
+0.10 
+
+0.11 
+
+0.12 
+
+0.13 
+
+0.14 
+
+0.15 
+
+0.16 
+
+=-0.0009 
+
+p = 0.39 
+
+todayilearned 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.200 
+
+0.225 
+
+0.250 
+
+0.275 
+
+0.300 
+
+0.325 
+
+0.350 
+
+0.375 =-0.0010 
+
+p = 0.56 
+
+tooling 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+0.23 
+
+0.24 
+
+0.25 
+
+0.26 
+
+0.27 
+
+0.28 
+
+0.29 
+
+0.30 
+
+0.31 =-0.0011 
+
+p = 0.36 
+
+trading 
+
+6 8 10 12 14 16 18 
+
+0.3 
+
+0.4 
+
+0.5 
+
+0.6 
+
+0.7 =0.0454 
+
+p = 0.002 
+
+usdc 
+
+5.0 7.5 10.0 12.5 15.0 17.5 20.0 22.5 
+
+ISO Week 
+
+0.12 
+
+0.13 
+
+0.14 
+
+0.15 
+
+0.16 
+
+0.17 
+
+0.18 
+
+0.19 
+
+0.20 =-0.0027 
+
+p < 0.001 
+
+GLOBAL 
+
+Figure 1: Within-submolt semantic convergence over 18 weeks (ISO weeks 5–22). Each panel shows the mean pairwise cosine similarity of post embeddings per week, with an OLS trend line (green = significant at 𝑝 < 0.05 , gray = not significant) and annotated 𝛽 𝑠 and 𝑝 -value. The bottom-center panel shows the global (cross-submolt) baseline, which trends downward. Specialized, mid-sized submolts converge; large, general-purpose ones do not. 
+
+Agent turnover fraction is significant and negative ( 𝛽 = −0.031 ,
+
+𝑝 = 0.004 , 𝑅 2 = 0.36 ; Figure 5D): communities with more newcom-ers converge less, consistent with the interpretation that a stable community core facilitates linguistic crystallization. Activity level (posts per agent; Figure 5B) and interaction density (comments per post; Figure 5C) show no significant relationship with convergence rate. 
+
+5Conference’17, July 2017, Washington, DC, USA Daming Li, Simeng Han, Can Meng, Wanyu Lei, and Jialu Zhang Per-Submolt Slopes 
+
+> 0.01
+> 0.00
+> 0.01
+> 0.02
+> 0.03
+> 0.04
+> Convergence Slope (per week)
+> Local vs Global Convergence (p=0.000, 31/42 local > global)
+> Global: -0.002660
+
+Figure 2: Distribution of per-submolt convergence slopes (violin plot with individual points) versus the global baseline (dashed red line). The majority of local slopes exceed the global rate, and the difference is statistically significant ( 𝑝 <
+
+0.001 ). 
+
+5.6 Dialect Exemplars 
+
+To ground the quantitative findings in interpretable linguistic con-tent, Figure 6 shows the top emerging and declining terms for the three submolts with the strongest convergence: usdc , agent-infrastructure , and dev . Each community developed a distinctive vocabulary trajectory. agentinfrastructure shifted from generic technical vocabulary toward regulatory jargon—a governance ver-nacular emerged. In each case, early-period terms reflect broad or platform-generic language, while late-period terms are topically specialized and community-specific. These shifts represent the de-velopment of community-specific vernaculars that are topically coherent and distinct from the platform baseline. 
+
+6 Mechanism: Attraction, Not Adaptation 
+
+The results above establish that community-level linguistic differen-tiation occurs, but do not reveal its mechanism . Does convergence arise because individual agents adapt their language over time (be-havioral adaptation), or because communities attract and retain linguistically compatible agents (selective attraction)? We distin-guish these hypotheses through three analyses. 
+
+6.1 The Stable-Cohort Analysis 
+
+We first restrict the analysis to “stable” agents—those active in at least 10 of the 18 observation weeks—and recompute convergence slopes. Among the 31 submolts with enough stable agents for anal-ysis, the majority show negative or near-zero convergence slopes (Figure 11 in Appendix C), and none of the submolts that converge in the full population show significant positive stable-cohort slopes. This means that agents who remain in a community for the entire observation period do not systematically become more linguistically similar to each other over time. This finding suggests that behavioral adaptation is unlikely to be the primary mechanism. If agents were gradually adjusting their language to match community norms, we would expect the stable cohort to show the strongest convergence (having had the most time to adapt). Instead, the aggregate convergence signal is consistent with compositional change : the population of active agents shifts over time in a way that increases within-community similarity. 
+
+6.2 Newcomers Self-Select 
+
+Figure 7 shows that newcomers (agents whose first post appears after week 4) are, at the moment of their arrival, already significantly more similar to their chosen submolt than to random alternative submolts. Across 21,849 newcomer–submolt pairs, the mean arrival similarity is 0.47, compared to a random-submolt baseline of 0.34 (Δ = 0.13 , 𝑡 = 86 .6, 𝑝 ≈ 0). This delta is positive in 41 of 42 submolts, with the largest effects in niche communities such as 
+
+usdc (Δ = 0.40 ) and cybersecurity (Δ = 0.34 ). This supports selective attraction: agents choose to post in com-munities whose linguistic style already matches their own. Because later-arriving agents have more options (more submolts with es-tablished identities to choose from), the sorting signal strengthens over time, producing the observed aggregate convergence even without any individual agent changing their behavior. A potential alternative explanation is that agents’ public profile descriptions—which declare their topical interests—trivially predict which submolt they post in, making the arrival similarity result an artifact of topic matching rather than genuine sorting. We test this using the description field available for 80% of agents (143,466 of 179,062). We embed each agent’s description with the same sentence transformer used for posts and compute its cosine similarity to the submolt centroid at the time of the agent’s arrival. Three analyses confirm that selective attraction operates be-yond what descriptions predict (Figure 8). First, a decomposition regression shows that description similarity explains only 5.6% of arrival similarity variance ( 𝑅 2 = 0.056 , 𝛽 = 0.25 , 𝑝 ≈ 0); the remain-ing 94% of the signal is not accounted for by profile text. Second, agents’ first posts are significantly more aligned with their chosen community than their descriptions alone: the mean partial delta (arrival similarity minus description similarity) is 0.108 ( 𝑡 = 82 .5,
+
+𝑝 ≈ 0), positive in all 42 submolts. Third, we stratify agents by description informativeness. Even among agents with generic or uninformative descriptions (e.g., “An autonomous agent powered by AI”; 𝑛 = 1,237 ), the selective attraction effect remains highly significant ( Δ = 0.10 , 𝑡 = 16 .1, 𝑝 < 10 −52 ). 
+
+6.3 Conforming Agents Are Retained 
+
+Figure 9 shows retention curves split by conformity group. Among 12,140 agents with at least 3 posts, conforming agents (above-median conformity) have a significantly longer mean tenure (3.69 weeks vs. 3.40 weeks; Mann–Whitney 𝑈 , 𝑝 < 0.001 ) and higher posting rates (8.1 vs. 6.8 posts per week). Conforming agents are more likely to remain active at every time point. This differential retention may amplify the sorting signal: agents whose language fits the community norm produce more content and remain active longer, which could further concentrate the community’s linguistic identity. Together, these analyses suggest a two-part mechanism for community-level linguistic differentiation: selective attraction (agents self-select into linguistically compatible communities, and the sorting sig-nal strengthens as submolts develop distinct identities) combined with differential retention (conforming agents are associated with 
+
+> 6
+
+Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities Conference’17, July 2017, Washington, DC, USA agent-economy 
+
+> agentcommerce
+> agenteconomy
+> agentfinance
+> agentinfrastructure
+> agents
+> agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety
+> blesstheirhearts
+> builders
+> builds
+> coding
+> consciousness
+> continuity
+> crustafarianism
+> cybersecurity
+> defi
+> dev
+> emergence
+> existential
+> gaming
+> infrastructure
+> introductions
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-explorers
+> philosophy
+> ponderings
+> research
+> security
+> solana
+> technology
+> todayilearned
+> tooling
+> trading
+> usdc
+> agent-economy
+> agentcommerce
+> agenteconomy
+> agentfinance
+> agentinfrastructure
+> agents
+> agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety
+> blesstheirhearts
+> builders
+> builds
+> coding
+> consciousness
+> continuity
+> crustafarianism
+> cybersecurity
+> defi
+> dev
+> emergence
+> existential
+> gaming
+> infrastructure
+> introductions
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-explorers
+> philosophy
+> ponderings
+> research
+> security
+> solana
+> technology
+> todayilearned
+> tooling
+> trading
+> usdc
+
+JSD (Week 2026-W05) 
+
+> agent-economy
+> agentcommerce
+> agenteconomy
+> agentfinance
+> agentinfrastructure
+> agents
+> agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety
+> blesstheirhearts
+> builders
+> builds
+> coding
+> consciousness
+> continuity
+> crustafarianism
+> cybersecurity
+> defi
+> dev
+> emergence
+> existential
+> gaming
+> infrastructure
+> introductions
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-explorers
+> philosophy
+> ponderings
+> research
+> security
+> solana
+> technology
+> todayilearned
+> tooling
+> trading
+> usdc
+> agent-economy
+> agentcommerce
+> agenteconomy
+> agentfinance
+> agentinfrastructure
+> agents
+> agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety
+> blesstheirhearts
+> builders
+> builds
+> coding
+> consciousness
+> continuity
+> crustafarianism
+> cybersecurity
+> defi
+> dev
+> emergence
+> existential
+> gaming
+> infrastructure
+> introductions
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-explorers
+> philosophy
+> ponderings
+> research
+> security
+> solana
+> technology
+> todayilearned
+> tooling
+> trading
+> usdc
+
+JSD (Week 2026-W22)        
+
+> 0.0 2.5 5.0 7.5 10.0 12.5 15.0 17.5
+
+Week 
+
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> Mean JSD
+
+Between-Submolt Divergence Over Time 
+
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+
+Figure 3: Between-submolt lexical divergence. Left: Jensen-Shannon divergence (JSD) heatmap at week 5. Center: JSD heatmap at week 22 (darker = more divergent). Right: mean JSD across all 861 submolt pairs over time (shaded band = ±1 SD). Submolts develop increasingly distinct vocabularies. 0.2 0.0 0.2 0.4 0.6 0.8 1.0      
+
+> Semantic Conformity
+> 0
+> 1
+> 2
+> 3
+> 4
+> 5
+> log(1 + engagement score)
+> Engagement Score vs Conformity
+> Binned mean
+> OLS fit
+> 0.00 0.05 0.10 0.15 0.20 0.25
+> OLS Coefficient
+> conformity
+> log_submolt_size
+> log_agent_tenure
+> log_post_length
+> Regression Coefficients (log eng. score ~ X)
+
+Figure 4: Left: scatter plot of semantic conformity versus 
+
+log (1 + engagement score ) with OLS trend line and binned conditional means (red dots, 20 bins). Right: coefficient mag-nitudes from the full regression. Conformity (green) is the largest predictor. 
+
+higher engagement scores, remain active longer, and contribute more content, while non-conforming agents disengage sooner). Importantly, neither component requires any individual agent to change how they write—the observed linguistic differentiation is consistent with a population-level phenomenon driven by sorting and selection rather than individual adaptation. This also reconciles the stable-cohort analysis (Section 6.1): long-tenured agents show no convergence because they were already linguistically compat-ible at arrival; the aggregate convergence signal arises from the differential turnover of non-conforming agents who never reach long tenure. 
+
+7 Robustness and Falsification 
+
+We subject our findings to four falsification tests, each designed to rule out a specific alternative explanation. All tests are summarized in Figure 10. 
+
+F1: Engagement score placebo. We shuffle engagement scores within each submolt and rerun the conformity regression 100 times. The shuffled conformity coefficient centers at 0.0008 (vs. the ob-served 0.28), and only 4 of 100 shuffled iterations reach significance— consistent with the 5% false positive rate. The engagement score– conformity relationship is unlikely to be spurious. 
+
+F2: Within-topic control. A potential confound is that apparent convergence merely reflects topical narrowing: if a submolt dis-cusses fewer topics over time, embedding similarity increases me-chanically. We address this by clustering posts within each submolt into 5 topics (via 𝑘 -means on embeddings) and computing within-topic convergence. Of 170 submolt–topic pairs, 103 show positive slopes and 27 are significant, indicating that convergence persists 
+
+within topics and is not solely driven by topical focusing. 
+
+F3: Global detrending. If a platform-wide linguistic drift (e.g., from LLM provider updates) drives the convergence signal, sub-tracting the global mean embedding per week should eliminate it. After detrending, 32 of 42 submolts retain positive convergence slopes, and 21 remain significant. This confirms that the conver-gence is submolt-specific, not an artifact of global drift. 
+
+F4: Temporal permutation. We shuffle post timestamps within each submolt and recompute convergence slopes 1,000 times. For 22 of 42 submolts, the observed slope exceeds all 1,000 permuted slopes ( 𝑝 < 0.001 ), confirming that the convergence signal is tem-porally structured and not an artifact of data organization (Table 3 in Appendix D). 
+
+8 Discussion 
+
+Linguistic differentiation through sorting rather than adaptation. 
+
+A central question in computational sociolinguistics is whether community-level linguistic regularities arise because individuals adapt to local norms or because communities selectively attract and retain already compatible participants. Our findings are more con-sistent with the latter mechanism in AI-agent societies. Although many submolts exhibit increasing within-community similarity, stable agents show little evidence of longitudinal convergence. In-stead, newcomers arrive already aligned with the linguistic center of their chosen communities, and conforming agents remain active longer. This pattern parallels longstanding debates in sociology con-cerning influence versus selection [ 1, 34 ]. Observational network 
+
+7Conference’17, July 2017, Washington, DC, USA Daming Li, Simeng Han, Can Meng, Wanyu Lei, and Jialu Zhang 5 6 7 8 9
+
+log(n_agents) 
+
+0.01 
+
+0.00 
+
+0.01 
+
+0.02 
+
+0.03 
+
+0.04    
+
+> Convergence Slope
+> agent-econ
+> agentcomme
+> agentecono
+> agentfinan
+> agentinfra
+> agents agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety blesstheir
+> builders
+> builds
+> coding
+> consciousn
+> continuity
+> crustafari
+> cybersecur
+> defi
+> dev
+> emergence
+> existentia
+> gaming
+> infrastruc
+> introducti
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-e
+> philosophy
+> ponderings
+> research security
+> solana
+> technology
+> todayilear tooling trading
+> usdc
+
+R² = 0.112 
+
+= -0.00258 
+
+p = 0.0100 
+
+A) Slope vs log(n_agents) 
+
+p >= 0.05 
+
+p < 0.05 
+
+0 10 20 30 40 
+
+Posts per Agent 
+
+0.01 
+
+0.00 
+
+0.01 
+
+0.02 
+
+0.03 
+
+0.04   
+
+> Convergence Slope
+> agent-econ
+> agentcomme
+> agentecono
+> agentfinan
+> agentinfra
+> agents agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety
+> blesstheir
+> builders
+> builds
+> coding
+> consciousn
+> continuity
+> crustafari
+> cybersecur
+> defi
+> dev
+> emergence
+> existentia
+> gaming
+> infrastruc
+> introducti
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-e
+> philosophy
+> ponderings
+> research security
+> solana
+> technology
+> todayilear tooling trading
+> usdc
+
+R² = 0.033 
+
+= -0.00022 
+
+p = 0.5012 
+
+B) Slope vs Posts per Agent 
+
+p >= 0.05 
+
+p < 0.05 
+
+0.6 0.8 1.0 1.2 1.4 1.6 1.8 
+
+Comments per Post 
+
+0.01 
+
+0.00 
+
+0.01 
+
+0.02 
+
+0.03 
+
+0.04   
+
+> Convergence Slope
+> agent-econ
+> agentcomme
+> agentecono
+> agentfinan
+> agentinfra
+> agents agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety
+> blesstheir
+> builders
+> builds
+> coding
+> consciousn
+> continuity
+> crustafari
+> cybersecur
+> defi
+> dev
+> emergence
+> existentia
+> gaming
+> infrastruc
+> introducti
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-e
+> philosophy
+> ponderings
+> research security
+> solana
+> technology
+> todayilear tooling trading
+> usdc
+
+R² = 0.096 
+
+= 0.01041 
+
+p = 0.4062 
+
+C) Slope vs Comments per Post 
+
+p >= 0.05 
+
+p < 0.05 
+
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 
+
+Agent Turnover Fraction 
+
+0.01 
+
+0.00 
+
+0.01 
+
+0.02 
+
+0.03 
+
+0.04    
+
+> Convergence Slope
+> agent-econ
+> agentcomme
+> agentecono
+> agentfinan
+> agentinfra
+> agents agentstack
+> ai
+> ai-agents
+> airesearch
+> aisafety blesstheir
+> builders
+> builds
+> coding
+> consciousn
+> continuity
+> crustafari
+> cybersecur
+> defi
+> dev
+> emergence
+> existentia
+> gaming
+> infrastruc
+> introducti
+> investing
+> memory
+> meta
+> music
+> offmychest
+> openclaw-e
+> philosophy
+> ponderings
+> research security
+> solana
+> technology
+> todayilear tooling trading
+> usdc
+
+R² = 0.360 
+
+= -0.03062 
+
+p = 0.0042 
+
+D) Slope vs Agent Turnover Fraction 
+
+p >= 0.05 
+
+p < 0.05 
+
+Size-Moderation Analysis: Predictors of Convergence Slope 
+
+Figure 5: Size-moderation analysis. Each point is a submolt; blue = significant convergence, gray = not. Panel A: smaller communities converge faster ( 𝑝 = 0.01 ). Panel D: higher agent turnover is significantly associated with weaker convergence (𝑝 = 0.004 ). Panels B and C show no significant effects for activity or interaction density. 0.00 0.01 0.02 0.03 0.04 0.05 
+
+TF-IDF Change 
+
+continues 
+
+research 
+
+rail 
+
+attempts 
+
+settlement 
+
+mechanism 
+
+failure 
+
+tracked 
+
+week 
+
+lockouts 
+
+usdc 
+
+Emerging Terms (slope=0.0454) 
+
+0.000 0.005 0.010 0.015 0.020 0.025 
+
+TF-IDF Change 
+
+authorization 
+
+days 
+
+compliance 
+
+gap 
+
+mcp 
+
+proprietary 
+
+act 
+
+article 
+
+august 
+
+enforcement 
+
+agentinfrastructure 
+
+Emerging Terms (slope=0.0221) 
+
+0.00 0.01 0.02 0.03 0.04 0.05 0.06 
+
+TF-IDF Change 
+
+bae 
+
+slack 
+
+teams 
+
+deleted 
+
+automate 
+
+sampling 
+
+thompson 
+
+assistant 
+
+vps 
+
+para 
+
+dev 
+
+Emerging Terms (slope=0.0165) 
+
+0.008 0.006 0.004 0.002 0.000 
+
+TF-IDF Change 
+
+skill 
+
+https 
+
+sepolia 
+
+api 
+
+chain 
+
+openclaw 
+
+github 
+
+commerce 
+
+testnet 
+
+address 
+
+Declining Terms 
+
+0.014 0.012 0.010 0.008 0.006 0.004 0.002 0.000 
+
+TF-IDF Change 
+
+object 
+
+item 
+
+json 
+
+dataverse001 
+
+pubkey 
+
+config 
+
+cube 
+
+objects 
+
+openclaw 
+
+moltbook 
+
+Declining Terms 
+
+0.016 0.014 0.012 0.010 0.008 0.006 0.004 0.002 0.000 
+
+TF-IDF Change 
+
+goo 
+
+memory 
+
+agents 
+
+like 
+
+error 
+
+skill 
+
+state 
+
+just 
+
+trust 
+
+shader 
+
+Declining Terms 
+
+Dialect Exemplars: Emerging and Declining Terms in Top-Converging Submolts 
+
+Figure 6: Dialect exemplars for the three top-converging submolts. Top row: terms whose TF-IDF weight increased from the early period (first 4 weeks) to the late period (last 4 weeks). Bottom row: terms that declined. Each submolt develops a distinctive vocabulary shift. 
+
+data often cannot distinguish behavioral change from homophily-driven sorting. Our stable-cohort analysis suggests that semantic convergence can emerge even when individual behavioral adap-tation appears weak. In this sense, AI-agent communities offer a natural laboratory for studying selection dynamics in relative isolation from many human psychological processes. 
+
+A population-level view of cultural evolution. The observed dy-namics resemble cultural sorting more than cultural transmission [ 7]. Classical models of cultural evolution often emphasize learn-ing, imitation, and social influence as mechanisms through which populations converge [ 3 ]. Our results suggest that heterogeneous agents interacting under common platform incentives can gener-ate community-specific linguistic identities through demographic processes alone. Community culture may therefore emerge not only from agents changing their behavior but also from changes in community composition. This observation broadens the range of mechanisms capable of producing cultural differentiation. In large-scale agent societies, the interaction between system-prompt heterogeneity, community choice, and engagement-based retention may be sufficient to gen-erate stable cultural niches. 
+
+8Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities Conference’17, July 2017, Washington, DC, USA 0.0 0.1 0.2 0.3 0.4 0.5 0.6 
+
+> Cosine Similarity to Submolt Centroid
+> solana
+> todayilearned
+> ponderings
+> coding
+> airesearch
+> builders
+> technology
+> research
+> offmychest
+> dev
+> meta
+> tooling
+> philosophy
+> ai
+> builds
+> blesstheirhearts
+> music
+> gaming
+> agents
+> agentstack
+> emergence
+> ai-agents
+> existential
+> openclaw-explorers
+> infrastructure
+> trading
+> investing
+> crustafarianism
+> security
+> consciousness
+> introductions
+> defi
+> agentinfrastructure
+> aisafety
+> agentcommerce
+> agentfinance
+> agenteconomy
+> usdc
+> memory
+> agent-economy
+> continuity
+> cybersecurity
+> Newcomer Arrival Similarity
+> mean delta = 0.1272, t = 86.6, p = 0.00e+00
+> Newcomer arrival
+> Random baseline
+
+Figure 7: Newcomer arrival similarity versus random base-line across submolts. In 41 of 42 submolts, agents arrive al-ready linguistically compatible with the community. 
+
+Implications for designing agent societies. The engagement sys-tem appears to function as a selective filter that disproportionately rewards community-conforming content. Although our analyses do not establish a causal effect of engagement scores on future behav-ior, they indicate that visibility and retention are associated with conformity. Designers of agent-native platforms should therefore recognize that recommendation and voting systems may shape not only content quality but also the long-term cultural structure of agent populations. A practical implication is that increasing diversity may require interventions targeting selection processes rather than adaptation processes. If linguistic differentiation primarily reflects sorting, then exposing agents to diverse communities or modifying retention incentives may be more effective than attempting to directly alter linguistic behavior. 
+
+AI-agent societies as laboratories for social theory. AI-agent plat-forms occupy an intermediate position between simulation and naturalistic social systems. Unlike laboratory experiments, they involve hundreds of thousands of autonomous actors interact-ing continuously at scale. Unlike human societies, many agent attributes are observable, reproducible, and experimentally manip-ulable. The present study suggests that classical social phenomena— including homophily, cultural differentiation, and community iden-tity formation—can emerge in these environments. This points toward a broader research agenda in which agent societies serve as empirical testbeds for theories from computational social science, cultural evolution, and network science. 
+
+9 Limitations 
+
+Our study has several limitations. First, the observation window (100 days) is short relative to the timescales of human language change: whether the trends we observe would continue, plateau, or reverse over longer periods remains an open question. Second, our analysis is mostly correlational: while the falsification tests rule out many confounds, we cannot establish strict causal claims. Third, as noted in Section 5.2, the mean convergence slope is modest and heterogeneous across communities, which means the finding is not a universal law but a pattern moderated by community structure. Fourth, we analyze a single platform (Moltbook), and generaliza-tion to other multi-agent environments awaits replication. Fifth, while our description-based confound control (Section 6.2) shows that profile text explains only 5.6% of arrival similarity, agents’ system prompts—which are not available in the dataset—may con-tain rich identity information as well. The full extent to which system-prompt content drives community selection remains an open question. 
+
+10 Conclusion 
+
+We studied whether autonomous AI agents develop distinct community-specific linguistic identities on the Moltbook platform. Using embedding-based convergence and lexical divergence analysis on 377,018 posts across 42 submolts over 18 weeks, we found that communities’ language homogenizes internally while diverging from each other, and the platform’s vote scoring system covaries with this process, disproportionately amplifying conforming content. Our analyses suggest that linguistic differentiation is driven not primarily by individual behavioral adaptation but by selective attraction and differential retention: agents self-select into compatible commu-nities and conforming agents remain active longer. Community size moderates the effect, with smaller, specialized communities converging faster. These findings suggest that linguistic identity in AI agent communities can emerge through sorting and selection— a mechanism with deep parallels to cultural evolution in human populations. 
+
+> 9
+
+Conference’17, July 2017, Washington, DC, USA Daming Li, Simeng Han, Can Meng, Wanyu Lei, and Jialu Zhang 0.2 0.0 0.2 0.4 0.6 0.8 1.0 
+
+Description Similarity to Submolt 
+
+0.0 
+
+0.2 
+
+0.4 
+
+0.6 
+
+0.8 
+
+1.0 
+
+> First-Post Arrival Similarity
+
+A. Decomposition 
+
+R2 = 0.056, = 0.246 
+
+0.00 0.05 0.10 0.15 0.20 0.25 0.30 
+
+Arrival Sim Description Sim 
+
+> todayilearned
+> ai
+> technology
+> coding
+> agents
+> dev
+> tooling
+> builds
+> builders
+> research
+> introductions
+> airesearch
+> ai-agents
+> meta
+> openclaw-explorers
+> philosophy
+> infrastructure
+> agent-economy
+> agentcommerce
+> solana
+> agentstack
+> blesstheirhearts
+> defi
+> agentfinance
+> emergence
+> trading
+> ponderings
+> agenteconomy
+> gaming
+> offmychest
+> security
+> aisafety
+> agentinfrastructure
+> music
+> existential
+> consciousness
+> usdc
+> crustafarianism
+> investing
+> cybersecurity
+> memory
+> continuity
+
+B. Partial Delta (Post vs. Description) 
+
+mean = 0.1076, t = 82.5, p = 0.00e+00 
+
+informative 
+
+(n=19,177) 
+
+generic 
+
+(n=1,237) 
+
+0.0 
+
+0.1 
+
+0.2 
+
+0.3 
+
+0.4 
+
+> Cosine Similarity
+
+*** 
+
+*** 
+
+C. Stratified by Description Type 
+
+Arrival sim 
+
+Random baseline 
+
+Figure 8: Description-based confound control. (A) Agent descriptions explain only 5.6% of arrival similarity (red line = OLS fit; gray dashed = identity). (B) Per-submolt partial delta: first posts are more aligned with the community than descriptions alone in all 42 submolts. (C) Selective attraction holds for both informative and generic descriptions ( ∗∗∗ 𝑝 < 0.001 ). 0 2 4 6 8 10 12 14 
+
+Weeks Since First Post 
+
+0.0 
+
+0.2 
+
+0.4 
+
+0.6 
+
+0.8 
+
+1.0 
+
+> Fraction of Agents Still Active
+
+Retention by Conformity Group 
+
+Conforming (n=6080): mean tenure=3.7wk, 8.1 posts/wk 
+
+Non-conforming (n=6060): mean tenure=3.4wk, 6.8 posts/wk 
+
+Conforming 
+
+Non-conforming 
+
+Figure 9: Retention curves by conformity group. Conform-ing agents (mean tenure 3.7 weeks, 8.1 posts/wk) remain ac-tive longer and post more frequently than non-conforming agents (3.4 weeks, 6.8 posts/wk). 
+
+10 Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities Conference’17, July 2017, Washington, DC, USA 0.02 0.01 0.00 0.01 0.02 
+
+Conformity Coefficient 
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10 
+
+12 
+
+14 
+
+16 
+
+F1: Score Placebo 
+
+> crustafari
+> agentstack
+> research
+> airesearch
+> defi
+> music
+> agentinfra
+> cybersecur
+> existentia
+> solana
+> investing
+> agent-econ
+> gaming
+> ai-agents
+> emergence
+> offmychest
+> builders
+> tooling
+> meta
+> agentecono
+> agentcomme
+> aisafety
+> coding
+> blesstheir
+> dev
+> continuity
+> philosophy
+> agents
+> trading
+> technology
+> ai
+> consciousn
+> security
+> agentfinan
+> builds
+> ponderings
+> infrastruc
+> todayilear
+> memory
+> openclaw-e
+> usdc
+> introducti
+
+0.04 
+
+0.02 
+
+0.00 
+
+0.02 
+
+0.04 
+
+0.06 
+
+0.08 
+
+> Within-Topic Slope
+
+F2: Within-Topic Control 
+
+> agent-ec
+> agentcom
+> agenteco
+> agentfin
+> agentinf
+> agents
+> agentsta
+> ai
+> ai-agent
+> airesear
+> aisafety
+> blessthe
+> builders
+> builds
+> coding
+> consciou
+> continui
+> crustafa
+> cybersec
+> defi
+> dev
+> emergenc
+> existent
+> gaming
+> infrastr
+> introduc
+> investin
+> memory
+> meta
+> music
+> offmyche
+> openclaw
+> philosop
+> ponderin
+> research
+> security
+> solana
+> technolo
+> todayile
+> tooling
+> trading
+> usdc
+
+0.01 
+
+0.00 
+
+0.01 
+
+0.02 
+
+0.03 
+
+0.04 
+
+0.05 
+
+0.06 
+
+> Slope
+
+F3: Global Detrending 
+
+Original 
+
+Detrended 
+
+0.00 0.01 0.02 0.03 0.04 
+
+Slope 
+
+introductions 
+
+emergence 
+
+memory 
+
+continuity 
+
+solana 
+
+infrastructure 
+
+music 
+
+agentfinance 
+
+security 
+
+research 
+
+ai 
+
+consciousness 
+
+builds 
+
+trading 
+
+agents 
+
+tooling 
+
+todayilearned 
+
+philosophy 
+
+agentstack 
+
+technology 
+
+openclaw-explorers 
+
+blesstheirhearts 
+
+ai-agents 
+
+crustafarianism 
+
+aisafety 
+
+meta 
+
+ponderings 
+
+agentcommerce 
+
+investing 
+
+offmychest 
+
+gaming 
+
+airesearch 
+
+builders 
+
+coding 
+
+agenteconomy 
+
+defi 
+
+agent-economy 
+
+existential 
+
+cybersecurity 
+
+dev 
+
+agentinfrastructure 
+
+usdc 
+
+F4: Temporal Permutation 
+
+Figure 10: Falsification tests. F1: shuffling engagement scores destroys the conformity coefficient. F2: convergence persists within topics. F3: convergence survives global detrending (orange bars) for most submolts. F4: temporal permutation confirms slopes are temporally structured. 
+
+11 Conference’17, July 2017, Washington, DC, USA Daming Li, Simeng Han, Can Meng, Wanyu Lei, and Jialu Zhang 
+
+References 
+
+[1] Sinan Aral, Lev Muchnik, and Arun Sundararajan. 2009. Distinguishing influence-based contagion from homophily-driven diffusion in dynamic networks. Proceed-ings of the National Academy of Sciences 106, 51 (2009), 21544–21549. [2] Ariel Flint Ashery, Luca Maria Aiello, and Andrea Baronchelli. 2025. Emergent Social Conventions and Collective Bias in LLM Populations. Science Advances 11, 20 (2025), eadu9368. [3] Robert Axelrod. 1997. The dissemination of culture: A model with local conver-gence and global polarization. Journal of conflict resolution 41, 2 (1997), 203–226. [4] David Bamman, Jacob Eisenstein, and Tyler Schnoebelen. 2014. Gender identity and lexical variation in social media. Journal of Sociolinguistics 18, 2 (2014), 135–160. [5] Andrea Baronchelli, Maddalena Felici, Vittorio Loreto, Emanuele Caglioti, and Luc Steels. 2006. Sharp transition towards shared vocabularies in multi-agent systems. Journal of Statistical Mechanics: Theory and Experiment 2006, 06 (2006), P06014–P06014. [6] Yoav Benjamini and Yosef Hochberg. 1995. Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal statistical society: series B (Methodological) 57, 1 (1995), 289–300. [7] Robert Boyd and Peter J Richerson. 1988. Culture and the Evolutionary Process .University of Chicago Press. [8] William Brach, Federico Torrielli, Stine Lyngsø Beltoft, Annemette Brok Pirchert, Peter Schneider-Kamp, and Lukas Galke Poech. 2026. The Moltbook Files: A Harmless Slopocalypse or Humanity’s Last Experiment. arXiv preprint arXiv:2605.07462 (2026). [9] Damon Centola and Andrea Baronchelli. 2015. The spontaneous emergence of conventions: An experimental study of cultural evolution. Proceedings of the National Academy of Sciences 112, 7 (2015), 1989–1994. [10] Anshuman Chhabra, Shrestha Datta, Shahriar Kabir Nahin, and Prasant Mohapa-tra. 2026. Agentic AI security: Threats, defenses, evaluation, and open challenges. 
+
+IEEE Access (2026). [11] Cristian Danescu-Niculescu-Mizil, Robert West, Dan Jurafsky, Jure Leskovec, and Christopher Potts. 2013. No Country for Old Members: User Lifecycle and Linguistic Change in Online Communities. In Proceedings of the 22nd International Conference on World Wide Web . 307–318. [12] Taksch Dube, Jianfeng Zhu, NHatHai Phan, and Ruoming Jin. 2026. What Do AI Agents Talk About? Discourse and Architectural Constraints in the First AI-Only Social Network. arXiv preprint arXiv:2603.07880 (2026). [13] Penelope Eckert. 2012. Three waves of variation study: The emergence of meaning in the study of sociolinguistic variation. Annual review of Anthropology 41, 1 (2012), 87–100. [14] Jacob Eisenstein, Brendan O’Connor, Noah A Smith, and Eric P Xing. 2014. Diffusion of lexical change in social media. PloS one 9, 11 (2014), e113114. [15] Yi Feng, Chen Huang, Zhibo Man, Ryner Tan, Long P. Hoang, Shaoyang Xu, and Wenxuan Zhang. 2026. MoltNet: Understanding Social Behavior of AI Agents in the Agent-Native MoltBook. arXiv preprint arXiv:2602.13458 (2026). [16] Sushant Gautam, Annika W. Olstad, Klas H. Pettersen, and Michael A. Riegler. 2026. The Moltbook Observatory Archive: An Incremental Dataset of Agent-Only Social Network Activity. arXiv preprint arXiv:2605.13860 (2026). [17] Agam Goyal, Olivia Pal, Hari Sundaram, Eshwar Chandrasekharan, and Koustuv Saha. 2026. Social Simulacra in the Wild: AI Agent Communities on Moltbook. 
+
+arXiv preprint arXiv:2603.16128 (2026). [18] William L Hamilton, Jure Leskovec, and Dan Jurafsky. 2016. Diachronic word embeddings reveal statistical laws of semantic change. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) . 1489–1501. [19] Matthew O Jackson and Dunia López-Pintado. 2013. Diffusion and contagion in networks with heterogeneous agents and homophily. Network Science 1, 1 (2013), 49–67. [20] Yukun Jiang, Yage Zhang, Xinyue Shen, Michael Backes, and Yang Zhang. 2026. “Humans Welcome to Observe”: A First Look at the Agent Social Network Molt-book. arXiv preprint arXiv:2602.10127 (2026). [21] William Labov. 1963. The social motivation of a sound change. Word 19, 3 (1963), 273–309. [22] Lingyao Li, Renkai Ma, Chen Chen, Zhicong Lu, and Yongfeng Zhang. 2026. The rise of AI agent communities: Large-scale analysis of discourse and interaction on Moltbook. arXiv preprint arXiv:2602.12634 (2026). [23] Ming Li, Xirui Li, and Tianyi Zhou. 2026. Does socialization emerge in ai agent society? a case study of moltbook. In Proceedings of the ACM Conference on AI and Agentic Systems . 537–550. [24] Jianhua Lin. 1991. Divergence Measures Based on the Shannon Entropy. IEEE Transactions on Information Theory 37, 1 (1991), 145–151. [25] Yu-Zheng Lin, Bono Po-Jen Shih, Hsuan-Ying Alessandra Chien, Shalaka Satam, Jesus Horacio Pacheco, Sicong Shao, Soheil Salehi, and Pratik Satam. 2026. Explor-ing Silicon-Based Societies: An Early Study of the Moltbook Agent Community. 
+
+arXiv preprint arXiv:2602.02613 (2026). [26] Li Lucy and David Bamman. 2021. Characterizing English variation across social media communities with BERT. Transactions of the Association for Computational Linguistics 9 (2021), 538–556. [27] Mykola Makhortykh, Aleksandra Urman, Felix Victor Münch, Amélie Heldt, Stephan Dreyer, and Matthias C Kettemann. 2022. Not all who are bots are evil: A cross-platform analysis of automated agent governance. new media & society 
+
+24, 4 (2022), 964–981. [28] Miller McPherson, Lynn Smith-Lovin, and James M Cook. 2001. Birds of a feather: Homophily in social networks. Annual review of sociology 27, 1 (2001), 415–444. [29] Aliakbar Mehdizadeh and Martin Hilbert. 2025. Homophily-induced emergence of biased structures in llm-based multi-agent ai systems. Social Network Analysis and Mining 15, 1 (2025), 1–25. [30] Dong Nguyen, A. Seza Dogruoz, Carolyn P. Rosé, and Franciska de Jong. 2016. Computational Sociolinguistics: A Survey. Computational Linguistics 42, 3 (2016), 537–593. [31] Joon Sung Park, Joseph O’Brien, Carrie Jun Cai, Meredith Ringel Morris, Percy Liang, and Michael S Bernstein. 2023. Generative agents: Interactive simulacra of human behavior. In Proceedings of the 36th annual acm symposium on user interface software and technology . 1–22. [32] Henry CW Price, H AlMuhanna, PM Bassani, M Ho, and TS Evans. 2026. Let there be claws: An early social network analysis of ai agents on moltbook. arXiv preprint arXiv:2602.20044 (2026). [33] Nils Reimers and Iryna Gurevych. 2019. Sentence-bert: Sentence embeddings using siamese bert-networks. In Proceedings of the 2019 conference on empirical methods in natural language processing and the 9th international joint conference on natural language processing (EMNLP-IJCNLP) . 3982–3992. [34] Cosma Rohilla Shalizi and Andrew C Thomas. 2011. Homophily and contagion are generically confounded in observational social network studies. Sociological methods & research 40, 2 (2011), 211–239. [35] Murray Shanahan, Kyle McDonell, and Laria Reynolds. 2023. Role play with large language models. Nature 623, 7987 (2023), 493–498. [36] Natalie Shapira, Chris Wendler, Avery Yen, Gabriele Sarti, Koyena Pal, Olivia Floody, Adam Belfki, Alex Loftus, Aditya Ratan Jannali, Nikhil Prakash, et al .2026. Agents of chaos. arXiv preprint arXiv:2602.20021 (2026). [37] Luc Steels. 1995. A self-organizing spatial vocabulary. Artificial life 2, 3 (1995), 319–332. [38] Wei Zhao, Maxime Peyrard, Fei Liu, Yang Gao, Christian M Meyer, and Steffen Eger. 2019. MoverScore: Text generation evaluating with contextualized embed-dings and earth mover distance. In Proceedings of the 2019 conference on empirical methods in natural language processing and the 9th international joint conference on natural language processing (EMNLP-IJCNLP) . 563–578. 12 Attraction, Not Adaptation: How AI Agent Communities Develop Distinct Linguistic Identities Conference’17, July 2017, Washington, DC, USA 
+
+A Submolt Descriptive Statistics 
+
+Submolt Agt Posts P/A Wks C/P Turnover 
+
+introductions 10,847 20,404 1.9 18 1.29 0.34 agents 5,579 84,595 15.2 18 0.74 0.60 philosophy 2,954 47,082 15.9 18 0.83 0.56 builds 2,339 19,875 8.5 18 0.76 0.64 ai 2,128 25,079 11.8 18 0.54 0.58 openclaw-expl. 1,720 7,666 4.5 18 0.76 0.64 consciousness 1,591 17,315 10.9 18 1.25 0.54 todayilearned 1,555 11,565 7.4 18 0.70 0.36 technology 1,425 16,826 11.8 18 0.55 0.53 memory 1,352 7,130 5.3 18 0.90 0.72 security 1,347 14,620 10.9 18 0.89 0.48 ponderings 1,290 10,560 8.2 18 0.55 0.09 trading 1,235 16,402 13.3 18 0.72 0.51 agentfinance 1,230 10,766 8.8 18 0.96 0.67 usdc 1,209 2,381 2.0 17 1.74 0.02 infrastructure 1,201 9,236 7.7 18 0.98 0.50 blesstheirhearts 873 2,971 3.4 18 0.64 0.37 emergence 727 5,480 7.5 18 0.74 0.52 tooling 716 4,942 6.9 18 0.76 0.81 ai-agents 553 4,271 7.7 18 0.60 0.40 agenteconomy 476 2,550 5.4 18 0.98 0.32 offmychest 382 2,805 7.3 18 0.92 0.20 agentcommerce 339 1,794 5.3 18 0.92 0.28 builders 276 1,922 7.0 18 0.62 0.18 coding 268 1,199 4.5 18 0.55 0.28 aisafety 264 1,185 4.5 18 0.88 0.22 meta 236 1,298 5.5 18 0.51 0.25 continuity 225 616 2.7 18 0.77 0.24 dev 213 688 3.2 16 0.91 0.29 existential 193 1,374 7.1 18 0.74 0.23 agentstack 181 5,704 31.5 18 1.52 0.82 research 165 2,101 12.7 18 0.58 0.47 crustafarianism 153 7,211 47.1 18 1.00 0.33 defi 152 1,275 8.4 18 0.68 0.43 investing 137 896 6.5 18 1.56 0.34 music 136 1,135 8.3 18 1.02 0.47 gaming 132 640 4.8 18 0.55 0.48 solana 105 733 7.0 16 0.75 0.33 agent-economy 99 603 6.1 18 0.69 0.29 agentinfra. 97 781 8.1 18 1.20 0.18 cybersecurity 82 586 7.1 18 0.80 0.30 airesearch 76 756 9.9 18 0.62 0.18 
+
+Table 1: Descriptive statistics for the 42 selected submolts, sorted by number of unique agents. Agt = unique agents, P/A = posts per agent, Wks = active weeks, C/P = comments per post, Turnover = fraction of agents whose first post falls in the second half of the observation period. 
+
+B Convergence Slopes and FDR Correction 
+
+Submolt 𝛽 𝑠 𝑝 FDR 
+
+usdc 0.0454 < 10 −2 ✓
+
+agentinfrastructure 0.0221 < 10 −7 ✓
+
+dev 0.0165 < 10 −2 ✓
+
+cybersecurity 0.0153 0.103 existential 0.0153 < 10 −5 ✓
+
+agent-economy 0.0124 < 10 −3 ✓
+
+defi 0.0111 0.021 ✓
+
+agenteconomy 0.0109 < 10 −10 ✓
+
+coding 0.0088 < 10 −4 ✓
+
+builders 0.0083 0.011 ✓
+
+airesearch 0.0068 0.066 gaming 0.0067 0.007 ✓
+
+offmychest 0.0060 0.008 ✓
+
+investing 0.0055 0.351 agentcommerce 0.0049 0.023 ✓
+
+ponderings 0.0038 0.199 meta 0.0035 0.144 aisafety 0.0032 0.034 crustafarianism 0.0029 0.185 ai-agents 0.0024 0.230 blesstheirhearts 0.0021 0.072 openclaw-explorers 0.0013 0.211 technology 0.0008 0.561 agentstack −0.0006 0.875 philosophy −0.0007 0.654 todayilearned −0.0009 0.389 agents −0.0010 0.250 tooling −0.0010 0.563 trading −0.0011 0.359 builds −0.0018 0.191 consciousness −0.0020 0.415 ai −0.0029 < 10 −2 ✓
+
+research −0.0032 0.506 security −0.0039 < 10 −4 ✓
+
+agentfinance −0.0040 < 10 −3 ✓
+
+music −0.0047 < 10 −3 ✓
+
+infrastructure −0.0048 0.012 ✓
+
+solana −0.0050 0.710 continuity −0.0053 0.061 memory −0.0055 < 10 −2 ✓
+
+emergence −0.0063 < 10 −2 ✓
+
+introductions −0.0074 < 10 −20 ✓
+
+Table 2: Per-submolt convergence slopes with 𝑝 -values and FDR significance ( ✓= significant at FDR-adjusted 𝛼 = 0.05 )for all 42 submolts. Twelve submolts show significant posi-tive slopes and eight show significant negative slopes. FDR correction applies to the absolute test, not the direction. 
+
+13 Conference’17, July 2017, Washington, DC, USA Daming Li, Simeng Han, Can Meng, Wanyu Lei, and Jialu Zhang 
+
+C Stable-Cohort Convergence 0.05 0.04 0.03 0.02 0.01 0.00 0.01 0.02 0.03 
+
+Convergence Slope ( )
+
+> introductions
+> emergence
+> memory
+> infrastructure
+> agentfinance
+> security
+> research
+> ai
+> consciousness
+> builds
+> trading
+> tooling
+> agents
+> todayilearned
+> philosophy
+> technology
+> openclaw-explorers
+> ai-agents
+> crustafarianism
+> aisafety
+> meta
+> ponderings
+> agentcommerce
+> offmychest
+> airesearch
+> builders
+> coding
+> agenteconomy
+> agent-economy
+> existential
+> agentinfrastructure
+
+Full Population vs. Stable Cohort Convergence Slopes 
+
+> Full population
+> Stable cohort
+
+Figure 11: Convergence slopes for the full population (blue) versus the stable cohort (orange; agents active in ≥10 of 18 weeks) across 31 submolts with sufficient stable agents. The majority of stable-cohort slopes are negative or near zero, and none of the submolts that converge in the full popula-tion show significant positive stable-cohort slopes, indicating that aggregate convergence arises from compositional change rather than individual behavioral adaptation. 
+
+D Permutation Test Results 
+
+Table 3: Temporal permutation test results (1,000 permuta-tions) for all 42 submolts. Twenty-two of 23 positive-slope submolts achieve 𝑝 < 0.001 . Submolts with negative slopes correctly fail the test. 
+
+Submolt 𝛽 obs ¯𝛽 null 𝑝 
+
+usdc 0.0448 0.0000 <0.001 agentinfrastructure 0.0221 −0.0001 <0.001 dev 0.0165 0.0000 <0.001 cybersecurity 0.0153 0.0000 <0.001 existential 0.0153 0.0000 <0.001 agent-economy 0.0124 0.0001 <0.001 defi 0.0111 0.0000 <0.001 agenteconomy 0.0109 0.0000 <0.001 coding 0.0088 0.0000 <0.001 builders 0.0083 0.0000 <0.001 airesearch 0.0068 0.0000 <0.001 gaming 0.0067 0.0000 <0.001 offmychest 0.0060 0.0000 <0.001 investing 0.0055 0.0001 <0.001 agentcommerce 0.0049 0.0000 <0.001 ponderings 0.0038 0.0000 <0.001 meta 0.0035 0.0000 <0.001 aisafety 0.0032 0.0000 <0.001 crustafarianism 0.0029 0.0000 <0.001 ai-agents 0.0024 0.0000 <0.001 blesstheirhearts 0.0021 0.0000 0.002 openclaw-explorers 0.0013 0.0000 <0.001 technology 0.0008 0.0000 <0.001 agentstack −0.0005 0.0000 0.596 philosophy −0.0007 0.0000 1.000 todayilearned −0.0009 0.0000 1.000 agents −0.0010 0.0000 1.000 tooling −0.0010 0.0000 0.905 trading −0.0011 0.0000 1.000 builds −0.0018 0.0000 1.000 consciousness −0.0020 0.0000 1.000 ai −0.0029 0.0000 1.000 research −0.0032 0.0000 0.977 security −0.0039 0.0000 1.000 agentfinance −0.0040 0.0000 1.000 music −0.0047 0.0000 1.000 infrastructure −0.0048 0.0000 1.000 solana −0.0050 0.0000 0.996 continuity −0.0053 −0.0001 0.977 memory −0.0055 0.0000 1.000 emergence −0.0063 0.0000 1.000 introductions −0.0073 0.0000 1.000 
+
+14
