@@ -1,0 +1,872 @@
+Title: Diverse Evidence, Better Forecasts: Multi-Agent Deliberation Under Information Asymmetry
+
+URL Source: https://arxiv.org/pdf/2607.01661v1
+
+Published Time: Fri, 03 Jul 2026 00:36:45 GMT
+
+Number of Pages: 17
+
+Markdown Content:
+# Diverse Evidence, Better Forecasts: Multi-Agent Deliberation Under Information Asymmetry 
+
+Yuante Li 1*† , Yicheng Tao 1* , Kate Zhang 1* ,Taozhi Wang 1, Gefei Gu 1, Yaxin Zhou 21 School of Computer Science, Carnegie Mellon University  
+
+> 2
+
+College of Engineering, Carnegie Mellon University 
+
+{yuantel, katezhan}@cs.cmu.edu , yichengtao@cmu.edu 
+
+Abstract 
+
+Multi-agent systems are increasingly used for forecasting future events, as deliberation among multiple LLMs is believed to improve reasoning and calibration. Yet existing ap-proaches overlook a critical design choice: what information each agent receives. When all agents are given identical evidence, deliber-ation collapses into herding rather than genuine belief revision, leaving multi-agent systems lit-tle better than a single agent. We identify this as a fundamental gap and propose designed information asymmetry to close it: by parti-tioning evidence into shared public and dis-joint private subsets, each agent holds exclusive knowledge that can only reach others through deliberation. We theoretically show that this decomposition reduces inter-agent error corre-lation, and instantiate it in InfoDelphi , a frame-work combining relevance-aware evidence rout-ing, rationale-based iterative deliberation, and confidence-weighted aggregation. On P OLY -GYM , a benchmark of 375 binary forecasting questions derived from real-world prediction markets, InfoDelphi outperforms the strongest single-agent and multi-agent baselines by 12– 18% in Brier score and 4–8 percentage points in accuracy. More detailed experiments confirm that removing information asymmetry elimi-nates most deliberation gains, establishing di-versity of input as the key enabler of effective multi-agent reasoning. 
+
+1 Introduction 
+
+Prediction markets such as Polymarket 1 aggregate the beliefs of thousands of participants into real-time probability estimates for future events, achiev-ing forecasting accuracy that often rivals or exceeds expert panels (Tetlock, 2005). With every question resolved against a definitive ground truth, these markets provide a natural benchmark for machine 
+
+> *Equal Contribution.
+> †Corresponding Author
+> 1https://polymarket.com/
+
+intelligence: can an automated system reason over evidence and match human-level forecasting? 
+
+Recent work has shown that large language mod-els (LLMs) equipped with retrieved evidence can approach human-level performance on binary fore-casting tasks (Halawi et al., 2024; Turtel et al., 2025), but these advances rely primarily on single-agent, single-pass pipelines that treat the entire ev-idence corpus as a monolithic context window. A natural extension is the multi-agent setting, where a panel of LLMs deliberates over the evidence before producing a collective forecast. Such frameworks draw inspiration from well-studied human mech-anisms for aggregating distributed knowledge— expert committees, structured interviews, and the Delphi method (Dalkey, 1969)—and have shown promise in general reasoning tasks (Chen et al., 2024; Wang et al., 2024). 
+
+Figure 1: Effect of information asymmetry on a real prediction. Left : agents with identical evidence con-verge to the same incorrect forecast. Right : agents with complementary private evidence self-correct through ra-tionale sharing, reducing Brier score from 0.45 to 0.004. 
+
+Effective collective reasoning, however, requires that participants hold informationally diverse views. As formalized in the Condorcet jury tradition and established empirically for human forecast-ers (Lorenz et al., 2011), when agents share identi-cal information, deliberation fails to improve col-lective accuracy: they reach the same conclusions independently, and iterative exchange merely re-1
+
+> arXiv:2607.01661v1 [cs.AI] 2 Jul 2026
+
+inforces the shared prior. In LLM systems this problem runs deeper. Recent work shows that mod-els from different providers make correlated errors at rates above 60% (Kim et al., 2025), and that stan-dard multi-agent debate under homogeneous input behaves as a martingale whose expected accuracy does not improve over rounds (Choi et al., 2026a). Figure 1 illustrates this failure mode on a real pre-diction market question: when all agents receive identical evidence, they converge to the same incor-rect forecast (left), whereas agents equipped with complementary private evidence can self-correct through deliberation (right). To address this, we propose designed informa-tion asymmetry , treating information asymmetry not as a limitation to overcome but as a princi-ple to exploit. We introduce InfoDelphi , a multi-agent forecasting framework that partitions evi-dence into a shared public pool and disjoint pri-vate subsets, giving each agent distinct expertise while preserving common ground for communi-cation. This mirrors effective human expert pan-els, where participants contribute complementary knowledge rather than reading the same briefing materials. InfoDelphi constructs informative ev-idence partitions using BM25 relevance ranking. During deliberation, agents exchange rationale ex-cerpts rather than raw evidence, enabling efficient propagation of private signals. Final forecasts are aggregated through confidence-weighted averag-ing in logit space, emphasizing the predictions of the best-informed agents. Together, these design choices ensure that deliberation surfaces new infor-mation rather than reinforcing shared priors. Furthermore, existing forecasting benchmarks entangle retrieval quality with reasoning ability, making it impossible to assess whether gains come from better search or better deliberation. We intro-duce P OLY GYM , a controlled benchmark of 375 bi-nary Polymarket questions with fixed, pre-retrieved evidence shared across all methods. On P OLY GYM ,InfoDelphi outperforms the strongest single-agent and multi-agent baselines by 12–18% in Brier score and 4–8 percentage points in accuracy. Detailed ablations confirm that the public/private split and rationale sharing are jointly necessary, as removing either eliminates most gains, and cross-model ex-periments demonstrate consistent improvements from open-source to frontier proprietary LLMs. These results establish designed information asym-metry as a general principle for multi-agent reason-ing under uncertainty. Our main contributions are as follows: • We propose designed information asymmetry 
+
+for multi-agent reasoning, and theoretically show that public/private evidence partitioning reduces inter-agent error correlation. • We introduce InfoDelphi , which instantiates this principle through relevance-aware evi-dence routing, rationale-based deliberation, and confidence-weighted aggregation. • We construct P OLY GYM , a controlled forecast-ing benchmark that isolates information uti-lization from retrieval, and conduct extensive experiments showing that (a) deliberation with-out information diversity provides little benefit, (b) rationale sharing is critical for cross-agent information transfer, and (c) gains generalize across different LLM backends. 
+
+2 Related Work 
+
+LLM-based Forecasting. Early work estab-lished a substantial gap between LLM and human forecasting accuracy. Zou et al. (2022) find that lan-guage models achieve only 65% accuracy on Auto-cast compared to 92% for human aggregates, while Schoenegger and Park (2023) show that GPT-4 without augmentation does not significantly outper-form a random baseline on Metaculus. Retrieval-augmented generation (Lewis et al., 2020) substan-tially closes this gap: Yan et al. (2023) improve Au-tocast accuracy through zero-shot re-ranking and summarization of retrieved news, and Halawi et al. (2024) present a full pipeline achieving near-human performance on Polymarket and Metaculus. More recent work focuses on training: Turtel et al. (2025) fine-tune on 12,100 resolved Polymarket questions, and Chandak et al. (2025) train an 8B model via reinforcement learning that matches proprietary LLMs on prediction benchmarks. On the aggre-gation side, Schoenegger et al. (2024) show that ensembling diverse LLMs produces forecasts sta-tistically indistinguishable from human forecasters. Benchmark design has matured in parallel: Fore-castBench (Karger et al., 2024) and FutureX (Zeng et al., 2025) provide continuously updated evalua-tions with strict temporal controls, and Paleka et al. (2025) identify systematic pitfalls including tempo-ral leakage and piggybacking on existing forecasts. Despite this progress, existing pipelines treat fore-casting as a single-agent process and do not study evidence distribution across a deliberating panel. 2Multi-Agent Reasoning and Deliberation. 
+
+Multi-agent debate has emerged as a general strategy for improving LLM reasoning (Du et al., 2024). Wang et al. (2022) show that sampling diverse chain-of-thought paths and selecting by majority vote improves accuracy, while Wang et al. (2024) propose Mixture-of-Agents, a layered architecture where later agents condition on all prior outputs. Chen et al. (2024) demonstrate that a round-table conference of diverse LLMs with confidence-weighted voting outperforms single-agent baselines across reasoning benchmarks. However, recent theory suggests multi-agent debate is not uniformly beneficial. Choi et al. (2026b) prove that under a Dirichlet-Categorical belief model, standard multi-agent debate forms a 
+
+martingale : expected correctness does not improve over rounds when agents receive identical inputs. Shin (2026) formalize this via the Data Processing Inequality: closed-system deliberation forms a Markov chain, so mutual information with the ground truth can only decrease. Kim et al. (2025) document that LLM errors are 60%+ correlated, implying that naive ensembling hits a non-zero error floor. Our work addresses these limitations by introducing designed information asymmetry to break correlation and convert the martingale into productive belief revision. 
+
+Information Aggregation and Collective Intelli-gence. The conditions under which groups out-perform individuals are well studied. Surowiecki (2004) identify independence, diversity, and decen-tralized knowledge as key conditions for collective intelligence, while Hong and Page (2004) show that diverse groups can outperform groups of only high-ability individuals. The DeGroot model (DeGroot, 1974) formalizes iterative belief aggregation, and the Delphi method (Dalkey, 1969) applies struc-tured multi-round elicitation to reduce expert dis-agreement. For probabilistic forecasting, the linear opinion pool (Stone, 1961) and logit-space extrem-ization (Satopää et al., 2014) provide principled aggregation. Meanwhile, social influence can sup-press diversity without improving accuracy (Lorenz et al., 2011), and informational cascades may cause agents to ignore private signals once consensus emerges (Bikhchandani et al., 1992). Our frame-work operationalizes the positive conditions for collective intelligence while explicitly mitigating herding and information loss through evidence par-titioning and rationale-based communication. 
+
+3 Methodology 
+
+3.1 Problem Formulation 
+
+Let q denote a binary forecasting question with resolution date τ and ground truth y ∈ { 0, 1}. Each question is accompanied by a retrieved evidence corpus E = {e1, . . . , e n}, where ei consists of a title, URL, and textual snippet retrieved prior to 
+
+τ . Therefore, given the question q and evidence corpus E, the goal is to estimate p(y = 1 | q, E),where p ∈ [0 , 1] denotes the predicted probability that the event resolves positively. 
+
+3.2 Theoretical Motivation 
+
+We begin by formalizing why information asym-metry improves collective forecasting, drawing on the bias-variance-covariance decomposition of the ensemble mean squared error. 
+
+Homogeneous input induces correlated errors. 
+
+Consider J agents each receiving the same evi-dence E. Let pj denote agent j’s forecast and y the ground truth. The ensemble forecast ¯p = 1
+
+> J
+
+P 
+
+> j
+
+pj
+
+has mean squared error: 
+
+MSE(¯ p) = Bias 2 + ¯ σ2 − Div , (1) where ¯σ2 = 1
+
+> J
+
+P 
+
+> j
+
+Var( pj ) is the average agent variance and Div = 1
+
+> J
+
+P 
+
+> j
+
+Var( pj − ¯p) is the diversity term (Wood et al., 2023). When all agents observe identical input, their prediction er-rors ϵj = pj − y are driven by the same evidence and thus highly correlated: Cov( ϵi, ϵ j ) ≈ Var( ϵ)
+
+for i̸ = j. In this regime, the diversity term Div col-lapses toward zero, because agents conditioned on identical input produce nearly identical forecasts, and the ensemble provides no benefit over a single agent. Recent empirical work confirms this: LLM errors are correlated across providers, and optimal aggregation under full correlation has a non-zero error floor (Kim et al., 2025; Turkmen et al., 2026). 
+
+Information asymmetry reduces error correla-tion. We now show that the public/private evi-dence partition directly reduces this correlation. 
+
+Proposition 3.1 (Diversity-Induced Decorrelation) .
+
+Let each agent’s prediction error decompose as 
+
+ϵj = ρ · ϵpub + (1 − ρ) · ϵpriv  
+
+> j
+
+, where ϵpub is the error component driven by shared public evidence, 
+
+ϵpriv  
+
+> j
+
+is the component driven by agent j’s private evidence, and ρ ∈ [0 , 1] is the public ratio. Let 
+
+σ2pub = Var( ϵpub ) and assume: 
+
+3(i) Cov( ϵpriv  
+
+> i
+
+, ϵ priv  
+
+> j
+
+) = 0 for i̸ = j (private– private independence); (ii) Cov( ϵpub , ϵ priv  
+
+> k
+
+) = 0 for all k (public–private independence); (iii) Var( ϵpriv  
+
+> j
+
+) = σ2priv for all j (symmetric pri-vate noise). Then: 
+
+Corr( ϵi, ϵ j ) = ρ2 σ2pub 
+
+ρ2 σ2pub + (1 −ρ)2 σ2priv 
+
+. (2) 
+
+Proof. By bilinearity of covariance and assump-tions (i)–(ii), all cross-terms vanish, giving 
+
+Cov( ϵi, ϵ j ) = ρ2σ2pub . By assumptions (ii)–(iii), the cross-term in the variance expansion also van-ishes, so Var( ϵj ) = ρ2σ2pub + (1 −ρ)2σ2priv , which equals Var( ϵi) by symmetry. Dividing covariance by pVar( ϵi)Var( ϵj ) = Var( ϵj ) gives (2). Proposition 3.1 shows that inter-agent error correla-tion decreases monotonically as ρ decreases from 1 to 0. As a concrete instance, at the default ρ = 0 .5
+
+with equal-variance components ( σpub = σpriv ), correlation equals 0.25 /(0 .25 + 0 .25) = 0 .5, half the all-public baseline ( ρ=1 , correlation = 1 ). At 
+
+ρ = 0 (all-private), agents are fully decorrelated; at ρ = 1 (all-public, standard debate), correlation reaches its maximum. 
+
+Corollary 3.1.1 (Optimal Public Ratio Trade-off) .
+
+Decreasing ρ reduces error correlation (improving ensemble gain) but also reduces the shared context necessary for agents to interpret each other’s ratio-nales. An optimal ρ∗ ∈ (0 , 1) therefore exists that balances diversity against communicability. 
+
+Rationale sharing enables cross-agent informa-tion transfer. Even with disjoint evidence, agents cannot benefit from each other’s private signals un-less they communicate their reasoning , not just their conclusions. By the Data Processing In-equality (Shin, 2026), a deliberation system where agents only exchange numeric estimates forms a Markov chain Ej → p(1)  
+
+> j
+
+→ p(2)  
+
+> j
+
+→ · · · , so 
+
+I(y; p(r+1)  
+
+> j
+
+) ≤ I(y; p(r) 
+
+> j
+
+): information with the ground truth can only decrease. Sharing rationales breaks this Markov structure: agent i now observes a summary of agent j’s reasoning over Epriv  
+
+> j
+
+, ef-fectively receiving a lossy projection of j’s private evidence. This converts the system from closed to open, allowing I(y; p(r+1)  
+
+> j
+
+) > I (y; p(r) 
+
+> j
+
+), which is a necessary condition for iterative deliberation to improve over a single round. 
+
+3.3 The InfoDelphi Framework Overview. Figure 2 illustrates the end-to-end In-foDelphi pipeline. Our theoretical analysis (Sec-tion 3.2) identifies three conditions for effective collective forecasting: agents must hold diverse signals (to reduce error correlation), share com-mon ground (to enable meaningful communica-tion), and exchange reasoning (to transfer private information). InfoDelphi instantiates these condi-tions through three corresponding stages: (1) Ev-idence routing partitions E into a shared public pool and disjoint private subsets via BM25 rel-evance ranking, simultaneously satisfying diver-sity and common ground; (2) Iterative deliber-ation enables agents to exchange rationale ex-cerpts across rounds, converting private signals into shared knowledge; (3) Confidence-weighted aggregation combines final-round forecasts in logit space, amplifying agents whose private evidence supports stronger predictions. 
+
+Evidence Routing. We consider a panel of J
+
+agents {A1, . . . , A J } and a public ratio ρ ∈ [0 , 1] .The corpus is partitioned into a shared public subset 
+
+Epub and J disjoint private subsets: 
+
+E = Epub ∪
+
+> J
+
+G
+
+> j=1
+
+Epriv  
+
+> j
+
+, |E pub | = ⌊ρ · |E|⌋ . (3) Agent Aj observes the private view Ej = Epub ∪Epriv  
+
+> j
+
+.To maximize information diversity across pri-vate subsets, we allocate documents via BM25 rel-evance routing : each document ei ∈ E \ E pub 
+
+receives a relevance score si = BM25( ei, q ). The top-|E pub | scoring documents form Epub : since these are the most directly relevant to the question, they serve as the shared “language” through which agents can interpret each other’s reasoning during deliberation. The remaining documents are sorted by si and assigned to agents in round-robin order, so that adjacent relevance levels are spread across distinct private views. This design ensures that each agent holds a unique slice of peripheral evidence while sharing access to core information, enabling diversity without sacrificing common ground. 
+
+Iterative Deliberation with Rationale Sharing. 
+
+At each round r ∈ { 1, . . . , R }, agent Aj produces a structured forecast: 
+
+f (r) 
+
+> j
+
+=  p(r) 
+
+> j
+
+, ℓ (r) 
+
+> j
+
+, r (r)
+
+> j
+
+, (4) 4Figure 2: Overview of the InfoDelphi framework. (a) Evidence Routing : documents are ranked by BM25 relevance and distributed round-robin, constructing a shared public pool and disjoint private subsets for each agent. (b) Multi-Agent Deliberation : agents exchange structured forecasts and rationales over two rounds via a history summarizer, enabling private information to propagate. (c) Confidence-Weighted Aggregation : final forecasts are combined by prediction-extremity weights ( wj = |logit( pj )|) into a single probability estimate. 
+
+where p(r) 
+
+> j
+
+∈ [0 , 1] is a probability estimate, ℓ(r) 
+
+> j
+
+∈{0, 1} is a categorical prediction, and r(r) 
+
+> j
+
+is a free-text rationale. The agent conditions on its private view and a history summary of prior-round fore-casts: 
+
+f (r) 
+
+> j
+
+∼ LLM 
+
+
+
+q, Ej , h (r−1) 
+
+, (5) where h(0) = ∅ and, for r ≥ 2:
+
+h(r−1) = (p(r−1)  
+
+> k
+
+, ℓ (r−1)  
+
+> k
+
+, r (r−1)  
+
+> k
+
+) k̸ =j . (6) Crucially, h(r−1) includes rationale excerpts from other agents, not only their numeric estimates. As established in Section 3.2, this is what allows pri-vate evidence to propagate across agent boundaries. We study two deliberation protocols: indepen-dent forecasting , where agents reason solely from their private view; and iterative deliberation (the full InfoDelphi protocol), where agents addition-ally observe all other agents’ Round 1 forecasts and rationales before producing their final prediction. 
+
+Confidence-Weighted Aggregation. Given J
+
+agents’ final-round forecasts {f (R) 
+
+> j
+
+}Jj=1 , we aggre-gate them via Confidence-Weighted (CW) pooling :
+
+ˆpCW = σ
+
+
+
+> J
+
+X
+
+> j=1
+
+wj · logit( p(R) 
+
+> j
+
+)
+
+> J
+
+X
+
+> j=1
+
+wj
+
+
+
+,wj = logit( p(R) 
+
+> j
+
+) (7) where σ(·) is the sigmoid function and wj =
+
+|logit( p(R) 
+
+> j
+
+)| weights each agent by the extrem-ity of its prediction. Aggregation is performed in logit space to respect bounded probabilities. This is equivalent to weighted geometric averaging of odds ratios and coincides with the logarithmic opin-ion pool under uniform weights (Genest and Zidek, 1986). Agents with stronger private evidence pro-duce more extreme forecasts, so up-weighting them amplifies the most informed signals. 
+
+4 Experimental Setup 
+
+Dataset. Current LLM forecasting systems (Ha-lawi et al., 2024; Turtel et al., 2025) primarily emphasize retrieval quality , while an equally im-portant capability is information utilization : how agents interpret, distribute, and collaboratively rea-son over retrieved evidence. To study this dimen-sion in isolation, we construct POLY GYM , a con-trolled forecasting benchmark built from real-world Polymarket questions. Specifically, P OLY GYM 
+
+contains 375 binary forecasting markets with tem-porally filtered evidence corpora, where each ques-tion is paired with up to 30 pre-retrieved documents collected before market resolution. Unlike live forecasting benchmarks, all methods operate over the same fixed evidence pool, eliminating variabil-ity from changing web environments and unstable search results. This design enables reproducible evaluation of multi-agent deliberation strategies under controlled information conditions. Impor-tantly, P OLY GYM explicitly supports the study of designed information asymmetry , as it isolates whether performance gains arise from improved reasoning and coordination rather than from supe-5rior retrieval alone. More details in Appendix B. 
+
+Baselines. We compare against two categories of baselines (details in Appendix E). ❶ Single-agent methods : Zero-shot (Kojima et al., 2022), Sequential Bayesian (Shi et al., 2023), Chain-of-Thought (Wei et al., 2022), Self-Consistency (Wang et al., 2022), Halawi et al. (Ha-lawi et al., 2024), and Superforecaster (Karger et al., 2024). ❷ Multi-agent methods with ho-mogeneous input : Standard Debate (Du et al., 2024), MoA (Wang et al., 2024), Crowd Ensem-ble (Schoenegger et al., 2024), and AIA Fore-caster (Alur et al., 2025). 
+
+Metrics. We report two complementary metrics. The Brier score BS = 1
+
+> N
+
+PNk=1 (ˆ pk − yk)2 mea-sures probabilistic calibration. Accuracy reports the fraction of questions for which the predicted label 1[ˆ p ≥ 0.5] matches the ground-truth y.
+
+Implementation. All experiments use 
+
+gpt-5.4-mini via the OpenRouter API 2 as the primary model. We use J = 3 agents, R = 2 
+
+deliberation rounds, and ρ = 0.5 as default settings, with temperature 0.7, random seed 42, and parallelization across 15 workers. 
+
+5 Results 
+
+5.1 Main Results 
+
+Table 1 compares InfoDelphi under independent and iterative deliberation protocols with baselines. 
+
+➠ Overall performance. InfoDelphi achieves the best Brier score (0.178) and accuracy (77.9%) across all methods. The improvement stems from two complementary mechanisms: information partitioning creates diverse signals that reduce cor-related errors, and rationale-based deliberation al-lows agents to correct each other using their pri-vate evidence. Notably, even without deliberation (R=1 ), InfoDelphi already achieves the second-highest accuracy (74.1%), confirming that the di-versity introduced by evidence routing provides value before any inter-agent communication occurs. Deliberation then amplifies this by enabling agents to propagate their private insights to others. 
+
+➠ Information diversity is the key enabler. 
+
+Across all baselines, neither scaling the number of agents, improving prompting strategies, nor adding 
+
+> 2
+
+openrouter.ai 
+
+Table 1: Results on P OLY GYM (N = 375 ). Methods are grouped by category. Bold is the best; underline is the second best.                            
+
+> Category Method Brier ↓Acc ↑
+> Single-Agent  Zero-shot (Kojima et al., 2022) 0.201 66.7% Seq. Bayesian (Shi et al., 2023) 0.256 62.1% Chain-of-Thought (Wei et al., 2022) 0.216 69.9% Self-Consistency (Wang et al., 2022) 0.221 69.6% Halawi et al. (Halawi et al., 2024) 0.238 65.3% Superforecaster (Karger et al., 2024) 0.242 68.8%
+> Multi-Agent  Standard Debate (Du et al., 2024) 0.202 73.9% MoA (Wang et al., 2024) 0.220 70.9% Crowd Ensemble (Schoenegger et al., 2024) 0.245 65.9% AIA Forecaster (Alur et al., 2025) 0.247 67.7%
+> Ours  InfoDelphi (no deliberation) 0.206 74.1%
+> InfoDelphi 0.178 77.9%
+
+sophisticated aggregation mechanisms yields mean-ingful gains without information diversity. Multi-agent methods with homogeneous input (MoA, Crowd Ensemble, AIA Forecaster) fail to out-perform a single Chain-of-Thought agent despite deploying 3–10 agents with various aggregation strategies. Similarly, single-agent methods with elaborate prompting (Halawi’s 7-step scratchpad, Superforecaster’s structured reasoning) perform 
+
+worse than simple Chain-of-Thought, suggesting that more elaborate reasoning on noisy evidence amplifies rather than mitigates errors. The one par-tial exception is Standard Debate, which benefits from iterative belief revision, yet it remains well below InfoDelphi because agents sharing identical evidence can only reinforce existing interpretations rather than introduce genuinely new perspectives. These results are consistent with the prediction of Proposition 3.1: without information asymmetry, inter-agent error correlation remains high and ag-gregation provides diminishing returns. 
+
+5.2 Ablation Studies 
+
+We ablate each design dimension against the default InfoDelphi configuration ( J=3 agents, 
+
+R=2 rounds, ρ=0 .5, BM25 routing, confidence-weighted aggregation, with rationale sharing). Each ablation varies one component while hold-ing others fixed (detailed settings are provided in Appendix E). 
+
+➠ Creating asymmetry is necessary but not suf-ficient. Section 3.2 argues that effective collec-tive reasoning requires three conditions: diverse signals, common ground, and reasoning exchange. The ablation results confirm this hierarchy. Simply partitioning evidence without deliberation already outperforms most homogeneous baselines; adding a second round yields a further −0.028 Brier reduc-6Table 2: Ablation results on P OLY GYM . Each row varies one component from the default InfoDelphi con-figuration. Bold is the best.                                   
+
+> Dimension Setting Brier ↓Acc ↑
+> Rounds
+> R=1 (no deliberation) 0.206 74.1%
+> R=2 (default) 0.178 77.9%
+> R=3 0.196 75.7% Public ratio
+> ρ=0 .30.191 75.5%
+> ρ=0 .5(default) 0.178 77.9%
+> ρ=1 .0(all public) 0.193 75.7% Rationale sharing Without 0.211 70.4% With (default) 0.178 77.9%
+> Aggregation Uniform weighting 0.196 74.9% Confidence-weighted (default) 0.178 77.9%
+> Evidence routing Random allocation 0.188 76.2% Relevance-based (default) 0.178 77.9%
+
+tion, demonstrating that information asymmetry creates the potential for improvement while delib-eration realizes it. However, a third round reverses this gain: with a finite evidence pool, two rounds suffice to propagate most private signals, and fur-ther deliberation leads to convergence toward a group consensus rather than continued refinement. 
+
+➠ How agents communicate determines whether deliberation helps. The largest degra-dation occurs when rationale sharing is removed, reducing deliberation to a closed system. This validates the DPI argument: exchanging only numeric estimates preserves the Markov structure and prevents private information from flowing across agent boundaries. With rationale sharing, agents receive a lossy projection of each other’s private evidence; without it, information about ground truth can only decrease over rounds. 
+
+➠ The balance between diversity and common ground. The public ratio ρ reveals an asymmet-ric failure mode: too little shared context ( ρ=0 .3)is as harmful as too much ( ρ=1 .0), but for different reasons. The former breaks communication while the latter eliminates diversity. Even at the optimal split ( ρ=0 .5), the method of allocation still mat-ters: relevance-based routing outperforms random by 0.010 Brier. This suggests that effective infor-mation asymmetry is not just about how much to split, but about ensuring the public pool serves as meaningful common ground while private subsets contain genuinely complementary signals. 
+
+➠ Confidence-weighted aggregation ampli-fies informed agents. Replacing confidence-weighted aggregation with uniform weighting de-grades Brier by 0.018, showing that not all agents contribute equally after deliberation. Agents with 
+
+Table 3: Cross-model generalization of InfoDelphi (mean ± std over 3 runs).                  
+
+> Independent Iterative Model Brier ↓Acc ↑Brier ↓Acc ↑
+> Llama-4-Scout .209 ±.002 67.3 ±0.7% .204 ±.002 68.3 ±0.6%
+> GPT-5.4-mini .208 ±.005 73.8 ±0.8% .189 ±.009 76.7 ±1.2%
+> DeepSeek-V3.2 .184 ±.001 75.4 ±0.9% .163 ±.005 79.6 ±1.3%
+
+stronger private evidence produce more extreme predictions, and up-weighting them concentrates influence in the most informed voices (validated in Section 5.4). 
+
+➠ Summary. The ablations reveal that InfoDel-phi’s gains are driven by the principle of designed information asymmetry rather than any single al-gorithmic component. Rationale sharing and the public/private split are the load-bearing design choices, while the routing algorithm and aggre-gation scheme provide further gains but are not irreplaceable, implying that the framework general-izes beyond its current form: alternative evidence partitioning strategies (e.g., dense retrieval) or ag-gregation methods can be substituted while preserv-ing the benefit of information-diverse deliberation. 
+
+5.3 Cross-Model Generalization 
+
+To verify that InfoDelphi’s gains are not specific to a single model, we evaluate the full frame-work on additional backends: DeepSeek-V3.2 (Liu et al., 2025) and Llama-4-Scout-17B (Adcock et al., 2026), as shown in Table 3. All three models bene-fit from iterative deliberation, with the gain scaling with model capability. This pattern suggests that stronger models extract more value from rationale sharing, as interpreting others’ reasoning requires sufficient comprehension ability. Notably, even the smallest model benefits from information partition-ing alone (its independent mode already outper-forms most homogeneous multi-agent baselines), confirming that the framework is effective across the full spectrum of model capabilities. 
+
+5.4 Detailed Analysis 
+
+➠ Why does confidence weighting work in the asymmetric setting? Our confidence-weighted aggregation rests on the assumption that agents with stronger private evidence will produce more extreme predictions. Figure 3 validates this: ac-curacy increases monotonically from 62.7% in the least extreme quartile to 94.7% in the most extreme, while Brier score falls from 0.235 to 0.052. However, a deeper question is why CW 7Q1     
+
+> (least extreme)
+> Q2 Q3 Q4
+> (most extreme)
+> Prediction Extremity Quartile ( |p0.5| )
+> 30
+> 40
+> 50
+> 60
+> 70
+> 80
+> 90
+> 100
+> Accuracy (%)
+> 62.7
+> 68.5
+> 76.9
+> 94.7
+> 0.00
+> 0.05
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> 0.35
+> Brier Score 0.235
+> 0.259
+> 0.216
+> 0.052
+> Accuracy (%) Brier Score
+
+Figure 3: Accuracy and Brier score by prediction ex-tremity quartile ( |p − 0.5|). More extreme predictions correlate strongly with higher accuracy, validating the confidence-weighted aggregation design. 
+
+works better under information asymmetry than under homogeneous input. We find that individual agents are equally extreme in both settings (mean 
+
+|p − 0.5| ≈ 0.36 ), but their predictions point in dif-ferent directions under InfoDelphi: inter-agent vari-ance is 1.7 × higher than in the homogeneous set-ting. In other words, information asymmetry does not make agents more confident—it makes them confident about different things . CW aggregation therefore synthesizes diverse high-confidence sig-nals grounded in complementary evidence, rather than merely amplifying a shared bias. 
+
+➠ Information asymmetry preserves diversity through deliberation. A key concern with itera-tive deliberation is herding: agents may converge toward a consensus regardless of their private ev-idence, collapsing the diversity that makes multi-agent systems valuable. Figure 4 quantifies this by measuring inter-agent prediction variance be-fore and after deliberation under three evidence allocation strategies. Under All Info ( ρ=1 .0) and Random Split ( ρ=0 .5), deliberation reduces vari-ance by 90–92%, indicating near-complete con-vergence. Under relevance-based routing ( ρ=0 .5), variance reduction is only 73%, preserving sub-stantially more inter-agent diversity. This confirms that information asymmetry acts as a structural safeguard against herding: agents holding private evidence that they judge to be strongly predictive maintain distinct perspectives even after observing others’ reasoning, because their exclusive informa-tion provides an independent basis for conviction that social pressure alone cannot override. 
+
+➠ Statistical significance. We verify that In-foDelphi’s improvements are statistically signif-icant via paired Wilcoxon signed-rank tests on per-BM25 Split Random Split All Info  
+
+> 0.000
+> 0.005
+> 0.010
+> 0.015
+> 0.020
+> 0.025
+> 0.030
+> 0.035
+> 0.040
+> Mean Inter-Agent Variance
+> 73% 92%
+> 90%
+> Round 1 (before)
+> Round 2 (after)
+
+Figure 4: Mean inter-agent prediction variance before (Round 1) and after (Round 2) deliberation. BM25 routing preserves substantially more diversity (73% re-duction) compared to Random Split and All Info. Table 4: Statistical significance of InfoDelphi vs. base-lines (paired Wilcoxon signed-rank test). 
+
+Baseline ∆Brier p-value 
+
+vs. Single-Agent −0.038 <0.001 vs. Standard Debate −0.023 0.021 vs. MoA −0.042 0.010 vs. Crowd Ensemble −0.067 <0.001 vs. AIA Forecaster −0.069 <0.001 
+
+question Brier scores (Table 4). InfoDelphi sig-nificantly outperforms all baselines ( p < 0.05 ), with the strongest significance against methods that scale agents without information diversity (Crowd Ensemble, AIA Forecaster: p < 0.001 ). 
+
+6 Conclusion 
+
+We presented InfoDelphi , a multi-agent forecasting framework built on a simple but overlooked insight: collective reasoning only outperforms individual reasoning when participants hold genuinely differ-ent information. By treating information asymme-try as a first-class design principle, InfoDelphi con-verts redundant deliberation into productive belief revision, achieving consistent gains across model scales and families on P OLY GYM . Probabilistic forecasting represents a particularly demanding test of this principle, requiring synthesis of noisy, con-tradictory evidence into calibrated estimates under irreducible uncertainty. That designed informa-tion asymmetry yields robust improvements in this setting suggests broad applicability to multi-agent systems where agents reason over shared evidence, from collaborative question answering to scientific hypothesis evaluation to complex decision support. 8Limitations 
+
+Theoretical assumptions. Proposition 3.1 rests on three idealizing assumptions: a linear error decomposition, public–private independence, and symmetric private noise. In practice, documents re-trieved for the same question share topical correla-tions, partially violating the independence assump-tions and making the decorrelation bound approx-imate. The linear decomposition further assumes that public and private error components combine with fixed weights ρ and 1−ρ, a functional form that LLMs, as non-linear functions of their inputs, need not satisfy. 
+
+Scope. API cost scales linearly with agents × rounds (about 12$ for 375 questions), which limits our ability to conduct large-scale experiments with more agents or deliberation rounds that would be needed to precisely characterize convergence be-havior. Additionally, as our primary contribution is the multi-agent paradigm of designed information asymmetry, both evidence routing and aggregation employ standard off-the-shelf methods. More so-phisticated alternatives may yield further gains. 
+
+Ethics considerations 
+
+This work presents a forecasting framework and does not directly enable disinformation or harm beyond risks inherent to LLM-based systems gen-erally. However, automated probability estimates generated at scale could in principle be misused to manipulate market sentiment or create false impres-sions of consensus. We recommend that InfoDel-phi be used as a decision-support tool with human oversight in high-stakes deployment contexts. 
+
+References 
+
+Aaron Adcock, Aayushi Srivastava, Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pande, Abhinav Pandey, Abhinav Sharma, Abhishek Kadian, Abhishek Ku-mawat, Adam Kelsey, and 1 others. 2026. The llama 4 herd: Architecture, training, evaluation, and deploy-ment notes. arXiv preprint arXiv:2601.11659. Rohan Alur, Bradly C Stadie, Daniel Kang, Ryan Chen, Matt McManus, Michael Rickert, Tyler Lee, Michael Federici, Richard Zhu, Dennis Fogerty, and 1 oth-ers. 2025. Aia forecaster: Technical report. arXiv preprint arXiv:2511.07678. Sushil Bikhchandani, David Hirshleifer, and Ivo Welch. 1992. A theory of fads, fashion, custom, and cul-tural change as informational cascades. Journal of political Economy, 100(5):992–1026. Nikhil Chandak, Shashwat Goel, Ameya Prabhu, Moritz Hardt, and Jonas Geiping. 2025. Scaling open-ended reasoning to predict the future. In Workshop on Scaling Environments for Agents. Justin Chen, Swarnadeep Saha, and Mohit Bansal. 2024. Reconcile: Round-table conference improves reasoning via consensus among diverse llms. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 7066–7085. Zhiyu Chen, Wenhu Chen, Charese Smiley, Sameena Shah, Iana Borova, Dylan Langdon, Reema Moussa, Matt Beane, Ting-Hao Huang, Bryan Routledge, and William Yang Wang. 2021. Finqa: A dataset of nu-merical reasoning over financial data. Proceedings of EMNLP 2021. Pu Cheng, Juncheng Liu, and Yunshen Long. 2026. Polybench: Benchmarking llm forecasting and trad-ing capabilities on live prediction market data. Preprint, arXiv:2604.14199. Hyeong Kyu Choi, Jerry Zhu, and Sharon Li. 2026a. Debate or vote: Which yields better decisions in multi-agent large language models? Advances in Neural Information Processing Systems , 38:101732– 101764. Hyeong Kyu Choi, Jerry Zhu, and Sharon Li. 2026b. Debate or vote: Which yields better decisions in multi-agent large language models? Advances in Neural Information Processing Systems , 38:101732– 101764. Hui Dai, Ryan Teehan, and Mengye Ren. 2025. Are llms prescient? a continuous evaluation using daily news as the oracle. In International Conference on Machine Learning. N. Dalkey. 1969. An experimental study of group opin-ion: The delphi method. Futures, 1(5):408–426. Morris H. DeGroot. 1974. Reaching a consensus. Journal of the American Statistical Association ,69(345):118–121. Yilun Du, Shuang Li, Antonio Torralba, Joshua B Tenen-baum, and Igor Mordatch. 2024. Improving factual-ity and reasoning in language models through multi-agent debate. In Forty-first international conference on machine learning. Christian Genest and James V. Zidek. 1986. Combining Probability Distributions: A Critique and an Anno-tated Bibliography. Statistical Science , 1(1):114 – 135. Danny Halawi, Fred Zhang, Chen Yueh-Han, and Jacob Steinhardt. 2024. Approaching human-level fore-casting with language models. Advances in Neural Information Processing Systems, 37:50426–50468. 
+
+9Lu Hong and Scott E. Page. 2004. Groups of di-verse problem solvers can outperform groups of high-ability problem solvers. Proceedings of the National Academy of Sciences, 101(46):16385–16389. Ezra Karger, Houtan Bastani, Chen Yueh-Han, Zachary Jacobs, Danny Halawi, Fred Zhang, and Philip E Tetlock. 2024. Forecastbench: A dynamic bench-mark of ai forecasting capabilities. arXiv preprint arXiv:2409.19839. Elliot Myunghoon Kim, Avi Garg, Kenny Peng, and Nikhil Garg. 2025. Correlated errors in large language models. In Forty-second International Conference on Machine Learning. Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yu-taka Matsuo, and Yusuke Iwasawa. 2022. Large lan-guage models are zero-shot reasoners. Advances in neural information processing systems , 35:22199– 22213. Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Hein-rich Küttler, Mike Lewis, Wen-tau Yih, Tim Rock-täschel, and 1 others. 2020. Retrieval-augmented gen-eration for knowledge-intensive nlp tasks. Advances in neural information processing systems , 33:9459– 9474. Aixin Liu, Aoxue Mei, Bangcai Lin, Bing Xue, Bingx-uan Wang, Bingzheng Xu, Bochao Wu, Bowei Zhang, Chaofan Lin, Chen Dong, and 1 others. 2025. Deepseek-v3. 2: Pushing the frontier of open large language models. arXiv preprint arXiv:2512.02556. Jan Lorenz, Heiko Rauhut, Frank Schweitzer, and Dirk Helbing. 2011. How social influence can under-mine the wisdom of crowd effect. Proceedings of the National Academy of Sciences, 108:9020 – 9025. Daniel Paleka, Shashwat Goel, Jonas Geiping, and Florian Tramèr. 2025. Pitfalls in evaluating language model forecasters. arXiv preprint arXiv:2506.00723. Ville A. Satopää, Jonathan Baron, Dean P. Foster, Bar-bara A. Mellers, Philip E. Tetlock, and Lyle H. Ungar. 2014. Combining multiple probability predictions using a simple logit model. International Journal of Forecasting, 30(2):344–356. Philipp Schoenegger and Peter S Park. 2023. Large lan-guage model prediction capabilities: Evidence from a real-world forecasting tournament. arXiv preprint arXiv:2310.13014. Philipp Schoenegger, Indre Tuminauskaite, Peter S Park, Rafael Valdece Sousa Bastos, and Philip E Tetlock. 2024. Wisdom of the silicon crowd: Llm ensemble prediction capabilities rival human crowd accuracy. Science Advances, 10(45):eadp1528. Ismet Semedov. 2025. Polymarket prediction markets dataset. Kaggle Dataset. Xiaoming Shi, Siqiao Xue, Kangrui Wang, Fan Zhou, James Zhang, Jun Zhou, Chenhao Tan, and Hongyuan Mei. 2023. Language models can im-prove event prediction by few-shot abductive rea-soning. Advances in Neural Information Processing Systems, 36:29532–29557. Kwan Soo Shin. 2026. The reasoning trap: An information-theoretic bound on closed-system multi-step llm reasoning. arXiv preprint arXiv:2605.01704. M. Stone. 1961. The opinion pool. The Annals of Mathematical Statistics, 32(4):1339–1342. James Surowiecki. 2004. The Wisdom of Crowds: Why the Many Are Smarter Than the Few and How Collective Wisdom Shapes Business, Economies, Societies, and Nations. Doubleday. Philip E Tetlock. 2005. Expert Political Judgment: How Good Is It? How Can We Know? Princeton University Press. Yigit Turkmen, Baturalp Buyukates, and Melih Bastopcu. 2026. Don’t always pick the highest-performing model: An information theoretic view of llm ensemble selection. arXiv preprint arXiv:2602.08003. Benjamin Turtel, Danny Franklin, and Philipp Schoenegger. 2025. Llms can teach themselves to better predict the future. arXiv preprint arXiv:2502.05253. Junlin Wang, WANG Jue, Ben Athiwaratkun, Ce Zhang, and James Zou. 2024. Mixture-of-agents en-hances large language model capabilities. In The Thirteenth International Conference on Learning Representations. Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc V Le, Ed H Chi, Sharan Narang, Aakanksha Chowdhery, and Denny Zhou. 2022. Self-consistency improves chain of thought reasoning in language models. In The Eleventh International Conference on Learning Representations. Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Fei Xia, Ed Chi, Quoc V Le, Denny Zhou, and 1 others. 2022. Chain-of-thought prompting elic-its reasoning in large language models. Advances in neural information processing systems , 35:24824– 24837. Danny Wood, Tingting Mu, Andrew M Webb, Henry WJ Reeve, Mikel Lujan, and Gavin Brown. 2023. A unified theory of diversity in ensemble learning. Journal of machine learning research ,24(359):1–49. Qi Yan, Raihan Seraj, Jiawei He, Lili Meng, and Tristan Sylvain. 2023. Autocast++: Enhancing world event prediction with zero-shot ranking-based context re-trieval. In The Twelfth International Conference on Learning Representations. 
+
+10 Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William Cohen, Ruslan Salakhutdinov, and Christo-pher D Manning. 2018. Hotpotqa: A dataset for diverse, explainable multi-hop question answering. In Proceedings of the 2018 conference on empirical methods in natural language processing , pages 2369– 2380. Zhiyuan Zeng, Jiashuo Liu, Siyuan Chen, Tianci He, Yali Liao, Yixiao Tian, Jinpeng Wang, Zaiyuan Wang, Yang Yang, Lingyue Yin, and 1 others. 2025. Futurex: An advanced live benchmark for llm agents in future prediction. arXiv preprint arXiv:2508.11987. Jaden Zhang, Gardenia Liu, Oliver Johansson, Hileam-lak Yitayew, Kamryn Ohly, and Grace Li. 2026. Pre-diction arena: Benchmarking ai models on real-world prediction markets. Preprint, arXiv:2604.07355. Andy Zou, Tristan Xiao, Ryan Jia, Joe Kwon, Man-tas Mazeika, Richard Li, Dawn Song, Jacob Stein-hardt, Owain Evans, and Dan Hendrycks. 2022. Forecasting future world events with neural net-works. Advances in Neural Information Processing Systems, 35:27293–27305. 
+
+A Discussion 
+
+Key insight. Our central finding is that designed information asymmetry is necessary for effective multi-agent deliberation. When all agents receive identical evidence, iterative discussion provides lit-tle measurable benefit, as agents merely reinforce correlated beliefs rather than contribute comple-mentary knowledge. This aligns with the martin-gale characterization of homogeneous-input debate and suggests that the widely adopted practice of giving all agents the same context fundamentally limits the value of multi-agent interaction. 
+
+Future work. Natural extensions include (1) adaptive routing that dynamically adjusts evi-dence allocation based on emerging disagreement, (2) more expressive routing algorithms beyond BM25, such as dense retrieval or learned semantic partitioning, (3) learned aggregation weights replacing self-reported confidence, (4) evaluation on open-ended and multi-choice forecasting tasks, and (5) heterogeneous model panels that leverage model-level diversity in addition to evidence-level asymmetry. 
+
+Potential Risks. Designed information asymme-try encourages agents to maintain distinct beliefs, but it may also amplify biased or misleading evi-dence partitions. If private evidence subsets contain low-quality, adversarial, or outdated documents, agents may become confidently polarized around incorrect conclusions rather than self-correcting through deliberation. In high-stakes domains such as finance or geopolitics, this could reinforce spec-ulative narratives or misleading impressions of cer-tainty. In addition, rationale sharing introduces a potential attack surface, where persuasive but flawed rationales propagate errors across agents. Future deployments should therefore incorporate evidence verification, source reliability estimation, and safeguards against adversarial persuasion. 
+
+B POLY GYM Benchmark Details 
+
+Motivation. Agentic forecasting systems for pre-diction markets require two distinct capabilities: (1) retrieval , identifying relevant information from the web, and (2) utilization , reasoning over that information to produce calibrated probability esti-mates. Existing benchmarks predominantly eval-uate these capabilities jointly (Table 5), making it difficult to determine whether performance gains arise from better retrieval or better collective rea-soning. Also, live benchmarks (Karger et al., 2024; Zeng et al., 2025) introduce variability from chang-ing web environments and unstable evidence avail-ability. Recent work shows that even retrieval-augmented forecasting systems continue to exhibit substantial performance degradation over time, sug-gesting that access to information alone does not solve the utilization challenge (Dai et al., 2025). 2 Domain        
+
+> Assignment
+> Polymarket Dataset
+> (Kaggle)
+> Assign to canonical
+> domains
+> Popularity-
+> weighted sampling
+> for topical diversity
+> Retrieve up to 30
+> docs per market via
+> Tavily
+> Keep markets with
+> resolution date
+> 1Source 3Sampling 4Evidence
+> Retrieval 5Temporal
+> Filtering
+
+Figure 5: POLY GYM Data Construction Pipeline 
+
+Therefore, our work specifically studies a uti-lization question: given the same global evidence pool, can a multi-agent system reason more ef-fectively by distributing information asymmetri-cally and exchanging rationales? To isolate this utilization dimension, we construct POLY GYM as a controlled benchmark where all methods oper-ate over the same pre-retrieved evidence corpus, while allowing different agents to observe differ-ent evidence subsets. This design enables direct evaluation of whether information asymmetry it-self improves deliberative forecasting, independent of retrieval quality. Conceptually, P OLY GYM is related to controlled retrieval settings in QA re-search (Chen et al., 2021; Yang et al., 2018) that 11 Setup Static Reproducible Time Control Fixed Evidence Realistic Agent Study                                            
+
+> ForecastBench (Karger et al., 2024) ××✓×✓×
+> FutureX (Zeng et al., 2025) ××✓×✓×
+> PolyBench (Cheng et al., 2026) ××✓×✓×
+> Prediction Arena (Zhang et al., 2026) ××✓×✓✓
+> Zou et al. (Zou et al., 2022) ✓×××××
+> Halawi et al. (Halawi et al., 2024) ✓×××××
+> POLY GYM (Ours) ✓✓✓✓✓✓
+
+Table 5: Comparison of forecasting evaluation setups. POLY GYM uniquely provides fixed evidence and full reproducibility, enabling controlled study of information utilization and multi-agent deliberation. 
+
+separate retrieval quality from downstream reason-ing. 
+
+Construction. POLY GYM is derived from a large-scale Polymarket dataset (Semedov, 2025) consisting of approximately 40,000 events and 100,000 prediction markets. Events are assigned to canonical domains (Crypto, Sports, Science & Technology, Politics, Business) using metadata fields. We apply popularity-weighted sampling to ensure topical diversity, yielding 500 binary mar-kets. All questions and evidence documents in POLY GYM are in English. 
+
+Evidence. For each market, we retrieve up to 30 documents via the Tavily search API 3 using queries derived from the question text. A strict temporal cutoff ensures all evidence precedes the market resolution date. Retrieved documents are deduplicated and truncated to 500 characters. By pre-constructing a shared evidence corpus, we fo-cus evaluation on how agents interpret, partition, and aggregate information rather than on search strategy differences. 
+
+Temporal filtering. To reduce contamination from LLM prior knowledge, we retain only markets with resolution date ≥ 2025-09-01, yielding the fi-nal set of 375 questions used in all experiments. More details are provided in Appendix E.3. 
+
+Licenses and intended use. The source Poly-market dataset (Semedov, 2025) is licensed under the Open Data Commons Database Contents Li-cense (DbCL) v1.0. Evidence documents retrieved via the Tavily Search API are used solely for non-commercial research purposes under its API terms of service and are not independently redistributed. POLY GYM is intended for research use only. The accompanying code is released under the MIT Li-cense. 
+
+> 3https://www.tavily.com/
+
+C Proof of Proposition 3.1 
+
+We provide the complete derivation. Let ϵj = ρ ·
+
+ϵpub + (1 − ρ) · ϵpriv  
+
+> j
+
+for agent j ∈ { 1, . . . , J }.
+
+Covariance between agents. For i̸ = j, expand-ing by bilinearity of covariance: 
+
+Cov( ϵi, ϵ j ) = ρ2Var( ϵpub )+ ρ(1 −ρ)Cov( ϵpub , ϵ priv  
+
+> j
+
+)+ ρ(1 −ρ)Cov( ϵpriv  
+
+> i
+
+, ϵ pub )+ (1 −ρ)2Cov( ϵpriv  
+
+> i
+
+, ϵ priv  
+
+> j
+
+). (8) By the independence assumptions (private com-ponents are independent of each other and of the public component): Cov( ϵpriv  
+
+> i
+
+, ϵ priv  
+
+> j
+
+) = 0 and 
+
+Cov( ϵpub , ϵ priv  
+
+> j
+
+) = 0 . Therefore: 
+
+Cov( ϵi, ϵ j ) = ρ2Var( ϵpub ). (9) 
+
+Individual variance. Since ϵpub and ϵpriv  
+
+> j
+
+are independent, the cross term vanishes: 
+
+Var( ϵj ) = ρ2Var( ϵpub ) + (1 −ρ)2Var( ϵpriv  
+
+> j
+
+).
+
+(10) 
+
+Correlation. Let σ2pub = Var( ϵpub ) and assume agents are symmetric ( Var( ϵpriv  
+
+> j
+
+) = σ2priv for all j), which implies Var( ϵi) = Var( ϵj ) and simplifies 
+
+Corr( ϵi, ϵ j ) = Cov( ϵi, ϵ j )/pVar( ϵi)Var( ϵj ) to 
+
+Cov( ϵi, ϵ j )/Var( ϵj ):
+
+Corr( ϵi, ϵ j ) = ρ2σ2pub 
+
+ρ2σ2pub + (1 −ρ)2σ2priv 
+
+. (11) In the homogeneous baseline where ρ = 1 (all agents receive the same input): Corr( ϵi, ϵ j ) = 1 
+
+(perfectly correlated errors). As ρ decreases, cor-relation decreases monotonically, reaching 0 when 
+
+ρ = 0 . At our default ρ = 0 .5 with equal-variance components, Corr = 0 .25 /(0 .25 + 0 .25) = 0 .5,compared to Corr = 1 at ρ = 1, represent-ing a 50% reduction in inter-agent error corre-lation. 12 D Proof of Corollary 3.1.1 
+
+Define the communicability between two agents as the mutual information between their forecast errors: 
+
+C(ρ) := I(ϵi; ϵj ). (12) When ρ = 0 , the private components ϵpriv  
+
+> i
+
+and ϵpriv 
+
+> j
+
+are independent by assumption (Proposition 3.1), so C(0) = 0 . For ρ > 0, agents share the com-mon component ϵpub , so ϵi and ϵj are dependent and C(ρ) > 0. By the Data Processing Inequal-ity (Shin, 2026), C(ρ) upper-bounds the informa-tion any function of ϵi (including agent i’s ratio-nale) can provide to agent j: at ρ = 0 , deliberation cannot transfer information between agents. 
+
+Ensemble MSE decomposition. Our objective is to find ρ∗ = arg min ρ∈[0 ,1] L(ρ). The J-agent ensemble MSE decomposes as: 
+
+L(ρ) = σ2(ρ)
+
+J
+
+1 + ( J−1) r(ρ)| {z }  
+
+> variance term V(ρ)
+
++ D(ρ)2
+
+| {z } 
+
+> bias term
+
+,
+
+(13) where σ2(ρ) = ρ2σ2pub + (1 −ρ)2σ2priv is the indi-vidual agent variance and r(ρ) is the inter-agent correlation from Proposition 3.1. We model D(ρ)
+
+as a continuous, non-increasing function of C(ρ),with D(0) = D0 (single-agent bias, since delibera-tion cannot transfer information when C(0) = 0 )and D(ρ) < D 0 for all ρ > 0 (any positive com-municability enables strictly more effective deliber-ation than the no-communication baseline). Conti-nuity of D follows from the continuity of C(ρ) as a function of the mixing weight ρ.
+
+Boundary analysis. At ρ = 1 : r(1) = 1 , so 
+
+V (1) = σ2pub /J · J = σ2pub , equal to single-agent variance with no ensemble gain. For any ρ = 1 − ε
+
+with ε > 0: r(1 −ε) < 1, so V (1 −ε) < V (1) ,while D(1 −ε) ≈ D(1) by continuity. Therefore 
+
+L(1 −ε) < L (1) , and ρ = 1 is not a minimizer. 
+
+At ρ = 0: σ2(0) = σ2priv , r(0) = 0, and 
+
+C(0) = 0 , so V (0) = σ2priv /J and D(0) = D0.We show that moving slightly into the interior strictly decreases both terms. Differentiating σ2(ρ)
+
+and r(ρ):
+
+dσ 2
+
+dρ ρ=0 
+
+= −2σ2priv < 0, dr dρ ρ=0 
+
+= 0 , (14) where the second identity follows because ρ2σ2pub 
+
+in the numerator of r vanishes to second order at 
+
+ρ = 0 . Therefore 
+
+dV dρ ρ=0 
+
+= 1
+
+J
+
+h
+
+(σ2)′(0)  1 + ( J−1) r(0) 
+
++ σ2(0) ( J−1) r′(0) 
+
+i
+
+= − 2σ2priv 
+
+J < 0.
+
+(15) By continuity, there exists εV > 0 such that 
+
+V (ε) < V (0) for all ε ∈ (0 , ε V ). Simultaneously, for any ρ > 0 the agents share the common com-ponent ϵpub , so C(ρ) > 0 and by the strict mono-tonicity assumption D(ρ) < D 0 = D(0) , giving 
+
+D(ε)2 < D (0) 2 for every ε > 0. Combining, 
+
+L(ε) = V (ε) + D(ε)2 < V (0) + D(0) 2 = L(0) 
+
+for sufficiently small ε > 0, so ρ = 0 is not a minimizer. 
+
+Existence of interior optimum. Since neither boundary is a minimizer, and L(ρ) is continuous on the compact interval [0 , 1] , the Extreme Value Theorem guarantees that the minimum is attained at some ρ∗ ∈ (0 , 1) .
+
+E Experimental Details 
+
+E.1 Baseline Descriptions 
+
+➠ Single-Agent Methods. 
+
+• Zero-shot (Kojima et al., 2022): The LLM predicts without any retrieved evidence, rely-ing solely on internal knowledge. • Sequential Bayesian (Shi et al., 2023): Ev-idence items are processed one at a time by 
+
+K=5 sequential agents, each updating the pre-vious agent’s probability estimate. • Chain-of-Thought (Wei et al., 2022): One agent receives all evidence and produces a forecast with chain-of-thought reasoning. • Self-Consistency (Wang et al., 2022): The same CoT prompt is sampled 5 times at tem-perature 0.7. Then, predictions are averaged. • Halawi et al. (Halawi et al., 2024): A 7-step structured scratchpad prompt (rephrase, pro/con arguments, aggregate, calibration check) is run 3 times. Results are combined via trimmed mean that downweights the pre-diction furthest from the median by 50%. 13 • Superforecaster (Karger et al., 2024): Astructured reasoning prompt that instructs the model to decompose the question, estimate base rates, update with evidence, and perform a calibration check. 
+
+➠ Multi-Agent Methods (Homogeneous Input). 
+
+• Standard Debate (Du et al., 2024): 3 agents all receive the full evidence corpus, deliber-ate over 2 rounds sharing predictions and ra-tionales, with final predictions aggregated by mean. • MoA (Wang et al., 2024): 3 proposer agents independently forecast with full evidence. The 4th aggregator agent receives all propos-als with rationales and produces a final syn-thesized prediction. • Crowd Ensemble (Schoenegger et al., 2024): 5 independent agents each receive all evidence and predict. Then, the median prediction is used as the final forecast. • AIA Forecaster (Alur et al., 2025): 10 inde-pendent agents forecast with full evidence, and a supervisor agent identifies disagree-ments among their reasoning traces and pro-duces a final prediction with a confidence la-bel. If confidence is “high”, the supervisor’s prediction is used; otherwise, the system falls back to the mean of the 10 agents. 
+
+E.2 Ablation Settings 
+
+Each ablation modifies one dimension of the de-fault InfoDelphi configuration ( J=3 , R=2 , ρ=0 .5,BM25 routing, confidence-weighted aggregation, rationale sharing enabled): • Rounds : R ∈ { 1, 2, 3}. At R=1 , agents pre-dict once with no inter-agent communication (equivalent to independent forecasting). At 
+
+R=3 , agents undergo two rounds of rationale exchange before the final prediction. • Public ratio : ρ ∈ { 0.3, 0.5, 1.0}. At ρ=1 .0,all evidence is shared (no private subsets), re-ducing to standard debate. • Rationale sharing : When disabled, the his-tory summary contains only (pk, ℓ k) pairs without rationale text. • Aggregation : Uniform weighting replaces confidence-weighted pooling with a simple mean of agent probabilities. • Evidence routing : Random allocation shuf-fles evidence items with a fixed seed and as-signs them round-robin, without BM25 rele-vance ranking. 
+
+E.3 Model Details 
+
+Table 6 summarizes the models used in our cross-model experiments. All models’ knowledge cutoffs predate our temporal filter (resolution date ≥ 2025-09-01), ensuring no data leakage from training.          
+
+> Model Knowledge Cutoff Provider
+> GPT-5.4-mini August 2025 OpenAI DeepSeek-V3.2 March 2025 DeepSeek Llama-4-Scout-17B August 2024 Meta
+> Table 6: Model knowledge cutoff dates. All cutoffs pre-cede the P OLY GYM temporal filter (September 2025), preventing prior knowledge contamination.
+
+E.4 Computational Cost 
+
+Table 7 reports the estimated API cost for a single full run (375 questions, two settings) per model.          
+
+> Model Cost / run API calls / run
+> GPT-5.4-mini $12.66 3,375 DeepSeek-V3.2 $3.51 3,375 Llama-4-Scout-17B $0.51 3,375
+> Table 7: Estimated cost per single run (375 questions ×
+> 9 API calls each). Pricing based on published per-token rates at time of experiments.
+
+F Case Study: Deliberation in Action 
+
+We present a complete example showing how In-foDelphi’s information asymmetry and rationale sharing enable self-correction. This is the same question used in Figure 1. 
+
+Question. “Over $1.8B committed to the MegaETH public sale?” ( Ground truth: No. )
+
+Round 1 (Independent predictions). Each agent receives the shared public evidence plus its own private subset: • Agent 1 (p = 0 .86 ): “The strongest evidence points to total commitments exceeding $1.8B. The official sale dashboard shows $1.39B com-mitted at one point, and multiple reports de-scribe massive oversubscription...” • Agent 2 (p = 0 .12 ): “The strongest evidence indicates total committed amounts were around 14 $1.39B at the dashboard and over $1B in re-lated coverage, but not over $1.8B. A Polymar-ket market page explicitly shows the outcome resolved No...” • Agent 3 (p = 0 .03 ): “The strongest direct source reports MegaETH’s total committed amount at $1,390,735,255, which is below $1.8B. Multiple other sources describe the sale as around $450M committed...” Agent 1’s private evidence emphasized “massive oversubscription” narratives, while Agents 2 and 3 held private documents with the exact dashboard figure ($1.39B) and market resolution data. 
+
+Round 2 (After rationale sharing). After ob-serving each other’s rationales: • Agent 1 (0.86 → 0.11 ): “The best direct ev-idence is the Sonar dashboard showing total committed amount of $1,390,735,255, which is below $1.8B...” (Self-corrected after seeing Agents 2&3’s citation of the exact figure.) 
+
+• Agent 2 (0.12 → 0.08 ): “The Polymarket reso-lution and dashboard figure consistently place total commitments below $1.8B. Agent 1’s re-vision further corroborates this.” (Maintained position with increased confidence.) 
+
+• Agent 3 (0.03 → 0.08 ): “The $1.39B dash-board figure is unambiguous. Slight upward adjustment reflects residual uncertainty in in-terpreting ‘committed’ vs. final sale volume.” 
+
+(Slight adjustment, remained confident.) 
+
+Outcome. Final CW-aggregated prediction: ˆp =0.06 (Brier = 0.004 ). The single-agent baseline with all evidence predicted p = 0 .95 (Brier = 0.9 ), failing because the dominant narrative of “over-subscription” overwhelmed the specific dashboard figure buried among 20+ documents. 
+
+Key insight. Information asymmetry ensured that the critical evidence (exact $1.39B figure) reached at least some agents as private, high-salience information. Rationale sharing then prop-agated this finding to Agent 1, who recognized the superior specificity of the dashboard data and self-corrected. 
+
+G Prompt Templates 
+
+We list the exact prompts used in InfoDelphi. All agents receive the same system prompt and struc-tured user prompt; the only difference across agents is their assigned evidence subset. 
+
+System Prompt                         
+
+> You are aforecaster for binary (Yes/No) prediction markets. Use only the evidence provided. Prefer high-credibility sources when they conflict. Reflect uncertainty with probabilities near 0.5. You must respond with valid JSON only, no other text before or after.
+
+User Prompt (Round 1)              
+
+> Question: {question} Evidence: [1] doc_id=doc_001 |source=... |title=... | content: ... [2] doc_id=doc_002 |source=... |title=... | content: ... ... Respond with exactly one JSON object, no other text. Schema: {"p_yes": <0-1>, "label": "YES"|"NO", "rationale": "...", "evidence_used": ["doc_id", ...]}
+
+User Prompt (Round 2) In round 2, the prompt includes a history summary of all other agents’ round-1 outputs appended after the evidence:                
+
+> Question: {question} Evidence: [1] doc_id=doc_001 | ... ... Previous round summary (other agents): Agent 1: p_yes=0.850 (YES) —The evidence suggests... Agent 2: p_yes=0.120 (NO) — Based on the pricing data... Agent 3: p_yes=0.630 (YES) —Multiple sources indicate... Round mean p_yes=0.533. Consider whether you agree or disagree with the above. Respond with exactly one JSON object, no other text. Schema: {"p_yes": <0-1>, "label": "YES"|"NO", "rationale": "...", "evidence_used": ["doc_id", ...]}
+
+Output Format Each agent returns a JSON ob-ject:          
+
+> {"p_yes": 0.85, "label": "YES", "rationale": "The strongest evidence from doc_003 indicates...", "evidence_used": ["doc_001", "doc_003"]}
+
+H Qualitative Analysis 
+
+We present two representative successes and two failures of InfoDelphi, illustrating the mechanisms through which information asymmetry and deliber-ation help or fail. 15 ✓ S1: Minority Evidence Overrides a Confident Majority 
+
+Q: Will the Monad public sale commitments be between $1.8B and $2B? 
+
+Ground truth: NO InfoDelphi ˆp: 0.01 
+
+Brier: 0.0001 
+
+Agent p(1) → p(2) Round-1 evidence cited A0 0.97 → 0.01 “record-breaking sale; large oversubscription” 
+
+A1 0.01 → 0.01 Coinbase token-sale page: 276M USDC committed 
+
+A2 0.93 → 0.01 “oversubscribed; sale closed at cap” 
+
+Mechanism. In Round 1, A 0 and A 2 pre-dicted YES with high confidence, citing re-ports of a “record-breaking” sale and large oversubscription. A 1, whose private evidence included Coinbase’s authoritative token-sale page, correctly identified that the actual com-mitted amount was 276M USDC, which is far below the $1.8B threshold, and thus predicted NO (0.01). After deliberation, A 1’s rationale exposed that the majority had confused the token’s fully diluted valuation ($2.5B) with actual USDC commitments; both A 0 and A 2
+
+immediately corrected to 0.01. This case illus-trates the core benefit of information asymme-try: a single agent holding an authoritative pri-vate source can overturn a confidently wrong majority through rationale sharing.  
+
+> ✓S2: Deliberation Resolves a Shared Misinterpretation
+
+Q: Will Gemini 3.0 be released on November 28, 2025? 
+
+Ground truth: NO InfoDelphi ˆp: 0.03 
+
+Agent p(1) → p(2) Round-1 evidence cited A0 0.94 → 0.03 “Gemini 3.0 launched November 18, 2025” 
+
+A1 0.97 → 0.03 Multiple outlets confirm Nov. 18 launch 
+
+A2 0.93 → 0.03 Google blog: Nov. 18 general availability 
+
+Mechanism. All three agents in Round 1 had access to evidence stating that Gemini 3.0 launched on November 18, 2025. All three misinterpreted the question as asking whether Gemini 3.0 would be released by November 28 (a deadline interpretation), rather than on 
+
+November 28 specifically. Under this reading, a November 18 launch satisfies the condition, leading to high YES probabilities despite ratio-nales that correctly noted the release occurred on November 18. After deliberation, agents read each other’s rationales and converged on the correct interpretation: the question asks about a specific date, and a November 18 re-lease does not satisfy it. All predictions cor-rected to 0.03. The case demonstrates that sharing reasoning , not just numeric estimates, is what enables deliberation to resolve shared misinterpretations, consistent with our theoret-ical analysis in Section 3.2.  
+
+> ×F1: Evidence Gap Beyond Retrieval
+
+Q: Will Ethereum reach $4,600 between September 29 and October 5? 
+
+Ground truth: YES InfoDelphi ˆp: 0.02 
+
+Agent p(1) → p(2) Round-1 evidence cited A0 0.01 → 0.02 Window high: $4,591.44 on October 3
+
+A1 0.03 → 0.02 Same intraday peak reported across sources 
+
+A2 0.08 → 0.02 No retrieved source reports $4,600 +
+
+Mechanism. The retrieved evidence consis-tently showed Ethereum’s highest intraday price during the window as $4,591.44 on Octo-
+
+16 ber 3, which is $8.56 below the threshold. All agents independently concluded NO in Round 1, and deliberation only reinforced this shared view. In reality, Ethereum briefly crossed $4,600 at a moment not captured in the re-trieved documents. No amount of rationale sharing can compensate for evidence that was never retrieved: the system’s upper bound is the quality of its retrieval. This case highlights a fundamental limitation of RAG-based fore-casting and motivates future work on richer evidence retrieval.  
+
+> ×F2: Correlated Evidence Produces an Overconfident Echo Chamber
+
+Q: Israel strikes Iran by November 30? 
+
+Ground truth: NO InfoDelphi ˆp: 0.996 
+
+Agent p(1) → p(2) Round-1 evidence cited A0 0.98 → 0.995 Reports of Operation Rising Lion, June 13 
+
+A1 0.98 → 0.998 Independent coverage of the June 13 strikes 
+
+A2 0.98 → 0.995 Multiple outlets confirming June 13 events 
+
+Mechanism. All agents’ private evidence con-tained multiple independent news reports de-scribing Israeli strikes on Iran on June 13, 2025 (Operation Rising Lion). Every agent predicted YES with 0.98 confidence in Round 1. Deliberation made matters worse: agents reinforced each other’s certainty, pushing pre-dictions to 0.995–0.998 in Round 2. The mar-ket resolved NO, likely due to the question’s resolution criteria differing from the agents’ in-terpretation. This case illustrates that when all agents’ private evidence is drawn from the same correlated news corpus, information asymmetry provides no diversification bene-fit and deliberation degenerates into an echo chamber. 
+
+17
